@@ -17,6 +17,7 @@ Die Übungen sind so aufgebaut, dass jedes Kapitel auf dem vorherigen aufbaut:
 | **[02. Konstruktor & self](./02_init_und_self/)** | `__init__` & `self` | Objekte sauber mit Startwerten initialisieren |
 | **[03. Methoden & Verhalten](./03_methoden_und_verhalten/)** | Methoden & Interaktion | Objekte können handeln & miteinander interagieren |
 | **[04. Schöne Textausgabe](./04_str_und_darstellung/)** | `__str__` Dunder-Methode | Wie Objekte lesbar mit `print()` ausgegeben werden |
+| **[04b. Umstieg auf VS Code](./04b_umstieg_vscode/)** | **Exkurs: IDE-Wechsel** | **Von Thonny zu VS Code: Plugins (Error Lens, Python), Shortcuts & Terminal** |
 | **[05. Objekte kombinieren](./05_objekte_kombinieren/)** | Komposition | Listen von Objekten & komplexe Datenstrukturen |
 | **[06. Abschlussprojekt](./06_abschlussprojekt_tamagotchi/)** | Mini-Projekt: Tamagotchi | Ein interaktives Konsolenspiel mit allem Gelernten |
 
@@ -37,7 +38,7 @@ In jedem Kapitelordner findest du:
 
 1. Öffne den Ordner des aktuellen Kapitels (z.B. `00_fehlersuche_und_grundlagen`).
 2. Öffne die `index.html` im Browser oder lies die `README.md`.
-3. Öffne `aufgabe.py` und bearbeite die nummerierten `TODO`s / Bugs.
+3. Öffne `aufgabe.py` und bearbeite die Aufgaben.
 4. Führe die Tests aus, um deine Lösung zu prüfen:
    ```bash
    python3 test_aufgabe.py

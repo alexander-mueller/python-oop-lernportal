@@ -258,14 +258,80 @@ pre code {
   padding: 0;
 }
 
-/* Code Syntax Highlights (CSS simulated) */
-.kw { color: #f472b6; font-weight: bold; } /* def, class, return, if */
-.fn { color: #60a5fa; } /* function name */
-.str { color: #a7f3d0; } /* strings */
-.num { color: #fbbf24; } /* numbers */
-.cm { color: #64748b; font-style: italic; } /* comments */
-.var { color: #cbd5e1; } /* self, variables */
-.attr { color: #38bdf8; } /* self.attributes */
+/* Code Syntax Highlights */
+.kw { color: #f472b6; font-weight: bold; }
+.fn { color: #60a5fa; }
+.str { color: #a7f3d0; }
+.num { color: #fbbf24; }
+.cm { color: #64748b; font-style: italic; }
+.var { color: #cbd5e1; }
+.attr { color: #38bdf8; }
+
+/* Keyboard Shortcut Badges */
+kbd {
+  display: inline-block;
+  padding: 3px 7px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #334155;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-bottom: 2px solid #94a3b8;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  margin: 0 2px;
+}
+
+/* Extension Cards (for VS Code Guide) */
+.extension-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.extension-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.extension-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.extension-icon {
+  font-size: 1.8rem;
+  background: var(--primary-light);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.extension-info h4 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.extension-info p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  line-height: 1.4;
+}
 
 /* Accordion / Details */
 details {
@@ -446,4 +512,5 @@ summary:hover {
   .card { padding: 18px; }
   .footer-nav { flex-direction: column; }
   .footer-nav .btn { width: 100%; justify-content: center; }
+  .extension-grid { grid-template-columns: 1fr; }
 }
