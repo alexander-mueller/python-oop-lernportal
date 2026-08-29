@@ -486,6 +486,32 @@ object has no attribute 'gang'</code></pre>
       </div>
     </section>
 
+    <!-- Interaktiver Traceback-Dolmetscher -->
+    <section id="error-interpreter-widget"></section>
+
+    <!-- Lehrpfad-Zertifikate Card -->
+    <section class="card" style="border-left: 5px solid #d97706; background: linear-gradient(180deg, #ffffff 0%, #fffdfa 100%);">
+      <h2>🏆 Offizielle Lehrpfad-Abschlusszertifikate</h2>
+      <p>
+        Sobald du einen Lehrpfad oder das gesamte Portal abgeschlossen hast, kannst du dir hier dein persönliches, ausdruckbares <strong>Abschluss-Zertifikat</strong> mit deinen freigeschalteten Leistungsnachweisen generieren!
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 15px;">
+        <button onclick="window.zeigeZertifikatModal(1)" class="btn" style="background: #1e40af; justify-content: center;">
+          🌱 Zertifikat Lehrpfad 1
+        </button>
+        <button onclick="window.zeigeZertifikatModal(2)" class="btn" style="background: #4338ca; justify-content: center;">
+          🏗️ Zertifikat Lehrpfad 2
+        </button>
+        <button onclick="window.zeigeZertifikatModal(3)" class="btn" style="background: #15803d; justify-content: center;">
+          🚀 Zertifikat Lehrpfad 3
+        </button>
+        <button onclick="window.zeigeZertifikatModal('master')" class="btn" style="background: #b45309; justify-content: center; font-weight: bold;">
+          👑 Master-Zertifikat
+        </button>
+      </div>
+    </section>
+
     <!-- FAQ & Troubleshooting Card -->
     <section class="card">
       <h2>🩺 Häufige Fragen & Troubleshooting</h2>
@@ -509,7 +535,7 @@ object has no attribute 'gang'</code></pre>
       <details>
         <summary>❌ Wie wechsle ich im Terminal zwischen den Ordnern hin und her?</summary>
         <div class="details-content">
-          <p><strong>In einen Unterordner hinein:</strong> <code>cd g01_erste_schritte_taschenrechner</code></p>
+          <p><strong>In einen Unterordner hinein:</strong> <code>cd lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner</code></p>
           <p><strong>Einen Ordner nach oben zurück:</strong> <code>cd ..</code></p>
           <p><strong>Inhalt des aktuellen Ordners auflisten:</strong> <code>ls</code> (oder <code>dir</code> auf Windows)</p>
         </div>
@@ -518,8 +544,11 @@ object has no attribute 'gang'</code></pre>
 
   </main>
 
-  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <!-- Lokale Didaktik- & Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
   <script src="assets/gamification_data.js"></script>
   <script src="assets/gamification.js"></script>
+  <script src="assets/interpreter.js"></script>
+  <script src="assets/certificate.js"></script>
+  <script src="assets/parsons.js"></script>
 </body>
 </html>

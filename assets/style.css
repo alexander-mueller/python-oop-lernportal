@@ -283,7 +283,7 @@ kbd {
   margin: 0 2px;
 }
 
-/* Extension Cards (for VS Code Guide) */
+/* Extension Cards */
 .extension-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -402,7 +402,7 @@ summary:hover {
   flex: 1;
 }
 
-/* Grid & Roadmap Cards (for Overview) */
+/* Grid & Roadmap Cards */
 .roadmap-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -733,6 +733,242 @@ summary:hover {
 
 .trophy-locked .trophy-badge-status {
   color: #64748b;
+}
+
+/* ==========================================================================
+   PARSONS PUZZLES & PRIMM WIDGETS
+   ========================================================================== */
+
+.parsons-box {
+  background: #ffffff;
+  border: 2px solid var(--primary-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin: 25px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.parsons-header {
+  margin-bottom: 15px;
+}
+
+.parsons-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.parsons-badge {
+  background: var(--warning-light);
+  color: #b45309;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.parsons-instruction {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.parsons-board {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.parsons-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.parsons-line:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.parsons-handle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: grab;
+  user-select: none;
+}
+
+.parsons-code {
+  flex: 1;
+}
+
+.parsons-code code {
+  background: transparent;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.parsons-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-parsons-move {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.btn-parsons-move:hover:not(:disabled) {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-parsons-move:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.parsons-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   OFFICIAL CERTIFICATE MODAL
+   ========================================================================== */
+
+.certificate-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.certificate-container {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  max-width: 750px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.certificate-border {
+  border: 6px double #d97706;
+  border-radius: var(--radius-sm);
+  padding: 30px;
+  text-align: center;
+  background: #fffdfa;
+}
+
+.certificate-badge {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #b45309;
+  margin-bottom: 10px;
+}
+
+.certificate-headline {
+  font-size: 2rem;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.certificate-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.certificate-student-name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: #fbbf24;
+  text-underline-offset: 6px;
+  margin: 15px 0;
+}
+
+.certificate-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.certificate-track-title {
+  font-size: 1.35rem;
+  color: #0f172a;
+  margin: 8px 0;
+}
+
+.certificate-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  max-width: 550px;
+  margin: 0 auto 20px auto;
+  line-height: 1.45;
+}
+
+.certificate-meta {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  color: #334155;
+  margin: 20px 0;
+  padding: 12px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.certificate-seal {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 1px;
+}
+
+.certificate-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+@media print {
+  body * { visibility: hidden; }
+  .certificate-container, .certificate-container * { visibility: visible; }
+  .certificate-overlay { position: static; background: transparent; padding: 0; }
+  .certificate-actions { display: none; }
 }
 
 /* Responsive */
