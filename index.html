@@ -21,6 +21,14 @@
       </div>
 
       <div class="sidebar-quick-nav">
+        <div style="padding: 0 4px 10px 4px;">
+          <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px;">Aktiver Sprachkurs:</label>
+          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="window.location.href = this.value === 'python' ? 'index.html' : 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : 'tabellen_und_select')">
+            <option value="python" selected>🐍 Python (33 Module)</option>
+            <option value="javascript">🌐 JavaScript (Demo)</option>
+            <option value="sql">🗄️ SQL &amp; SQLite (Demo)</option>
+          </select>
+        </div>
         <a href="./index.html" class="sidebar-link">🏠 Startseite</a>
         <a href="./index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
         <a href="./index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
@@ -1061,6 +1069,10 @@ print(mein_auto.hupen())
   <script src="assets/certificate.js"></script>
   <script src="assets/parsons.js"></script>
   <script src="assets/code_guard.js"></script>
+  <script src="assets/runners/runner_registry.js"></script>
+  <script src="assets/runners/python_runner.js"></script>
+  <script src="assets/runners/js_runner.js"></script>
+  <script src="assets/runners/sql_runner.js"></script>
   <script src="assets/runner.js"></script>
   <script src="assets/ui_enhancements.js"></script>
   <script src="assets/app_auth.js"></script>

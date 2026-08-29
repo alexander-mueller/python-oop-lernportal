@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 01: Variablen &amp; Template-Strings</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 JavaScript Grundlagen</div>
+          <h1>JS 01: Variablen, Typen &amp; Template-Strings</h1>
+          <p>Lerne die Grundlagen der modernen Web-Entwicklung mit <code>let</code>, <code>const</code> und Template-Strings.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 1. Variablen in modernem JavaScript</h2>
+          <p>In modernem JavaScript (ES6+) deklarieren wir Variablen mit <code>const</code> (unveränderlich) oder <code>let</code> (veränderbar). Das alte <code>var</code> sollte vermieden werden.</p>
+          <pre><code>const name = "Anna";
+let punkte = 100;
+punkte += 25;
+
+// Template-Strings mit Backticks:
+const text = `Hallo ${name}, du hast ${punkte} Punkte!`;
+console.log(text);</code></pre>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Funktion <code>addieren(a, b)</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Funktion <code>begruessung(name)</code> mit Template-String bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Funktion <code>istVolljaehrig(alter)</code> schreiben.</label>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a href="../../../workspace.html?course=javascript&track=track_1_grundlagen&chapter=01_erste_schritte_variablen" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "id": "sql",
+  "title": "SQL & Relationale Datenbanken",
+  "language": "sql",
+  "icon": "🗄️",
+  "runner": "sql",
+  "description": "Von relationalen Tabellen über SELECT, WHERE, JOINs bis hin zu Aggregationen und Gruppierungen.",
+  "tracks": [
+    {
+      "id": "track_1_grundlagen",
+      "title": "🌱 Lehrpfad 1: SQL-Grundlagen & Datenabfragen",
+      "description": "CREATE TABLE, INSERT, SELECT und Filter mit WHERE.",
+      "certificateKey": "sql_grundlagen",
+      "chapters": [
+        { "folder": "01_tabellen_und_select", "title": "SQL 01: Tabellen anlegen & Daten abfragen", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
+      ]
+    }
+  ]
+}

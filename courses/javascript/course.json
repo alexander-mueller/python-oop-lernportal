@@ -1,0 +1,20 @@
+{
+  "id": "javascript",
+  "title": "JavaScript & Moderne Web-Entwicklung",
+  "language": "javascript",
+  "icon": "🌐",
+  "runner": "javascript",
+  "description": "Vom Browser-Scripting über ES6-Funktionen, Arrays bis hin zu asynchronem JavaScript.",
+  "tracks": [
+    {
+      "id": "track_1_grundlagen",
+      "title": "🌱 Lehrpfad 1: JavaScript Grundlagen & ES6",
+      "description": "Variablen (let/const), Template Strings, Arrow Functions und Array-Methoden.",
+      "certificateKey": "js_grundlagen",
+      "chapters": [
+        { "folder": "01_erste_schritte_variablen", "title": "JS 01: Variablen, Typen & Template-Strings", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
+        { "folder": "02_funktionen_und_arrays", "title": "JS 02: Arrow Functions, Arrays & Map/Filter", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 01: Tabellen anlegen &amp; SELECT</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🗄️ SQL &amp; Relationale Datenbanken</div>
+          <h1>SQL 01: Tabellen anlegen &amp; Daten abfragen</h1>
+          <p>Lerne die Grundlagen relationaler Datenbanken mit SQLite WebAssembly direkt im Browser.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 1. Relationale Datenbanken &amp; Tabellen</h2>
+          <p>Daten werden in strukturierten Tabellen mit definierten Spaltentypen gespeichert:</p>
+          <pre><code>CREATE TABLE kunden (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    guthaben REAL
+);
+
+INSERT INTO kunden (name, guthaben) VALUES ('Max Mustermann', 150.0);
+SELECT * FROM kunden WHERE guthaben > 100;</code></pre>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Tabelle <code>mitarbeiter</code> mit Spalten anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Testdaten mit <code>INSERT INTO</code> einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Mitarbeiter mit <code>SELECT</code> und <code>WHERE</code> filtern.</label>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a href="../../../workspace.html?course=sql&track=track_1_grundlagen&chapter=01_tabellen_und_select" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

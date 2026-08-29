@@ -330,6 +330,8 @@
   <script src="assets/code_guard.js"></script>
   <script src="assets/runners/runner_registry.js"></script>
   <script src="assets/runners/python_runner.js"></script>
+  <script src="assets/runners/js_runner.js"></script>
+  <script src="assets/runners/sql_runner.js"></script>
   <script src="assets/monaco_ide.js"></script>
 
   <script>
@@ -399,8 +401,20 @@
 
     async function loadWorkspaceData() {
       try {
-        let taskFile = "aufgabe.py";
-        let testFile = "test_aufgabe.py";
+        await loadCourseManifest();
+        setupNextChapterButton();
+
+        const activeLanguage = currentCourseManifest ? (currentCourseManifest.language || "python") : "python";
+        const runner = window.RunnerRegistry ? window.RunnerRegistry.get(activeLanguage) : null;
+
+        let basePath = `${trackFolder}/${chapterFolder}`;
+        if (courseId !== "python") {
+          basePath = `courses/${courseId}/${chapterFolder}`;
+        }
+
+        let taskFile = runner ? `aufgabe${runner.fileExtension}` : "aufgabe.py";
+        let testFile = runner ? runner.testFileExtension : "test_aufgabe.py";
+        let loesungFile = runner ? `musterloesung${runner.fileExtension}` : "musterloesung.py";
 
         if (chapterFolder === "04b_umstieg_vscode") {
           taskFile = "vscode_test.py";
@@ -411,10 +425,10 @@
         }
 
         const promises = [
-          fetch(`${trackFolder}/${chapterFolder}/${taskFile}`).then(r => r.ok ? r.text() : "# Aufgabe konnte nicht geladen werden"),
-          testFile ? fetch(`${trackFolder}/${chapterFolder}/${testFile}`).then(r => r.ok ? r.text() : "") : Promise.resolve(""),
-          fetch(`${trackFolder}/${chapterFolder}/musterloesung.py`).then(r => r.ok ? r.text() : "").catch(() => ""),
-          fetch(`${trackFolder}/${chapterFolder}/index.html`).then(r => r.ok ? r.text() : "").catch(() => "")
+          fetch(`${basePath}/${taskFile}`).then(r => r.ok ? r.text() : "// Aufgabe konnte nicht geladen werden"),
+          testFile ? fetch(`${basePath}/${testFile}`).then(r => r.ok ? r.text() : "") : Promise.resolve(""),
+          fetch(`${basePath}/${loesungFile}`).then(r => r.ok ? r.text() : "").catch(() => ""),
+          fetch(`${basePath}/index.html`).then(r => r.ok ? r.text() : "").catch(() => "")
         ];
 
         const [aufgabeCode, testCode, loesungCode, htmlDoc] = await Promise.all(promises);

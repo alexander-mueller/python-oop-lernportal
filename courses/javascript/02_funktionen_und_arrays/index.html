@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 02: Arrow Functions &amp; Array-Methoden</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 JavaScript Grundlagen</div>
+          <h1>JS 02: Arrow Functions, Arrays &amp; Map/Filter</h1>
+          <p>Lerne funktionale Array-Transformationen mit <code>.map()</code>, <code>.filter()</code> und <code>.reduce()</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 1. Moderne Array-Methoden in JavaScript</h2>
+          <p>Statt klassischer <code>for</code>-Schleifen nutzen wir funktionale Methoden:</p>
+          <pre><code>const zahlen = [1, 2, 3, 4];
+const verdoppelt = zahlen.map(x => x * 2);
+const gerade = zahlen.filter(x => x % 2 === 0);
+const summe = zahlen.reduce((a, b) => a + b, 0);</code></pre>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Funktion <code>verdoppeln(zahlen)</code> mit <code>.map()</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Funktion <code>filterGeradeZahlen(zahlen)</code> mit <code>.filter()</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Funktion <code>arraySumme(zahlen)</code> mit <code>.reduce()</code> schreiben.</label>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a href="../../../workspace.html?course=javascript&track=track_1_grundlagen&chapter=02_funktionen_und_arrays" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

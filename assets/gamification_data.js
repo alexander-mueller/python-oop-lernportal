@@ -14,7 +14,7 @@ window.GAMIFICATION_DATA = {
   "streak_tage": 1,
   "letzter_aktiver_tag": "2026-08-29",
   "historie": [],
-  "zuletzt_aktualisiert": "2026-08-30T00:30:42.090205"
+  "zuletzt_aktualisiert": "2026-08-30T00:34:34.221863"
 };
 window.GAMIFICATION_BADGES_KATALOG = {
   "rechenkonegin": {
