@@ -175,4 +175,12 @@ class TestKapitel11(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    res = unittest.main(verbosity=2, exit=False)
+    try:
+        from pathlib import Path
+        sys.path.insert(0, str(Path(__file__).parent.parent))
+        from gamification import report_single_chapter_result
+        report_single_chapter_result(Path(__file__).parent.name, res.result.wasSuccessful(), res.result.testsRun)
+    except Exception:
+        pass
+    sys.exit(0 if res.result.wasSuccessful() else 1)

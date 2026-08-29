@@ -308,5 +308,39 @@ window.GAMIFICATION_LEVEL_STUFEN = {json.dumps(LEVEL_STUFEN, indent=2, ensure_as
         }
 
 
+def report_single_chapter_result(kapitel_ordner: str, tests_erfolgreich: bool, tests_anzahl: int):
+    """
+    Wird von einzelnen test_aufgabe.py Skripten aufgerufen, wenn sie direkt ausgeführt werden.
+    Aktualisiert den Spielstand und gibt motivierendes Feedback im Terminal aus.
+    """
+    gm = GamificationManager()
+    aktuelle_geloeste = set(gm.state.get("geloeste_kapitel", []))
+    
+    if tests_erfolgreich and tests_anzahl > 0:
+        war_bereits_geloest = kapitel_ordner in aktuelle_geloeste
+        aktuelle_geloeste.add(kapitel_ordner)
+        
+        # Gesamtbestandene Tests schätzen/updaten
+        alte_tests = gm.state.get("bestandene_tests", 0)
+        neue_tests = alte_tests if war_bereits_geloest else alte_tests + tests_anzahl
+        
+        events = gm.sync_mit_test_ergebnissen(list(aktuelle_geloeste), neue_tests)
+        lvl = events["lvl_info"]
+        
+        print("\n" + "═" * 60)
+        print(f"🎉 KAPITEL BESTANDEN! ⭐ {lvl['titel']} (Level {lvl['level']})")
+        print(f"💎 Aktuelle XP: {events['gesamt_xp']} XP | Rang: {lvl['rang']}")
+        
+        if events.get("level_up"):
+            print(f"🚀 LEVEL UP! Du bist aufgestiegen zu Level {lvl['level']}!")
+            
+        if events.get("neue_badges"):
+            for b in events["neue_badges"]:
+                print(f"🏆 NEUE TROPHÄE: {b['icon']} {b['name']} (+{b['xp_bonus']} XP Bonus!)")
+                
+        print(f"💡 Zeige deinen Fortschrittspass mit: python3 profil.py")
+        print("═" * 60 + "\n")
+
+
 # Singleton-Instanz
 manager = GamificationManager()
