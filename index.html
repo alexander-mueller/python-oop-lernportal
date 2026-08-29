@@ -3,16 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python OOP Lernportal: Klassen & Objekte</title>
+  <title>Python Lernportal: Grundlagen, OOP & Software-Entwicklung</title>
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .track-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .track-1-badge { background: #dbeafe; color: #1e40af; }
+    .track-2-badge { background: #e0e7ff; color: #4338ca; }
+    .track-3-badge { background: #dcfce7; color: #166534; }
+    .section-header {
+      margin: 40px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      color: var(--text-main);
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <div class="header-container">
-      <div class="header-badge">🐍 Python Nachhilfe & Selbstlern-Kurs</div>
-      <h1>Objektorientierte Programmierung (OOP)</h1>
-      <p>Lerne Schritt für Schritt, wie du eigene Klassen baust, Methoden nutzt und professionell mit Git &amp; Unit Tests arbeitest.</p>
+      <div class="header-badge">🐍 Python Nachhilfe- &amp; Selbstlern-Portal</div>
+      <h1>Vom Einsteiger zum Software-Entwickler</h1>
+      <p>3 strukturierte Lehrpfade: Prozedurale Grundlagen &bull; Objektorientierung &bull; Professionelle Werkzeuge (Git, TDD, Tkinter)</p>
     </div>
   </header>
 
@@ -20,25 +55,160 @@
 
     <!-- Willkommen Card -->
     <section class="card">
-      <h2>👋 Willkommen zu deiner Übungsreihe!</h2>
+      <h2>👋 Willkommen zu deiner interaktiven Python-Lernreise!</h2>
       <p>
-        Dieser Kurs begleitet dich durch die gesamte Objektorientierte Programmierung in Python – exakt abgestimmt auf dein Schulskriptum, aber mit viel mehr Erklärungen, Analogien, Visualisierungen und automatischen Tests!
+        Dieses Portal begleitet dich Schritt für Schritt von den ersten Schritten in Python bis hin zu vollständigen Desktop-Apps mit grafischer Oberfläche. Alle Aufgaben sind mit verständlichen Erklärungen, Alltags-Analogien, visuellen Beispielen und <strong>automatischen Tests</strong> für sofortiges Feedback ausgestattet.
       </p>
       
-      <div class="box box-analogie">
-        <div class="box-title">🏗️ Die Grundidee von OOP in einem Satz:</div>
-        Eine <strong>Klasse</strong> ist wie ein Bauplan (oder eine Plätzchen-Ausstechform). Ein <strong>Objekt</strong> ist das fertige Haus (oder das gebackene Plätzchen), das nach diesem Bauplan entstanden ist!
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 20px 0;">
+        <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 15px; border-radius: var(--radius-sm);">
+          <span class="track-badge track-1-badge">Lehrpfad 1</span>
+          <h4 style="margin: 0 0 6px 0; color: #1e3a8a;">🌱 Grundlagen der Programmierung</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Für Einsteiger oder zur Wiederholung: Rechnen, Variablen, Bedingungen, Schleifen, Funktionen, Listen, Dictionaries &amp; Strings (G01–G10).</p>
+        </div>
+        <div style="background: #f8fafc; border-left: 4px solid #6366f1; padding: 15px; border-radius: var(--radius-sm);">
+          <span class="track-badge track-2-badge">Lehrpfad 2</span>
+          <h4 style="margin: 0 0 6px 0; color: #312e81;">🏗️ Einstieg in OOP &amp; Tools</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Klassen, Baupläne, <code>__init__</code>, Methoden, UML-Diagramme, VS Code Umstieg, Git-Versionskontrolle &amp; Tamagotchi-Projekt (00–06).</p>
+        </div>
+        <div style="background: #f8fafc; border-left: 4px solid #22c55e; padding: 15px; border-radius: var(--radius-sm);">
+          <span class="track-badge track-3-badge">Lehrpfad 3</span>
+          <h4 style="margin: 0 0 6px 0; color: #14532d;">🚀 Fortgeschrittenes OOP &amp; GUIs</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Speicher-Referenzen, Dunder-Methoden, eigene Unit Tests (TDD), Vererbung, Polymorphie, Exceptions, JSON-Persistenz &amp; Tkinter (07–14).</p>
+        </div>
       </div>
 
       <div class="box box-tipp">
         <div class="box-title">📚 Schulabgleich &amp; Lehrplan:</div>
-        Alle Kapitel sind 1:1 mit den Themen deines Informatik-Unterrichts (Type Hints, UML, Assoziationen, Referenzen, Vererbung, Tkinter) abgestimmt. Ausführlicher Plan in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
+        Alle Kapitel sind 1:1 mit dem offiziellen Skriptum des Informatik-Unterrichts abgestimmt. Detaillierter Leitfaden in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
       </div>
     </section>
 
-    <!-- PHASE 1: GRUNDLAGEN & WERKZEUGE -->
+    <!-- LEHRPFAD 1: GRUNDLAGEN -->
     <section>
-      <h2 style="margin: 30px 0 10px 0; color: var(--text-main); font-size: 1.4rem;">🌱 Phase 1: Grundlagen OOP &amp; Entwickler-Werkzeuge</h2>
+      <div class="section-header">
+        <div>
+          <h2>🛣️ Lehrpfad 1: Grundlagen der Programmierung (Prozedural)</h2>
+          <div class="section-desc">Die unverzichtbare Basis: Datentypen, Kontrollstrukturen, Funktionen und Datenstrukturen.</div>
+        </div>
+        <span class="track-badge track-1-badge">10 Kapitel &bull; G01 bis G10</span>
+      </div>
+
+      <div class="roadmap-grid">
+
+        <!-- G01 -->
+        <a href="g01_erste_schritte_taschenrechner/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G01</span>
+            <div class="roadmap-title">🧮 Python als Taschenrechner</div>
+            <div class="roadmap-desc">Zahlen (<code>int</code>, <code>float</code>), Grundrechenarten, Ganzzahldivision <code>//</code>, Modulo <code>%</code>, Potenzen <code>**</code> &amp; <code>print()</code>.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G01 öffnen &rarr;</div>
+        </a>
+
+        <!-- G02 -->
+        <a href="g02_variablen_und_datentypen/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G02</span>
+            <div class="roadmap-title">📦 Variablen &amp; Datentypen</div>
+            <div class="roadmap-desc">Speicherboxen, die 4 Basisdatentypen (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>), Type Casting &amp; Type Hints.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G02 öffnen &rarr;</div>
+        </a>
+
+        <!-- G03 -->
+        <a href="g03_ein_und_ausgabe/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G03</span>
+            <div class="roadmap-title">💬 Interaktive Ein- &amp; Ausgabe</div>
+            <div class="roadmap-desc">Benutzereingaben mit <code>input()</code>, Textumwandlung und moderne formatierte <code>f-Strings</code> (z.B. <code>{preis:.2f} €</code>).</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G03 öffnen &rarr;</div>
+        </a>
+
+        <!-- G04 -->
+        <a href="g04_verzweigungen_und_bedingungen/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G04</span>
+            <div class="roadmap-title">🚦 Bedingungen &amp; Verzweigungen</div>
+            <div class="roadmap-desc">Entscheidungen treffen mit <code>if</code>, <code>elif</code>, <code>else</code>, Vergleichs- und Logikoperatoren (<code>and</code>, <code>or</code>, <code>not</code>).</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G04 öffnen &rarr;</div>
+        </a>
+
+        <!-- G05 -->
+        <a href="g05_schleifen_und_wiederholungen/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G05</span>
+            <div class="roadmap-title">🎡 Schleifen &amp; Wiederholungen</div>
+            <div class="roadmap-desc">Zählschleifen mit <code>for in range(...)</code>, Bedingungsschleifen mit <code>while</code>, <code>break</code> &amp; <code>continue</code>.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G05 öffnen &rarr;</div>
+        </a>
+
+        <!-- G06 -->
+        <a href="g06_funktionen_und_module/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G06</span>
+            <div class="roadmap-title">🪄 Eigene Funktionen &amp; Module</div>
+            <div class="roadmap-desc">Wiederverwendbarer Code mit <code>def</code>, <code>return</code>, Parametern, Scope und Modulen (<code>math</code>, <code>random</code>).</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G06 öffnen &rarr;</div>
+        </a>
+
+        <!-- G07 -->
+        <a href="g07_listen_und_sequenzen/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G07</span>
+            <div class="roadmap-title">📋 Listen &amp; Sequenzen</div>
+            <div class="roadmap-desc">Elemente speichern, Indexzugriff, Slicing (<code>[1:4]</code>), Listen-Methoden (<code>append</code>, <code>pop</code>) &amp; <code>sum/len/min/max</code>.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G07 öffnen &rarr;</div>
+        </a>
+
+        <!-- G08 -->
+        <a href="g08_textverarbeitung_und_strings/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G08</span>
+            <div class="roadmap-title">🔤 Textverarbeitung &amp; Strings</div>
+            <div class="roadmap-desc">String-Methoden wie <code>.strip()</code>, <code>.replace()</code>, <code>.split()</code>, <code>.join()</code> und Palindrom-Analyse.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G08 öffnen &rarr;</div>
+        </a>
+
+        <!-- G09 -->
+        <a href="g09_dictionaries_und_sets/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G09</span>
+            <div class="roadmap-title">🗃️ Dictionaries &amp; Sets</div>
+            <div class="roadmap-desc">Schlüssel-Wert-Paare (<code>{key: val}</code>), sicheres <code>.get()</code>, Telefonbuch-Suche &amp; Mengen (<code>set</code>) ohne Duplikate.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G09 öffnen &rarr;</div>
+        </a>
+
+        <!-- G10 -->
+        <a href="g10_comprehensions_datum_algorithmen/index.html" class="roadmap-card" style="border-left: 4px solid #3b82f6;">
+          <div>
+            <span class="roadmap-number" style="background: #dbeafe; color: #1e40af;">Grundlagen G10</span>
+            <div class="roadmap-title">🚀 Comprehensions &amp; Algorithmen</div>
+            <div class="roadmap-desc">List Comprehensions (<code>[x for x in ...]</code>), <code>datetime</code> für Kalenderberechnungen &amp; Min/Max-Suche.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel G10 öffnen &rarr;</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- LEHRPFAD 2: EINSTIEG IN OOP & WERKZEUGE -->
+    <section>
+      <div class="section-header">
+        <div>
+          <h2>🛣️ Lehrpfad 2: Einstieg in OOP &amp; Entwickler-Werkzeuge</h2>
+          <div class="section-desc">Der Übergang zur Objektorientierung: Baupläne, Methoden, UML, VS Code &amp; Git.</div>
+        </div>
+        <span class="track-badge track-2-badge">Kapitel 00 bis 06</span>
+      </div>
+
       <div class="roadmap-grid">
         
         <!-- Kapitel 0 -->
@@ -46,9 +216,9 @@
           <div>
             <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Warm-up 00</span>
             <div class="roadmap-title">🔍 Fehlersuche &amp; Bugs</div>
-            <div class="roadmap-desc">Tracebacks richtig lesen, Einrückungsfehler (IndentationError), Typfehler und Detektiv-Aufgabe.</div>
+            <div class="roadmap-desc">Tracebacks von unten lesen, Einrückungen (IndentationError), Typfehler und Detektiv-Aufgabe.</div>
           </div>
-          <div class="roadmap-footer">Vorkapitel öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 1 -->
@@ -95,10 +265,10 @@
         <a href="04b_umstieg_vscode/index.html" class="roadmap-card" style="border-left: 4px solid var(--secondary);">
           <div>
             <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Exkurs 04b</span>
-            <div class="roadmap-title">🚀 Umstieg &amp; Installation VS Code</div>
+            <div class="roadmap-title">🚀 Installation &amp; Setup VS Code</div>
             <div class="roadmap-desc">Installationsanleitung (Win/Mac/Linux), Plugins (Error Lens, Python), Shortcuts &amp; Terminal.</div>
           </div>
-          <div class="roadmap-footer">VS Code Guide öffnen &rarr;</div>
+          <div class="roadmap-footer">VS Code Guide &rarr;</div>
         </a>
 
         <!-- Kapitel 4c (Git) -->
@@ -106,9 +276,9 @@
           <div>
             <span class="roadmap-number" style="background: var(--success-light); color: var(--success);">Exkurs 04c</span>
             <div class="roadmap-title">🌿 Git &amp; Versionskontrolle</div>
-            <div class="roadmap-desc">Die Programmier-Zeitmaschine: Spielstände (Commits) sichern, Diffs in VS Code, Terminal-Befehle &amp; Push.</div>
+            <div class="roadmap-desc">Die Programmier-Zeitmaschine: Spielstände (Commits) sichern, Diffs in VS Code, Terminal &amp; Push.</div>
           </div>
-          <div class="roadmap-footer">Git Guide öffnen &rarr;</div>
+          <div class="roadmap-footer">Git Guide &rarr;</div>
         </a>
 
         <!-- Kapitel 5 -->
@@ -134,9 +304,16 @@
       </div>
     </section>
 
-    <!-- PHASE 2: FORTGESCHRITTENES OOP -->
+    <!-- LEHRPFAD 3: FORTGESCHRITTENES OOP -->
     <section>
-      <h2 style="margin: 35px 0 10px 0; color: var(--text-main); font-size: 1.4rem;">🧠 Phase 2: Fortgeschrittenes OOP, Testing &amp; Persistenz</h2>
+      <div class="section-header">
+        <div>
+          <h2>🛣️ Lehrpfad 3: Fortgeschrittenes OOP, Testing &amp; Desktop-GUIs</h2>
+          <div class="section-desc">Professionelle Softwaretechnik: Speicherverwaltung, Vererbung, TDD-Tests, Persistenz und GUIs.</div>
+        </div>
+        <span class="track-badge track-3-badge">Kapitel 07 bis 14</span>
+      </div>
+
       <div class="roadmap-grid">
 
         <!-- Kapitel 7 -->
@@ -144,90 +321,80 @@
           <div>
             <span class="roadmap-number" style="background: var(--success-light); color: var(--success);">Kapitel 07</span>
             <div class="roadmap-title">🌳 Referenzen &amp; Stammbäume</div>
-            <div class="roadmap-desc">Speicherbereiche im RAM, Aliasing (<code>b = a</code>), <code>is</code> vs. <code>==</code> und Familienstammbaum-Klassen.</div>
+            <div class="roadmap-desc">Speicherbereiche im RAM, Aliasing (<code>b = a</code>), <code>is</code> vs. <code>==</code> und Familienstammbäume.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 07 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 8 -->
         <a href="08_operator_overloading_dunder/index.html" class="roadmap-card" style="border-left: 4px solid var(--secondary);">
           <div>
-            <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Kapitel 08 &bull; Neu</span>
+            <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Kapitel 08</span>
             <div class="roadmap-title">➕ Operator Overloading &amp; Dunder</div>
-            <div class="roadmap-desc">Eigene Klassen rechen- und vergleichbar machen mit <code>__add__</code>, <code>__mul__</code>, <code>__eq__</code>, <code>__lt__</code> für 2D-Vektoren &amp; Wegstrecken.</div>
+            <div class="roadmap-desc">Eigene Klassen rechenbar machen mit <code>__add__</code>, <code>__mul__</code>, <code>__eq__</code> für 2D-Vektoren &amp; Wegstrecken.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 08 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 9 -->
         <a href="09_eigene_unit_tests_schreiben/index.html" class="roadmap-card" style="border-left: 4px solid var(--primary);">
           <div>
-            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 09 &bull; Neu</span>
+            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 09</span>
             <div class="roadmap-title">🧪 Eigene Unit Tests &amp; TDD</div>
-            <div class="roadmap-desc">Schreibe eigene Testsuiten mit <code>unittest</code>, <code>self.assertEqual()</code>, <code>assertRaises()</code> und lerne Test-Driven Development.</div>
+            <div class="roadmap-desc">Schreibe eigene Testsuiten mit <code>unittest</code>, <code>self.assertEqual()</code>, <code>assertRaises()</code> und lerne TDD.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 09 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 10 -->
         <a href="10_vererbung_und_super/index.html" class="roadmap-card" style="border-left: 4px solid var(--primary);">
           <div>
-            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 10 &bull; Neu</span>
+            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 10</span>
             <div class="roadmap-title">🧬 Vererbung &amp; super()</div>
-            <div class="roadmap-desc">DRY-Prinzip, Basis- &amp; Kindklassen, <code>super().__init__()</code>, Methoden erweitern &amp; Fahrzeugflotten-Hierarchie.</div>
+            <div class="roadmap-desc">DRY-Prinzip, Basis- &amp; Kindklassen, <code>super().__init__()</code>, Methoden erweitern &amp; Fahrzeugflotten.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 10 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 11 -->
         <a href="11_polymorphie_und_interfaces/index.html" class="roadmap-card" style="border-left: 4px solid var(--secondary);">
           <div>
-            <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Kapitel 11 &bull; Neu</span>
+            <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Kapitel 11</span>
             <div class="roadmap-title">🎭 Polymorphie &amp; Interfaces</div>
-            <div class="roadmap-desc">Vielgestaltigkeit, Duck Typing, abstrakte Basisklassen (<code>ABC</code>), Geometrie-Engine &amp; Zeichenflächen-Manager.</div>
+            <div class="roadmap-desc">Vielgestaltigkeit, Duck Typing, abstrakte Basisklassen (<code>ABC</code>), Geometrie-Engine &amp; Zeichenflächen.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 11 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 12 -->
         <a href="12_exceptions_und_fehlerbehandlung/index.html" class="roadmap-card" style="border-left: 4px solid var(--danger);">
           <div>
-            <span class="roadmap-number" style="background: var(--danger-light); color: var(--danger);">Kapitel 12 &bull; Neu</span>
+            <span class="roadmap-number" style="background: var(--danger-light); color: var(--danger);">Kapitel 12</span>
             <div class="roadmap-title">🛡️ Exceptions &amp; Fehlerbehandlung</div>
-            <div class="roadmap-desc">Robuste Fehlerkontrolle mit <code>try-except-else-finally</code>, <code>raise</code> und eigene Exception-Klassen im Bankkonto-Simulator.</div>
+            <div class="roadmap-desc">Robuste Fehlerkontrolle mit <code>try-except-else-finally</code>, <code>raise</code> und eigene Fehlerklassen im Banking.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 12 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 13 -->
         <a href="13_persistenz_json_und_csv/index.html" class="roadmap-card" style="border-left: 4px solid var(--primary);">
           <div>
-            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 13 &bull; Neu</span>
+            <span class="roadmap-number" style="background: var(--primary-light); color: var(--primary);">Kapitel 13</span>
             <div class="roadmap-title">💾 Datei-Persistenz: JSON &amp; CSV</div>
-            <div class="roadmap-desc">Dauerhaftes Speichern &amp; Laden: Savegames mit <code>to_dict()</code>/<code>from_dict()</code>, <code>json.dump</code> und CSV-Tabellen-Export.</div>
+            <div class="roadmap-desc">Dauerhaftes Speichern &amp; Laden: Savegames mit <code>to_dict()</code>/<code>from_dict()</code>, <code>json.dump</code> und CSV-Export.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 13 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 14 -->
         <a href="14_gui_mit_tkinter/index.html" class="roadmap-card" style="border-left: 4px solid var(--purple);">
           <div>
-            <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Kapitel 14 &bull; Neu</span>
+            <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Kapitel 14</span>
             <div class="roadmap-title">🖥️ Desktop-GUIs mit Tkinter</div>
             <div class="roadmap-desc">Fenster, Buttons, Labels, Grid-Layout, Event-Loop und MVC-Architektur im interaktiven Zähler &amp; Rechner.</div>
           </div>
-          <div class="roadmap-footer">Kapitel 14 öffnen &rarr;</div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
-
-        <!-- Vorschau Kapitel 8-11 & 15-16 -->
-        <div class="roadmap-card" style="opacity: 0.85;">
-          <div>
-            <span class="roadmap-number">Weitere Kapitel &bull; Geplant</span>
-            <div class="roadmap-title">🧬 Vererbung, Polymorphie &amp; Master-Projekt</div>
-            <div class="roadmap-desc">Operator Overloading (08), Unit Testing (09), Vererbung (10), Polymorphie (11), Parameter (15) und Master-Projekt (16).</div>
-          </div>
-          <div class="roadmap-footer" style="color: var(--text-muted);">Ausführlicher Plan in LEHRPLAN.md</div>
-        </div>
 
       </div>
     </section>
@@ -246,9 +413,9 @@
       
       <div class="code-container">
         <div class="code-header">
-          <span>Terminal (Beispiel für Kapitel 01)</span>
+          <span>Terminal (Beispiel für Grundlagen G01)</span>
         </div>
-        <pre><code>cd 01_einstieg_klassen
+        <pre><code>cd g01_erste_schritte_taschenrechner
 python3 test_aufgabe.py</code></pre>
       </div>
 
@@ -293,7 +460,7 @@ object has no attribute 'gang'</code></pre>
         <div class="box-title">💡 Die 3 goldenen Regeln beim Arbeiten mit Tests:</div>
         <ol style="margin-left: 20px; margin-top: 6px;">
           <li style="margin-bottom: 6px;"><strong>Immer <code>return</code> statt nur <code>print()</code>:</strong> Tests prüfen das, was eine Funktion mit <code>return</code> zurückliefert. Ein <code>print()</code> zeigt es zwar auf dem Bildschirm an, reicht dem Test aber nicht!</li>
-          <li style="margin-bottom: 6px;"><strong>Exakte Namen beachten:</strong> Wenn die Aufgabe <code>def mutter_setzen(self):</code> verlangt, darf die Methode nicht <code>def MutterSetzen</code> heißen (Python unterscheidet Groß- und Kleinschreibung).</li>
+          <li style="margin-bottom: 6px;"><strong>Exakte Namen beachten:</strong> Wenn die Aufgabe <code>def addieren(a, b):</code> verlangt, darf die Funktion nicht <code>def Addieren</code> heißen (Python unterscheidet Groß- und Kleinschreibung).</li>
           <li style="margin-bottom: 6px;"><strong>Fehlermeldungen von unten nach oben lesen:</strong> Ganz unten steht immer genau, was nicht gepasst hat!</li>
         </ol>
       </div>
@@ -322,7 +489,7 @@ object has no attribute 'gang'</code></pre>
       <details>
         <summary>❌ Wie wechsle ich im Terminal zwischen den Ordnern hin und her?</summary>
         <div class="details-content">
-          <p><strong>In einen Unterordner hinein:</strong> <code>cd 01_einstieg_klassen</code></p>
+          <p><strong>In einen Unterordner hinein:</strong> <code>cd g01_erste_schritte_taschenrechner</code></p>
           <p><strong>Einen Ordner nach oben zurück:</strong> <code>cd ..</code></p>
           <p><strong>Inhalt des aktuellen Ordners auflisten:</strong> <code>ls</code> (oder <code>dir</code> auf Windows)</p>
         </div>

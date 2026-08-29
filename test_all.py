@@ -11,6 +11,16 @@ import unittest
 from pathlib import Path
 
 KAPITEL = [
+    ("Grundlagen 01: Python als Taschenrechner", "g01_erste_schritte_taschenrechner"),
+    ("Grundlagen 02: Variablen & Datentypen", "g02_variablen_und_datentypen"),
+    ("Grundlagen 03: Interaktive Ein- & Ausgabe", "g03_ein_und_ausgabe"),
+    ("Grundlagen 04: Verzweigungen & Bedingungen", "g04_verzweigungen_und_bedingungen"),
+    ("Grundlagen 05: Schleifen & Wiederholungen", "g05_schleifen_und_wiederholungen"),
+    ("Grundlagen 06: Eigene Funktionen & Module", "g06_funktionen_und_module"),
+    ("Grundlagen 07: Listen & Sequenzen", "g07_listen_und_sequenzen"),
+    ("Grundlagen 08: Textverarbeitung & Strings", "g08_textverarbeitung_und_strings"),
+    ("Grundlagen 09: Dictionaries & Sets", "g09_dictionaries_und_sets"),
+    ("Grundlagen 10: Comprehensions & Algorithmen", "g10_comprehensions_datum_algorithmen"),
     ("Kapitel 00: Python-Fehlersuche (Warm-up)", "00_fehlersuche_und_grundlagen"),
     ("Kapitel 01: Einstieg in Klassen", "01_einstieg_klassen"),
     ("Kapitel 02: Konstruktor & self", "02_init_und_self"),

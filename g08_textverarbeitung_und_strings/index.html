@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel G08: Textverarbeitung & Strings in Python</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../g07_listen_und_sequenzen/index.html">Kapitel G07</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel G08</span>
+      </nav>
+      <div class="header-badge">Grundlagen G08 (Schulabgleich 11.0)</div>
+      <h1>Textverarbeitung &amp; Strings 🔤✨</h1>
+      <p>Lerne, wie du Texte zerlegst, bereinigst, durchsuchst und formatierst – mit den mächtigen String-Methoden von Python.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Stempel-Analogie & Immutability -->
+    <section class="card">
+      <h2>1. 🏛️ Die Stempel-Analogie: Strings sind unveränderlich!</h2>
+      
+      <p>
+        In Python sind <strong>Strings (<code>str</code>) unveränderlich (immutable)</strong>. Das bedeutet:
+        Sobald ein String erzeugt wurde, kann kein einzelner Buchstabe mehr ausgetauscht werden!
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🖨️ Die Stempel- &amp; Druck-Analogie:</div>
+        <p>
+          Stell dir einen String wie ein gedrucktes Dokument vor. Wenn du <code>text.upper()</code> oder <code>text.replace("a", "b")</code> aufrufst,
+          wird nicht der Buchstabe auf dem Papier radiert.
+          Stattdessen nimmt Python ein <strong>frisches, neues Blatt Papier</strong> und stempelt den modifizierten Text darauf!
+        </p>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python: Immutable Strings</span>
+        </div>
+        <pre><span class="var">name</span> = <span class="str">"python"</span>
+
+<span class="cm"># ❌ Falsch: Einzelnes Zeichen überschreiben geht nicht!</span>
+<span class="cm"># name[0] = "P"  -> TypeError: 'str' object does not support item assignment</span>
+
+<span class="cm"># ✅ Richtig: Die Methode liefert einen NEUEN String zurück, den wir neu zuweisen:</span>
+<span class="var">name</span> = <span class="var">name</span>.<span class="fn">capitalize</span>()  <span class="cm"># name ist jetzt "Python"</span></pre>
+      </div>
+    </section>
+
+    <!-- 2. Methoden Cheat-Sheet -->
+    <section class="card">
+      <h2>2. 🧰 Das große String-Methoden Cheat-Sheet</h2>
+
+      <p>Hier siehst du die wichtigsten Methoden für deine tägliche Textverarbeitung im Überblick:</p>
+
+      <h3>A. Groß- &amp; Kleinschreibung</h3>
+      <div class="code-container">
+        <pre><span class="var">t</span> = <span class="str">"hallo welt"</span>
+<span class="fn">print</span>(<span class="var">t</span>.<span class="fn">upper</span>())       <span class="cm"># -> "HALLO WELT" (alles GROSS)</span>
+<span class="fn">print</span>(<span class="var">t</span>.<span class="fn">lower</span>())       <span class="cm"># -> "hallo welt" (alles klein)</span>
+<span class="fn">print</span>(<span class="var">t</span>.<span class="fn">capitalize</span>())  <span class="cm"># -> "Hallo welt" (nur erstes Zeichen groß)</span>
+<span class="fn">print</span>(<span class="var">t</span>.<span class="fn">title</span>())       <span class="cm"># -> "Hallo Welt" (jedes Wort groß)</span></pre>
+      </div>
+
+      <h3>B. Leerzeichen bereinigen (.strip)</h3>
+      <div class="code-container">
+        <pre><span class="var">roh</span> = <span class="str">"   max_mustermann \n  "</span>
+<span class="fn">print</span>(<span class="var">roh</span>.<span class="fn">strip</span>())     <span class="cm"># -> "max_mustermann" (entfernt Leerzeichen &amp; Umbrüche an beiden Enden)</span>
+<span class="fn">print</span>(<span class="var">roh</span>.<span class="fn">lstrip</span>())    <span class="cm"># -> entfernt nur links</span>
+<span class="fn">print</span>(<span class="var">roh</span>.<span class="fn">rstrip</span>())    <span class="cm"># -> entfernt nur rechts</span></pre>
+      </div>
+
+      <h3>C. Suchen, Zählen &amp; Ersetzen</h3>
+      <div class="code-container">
+        <pre><span class="var">satz</span> = <span class="str">"Python ist super und Python macht Spaß"</span>
+
+<span class="cm"># Ersetzen:</span>
+<span class="var">neu</span> = <span class="var">satz</span>.<span class="fn">replace</span>(<span class="str">"Python"</span>, <span class="str">"Coding"</span>)  <span class="cm"># Ersetzt alle Vorkommen</span>
+
+<span class="cm"># Zählen & Suchen:</span>
+<span class="fn">print</span>(<span class="var">satz</span>.<span class="fn">count</span>(<span class="str">"Python"</span>))      <span class="cm"># -> 2</span>
+<span class="fn">print</span>(<span class="var">satz</span>.<span class="fn">find</span>(<span class="str">"super"</span>))        <span class="cm"># -> Index 11 (-1 falls nicht vorhanden)</span>
+<span class="fn">print</span>(<span class="var">satz</span>.<span class="fn">startswith</span>(<span class="str">"Python"</span>)) <span class="cm"># -> True</span>
+<span class="fn">print</span>(<span class="var">satz</span>.<span class="fn">endswith</span>(<span class="str">"Spaß"</span>))    <span class="cm"># -> True</span></pre>
+      </div>
+
+      <h3>D. Zerlegen (.split) &amp; Zusammenfügen (.join)</h3>
+      <div class="code-container">
+        <pre><span class="cm"># 1. An Trennzeichen zerlegen:</span>
+<span class="var">csv</span> = <span class="str">"Anna;17;Wien"</span>
+<span class="var">spalten</span> = <span class="var">csv</span>.<span class="fn">split</span>(<span class="str">";"</span>)         <span class="cm"># -> ["Anna", "17", "Wien"]</span>
+
+<span class="cm"># 2. Ohne Parameter zerlegt .split() an beliebigen Whitespaces:</span>
+<span class="var">woerter</span> = <span class="str">"  Python   macht   Spaß  "</span>.<span class="fn">split</span>()
+<span class="fn">print</span>(<span class="var">woerter</span>)                 <span class="cm"># -> ["Python", "macht", "Spaß"]</span>
+
+<span class="cm"># 3. Liste wieder zu einem formatierten String verknüpfen:</span>
+<span class="var">liste</span> = [<span class="str">"Rot"</span>, <span class="str">"Grün"</span>, <span class="str">"Blau"</span>]
+<span class="var">farben_text</span> = <span class="str">", "</span>.<span class="fn">join</span>(<span class="var">liste</span>)  <span class="cm"># -> "Rot, Grün, Blau"</span></pre>
+      </div>
+    </section>
+
+    <!-- 3. Praxisbeispiel Palindrom & Textbereinigung -->
+    <section class="card">
+      <h2>3. 🌟 Praxisbeispiel: Palindrom &amp; Text-Bereinigung</h2>
+
+      <p>Ein Palindrom ist ein Text, der vorwärts wie rückwärts identisch ist (z.B. <em>"Dreh mal am Herd"</em>). Mit String-Methoden und Slicing ist die Prüfung ein Kinderspiel:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python: Palindrom-Prüfer</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">pruefe_palindrom</span>(<span class="var">text</span>):
+    <span class="cm"># 1. Alles in Kleinbuchstaben umwandeln:</span>
+    <span class="var">sauber</span> = <span class="var">text</span>.<span class="fn">lower</span>()
+    <span class="cm"># 2. Leerzeichen entfernen:</span>
+    <span class="var">sauber</span> = <span class="var">sauber</span>.<span class="fn">replace</span>(<span class="str">" "</span>, <span class="str">""</span>)
+    <span class="cm"># 3. Mit der Umkehrung (Slicing [::-1]) vergleichen:</span>
+    <span class="kw">return</span> <span class="var">sauber</span> == <span class="var">sauber</span>[::-<span class="num">1</span>]
+
+<span class="fn">print</span>(<span class="fn">pruefe_palindrom</span>(<span class="str">"Anna"</span>))             <span class="cm"># -> True</span>
+<span class="fn">print</span>(<span class="fn">pruefe_palindrom</span>(<span class="str">"Dreh mal am Herd"</span>)) <span class="cm"># -> True</span>
+<span class="fn">print</span>(<span class="fn">pruefe_palindrom</span>(<span class="str">"Python"</span>))           <span class="cm"># -> False</span></pre>
+      </div>
+    </section>
+
+    <!-- 4. Aufgabenliste -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>g08_textverarbeitung_und_strings/aufgabe.py</code> und löse die 5 Aufgaben:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_1">
+          <label for="t8_1" class="task-label">
+            <strong>TODO 1 (<code>ist_palindrom</code>):</strong> Prüfe, ob ein Text von beiden Seiten gleich lautet (ignoriere Groß/Klein und Leerzeichen).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_2">
+          <label for="t8_2" class="task-label">
+            <strong>TODO 2 (<code>zaehle_vokale</code>):</strong> Zähle alle Vokale (a, e, i, o, u, ä, ö, ü) im Text unabhängig von Groß/Klein.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_3">
+          <label for="t8_3" class="task-label">
+            <strong>TODO 3 (<code>bereinige_benutzernamen</code>):</strong> Entferne Rand-Leerzeichen mit <code>.strip()</code>, mache alles lowercase und ersetze Leerzeichen durch <code>_</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_4">
+          <label for="t8_4" class="task-label">
+            <strong>TODO 4 (<code>woerter_zaehlen</code>):</strong> Ermittle die Wortanzahl mithilfe von <code>.split()</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_5">
+          <label for="t8_5" class="task-label">
+            <strong>TODO 5 (<code>maskiere_kreditkarte</code>):</strong> Ersetze alle Ziffern bis auf die letzten 4 durch <code>*</code> (z.B. <code>"************5678"</code>).
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Benutzernamen bereinigen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">bereinige_benutzernamen</span>(<span class="var">name</span>):
+    <span class="kw">return</span> <span class="var">name</span>.<span class="fn">strip</span>().<span class="fn">lower</span>().<span class="fn">replace</span>(<span class="str">" "</span>, <span class="str">"_"</span>)</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 5 (Kreditkarte maskieren)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">maskiere_kreditkarte</span>(<span class="var">nummer</span>):
+    <span class="kw">if</span> <span class="fn">len</span>(<span class="var">nummer</span>) &lt;= <span class="num">4</span>:
+        <span class="kw">return</span> <span class="var">nummer</span>
+    <span class="kw">return</span> <span class="str">"*"</span> * (<span class="fn">len</span>(<span class="var">nummer</span>) - <span class="num">4</span>) + <span class="var">nummer</span>[-<span class="num">4</span>:]</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../g07_listen_und_sequenzen/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel G07</a>
+        <a href="../g09_dictionaries_und_sets/index.html" class="btn">Weiter zu Kapitel G09 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
