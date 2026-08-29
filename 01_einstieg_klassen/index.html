@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 01: Einstieg in Klassen</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 01</span>
+      </nav>
+      <div class="header-badge">Kapitel 01</div>
+      <h1>Die erste Klasse: Bauplan vs. Objekt 🐶</h1>
+      <p>Verstehe den Unterschied zwischen einer Klasse und einer Instanz und baue deine ersten Haustier-Objekte.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Theorie Card -->
+    <section class="card">
+      <h2>1. Die wichtigste Idee: Bauplan vs. Haus</h2>
+      
+      <p>
+        In Python ist alles, was du bisher kennengelernt hast (Zahlen, Strings, Listen, Dictionaries), im Grunde ein <strong>Objekt</strong>. Doch jetzt lernst du, wie du <strong>deine ganz eigenen Datentypen</strong> erfindest!
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🏗️ Die Plätzchenform-Analogie:</div>
+        <p>Stell dir das Backen vor:</p>
+        <ul style="margin-left: 20px;">
+          <li>Die <strong>Klasse (<code>class</code>)</strong> ist die <strong>Ausstechform</strong>. Sie legt fest: Jedes Plätzchen hat einen Kopf, zwei Arme und zwei Beine. Die Form selbst kann man aber nicht essen.</li>
+          <li>Das <strong>Objekt (Instanz)</strong> ist das <strong>echte Plätzchen</strong>, das du aus dem Teig ausstichst. Ein Plätzchen bekommt Schokoglasur, das andere Zuckerstreusel. Beide stammen aus derselben Form, sind aber eigenständig!</li>
+        </ul>
+      </div>
+
+      <h3>Warum nicht einfach Dictionaries?</h3>
+      <p>Ein Dictionary hat keine feste Struktur – man vertippt sich leicht:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (Problem mit Dictionaries)</span>
+        </div>
+        <pre><span class="var">tier1</span> = {<span class="str">"name"</span>: <span class="str">"Bello"</span>, <span class="str">"tierart"</span>: <span class="str">"Hund"</span>, <span class="str">"alter"</span>: <span class="num">3</span>}
+<span class="var">tier2</span> = {<span class="str">"name"</span>: <span class="str">"Mimi"</span>, <span class="str">"art"</span>: <span class="str">"Katze"</span>, <span class="str">"alter"</span>: <span class="num">5</span>}  <span class="cm"># Ups! 'art' statt 'tierart'!</span>
+<span class="cm"># Ein Programm würde hier abstürzen, weil tier2["tierart"] nicht existiert!</span></pre>
+      </div>
+
+      <p>Mit einer <strong>Klasse</strong> definierst du eine klare, wiederverwendbare Struktur.</p>
+    </section>
+
+    <!-- Syntax Card -->
+    <section class="card">
+      <h2>2. Wie definiert und nutzt man eine Klasse?</h2>
+
+      <p>Eine einfache Klasse erstellst du mit dem Schlüsselwort <code>class</code>:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python</span>
+        </div>
+        <pre><span class="cm"># 1. Bauplan definieren:</span>
+<span class="kw">class</span> <span class="fn">Auto</span>:
+    <span class="kw">pass</span>  <span class="cm"># pass bedeutet: Hier steht erst mal kein weiterer Code</span>
+
+<span class="cm"># 2. Ein Objekt erzeugen (Instanziierung):</span>
+<span class="var">mein_auto</span> = <span class="fn">Auto</span>()
+
+<span class="cm"># 3. Eigenschaften (Attribute) mit dem Punkt (.) setzen:</span>
+<span class="var">mein_auto</span>.<span class="attr">farbe</span> = <span class="str">"Rot"</span>
+<span class="var">mein_auto</span>.<span class="attr">marke</span> = <span class="str">"VW"</span>
+<span class="var">mein_auto</span>.<span class="attr">ps</span> = <span class="num">110</span>
+
+<span class="cm"># 4. Werte wieder abfragen:</span>
+<span class="fn">print</span>(<span class="var">mein_auto</span>.<span class="attr">farbe</span>)  <span class="cm"># Gibt "Rot" aus</span></pre>
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Häufige Stolperfalle: Klassenname Großschreiben!</div>
+        In Python schreibt man Klassennamen standardmäßig in <strong>CamelCase</strong> mit großem Anfangsbuchstaben (z.B. <code>Haustier</code>, <code>BankKonto</code>), während Variablen und Funktionen klein geschrieben werden (z.B. <code>mein_haustier</code>, <code>erstelle_tier()</code>).
+      </div>
+    </section>
+
+    <!-- Aufgaben Card -->
+    <section class="card">
+      <h2>3. Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>01_einstieg_klassen/aufgabe.py</code> und bearbeite die nummerierten TODOs:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t1">
+          <label for="t1" class="task-label">
+            <strong>TODO 1:</strong> Definiere die Klasse <code>Haustier</code> mit <code>pass</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2">
+          <label for="t2" class="task-label">
+            <strong>TODO 2:</strong> Funktion <code>erstelle_bello()</code>: Erzeuge ein Haustier-Objekt mit <code>name="Bello"</code>, <code>tierart="Hund"</code>, <code>alter=3</code> und gib es mit <code>return</code> zurück.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3">
+          <label for="t3" class="task-label">
+            <strong>TODO 3:</strong> Funktion <code>erstelle_mimi()</code>: Erzeuge ein Haustier-Objekt mit <code>name="Mimi"</code>, <code>tierart="Katze"</code>, <code>alter=5</code> und gib es zurück.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4">
+          <label for="t4" class="task-label">
+            <strong>TODO 4:</strong> Funktion <code>steckbrief_text(haustier)</code>: Gibt einen f-String zurück: <code>"{haustier.name} ist ein(e) {haustier.tierart} und ist {haustier.alter} Jahre alt."</code>
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t5">
+          <label for="t5" class="task-label">
+            <strong>TODO 5:</strong> Funktion <code>aelteres_tier(tier1, tier2)</code>: Vergleicht <code>tier1.alter</code> und <code>tier2.alter</code> und gibt das ältere Haustier-Objekt zurück (bei Gleichstand <code>tier1</code>).
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>Tipp zu TODO 1 & 2 (Objekt erstellen und befüllen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">class</span> <span class="fn">Haustier</span>:
+    <span class="kw">pass</span>
+
+<span class="kw">def</span> <span class="fn">erstelle_bello</span>():
+    <span class="var">tier</span> = <span class="fn">Haustier</span>()  <span class="cm"># Neues Objekt erzeugen</span>
+    <span class="var">tier</span>.<span class="attr">name</span> = <span class="str">"Bello"</span>
+    <span class="var">tier</span>.<span class="attr">tierart</span> = <span class="str">"Hund"</span>
+    <span class="var">tier</span>.<span class="attr">alter</span> = <span class="num">3</span>
+    <span class="kw">return</span> <span class="var">tier</span>  <span class="cm"># WICHTIG: Das fertige Objekt zurückgeben!</span></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Tipp zu TODO 5 (Tiere vergleichen)</summary>
+        <div class="details-content">
+          <p>Du kannst mit einem einfachen <code>if</code> auf die Attribute der übergebenen Objekte zugreifen:</p>
+          <div class="code-container">
+            <pre><span class="kw">if</span> <span class="var">tier2</span>.<span class="attr">alter</span> > <span class="var">tier1</span>.<span class="attr">alter</span>:
+    <span class="kw">return</span> <span class="var">tier2</span>
+<span class="kw">else</span>:
+    <span class="kw">return</span> <span class="var">tier1</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Testen & Footer Navigation -->
+    <section class="card">
+      <h2>4. Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>01_einstieg_klassen</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../index.html" class="btn btn-secondary">&larr; Zurück zur Übersicht</a>
+        <a href="../02_init_und_self/index.html" class="btn">Weiter zu Kapitel 02 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

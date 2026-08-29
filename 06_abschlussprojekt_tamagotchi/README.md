@@ -23,7 +23,7 @@ Du kannst mit ihm interagieren:
 - 🍎 **Füttern** (`fuettern`): Senkt den Hunger, macht etwas müde und etwas glücklicher.
 - ⚽ **Spielen** (`spielen`): Steigert das Glück, macht aber hungrig und müde. Zu müde Haustiere weigern sich zu spielen!
 - 💤 **Schlafen** (`schlafen`): Setzt die Müdigkeit auf 0, lässt einen Tag vergehen (`alter_tage += 1`), macht aber etwas hungrig.
-- ⏳ **Zeit vergeht** (`zeit_vergeht`): Das Haustier wird hungriger, müder und etwas trauriger. Wenn der Hunger 100 erreicht, schläft es für immer ein...
+- ⏳ **Zeit vergeht** (`zeit_vergeht`): Das Haustier wird hungriger, müder und etwas trauriger. Wenn der Hunger 100 erreicht oder Glück 0 wird, schläft es für immer ein...
 
 ---
 

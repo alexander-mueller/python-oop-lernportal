@@ -20,7 +20,11 @@ class Song:
     # TODO 2: Methode "formatierte_dauer(self)"
     # Rechnet 'self.dauer_sekunden' in Minuten und Sekunden um und gibt einen
     # String im Format "MM:SS" zurück (z.B. 215 -> "03:35", 70 -> "01:10").
-    # Tipp: Verwende // 60 und % 60 sowie f"{minuten:02d}:{sekunden:02d}"
+    #
+    # Tipp:
+    # minuten = self.dauer_sekunden // 60
+    # sekunden = self.dauer_sekunden % 60
+    # return f"{minuten:02d}:{sekunden:02d}"
     # ==========================================================================
     def formatierte_dauer(self):
         # Schreibe hier deinen Code für TODO 2:
@@ -28,8 +32,8 @@ class Song:
 
     # ==========================================================================
     # TODO 3: Dunder-Methode "__str__(self)"
-    # Gibt einen String im folgenden Format zurück:
-    # '"{titel}" von {kuenstler} ({dauer})'
+    # Gibt einen String im Format zurück:
+    # '"{titel}" von {kuenstler} ({formatierte_dauer})'
     #
     # Beispiel: '"Flowers" von Miley Cyrus (03:20)'
     # ==========================================================================
@@ -50,7 +54,7 @@ class Playlist:
 
     # ==========================================================================
     # TODO 5: Methode "song_hinzufuegen(self, song)"
-    # Hängt das übergebene Song-Objekt an 'self.songs' an.
+    # Hängt das übergebene Song-Objekt an 'self.songs' an (.append).
     # ==========================================================================
     def song_hinzufuegen(self, song):
         # Schreibe hier deinen Code für TODO 5:
@@ -58,7 +62,7 @@ class Playlist:
 
     # ==========================================================================
     # TODO 6: Methode "anzahl_songs(self)"
-    # Gibt die Anzahl der Songs in der Playlist als Integer zurück.
+    # Gibt die Anzahl der Songs in der Playlist als Integer zurück (len(self.songs)).
     # ==========================================================================
     def anzahl_songs(self):
         # Schreibe hier deinen Code für TODO 6:
@@ -68,6 +72,12 @@ class Playlist:
     # TODO 7: Methode "gesamtdauer_sekunden(self)"
     # Gibt die Summe der Sekunden aller Songs in der Playlist zurück.
     # Bei leerer Playlist: 0
+    #
+    # Tipp:
+    # total = 0
+    # for s in self.songs:
+    #     total += s.dauer_sekunden
+    # return total
     # ==========================================================================
     def gesamtdauer_sekunden(self):
         # Schreibe hier deinen Code für TODO 7:
@@ -96,6 +106,7 @@ class Playlist:
 
 # ==============================================================================
 # Hauptprogramm zum Ausprobieren:
+# (Ausführen mit 'python3 aufgabe.py')
 # ==============================================================================
 if __name__ == "__main__":
     print("🎧 --- MEINE PLAYLIST --- 🎧")
@@ -106,18 +117,21 @@ if __name__ == "__main__":
     s3 = Song("Anti-Hero", "Taylor Swift", 201)
     s4 = Song("As It Was", "Harry Styles", 167)
 
-    meine_hits.song_hinzufuegen(s1)
-    meine_hits.song_hinzufuegen(s2)
-    meine_hits.song_hinzufuegen(s3)
-    meine_hits.song_hinzufuegen(s4)
+    if hasattr(meine_hits, "songs"):
+        meine_hits.song_hinzufuegen(s1)
+        meine_hits.song_hinzufuegen(s2)
+        meine_hits.song_hinzufuegen(s3)
+        meine_hits.song_hinzufuegen(s4)
 
-    print(f"Playlist: {meine_hits.name} ({meine_hits.anzahl_songs()} Songs)")
-    print(f"Gesamtlaufzeit: {meine_hits.gesamtdauer_sekunden()} Sekunden")
+        print(f"Playlist: {meine_hits.name} ({meine_hits.anzahl_songs()} Songs)")
+        print(f"Gesamtlaufzeit: {meine_hits.gesamtdauer_sekunden()} Sekunden")
 
-    laengster = meine_hits.laengster_song()
-    if laengster:
-        print(f"Längster Song: {laengster}")
+        laengster = meine_hits.laengster_song()
+        if laengster:
+            print(f"Längster Song: {laengster}")
 
-    print("\nSongs von Taylor Swift:")
-    for s in meine_hits.finde_songs_von("taylor swift"):
-        print(f"- {s}")
+        print("\nSongs von Taylor Swift:")
+        for s in meine_hits.finde_songs_von("taylor swift"):
+            print(f"- {s}")
+    else:
+        print("💡 Hinweis: Implementiere die TODOs, um die Playlist zu testen!")

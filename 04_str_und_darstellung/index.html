@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 04: __str__ und Darstellung</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../03_methoden_und_verhalten/index.html">Kapitel 03</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 04</span>
+      </nav>
+      <div class="header-badge">Kapitel 04</div>
+      <h1>Schöne Ausgaben mit <code>__str__</code> &amp; Objektlisten 🧾</h1>
+      <p>Lerne, wie du bestimmst, was beim <code>print(objekt)</code> erscheint und wie Objekte andere Objekte in Listen verwalten.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Theorie Card -->
+    <section class="card">
+      <h2>1. Warum sieht <code>print(objekt)</code> standardmäßig so hässlich aus?</h2>
+      
+      <p>
+        Wenn du versuchst, ein Objekt ohne Dunder-Methode zu drucken:
+      </p>
+      
+      <div class="code-container">
+        <pre><span class="var">mein_buch</span> = <span class="fn">Buch</span>(<span class="str">"Harry Potter"</span>, <span class="str">"J.K. Rowling"</span>)
+<span class="fn">print</span>(<span class="var">mein_buch</span>)  <span class="cm"># Ausgabe: &lt;__main__.Buch object at 0x7fa2b0485d90&gt;</span></pre>
+      </div>
+
+      <p>
+        Python weiß ohne deine Hilfe nicht, wie du dein Objekt darstellen möchtest.
+      </p>
+
+      <div class="box box-tipp">
+        <div class="box-title">✨ Die Magie von <code>__str__</code>:</div>
+        Sobald du in deiner Klasse eine Methode <code>def __str__(self):</code> definierst, ruft Python diese automatisch auf, wann immer das Objekt zu Text umgewandelt wird (bei <code>print()</code>, <code>str()</code> oder in f-Strings)!
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Buch</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">titel</span>, <span class="var">autor</span>):
+        <span class="var">self</span>.<span class="attr">titel</span> = <span class="var">titel</span>
+        <span class="var">self</span>.<span class="attr">autor</span> = <span class="var">autor</span>
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="str">f"'{self.titel}' von {self.autor}"</span>  <span class="cm"># MUSS ein String sein!</span>
+
+<span class="var">mein_buch</span> = <span class="fn">Buch</span>(<span class="str">"Harry Potter"</span>, <span class="str">"J.K. Rowling"</span>)
+<span class="fn">print</span>(<span class="var">mein_buch</span>)  <span class="cm"># Ausgabe: 'Harry Potter' von J.K. Rowling</span></pre>
+      </div>
+    </section>
+
+    <!-- Objektlisten Card -->
+    <section class="card">
+      <h2>2. Objekte in Listen verwalten</h2>
+
+      <p>
+        Eine Klasse kann als Attribut eine <strong>Liste von anderen Objekten</strong> haben:
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🛒 Der Warenkorb:</div>
+        Ein <code>Warenkorb</code> besitzt eine Liste <code>self.artikel_liste = []</code>. Wenn du einen <code>Artikel</code> hinzufügst, landet das ganze Artikel-Objekt in der Liste!
+      </div>
+    </section>
+
+    <!-- Aufgaben Card -->
+    <section class="card">
+      <h2>3. Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4_1">
+          <label for="t4_1" class="task-label">
+            <strong>TODO 1:</strong> <code>Artikel.__init__(self, name, preis, anzahl=1)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4_2">
+          <label for="t4_2" class="task-label">
+            <strong>TODO 2:</strong> <code>Artikel.gesamtpreis(self)</code> -> <code>self.preis * self.anzahl</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4_3">
+          <label for="t4_3" class="task-label">
+            <strong>TODO 3:</strong> <code>Artikel.__str__(self)</code> -> z.B. <code>"2x Milch (je 1.29 €) = 2.58 €"</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4_4">
+          <label for="t4_4" class="task-label">
+            <strong>TODO 4-7:</strong> <code>Warenkorb</code> mit <code>artikel_hinzufuegen</code>, <code>gesamtsumme</code> und <code>bon_text</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>Tipp zu TODO 7 (Kassenzettel zusammensetzen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">bon_text</span>(<span class="var">self</span>):
+    <span class="var">zeilen</span> = [<span class="str">"--- KASSENZETTEL ---"</span>]
+    <span class="kw">for</span> <span class="var">artikel</span> <span class="kw">in</span> <span class="var">self</span>.<span class="attr">artikel_liste</span>:
+        <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="fn">str</span>(<span class="var">artikel</span>))  <span class="cm"># Nutzt automatisch __str__ des Artikels!</span>
+    <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="str">"--------------------"</span>)
+    <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="str">f"Gesamtsumme: {self.gesamtsumme():.2f} €"</span>)
+    <span class="kw">return</span> <span class="str">"\n"</span>.<span class="fn">join</span>(<span class="var">zeilen</span>)</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Testen & Footer Navigation -->
+    <section class="card">
+      <h2>4. Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>04_str_und_darstellung</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../03_methoden_und_verhalten/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 03</a>
+        <a href="../05_objekte_kombinieren/index.html" class="btn">Weiter zu Kapitel 05 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

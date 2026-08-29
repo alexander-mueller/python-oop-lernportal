@@ -77,6 +77,20 @@ k2 = Bankkonto("Ben", 50.0)
 
 ---
 
+## ⚠️ Typische Fehler vermeiden
+
+1. **`__init__` mit zwei Unterstrichen schreiben:**
+   - ❌ `def _init_(self):` (wird nicht aufgerufen!)
+   - ✅ `def __init__(self):` (korrekt!)
+2. **`self` bei jeder Methode als ersten Parameter:**
+   - ❌ `def einzahlen(betrag):` -> führt zu `TypeError: einzahlen() takes 1 positional argument but 2 were given`
+   - ✅ `def einzahlen(self, betrag):`
+3. **Zuweisungsrichtung beachten:**
+   - ❌ `inhaber = self.inhaber` (falsch herum!)
+   - ✅ `self.inhaber = inhaber` (speichert den Parameter im Attribut)
+
+---
+
 ## 🎯 Deine Aufgabe: Das Bankkonto
 
 Öffne `aufgabe.py`. Du programmierst eine Klasse `Bankkonto`:

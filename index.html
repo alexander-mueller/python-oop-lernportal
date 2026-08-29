@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python OOP Lernportal: Klassen & Objekte</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="header-badge">🐍 Python Nachhilfe & Selbstlern-Kurs</div>
+      <h1>Objektorientierte Programmierung (OOP)</h1>
+      <p>Lerne Schritt für Schritt, wie du eigene Klassen baust, Methoden nutzt und komplexe Programme strukturierst.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Willkommen Card -->
+    <section class="card">
+      <h2>👋 Willkommen zu deiner Übungsreihe!</h2>
+      <p>
+        Bisher hast du in Python schon viel gelernt: Variablen, Schleifen, Bedingungen, Listen, Dictionaries und Funktionen.
+        Jetzt machen wir den nächsten großen Schritt in der Softwareentwicklung: <strong>Klassen & Objekte</strong>!
+      </p>
+      <p>
+        Mit Klassen kannst du zusammengehörige Daten und Aktionen an einem Ort bündeln. Fast jede moderne App (ob Instagram, Spotify oder Computerspiele) basiert auf objektorientierter Programmierung.
+      </p>
+      
+      <div class="box box-analogie">
+        <div class="box-title">🏗️ Die Grundidee in einem Satz:</div>
+        Eine <strong>Klasse</strong> ist wie ein Bauplan (oder eine Plätzchen-Ausstechform). Ein <strong>Objekt</strong> ist das fertige Haus (oder das gebackene Plätzchen), das nach diesem Bauplan entstanden ist!
+      </div>
+    </section>
+
+    <!-- Roadmap Grid -->
+    <section>
+      <h2 style="margin: 30px 0 15px 0; color: var(--text-main); font-size: 1.5rem;">🗺️ Dein Lernpfad (Kapitel 01 bis 06)</h2>
+      <div class="roadmap-grid">
+        
+        <!-- Kapitel 1 -->
+        <a href="01_einstieg_klassen/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 01</span>
+            <div class="roadmap-title">🐶 Die erste Klasse</div>
+            <div class="roadmap-desc">Was ist eine Klasse? Bauplan vs. Objekt, Instanziierung und erste Attribute am Haustier-Beispiel.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+        <!-- Kapitel 2 -->
+        <a href="02_init_und_self/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 02</span>
+            <div class="roadmap-title">💳 Konstruktor & self</div>
+            <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht und was das Wörtchen <code>self</code> wirklich bedeutet (Bankkonto-App).</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+        <!-- Kapitel 3 -->
+        <a href="03_methoden_und_verhalten/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 03</span>
+            <div class="roadmap-title">⚔️ Methoden & Verhalten</div>
+            <div class="roadmap-desc">Objekte führen Aktionen aus! Interaktion zwischen Helden und Monstern in einem RPG-Kampfsimulator.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+        <!-- Kapitel 4 -->
+        <a href="04_str_und_darstellung/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 04</span>
+            <div class="roadmap-title">🧾 Schöne Textausgabe</div>
+            <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Objekte im Warenkorb sammelt.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+        <!-- Kapitel 5 -->
+        <a href="05_objekte_kombinieren/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 05</span>
+            <div class="roadmap-title">🎵 Komposition & Playlists</div>
+            <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+        <!-- Kapitel 6 -->
+        <a href="06_abschlussprojekt_tamagotchi/index.html" class="roadmap-card">
+          <div>
+            <span class="roadmap-number">Kapitel 06</span>
+            <div class="roadmap-title">🥚 Tamagotchi Mini-Projekt</div>
+            <div class="roadmap-desc">Kombiniere alles in einem voll spielbaren, interaktiven virtuellen Haustier für dein Terminal!</div>
+          </div>
+          <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Wie lerne ich Card -->
+    <section class="card">
+      <h2>🚀 Wie du vorgehst (Schritt-für-Schritt)</h2>
+      <ol style="margin-left: 20px; margin-bottom: 15px;">
+        <li style="margin-bottom: 8px;">Wähle das nächste offene Kapitel aus der Liste oben.</li>
+        <li style="margin-bottom: 8px;">Lies die Erklärungen und schau dir die Codebeispiele und „Stolperfallen“ an.</li>
+        <li style="margin-bottom: 8px;">Öffne die <code>aufgabe.py</code> im entsprechenden Kapitelordner und löse die <code>TODO</code>s.</li>
+        <li style="margin-bottom: 8px;">
+          Führe im Terminal den automatischen Test aus:
+          <div class="code-container" style="margin: 10px 0;">
+            <div class="code-header">
+              <span>Terminal</span>
+            </div>
+            <pre><code>python3 test_aufgabe.py</code></pre>
+          </div>
+        </li>
+        <li>Wenn alle Tests mit <strong>OK</strong> durchlaufen, hast du das Kapitel erfolgreich gemeistert! 🎉</li>
+      </ol>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Gesamten Fortschritt auf einen Blick prüfen:</div>
+        Du kannst jederzeit im Hauptordner folgenden Befehl ausführen, um zu sehen, wie viele Kapitel du schon gelöst hast:
+        <div class="code-container" style="margin: 8px 0 0 0;">
+          <pre><code>python3 test_all.py</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ & Troubleshooting Card -->
+    <section class="card">
+      <h2>🩺 Erste Hilfe & Häufige Fragen</h2>
+
+      <details>
+        <summary>❌ Fehlermeldung: <code>TypeError: ... takes 0 positional arguments but 1 was given</code></summary>
+        <div class="details-content">
+          <p><strong>Ursache:</strong> Du hast bei einer Methode in deiner Klasse das <code>self</code> im Methodenkopf vergessen!</p>
+          <p><strong>Lösung:</strong> Schreibe <code>def meine_methode(self):</code> statt <code>def meine_methode():</code>. Python übergibt bei Methodenaufrufen immer automatisch das Objekt selbst als erstes Argument.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>❌ Fehlermeldung: <code>AttributeError: 'NoneType' object has no attribute '...'</code></summary>
+        <div class="details-content">
+          <p><strong>Ursache:</strong> Eine Funktion oder Methode hat nichts zurückgegeben (also <code>None</code>), und du versuchst, auf ein Attribut davon zuzugreifen.</p>
+          <p><strong>Lösung:</strong> Prüfe, ob du am Ende der Funktion das <code>return objekt</code> vergessen hast!</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>❌ Der Test schlägt fehl, obwohl ich die richtige Ausgabe in der Konsole sehe?</summary>
+        <div class="details-content">
+          <p><strong>Ursache:</strong> Du hast vermutlich <code>print(...)</code> verwendet, anstatt den Wert mit <code>return ...</code> zurückzugeben.</p>
+          <p><strong>Lösung:</strong> Die automatischen Tests prüfen den Rückgabewert (<code>return</code>) deiner Funktionen/Methoden, nicht das, was auf dem Bildschirm ausgegeben wird.</p>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+</body>
+</html>

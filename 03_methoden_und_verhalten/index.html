@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 03: Methoden und Verhalten</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../02_init_und_self/index.html">Kapitel 02</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 03</span>
+      </nav>
+      <div class="header-badge">Kapitel 03</div>
+      <h1>Methoden &amp; Verhalten: Wenn Objekte lebendig werden ⚔️</h1>
+      <p>Lass Objekte aktiv handeln und miteinander interagieren in einem rundenbasierten RPG-Heldenduell.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Theorie Card -->
+    <section class="card">
+      <h2>1. Was sind Methoden?</h2>
+      
+      <p>
+        Bisher haben unsere Klassen vor allem Daten gespeichert. Aber in der objektorientierten Programmierung haben Objekte auch <strong>Verhalten</strong>. Funktionen, die zu einer Klasse gehören, nennt man <strong>Methoden</strong>.
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Zauberer</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">name</span>, <span class="var">mana</span>=<span class="num">50</span>):
+        <span class="var">self</span>.<span class="attr">name</span> = <span class="var">name</span>
+        <span class="var">self</span>.<span class="attr">mana</span> = <span class="var">mana</span>
+
+    <span class="cm"># Eine Methode gehört dem Zauberer:</span>
+    <span class="kw">def</span> <span class="fn">zauberspruch_wirken</span>(<span class="var">self</span>, <span class="var">kosten</span>):
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">mana</span> >= <span class="var">kosten</span>:
+            <span class="var">self</span>.<span class="attr">mana</span> -= <span class="var">kosten</span>
+            <span class="kw">return</span> <span class="kw">True</span>
+        <span class="kw">return</span> <span class="kw">False</span></pre>
+      </div>
+    </section>
+
+    <!-- Interaktion zwischen Objekten -->
+    <section class="card">
+      <h2>2. Wenn zwei Objekte miteinander interagieren</h2>
+
+      <p>
+        Besonders spannend wird es, wenn eine Methode eines Objekts ein <strong>anderes Objekt als Parameter</strong> bekommt (z.B. <code>ritter.angreifen(drache)</code>).
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🤝 Die Duell-Analogie:</div>
+        In <code>angreifen(self, gegner)</code> ist <code>self</code> der Angreifer (z.B. Arthur) und <code>gegner</code> ist das Ziel (z.B. der Drache). Arthur ruft <code>gegner.schaden_erleiden(self.angriffskraft)</code> auf. So beeinflussen sich die Objekte gegenseitig!
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Wichtig: Logische Grenzen einhalten (Clamping)!</div>
+        Lebenspunkte dürfen niemals unter <code>0</code> fallen (ein besiegter Held hat 0 HP, nicht -15 HP) und bei Heilung niemals über <code>max_leben</code> steigen.
+      </div>
+    </section>
+
+    <!-- Aufgaben Card -->
+    <section class="card">
+      <h2>3. Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_1">
+          <label for="t3_1" class="task-label">
+            <strong>TODO 1:</strong> <code>__init__(self, name, leben=100, angriffskraft=15)</code> mit <code>max_leben = leben</code> und <code>ist_am_leben = True</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_2">
+          <label for="t3_2" class="task-label">
+            <strong>TODO 2:</strong> Methode <code>schaden_erleiden(self, schaden)</code>: Zieht Schaden ab. Fällt das Leben auf/unter 0 -> setze <code>leben = 0</code> und <code>ist_am_leben = False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_3">
+          <label for="t3_3" class="task-label">
+            <strong>TODO 3:</strong> Methode <code>heilen(self, heilung)</code>: Erhöht Leben maximal bis <code>max_leben</code> (nur wenn noch am Leben).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_4">
+          <label for="t3_4" class="task-label">
+            <strong>TODO 4:</strong> Methode <code>angreifen(self, gegner)</code>: Wenn beide lebendig sind, rufe <code>gegner.schaden_erleiden(self.angriffskraft)</code> auf.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_5">
+          <label for="t3_5" class="task-label">
+            <strong>TODO 5:</strong> Methode <code>status_text(self)</code>: Gibt formatierten Status zurück.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>Tipp zu TODO 3 (Heilung begrenzen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">heilen</span>(<span class="var">self</span>, <span class="var">heilung</span>):
+    <span class="kw">if</span> <span class="kw">not</span> <span class="var">self</span>.<span class="attr">ist_am_leben</span> <span class="kw">or</span> <span class="var">heilung</span> &lt;= <span class="num">0</span>:
+        <span class="kw">return</span> <span class="num">0</span>
+    <span class="var">alter_wert</span> = <span class="var">self</span>.<span class="attr">leben</span>
+    <span class="var">self</span>.<span class="attr">leben</span> = <span class="fn">min</span>(<span class="var">self</span>.<span class="attr">max_leben</span>, <span class="var">self</span>.<span class="attr">leben</span> + <span class="var">heilung</span>)
+    <span class="kw">return</span> <span class="var">self</span>.<span class="attr">leben</span> - <span class="var">alter_wert</span>  <span class="cm"># Wie viel wurde wirklich geheilt?</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Testen & Footer Navigation -->
+    <section class="card">
+      <h2>4. Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>03_methoden_und_verhalten</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../02_init_und_self/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 02</a>
+        <a href="../04_str_und_darstellung/index.html" class="btn">Weiter zu Kapitel 04 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

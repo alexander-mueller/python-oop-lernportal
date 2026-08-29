@@ -60,6 +60,16 @@ class Schultasche:
 
 ---
 
+## ⚠️ Stolperfallen bei `__str__`
+
+1. **`__str__` muss immer einen `str` zurückgeben (`return`), NIEMALS `print`:**
+   - ❌ `def __str__(self): print(self.name)` (Falsch!)
+   - ✅ `def __str__(self): return str(self.name)` (Richtig!)
+2. **Unterstriche beachten:**
+   - Zwei Unterstriche vor und nach `str`: `__str__`.
+
+---
+
 ## 🎯 Deine Aufgabe: Der Supermarkt-Kassenzettel
 
 In `aufgabe.py` programmierst du zwei Klassen:

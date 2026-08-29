@@ -19,6 +19,7 @@ class Artikel:
     # TODO 2: Methode "gesamtpreis(self)"
     # Gibt den Preis für diesen Artikel multipliziert mit der Anzahl zurück.
     # Beispiel: 3 Äpfel à 0.50€ -> 1.50
+    # Tipp: return self.preis * self.anzahl
     # ==========================================================================
     def gesamtpreis(self):
         # Schreibe hier deinen Code für TODO 2:
@@ -26,11 +27,10 @@ class Artikel:
 
     # ==========================================================================
     # TODO 3: Dunder-Methode "__str__(self)"
-    # Gibt einen String im folgenden Format zurück:
+    # Gibt einen formatierten String zurück:
     # "{anzahl}x {name} (je {preis:.2f} €) = {gesamtpreis:.2f} €"
     #
-    # Beispiel:
-    # Bei name="Milch", preis=1.29, anzahl=2:
+    # Beispiel: Bei name="Milch", preis=1.29, anzahl=2:
     # -> "2x Milch (je 1.29 €) = 2.58 €"
     # ==========================================================================
     def __str__(self):
@@ -50,7 +50,7 @@ class Warenkorb:
 
     # ==========================================================================
     # TODO 5: Methode "artikel_hinzufuegen(self, artikel)"
-    # Fügt das übergebene Artikel-Objekt an 'self.artikel_liste' an (.append).
+    # Hängt das übergebene Artikel-Objekt an 'self.artikel_liste' an (.append).
     # ==========================================================================
     def artikel_hinzufuegen(self, artikel):
         # Schreibe hier deinen Code für TODO 5:
@@ -59,8 +59,13 @@ class Warenkorb:
     # ==========================================================================
     # TODO 6: Methode "gesamtsumme(self)"
     # Berechnet die Summe der Gesamtpreise aller Artikel in self.artikel_liste
-    # und gibt diese als float zurück. (Tipp: Schleife oder sum())
-    # Bei leerem Warenkorb soll 0.0 zurückgegeben werden.
+    # und gibt diese als float zurück.
+    #
+    # Tipp mit Schleife:
+    # total = 0.0
+    # for item in self.artikel_liste:
+    #     total += item.gesamtpreis()
+    # return total
     # ==========================================================================
     def gesamtsumme(self):
         # Schreibe hier deinen Code für TODO 6:
@@ -76,8 +81,7 @@ class Warenkorb:
     # --------------------
     # Gesamtsumme: 5.07 €
     #
-    # Tipp: Baue eine Liste von Zeilen und verbinde sie mit "\n".join(...)
-    # Die Zeilen für die Artikel erhältst du einfach mit str(artikel)!
+    # Tipp: Baue eine Liste von Zeilen und verbinde sie am Ende mit "\n".join(...)
     # ==========================================================================
     def bon_text(self):
         # Schreibe hier deinen Code für TODO 7:
@@ -86,6 +90,7 @@ class Warenkorb:
 
 # ==============================================================================
 # Hauptprogramm zum Ausprobieren:
+# (Ausführen mit 'python3 aufgabe.py')
 # ==============================================================================
 if __name__ == "__main__":
     print("🛒 --- SUPERMARKT EINKAUF --- 🛒")
@@ -95,11 +100,10 @@ if __name__ == "__main__":
     a2 = Artikel("Brot", 2.49, 1)
     a3 = Artikel("Schokolade", 0.99, 3)
 
-    korb.artikel_hinzufuegen(a1)
-    korb.artikel_hinzufuegen(a2)
-    korb.artikel_hinzufuegen(a3)
-
-    if korb.artikel_liste:
+    if hasattr(korb, "artikel_liste"):
+        korb.artikel_hinzufuegen(a1)
+        korb.artikel_hinzufuegen(a2)
+        korb.artikel_hinzufuegen(a3)
         print(korb.bon_text())
     else:
-        print("Hinweis: Implementiere die TODOs, um den Kassenbon zu drucken!")
+        print("💡 Hinweis: Implementiere die TODOs, um den Kassenbon zu drucken!")

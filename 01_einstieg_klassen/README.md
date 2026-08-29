@@ -1,10 +1,10 @@
-# Kapitel 01: Die erste Klasse – Was sind Klassen & Objekte?
+# Kapitel 01: Die erste Klasse – Was sind Klassen & Objekte? 🐶🐱
 
-Herzlich willkommen in der Welt der objektorientierten Programmierung (kurz: **OOP**)! 🐶🐱
+Herzlich willkommen in der Welt der objektorientierten Programmierung (kurz: **OOP**)!
 
 Bisher hast du in Python mit Variablen, Listen, Dictionaries und Funktionen gearbeitet. Das hat super funktioniert! Doch wenn Programme größer werden, wird es schnell unübersichtlich.
 
-Hier kommen **Klassen** ins Spiel.
+Mit **Klassen** lernst du jetzt, wie du deine eigenen, maßgeschneiderten Datentypen erstellst.
 
 ---
 
@@ -43,7 +43,7 @@ Eine einfache Klasse definierst du mit dem Schlüsselwort `class`:
 
 ```python
 class Auto:
-    pass  # 'pass' bedeutet: "Hier passiert erst mal nichts"
+    pass  # 'pass' bedeutet: "Hier passiert erst mal nichts weiter"
 ```
 
 Aus dieser Klasse kannst du nun ein Objekt erzeugen (**Instanziierung**):
@@ -71,16 +71,31 @@ dein_auto.ps = 180
 
 ---
 
-## 🎯 Deine Aufgabe
+## ⚠️ Häufige Stolperfallen für Einsteiger
 
-Öffne jetzt die Datei `aufgabe.py` und bearbeite die Aufgaben:
-1. Erstelle die Klasse `Haustier`.
-2. Erzeuge zwei Haustier-Objekte `bello` und `mimi` mit Eigenschaften.
-3. Schreibe zwei kleine Hilfsfunktionen, die mit deinen Haustier-Objekten arbeiten.
+1. **Groß- und Kleinschreibung:**
+   - Klassen werden per Konvention in **CamelCase** mit großem Anfangsbuchstaben geschrieben: `class Haustier:`, `class BankKonto:`.
+   - Variablen und Funktionen schreibt man klein mit Unterstrichen: `mein_haustier = Haustier()`.
+2. **Klammern beim Erstellen nicht vergessen:**
+   - `bello = Haustier()` erzeugt ein neues Objekt.
+   - `bello = Haustier` (ohne Klammern) würde die Klasse selbst speichern, kein neues Objekt erzeugen!
+3. **`return` in Funktionen nicht vergessen:**
+   - Wenn deine Funktion ein neu gebautes Haustier erzeugen soll, muss am Ende `return tier` stehen, sonst gibt die Funktion `None` zurück.
+
+---
+
+## 🎯 Deine Aufgaben in `aufgabe.py`
+
+Öffne jetzt die Datei `aufgabe.py` und bearbeite die nummerierten TODOs:
+1. **TODO 1:** Definiere die leere Klasse `Haustier`.
+2. **TODO 2:** Schreibe die Funktion `erstelle_bello()`.
+3. **TODO 3:** Schreibe die Funktion `erstelle_mimi()`.
+4. **TODO 4:** Schreibe die Funktion `steckbrief_text(haustier)`.
+5. **TODO 5:** Schreibe die Funktion `aelteres_tier(tier1, tier2)`.
 
 ### Testen:
 Führe deine Tests aus mit:
 ```bash
 python3 test_aufgabe.py
 ```
-Sobald alle Tests bestanden sind, kannst du mit Kapitel 02 weitermachen!
+Sobald alle Tests mit `OK` durchlaufen, bist du bereit für Kapitel 02!

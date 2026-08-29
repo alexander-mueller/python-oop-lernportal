@@ -56,6 +56,16 @@ class Spieler:
 
 ---
 
+## ⚠️ Typische Stolperfallen in diesem Kapitel
+
+1. **Grenzen beachten (Min/Max Clamping):**
+   - Lebenspunkte dürfen nach Schaden nie negativ werden: `if self.leben < 0: self.leben = 0`
+   - Lebenspunkte dürfen nach Heilung nie über `max_leben` steigen: `self.leben = min(self.max_leben, self.leben + heilung)`
+2. **Besiegte Objekte können nicht mehr handeln:**
+   - Vor Aktionen wie Angreifen oder Heilen immer prüfen: `if not self.ist_am_leben: return False` bzw. `return 0`
+
+---
+
 ## 🎯 Deine Aufgabe: Das RPG-Duell
 
 In `aufgabe.py` erstellst du eine Klasse `Held` für ein Rollenspiel:

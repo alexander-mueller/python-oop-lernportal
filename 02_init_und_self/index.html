@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 02: Konstruktor __init__ und self</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../01_einstieg_klassen/index.html">Kapitel 01</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 02</span>
+      </nav>
+      <div class="header-badge">Kapitel 02</div>
+      <h1>Der Konstruktor <code>__init__</code> &amp; das geheimnisvolle <code>self</code> 💳</h1>
+      <p>Lerne, wie Objekte direkt beim Erstellen startklar gemacht werden und baue eine Taschengeld-Konto App.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Theorie Card -->
+    <section class="card">
+      <h2>1. Warum brauchen wir <code>__init__</code>?</h2>
+      
+      <p>
+        In Kapitel 01 mussten wir jedes Attribut mühsam von Hand setzen:
+      </p>
+      
+      <div class="code-container">
+        <pre><span class="var">bello</span> = <span class="fn">Haustier</span>()
+<span class="var">bello</span>.<span class="attr">name</span> = <span class="str">"Bello"</span>
+<span class="var">bello</span>.<span class="attr">alter</span> = <span class="num">3</span>  <span class="cm"># Was passiert, wenn man hier das Alter vergisst? -> Programm stürzt ab!</span></pre>
+      </div>
+
+      <p>
+        Deshalb gibt es den <strong>Konstruktor</strong> <code>__init__</code>. Er wird von Python <strong>automatisch aufgerufen</strong>, sobald ein neues Objekt erstellt wird!
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🏗️ Die Geburtsurkunde-Analogie:</div>
+        Wenn ein neues Objekt "geboren" wird, muss es sofort seine grundlegenden Daten erhalten (Name, Startwert). <code>__init__</code> ist wie das Ausfüllen des Datenblattes bei der Geburt – danach ist das Objekt sofort einsatzbereit!
+      </div>
+    </section>
+
+    <!-- self Erklärung -->
+    <section class="card">
+      <h2>2. Was bedeutet <code>self</code>?</h2>
+
+      <p>
+        Das Wörtchen <code>self</code> steht auf Deutsch für <strong>"ich selbst"</strong> bzw. <strong>"dieses konkrete Objekt hier"</strong>.
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Bankkonto</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">inhaber</span>, <span class="var">kontostand</span>=<span class="num">0.0</span>):
+        <span class="var">self</span>.<span class="attr">inhaber</span> = <span class="var">inhaber</span>          <span class="cm"># Speichere 'inhaber' im Attribut DIESES Objekts</span>
+        <span class="var">self</span>.<span class="attr">kontostand</span> = <span class="var">kontostand</span>    <span class="cm"># Speichere 'kontostand' in MEINEM Speicher</span>
+
+<span class="cm"># Verwendung:</span>
+<span class="var">konto_anna</span> = <span class="fn">Bankkonto</span>(<span class="str">"Anna"</span>, <span class="num">50.0</span>)
+<span class="var">konto_ben</span> = <span class="fn">Bankkonto</span>(<span class="str">"Ben"</span>)          <span class="cm"># Verwendet den Standardwert 0.0</span></pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Warum <code>self.inhaber = inhaber</code>?</div>
+        Links vom Gleichheitszeichen steht <code>self.inhaber</code> – das ist die Variable, die <strong>am Objekt dauerhaft gespeichert</strong> bleibt. Rechts steht <code>inhaber</code> – das ist nur der temporäre Übergabeparameter der Funktion.
+      </div>
+    </section>
+
+    <!-- Stolperfallen -->
+    <section class="card">
+      <h2>3. Häufige Stolperfallen beim Konstruktor</h2>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Fehler 1: Doppel-Unterstrich vs. Einzel-Unterstrich</div>
+        Es heißt <code>__init__</code> mit <strong>zwei Unterstrichen</strong> davor und danach (Dunder), NICHT <code>_init_</code>! Wenn du nur einen Unterstrich schreibst, ignoriert Python die Methode einfach.
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">⚠️ Fehler 2: <code>self</code> im Methodenkopf vergessen</div>
+        Jede Methode in einer Klasse <strong>muss</strong> als allerersten Parameter <code>self</code> haben:
+        <br><code>def einzahlen(self, betrag):</code> &nbsp;&check;
+        <br><code>def einzahlen(betrag):</code> &nbsp;&cross; (Führt zu <code>TypeError</code>!)
+      </div>
+    </section>
+
+    <!-- Aufgaben -->
+    <section class="card">
+      <h2>4. Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>02_init_und_self/aufgabe.py</code>:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_1">
+          <label for="t2_1" class="task-label">
+            <strong>TODO 1:</strong> Schreibe <code>__init__(self, inhaber, kontostand=0.0)</code> und binde <code>inhaber</code> und <code>kontostand</code> an <code>self</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_2">
+          <label for="t2_2" class="task-label">
+            <strong>TODO 2:</strong> Methode <code>einzahlen(self, betrag)</code>: Wenn <code>betrag > 0</code>, erhöhe Kontostand und gib <code>True</code> zurück, sonst <code>False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_3">
+          <label for="t2_3" class="task-label">
+            <strong>TODO 3:</strong> Methode <code>auszahlen(self, betrag)</code>: Wenn <code>betrag > 0</code> und <code>self.kontostand >= betrag</code>, ziehe Geld ab und gib <code>True</code> zurück, sonst <code>False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_4">
+          <label for="t2_4" class="task-label">
+            <strong>TODO 4:</strong> Methode <code>info_text(self)</code>: Gibt f-String zurück: <code>"Konto von {self.inhaber}: {self.kontostand:.2f} Euro"</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>Tipp zu TODO 3 (Auszahlen mit Absicherung)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">auszahlen</span>(<span class="var">self</span>, <span class="var">betrag</span>):
+    <span class="kw">if</span> <span class="var">betrag</span> > <span class="num">0</span> <span class="kw">and</span> <span class="var">self</span>.<span class="attr">kontostand</span> >= <span class="var">betrag</span>:
+        <span class="var">self</span>.<span class="attr">kontostand</span> -= <span class="var">betrag</span>
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Testen & Footer Navigation -->
+    <section class="card">
+      <h2>5. Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>02_init_und_self</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../01_einstieg_klassen/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 01</a>
+        <a href="../03_methoden_und_verhalten/index.html" class="btn">Weiter zu Kapitel 03 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
