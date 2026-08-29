@@ -22,30 +22,31 @@
     <section class="card">
       <h2>👋 Willkommen zu deiner Übungsreihe!</h2>
       <p>
-        Bisher hast du in Python schon viel gelernt: Variablen, Schleifen, Bedingungen, Listen, Dictionaries und Funktionen.
-        Jetzt machen wir den nächsten großen Schritt in der Softwareentwicklung: <strong>Klassen & Objekte</strong>!
-      </p>
-      <p>
-        Damit du beim Programmieren nie an kleinen Syntaxfehlern verzweifelst, starten wir mit einem kurzen <strong>Warm-up zur Fehlersuche (Kapitel 00)</strong>, und steigen nach Kapitel 04 auf die Profi-Entwicklungsumgebung <strong>VS Code (Kapitel 04b)</strong> um.
+        Dieser Kurs begleitet dich durch die gesamte Objektorientierte Programmierung in Python – exakt abgestimmt auf dein Schulskriptum, aber mit viel mehr Erklärungen, Analogien, Visualisierungen und automatischen Tests!
       </p>
       
       <div class="box box-analogie">
         <div class="box-title">🏗️ Die Grundidee von OOP in einem Satz:</div>
         Eine <strong>Klasse</strong> ist wie ein Bauplan (oder eine Plätzchen-Ausstechform). Ein <strong>Objekt</strong> ist das fertige Haus (oder das gebackene Plätzchen), das nach diesem Bauplan entstanden ist!
       </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">📚 Schulabgleich &amp; Lehrplan:</div>
+        Alle Kapitel sind 1:1 mit den Themen deines Informatik-Unterrichts (Type Hints, UML, Assoziationen, Referenzen, Vererbung, Tkinter) abgestimmt.
+      </div>
     </section>
 
-    <!-- Roadmap Grid -->
+    <!-- PHASE 1: GRUNDLAGEN -->
     <section>
-      <h2 style="margin: 30px 0 15px 0; color: var(--text-main); font-size: 1.5rem;">🗺️ Dein Lernpfad (Kapitel 00 bis 06)</h2>
+      <h2 style="margin: 30px 0 10px 0; color: var(--text-main); font-size: 1.4rem;">🌱 Phase 1: Grundlagen OOP &amp; Entwicklungsumgebung</h2>
       <div class="roadmap-grid">
         
         <!-- Kapitel 0 -->
         <a href="00_fehlersuche_und_grundlagen/index.html" class="roadmap-card" style="border-left: 4px solid var(--purple);">
           <div>
-            <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Vorkapitel 00</span>
+            <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Warm-up 00</span>
             <div class="roadmap-title">🔍 Fehlersuche &amp; Bugs</div>
-            <div class="roadmap-desc">Tracebacks richtig lesen, Einrückungsfehler (IndentationError), Typfehler und eine interaktive Detektiv-Aufgabe.</div>
+            <div class="roadmap-desc">Tracebacks richtig lesen, Einrückungsfehler (IndentationError), Typfehler und Detektiv-Aufgabe.</div>
           </div>
           <div class="roadmap-footer">Vorkapitel öffnen &rarr;</div>
         </a>
@@ -55,7 +56,7 @@
           <div>
             <span class="roadmap-number">Kapitel 01</span>
             <div class="roadmap-title">🐶 Die erste Klasse</div>
-            <div class="roadmap-desc">Was ist eine Klasse? Bauplan vs. Objekt, Instanziierung und erste Attribute am Haustier- &amp; Fahrrad-Beispiel.</div>
+            <div class="roadmap-desc">Bauplan vs. Objekt, Instanziierung, Punktnotation und Type Hints am Fahrrad- &amp; Haustier-Beispiel.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -65,7 +66,7 @@
           <div>
             <span class="roadmap-number">Kapitel 02</span>
             <div class="roadmap-title">💳 Konstruktor & self</div>
-            <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht und was <code>self</code> bedeutet (Smartphone- &amp; Bankkonto-App).</div>
+            <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht, was <code>self</code> bedeutet und erste UML-Klassendiagramme.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -85,27 +86,27 @@
           <div>
             <span class="roadmap-number">Kapitel 04</span>
             <div class="roadmap-title">🧾 Schöne Textausgabe</div>
-            <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Objekte im Warenkorb &amp; bei Pizza-Bestellungen sammelt.</div>
+            <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Rechnungsdruck im Warenkorb.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
 
-        <!-- Kapitel 4b (VS Code Exkurs) -->
+        <!-- Kapitel 4b -->
         <a href="04b_umstieg_vscode/index.html" class="roadmap-card" style="border-left: 4px solid var(--secondary);">
           <div>
             <span class="roadmap-number" style="background: #e0f2fe; color: #0284c7;">Exkurs 04b</span>
-            <div class="roadmap-title">🚀 Umstieg auf VS Code</div>
-            <div class="roadmap-desc">Von Thonny zu VS Code: Die besten Plugins (Error Lens, Python), Shortcuts, Projektordner &amp; integriertes Terminal.</div>
+            <div class="roadmap-title">🚀 Umstieg &amp; Installation VS Code</div>
+            <div class="roadmap-desc">Installationsanleitung (Win/Mac/Linux), Plugins (Error Lens, Python), Shortcuts &amp; Terminal.</div>
           </div>
-          <div class="roadmap-footer">VS Code Tutorial öffnen &rarr;</div>
+          <div class="roadmap-footer">VS Code Guide öffnen &rarr;</div>
         </a>
 
         <!-- Kapitel 5 -->
         <a href="05_objekte_kombinieren/index.html" class="roadmap-card">
           <div>
             <span class="roadmap-number">Kapitel 05</span>
-            <div class="roadmap-title">🎵 Komposition & Playlists</div>
-            <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists &amp; Schulklassen.</div>
+            <div class="roadmap-title">🎵 Assoziation & Komposition</div>
+            <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -114,7 +115,7 @@
         <a href="06_abschlussprojekt_tamagotchi/index.html" class="roadmap-card">
           <div>
             <span class="roadmap-number">Kapitel 06</span>
-            <div class="roadmap-title">🥚 Tamagotchi Mini-Projekt</div>
+            <div class="roadmap-title">🥚 Mini-Projekt: Tamagotchi</div>
             <div class="roadmap-desc">Kombiniere alles in einem voll spielbaren, interaktiven virtuellen Haustier für dein Terminal!</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
@@ -123,8 +124,56 @@
       </div>
     </section>
 
+    <!-- PHASE 2: FORTGESCHRITTENES OOP -->
+    <section>
+      <h2 style="margin: 35px 0 10px 0; color: var(--text-main); font-size: 1.4rem;">🧠 Phase 2: Fortgeschrittenes OOP, Speicher &amp; Persistenz</h2>
+      <div class="roadmap-grid">
+
+        <!-- Kapitel 7 -->
+        <a href="07_referenzen_und_speicher/index.html" class="roadmap-card" style="border-left: 4px solid var(--success);">
+          <div>
+            <span class="roadmap-number" style="background: var(--success-light); color: var(--success);">Kapitel 07</span>
+            <div class="roadmap-title">🌳 Referenzen &amp; Stammbäume</div>
+            <div class="roadmap-desc">Speicherbereiche im RAM, Aliasing (<code>b = a</code>), <code>is</code> vs. <code>==</code> und Familienstammbaum-Klassen.</div>
+          </div>
+          <div class="roadmap-footer">Kapitel 07 öffnen &rarr;</div>
+        </a>
+
+        <!-- Vorschau Kapitel 8 -->
+        <div class="roadmap-card" style="opacity: 0.85;">
+          <div>
+            <span class="roadmap-number">Kapitel 08 &bull; Geplant</span>
+            <div class="roadmap-title">➕ Operator Overloading &amp; Dunder</div>
+            <div class="roadmap-desc">Eigene Klassen rechen- und vergleichbar machen mit <code>__add__</code>, <code>__eq__</code>, <code>__lt__</code> für 2D-Vektoren &amp; Kartenspiele.</div>
+          </div>
+          <div class="roadmap-footer" style="color: var(--text-muted);">In Vorbereitung &bull; Schulabgleich 28.0</div>
+        </div>
+
+        <!-- Vorschau Kapitel 9 -->
+        <div class="roadmap-card" style="opacity: 0.85;">
+          <div>
+            <span class="roadmap-number">Kapitel 09 &bull; Geplant</span>
+            <div class="roadmap-title">🧬 Vererbung &amp; super()</div>
+            <div class="roadmap-desc">Basisklassen, Kindklassen, Code-Wiederverwendung und <code>super().__init__()</code> für Fahrzeugflotten &amp; RPG-Helden.</div>
+          </div>
+          <div class="roadmap-footer" style="color: var(--text-muted);">In Vorbereitung &bull; Schulabgleich 25.0</div>
+        </div>
+
+        <!-- Vorschau Kapitel 10-12 -->
+        <div class="roadmap-card" style="opacity: 0.85;">
+          <div>
+            <span class="roadmap-number">Kapitel 10 - 12 &bull; Geplant</span>
+            <div class="roadmap-title">🛡️ Exceptions, Persistenz &amp; GUI</div>
+            <div class="roadmap-desc">Polymorphie (10), Eigene Fehlerklassen (11), Spielstände dauerhaft mit JSON/CSV sichern (12) und Desktop-Apps mit Tkinter (13).</div>
+          </div>
+          <div class="roadmap-footer" style="color: var(--text-muted);">Ausführlicher Plan in LEHRPLAN.md</div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- Wie lerne ich Card -->
-    <section class="card">
+    <section class="card" style="margin-top: 35px;">
       <h2>🚀 Wie du vorgehst (Schritt-für-Schritt)</h2>
       <ol style="margin-left: 20px; margin-bottom: 15px;">
         <li style="margin-bottom: 8px;">Wähle das nächste offene Kapitel aus der Liste oben (starte mit Kapitel 00 zum Warm-up).</li>
@@ -149,35 +198,6 @@
           <pre><code>python3 test_all.py</code></pre>
         </div>
       </div>
-    </section>
-
-    <!-- FAQ & Troubleshooting Card -->
-    <section class="card">
-      <h2>🩺 Erste Hilfe & Häufige Fragen</h2>
-
-      <details>
-        <summary>❌ Fehlermeldung: <code>TypeError: ... takes 0 positional arguments but 1 was given</code></summary>
-        <div class="details-content">
-          <p><strong>Ursache:</strong> Du hast bei einer Methode in deiner Klasse das <code>self</code> im Methodenkopf vergessen!</p>
-          <p><strong>Lösung:</strong> Schreibe <code>def meine_methode(self):</code> statt <code>def meine_methode():</code>. Python übergibt bei Methodenaufrufen immer automatisch das Objekt selbst als erstes Argument.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>❌ Fehlermeldung: <code>AttributeError: 'NoneType' object has no attribute '...'</code></summary>
-        <div class="details-content">
-          <p><strong>Ursache:</strong> Eine Funktion oder Methode hat nichts zurückgegeben (also <code>None</code>), und du versuchst, auf ein Attribut davon zuzugreifen.</p>
-          <p><strong>Lösung:</strong> Prüfe, ob du am Ende der Funktion das <code>return objekt</code> vergessen hast!</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>❌ Der Test schlägt fehl, obwohl ich die richtige Ausgabe in der Konsole sehe?</summary>
-        <div class="details-content">
-          <p><strong>Ursache:</strong> Du hast vermutlich <code>print(...)</code> verwendet, anstatt den Wert mit <code>return ...</code> zurückzugeben.</p>
-          <p><strong>Lösung:</strong> Die automatischen Tests prüfen den Rückgabewert (<code>return</code>) deiner Funktionen/Methoden, nicht das, was auf dem Bildschirm ausgegeben wird.</p>
-        </div>
-      </details>
     </section>
 
   </main>

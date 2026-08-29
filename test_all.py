@@ -18,6 +18,7 @@ KAPITEL = [
     ("Kapitel 04: __str__ & Darstellung", "04_str_und_darstellung"),
     ("Kapitel 05: Objekte kombinieren", "05_objekte_kombinieren"),
     ("Kapitel 06: Abschlussprojekt Tamagotchi", "06_abschlussprojekt_tamagotchi"),
+    ("Kapitel 07: Referenzen & Stammbäume", "07_referenzen_und_speicher"),
 ]
 
 def main():
