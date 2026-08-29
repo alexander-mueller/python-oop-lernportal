@@ -506,6 +506,235 @@ summary:hover {
   flex-wrap: wrap;
 }
 
+/* ==========================================================================
+   GAMIFICATION HUD & TROPHY ROOM STYLES
+   ========================================================================== */
+
+.hud-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #f8fafc;
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.hud-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hud-avatar {
+  font-size: 2.2rem;
+  background: rgba(99, 102, 241, 0.2);
+  border: 2px solid var(--primary);
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.hud-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.hud-title {
+  font-size: 0.92rem;
+  color: #94a3b8;
+}
+
+.hud-rank {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.hud-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hud-stat-box {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+
+.hud-stat-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.hud-stat-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hud-progress-container {
+  margin: 15px 0;
+}
+
+.hud-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.hud-progress-bar-bg {
+  background: rgba(255, 255, 255, 0.12);
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hud-progress-bar-fill {
+  background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.hud-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-btn {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.hud-cli-tip {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.hud-cli-tip code {
+  background: rgba(0, 0, 0, 0.3);
+  color: #38bdf8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Trophy Room Grid */
+.trophy-room {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.trophy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.trophy-card {
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+
+.trophy-unlocked {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}
+
+.trophy-locked {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.65;
+}
+
+.trophy-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.trophy-info {
+  flex: 1;
+}
+
+.trophy-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.trophy-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.trophy-badge-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.trophy-unlocked .trophy-badge-status {
+  color: #10b981;
+}
+
+.trophy-locked .trophy-badge-status {
+  color: #64748b;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   header h1 { font-size: 1.6rem; }
@@ -513,4 +742,6 @@ summary:hover {
   .footer-nav { flex-direction: column; }
   .footer-nav .btn { width: 100%; justify-content: center; }
   .extension-grid { grid-template-columns: 1fr; }
+  .hud-header { flex-direction: column; align-items: flex-start; }
+  .hud-stats { width: 100%; justify-content: space-between; }
 }

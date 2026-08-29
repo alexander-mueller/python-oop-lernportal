@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-🧪 Gesamttest-Runner für alle Kapitel
-===================================
-Führe dieses Skript aus, um zu sehen, welche Kapitel du bereits erfolgreich gelöst hast:
+🧪 Gesamttest-Runner & Gamification-Synchronisation
+===================================================
+Führe dieses Skript aus, um zu sehen, welche Kapitel du bereits erfolgreich gelöst hast
+und um deine XP, dein Level und deine Trophäen zu aktualisieren:
     python3 test_all.py
 """
 
 import sys
 import unittest
 from pathlib import Path
+from gamification import GamificationManager
 
 KAPITEL = [
     ("Grundlagen 01: Python als Taschenrechner", "g01_erste_schritte_taschenrechner"),
@@ -42,11 +44,13 @@ KAPITEL = [
 
 def main():
     root = Path(__file__).parent.resolve()
-    print("=" * 65)
-    print("🎓 PYTHON OOP ÜBUNGSREIHE – GESAMTFORTSCHRITT")
-    print("=" * 65)
+    print("=" * 68)
+    print("🎓 PYTHON LERNPORTAL – GESAMTFORTSCHRITT &amp; TESTS")
+    print("=" * 68)
     
     gesamt_bestanden = 0
+    bestandene_ordner = []
+    gesamt_tests_bestanden = 0
     
     for titel, ordner in KAPITEL:
         kapitel_pfad = root / ordner
@@ -74,19 +78,40 @@ def main():
         erfolgreich = result.wasSuccessful() and anzahl_tests > 0
 
         if erfolgreich:
-            print(f"  ✅ {titel:45s} ({anzahl_tests}/{anzahl_tests} Tests OK)")
+            print(f"  ✅ {titel:48s} ({anzahl_tests}/{anzahl_tests} Tests OK)")
             gesamt_bestanden += 1
+            bestandene_ordner.append(ordner)
+            gesamt_tests_bestanden += anzahl_tests
         else:
             fehlgeschlagen = len(result.failures) + len(result.errors)
-            print(f"  ⏳ {titel:45s} (Noch offen / {fehlgeschlagen} Fehler)")
+            print(f"  ⏳ {titel:48s} (Noch offen / {fehlgeschlagen} Fehler)")
 
-    print("=" * 65)
+    print("=" * 68)
     print(f"Ergebnis: {gesamt_bestanden} von {len(KAPITEL)} Kapiteln vollständig gelöst!")
-    if gesamt_bestanden == len(KAPITEL):
-        print("🏆 PERFEKT! Du hast alle Aufgaben mit Bravour gemeistert! 🎉")
-    else:
-        print("💡 Öffne das nächste offene Kapitel und starte mit aufgabe.py!")
-    print("=" * 65)
+    
+    # Gamification-Status aktualisieren
+    gm = GamificationManager()
+    events = gm.sync_mit_test_ergebnissen(bestandene_ordner, gesamt_tests_bestanden)
+    lvl = events["lvl_info"]
+
+    print()
+    print("🎮 GAMIFICATION STATUS:")
+    print(f"  ⭐ Level {lvl['level']} ({lvl['titel']}) | Rang: {lvl['rang']}")
+    print(f"  💎 XP: {events['gesamt_xp']} XP (Nächste Stufe bei {lvl['naechste_stufe_xp']} XP)")
+    print(f"  🏆 Trophäen: {len(gm.state.get('freigeschaltete_badges', []))} / 14 freigeschaltet")
+
+    if events.get("level_up"):
+        print(f"\n🎉🎉🎉 LEVEL UP! Du bist jetzt Level {lvl['level']} ({lvl['titel']})! 🎉🎉🎉")
+
+    if events.get("neue_badges"):
+        print("\n🎖️ NEU FREIGESCHALTETE TROPHÄEN:")
+        for b in events["neue_badges"]:
+            print(f"  ✨ {b['icon']} {b['name']} (+{b['xp_bonus']} XP Bonus!)")
+            print(f"     ↳ {b['desc']}")
+
+    print("-" * 68)
+    print("💡 Zeige deinen vollständigen Pass mit: python3 profil.py")
+    print("=" * 68)
 
 
 if __name__ == "__main__":
