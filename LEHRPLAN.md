@@ -39,7 +39,9 @@ Es gleicht die gesamte Übungsreihe (Grundlagen &amp; Fortgeschrittene Objektori
   ├── 11: Polymorphie & Interfaces (ABC, Geometrie & Zeichenfläche)        (Lehrer 25.1)
   ├── 12: Exceptions & Robuste Fehlerbehandlung (try-except, Bankkonto)    (Lehrer 26.0)
   ├── 13: Datei-Persistenz: JSON & CSV Speichern (Savegames)               (Lehrer 14.0)
-  └── 14: Desktop-GUIs mit Tkinter & MVC-Architektur (Zähler & Rechner)    (Lehrer 27.0)
+  ├── 14: Desktop-GUIs mit Tkinter & MVC-Architektur (Zähler & Rechner)    (Lehrer 27.0)
+  ├── 15: Parameter (*args, **kwargs) & Eigene Container (Gaming-Inventar) (Lehrer 29.0 & 30.0)
+  └── 16: Master-Abschlussprojekt: Professionelle Desktop-App (PetCare)    (Meisterstück & MVC)
 ```
 
 ---
@@ -75,3 +77,6 @@ Es gleicht die gesamte Übungsreihe (Grundlagen &amp; Fortgeschrittene Objektori
 | **12** | **Exceptions** | `try-except-else-finally`, `raise`, eigene Fehler | Bankkonto- & Geldautomat-Simulator |
 | **13** | **Persistenz** | `with open()`, `json.dump`/`load`, CSV-Export | Savegames & Notenbuch |
 | **14** | **Tkinter GUI** | Echte Desktop-Apps, Widgets, `grid()`, MVC-Muster | Interaktive Zähler- & Rechner-App |
+| **15** | **Parameter & Container** | `*args`, `**kwargs`, Unpacking & Container-Dunder (`__getitem__`, `__setitem__`, `__delitem__`, `__contains__`, `__iter__`) | Gaming-Rucksack & Inventar |
+| **16** | **Master-Abschlussprojekt** | Vollständiges Desktop-Meisterstück: MVC-Architektur, Vererbung & Polymorphie, JSON-Savegames, CSV-Export, Exceptions & Tkinter-GUI | PetCare- & Tierheim-Manager Pro |
+

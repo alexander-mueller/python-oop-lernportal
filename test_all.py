@@ -36,6 +36,8 @@ KAPITEL = [
     ("Kapitel 12: Exceptions & Fehlerbehandlung", "12_exceptions_und_fehlerbehandlung"),
     ("Kapitel 13: Persistenz (JSON & CSV)", "13_persistenz_json_und_csv"),
     ("Kapitel 14: Desktop-GUIs mit Tkinter", "14_gui_mit_tkinter"),
+    ("Kapitel 15: Parameter & Eigene Container", "15_parameter_und_container"),
+    ("Kapitel 16: Master-Abschlussprojekt", "16_master_abschlussprojekt"),
 ]
 
 def main():

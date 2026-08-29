@@ -50,6 +50,8 @@ Dieses Portal ist didaktisch aufbereitet, voll **abgeglichen mit dem Informatik-
 | **[12. Exceptions & Fehler](./12_exceptions_und_fehlerbehandlung/)** | **Robustes Coding** | `try-except-else-finally`, `raise`, eigene Exception-Klassen im Banking |
 | **[13. Datei-Persistenz](./13_persistenz_json_und_csv/)** | **JSON & CSV** | Dauerhaftes Speichern & Laden: Savegames & Tabellen-Export |
 | **[14. Desktop-GUIs mit Tkinter](./14_gui_mit_tkinter/)** | **Tkinter Desktop-Apps** | Echte Fenster, Buttons, Labels, Grid-Layout & MVC-Architektur |
+| **[15. Parameter & Container](./15_parameter_und_container/)** | **Dunder-Container** | Variable Argumente (`*args`, `**kwargs`), Unpacking & Container (`len`, `[]`, `in`, `iter`) |
+| **[16. Master-Abschlussprojekt](./16_master_abschlussprojekt/)** | **🏆 Meisterstück: PetCare** | Vollständige Desktop-App: MVC, Vererbung, Polymorphie, JSON-Savegames & Tkinter GUI |
 
 ---
 
@@ -70,7 +72,7 @@ python3 test_aufgabe.py
 - ❌ **`FAIL` (AssertionError)**: Dein Code läuft, liefert aber einen falschen Wert zurück (z.B. Rechenfehler oder falsche Bedingung). Lies die letzte Zeile der Fehlermeldung!
 - 💥 **`ERROR` (Syntax / AttributeError)**: Dein Code hat einen Absturz (z.B. Tippfehler im Funktionsnamen).
 
-### 3. Gesamten Fortschritt aller 25 Kapitel prüfen:
+### 3. Gesamten Fortschritt aller 27 Kapitel prüfen:
 Führe im Hauptordner folgenden Befehl aus:
 ```bash
 python3 test_all.py
