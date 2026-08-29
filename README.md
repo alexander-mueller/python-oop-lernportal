@@ -8,7 +8,7 @@ Diese Übungsreihe ist didaktisch aufbereitet und **1:1 mit dem offiziellen Lehr
 
 ## 🗺️ Der Lernpfad
 
-### 🌱 Phase 1: Grundlagen OOP & Entwicklungsumgebung
+### 🌱 Phase 1: Grundlagen OOP & Werkzeuge
 | Kapitel | Thema | Was du lernst |
 | :--- | :--- | :--- |
 | **[00. Fehlersuche & Grundlagen](./00_fehlersuche_und_grundlagen/)** | Warm-up & Debugging | Tracebacks lesen, Einrückungen (`IndentationError`), Typfehler & Detektiv-Aufgabe |
@@ -17,20 +17,22 @@ Diese Übungsreihe ist didaktisch aufbereitet und **1:1 mit dem offiziellen Lehr
 | **[03. Methoden & Verhalten](./03_methoden_und_verhalten/)** | Methoden & Interaktion | Objekte können handeln & miteinander im Duell interagieren |
 | **[04. Schöne Textausgabe](./04_str_und_darstellung/)** | `__str__` Dunder-Methode | Wie Objekte lesbar mit `print()` ausgegeben werden (Warenkorb & Bon) |
 | **[04b. Umstieg & Installation VS Code](./04b_umstieg_vscode/)** | **Exkurs: IDE-Wechsel** | **Installation (Win/Mac/Linux), Plugins (Error Lens, Python), Shortcuts & Terminal** |
+| **[04c. Git & Versionskontrolle](./04c_git_und_versionskontrolle/)** | **Exkurs: Git-Tooling** | **Spielstände (Commits) sichern, VS Code Git-Tab, Terminal-Befehle & Remote Push** |
 | **[05. Objekte kombinieren](./05_objekte_kombinieren/)** | Assoziation & Komposition | Listen von Objekten & Spotify-Playlists filtern und berechnen |
 | **[06. Abschlussprojekt OOP 1](./06_abschlussprojekt_tamagotchi/)** | Mini-Projekt: Tamagotchi | Ein interaktives Konsolenspiel mit allem Gelernten |
 
-### 🧠 Phase 2: Fortgeschrittenes OOP, Speicher & Persistenz
+### 🧠 Phase 2: Fortgeschrittenes OOP, Testing & Persistenz
 | Kapitel | Thema | Was du lernst |
 | :--- | :--- | :--- |
 | **[07. Referenzen, Speicher & Stammbäume](./07_referenzen_und_speicher/)** | **Speicher & RAM** | **Referenzen, Aliasing (`b = a`), Mutable vs. Immutable, `is` vs. `==` & Familienstammbaum** |
 | *08. Operator Overloading* | *Dunder-Methoden* | *`__add__`, `__eq__`, `__lt__` (2D-Vektoren & Kartenspiele)* |
-| *09. Vererbung & `super()`* | *Inheritance* | *Basisklassen, Kindklassen & `super().__init__()` (Fahrzeuge & RPG-Helden)* |
-| *10. Polymorphie & Interfaces* | *Polymorphism* | *Methoden überschreiben, Geometrie- & Grafik-Engine* |
-| *11. Exceptions & Fehler* | *Robustes Coding* | *`try/except/else/finally`, `raise`, eigene Exception-Klassen* |
-| *12. JSON & CSV Speichern* | *Persistenz* | *Spielstände dauerhaft mit JSON/CSV auf der Festplatte sichern* |
+| *09. Eigene Unit Tests & TDD* | *Softwarequalität* | *Testsuiten schreiben mit `unittest`, `assertEqual`, `assertTrue`, `assertRaises`* |
+| *10. Vererbung & `super()`* | *Inheritance* | *Basisklassen, Kindklassen & `super().__init__()` (Fahrzeuge & RPG-Helden)* |
+| *11. Polymorphie & Interfaces* | *Polymorphism* | *Methoden überschreiben, Geometrie- & Grafik-Engine* |
+| *12. Exceptions & Fehler* | *Robustes Coding* | *`try/except/else/finally`, `raise`, eigene Exception-Klassen* |
+| *13. JSON & CSV Speichern* | *Persistenz* | *Spielstände dauerhaft mit JSON/CSV auf der Festplatte sichern* |
 
-*(Den vollständigen didaktischen Masterplan für alle Kapitel bis 15 findest du in [`LEHRPLAN.md`](./LEHRPLAN.md).)*
+*(Den vollständigen didaktischen Masterplan für alle Kapitel bis 16 findest du in [`LEHRPLAN.md`](./LEHRPLAN.md).)*
 
 ---
 
