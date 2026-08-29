@@ -102,10 +102,22 @@
       activeOutputEl = output;
       
       const code = editor.value;
+      
+      if (window.CODE_GUARD) {
+        const check = window.CODE_GUARD.validate(code);
+        if (!check.safe) {
+          output.innerHTML = `<div style='color: #ef4444;'>${check.error}</div>`;
+          return;
+        }
+      }
+
       const pyodide = await getPyodide();
 
       if (pyodide) {
         try {
+          if (window.CODE_GUARD && window.CODE_GUARD.getSandboxBootstrap) {
+            await pyodide.runPythonAsync(window.CODE_GUARD.getSandboxBootstrap());
+          }
           output.innerHTML = "";
           await pyodide.runPythonAsync(code);
           if (output.innerHTML === "") {

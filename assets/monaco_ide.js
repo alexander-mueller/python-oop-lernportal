@@ -2,6 +2,7 @@
  * ⚡ GEHÄRTETE MONACO WEB-IDE & PYODIDE RUNNER ENGINE ⚡
  * =====================================================
  * Interaktive Entwicklungsumgebung mit:
+ * - Integriertem CODE_GUARD Sicherheits-Filter (Schadcode- & Exploit-Sperre)
  * - Monaco Editor (VS Code Engine mit Autocomplete & Syntax-Highlighting)
  * - Tastatur-Shortcuts: Strg+Enter (Run), Strg+Shift+Enter (Test), Strg+S (Save)
  * - In-Browser Pyodide WebAssembly Python Runner (95% Client-Execution)
@@ -72,12 +73,10 @@
       bracketPairColorization: { enabled: true }
     });
 
-    // Auto-Save beim Tippen
     monacoEditor.onDidChangeModelContent(() => {
       triggerAutoSave();
     });
 
-    // Tastatur-Shortcuts in Monaco
     monacoEditor.addCommand(window.monaco.KeyMod.CtrlCmd | window.monaco.KeyCode.Enter, () => {
       runCode();
     });
@@ -89,7 +88,6 @@
     });
   }
 
-  // Globaler Keydown-Listener für Strg+S
   window.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "s") {
       e.preventDefault();
@@ -97,7 +95,7 @@
     }
   });
 
-  // 2. Pyodide WebAssembly Initialisierung
+  // 2. Pyodide WebAssembly Initialisierung mit Sandbox-Bootstrap
   async function getPyodide() {
     if (pyodideInstance) return pyodideInstance;
     if (pyodideLoading) {
@@ -108,7 +106,7 @@
     }
 
     pyodideLoading = true;
-    logToTerminal("⏳ Lade Python WebAssembly Engine (Pyodide)... Bitte kurz warten.\n", "info");
+    logToTerminal("⏳ Initialisiere geschützte Python Sandbox Engine... Bitte kurz warten.\n", "info");
 
     try {
       if (!window.loadPyodide) {
@@ -126,26 +124,40 @@
         stderr: (text) => logToTerminal(text + "\n", "stderr")
       });
 
-      logToTerminal("✅ Python WebAssembly bereitgestellt!\n\n", "success");
+      // Sandbox-Härtung im Pyodide-Interpreter aktivieren
+      if (window.CODE_GUARD && window.CODE_GUARD.getSandboxBootstrap) {
+        await pyodideInstance.runPythonAsync(window.CODE_GUARD.getSandboxBootstrap());
+      }
+
+      logToTerminal("✅ Geschützte Python WebAssembly Sandbox bereitgestellt!\n\n", "success");
     } catch (err) {
-      logToTerminal(`❌ Fehler beim Laden von Pyodide: ${err.message}\n`, "error");
+      logToTerminal(`❌ Fehler beim Laden der Sandbox: ${err.message}\n`, "error");
     } finally {
       pyodideLoading = false;
     }
     return pyodideInstance;
   }
 
-  // 3. Code-Ausführung mit Timeout-Schutz (5s)
+  // 3. Code-Ausführung mit Sicherheitsprüfung & Timeout
   async function runCode() {
     const code = getEditorCode();
     clearTerminal();
+
+    // Layer 1: Code-Guard Sicherheits-Prüfung
+    if (window.CODE_GUARD) {
+      const check = window.CODE_GUARD.validate(code);
+      if (!check.safe) {
+        logToTerminal(`\n${check.error}\n\n`, "error");
+        return;
+      }
+    }
+
     logToTerminal("▶ Starte Python-Skript (Strg+Enter)...\n----------------------------------------\n", "info");
 
     const py = await getPyodide();
     if (!py) return;
 
     try {
-      // Timeout-Rennen
       let timeoutHandle;
       const timeoutPromise = new Promise((_, reject) => {
         timeoutHandle = setTimeout(() => {
@@ -164,7 +176,7 @@
     }
   }
 
-  // 4. Unittest-Ausführung (Test Runner)
+  // 4. Unittest-Ausführung mit Sicherheitsprüfung
   async function runTests() {
     if (!currentChapterData || !currentChapterData.testCode) {
       logToTerminal("❌ Keine Unittests für dieses Kapitel gefunden.\n", "error");
@@ -173,6 +185,16 @@
 
     const userCode = getEditorCode();
     clearTerminal();
+
+    // Layer 1: Code-Guard Sicherheits-Prüfung
+    if (window.CODE_GUARD) {
+      const check = window.CODE_GUARD.validate(userCode);
+      if (!check.safe) {
+        logToTerminal(`\n${check.error}\n\n`, "error");
+        return;
+      }
+    }
+
     logToTerminal("🧪 Führe automatisierte Unittests aus (Strg+Shift+Enter)...\n----------------------------------------\n", "info");
 
     const py = await getPyodide();
@@ -312,12 +334,10 @@ errors = len(result.errors)
   async function recordChapterSolved() {
     if (!currentChapterData || !currentChapterData.chapterId) return;
 
-    // Lokale Gamification
     if (window.addXP) {
       window.addXP(100, currentChapterData.chapterId);
     }
 
-    // Backend Cloud
     const token = localStorage.getItem("auth_token");
     if (token) {
       try {

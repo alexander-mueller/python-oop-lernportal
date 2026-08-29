@@ -507,8 +507,8 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             code_draft = str(body.get("code_draft", ""))[:100_000]
             subgoals_json = json.dumps(body.get("subgoals", {}))[:10_000]
 
-            if not chapter_id:
-                return self.send_json({"error": "chapter_id erforderlich"}, 400)
+            if not chapter_id or ".." in chapter_id or "\\" in chapter_id:
+                return self.send_json({"error": "Ungültiges chapter_id"}, 400)
 
             conn = get_db()
             conn.execute("""

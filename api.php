@@ -213,6 +213,11 @@ if ($path === '/progress/save') {
     if (!$user) { http_response_code(401); echo json_encode(['error' => 'Nicht angemeldet']); exit; }
 
     $chapter_id = substr(trim((string)($body['chapter_id'] ?? '')), 0, 120);
+    if (!$chapter_id || strpos($chapter_id, '..') !== false || strpos($chapter_id, '\\') !== false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Ungültiges chapter_id']);
+        exit;
+    }
     $code_draft = substr((string)($body['code_draft'] ?? ''), 0, 100000);
 
     $stmt = $pdo->prepare("INSERT INTO chapter_progress (user_id, chapter_id, code_draft) VALUES (?, ?, ?) ON CONFLICT(user_id, chapter_id) DO UPDATE SET code_draft = excluded.code_draft, updated_at = CURRENT_TIMESTAMP");
