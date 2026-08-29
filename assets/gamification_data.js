@@ -11,80 +11,80 @@ window.GAMIFICATION_DATA = {
   "streak_tage": 1,
   "letzter_aktiver_tag": "2026-08-29",
   "historie": [],
-  "zuletzt_aktualisiert": "2026-08-29T14:53:37.686061"
+  "zuletzt_aktualisiert": "2026-08-29T15:07:09.451191"
 };
 window.GAMIFICATION_BADGES_KATALOG = {
   "rechenkonegin": {
     "id": "rechenkonegin",
     "icon": "🧮",
     "name": "Rechenkönigin",
-    "desc": "Grundlagen G01 & G02 abgeschlossen (Zahlen, Operatoren & Typen gemeistert).",
+    "desc": "Grundlagen 01 & 02 abgeschlossen (Zahlen, Operatoren & Typen gemeistert).",
     "xp_bonus": 100,
     "kriterium": [
-      "g01_erste_schritte_taschenrechner",
-      "g02_variablen_und_datentypen"
+      "lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner",
+      "lehrpfad_1_grundlagen/02_variablen_und_datentypen"
     ]
   },
   "dialog_profi": {
     "id": "dialog_profi",
     "icon": "💬",
     "name": "Dialog-Profi",
-    "desc": "Grundlagen G03 abgeschlossen (Interaktive Ein-/Ausgabe mit f-Strings).",
+    "desc": "Grundlagen 03 abgeschlossen (Interaktive Ein-/Ausgabe mit f-Strings).",
     "xp_bonus": 75,
     "kriterium": [
-      "g03_ein_und_ausgabe"
+      "lehrpfad_1_grundlagen/03_ein_und_ausgabe"
     ]
   },
   "weichenstellerin": {
     "id": "weichenstellerin",
     "icon": "🚦",
     "name": "Weichenstellerin",
-    "desc": "Grundlagen G04 abgeschlossen (Bedingungslogik & Schaltjahre gemeistert).",
+    "desc": "Grundlagen 04 abgeschlossen (Bedingungslogik & Schaltjahre gemeistert).",
     "xp_bonus": 75,
     "kriterium": [
-      "g04_verzweigungen_und_bedingungen"
+      "lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen"
     ]
   },
   "schleifen_dompteurin": {
     "id": "schleifen_dompteurin",
     "icon": "🎡",
     "name": "Schleifen-Dompteurin",
-    "desc": "Grundlagen G05 abgeschlossen (While- & For-Schleifen gebändigt).",
+    "desc": "Grundlagen 05 abgeschlossen (While- & For-Schleifen gebändigt).",
     "xp_bonus": 100,
     "kriterium": [
-      "g05_schleifen_und_wiederholungen"
+      "lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen"
     ]
   },
   "funktions_zauberin": {
     "id": "funktions_zauberin",
     "icon": "🪄",
     "name": "Funktions-Zauberin",
-    "desc": "Grundlagen G06 abgeschlossen (Eigene Funktionen & Module gebaut).",
+    "desc": "Grundlagen 06 abgeschlossen (Eigene Funktionen & Module gebaut).",
     "xp_bonus": 100,
     "kriterium": [
-      "g06_funktionen_und_module"
+      "lehrpfad_1_grundlagen/06_funktionen_und_module"
     ]
   },
   "listen_archivarin": {
     "id": "listen_archivarin",
     "icon": "📋",
     "name": "Listen-Archivarin",
-    "desc": "Grundlagen G07 & G08 abgeschlossen (Sequenzen & Strings analysiert).",
+    "desc": "Grundlagen 07 & 08 abgeschlossen (Sequenzen & Strings analysiert).",
     "xp_bonus": 120,
     "kriterium": [
-      "g07_listen_und_sequenzen",
-      "g08_textverarbeitung_und_strings"
+      "lehrpfad_1_grundlagen/07_listen_und_sequenzen",
+      "lehrpfad_1_grundlagen/08_textverarbeitung_und_strings"
     ]
   },
   "daten_strategin": {
     "id": "daten_strategin",
     "icon": "🗃️",
     "name": "Daten-Strategin",
-    "desc": "Grundlagen G09 & G10 abgeschlossen (Dicts, Sets & Comprehensions gemeistert).",
+    "desc": "Grundlagen 09 & 10 abgeschlossen (Dicts, Sets & Comprehensions gemeistert).",
     "xp_bonus": 150,
     "kriterium": [
-      "g09_dictionaries_und_sets",
-      "g10_comprehensions_datum_algorithmen"
+      "lehrpfad_1_grundlagen/09_dictionaries_und_sets",
+      "lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen"
     ]
   },
   "bug_jaegerin": {
@@ -94,7 +94,7 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 00 gelöst (Alle Fehler-Bugs im Warm-up aufgespürt).",
     "xp_bonus": 100,
     "kriterium": [
-      "00_fehlersuche_und_grundlagen"
+      "lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen"
     ]
   },
   "erste_architektin": {
@@ -104,9 +104,9 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 01 bis 03 gelöst (Erste OOP-Klassen, Konstruktoren & Methoden).",
     "xp_bonus": 200,
     "kriterium": [
-      "01_einstieg_klassen",
-      "02_init_und_self",
-      "03_methoden_und_verhalten"
+      "lehrpfad_2_oop_einstieg/01_einstieg_klassen",
+      "lehrpfad_2_oop_einstieg/02_init_und_self",
+      "lehrpfad_2_oop_einstieg/03_methoden_und_verhalten"
     ]
   },
   "tamagotchi_mama": {
@@ -116,7 +116,7 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 06 Mini-Projekt abgeschlossen (Ein lebendiges Haustier gebaut).",
     "xp_bonus": 250,
     "kriterium": [
-      "06_abschlussprojekt_tamagotchi"
+      "lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi"
     ]
   },
   "zeit_reisende": {
@@ -126,7 +126,7 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 04c Git-Versionskontrolle verstanden & Spielstände gesichert.",
     "xp_bonus": 100,
     "kriterium": [
-      "04_str_und_darstellung"
+      "lehrpfad_2_oop_einstieg/04_str_und_darstellung"
     ]
   },
   "qualitaets_garantin": {
@@ -136,7 +136,7 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 09 abgeschlossen (Eigene professionelle Unit Tests geschrieben).",
     "xp_bonus": 200,
     "kriterium": [
-      "09_eigene_unit_tests_schreiben"
+      "lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben"
     ]
   },
   "oop_grossmeisterin": {
@@ -146,9 +146,9 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 10 bis 12 abgeschlossen (Vererbung, Polymorphie & Exceptions).",
     "xp_bonus": 300,
     "kriterium": [
-      "10_vererbung_und_super",
-      "11_polymorphie_und_interfaces",
-      "12_exceptions_und_fehlerbehandlung"
+      "lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super",
+      "lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces",
+      "lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung"
     ]
   },
   "software_architektin": {
@@ -158,7 +158,7 @@ window.GAMIFICATION_BADGES_KATALOG = {
     "desc": "Kapitel 16 Master-Projekt abgeschlossen & vollwertige Desktop-App gebaut!",
     "xp_bonus": 500,
     "kriterium": [
-      "16_master_abschlussprojekt"
+      "lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt"
     ]
   }
 };

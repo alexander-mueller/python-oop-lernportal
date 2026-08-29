@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 10: Vererbung & super()</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <style>
+    /* Spezifische Styles für UML-Diagramme */
+    .uml-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin: 25px 0;
+    }
+    .uml-card {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      width: 100%;
+      max-width: 380px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .uml-header {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .uml-section {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-color);
+      color: #334155;
+      line-height: 1.5;
+    }
+    .uml-section:last-child {
+      border-bottom: none;
+    }
+    .uml-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .uml-arrow::before {
+      content: '▲';
+      font-size: 1.2rem;
+    }
+    .uml-arrow-line {
+      width: 2px;
+      height: 20px;
+      background-color: var(--primary);
+    }
+    .uml-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../09_eigene_unit_tests_schreiben/index.html">Kapitel 09 (Unit Tests)</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 10</span>
+      </nav>
+      <div class="header-badge">Kapitel 10 &bull; Schulabgleich 25.0</div>
+      <h1>Vererbung (Inheritance) &amp; <code>super()</code> 🧬🚗</h1>
+      <p>Lerne, wie Klassen Eigenschaften und Methoden an Unterklassen vererben, Code-Duplikate verschwinden und wie <code>super().__init__()</code> funktioniert.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Die Grundidee von Vererbung -->
+    <section class="card">
+      <h2>1. Was ist Vererbung? (Das DRY-Prinzip)</h2>
+      
+      <p>
+        In vielen Software-Projekten gibt es Klassen, die sich sehr ähnlich sind. 
+        Stelle dir eine Fahrzeugflotte vor: Ein <strong>Auto</strong>, ein <strong>ElektroAuto</strong> und ein <strong>Lkw</strong> 
+        haben alle eine <em>Marke</em>, ein <em>Modell</em>, ein <em>Baujahr</em>, einen <em>Grundpreis</em> und können <em>fahren</em>.
+      </p>
+
+      <p>
+        Ohne Vererbung müsstest du all diese Variablen und Methoden in <strong>jeder einzelnen Klasse kopieren</strong>. 
+        Das verletzt eine der wichtigsten Regeln der Programmierung: <strong>DRY (Don't Repeat Yourself)</strong>!
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🧬 Die DNA- &amp; Stammbaum-Analogie:</div>
+        Wie in der Biologie: Kinder erben Merkmale (Augenfarbe, Blutgruppe) von ihren Eltern, entwickeln aber auch ihre ganz eigenen Fähigkeiten (z.B. Klavierspielen oder Fußballspielen).
+        <br><br>
+        In Python ist <code>Fahrzeug</code> die <strong>Elternklasse (Basisklasse)</strong> und <code>Auto</code> die <strong>Kindklasse (abgeleitete Klasse)</strong>. 
+        Das Auto erbt automatisch alles, was ein Fahrzeug kann, und fügt eigene Besonderheiten wie <code>sitzplaetze</code> und <code>hupen()</code> hinzu!
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">🔍 "Ist-ein" (Vererbung) vs. "Hat-ein" (Komposition):</div>
+        <ul>
+          <li><strong>Vererbung (Kapitel 10):</strong> Ein Auto <strong>ist ein</strong> Fahrzeug. Ein Elektroauto <strong>ist ein</strong> Auto.</li>
+          <li><strong>Komposition (Kapitel 05):</strong> Ein Auto <strong>hat einen</strong> Motor. Eine Playlist <strong>hat viele</strong> Songs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. UML-Klassendiagramm -->
+    <section class="card">
+      <h2>2. 📊 UML-Klassendiagramm: Die Vererbungshierarchie</h2>
+
+      <p>
+        Im UML-Diagramm wird Vererbung durch einen <strong>Pfeil mit geschlossener Dreiecksspitze (▲)</strong> dargestellt. 
+        Der Pfeil zeigt immer von der Kindklasse nach oben zur Elternklasse:
+      </p>
+
+      <div class="uml-container">
+        <!-- Basisklasse Fahrzeug -->
+        <div class="uml-card">
+          <div class="uml-header">Fahrzeug (Basisklasse)</div>
+          <div class="uml-section">
+            - marke: str<br>
+            - modell: str<br>
+            - baujahr: int<br>
+            - grundpreis: float<br>
+            - kilometerstand: float = 0.0
+          </div>
+          <div class="uml-section">
+            + __init__(marke, modell, baujahr, grundpreis)<br>
+            + fahren(km: float) -> None<br>
+            + berechne_restwert(jahr: int) -> float<br>
+            + info() -> str
+          </div>
+        </div>
+
+        <div class="uml-arrow">
+          <div class="uml-arrow-line"></div>
+        </div>
+
+        <div class="uml-row">
+          <!-- Kindklasse Auto -->
+          <div class="uml-card">
+            <div class="uml-header">Auto</div>
+            <div class="uml-section">
+              - sitzplaetze: int = 5<br>
+              - anzahl_tueren: int = 5
+            </div>
+            <div class="uml-section">
+              + __init__(..., sitzplaetze, tueren)<br>
+              + hupen() -> str<br>
+              + info() -> str <i>(überschrieben)</i>
+            </div>
+          </div>
+
+          <!-- Kindklasse Lkw -->
+          <div class="uml-card">
+            <div class="uml-header">Lkw</div>
+            <div class="uml-section">
+              - max_zuladung_kg: float<br>
+              - aktuelle_ladung_kg: float = 0.0
+            </div>
+            <div class="uml-section">
+              + __init__(..., max_zuladung_kg)<br>
+              + beladen(kg: float) -> bool<br>
+              + entladen(kg: float) -> float<br>
+              + info() -> str <i>(überschrieben)</i>
+            </div>
+          </div>
+        </div>
+
+        <div class="uml-arrow" style="margin-right: 200px;">
+          <div class="uml-arrow-line"></div>
+        </div>
+
+        <!-- Kindklasse ElektroAuto (erbt von Auto) -->
+        <div class="uml-card" style="margin-right: 200px;">
+          <div class="uml-header">ElektroAuto (erbt von Auto)</div>
+          <div class="uml-section">
+            - batterie_kapazitaet_kwh: float<br>
+            - batterie_ladestand_kwh: float<br>
+            - verbrauch_pro_100km: float = 18.0
+          </div>
+          <div class="uml-section">
+            + __init__(..., batterie_kapazitaet_kwh, ...)<br>
+            + reichweite() -> float<br>
+            + fahren(km: float) -> bool <i>(mit Stromverbrauch)</i><br>
+            + aufladen(kwh: float) -> float<br>
+            + info() -> str <i>(überschrieben)</i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Syntax & super() Erklärung -->
+    <section class="card">
+      <h2>3. Syntax: Wie funktioniert <code>super()</code> in Python?</h2>
+
+      <h3>Schritt 1: Vererbung deklarieren</h3>
+      <p>Um von einer Klasse zu erben, schreibst du den Namen der Elternklasse in Klammern hinter den Klassennamen:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Python (Vererbungssyntax)</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Auto</span>(<span class="fn">Fahrzeug</span>):   <span class="cm"># Auto erbt alle Attribute und Methoden von Fahrzeug!</span>
+    <span class="kw">pass</span></pre>
+      </div>
+
+      <h3>Schritt 2: Der Aufruf von <code>super().__init__(...)</code></h3>
+      <p>
+        Wenn die Kindklasse einen eigenen Konstruktor <code>__init__</code> besitzt, überschreibt sie zunächst den Eltern-Konstruktor. 
+        Damit die Eltern-Attribute (<code>marke</code>, <code>modell</code>, etc.) trotzdem sauber initialisiert werden, rufen wir mit <code>super().__init__()</code> den Konstruktor der Elternklasse auf:
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (super().__init__ in Aktion)</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Auto</span>(<span class="fn">Fahrzeug</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">marke</span>: <span class="fn">str</span>, <span class="var">modell</span>: <span class="fn">str</span>, <span class="var">baujahr</span>: <span class="fn">int</span>, <span class="var">grundpreis</span>: <span class="fn">float</span>, <span class="var">sitzplaetze</span>: <span class="fn">int</span> = <span class="num">5</span>):
+        <span class="cm"># 1. Eltern-Konstruktor aufrufen (setzt marke, modell, baujahr, grundpreis, kilometerstand):</span>
+        <span class="fn">super</span>().<span class="fn">__init__</span>(<span class="var">marke</span>, <span class="var">modell</span>, <span class="var">baujahr</span>, <span class="var">grundpreis</span>)
+        
+        <span class="cm"># 2. Zusätzliche, eigene Attribute der Kindklasse setzen:</span>
+        <span class="var">self</span>.<span class="attr">sitzplaetze</span>: <span class="fn">int</span> = <span class="var">sitzplaetze</span></pre>
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Häufiger Anfängerfehler: <code>super().__init__()</code> vergessen</div>
+        Wenn du in der Kindklasse <code>super().__init__()</code> vergisst, existieren Attribute wie <code>self.marke</code> oder <code>self.kilometerstand</code> am Kind-Objekt überhaupt nicht! Der Code stürzt beim ersten Zugriff mit einem <code>AttributeError</code> ab.
+      </div>
+    </section>
+
+    <!-- 4. Typ-Prüfungen: isinstance & issubclass -->
+    <section class="card">
+      <h2>4. Typ-Prüfung: <code>isinstance()</code> und <code>issubclass()</code></h2>
+
+      <p>Weil ein <code>ElektroAuto</code> von <code>Auto</code> und dieses von <code>Fahrzeug</code> erbt, ist ein Elektroauto gleichzeitig eine Instanz aller drei Klassen:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Python (Typ-Prüfungen)</span>
+        </div>
+        <pre><span class="var">tesla</span> = <span class="fn">ElektroAuto</span>(<span class="str">"Tesla"</span>, <span class="str">"Model 3"</span>, <span class="num">2023</span>, <span class="num">42000.0</span>, <span class="var">batterie_kapazitaet_kwh</span>=<span class="num">60.0</span>)
+
+<span class="fn">print</span>(<span class="fn">isinstance</span>(<span class="var">tesla</span>, <span class="fn">ElektroAuto</span>))  <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">isinstance</span>(<span class="var">tesla</span>, <span class="fn">Auto</span>))         <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">isinstance</span>(<span class="var">tesla</span>, <span class="fn">Fahrzeug</span>))     <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">isinstance</span>(<span class="var">tesla</span>, <span class="fn">Lkw</span>))          <span class="cm"># False (Lkw ist ein Geschwisterzweig!)</span>
+
+<span class="fn">print</span>(<span class="fn">issubclass</span>(<span class="fn">ElektroAuto</span>, <span class="fn">Fahrzeug</span>)) <span class="cm"># True</span></pre>
+      </div>
+    </section>
+
+    <!-- 5. Aufgaben -->
+    <section class="card">
+      <h2>5. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>10_vererbung_und_super/aufgabe.py</code> und vervollständige die 4 Klassen:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t10_1">
+          <label for="t10_1" class="task-label">
+            <strong>TODO 1–4 (Basisklasse Fahrzeug):</strong> Konstruktor mit <code>marke</code>, <code>modell</code>, <code>baujahr</code>, <code>grundpreis</code>, <code>kilometerstand=0.0</code>, Methoden <code>fahren(km)</code>, <code>berechne_restwert(jahr)</code> und <code>info()</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t10_2">
+          <label for="t10_2" class="task-label">
+            <strong>TODO 5–7 (Kindklasse Auto):</strong> Erbt von <code>Fahrzeug</code>. Ruft <code>super().__init__()</code> auf, speichert <code>sitzplaetze</code> und <code>anzahl_tueren</code>, Methode <code>hupen()</code> und erweitert <code>info()</code> mit <code>super().info()</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t10_3">
+          <label for="t10_3" class="task-label">
+            <strong>TODO 8–12 (Kindklasse ElektroAuto):</strong> Erbt von <code>Auto</code>. Speichert Batteriekapazität &amp; Ladestand, berechnet <code>reichweite()</code>, überschreibt <code>fahren(km)</code> mit Stromabzug und <code>super().fahren(km)</code>, implementiert <code>aufladen(kwh)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t10_4">
+          <label for="t10_4" class="task-label">
+            <strong>TODO 13–16 (Kindklasse Lkw):</strong> Erbt von <code>Fahrzeug</code>. Speichert <code>max_zuladung_kg</code>, implementiert Frachtmanagement mit <code>beladen(kg)</code> und <code>entladen(kg)</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Restwert berechnen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="var">alter</span> = <span class="fn">max</span>(<span class="num">0</span>, <span class="var">aktuelles_jahr</span> - <span class="var">self</span>.<span class="attr">baujahr</span>)
+<span class="var">wertverlust</span> = <span class="var">self</span>.<span class="attr">grundpreis</span> * <span class="num">0.05</span> * <span class="var">alter</span>
+<span class="var">restwert</span> = <span class="var">self</span>.<span class="attr">grundpreis</span> - <span class="var">wertverlust</span>
+<span class="kw">return</span> <span class="fn">max</span>(<span class="var">self</span>.<span class="attr">grundpreis</span> * <span class="num">0.10</span>, <span class="var">restwert</span>)</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 10 (ElektroAuto fahren)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">if</span> <span class="var">km</span> &lt;= <span class="num">0</span>:
+    <span class="kw">return</span> <span class="kw">False</span>
+<span class="var">benoetigt</span> = (<span class="var">km</span> / <span class="num">100.0</span>) * <span class="var">self</span>.<span class="attr">verbrauch_pro_100km</span>
+<span class="kw">if</span> <span class="var">self</span>.<span class="attr">batterie_ladestand_kwh</span> >= <span class="var">benoetigt</span>:
+    <span class="var">self</span>.<span class="attr">batterie_ladestand_kwh</span> -= <span class="var">benoetigt</span>
+    <span class="fn">super</span>().<span class="fn">fahren</span>(<span class="var">km</span>)  <span class="cm"># Erhöht den Kilometerstand in der Basisklasse!</span>
+    <span class="kw">return</span> <span class="kw">True</span>
+<span class="kw">return</span> <span class="kw">False</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 6. Testen & Navigation -->
+    <section class="card">
+      <h2>6. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>10_vererbung_und_super</code> folgenden Befehl aus:</p>
+      
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../09_eigene_unit_tests_schreiben/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 09</a>
+        <a href="../11_polymorphie_und_interfaces/index.html" class="btn">Weiter zu Kapitel 11 (Polymorphie) &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

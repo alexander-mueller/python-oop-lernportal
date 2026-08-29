@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel G05: Schleifen & Wiederholungen</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../04_verzweigungen_und_bedingungen/index.html">&larr; Kapitel G04</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel G05</span>
+        <span>&rsaquo;</span>
+        <a href="../06_funktionen_und_module/index.html">Kapitel G06 &rarr;</a>
+      </nav>
+      <div class="header-badge">Grundlagen G05 &bull; Schulabgleich 09.1 &amp; 09.2</div>
+      <h1>Schleifen &amp; Wiederholungen 🎡🔄</h1>
+      <p>Lerne Zählschleifen (for), Bedingungsschleifen (while), Schleifen-Akkumulatoren und die Steuerbefehle break &amp; continue kennen.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Analogie & Grundkonzept -->
+    <section class="card">
+      <h2>1. Die Grundidee: Warum brauchen wir Schleifen?</h2>
+      
+      <p>
+        Computer sind unschlagbar schnell darin, monotone Aufgaben millionenfach zu wiederholen. Anstatt 100-mal denselben Befehl untereinander zu schreiben, sagen wir Python einfach: <em>"Wiederhole diesen Code-Block X-mal!"</em>
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🎡 Die Karussell- &amp; Riesenrad-Analogie:</div>
+        <p>Es gibt in Python zwei Hauptarten von Schleifen:</p>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li><strong>Zählschleife (<code>for</code>):</strong> Wie ein <strong>Karussell mit Wertmarken</strong>. Du kaufst 5 Runden. Der Automat zählt: 1, 2, 3, 4, 5 – und stoppt genau nach 5 Runden.</li>
+          <li><strong>Bedingungsschleife (<code>while</code>):</strong> Wie ein <strong>Riesenrad, das sich dreht, SOLANGE die Musik spielt</strong>. Sobald die Musik stoppt (Bedingung wird <code>False</code>), hält das Rad an.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. Zählschleifen & range() -->
+    <section class="card">
+      <h2>2. Zählschleifen: <code>for</code> und <code>range()</code></h2>
+      
+      <p>
+        Verwende <code>for</code>, wenn du im Voraus weißt, <strong>wie oft</strong> etwas wiederholt werden soll. Die Funktion <code>range()</code> erzeugt dafür die Zahlenfolge.
+      </p>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Die goldene range()-Regel: Der Stop-Wert ist immer EXKLUSIV!</div>
+        <code>range(1, 5)</code> läuft von <strong>1 bis 4</strong> (die Zahl 5 ist <strong>nicht</strong> dabei)!<br>
+        Wenn du bis 5 zählen willst, musst du <code>range(1, 6)</code> schreiben.
+      </div>
+
+      <h3>Die 3 Varianten von <code>range()</code> im Überblick:</h3>
+      <div style="overflow-x: auto; margin: 15px 0;">
+        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-color);">
+          <thead>
+            <tr style="background: var(--primary-light); color: var(--primary); text-align: left;">
+              <th style="padding: 10px 14px; border-bottom: 2px solid var(--border-color);">Aufruf</th>
+              <th style="padding: 10px 14px; border-bottom: 2px solid var(--border-color);">Bedeutung</th>
+              <th style="padding: 10px 14px; border-bottom: 2px solid var(--border-color);">Erzeugte Zahlen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);"><code>range(5)</code></td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);">Start bei 0 bis Stop-1</td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color); font-weight: bold; color: var(--primary);">0, 1, 2, 3, 4</td>
+            </tr>
+            <tr style="background: #f8fafc;">
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);"><code>range(1, 6)</code></td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);">Start bei 1 bis 6-1</td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color); font-weight: bold; color: var(--primary);">1, 2, 3, 4, 5</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);"><code>range(0, 10, 2)</code></td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color);">Start bei 0, 2er-Schritte</td>
+              <td style="padding: 10px 14px; border-bottom: 1px solid var(--border-color); font-weight: bold; color: var(--primary);">0, 2, 4, 6, 8</td>
+            </tr>
+            <tr style="background: #f8fafc;">
+              <td style="padding: 10px 14px;"><code>range(5, 0, -1)</code></td>
+              <td style="padding: 10px 14px;">Rückwärts (Countdown!)</td>
+              <td style="padding: 10px 14px; font-weight: bold; color: var(--primary);">5, 4, 3, 2, 1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (for-Schleife mit range)</span>
+        </div>
+        <pre><span class="cm"># Countdown von 5 bis 1</span>
+<span class="kw">for</span> <span class="var">sekunde</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>, <span class="num">0</span>, <span class="num">-1</span>):
+    <span class="fn">print</span>(<span class="str">f"Raketenstart in {sekunde}..."</span>)
+<span class="fn">print</span>(<span class="str">"🚀 Liftoff!"</span>)</pre>
+      </div>
+    </section>
+
+    <!-- 3. Bedingungsschleifen & Endlosschleifen -->
+    <section class="card">
+      <h2>3. Bedingungsschleifen: <code>while</code></h2>
+      
+      <p>
+        Verwende <code>while</code>, wenn du nicht weißt, wie viele Durchläufe nötig sind, sondern die Schleife laufen soll, <strong>solange eine Bedingung wahr (<code>True</code>) ist</strong>.
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots"><span class="code-dot dot-red"></span><span class="code-dot dot-yellow"></span><span class="code-dot dot-green"></span></div>
+          <span>Python (while-Schleife)</span>
+        </div>
+        <pre><span class="var">energie</span> = <span class="num">3</span>
+<span class="kw">while</span> <span class="var">energie</span> > <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">f"Roboter läuft... Energie: {energie}"</span>)
+    <span class="var">energie</span> -= <span class="num">1</span>  <span class="cm"># ⚠️ Zähler anpassen, sonst Endlosschleife!</span>
+
+<span class="fn">print</span>(<span class="str">"Akku leer! Bitte aufladen."</span>)</pre>
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">🛑 Achtung vor der Endlosschleife (Infinite Loop)!</div>
+        <p>Wenn die Bedingung niemals <code>False</code> wird, stürzt dein Programm zwar nicht ab, aber es friert für immer ein! Verändere immer die Prüfvariable im Schleifenkörper.</p>
+        <p style="margin-top: 8px;"><strong>Notausstieg im Terminal:</strong> Drücke <kbd>Strg</kbd> + <kbd>C</kbd>, um eine Endlosschleife sofort abzubrechen!</p>
+      </div>
+    </section>
+
+    <!-- 4. Schleifen steuern: break & continue -->
+    <section class="card">
+      <h2>4. Schleifen-Steuerung: <code>break</code> &amp; <code>continue</code></h2>
+
+      <p>Mit zwei speziellen Schlüsselwörtern hast du volle Kontrolle über den Schleifenablauf:</p>
+
+      <div class="extension-grid">
+        <div class="extension-card">
+          <div class="extension-icon" style="background: var(--danger-light); color: var(--danger);">🛑</div>
+          <div class="extension-info">
+            <h4><code>break</code> (Notbremse)</h4>
+            <p>Beendet die Schleife <strong>sofort und vollständig</strong>. Die Programmausführung springt direkt hinter die Schleife.</p>
+          </div>
+        </div>
+
+        <div class="extension-card">
+          <div class="extension-icon" style="background: var(--warning-light); color: var(--warning);">⏭️</div>
+          <div class="extension-info">
+            <h4><code>continue</code> (Nächste Runde)</h4>
+            <p>Bricht nur die <strong>aktuelle Runde</strong> ab und springt sofort zum nächsten Schleifendurchlauf.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots"><span class="code-dot dot-red"></span><span class="code-dot dot-yellow"></span><span class="code-dot dot-green"></span></div>
+          <span>Python (break und continue im Einsatz)</span>
+        </div>
+        <pre><span class="cm"># Beispiel: Nur ungerade Zahlen drucken, bei 7 abbrechen</span>
+<span class="kw">for</span> <span class="var">zahl</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    <span class="kw">if</span> <span class="var">zahl</span> % <span class="num">2</span> == <span class="num">0</span>:
+        <span class="kw">continue</span>  <span class="cm"># Überspringe gerade Zahlen</span>
+    <span class="kw">if</span> <span class="var">zahl</span> == <span class="num">7</span>:
+        <span class="fn">print</span>(<span class="str">"Glückszahl 7 gefunden -> Abbruch!"</span>)
+        <span class="kw">break</span>     <span class="cm"># Schleife komplett beenden</span>
+    <span class="fn">print</span>(<span class="str">"Ungerade Zahl:"</span>, <span class="var">zahl</span>)
+
+<span class="cm"># Ausgabe: 1, 3, 5, danach Abbruch!</span></pre>
+      </div>
+    </section>
+
+    <!-- 5. Schleifen-Akkumulator Muster -->
+    <section class="card">
+      <h2>5. Das Akkumulator-Muster 🧺</h2>
+      
+      <p>
+        Ein <strong>Akkumulator</strong> (Sammelbehälter) ist eines der wichtigsten Entwurfsmuster der Informatik. Er sammelt während der Schleife Werte an:
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots"><span class="code-dot dot-red"></span><span class="code-dot dot-yellow"></span><span class="code-dot dot-green"></span></div>
+          <span>Python (Die 3 klassischen Akkumulatoren)</span>
+        </div>
+        <pre><span class="cm"># 1. Summen-Akkumulator (Startwert: 0)</span>
+<span class="var">summe</span> = <span class="num">0</span>
+<span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>]:
+    <span class="var">summe</span> += <span class="var">x</span>     <span class="cm"># summe = summe + x</span>
+<span class="fn">print</span>(<span class="str">"Gesamtsumme:"</span>, <span class="var">summe</span>)  <span class="cm"># 60</span>
+
+<span class="cm"># 2. Zähler-Akkumulator (Startwert: 0)</span>
+<span class="var">anzahl</span> = <span class="num">0</span>
+<span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    <span class="kw">if</span> <span class="var">x</span> % <span class="num">2</span> == <span class="num">0</span>:
+        <span class="var">anzahl</span> += <span class="num">1</span>
+<span class="fn">print</span>(<span class="str">"Anzahl gerade Zahlen:"</span>, <span class="var">anzahl</span>)  <span class="cm"># 5</span>
+
+<span class="cm"># 3. Produkt-Akkumulator (Startwert: 1, NIEMALS 0!)</span>
+<span class="var">produkt</span> = <span class="num">1</span>
+<span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">5</span>):
+    <span class="var">produkt</span> *= <span class="var">x</span>   <span class="cm"># 1 * 2 * 3 * 4</span>
+<span class="fn">print</span>(<span class="str">"Produkt (4!):"</span>, <span class="var">produkt</span>)  <span class="cm"># 24</span></pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Goldene Akkumulator-Regel:</div>
+        Definiere die Akkumulator-Variable (<code>summe = 0</code> oder <code>produkt = 1</code>) <strong>immer VOR</strong> der Schleife! Wenn du sie in der Schleife definierst, wird der Wert bei jedem Durchlauf wieder auf 0 bzw. 1 zurückgesetzt.
+      </div>
+    </section>
+
+    <!-- 6. Aufgaben & Checkliste -->
+    <section class="card">
+      <h2>6. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>g05_schleifen_und_wiederholungen/aufgabe.py</code> und bearbeite die folgenden 5 Funktionen:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t1">
+          <label for="t1" class="task-label">
+            <strong>TODO 1: <code>summe_bis(n: int) -> int</code></strong><br>
+            Berechnet $1 + 2 + \dots + n$ mit einer <code>for</code>-Schleife und <code>range(1, n + 1)</code>. Gibt 0 zurück, falls $n \le 0$.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2">
+          <label for="t2" class="task-label">
+            <strong>TODO 2: <code>fakultaet(n: int) -> int</code></strong><br>
+            Berechnet $n! = 1 \cdot 2 \dots n$. Für $n = 0$ ist das Ergebnis 1. Bei $n < 0$ wird ein <code>ValueError</code> ausgelöst.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3">
+          <label for="t3" class="task-label">
+            <strong>TODO 3: <code>zaehle_gerade_zahlen(start: int, ende: int) -> int</code></strong><br>
+            Zählt alle geraden Zahlen im Bereich von <code>start</code> bis <code>ende</code> (inklusive). Gibt 0 zurück, wenn <code>start > ende</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4">
+          <label for="t4" class="task-label">
+            <strong>TODO 4: <code>ist_primzahl(n: int) -> bool</code></strong><br>
+            Prüft, ob <code>n</code> eine Primzahl ist. Gibt <code>False</code> zurück für $n \le 1$, <code>True</code> für 2, und bricht mit <code>return False</code> ab, sobald ein Teiler gefunden wird.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t5">
+          <label for="t5" class="task-label">
+            <strong>TODO 5: <code>quorsumme(n: int) -> int</code></strong><br>
+            Berechnet die Quersumme einer Zahl mit einer <code>while</code>-Schleife durch wiederholtes <code>rest % 10</code> und <code>rest //= 10</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 1 &amp; 2 (Summe &amp; Fakultät)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">summe_bis</span>(<span class="var">n</span>: <span class="fn">int</span>) -> <span class="fn">int</span>:
+    <span class="kw">if</span> <span class="var">n</span> &lt;= <span class="num">0</span>:
+        <span class="kw">return</span> <span class="num">0</span>
+    <span class="var">summe</span> = <span class="num">0</span>
+    <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="var">n</span> + <span class="num">1</span>):
+        <span class="var">summe</span> += <span class="var">i</span>
+    <span class="kw">return</span> <span class="var">summe</span></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 4 (Primzahl-Test mit Schleife)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">ist_primzahl</span>(<span class="var">n</span>: <span class="fn">int</span>) -> <span class="fn">bool</span>:
+    <span class="kw">if</span> <span class="var">n</span> &lt;= <span class="num">1</span>:
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">2</span>, <span class="var">n</span>):
+        <span class="kw">if</span> <span class="var">n</span> % <span class="var">i</span> == <span class="num">0</span>:
+            <span class="kw">return</span> <span class="kw">False</span>  <span class="cm"># Teiler gefunden -> keine Primzahl!</span>
+    <span class="kw">return</span> <span class="kw">True</span>           <span class="cm"># Kein Teiler gefunden -> Primzahl!</span></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 5 (Quersumme mit while-Schleife)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">quorsumme</span>(<span class="var">n</span>: <span class="fn">int</span>) -> <span class="fn">int</span>:
+    <span class="var">rest</span> = <span class="fn">abs</span>(<span class="var">n</span>)
+    <span class="var">summe</span> = <span class="num">0</span>
+    <span class="kw">while</span> <span class="var">rest</span> > <span class="num">0</span>:
+        <span class="var">summe</span> += <span class="var">rest</span> % <span class="num">10</span>    <span class="cm"># Letzte Ziffer addieren</span>
+        <span class="var">rest</span> = <span class="var">rest</span> // <span class="num">10</span>     <span class="cm"># Letzte Ziffer abschneiden</span>
+    <span class="kw">return</span> <span class="var">summe</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 7. Testen & Navigation -->
+    <section class="card">
+      <h2>7. 🧪 Testen &amp; Weitergehen</h2>
+      <p>Führe im Terminal den Unittest aus:</p>
+      <div class="code-container">
+        <div class="code-header"><span>Terminal</span></div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../04_verzweigungen_und_bedingungen/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel G04</a>
+        <a href="../06_funktionen_und_module/index.html" class="btn">Weiter zu Kapitel G06 (Funktionen &amp; Module) &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 02: Konstruktor __init__ und self</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../01_einstieg_klassen/index.html">Kapitel 01</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 02</span>
+      </nav>
+      <div class="header-badge">Kapitel 02</div>
+      <h1>Der Konstruktor <code>__init__</code> &amp; das geheimnisvolle <code>self</code> 💳</h1>
+      <p>Lerne, wie Objekte direkt beim Erstellen startklar gemacht werden – mit vollständigen Codebeispielen.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Warum __init__ -->
+    <section class="card">
+      <h2>1. Warum brauchen wir <code>__init__</code>?</h2>
+      
+      <p>
+        In Kapitel 01 mussten wir jedes Attribut mühsam nach dem Erstellen von Hand setzen:
+      </p>
+      
+      <div class="code-container">
+        <pre><span class="var">bello</span> = <span class="fn">Haustier</span>()
+<span class="var">bello</span>.<span class="attr">name</span> = <span class="str">"Bello"</span>
+<span class="var">bello</span>.<span class="attr">alter</span> = <span class="num">3</span>  <span class="cm"># Wenn wir 100 Tiere haben, müssen wir hunderte Zeilen schreiben!</span></pre>
+      </div>
+
+      <p>
+        Die Lösung heißt <strong>Konstruktor</strong>: Die spezielle Methode <code>__init__</code>. Sie wird von Python <strong>automatisch aufgerufen</strong>, genau in dem Moment, in dem du ein Objekt erzeugst!
+      </p>
+    </section>
+
+    <!-- 2. Vollständiges Beispiel: Smartphone -->
+    <section class="card">
+      <h2>2. 📱 Vollständiges Beispiel: Die Smartphone-Klasse</h2>
+
+      <p>Schau dir an, wie eine vollständige Klasse mit Konstruktor und Methoden in der Praxis aussieht:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (Komplettes Beispiel: smartphone.py)</span>
+        </div>
+        <pre><span class="cm"># 1. Die vollständige Klasse definieren:</span>
+<span class="kw">class</span> <span class="fn">Smartphone</span>:
+    <span class="cm"># Der Konstruktor wird automatisch beim Erstellen aufgerufen:</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">modell</span>, <span class="var">speicher_gb</span>, <span class="var">akku</span>=<span class="num">100</span>):
+        <span class="var">self</span>.<span class="attr">modell</span> = <span class="var">modell</span>              <span class="cm"># z.B. "iPhone 15"</span>
+        <span class="var">self</span>.<span class="attr">speicher_gb</span> = <span class="var">speicher_gb</span>      <span class="cm"># z.B. 128</span>
+        <span class="var">self</span>.<span class="attr">akku</span> = <span class="var">akku</span>                  <span class="cm"># Standardwert ist 100%</span>
+
+    <span class="cm"># Eine Methode, die den Akkustand verringert:</span>
+    <span class="kw">def</span> <span class="fn">benutzen</span>(<span class="var">self</span>, <span class="var">minuten</span>):
+        <span class="var">verbrauch</span> = <span class="var">minuten</span> * <span class="num">0.5</span>
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">akku</span> >= <span class="var">verbrauch</span>:
+            <span class="var">self</span>.<span class="attr">akku</span> -= <span class="var">verbrauch</span>
+            <span class="kw">return</span> <span class="str">f"{self.modell}: {minuten} Min. genutzt. Akku: {self.akku:.0f}%"</span>
+        <span class="kw">else</span>:
+            <span class="var">self</span>.<span class="attr">akku</span> = <span class="num">0</span>
+            <span class="kw">return</span> <span class="str">f"{self.modell}: Akku ist leer!"</span>
+
+    <span class="cm"># Eine Methode zum Aufladen:</span>
+    <span class="kw">def</span> <span class="fn">aufladen</span>(<span class="var">self</span>):
+        <span class="var">self</span>.<span class="attr">akku</span> = <span class="num">100</span>
+        <span class="kw">return</span> <span class="str">f"{self.modell} ist wieder voll aufgeladen (100%)!"</span>
+
+
+<span class="cm"># ==============================================================================</span>
+<span class="cm"># Jetzt verwenden wir die Smartphone-Klasse:</span>
+<span class="cm"># ==============================================================================</span>
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="cm"># Handy 1 erstellen (nutzt Standard-Akku 100%):</span>
+    <span class="var">mein_handy</span> = <span class="fn">Smartphone</span>(<span class="str">"iPhone 15"</span>, <span class="num">256</span>)
+
+    <span class="cm"># Handy 2 erstellen (mit 40% Start-Akku):</span>
+    <span class="var">altes_handy</span> = <span class="fn">Smartphone</span>(<span class="str">"Galaxy S10"</span>, <span class="num">64</span>, <span class="var">akku</span>=<span class="num">40</span>)
+
+    <span class="fn">print</span>(<span class="var">mein_handy</span>.<span class="fn">benutzen</span>(<span class="num">30</span>))   <span class="cm"># Verbraucht 15% -> 85% Rest</span>
+    <span class="fn">print</span>(<span class="var">altes_handy</span>.<span class="fn">benutzen</span>(<span class="num">90</span>))  <span class="cm"># Akku wird leer!</span>
+    <span class="fn">print</span>(<span class="var">altes_handy</span>.<span class="fn">aufladen</span>())     <span class="cm"># Wieder 100%</span></pre>
+      </div>
+    </section>
+
+    <!-- 3. Was bedeutet self im Detail? -->
+    <section class="card">
+      <h2>3. Was bedeutet <code>self</code> ganz genau?</h2>
+
+      <p>
+        Das Wörtchen <code>self</code> steht für <strong>"dieses konkrete Objekt hier"</strong>.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🪞 Das Namensschild-Prinzip:</div>
+        Wenn du <code>mein_handy.benutzen(30)</code> aufrufst, übergibt Python im Hintergrund automatisch <code>mein_handy</code> als erstes Argument <code>self</code>.
+        <br><br>
+        <code>self.akku -= verbrauch</code> bedeutet: <em>"Ziehe den Verbrauch vom Akku DIESES Handys ab – nicht von allen anderen Handys auf der Welt!"</em>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Warum <code>self.inhaber = inhaber</code>?</div>
+        <ul>
+          <li><strong>Links (<code>self.inhaber</code>):</strong> Das Attribut, das fest am Objekt im Arbeitsspeicher abgespeichert wird.</li>
+          <li><strong>Rechts (<code>inhaber</code>):</strong> Der Wert, den jemand beim Aufruf in die Klammern übergeben hat.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. Stolperfallen -->
+    <section class="card">
+      <h2>4. ⚠️ Häufige Fehler beim Konstruktor</h2>
+
+      <div class="box box-warning">
+        <div class="box-title">1. Tippfehler bei den Unterstrichen:</div>
+        <code>def __init__(self):</code> &nbsp;&check; (2 Unterstriche vorne, 2 hinten: Dunder!)<br>
+        <code>def _init_(self):</code> &nbsp;&cross; (Falsch! Python ruft die Methode nicht auf!)
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">2. 'self' im Methodenkopf vergessen:</div>
+        <code>def einzahlen(self, betrag):</code> &nbsp;&check;<br>
+        <code>def einzahlen(betrag):</code> &nbsp;&cross; (Führt zu <code>TypeError: takes 1 positional argument but 2 were given</code>)
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">3. Falsche Zuweisungsrichtung:</div>
+        <code>self.kontostand = kontostand</code> &nbsp;&check;<br>
+        <code>kontostand = self.kontostand</code> &nbsp;&cross; (Überschreibt den Parameter, speichert nichts am Objekt!)
+      </div>
+    </section>
+
+    <!-- 5. Aufgaben -->
+    <section class="card">
+      <h2>5. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>02_init_und_self/aufgabe.py</code>:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_1">
+          <label for="t2_1" class="task-label">
+            <strong>TODO 1:</strong> Schreibe <code>__init__(self, inhaber, kontostand=0.0)</code> und binde <code>inhaber</code> und <code>kontostand</code> an <code>self</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_2">
+          <label for="t2_2" class="task-label">
+            <strong>TODO 2:</strong> Methode <code>einzahlen(self, betrag)</code>: Wenn <code>betrag > 0</code>, erhöhe Kontostand und gib <code>True</code> zurück, sonst <code>False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_3">
+          <label for="t2_3" class="task-label">
+            <strong>TODO 3:</strong> Methode <code>auszahlen(self, betrag)</code>: Wenn <code>betrag > 0</code> und <code>self.kontostand >= betrag</code>, ziehe Geld ab und gib <code>True</code> zurück, sonst <code>False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2_4">
+          <label for="t2_4" class="task-label">
+            <strong>TODO 4:</strong> Methode <code>info_text(self)</code>: Gibt f-String zurück: <code>"Konto von {self.inhaber}: {self.kontostand:.2f} Euro"</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Auszahlen mit Absicherung)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">auszahlen</span>(<span class="var">self</span>, <span class="var">betrag</span>):
+    <span class="kw">if</span> <span class="var">betrag</span> > <span class="num">0</span> <span class="kw">and</span> <span class="var">self</span>.<span class="attr">kontostand</span> >= <span class="var">betrag</span>:
+        <span class="var">self</span>.<span class="attr">kontostand</span> -= <span class="var">betrag</span>
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 6. Testen & Footer Navigation -->
+    <section class="card">
+      <h2>6. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>02_init_und_self</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../01_einstieg_klassen/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 01</a>
+        <a href="../03_methoden_und_verhalten/index.html" class="btn">Weiter zu Kapitel 03 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

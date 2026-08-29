@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grundlagen 02: Variablen & Datentypen</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../01_erste_schritte_taschenrechner/index.html">&larr; Grundlagen 01</a>
+        <span>&rsaquo;</span>
+        <a href="../../index.html">🏠 Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Grundlagen 02</span>
+        <span>&rsaquo;</span>
+        <a href="../03_ein_und_ausgabe/index.html">Grundlagen 03 &rarr;</a>
+      </nav>
+      <div class="header-badge">Grundlagen 02 &bull; Schulabgleich 03.0 &amp; 03.1</div>
+      <h1>Variablen &amp; Datentypen 📦🏷️</h1>
+      <p>Lerne, wie Daten im Arbeitsspeicher abgelegt werden, was <code>int</code>, <code>float</code>, <code>str</code> und <code>bool</code> unterscheidet und wie Type Casting funktioniert.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Analogie: Die Speicherbox -->
+    <section class="card">
+      <h2>1. Was ist eine Variable? (Die Speicherbox-Analogie) 📦</h2>
+      <p>
+        Programme müssen Zwischenergebnisse, Spielstände oder Benutzernamen speichern. Dafür nutzt man <strong>Variablen</strong>.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🏷️ Das Namensschild am Karton:</div>
+        Stell dir den Arbeitsspeicher (RAM) deines Computers wie ein gigantisches Regal voller Kartons vor:
+        <ul style="margin-left: 20px; margin-top: 6px;">
+          <li>Der <strong>Wert</strong> (z.B. <code>16</code> oder <code>"Mia"</code>) liegt im Karton.</li>
+          <li>Der <strong>Variablenname</strong> (z.B. <code>alter</code>) ist das Etikett, das du außen auf den Karton klebst.</li>
+          <li>Mit dem Zuweisungsoperator <code>=</code> legst du einen Wert in den Karton hinein!</li>
+        </ul>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header"><span>Variablen zuweisen und verändern</span></div>
+        <pre><span class="cm"># Wert 16 in die Box 'alter' legen:</span>
+<span class="var">alter</span> = <span class="num">16</span>
+
+<span class="cm"># Später Geburtstag feiern – Wert aktualisieren:</span>
+<span class="var">alter</span> = <span class="var">alter</span> + <span class="num">1</span>  <span class="cm"># Jetzt ist alter 17!</span>
+
+<span class="fn">print</span>(<span class="str">"Neues Alter:"</span>, <span class="var">alter</span>)</pre>
+      </div>
+    </section>
+
+    <!-- 2. Die 4 Basisdatentypen -->
+    <section class="card">
+      <h2>2. Die 4 Basisdatentypen in Python 🏷️</h2>
+      <p>
+        Jeder Wert in Python gehört zu einer bestimmten Datenkategorie (einem sogenannten <strong>Datentyp</strong>):
+      </p>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+          <tr style="background: var(--primary-light); text-align: left;">
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Datentyp</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Python-Typ</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Beispiele</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Erklärung &amp; Verwendung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold;">Ganzzahl</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-family: var(--font-mono); color: var(--primary); font-weight: bold;">int</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>42</code>, <code>-7</code>, <code>0</code>, <code>1000</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Zähler, Alter, Punkte im Spiel (ohne Nachkommastellen).</td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold;">Kommazahl</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-family: var(--font-mono); color: var(--primary); font-weight: bold;">float</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>3.14</code>, <code>-0.5</code>, <code>2.0</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Preise, Messwerte, Notendurchschnitt (mit Dezimalpunkt <code>.</code>).</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold;">Text (String)</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-family: var(--font-mono); color: var(--primary); font-weight: bold;">str</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>"Hallo"</code>, <code>'Python'</code>, <code>"42"</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Namen, Nachrichten, Adressen (immer in Anführungszeichen).</td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-weight: bold;">Wahrheitswert</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color); font-family: var(--font-mono); color: var(--primary); font-weight: bold;">bool</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>True</code>, <code>False</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Logische Schalter, Bedingungen, Berechtigungen (z.B. Volljährigkeit).</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. Typprüfung & Type Hints -->
+    <section class="card">
+      <h2>3. Typprüfung mit <code>type()</code> &amp; Moderne Type Hints 🔍</h2>
+      
+      <p>Mit der eingebauten Funktion <code>type()</code> kannst du Python fragen, welchen Typ ein Wert hat:</p>
+
+      <div class="code-container">
+        <div class="code-header"><span>type() Abfragen</span></div>
+        <pre><span class="fn">print</span>(<span class="fn">type</span>(<span class="num">42</span>))       <span class="cm"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="num">3.14</span>))     <span class="cm"># &lt;class 'float'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="str">"Mia"</span>))    <span class="cm"># &lt;class 'str'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="kw">True</span>))     <span class="cm"># &lt;class 'bool'&gt;</span></pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">📝 Type Hints (Typ-Hinweise nach Schulstandard):</div>
+        Im Unterricht und in professionellen Codebases kennzeichnen wir Variablen und Funktions-Signaturen mit Typen. Das hilft VS Code und Lesern enorm beim Verstehen des Codes!
+      </div>
+
+      <div class="code-container">
+        <div class="code-header"><span>Type Hints in Aktion</span></div>
+        <pre><span class="var">name</span>: <span class="kw">str</span> = <span class="str">"Alice"</span>
+<span class="var">alter</span>: <span class="kw">int</span> = <span class="num">17</span>
+<span class="var">kontostand</span>: <span class="kw">float</span> = <span class="num">149.50</span>
+<span class="var">ist_mitglied</span>: <span class="kw">bool</span> = <span class="kw">True</span>
+
+<span class="kw">def</span> <span class="fn">ist_volljaehrig</span>(<span class="var">alter</span>: <span class="kw">int</span>) -> <span class="kw">bool</span>:
+    <span class="kw">return</span> <span class="var">alter</span> >= <span class="num">18</span></pre>
+      </div>
+    </section>
+
+    <!-- 4. Type Casting -->
+    <section class="card">
+      <h2>4. Typumwandlung (Type Casting) 🔄</h2>
+      <p>
+        Oft müssen wir Daten von einem Typ in einen anderen umwandeln (z.B. einen Text <code>"42"</code> in eine echte Zahl <code>42</code>, um damit rechnen zu können).
+      </p>
+
+      <div class="code-container">
+        <div class="code-header"><span>Casting-Funktionen</span></div>
+        <pre><span class="cm"># 1. In Ganzzahl umwandeln:</span>
+<span class="var">z1</span> = <span class="fn">int</span>(<span class="str">"42"</span>)     <span class="cm"># 42</span>
+<span class="var">z2</span> = <span class="fn">int</span>(<span class="num">9.99</span>)     <span class="cm"># 9 (schneidet Nachkommastellen einfach ab!)</span>
+
+<span class="cm"># 2. In Kommazahl umwandeln:</span>
+<span class="var">f1</span> = <span class="fn">float</span>(<span class="str">"3.14"</span>) <span class="cm"># 3.14</span>
+<span class="var">f2</span> = <span class="fn">float</span>(<span class="num">10</span>)     <span class="cm"># 10.0</span>
+
+<span class="cm"># 3. In Text umwandeln:</span>
+<span class="var">s1</span> = <span class="fn">str</span>(<span class="num">100</span>)      <span class="cm"># "100"</span>
+<span class="var">s2</span> = <span class="fn">str</span>(<span class="kw">True</span>)     <span class="cm"># "True"</span>
+
+<span class="cm"># 4. In Wahrheitswert (bool) umwandeln:</span>
+<span class="var">b1</span> = <span class="fn">bool</span>(<span class="num">1</span>)       <span class="cm"># True (Zahlen != 0 sind True)</span>
+<span class="var">b2</span> = <span class="fn">bool</span>(<span class="num">0</span>)       <span class="cm"># False</span>
+<span class="var">b3</span> = <span class="fn">bool</span>(<span class="str">""</span>)      <span class="cm"># False (leerer Text ist False)</span>
+<span class="var">b4</span> = <span class="fn">bool</span>(<span class="str">"Hallo"</span>) <span class="cm"># True (nicht-leerer Text ist True)</span></pre>
+      </div>
+
+      <!-- Warnung Anfängerfalle -->
+      <div class="box box-warning">
+        <div class="box-title">💥 Der klassische Anfängerfehler: "10" + "20" vs. 10 + 20</div>
+        <p>
+          Wenn du zwei Strings mit <code>+</code> verbindest, werden sie aneinandergehängt (<strong>Konkatenation</strong>). Wenn du zwei Zahlen addierst, wird gerechnet:
+        </p>
+        <p style="margin-top: 6px; font-family: var(--font-mono);">
+          - <code>"10" + "20"</code> &rarr; <code>"1020"</code> ❌ (Textverkettung!)<br>
+          - <code>10 + 20</code> &rarr; <code>30</code> ✅ (Zahlenaddition!)<br>
+          - <code>int("10") + int("20")</code> &rarr; <code>30</code> ✅ (Mit Casting!)
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. Aufgabenblatt -->
+    <section class="card">
+      <h2>5. 📝 Deine Aufgaben in <code>aufgabe.py</code></h2>
+      <p>
+        Öffne die Datei <code>g02_variablen_und_datentypen/aufgabe.py</code> und bearbeite die 4 TODOs:
+      </p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t1">
+          <label for="t1" class="task-label">
+            <strong>TODO 1: <code>bestimme_typ_name(wert)</code></strong> &ndash; Gib <code>"Wahrheitswert"</code>, <code>"Ganzzahl"</code>, <code>"Kommazahl"</code>, <code>"Text"</code> oder <code>"Unbekannt"</code> zurück. <em>(Tipp: Prüfe <code>bool</code> vor <code>int</code>!)</em>
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2">
+          <label for="t2" class="task-label">
+            <strong>TODO 2: <code>summe_aus_texten(text_a, text_b)</code></strong> &ndash; Wandle beide Textparameter mit <code>int()</code> um und addiere sie mathematisch.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3">
+          <label for="t3" class="task-label">
+            <strong>TODO 3: <code>formatiere_preis(preis_float)</code></strong> &ndash; Formatiere den Preis mit 2 Nachkommastellen und Euro-Zeichen (z.B. <code>f"{preis_float:.2f} €"</code>).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4">
+          <label for="t4" class="task-label">
+            <strong>TODO 4: <code>ist_volljaehrig(alter)</code></strong> &ndash; Gib <code>True</code> zurück, wenn <code>alter &gt;= 18</code> ist, sonst <code>False</code>.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 1 (Die bool vs. int Falle)</summary>
+        <div class="details-content">
+          <p>In Python erbt <code>bool</code> historisch von <code>int</code>. Wenn du <code>isinstance(True, int)</code> ausführst, liefert Python <code>True</code>! Prüfe daher immer zuerst:</p>
+          <div class="code-container">
+            <pre><span class="kw">if</span> <span class="fn">isinstance</span>(<span class="var">wert</span>, <span class="kw">bool</span>):
+    <span class="kw">return</span> <span class="str">"Wahrheitswert"</span>
+<span class="kw">elif</span> <span class="fn">isinstance</span>(<span class="var">wert</span>, <span class="kw">int</span>):
+    <span class="kw">return</span> <span class="str">"Ganzzahl"</span></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Kommazahlen mit f-String runden)</summary>
+        <div class="details-content">
+          <p>Mit <code>{preis:.2f}</code> wird eine Kommazahl auf exakt 2 Nachkommastellen formatiert:</p>
+          <div class="code-container">
+            <pre><span class="kw">return</span> <span class="str">f"{preis_float:.2f} €"</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 6. Testen & Navigation -->
+    <section class="card">
+      <h2>6. 🧪 Testen im Terminal</h2>
+      <p>Sobald du alle 4 Funktionen implementiert hast, führe den Unittest aus:</p>
+      
+      <div class="code-container">
+        <div class="code-header"><span>Terminal</span></div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../01_erste_schritte_taschenrechner/index.html" class="btn btn-secondary">&larr; Zurück zu G01: Taschenrechner</a>
+        <a href="../03_ein_und_ausgabe/index.html" class="btn">Weiter zu Kapitel G03: Ein- &amp; Ausgabe &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

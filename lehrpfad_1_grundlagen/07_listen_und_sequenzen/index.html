@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel G07: Listen & Sequenzen in Python</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../06_funktionen_und_module/index.html">Kapitel G06</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel G07</span>
+      </nav>
+      <div class="header-badge">Grundlagen G07 (Schulabgleich 09.0 &amp; 11.0)</div>
+      <h1>Listen &amp; Sequenzen in Python 🚂📋</h1>
+      <p>Lerne, wie du Daten in Listen sammelst, mit Index und Slicing zuschneidest und mit Methoden verwaltest.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Zugwaggon-Analogie & Indexierung -->
+    <section class="card">
+      <h2>1. 🚂 Die Zugwaggon-Analogie: Was ist eine Liste?</h2>
+      
+      <p>
+        Eine <strong>Liste (<code>list</code>)</strong> ist ein geordneter Behälter für mehrere Werte.
+        Du kannst dir eine Liste wie einen <strong>Zug mit durchnummerierten Waggons</strong> vorstellen:
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">Zugwaggons &amp; Indexe:</div>
+        <p>Jedes Element hat einen festen Platzhalter – den <strong>Index</strong>. Python zählt immer ab <strong>0</strong>!</p>
+        
+        <div style="overflow-x: auto; margin-top: 15px;">
+          <table style="width: 100%; border-collapse: collapse; text-align: center; font-family: var(--font-mono); font-size: 0.95rem;">
+            <tr style="background: var(--primary); color: white;">
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">Positiver Index</th>
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">0</th>
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">1</th>
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">2</th>
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">3</th>
+              <th style="padding: 8px; border: 1px solid #cbd5e1;">4</th>
+            </tr>
+            <tr style="background: white; font-weight: bold; color: var(--text-main);">
+              <td style="padding: 10px; border: 1px solid #cbd5e1; background: #f1f5f9;">Werte (Waggons)</td>
+              <td style="padding: 10px; border: 1px solid #cbd5e1;"><code>"Apfel"</code></td>
+              <td style="padding: 10px; border: 1px solid #cbd5e1;"><code>"Banane"</code></td>
+              <td style="padding: 10px; border: 1px solid #cbd5e1;"><code>"Kirsche"</code></td>
+              <td style="padding: 10px; border: 1px solid #cbd5e1;"><code>"Dattel"</code></td>
+              <td style="padding: 10px; border: 1px solid #cbd5e1;"><code>"Erdbeere"</code></td>
+            </tr>
+            <tr style="background: #f8fafc; color: var(--text-muted);">
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">Negativer Index</td>
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">-5</td>
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">-4</td>
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">-3</td>
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">-2</td>
+              <td style="padding: 8px; border: 1px solid #cbd5e1;">-1</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python: Index-Zugriff</span>
+        </div>
+        <pre><span class="var">fruechte</span> = [<span class="str">"Apfel"</span>, <span class="str">"Banane"</span>, <span class="str">"Kirsche"</span>, <span class="str">"Dattel"</span>, <span class="str">"Erdbeere"</span>]
+
+<span class="fn">print</span>(<span class="var">fruechte</span>[<span class="num">0</span>])   <span class="cm"># -> "Apfel" (Erstes Element)</span>
+<span class="fn">print</span>(<span class="var">fruechte</span>[<span class="num">2</span>])   <span class="cm"># -> "Kirsche" (Drittes Element)</span>
+<span class="fn">print</span>(<span class="var">fruechte</span>[-<span class="num">1</span>])  <span class="cm"># -> "Erdbeere" (Letztes Element)</span>
+<span class="fn">print</span>(<span class="var">fruechte</span>[-<span class="num">2</span>])  <span class="cm"># -> "Dattel" (Vorletztes Element)</span></pre>
+      </div>
+    </section>
+
+    <!-- 2. Slicing -->
+    <section class="card">
+      <h2>2. ✂️ Slicing: Teile einer Liste herausschneiden</h2>
+
+      <p>
+        Mit dem Slice-Muster <code>liste[start:stop:step]</code> schneidest du beliebige Teilbereiche heraus.
+        <strong>Wichtig:</strong> Der <code>stop</code>-Index ist immer <em>exklusiv</em> (wird nicht mitgenommen)!
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python: Slicing Beispiele</span>
+        </div>
+        <pre><span class="var">zahlen</span> = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>, <span class="num">60</span>]
+
+<span class="cm"># 1. Bereich von Index 1 bis vor Index 4:</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[<span class="num">1</span>:<span class="num">4</span>])   <span class="cm"># -> [20, 30, 40]</span>
+
+<span class="cm"># 2. Vom Anfang bis vor Index 3:</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[:<span class="num">3</span>])    <span class="cm"># -> [10, 20, 30]</span>
+
+<span class="cm"># 3. Ab Index 3 bis ganz zum Schluss:</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[<span class="num">3</span>:])    <span class="cm"># -> [40, 50, 60]</span>
+
+<span class="cm"># 4. Alle Elemente ohne erstes und letztes:</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[<span class="num">1</span>:-<span class="num">1</span>])  <span class="cm"># -> [20, 30, 40, 50]</span>
+
+<span class="cm"># 5. Jedes 2. Element (Schrittweite 2):</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[::<span class="num">2</span>])   <span class="cm"># -> [10, 30, 50]</span>
+
+<span class="cm"># 6. Liste komplett rückwärts:</span>
+<span class="fn">print</span>(<span class="var">zahlen</span>[::-<span class="num">1</span>])  <span class="cm"># -> [60, 50, 40, 30, 20, 10]</span></pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Slicing erzeugt immer eine NEUE Liste:</div>
+        Wenn du <code>kopie = zahlen[:]</code> oder <code>rueckwaerts = zahlen[::-1]</code> schreibst, bleibt die Original-Liste völlig unverändert!
+      </div>
+    </section>
+
+    <!-- 3. Listen-Methoden & Funktionen -->
+    <section class="card">
+      <h2>3. 🛠️ Methoden &amp; Eingebaute Funktionen</h2>
+
+      <p>Listen bieten praktische Werkzeuge, um Elemente zu verändern, zu durchsuchen und auszuwerten:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python: Listen manipulieren</span>
+        </div>
+        <pre><span class="var">tiere</span> = [<span class="str">"Hund"</span>, <span class="str">"Katze"</span>]
+
+<span class="cm"># Am Ende anfügen:</span>
+<span class="var">tiere</span>.<span class="fn">append</span>(<span class="str">"Maus"</span>)         <span class="cm"># -> ["Hund", "Katze", "Maus"]</span>
+
+<span class="cm"># An bestimmter Stelle einfügen:</span>
+<span class="var">tiere</span>.<span class="fn">insert</span>(<span class="num">0</span>, <span class="str">"Papagei"</span>)   <span class="cm"># -> ["Papagei", "Hund", "Katze", "Maus"]</span>
+
+<span class="cm"># Letztes Element entfernen und zurückgeben:</span>
+<span class="var">raus</span> = <span class="var">tiere</span>.<span class="fn">pop</span>()           <span class="cm"># raus = "Maus", Rest: ["Papagei", "Hund", "Katze"]</span>
+
+<span class="cm"># Bestimmten Wert sicher mit 'in' prüfen und entfernen:</span>
+<span class="kw">if</span> <span class="str">"Katze"</span> <span class="kw">in</span> <span class="var">tiere</span>:
+    <span class="var">tiere</span>.<span class="fn">remove</span>(<span class="str">"Katze"</span>)    <span class="cm"># Entfernt "Katze"</span>
+
+<span class="cm"># Sortieren & Umdrehen (in-place am Original):</span>
+<span class="var">tiere</span>.<span class="fn">sort</span>()
+<span class="var">tiere</span>.<span class="fn">reverse</span>()</pre>
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">⚠️ Vorsicht bei .remove():</div>
+        Wenn du <code>liste.remove("Etwas")</code> aufrufst und <code>"Etwas"</code> gar nicht in der Liste ist, stürzt dein Programm mit einem <code>ValueError</code> ab! Prüfe vorher immer mit <code>if "Etwas" in liste:</code>.
+      </div>
+
+      <h3>Statistik &amp; Rechnen mit Listen</h3>
+      <div class="code-container">
+        <pre><span class="var">noten</span> = [<span class="num">1.0</span>, <span class="num">2.3</span>, <span class="num">1.7</span>, <span class="num">3.0</span>]
+
+<span class="fn">print</span>(<span class="fn">len</span>(<span class="var">noten</span>))   <span class="cm"># -> 4 (Anzahl der Elemente)</span>
+<span class="fn">print</span>(<span class="fn">min</span>(<span class="var">noten</span>))   <span class="cm"># -> 1.0 (kleinste Zahl / beste Note)</span>
+<span class="fn">print</span>(<span class="fn">max</span>(<span class="var">noten</span>))   <span class="cm"># -> 3.0 (größte Zahl / schlechteste Note)</span>
+<span class="fn">print</span>(<span class="fn">sum</span>(<span class="var">noten</span>))   <span class="cm"># -> 8.0 (Summe)</span>
+<span class="var">schnitt</span> = <span class="fn">sum</span>(<span class="var">noten</span>) / <span class="fn">len</span>(<span class="var">noten</span>)  <span class="cm"># -> 2.0 (Durchschnitt)</span></pre>
+      </div>
+    </section>
+
+    <!-- 4. Aufgabenliste -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>g07_listen_und_sequenzen/aufgabe.py</code> und löse die 5 TODOs:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t7_1">
+          <label for="t7_1" class="task-label">
+            <strong>TODO 1 (<code>liste_umdrehen</code>):</strong> Gib eine neue umgedrehte Liste zurück, ohne das Original zu modifizieren.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t7_2">
+          <label for="t7_2" class="task-label">
+            <strong>TODO 2 (<code>filtere_positive_zahlen</code>):</strong> Gib eine Liste zurück, die nur Zahlen <code>> 0</code> enthält.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t7_3">
+          <label for="t7_3" class="task-label">
+            <strong>TODO 3 (<code>entferne_element</code>):</strong> Entferne das Element sicher mit <code>in</code> und <code>.remove()</code>. Gib <code>True</code> zurück wenn gefunden, sonst <code>False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t7_4">
+          <label for="t7_4" class="task-label">
+            <strong>TODO 4 (<code>mittlere_elemente</code>):</strong> Schneide erstes und letztes Element mit Slicing ab. Bei <code>len(liste) &lt;= 2</code> gib <code>[]</code> zurück.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t7_5">
+          <label for="t7_5" class="task-label">
+            <strong>TODO 5 (<code>noten_durchschnitt_ohne_ausreisser</code>):</strong> Entferne aus einer Kopie Minimum und Maximum und berechne <code>sum / len</code>. Bei weniger als 3 Noten gib <code>0.0</code> zurück.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Element sicher entfernen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">entferne_element</span>(<span class="var">liste</span>, <span class="var">element</span>):
+    <span class="kw">if</span> <span class="var">element</span> <span class="kw">in</span> <span class="var">liste</span>:
+        <span class="var">liste</span>.<span class="fn">remove</span>(<span class="var">element</span>)
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 5 (Notenschnitt ohne Ausreißer)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">noten_durchschnitt_ohne_ausreisser</span>(<span class="var">noten</span>):
+    <span class="kw">if</span> <span class="fn">len</span>(<span class="var">noten</span>) &lt; <span class="num">3</span>:
+        <span class="kw">return</span> <span class="num">0.0</span>
+    <span class="var">kopie</span> = <span class="fn">list</span>(<span class="var">noten</span>)
+    <span class="var">kopie</span>.<span class="fn">remove</span>(<span class="fn">min</span>(<span class="var">kopie</span>))
+    <span class="var">kopie</span>.<span class="fn">remove</span>(<span class="fn">max</span>(<span class="var">kopie</span>))
+    <span class="kw">return</span> <span class="fn">sum</span>(<span class="var">kopie</span>) / <span class="fn">len</span>(<span class="var">kopie</span>)</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../06_funktionen_und_module/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel G06</a>
+        <a href="../08_textverarbeitung_und_strings/index.html" class="btn">Weiter zu Kapitel G08 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

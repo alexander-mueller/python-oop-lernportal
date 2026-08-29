@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 06: Tamagotchi Abschlussprojekt</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../05_objekte_kombinieren/index.html">Kapitel 05</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 06</span>
+      </nav>
+      <div class="header-badge">Abschlussprojekt</div>
+      <h1>Dein eigenes Tamagotchi (Virtuelles Haustier) 🥚🐣</h1>
+      <p>Kombiniere alle gelernten OOP-Konzepte in einem interaktiven, voll funktionsfähigen Konsolenspiel!</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Das große Finale -->
+    <section class="card">
+      <h2>1. Das große Finale! 🏆</h2>
+      
+      <p>
+        Du hast alle Grundlagen gemeistert: Klassen &amp; Konstruktoren, Methoden, <code>__str__</code> und Objekt-Beziehungen. Jetzt bauen wir ein komplettes, virtuelles Haustier (Tamagotchi), das du im Terminal füttern, schlafen legen und mit dem du spielen kannst!
+      </p>
+    </section>
+
+    <!-- 2. Vollständiges Mini-Beispiel: Der Roboter -->
+    <section class="card">
+      <h2>2. 🤖 Vollständiges Beispiel: Ein Roboter mit Lebenszyklus</h2>
+
+      <p>Bevor du das Tamagotchi baust, schau dir dieses vollständige Beispiel an. Es zeigt, wie Attribute begrenzt werden (Clamping 0-100) und wie ein Status überprüft wird:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (Komplettes Beispiel: roboter.py)</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Roboter</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">name</span>):
+        <span class="var">self</span>.<span class="attr">name</span> = <span class="var">name</span>
+        <span class="var">self</span>.<span class="attr">energie</span> = <span class="num">100</span>          <span class="cm"># 100% Start-Energie</span>
+        <span class="var">self</span>.<span class="attr">ist_aktiv</span> = <span class="kw">True</span>
+
+    <span class="cm"># Hilfsmethode, um Werte zwischen 0 und 100 zu halten:</span>
+    <span class="kw">def</span> <span class="fn">_begrenzen</span>(<span class="var">self</span>, <span class="var">wert</span>):
+        <span class="kw">return</span> <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(<span class="num">100</span>, <span class="var">wert</span>))
+
+    <span class="kw">def</span> <span class="fn">arbeiten</span>(<span class="var">self</span>, <span class="var">dauer_stunden</span>):
+        <span class="kw">if</span> <span class="kw">not</span> <span class="var">self</span>.<span class="attr">ist_aktiv</span>:
+            <span class="kw">return</span> <span class="str">f"{self.name} ist ausgeschaltet!"</span>
+
+        <span class="var">verbrauch</span> = <span class="var">dauer_stunden</span> * <span class="num">20</span>
+        <span class="var">self</span>.<span class="attr">energie</span> = <span class="var">self</span>.<span class="fn">_begrenzen</span>(<span class="var">self</span>.<span class="attr">energie</span> - <span class="var">verbrauch</span>)
+        
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">energie</span> == <span class="num">0</span>:
+            <span class="var">self</span>.<span class="attr">ist_aktiv</span> = <span class="kw">False</span>
+            <span class="kw">return</span> <span class="str">f"{self.name} hat keine Energie mehr und schaltet sich ab!"</span>
+        
+        <span class="kw">return</span> <span class="str">f"{self.name} hat {dauer_stunden}h gearbeitet. Restenergie: {self.energie}%"</span>
+
+    <span class="kw">def</span> <span class="fn">aufladen</span>(<span class="var">self</span>):
+        <span class="var">self</span>.<span class="attr">energie</span> = <span class="num">100</span>
+        <span class="var">self</span>.<span class="attr">ist_aktiv</span> = <span class="kw">True</span>
+        <span class="kw">return</span> <span class="str">f"{self.name} ist wieder voll aufgeladen!"</span>
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="var">self</span>):
+        <span class="var">status</span> = <span class="str">"Aktiv ⚡"</span> <span class="kw">if</span> <span class="var">self</span>.<span class="attr">ist_aktiv</span> <span class="kw">else</span> <span class="str">"Ausgeschaltet 💤"</span>
+        <span class="kw">return</span> <span class="str">f"[{self.name}] Energie: {self.energie}% | Status: {status}"</span>
+
+
+<span class="cm"># Ausprobieren:</span>
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="var">bot</span> = <span class="fn">Roboter</span>(<span class="str">"Wall-E"</span>)
+    <span class="fn">print</span>(<span class="var">bot</span>)
+    <span class="fn">print</span>(<span class="var">bot</span>.<span class="fn">arbeiten</span>(<span class="num">3</span>))  <span class="cm"># Verbraucht 60% -> 40% übrig</span>
+    <span class="fn">print</span>(<span class="var">bot</span>.<span class="fn">arbeiten</span>(<span class="num">3</span>))  <span class="cm"># Energie auf 0 -> schaltet ab</span>
+    <span class="fn">print</span>(<span class="var">bot</span>)
+    <span class="fn">print</span>(<span class="var">bot</span>.<span class="fn">aufladen</span>())</pre>
+      </div>
+    </section>
+
+    <!-- 3. Aufgaben Card -->
+    <section class="card">
+      <h2>3. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_1">
+          <label for="t6_1" class="task-label">
+            <strong>TODO 1:</strong> <code>__init__(self, name, tierart="Drache")</code>: Startwerte <code>hunger=50</code>, <code>muedigkeit=20</code>, <code>glueck=80</code>, <code>alter_tage=0</code>, <code>ist_lebendig=True</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_2">
+          <label for="t6_2" class="task-label">
+            <strong>TODO 2:</strong> <code>fuettern(self, menge=20)</code>: Senkt Hunger, erhöht Glück &amp; Müdigkeit um 5.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_3">
+          <label for="t6_3" class="task-label">
+            <strong>TODO 3:</strong> <code>spielen(self, spass=25)</code>: Steigert Glück, erhöht Hunger (15) &amp; Müdigkeit (20). Wenn <code>muedigkeit > 80</code> -> ablehnen!
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_4">
+          <label for="t6_4" class="task-label">
+            <strong>TODO 4:</strong> <code>schlafen(self)</code>: Müdigkeit auf 0, Hunger +15, <code>alter_tage += 1</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_5">
+          <label for="t6_5" class="task-label">
+            <strong>TODO 5:</strong> <code>zeit_vergeht(self)</code>: Hunger +10, Müdigkeit +10, Glück -10. Prüfen, ob Hunger &gt;= 100 oder Glück &lt;= 0.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t6_6">
+          <label for="t6_6" class="task-label">
+            <strong>TODO 6:</strong> <code>__str__(self)</code>: Übersicht mit Name, Tierart, Alter und Werten.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zur Werte-Begrenzung (Clamping)</summary>
+        <div class="details-content">
+          <p>Damit Werte nicht unter 0 fallen oder über 100 steigen, nutze <code>max(0, min(100, wert))</code>:</p>
+          <div class="code-container">
+            <pre><span class="var">self</span>.<span class="attr">hunger</span> = <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(<span class="num">100</span>, <span class="var">self</span>.<span class="attr">hunger</span> - <span class="var">menge</span>))</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 4. Spiel starten Card -->
+    <section class="card">
+      <h2>4. 🕹️ Das interaktive Spiel starten!</h2>
+      
+      <p>Sobald alle Unittests grün sind, kannst du das Spiel live spielen:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 tamagotchi_spiel.py</code></pre>
+      </div>
+
+      <div class="box box-success">
+        <div class="box-title">🎉 Du hast es geschafft!</div>
+        Herzlichen Glückwunsch zum erfolgreichen Abschluss der Python OOP Übungsreihe!
+      </div>
+
+      <div class="footer-nav">
+        <a href="../05_objekte_kombinieren/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 05</a>
+        <a href="../../lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="btn">Weiter zu Kapitel 07: Referenzen &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

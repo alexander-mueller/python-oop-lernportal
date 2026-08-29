@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 03: Methoden und Verhalten</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../02_init_und_self/index.html">Kapitel 02</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 03</span>
+      </nav>
+      <div class="header-badge">Kapitel 03</div>
+      <h1>Methoden &amp; Verhalten: Wenn Objekte lebendig werden ⚔️</h1>
+      <p>Lass Objekte aktiv handeln und miteinander interagieren anhand eines vollständigen Rennspiel- &amp; Duell-Beispiels.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Was sind Methoden -->
+    <section class="card">
+      <h2>1. Was sind Methoden?</h2>
+      
+      <p>
+        Bisher haben unsere Klassen vor allem Daten gespeichert. Aber in der echten Programmierung haben Objekte auch <strong>Verhalten</strong> (sie können etwas <em>tun</em>). Funktionen, die innerhalb einer Klasse stehen, nennt man <strong>Methoden</strong>.
+      </p>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Der Unterschied zwischen Funktion und Methode:</div>
+        <ul>
+          <li>Eine <strong>Funktion</strong> steht frei im Code: <code>berechne_summe(a, b)</code></li>
+          <li>Eine <strong>Methode</strong> gehört zu einem Objekt und wird mit Punkt aufgerufen: <code>mein_held.angreifen(gegner)</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. Vollständiges Beispiel: Rennauto -->
+    <section class="card">
+      <h2>2. 🏎️ Vollständiges Beispiel: Die Rennauto-Klasse</h2>
+
+      <p>Hier siehst du eine vollständige Klasse mit Konstruktor, mehreren Methoden, Wertebegrenzung (Tankinhalt) und einer Renn-Simulation:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python (Komplettes Beispiel: rennauto.py)</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Rennauto</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">fahrer</span>, <span class="var">speed</span>, <span class="var">tank</span>=<span class="num">50</span>):
+        <span class="var">self</span>.<span class="attr">fahrer</span> = <span class="var">fahrer</span>
+        <span class="var">self</span>.<span class="attr">speed</span> = <span class="var">speed</span>          <span class="cm"># z.B. 220 km/h</span>
+        <span class="var">self</span>.<span class="attr">tank</span> = <span class="var">tank</span>            <span class="cm"># Aktueller Tank in Litern</span>
+        <span class="var">self</span>.<span class="attr">max_tank</span> = <span class="var">tank</span>        <span class="cm"># Maximales Tankvolumen</span>
+        <span class="var">self</span>.<span class="attr">gefahrene_km</span> = <span class="num">0</span>
+
+    <span class="cm"># Methode 1: Fahren (verbraucht Benzin)</span>
+    <span class="kw">def</span> <span class="fn">fahren</span>(<span class="var">self</span>, <span class="var">km</span>):
+        <span class="var">verbrauch</span> = <span class="var">km</span> * <span class="num">0.2</span>  <span class="cm"># 0.2 Liter pro km</span>
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">tank</span> >= <span class="var">verbrauch</span>:
+            <span class="var">self</span>.<span class="attr">tank</span> -= <span class="var">verbrauch</span>
+            <span class="var">self</span>.<span class="attr">gefahrene_km</span> += <span class="var">km</span>
+            <span class="kw">return</span> <span class="str">f"{self.fahrer} fährt {km} km (Tank: {self.tank:.1f}L übrig)"</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="str">f"{self.fahrer} hat nicht genug Sprit für {km} km!"</span>
+
+    <span class="cm"># Methode 2: Tanken (nicht über max_tank)</span>
+    <span class="kw">def</span> <span class="fn">tanken</span>(<span class="var">self</span>, <span class="var">liter</span>):
+        <span class="var">freier_platz</span> = <span class="var">self</span>.<span class="attr">max_tank</span> - <span class="var">self</span>.<span class="attr">tank</span>
+        <span class="var">getankt</span> = <span class="fn">min</span>(<span class="var">freier_platz</span>, <span class="var">liter</span>)
+        <span class="var">self</span>.<span class="attr">tank</span> += <span class="var">getankt</span>
+        <span class="kw">return</span> <span class="str">f"{self.fahrer} tankt {getankt:.1f} Liter nach (Tank: {self.tank:.1f}/{self.max_tank}L)"</span>
+
+    <span class="cm"># Methode 3: Interaktion mit einem anderen Auto</span>
+    <span class="kw">def</span> <span class="fn">duell_gegen</span>(<span class="var">self</span>, <span class="var">gegner_auto</span>):
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">speed</span> > <span class="var">gegner_auto</span>.<span class="attr">speed</span>:
+            <span class="kw">return</span> <span class="str">f"{self.fahrer} überholt {gegner_auto.fahrer} mit Leichtigkeit!"</span>
+        <span class="kw">elif</span> <span class="var">self</span>.<span class="attr">speed</span> &lt; <span class="var">gegner_auto</span>.<span class="attr">speed</span>:
+            <span class="kw">return</span> <span class="str">f"{gegner_auto.fahrer} zieht an {self.fahrer} vorbei!"</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="str">f"{self.fahrer} und {gegner_auto.fahrer} sind genau gleich schnell!"</span>
+
+
+<span class="cm"># Ausprobieren:</span>
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="var">auto1</span> = <span class="fn">Rennauto</span>(<span class="str">"Max"</span>, <span class="var">speed</span>=<span class="num">240</span>, <span class="var">tank</span>=<span class="num">40</span>)
+    <span class="var">auto2</span> = <span class="fn">Rennauto</span>(<span class="str">"Lewis"</span>, <span class="var">speed</span>=<span class="num">235</span>, <span class="var">tank</span>=<span class="num">50</span>)
+
+    <span class="fn">print</span>(<span class="var">auto1</span>.<span class="fn">fahren</span>(<span class="num">100</span>))         <span class="cm"># Verbraucht 20 Liter -> 20L übrig</span>
+    <span class="fn">print</span>(<span class="var">auto1</span>.<span class="fn">duell_gegen</span>(<span class="var">auto2</span>))   <span class="cm"># Max ist schneller als Lewis!</span>
+    <span class="fn">print</span>(<span class="var">auto1</span>.<span class="fn">tanken</span>(<span class="num">30</span>))          <span class="cm"># Tankt bis max 40L auf</span></pre>
+      </div>
+    </section>
+
+    <!-- 3. Interaktion zwischen Objekten -->
+    <section class="card">
+      <h2>3. 🤝 Interaktion: Ein Objekt übergibt sich an ein anderes</h2>
+
+      <p>
+        In der Methode <code>angreifen(self, gegner)</code> übergibst du das gegnerische Held-Objekt als Parameter:
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">⚔️ Wie das Helden-Duell funktioniert:</div>
+        <code>ritter.angreifen(drache)</code>
+        <br><br>
+        1. <code>self</code> ist der Ritter (mit <code>self.angriffskraft</code>).<br>
+        2. <code>gegner</code> ist der Drache.<br>
+        3. Der Ritter ruft: <code>gegner.schaden_erleiden(self.angriffskraft)</code> auf!<br>
+        4. Der Drache verliert Leben und prüft, ob er noch lebt.
+      </div>
+    </section>
+
+    <!-- 4. Aufgaben Card -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_1">
+          <label for="t3_1" class="task-label">
+            <strong>TODO 1:</strong> <code>__init__(self, name, leben=100, angriffskraft=15)</code> mit <code>max_leben = leben</code> und <code>ist_am_leben = True</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_2">
+          <label for="t3_2" class="task-label">
+            <strong>TODO 2:</strong> <code>schaden_erleiden(self, schaden)</code>: Wenn <code>leben &lt;= 0</code> wird -> <code>leben = 0</code> und <code>ist_am_leben = False</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_3">
+          <label for="t3_3" class="task-label">
+            <strong>TODO 3:</strong> <code>heilen(self, heilung)</code>: Erhöht Leben maximal bis <code>max_leben</code> (nur wenn noch am Leben).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_4">
+          <label for="t3_4" class="task-label">
+            <strong>TODO 4:</strong> <code>angreifen(self, gegner)</code>: Ruft <code>gegner.schaden_erleiden(self.angriffskraft)</code> auf (nur wenn beide leben).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3_5">
+          <label for="t3_5" class="task-label">
+            <strong>TODO 5:</strong> <code>status_text(self)</code>: Gibt formatierten Status zurück.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 4 (Angriff)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">def</span> <span class="fn">angreifen</span>(<span class="var">self</span>, <span class="var">gegner</span>):
+    <span class="kw">if</span> <span class="var">self</span>.<span class="attr">ist_am_leben</span> <span class="kw">and</span> <span class="var">gegner</span>.<span class="attr">ist_am_leben</span>:
+        <span class="var">gegner</span>.<span class="fn">schaden_erleiden</span>(<span class="var">self</span>.<span class="attr">angriffskraft</span>)
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>03_methoden_und_verhalten</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../02_init_und_self/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 02</a>
+        <a href="../04_str_und_darstellung/index.html" class="btn">Weiter zu Kapitel 04 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>

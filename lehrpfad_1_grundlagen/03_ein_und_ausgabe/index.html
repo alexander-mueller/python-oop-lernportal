@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel G03: Interaktive Ein- & Ausgabe</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../02_variablen_und_datentypen/index.html">&larr; Kapitel G02</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel G03</span>
+        <span>&rsaquo;</span>
+        <a href="../04_verzweigungen_und_bedingungen/index.html">Kapitel G04 &rarr;</a>
+      </nav>
+      <div class="header-badge">Grundlagen G03 &bull; Schulabgleich 07.0</div>
+      <h1>Interaktive Ein- &amp; Ausgabe 💬⌨️</h1>
+      <p>Lerne, wie du Benutzereingaben mit <code>input()</code> verarbeitest, Typen umwandelst und Daten mit modernen f-Strings elegant formatierst.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Analogie & Einführung -->
+    <section class="card">
+      <h2>1. Die Dialog-Analogie: Wenn Programme sprechen lernen 🗣️</h2>
+      
+      <p>
+        Bisher haben unsere Programme Werte starr im Code festgelegt. In der echten Welt müssen Programme jedoch auf Eingaben von Nutzerinnen und Nutzern reagieren: Ein Chatbot, ein Online-Shop-Kassenbon oder ein Videospiel-Menü.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🎭 Die Dialog-Analogie (Das Interview):</div>
+        Stell dir dein Programm wie eine Interviewerin vor:
+        <br>1. <strong>Frage stellen:</strong> Das Programm fragt höflich nach Informationen (<code>input("Name: ")</code>).
+        <br>2. <strong>Zuhören &amp; Notieren:</strong> Das Programm nimmt die Antwort entgegen (immer als Text!).
+        <br>3. <strong>Verarbeiten:</strong> Das Programm wandelt Zahlen um und rechnet damit.
+        <br>4. <strong>Antworten:</strong> Das Programm gibt das schön formatierte Ergebnis zurück (<code>print(...)</code> mit f-String).
+      </div>
+    </section>
+
+    <!-- 2. input() & Typumwandlung -->
+    <section class="card">
+      <h2>2. Tastatureingabe mit <code>input()</code> &amp; Typumwandlung ⚠️</h2>
+
+      <p>
+        Mit der eingebauten Funktion <code>input()</code> pausiert Python die Programmausführung und wartet auf Tastatureingaben im Terminal.
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span>Python Eingabe</span>
+        </div>
+        <pre><span class="var">name</span> = <span class="fn">input</span>(<span class="str">"Wie lautet dein Name? "</span>)
+<span class="fn">print</span>(<span class="str">f"Hallo {name}!"</span>)</pre>
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">🚨 Die goldene Regel: input() liefert IMMER einen String (str)!</div>
+        Selbst wenn die Benutzerin <code>42</code> eintippt, speichert Python den Text <code>"42"</code>.
+        <br>Wenn du versuchst, <code>"42" + 5</code> zu rechnen, stürzt Python mit einem <code>TypeError</code> ab!
+      </div>
+
+      <h3>Typkonvertierung (Type Casting):</h3>
+      <div class="code-container">
+        <div class="code-header"><span>Ganze Zahlen und Kommazahlen umwandeln</span></div>
+        <pre><span class="cm"># 1. Ganze Zahl (int):</span>
+<span class="var">alter_text</span> = <span class="fn">input</span>(<span class="str">"Dein Alter: "</span>)      <span class="cm"># z.B. "18"</span>
+<span class="var">alter</span> = <span class="fn">int</span>(<span class="var">alter_text</span>)                 <span class="cm"># Jetzt als Ganzzahl 18</span>
+<span class="var">tage</span> = <span class="var">alter</span> * <span class="num">365</span>                      <span class="cm"># Rechnen klappt problemlos!</span>
+
+<span class="cm"># Direkt in einer Zeile kombiniert:</span>
+<span class="var">alter</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Dein Alter: "</span>))
+
+<span class="cm"># 2. Kommazahl (float):</span>
+<span class="var">preis</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Preis in Euro (z.B. 4.99): "</span>))
+<span class="var">brutto</span> = <span class="var">preis</span> * <span class="num">1.20</span></pre>
+      </div>
+    </section>
+
+    <!-- 3. f-Strings & Cheat-Sheet -->
+    <section class="card">
+      <h2>3. Moderne f-Strings &amp; Formatierungs-Cheat-Sheet 📄</h2>
+
+      <p>
+        In modernem Python (ab Version 3.6) sind <strong>f-Strings</strong> (Formatted String Literals) der absolute Standard. Setze ein <code>f</code> direkt vor die Anführungszeichen, und du kannst Variablen und Ausdrücke direkt in <code>{...}</code> einbetten.
+      </p>
+
+      <div class="code-container">
+        <div class="code-header"><span>Beispiel: Ausdrücke direkt im f-String berechnen</span></div>
+        <pre><span class="var">name</span> = <span class="str">"Mia"</span>
+<span class="var">alter</span> = <span class="num">16</span>
+<span class="fn">print</span>(<span class="str">f"Hallo {name}, nächstes Jahr bist du schon {alter + 1} Jahre alt!"</span>)</pre>
+      </div>
+
+      <h3>Format-Spezifizierer (Format Codes):</h3>
+      <p>Hinter einem Doppelpunkt <code>:</code> kannst du das Aussehen von Zahlen exakt steuern:</p>
+
+      <div style="overflow-x: auto; margin: 15px 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <thead>
+            <tr style="background: var(--primary); color: white;">
+              <th style="padding: 12px 14px;">Code</th>
+              <th style="padding: 12px 14px;">Bedeutung</th>
+              <th style="padding: 12px 14px;">Beispiel</th>
+              <th style="padding: 12px 14px;">Ergebnis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 14px;"><code>{x:.2f}</code></td>
+              <td style="padding: 10px 14px;">Genau 2 Nachkommastellen (z.B. für Geldbeträge)</td>
+              <td style="padding: 10px 14px;"><code>f"{2.5:.2f} €"</code></td>
+              <td style="padding: 10px 14px;"><strong style="color: var(--primary);">"2.50 €"</strong></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 14px;"><code>{x:.1f}</code></td>
+              <td style="padding: 10px 14px;">Genau 1 Nachkommastelle (z.B. für BMI / Notenschnitt)</td>
+              <td style="padding: 10px 14px;"><code>f"{23.148:.1f}"</code></td>
+              <td style="padding: 10px 14px;"><strong style="color: var(--primary);">"23.1"</strong></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 14px;"><code>{x:.1%}</code></td>
+              <td style="padding: 10px 14px;">Prozentwert (multipliziert automatisch mit 100)</td>
+              <td style="padding: 10px 14px;"><code>f"{0.19:.1%}"</code></td>
+              <td style="padding: 10px 14px;"><strong style="color: var(--primary);">"19.0%"</strong></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 10px 14px;"><code>{n:04d}</code></td>
+              <td style="padding: 10px 14px;">Ganzzahl mit führenden Nullen (mind. 4 Ziffern)</td>
+              <td style="padding: 10px 14px;"><code>f"{7:04d}"</code></td>
+              <td style="padding: 10px 14px;"><strong style="color: var(--primary);">"0007"</strong></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 14px;"><code>{s:>10}</code></td>
+              <td style="padding: 10px 14px;">Rechtsbündig in einer 10-Zeichen-Spalte</td>
+              <td style="padding: 10px 14px;"><code>f'{"Kaffee":>10}'</code></td>
+              <td style="padding: 10px 14px;"><strong style="color: var(--primary);">"    Kaffee"</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4. <code>print()</code> mit Parametern steuern (<code>sep</code> &amp; <code>end</code>)</h3>
+      <div class="code-container">
+        <div class="code-header"><span>sep und end Parameter</span></div>
+        <pre><span class="cm"># sep ändert das Trennzeichen zwischen Argumenten:</span>
+<span class="fn">print</span>(<span class="str">"2026"</span>, <span class="str">"08"</span>, <span class="str">"29"</span>, <span class="var">sep</span>=<span class="str">"-"</span>)
+<span class="cm"># Ausgabe: 2026-08-29</span>
+
+<span class="cm"># end verhindert den Zeilenumbruch:</span>
+<span class="fn">print</span>(<span class="str">"Lade Daten"</span>, <span class="var">end</span>=<span class="str">"... "</span>)
+<span class="fn">print</span>(<span class="str">"Fertig!"</span>)
+<span class="cm"># Ausgabe: Lade Daten... Fertig!</span></pre>
+      </div>
+    </section>
+
+    <!-- 4. Deine Aufgaben -->
+    <section class="card">
+      <h2>4. 📝 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>g03_ein_und_ausgabe/aufgabe.py</code> und setze folgende 4 Funktionen um:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t1">
+          <label for="t1" class="task-label">
+            <strong>TODO 1: <code>begruessungs_text(name, stadt)</code></strong><br>
+            Erstelle den String: <code>f"Hallo {name}, herzlich willkommen in {stadt}!"</code>
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t2">
+          <label for="t2" class="task-label">
+            <strong>TODO 2: <code>berechne_alter_in_tagen(jahre)</code></strong><br>
+            Multipliziere das übergebene Alter in Jahren mit <code>365</code> und gib das Ergebnis als <code>int</code> zurück.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t3">
+          <label for="t3" class="task-label">
+            <strong>TODO 3: <code>formatiere_rechnungsposten(artikel, anzahl, einzelpreis)</code></strong><br>
+            Berechne den Gesamtpreis (<code>anzahl * einzelpreis</code>) und formatiere beide Preise mit genau 2 Nachkommastellen:<br>
+            <code>f"{anzahl}x {artikel} à {einzelpreis:.2f} € = {gesamtpreis:.2f} €"</code>
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t4">
+          <label for="t4" class="task-label">
+            <strong>TODO 4: <code>steckbrief(name, groesse_m, gewicht_kg)</code></strong><br>
+            Berechne den BMI (<code>gewicht_kg / (groesse_m ** 2)</code>) und gib den formatierten Steckbrief zurück:<br>
+            <code>f"Steckbrief: {name} | Größe: {groesse_m:.2f} m | Gewicht: {gewicht_kg:.1f} kg | BMI: {bmi:.1f}"</code>
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Rechnungsposten)</summary>
+        <div class="details-content">
+          <p>Multipliziere zuerst <code>gesamtpreis = anzahl * einzelpreis</code>. Setze dann beide Werte in den f-String ein und formatiere sie mit <code>:.2f</code>:</p>
+          <div class="code-container">
+            <pre><code>gesamtpreis = anzahl * einzelpreis
+return f"{anzahl}x {artikel} à {einzelpreis:.2f} € = {gesamtpreis:.2f} €"</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 4 (BMI &amp; Potenzen in Python)</summary>
+        <div class="details-content">
+          <p>In Python rechnet man Potenzen mit dem Doppelstern-Operator <code>**</code>:</p>
+          <div class="code-container">
+            <pre><code>bmi = gewicht_kg / (groesse_m ** 2)
+return f"Steckbrief: {name} | Größe: {groesse_m:.2f} m | Gewicht: {gewicht_kg:.1f} kg | BMI: {bmi:.1f}"</code></pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Automatische Tests &amp; Überprüfung</h2>
+      <p>Führe das Testskript im Terminal aus, um deine Funktionen zu prüfen:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <p>Um das interaktive Programm mit echten Tastatureingaben auszuprobieren, führe aus:</p>
+      <div class="code-container">
+        <div class="code-header"><span>Interaktiver Test</span></div>
+        <pre><code>python3 aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../02_variablen_und_datentypen/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel G02</a>
+        <a href="../04_verzweigungen_und_bedingungen/index.html" class="btn">Weiter zu Kapitel G04: Verzweigungen &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+</body>
+</html>
