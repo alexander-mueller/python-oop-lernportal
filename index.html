@@ -181,12 +181,13 @@
       <header>
         <div class="header-container">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-            <div class="header-badge">🐍 Python Online-Lernplattform &amp; Web-IDE</div>
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div class="header-badge">🐍 Python Online-Lernplattform (Solo &amp; Klassen)</div>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
               <span id="nav-auth-user" style="display: none; font-size: 0.85rem; font-weight: 700; color: white;"></span>
+              <button type="button" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #059669;" onclick="window.AUTH.startGuestSoloMode()">🚀 Solo-Start (Gast)</button>
               <button type="button" class="btn" id="nav-btn-login" style="padding: 5px 12px; font-size: 0.8rem; background: rgba(255,255,255,0.15);" onclick="window.openAuthModal('login')">🔑 Anmelden</button>
               <button type="button" class="btn" id="nav-btn-register" style="padding: 5px 12px; font-size: 0.8rem; background: var(--primary);" onclick="window.openAuthModal('register')">Konto erstellen</button>
-              <a href="teacher.html" class="btn" id="nav-teacher-link" style="padding: 5px 12px; font-size: 0.8rem; background: #059669; display: none;">👨‍🏫 Lehrerbereich</a>
+              <a href="teacher.html" class="btn" id="nav-teacher-link" style="padding: 5px 12px; font-size: 0.8rem; background: #0891b2; display: none;">👨‍🏫 Lehrerbereich</a>
             </div>
           </div>
           <h1>Vom Einsteiger zum Software-Entwickler</h1>
@@ -208,10 +209,17 @@
 
         <!-- Willkommen Card -->
         <section class="card">
-          <h2>👋 Willkommen zu deiner Python-Lernreise!</h2>
-          <p>
-            Dieses Portal begleitet dich Schritt für Schritt von den ersten Schritten in Python bis hin zu vollständigen Desktop-Apps. Du kannst jedes Kapitel direkt in der <strong>integrierten Monaco Web-IDE</strong> im Browser programmieren und mit 1 Klick gegen automatische Tests prüfen!
-          </p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h2 style="margin-top: 0;">👋 Willkommen zu deiner Python-Lernreise!</h2>
+              <p>
+                Dieses Portal begleitet dich Schritt für Schritt von den ersten Schritten in Python bis hin zu vollständigen Desktop-Apps. Du kannst jedes Kapitel direkt in der <strong>integrierten Monaco Web-IDE</strong> im Browser programmieren und mit 1 Klick gegen automatische Tests prüfen!
+              </p>
+            </div>
+            <div id="solo-mode-indicator" style="background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; padding: 6px 14px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;">
+              🎓 Solo-Modus aktiv (Eigenes Tempo)
+            </div>
+          </div>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0;">
             <div style="background: #f8fafc; border-left: 4px solid #059669; padding: 14px; border-radius: var(--radius-sm);">

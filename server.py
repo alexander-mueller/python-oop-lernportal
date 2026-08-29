@@ -441,8 +441,8 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({"error": "Passwort muss zwischen 6 und 128 Zeichen lang sein"}, 400)
             if not name or len(name) > 60:
                 return self.send_json({"error": "Name muss zwischen 1 und 60 Zeichen lang sein"}, 400)
-            if role not in ("student", "teacher"):
-                role = "student"
+            if role not in ("student", "teacher", "solo"):
+                role = "solo"
 
             pwd_hash, salt = hash_password(password)
             conn = get_db()

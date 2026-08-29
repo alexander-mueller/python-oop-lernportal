@@ -146,7 +146,8 @@ if ($path === '/auth/register') {
     $email = strtolower(trim((string)($body['email'] ?? '')));
     $password = (string)($body['password'] ?? '');
     $name = trim((string)($body['name'] ?? ''));
-    $role = ($body['role'] ?? 'student') === 'teacher' ? 'teacher' : 'student';
+    $role_input = $body['role'] ?? 'solo';
+    $role = in_array($role_input, ['student', 'teacher', 'solo'], true) ? $role_input : 'solo';
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 6 || strlen($name) < 1) {
         http_response_code(400);
