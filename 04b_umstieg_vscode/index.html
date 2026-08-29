@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kapitel 04b: Umstieg auf Visual Studio Code</title>
+  <title>Kapitel 04b: Umstieg & Installation von Visual Studio Code</title>
   <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
@@ -19,9 +19,9 @@
         <span>&rsaquo;</span>
         <a href="../05_objekte_kombinieren/index.html">Kapitel 05 &rarr;</a>
       </nav>
-      <div class="header-badge">Exkurs &amp; Praxissprung</div>
+      <div class="header-badge">Installation &amp; Setup</div>
       <h1>Umstieg von Thonny auf Visual Studio Code 🚀💻</h1>
-      <p>Willkommen in der Profi-Entwicklungsumgebung! Lerne die besten Plugins, Shortcuts und Arbeitsabläufe kennen.</p>
+      <p>Schritt-für-Schritt-Installationsanleitung (Windows, Mac, Linux), die besten Plugins und Profi-Tipps.</p>
     </div>
   </header>
 
@@ -32,56 +32,135 @@
       <h2>1. Warum wechseln wir von Thonny zu VS Code?</h2>
       
       <p>
-        <strong>Thonny</strong> war für den Anfang genial: Es ist einfach, hat einen Variablen-Inspektor und man kann Zeile für Zeile durch ein Skript gehen.
+        <strong>Thonny</strong> war für den Einstieg super: Es ist schlank und man sieht Variablen sofort.
       </p>
       <p>
-        Doch je größer deine Projekte werden (mehrere Dateien, Klassen, Tests und Git), desto mehr stößt Thonny an seine Grenzen. <strong>Visual Studio Code (VS Code)</strong> ist der weltweite Standard in der professionellen Softwareentwicklung.
+        Aber ab jetzt werden unsere Projekte größer (mehrere Dateien, Klassen, Tests und Git). <strong>Visual Studio Code (VS Code)</strong> von Microsoft ist die weltweit beliebteste Entwicklungsumgebung für Python.
       </p>
 
       <div class="box box-analogie">
-        <div class="box-title">🏎️ Vom Fahrschulauto zum Rennwagen:</div>
+        <div class="box-title">🏎️ Die 4 größten Vorteile von VS Code:</div>
         <ul>
-          <li><strong>Thonny</strong> ist das Fahrschulauto mit Doppelpedalen – perfekt für die ersten Fahrstunden auf dem Parkplatz.</li>
-          <li><strong>VS Code</strong> ist ein modernes Sportauto mit Navi, Spurhalteassistent, Tempomat und Turbolader. Es hilft dir beim Tippen, findet Fehler automatisch und macht das Coden viel schneller!</li>
+          <li><strong>IntelliSense:</strong> Schlägt dir automatisch Methoden und Attribute vor (z.B. wenn du <code>mein_auto.</code> tippst).</li>
+          <li><strong>Projekt-Explorer:</strong> Alle Dateien und Ordner deines Kurses auf einen Blick.</li>
+          <li><strong>Integriertes Terminal:</strong> Skripte und Tests direkt im Editor mit <kbd>Strg</kbd> + <kbd>`</kbd> ausführen.</li>
+          <li><strong>Erweiterungen (Extensions):</strong> Fehler werden direkt farbig im Code markiert (Error Lens).</li>
         </ul>
       </div>
-
-      <h3>Die 4 größten Vorteile von VS Code:</h3>
-      <ul style="margin-left: 20px; margin-top: 10px;">
-        <li style="margin-bottom: 6px;"><strong>IntelliSense:</strong> Schlägt dir automatisch Methoden und Variablennamen vor (kein Vertippen mehr!).</li>
-        <li style="margin-bottom: 6px;"><strong>Projekt-Ordner:</strong> Du siehst alle Dateien deines Projekts auf einen Blick in der Seitenleiste.</li>
-        <li style="margin-bottom: 6px;"><strong>Integriertes Terminal:</strong> Führe Tests und Skripte direkt im Editor aus, ohne Fenster zu wechseln.</li>
-        <li style="margin-bottom: 6px;"><strong>Tausende Erweiterungen:</strong> Passe VS Code mit Themes, Formatierern und Fehleranzeigen perfekt an dich an.</li>
-      </ul>
     </section>
 
-    <!-- 2. Wichtigstes Grundkonzept: Open Folder -->
+    <!-- 2. Installationsanleitung für alle Betriebssysteme -->
     <section class="card">
-      <h2>2. Das wichtigste Grundkonzept: "Ordner öffnen" (Open Folder)</h2>
+      <h2>2. 📥 Schritt-für-Schritt Installationsanleitung</h2>
+
+      <p>Wähle dein Betriebssystem aus und befolge die Schritte:</p>
+
+      <!-- Windows Installation -->
+      <details open>
+        <summary style="font-size: 1.15rem;">🪟 Anleitung für Windows 10 / 11</summary>
+        <div class="details-content">
+          <ol style="margin-left: 20px;">
+            <li style="margin-bottom: 10px;">
+              Gehe auf die offizielle Website: <a href="https://code.visualstudio.com" target="_blank" style="color: var(--primary); font-weight: bold;">code.visualstudio.com</a> und klicke auf den blauen Button <strong>"Download for Windows"</strong>.
+            </li>
+            <li style="margin-bottom: 10px;">
+              Starte die heruntergeladene Installationsdatei (<code>VSCodeUserSetup-x64-...exe</code>).
+            </li>
+            <li style="margin-bottom: 10px;">
+              Akzeptiere die Lizenzvereinbarung und klicke auf <strong>Weiter</strong>.
+            </li>
+            <li style="margin-bottom: 10px;">
+              <div class="box box-warning" style="margin: 6px 0;">
+                <div class="box-title">⚠️ Sehr wichtig bei der Windows-Installation:</div>
+                Setze im Schritt <em>"Zusätzliche Aufgaben auswählen"</em> unbedingt <strong>alle Haken</strong>:
+                <ul style="margin-left: 20px; margin-top: 6px;">
+                  <li>&check; <strong>Aktion "Mit Code öffnen" zum Windows Explorer-Dateikontextmenü hinzufügen</strong></li>
+                  <li>&check; <strong>Aktion "Mit Code öffnen" zum Windows Explorer-Verzeichniskontextmenü hinzufügen</strong></li>
+                  <li>&check; <strong>Code als Editor für unterstützte Dateitypen registrieren</strong></li>
+                  <li>&check; <strong>Zu PATH hinzufügen (nach Neustart verfügbar)</strong></li>
+                </ul>
+              </div>
+            </li>
+            <li style="margin-bottom: 10px;">
+              Klicke auf <strong>Installieren</strong> und danach auf <strong>Fertigstellen</strong> (VS Code startet automatisch).
+            </li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- macOS Installation -->
+      <details>
+        <summary style="font-size: 1.15rem;">🍎 Anleitung für macOS (MacBook / iMac)</summary>
+        <div class="details-content">
+          <ol style="margin-left: 20px;">
+            <li style="margin-bottom: 10px;">
+              Gehe auf <a href="https://code.visualstudio.com" target="_blank" style="color: var(--primary); font-weight: bold;">code.visualstudio.com</a> und lade <strong>"Download for Mac"</strong> herunter (Universal).
+            </li>
+            <li style="margin-bottom: 10px;">
+              Öffne deinen <strong>Downloads-Ordner</strong> und entpacke die <code>.zip</code>-Datei (falls nicht automatisch geschehen).
+            </li>
+            <li style="margin-bottom: 10px;">
+              <div class="box box-tipp" style="margin: 6px 0;">
+                <div class="box-title">💡 Wichtig für Mac-Nutzer:</div>
+                Ziehe die Datei <strong>Visual Studio Code</strong> aus dem Downloads-Ordner in deinen Ordner <strong>Programme (Applications)</strong>!
+              </div>
+            </li>
+            <li style="margin-bottom: 10px;">
+              Öffne VS Code aus dem Programme-Ordner. (Falls eine Warnung erscheint: Klicke auf <em>"Öffnen"</em>).
+            </li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- Linux Installation -->
+      <details>
+        <summary style="font-size: 1.15rem;">🐧 Anleitung für Linux (Ubuntu / Debian / Mint)</summary>
+        <div class="details-content">
+          <p>Lade das <code>.deb</code>-Paket von <a href="https://code.visualstudio.com" target="_blank" style="color: var(--primary);">code.visualstudio.com</a> herunter und doppelklicke darauf, oder installiere es direkt per Terminal:</p>
+          <div class="code-container">
+            <pre><code>sudo apt update && sudo apt install snapd
+sudo snap install --classic code</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- Sprache auf Deutsch umstellen -->
+      <div class="box box-tipp" style="margin-top: 20px;">
+        <div class="box-title">🇩🇪 Sprache auf Deutsch umstellen (Optional):</div>
+        Wenn du VS Code auf Deutsch haben möchtest:
+        <ol style="margin-left: 20px; margin-top: 6px;">
+          <li>Drücke <kbd>Strg</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>).</li>
+          <li>Tippe: <code>Configure Display Language</code> und drücke <kbd>Enter</kbd>.</li>
+          <li>Wähle <code>Deutsch (German)</code> aus. VS Code startet kurz neu und ist komplett auf Deutsch!</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 3. Projektordner öffnen -->
+    <section class="card">
+      <h2>3. 📁 Das Projekt in VS Code öffnen</h2>
 
       <div class="box box-warning">
-        <div class="box-title">⚠️ Wichtigster Unterschied zu Thonny:</div>
-        In Thonny hat man meist nur eine einzelne Datei geöffnet (z.B. <code>aufgabe.py</code>).<br>
-        In <strong>VS Code öffnet man immer den gesamten Projektordner</strong> (z.B. <code>Aufgaben-Python</code>)!
+        <div class="box-title">⚠️ Grundregel: Immer "Ordner öffnen", nicht nur eine Datei!</div>
+        In VS Code öffnet man immer den <strong>gesamten Hauptordner</strong> (<code>Aufgaben-Python</code>), damit alle Kapitel, Hilfsdateien und Tests auf einmal verknüpft sind.
       </div>
 
-      <h3>So öffnest du dein Projekt richtig:</h3>
-      <ol style="margin-left: 20px; margin-top: 10px;">
-        <li style="margin-bottom: 8px;">Starte <strong>Visual Studio Code</strong>.</li>
-        <li style="margin-bottom: 8px;">Klicke im Menü oben auf <strong>Datei &rarr; Ordner öffnen...</strong> (oder <kbd>Strg</kbd> + <kbd>K</kbd>, dann <kbd>Strg</kbd> + <kbd>O</kbd> / auf Mac: <kbd>Cmd</kbd> + <kbd>O</kbd>).</li>
-        <li style="margin-bottom: 8px;">Wähle den Hauptordner <code>Aufgaben-Python</code> aus und klicke auf <strong>Öffnen</strong>.</li>
-        <li style="margin-bottom: 8px;">Bestätige eventuell die Frage <em>"Vertrauen Sie den Autoren?"</em> mit <strong>Ja</strong>.</li>
+      <ol style="margin-left: 20px;">
+        <li style="margin-bottom: 8px;">Klicke oben im Menü auf <strong>Datei &rarr; Ordner öffnen...</strong> (Mac: <strong>File &rarr; Open Folder...</strong>).</li>
+        <li style="margin-bottom: 8px;">Wähle deinen Ordner <code>Aufgaben-Python</code> aus und klicke auf <strong>Ordner auswählen</strong>.</li>
+        <li style="margin-bottom: 8px;">Bestätige die Meldung <em>"Vertrauen Sie den Autoren dieser Dateien?"</em> mit <strong>Ja</strong>.</li>
       </ol>
-      <p style="margin-top: 10px;">Jetzt siehst du links im Explorer alle Kapitelordner, Tests und Dateien sauber aufgelistet!</p>
+      <p style="margin-top: 10px;">Jetzt siehst du links in der Leiste den gesamten Dateibaum aller Kapitel!</p>
     </section>
 
-    <!-- 3. Die besten Plugins / Extensions -->
+    <!-- 4. Die besten Plugins / Extensions -->
     <section class="card">
-      <h2>3. 🧩 Die unverzichtbaren Erweiterungen (Plugins)</h2>
+      <h2>4. 🧩 Die wichtigsten Erweiterungen (Plugins)</h2>
 
       <p>
-        Um Erweiterungen zu installieren, klicke ganz links in der Seitenleiste auf das <strong>Erweiterungs-Icon</strong> (die vier Quadrate mit einem fliegenden Würfel) oder drücke <kbd>Strg</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>).
+        Klicke ganz links in der Seitenleiste auf das <strong>Erweiterungs-Icon</strong> (die 4 Kacheln) oder drücke <kbd>Strg</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>).
       </p>
+      <p>Suche nach den folgenden Namen und klicke jeweils auf <strong>Installieren (Install)</strong>:</p>
 
       <div class="extension-grid">
         
@@ -89,8 +168,8 @@
         <div class="extension-card">
           <div class="extension-icon">🐍</div>
           <div class="extension-info">
-            <h4>Python (von Microsoft)</h4>
-            <p><strong>Pflicht-Plugin!</strong> Aktiviert Syntax-Highlighting, Code-Ausführung, IntelliSense und Debugging.</p>
+            <h4>1. Python (von Microsoft)</h4>
+            <p><strong>Pflicht!</strong> Aktiviert Syntax-Hervorhebung, Code-Ausführung und IntelliSense.</p>
           </div>
         </div>
 
@@ -98,8 +177,8 @@
         <div class="extension-card">
           <div class="extension-icon">⚡</div>
           <div class="extension-info">
-            <h4>Pylance (von Microsoft)</h4>
-            <p>Macht die Autovervollständigung blitzschnell und warnt dich sofort bei falschen Typen.</p>
+            <h4>2. Pylance (von Microsoft)</h4>
+            <p>Macht die Autovervollständigung blitzschnell und warnt bei falschen Parametern.</p>
           </div>
         </div>
 
@@ -107,8 +186,8 @@
         <div class="extension-card" style="border: 2px solid var(--primary);">
           <div class="extension-icon">🔍</div>
           <div class="extension-info">
-            <h4>Error Lens <span style="font-size: 0.75rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 10px;">Geheimtipp!</span></h4>
-            <p>Zeigt Fehler und Warnungen <strong>direkt als farbigen Text in der Codezeile</strong> an – kein Suchen im Terminal nötig!</p>
+            <h4>3. Error Lens <span style="font-size: 0.75rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 10px;">Must-Have!</span></h4>
+            <p>Zeigt Fehler <strong>direkt farbig in der Codezeile</strong> an – du musst nicht lange suchen!</p>
           </div>
         </div>
 
@@ -116,8 +195,8 @@
         <div class="extension-card">
           <div class="extension-icon">🎨</div>
           <div class="extension-info">
-            <h4>Material Icon Theme</h4>
-            <p>Verleiht Python-, HTML- und Git-Dateien im Explorer hübsche und bunte Symbole.</p>
+            <h4>4. Material Icon Theme</h4>
+            <p>Gibt allen Dateien im Explorer schöne, bunte Symbole (Python-Logo, HTML-Icon etc.).</p>
           </div>
         </div>
 
@@ -125,8 +204,8 @@
         <div class="extension-card">
           <div class="extension-icon">💬</div>
           <div class="extension-info">
-            <h4>Better Comments</h4>
-            <p>Färbt Kommentare ein: <code># TODO:</code> wird orange, <code># !</code> wird rot, <code># ?</code> wird blau.</p>
+            <h4>5. Better Comments</h4>
+            <p>Färbt Kommentare ein: <code># TODO</code> (orange), <code># !</code> (rot), <code># ?</code> (blau).</p>
           </div>
         </div>
 
@@ -134,46 +213,17 @@
         <div class="extension-card">
           <div class="extension-icon">🪄</div>
           <div class="extension-info">
-            <h4>Black Formatter</h4>
-            <p>Formatiert deinen Code beim Speichern (<kbd>Strg</kbd>+<kbd>S</kbd>) automatisch nach den offiziellen Python-Regeln.</p>
+            <h4>6. Black Formatter</h4>
+            <p>Formatiert Code beim Speichern (<kbd>Strg</kbd>+<kbd>S</kbd>) automatisch perfekt.</p>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- 4. Die Oberfläche verstehen -->
-    <section class="card">
-      <h2>4. 🖥️ Die Benutzeroberfläche im Überblick</h2>
-
-      <ul style="margin-left: 20px;">
-        <li style="margin-bottom: 12px;">
-          <strong>Seitenleiste links:</strong>
-          <br>📁 <strong>Explorer:</strong> Dateibaum durchsuchen.
-          <br>🔍 <strong>Suche:</strong> Text im gesamten Projekt finden.
-          <br>🌿 <strong>Quellcodeverwaltung:</strong> Git Commits &amp; Pushes.
-          <br>🧩 <strong>Erweiterungen:</strong> Neue Plugins installieren.
-        </li>
-        <li style="margin-bottom: 12px;">
-          <strong>Das integrierte Terminal:</strong>
-          <br>Drücke <kbd>Strg</kbd> + <kbd>`</kbd> (Taste links neben der Backspace-Taste / bzw. <kbd>Strg</kbd> + <kbd>J</kbd>).
-          <br>Hier kannst du direkt wie gewohnt deine Befehle tippen:
-          <div class="code-container" style="margin: 8px 0;">
-            <pre><code>python3 test_all.py</code></pre>
-          </div>
-        </li>
-        <li style="margin-bottom: 12px;">
-          <strong>Python-Interpreter auswählen:</strong>
-          <br>Unten rechts in der Statusleiste steht deine Python-Version (z.B. <code>3.11.x</code>). Falls dort <em>"Select Interpreter"</em> steht, klicke darauf und wähle den empfohlenen Python-Pfad aus.
-        </li>
-      </ul>
-    </section>
-
     <!-- 5. Die wichtigsten Shortcuts -->
     <section class="card">
-      <h2>5. ⌨️ Die wichtigsten Tastenkombinationen (Shortcuts)</h2>
-
-      <p>Mit diesen Shortcuts codest du wie ein echter Profi:</p>
+      <h2>5. ⌨️ Tastenkombinationen (Shortcuts) für Profis</h2>
 
       <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
         <thead>
@@ -195,7 +245,7 @@
             <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Cmd</kbd> + <kbd>`</kbd> (oder <kbd>Cmd</kbd> + <kbd>J</kbd>)</td>
           </tr>
           <tr>
-            <td style="padding: 10px; border: 1px solid var(--border-color);">⚡ Command Palette (Alles suchen)</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">⚡ Command Palette (Befehle suchen)</td>
             <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Strg</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td>
             <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td>
           </tr>
@@ -210,8 +260,8 @@
             <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Cmd</kbd> + <kbd>D</kbd></td>
           </tr>
           <tr style="background: #fafafa;">
-            <td style="padding: 10px; border: 1px solid var(--border-color);">🚀 Skript direkt ausführen</td>
-            <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Strg</kbd> + <kbd>F5</kbd> (oder Play-Button oben rechts)</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">🚀 Skript direkt starten</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Strg</kbd> + <kbd>F5</kbd> (oder Play-Button ▶️)</td>
             <td style="padding: 10px; border: 1px solid var(--border-color);"><kbd>Cmd</kbd> + <kbd>F5</kbd></td>
           </tr>
         </tbody>
@@ -228,38 +278,32 @@
         <li class="task-item">
           <input type="checkbox" class="task-checkbox" id="c1">
           <label for="c1" class="task-label">
-            <strong>Schritt 1:</strong> Öffne das Projekt <code>Aufgaben-Python</code> als Ordner in VS Code.
+            <strong>Schritt 1:</strong> VS Code herunterladen, installieren und den Ordner <code>Aufgaben-Python</code> öffnen.
           </label>
         </li>
         <li class="task-item">
           <input type="checkbox" class="task-checkbox" id="c2">
           <label for="c2" class="task-label">
-            <strong>Schritt 2:</strong> Installiere die Erweiterungen <strong>Python</strong> und <strong>Error Lens</strong>.
+            <strong>Schritt 2:</strong> Die Erweiterungen <strong>Python</strong> und <strong>Error Lens</strong> installieren.
           </label>
         </li>
         <li class="task-item">
           <input type="checkbox" class="task-checkbox" id="c3">
           <label for="c3" class="task-label">
-            <strong>Schritt 3:</strong> Öffne <code>vscode_test.py</code> und beobachte, wie Error Lens sofort Fehler hervorhebt.
+            <strong>Schritt 3:</strong> In <code>vscode_test.py</code> die Autovervollständigung (IntelliSense) ausprobieren (<code>tesla.</code> tippen).
           </label>
         </li>
         <li class="task-item">
           <input type="checkbox" class="task-checkbox" id="c4">
           <label for="c4" class="task-label">
-            <strong>Schritt 4:</strong> Tippe <code>auto.</code> und sieh dir die Autovervollständigung (IntelliSense) an.
-          </label>
-        </li>
-        <li class="task-item">
-          <input type="checkbox" class="task-checkbox" id="c5">
-          <label for="c5" class="task-label">
-            <strong>Schritt 5:</strong> Öffne das Terminal mit <kbd>Strg</kbd> + <kbd>`</kbd> und führe <code>python3 vscode_test.py</code> aus.
+            <strong>Schritt 4:</strong> Das Terminal mit <kbd>Strg</kbd> + <kbd>`</kbd> öffnen und <code>python3 04b_umstieg_vscode/vscode_test.py</code> ausführen.
           </label>
         </li>
       </ul>
 
       <div class="box box-success">
-        <div class="box-title">🎉 Perfekt vorbereitet!</div>
-        Du beherrschst nun die Grundlagen von VS Code. Jetzt bist du bereit für Kapitel 05 (Objekte kombinieren)!
+        <div class="box-title">🎉 Perfekt eingerichtet!</div>
+        Du bist jetzt mit modernem Profi-Werkzeug ausgestattet und bereit für Kapitel 05 (Objekte kombinieren)!
       </div>
 
       <div class="footer-nav">

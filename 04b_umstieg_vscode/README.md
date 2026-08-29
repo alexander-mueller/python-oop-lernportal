@@ -1,58 +1,87 @@
-# Kapitel 04b: Umstieg von Thonny auf Visual Studio Code (VS Code) 🚀💻
+# Kapitel 04b: Umstieg & Installation von Visual Studio Code (VS Code) 🚀💻
 
-Herzlich willkommen zum Exkurs!
+Herzlich willkommen zum Praxis-Guide!
 
 Bisher hast du deine Aufgaben vielleicht in **Thonny** bearbeitet. Thonny ist super für die ersten Schritte. Aber ab jetzt werden unsere Projekte größer (mehrere Dateien, Klassen, Tests). 
 
-**Visual Studio Code (VS Code)** ist die beliebteste und mächtigste Entwicklungsumgebung der Welt. Hier lernst du, wie du sie einrichtest und wie ein Profi nutzt!
+**Visual Studio Code (VS Code)** von Microsoft ist die beliebteste und modernste Entwicklungsumgebung der Welt. Hier erfährst du, wie du sie installierst und einrichtest.
 
 ---
 
-## 🏗️ Das wichtigste Grundkonzept: "Ordner öffnen" (Open Folder)
+## 📥 1. Installation Schritt-für-Schritt
 
-- In Thonny öffnet man meistens nur einzelne Dateien (wie `aufgabe.py`).
-- In **VS Code öffnet man immer den gesamten Projektordner**:
-  1. Starte VS Code.
-  2. Klicke auf **Datei &rarr; Ordner öffnen...** (oder `Strg + K`, dann `Strg + O` / auf Mac: `Cmd + O`).
-  3. Wähle den Ordner `Aufgaben-Python` aus.
+### 🪟 Für Windows (Windows 10 / 11):
+1. Gehe auf [code.visualstudio.com](https://code.visualstudio.com) und lade den **Windows Installer** herunter.
+2. Starte die Datei `VSCodeUserSetup-x64-...exe`.
+3. **⚠️ SEHR WICHTIG:** Setze im Schritt *"Zusätzliche Aufgaben"* alle 4 Haken:
+   - [x] *Aktion 'Mit Code öffnen' zum Windows Explorer-Dateikontextmenü hinzufügen*
+   - [x] *Aktion 'Mit Code öffnen' zum Windows Explorer-Verzeichniskontextmenü hinzufügen*
+   - [x] *Code als Editor für unterstützte Dateitypen registrieren*
+   - [x] *Zu PATH hinzufügen*
+4. Klicke auf **Installieren** und **Fertigstellen**.
 
-Jetzt hast du links im Explorer die volle Übersicht über alle Kapitel!
+### 🍎 Für macOS (MacBook / iMac):
+1. Lade auf [code.visualstudio.com](https://code.visualstudio.com) die Mac-Version (`.zip`) herunter.
+2. Entpacke die Datei im Downloads-Ordner.
+3. **⚠️ Wichtig:** Ziehe die Datei `Visual Studio Code.app` in deinen Ordner **Programme (Applications)**!
+4. Starte VS Code aus dem Programme-Ordner.
 
----
-
-## 🧩 Die besten Erweiterungen (Extensions)
-
-Drücke `Strg + Shift + X` (Mac: `Cmd + Shift + X`), um den Erweiterungs-Store zu öffnen. Installiere folgende Plugins:
-
-1. **Python & Pylance (von Microsoft):**
-   Aktiviert Autovervollständigung (IntelliSense), Syntaxprüfung und den Ausführen-Button.
-2. **Error Lens (⭐ Geheimtipp!):**
-   Zeigt Fehler und Warnungen direkt als Text in der Codezeile an! Du musst nicht erst lange im Terminal nach Zeilennummern suchen.
-3. **Material Icon Theme:**
-   Hübsche, bunte Datei-Symbole für Python, Markdown, HTML und Git.
-4. **Better Comments:**
-   Färbt `# TODO`, `# !` und `# ?` farblich ein.
-5. **Black Formatter:**
-   Formatiert deinen Code beim Speichern automatisch sauber und ordentlich.
+### 🐧 Für Linux (Ubuntu / Debian):
+```bash
+sudo apt update && sudo apt install snapd
+sudo snap install --classic code
+```
 
 ---
 
-## ⌨️ Die wichtigsten Tastenkombinationen (Shortcuts)
+## 🇩🇪 2. Sprache auf Deutsch umstellen (Optional)
+
+1. Drücke `Strg + Shift + P` (Mac: `Cmd + Shift + P`).
+2. Tippe: `Configure Display Language` und drücke `Enter`.
+3. Wähle `Deutsch (German)` aus und starte VS Code neu.
+
+---
+
+## 📁 3. Das Projekt in VS Code öffnen
+
+- In Thonny öffnet man meistens nur einzelne Dateien (`aufgabe.py`).
+- In **VS Code öffnet man immer den gesamten Hauptordner**:
+  1. Klicke oben auf **Datei &rarr; Ordner öffnen...** (Mac: `Cmd + O`).
+  2. Wähle den Ordner `Aufgaben-Python` aus.
+  3. Bestätige *"Vertrauen Sie den Autoren"* mit **Ja**.
+
+Jetzt siehst du links im Explorer alle Kapitel und Dateien!
+
+---
+
+## 🧩 4. Die besten Erweiterungen (Extensions)
+
+Drücke `Strg + Shift + X` (Mac: `Cmd + Shift + X`), um den Extension-Store zu öffnen:
+
+1. **Python & Pylance (von Microsoft):** IntelliSense, Syntaxprüfung & Ausführen.
+2. **Error Lens (⭐ Must-Have!):** Zeigt Fehler direkt farbig in der Zeile an.
+3. **Material Icon Theme:** Bunte Datei-Symbole.
+4. **Better Comments:** Farbige Kommentare (`# TODO`, `# !`).
+5. **Black Formatter:** Automatisches Formatieren beim Speichern (`Strg + S`).
+
+---
+
+## ⌨️ 5. Die wichtigsten Shortcuts
 
 | Aktion | Windows / Linux | macOS |
 | :--- | :--- | :--- |
 | **Datei speichern** | `Strg + S` | `Cmd + S` |
 | **Terminal öffnen / schließen** | `Strg + \`` (oder `Strg + J`) | `Cmd + \`` (oder `Cmd + J`) |
 | **Command Palette (Befehle suchen)** | `Strg + Shift + P` | `Cmd + Shift + P` |
-| **Code formatieren** | `Alt + Shift + F` | `Option + Shift + F` |
+| **Code automatisch formatieren** | `Alt + Shift + F` | `Option + Shift + F` |
 | **Nächstes gleiches Wort markieren** | `Strg + D` | `Cmd + D` |
-| **Skript ausführen** | `Strg + F5` (oder Play-Button oben) | `Cmd + F5` |
+| **Skript starten** | `Strg + F5` (oder Play-Button ▶️) | `Cmd + F5` |
 
 ---
 
-## 🧪 Ausprobieren in `vscode_test.py`
+## 🧪 6. Ausprobieren in `vscode_test.py`
 
 Öffne `vscode_test.py` in VS Code und teste:
 1. Wie **Error Lens** Fehler in Echtzeit anzeigt.
-2. Wie **IntelliSense** Methoden vorschlägt, wenn du `auto.` tippst.
-3. Öffne das Terminal mit `Strg + \`` und führe `python3 test_all.py` aus!
+2. Wie **IntelliSense** Methoden vorschlägt, wenn du `tesla.` tippst.
+3. Öffne das Terminal mit `Strg + \`` und führe `python3 04b_umstieg_vscode/vscode_test.py` aus!
