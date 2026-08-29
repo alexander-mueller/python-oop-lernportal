@@ -1,0 +1,105 @@
+"""
+Kapitel 04: __str__ und Objektlisten – Supermarkt & Warenkorb
+============================================================
+
+In dieser Aufgabe erstellst du zwei Klassen: 'Artikel' und 'Warenkorb'.
+"""
+
+class Artikel:
+    # ==========================================================================
+    # TODO 1: Konstruktor für Artikel
+    # Parameter: self, name (str), preis (float), anzahl (int, Standardwert 1)
+    # Speichere: self.name, self.preis, self.anzahl
+    # ==========================================================================
+    def __init__(self, name, preis, anzahl=1):
+        # Schreibe hier deinen Code für TODO 1:
+        pass
+
+    # ==========================================================================
+    # TODO 2: Methode "gesamtpreis(self)"
+    # Gibt den Preis für diesen Artikel multipliziert mit der Anzahl zurück.
+    # Beispiel: 3 Äpfel à 0.50€ -> 1.50
+    # ==========================================================================
+    def gesamtpreis(self):
+        # Schreibe hier deinen Code für TODO 2:
+        pass
+
+    # ==========================================================================
+    # TODO 3: Dunder-Methode "__str__(self)"
+    # Gibt einen String im folgenden Format zurück:
+    # "{anzahl}x {name} (je {preis:.2f} €) = {gesamtpreis:.2f} €"
+    #
+    # Beispiel:
+    # Bei name="Milch", preis=1.29, anzahl=2:
+    # -> "2x Milch (je 1.29 €) = 2.58 €"
+    # ==========================================================================
+    def __str__(self):
+        # Schreibe hier deinen Code für TODO 3:
+        pass
+
+
+class Warenkorb:
+    # ==========================================================================
+    # TODO 4: Konstruktor für Warenkorb
+    # Parameter: self
+    # Initialisiere: self.artikel_liste als leere Liste []
+    # ==========================================================================
+    def __init__(self):
+        # Schreibe hier deinen Code für TODO 4:
+        pass
+
+    # ==========================================================================
+    # TODO 5: Methode "artikel_hinzufuegen(self, artikel)"
+    # Fügt das übergebene Artikel-Objekt an 'self.artikel_liste' an (.append).
+    # ==========================================================================
+    def artikel_hinzufuegen(self, artikel):
+        # Schreibe hier deinen Code für TODO 5:
+        pass
+
+    # ==========================================================================
+    # TODO 6: Methode "gesamtsumme(self)"
+    # Berechnet die Summe der Gesamtpreise aller Artikel in self.artikel_liste
+    # und gibt diese als float zurück. (Tipp: Schleife oder sum())
+    # Bei leerem Warenkorb soll 0.0 zurückgegeben werden.
+    # ==========================================================================
+    def gesamtsumme(self):
+        # Schreibe hier deinen Code für TODO 6:
+        pass
+
+    # ==========================================================================
+    # TODO 7: Methode "bon_text(self)"
+    # Erzeugt einen formatierten mehrzeiligen String für den Kassenzettel.
+    # Format:
+    # --- KASSENZETTEL ---
+    # 2x Milch (je 1.29 €) = 2.58 €
+    # 1x Brot (je 2.49 €) = 2.49 €
+    # --------------------
+    # Gesamtsumme: 5.07 €
+    #
+    # Tipp: Baue eine Liste von Zeilen und verbinde sie mit "\n".join(...)
+    # Die Zeilen für die Artikel erhältst du einfach mit str(artikel)!
+    # ==========================================================================
+    def bon_text(self):
+        # Schreibe hier deinen Code für TODO 7:
+        pass
+
+
+# ==============================================================================
+# Hauptprogramm zum Ausprobieren:
+# ==============================================================================
+if __name__ == "__main__":
+    print("🛒 --- SUPERMARKT EINKAUF --- 🛒")
+    korb = Warenkorb()
+
+    a1 = Artikel("Milch", 1.29, 2)
+    a2 = Artikel("Brot", 2.49, 1)
+    a3 = Artikel("Schokolade", 0.99, 3)
+
+    korb.artikel_hinzufuegen(a1)
+    korb.artikel_hinzufuegen(a2)
+    korb.artikel_hinzufuegen(a3)
+
+    if korb.artikel_liste:
+        print(korb.bon_text())
+    else:
+        print("Hinweis: Implementiere die TODOs, um den Kassenbon zu drucken!")

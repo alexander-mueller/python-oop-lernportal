@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""
+🧪 Gesamttest-Runner für alle Kapitel
+===================================
+Führe dieses Skript aus, um zu sehen, welche Kapitel du bereits erfolgreich gelöst hast:
+    python3 test_all.py
+"""
+
+import sys
+import unittest
+from pathlib import Path
+
+KAPITEL = [
+    ("Kapitel 01: Einstieg in Klassen", "01_einstieg_klassen"),
+    ("Kapitel 02: Konstruktor & self", "02_init_und_self"),
+    ("Kapitel 03: Methoden & Verhalten", "03_methoden_und_verhalten"),
+    ("Kapitel 04: __str__ & Darstellung", "04_str_und_darstellung"),
+    ("Kapitel 05: Objekte kombinieren", "05_objekte_kombinieren"),
+    ("Kapitel 06: Abschlussprojekt Tamagotchi", "06_abschlussprojekt_tamagotchi"),
+]
+
+def main():
+    root = Path(__file__).parent.resolve()
+    print("=" * 60)
+    print("🎓 PYTHON OOP ÜBUNGSREIHE – GESAMTFORTSCHRITT")
+    print("=" * 60)
+    
+    gesamt_bestanden = 0
+    
+    for titel, ordner in KAPITEL:
+        kapitel_pfad = root / ordner
+        if not kapitel_pfad.exists():
+            continue
+            
+        sys.path.insert(0, str(kapitel_pfad))
+        
+        # Testsuite laden
+        loader = unittest.TestLoader()
+        suite = loader.discover(str(kapitel_pfad), pattern="test_aufgabe.py")
+        
+        # Leisen Runner ausführen
+        runner = unittest.TextTestRunner(stream=open("/dev/null", "w"), verbosity=0)
+        result = runner.run(suite)
+        
+        # Modul aus sys.path und sys.modules entfernen für saubere Isolation
+        if str(kapitel_pfad) in sys.path:
+            sys.path.remove(str(kapitel_pfad))
+        if "aufgabe" in sys.modules:
+            del sys.modules["aufgabe"]
+        if "test_aufgabe" in sys.modules:
+            del sys.modules["test_aufgabe"]
+
+        anzahl_tests = result.testsRun
+        erfolgreich = result.wasSuccessful() and anzahl_tests > 0
+
+        if erfolgreich:
+            print(f"  ✅ {titel:42s} ({anzahl_tests}/{anzahl_tests} Tests OK)")
+            gesamt_bestanden += 1
+        else:
+            fehlgeschlagen = len(result.failures) + len(result.errors)
+            print(f"  ⏳ {titel:42s} (Noch offen / {fehlgeschlagen} Fehler)")
+
+    print("=" * 60)
+    print(f"Ergebnis: {gesamt_bestanden} von {len(KAPITEL)} Kapiteln vollständig gelöst!")
+    if gesamt_bestanden == len(KAPITEL):
+        print("🏆 PERFEKT! Du hast alle OOP-Aufgaben mit Bravour gemeistert! 🎉")
+    else:
+        print("💡 Öffne das nächste offene Kapitel und starte mit aufgabe.py!")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
