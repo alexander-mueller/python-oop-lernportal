@@ -19,6 +19,13 @@ KAPITEL = [
     ("Kapitel 05: Objekte kombinieren", "05_objekte_kombinieren"),
     ("Kapitel 06: Abschlussprojekt Tamagotchi", "06_abschlussprojekt_tamagotchi"),
     ("Kapitel 07: Referenzen & Stammbäume", "07_referenzen_und_speicher"),
+    ("Kapitel 08: Operator Overloading & Dunder", "08_operator_overloading_dunder"),
+    ("Kapitel 09: Eigene Unit Tests & TDD", "09_eigene_unit_tests_schreiben"),
+    ("Kapitel 10: Vererbung & super()", "10_vererbung_und_super"),
+    ("Kapitel 11: Polymorphie & Interfaces", "11_polymorphie_und_interfaces"),
+    ("Kapitel 12: Exceptions & Fehlerbehandlung", "12_exceptions_und_fehlerbehandlung"),
+    ("Kapitel 13: Persistenz (JSON & CSV)", "13_persistenz_json_und_csv"),
+    ("Kapitel 14: Desktop-GUIs mit Tkinter", "14_gui_mit_tkinter"),
 ]
 
 def main():

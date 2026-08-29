@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 09: Eigene Unit Tests schreiben & TDD</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../08_operator_overloading_dunder/index.html">Kapitel 08</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 09</span>
+      </nav>
+      <div class="header-badge">Kapitel 09 &bull; Softwarequalität &amp; TDD</div>
+      <h1>Eigene Unit Tests schreiben &amp; TDD 🧪🛡️</h1>
+      <p>Lerne, wie du deinen Code mit Pythons <code>unittest</code> absicherst, Test-Driven Development anwendest und Fehler sofort entlarvst.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Das Konzept: Warum Unit Tests? -->
+    <section class="card">
+      <h2>1. Warum schreiben Profis eigene Unit Tests?</h2>
+      
+      <p>
+        Bisher hast du deine Programme vermutlich getestet, indem du <code>print()</code>-Befehle geschrieben hast und per Auge überprüft hast, ob das Ergebnis stimmt.
+        Das Problem: Bei 100 Funktionen vergisst man leicht Randfälle, und wenn man eine Zeile ändert, merkt man oft nicht, dass man an anderer Stelle etwas kaputtgemacht hat (eine sogenannte <em>Regression</em>).
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🪂 Das automatische Sicherheitsnetz:</div>
+        Ein <strong>Unit Test</strong> ist ein kleines Testprogramm, das eine einzelne Funktion oder Methode isoliert prüft.
+        Es vergleicht das tatsächliche Ergebnis automatisch mit dem Soll-Wert.
+        Läuft dein Code in 0.01 Sekunden durch 50 Tests, kannst du jederzeit mit 100%iger Sicherheit sagen: <em>"Mein Code funktioniert fehlerfrei!"</em>
+      </div>
+
+      <!-- TDD Cycle -->
+      <h3>Der TDD-Entwicklungszyklus (Red &bull; Green &bull; Refactor)</h3>
+      <p>In der agilen Entwicklung nutzt man oft <strong>Test-Driven Development (TDD)</strong>:</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
+        
+        <div style="background: var(--danger-light); border: 2px solid var(--danger); border-radius: var(--radius-md); padding: 16px;">
+          <h4 style="color: var(--danger); margin-bottom: 6px;">🔴 1. Red (Test schreiben)</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: #7f1d1d;">
+            Du schreibst zuerst den Test für ein Feature, das es noch gar nicht gibt. Der Test schlägt rot fehl.
+          </p>
+        </div>
+
+        <div style="background: var(--success-light); border: 2px solid var(--success); border-radius: var(--radius-md); padding: 16px;">
+          <h4 style="color: var(--success); margin-bottom: 6px;">🟢 2. Green (Code schreiben)</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: #064e3b;">
+            Du implementierst genau so viel Code, dass der Test grün wird.
+          </p>
+        </div>
+
+        <div style="background: var(--primary-light); border: 2px solid var(--primary); border-radius: var(--radius-md); padding: 16px;">
+          <h4 style="color: var(--primary); margin-bottom: 6px;">🔵 3. Refactor (Aufräumen)</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: #312e81;">
+            Du verbesserst den Code, machst ihn lesbarer und schneller – abgesichert durch deine Tests.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. Anatomie einer unittest-Klasse -->
+    <section class="card">
+      <h2>2. Der Aufbau einer <code>unittest</code>-Klasse</h2>
+
+      <p>Python bringt ein komplettes Testframework bereits mit: <code>import unittest</code>.</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Struktur einer Testklasse in Python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="var">unittest</span>
+
+<span class="kw">class</span> <span class="fn">TestTaschenrechner</span>(<span class="var">unittest</span>.<span class="fn">TestCase</span>):
+
+    <span class="kw">def</span> <span class="fn">setUp</span>(<span class="var">self</span>):
+        <span class="cm"># Wird AUTOMATISCH vor JEDEM einzelnen Test ausgeführt!</span>
+        <span class="var">self</span>.<span class="attr">calc</span> = <span class="fn">Taschenrechner</span>()
+
+    <span class="kw">def</span> <span class="fn">test_addition</span>(<span class="var">self</span>):
+        <span class="cm"># WICHTIG: Jede Testmethode MUSS mit "test_" beginnen!</span>
+        <span class="var">ergebnis</span> = <span class="var">self</span>.<span class="attr">calc</span>.<span class="fn">add</span>(<span class="num">2</span>, <span class="num">3</span>)
+        <span class="var">self</span>.<span class="fn">assertEqual</span>(<span class="var">ergebnis</span>, <span class="num">5</span>)
+
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="var">unittest</span>.<span class="fn">main</span>(<span class="attr">verbosity</span>=<span class="num">2</span>)</pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Warum <code>setUp()</code> so genial ist:</div>
+        In <code>setUp()</code> erstellst du frische Objekte für jeden Testlauf. Dadurch beeinflussen sich Tests niemals gegenseitig (Test-Isolation).
+      </div>
+    </section>
+
+    <!-- 3. Die wichtigsten Assert-Befehle -->
+    <section class="card">
+      <h2>3. Die wichtigsten Assert-Methoden im Überblick</h2>
+
+      <p>In deinen Testmethoden verwendest du <code>self.assert...()</code>, um Bedingungen zu prüfen:</p>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+          <tr style="background: var(--primary-light); text-align: left;">
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Assert-Methode</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Bedeutung</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Code-Beispiel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertEqual(a, b)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft $a == b$</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertEqual(calc.add(2, 3), 5)</code></td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertNotEqual(a, b)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft $a \ne b$</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertNotEqual(konto.stand, 0)</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertAlmostEqual(a, b, places=2)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft Kommazahlen mit Rundung</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertAlmostEqual(10/3, 3.333, places=2)</code></td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertTrue(x)</code> / <code>assertFalse(x)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft Booleschen Wert</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertTrue(konto.ist_aktiv)</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertIn(item, liste)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft, ob Element in Liste/String ist</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertIn(50.0, konto.transaktionen)</code></td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertIsNone(x)</code> / <code>assertIsNotNone(x)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft <code>is None</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>self.assertIsNone(person.mutter)</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>with self.assertRaises(FehlerTyp):</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Prüft, ob eine Exception geworfen wird</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>with self.assertRaises(ValueError): konto.abheben(9999)</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Fehler &amp; Exceptions testen mit <code>assertRaises</code></h3>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Beispiel: Testen auf erwartete Abstürze / Fehler</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">test_division_durch_null</span>(<span class="var">self</span>):
+    <span class="cm"># Der Test besteht NUR dann, wenn innerhalb des with-Blocks</span>
+    <span class="cm"># tatsächlich ein ZeroDivisionError ausgelöst wird!</span>
+    <span class="kw">with</span> <span class="var">self</span>.<span class="fn">assertRaises</span>(<span class="fn">ZeroDivisionError</span>):
+        <span class="var">self</span>.<span class="attr">calc</span>.<span class="fn">div</span>(<span class="num">10</span>, <span class="num">0</span>)</pre>
+      </div>
+    </section>
+
+    <!-- 4. Deine Aufgaben -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>
+        In <code>09_eigene_unit_tests_schreiben/aufgabe.py</code> sind die Klassen <code>Taschenrechner</code> und <code>Bankkonto</code> bereits fertig vorgegeben.
+        Deine Aufgabe ist es, die Unit-Test-Klassen zu schreiben!
+      </p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_1">
+          <label for="t9_1" class="task-label">
+            <strong>TODO 1:</strong> <code>TestTaschenrechner.setUp</code>: Instanziiere <code>self.calc = Taschenrechner()</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_2">
+          <label for="t9_2" class="task-label">
+            <strong>TODO 2:</strong> <code>test_01_grundrechenarten</code>: Teste <code>add</code>, <code>sub</code>, <code>mul</code> mit <code>assertEqual</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_3">
+          <label for="t9_3" class="task-label">
+            <strong>TODO 3:</strong> <code>test_02_division_und_kommazahlen</code>: Teste normale Division und <code>10 / 3</code> mit <code>assertAlmostEqual</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_4">
+          <label for="t9_4" class="task-label">
+            <strong>TODO 4:</strong> <code>test_03_division_durch_null_exception</code>: Teste mit <code>assertRaises(ZeroDivisionError)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_5">
+          <label for="t9_5" class="task-label">
+            <strong>TODO 5:</strong> <code>test_04_wurzel_negativ_exception</code>: Teste normale Wurzel und <code>assertRaises(ValueError)</code> bei <code>wurzel(-9)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_6">
+          <label for="t9_6" class="task-label">
+            <strong>TODO 6:</strong> <code>test_05_speicher_funktionen</code>: Teste <code>speicher_plus</code> und <code>speicher_loeschen</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_7">
+          <label for="t9_7" class="task-label">
+            <strong>TODO 7:</strong> <code>TestBankkonto.setUp</code>: Erstelle zwei Konten <code>self.k1 = Bankkonto("Alice", 100.0)</code> und <code>self.k2 = Bankkonto("Bob", 50.0)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_8">
+          <label for="t9_8" class="task-label">
+            <strong>TODO 8:</strong> <code>test_06_einzahlen_und_abheben</code>: Teste Ein- und Auszahlung und prüfe <code>transaktionen</code> mit <code>assertIn</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_9">
+          <label for="t9_9" class="task-label">
+            <strong>TODO 9:</strong> <code>test_07_abheben_ueber_limit_exception</code>: Teste <code>assertRaises(ValueError)</code> bei Abheben von mehr als Kontostand.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t9_10">
+          <label for="t9_10" class="task-label">
+            <strong>TODO 10:</strong> <code>test_08_ueberweisung</code>: Überweise 40.0 von <code>k1</code> nach <code>k2</code> und prüfe beide Kontostände &amp; Transaktionen.
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Periodische Kommazahlen testen)</summary>
+        <div class="details-content">
+          <p>Weil <code>10 / 3 = 3.3333333333333335</code> im Computer nicht exakt dargestellt werden kann, vergleicht man mit Rundungstoleranz:</p>
+          <div class="code-container">
+            <pre><span class="var">self</span>.<span class="fn">assertAlmostEqual</span>(<span class="var">self</span>.<span class="attr">calc</span>.<span class="fn">div</span>(<span class="num">10</span>, <span class="num">3</span>), <span class="num">3.3333</span>, <span class="attr">places</span>=<span class="num">2</span>)</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 8 &amp; 10 (Transaktionen mit assertIn prüfen)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="var">self</span>.<span class="attr">k1</span>.<span class="fn">einzahlen</span>(<span class="num">50.0</span>)
+<span class="var">self</span>.<span class="fn">assertEqual</span>(<span class="var">self</span>.<span class="attr">k1</span>.<span class="attr">kontostand</span>, <span class="num">150.0</span>)
+<span class="var">self</span>.<span class="fn">assertIn</span>(<span class="num">50.0</span>, <span class="var">self</span>.<span class="attr">k1</span>.<span class="attr">transaktionen</span>)</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Deine Tests ausführen &amp; validieren</h2>
+
+      <p><strong>Schritt 1:</strong> Führe deine eigenen Tests im Terminal aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal (Eigene Tests starten)</span>
+        </div>
+        <pre><code>python3 aufgabe.py</code></pre>
+      </div>
+
+      <p><strong>Schritt 2:</strong> Validiere deine Tests mit dem Metatest-Skript (prüft, ob deine Tests auch fehlerhaften Code entlarven!):</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal (Metatests prüfen)</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../08_operator_overloading_dunder/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 08</a>
+        <a href="../10_vererbung_und_super/index.html" class="btn">Weiter zu Kapitel 10 (Vererbung) &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

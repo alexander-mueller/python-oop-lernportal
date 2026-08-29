@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 12: Exceptions &amp; Fehlerbehandlung</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../11_polymorphie_und_interfaces/index.html">Kapitel 11</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 12</span>
+      </nav>
+      <div class="header-badge">Kapitel 12 &bull; Schulabgleich 26.0</div>
+      <h1>Exceptions &amp; Fehlerbehandlung 🛡️🛑</h1>
+      <p>Lerne, wie du Programme vor unkontrollierten Abstürzen schützt, saubere Kontrollflüsse mit <code>try-except-else-finally</code> baust und eigene Exception-Klassen definierst.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Das Konzept: Die Notbremse-Analogie -->
+    <section class="card">
+      <h2>1. Was ist eine Exception? (Die Notbremse im Code)</h2>
+      
+      <p>
+        In der realen Welt läuft nicht immer alles nach Plan: Eine Datei existiert nicht, der Benutzer tippt Buchstaben statt Zahlen ein, oder das Bankkonto hat nicht genug Guthaben.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🚆 Die Notbremse-Analogie:</div>
+        Stelle dir einen Zug vor. Normalerweise fährt der Zug geradeaus weiter. 
+        Wenn plötzlich ein Baum auf den Schienen liegt, zieht der Lokführer die <strong>Notbremse</strong> (in Python: <code>raise Exception()</code>). 
+        Statt dass der Zug ungebremst entgleist (Absturz mit rotem Traceback), fängt das Rettungsteam die Situation geordnet ab (in Python: <code>try ... except</code>).
+      </div>
+
+      <h3>Typische Python-Standard-Exceptions im Überblick:</h3>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+          <tr style="background: var(--primary-light); text-align: left;">
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Exception-Typ</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Wann tritt sie auf?</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Beispiel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>ValueError</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Richtiger Datentyp, aber unpassender Wert</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>int("hallo")</code></td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>TypeError</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Falscher Datentyp für eine Operation</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>"Zahl: " + 5</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>IndexError</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Zugriff auf einen nicht existierenden Listen-Index</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>liste[99]</code></td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>KeyError</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Schlüssel in einem Dictionary nicht vorhanden</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>dict["unbekannt"]</code></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>ZeroDivisionError</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Division durch die Zahl 0</td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>10 / 0</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. Die vollständige try-except-else-finally Struktur -->
+    <section class="card">
+      <h2>2. Die 4 Säulen der Fehlerbehandlung</h2>
+
+      <p>
+        Python bietet mit <code>try</code>, <code>except</code>, <code>else</code> und <code>finally</code> eine extrem saubere Struktur, um auf jede Eventualität vorbereitet zu sein:
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Struktur: try - except - else - finally</span>
+        </div>
+        <pre><span class="kw">try</span>:
+    <span class="cm"># 1. Versuche diesen Code auszuführen (kann fehlschlagen)</span>
+    <span class="var">eingabe</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Betrag eingeben: "</span>))
+    <span class="var">ergebnis</span> = <span class="num">100</span> / <span class="var">eingabe</span>
+
+<span class="kw">except</span> <span class="fn">ValueError</span> <span class="kw">as</span> <span class="var">e</span>:
+    <span class="cm"># 2a. Wird NUR ausgeführt, wenn ein ValueError auftrat</span>
+    <span class="fn">print</span>(<span class="str">f"Ungültige Eingabe: Keine Zahl! ({e})"</span>)
+
+<span class="kw">except</span> <span class="fn">ZeroDivisionError</span>:
+    <span class="cm"># 2b. Wird NUR ausgeführt, wenn durch 0 geteilt wurde</span>
+    <span class="fn">print</span>(<span class="str">"Division durch 0 ist nicht erlaubt!"</span>)
+
+<span class="kw">else</span>:
+    <span class="cm"># 3. Wird NUR ausgeführt, wenn ALLES GLATT ging (kein Fehler)</span>
+    <span class="fn">print</span>(<span class="str">f"Erfolg! Das Ergebnis ist: {ergebnis}"</span>)
+
+<span class="kw">finally</span>:
+    <span class="cm"># 4. Wird IMMER ausgeführt (egal ob Fehler oder Erfolg!)</span>
+    <span class="fn">print</span>(<span class="str">"Aufräumarbeiten beendet. Vorgang abgeschlossen."</span>)</pre>
+      </div>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Warum <code>finally</code>?</div>
+        <code>finally</code> ist perfekt für <strong>Aufräumarbeiten</strong>, die unter keinen Umständen vergessen werden dürfen – z.B. das Auswerfen der EC-Karte am Geldautomaten oder das Schließen einer offenen Datenbankverbindung!
+      </div>
+    </section>
+
+    <!-- 3. Eigene Exception-Klassen definieren -->
+    <section class="card">
+      <h2>3. Eigene Exception-Klassen definieren &amp; werfen (<code>raise</code>)</h2>
+
+      <p>
+        In professionellen OOP-Anwendungen nutzt man nicht nur die Standard-Fehler von Python, sondern baut <strong>eigene Fehlerklassen</strong>.
+        Dadurch weiß jeder sofort, worum es in deiner Fachdomäne geht (z.B. <code>KontoGesperrtError</code> statt nur ungenauem <code>Exception</code>).
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Eigene Exception-Hierarchie</span>
+        </div>
+        <pre><span class="cm"># 1. Basisklasse für alle Fehler in der Bank-Anwendung</span>
+<span class="kw">class</span> <span class="fn">BankFehler</span>(<span class="fn">Exception</span>):
+    <span class="str">"""Basis-Exception für alle Bank-bezogenen Probleme."""</span>
+    <span class="kw">pass</span>
+
+<span class="cm"># 2. Spezifische Fehler erben von unserer Basisklasse</span>
+<span class="kw">class</span> <span class="fn">KontoGesperrtError</span>(<span class="fn">BankFehler</span>):
+    <span class="kw">pass</span>
+
+<span class="kw">class</span> <span class="fn">NichtGenugGuthabenError</span>(<span class="fn">BankFehler</span>):
+    <span class="kw">pass</span>
+
+<span class="kw">class</span> <span class="fn">UngueltigePinError</span>(<span class="fn">BankFehler</span>):
+    <span class="kw">pass</span></pre>
+      </div>
+
+      <h3>Einen Fehler mit <code>raise</code> auslösen:</h3>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Fehler gezielt werfen</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">abheben</span>(<span class="var">self</span>, <span class="var">betrag</span>: <span class="fn">float</span>) -> <span class="fn">float</span>:
+    <span class="kw">if</span> <span class="var">betrag</span> > <span class="var">self</span>.<span class="attr">kontostand</span>:
+        <span class="kw">raise</span> <span class="fn">NichtGenugGuthabenError</span>(<span class="str">f"Nur noch {self.kontostand}€ verfügbar!"</span>)
+    
+    <span class="var">self</span>.<span class="attr">kontostand</span> -= <span class="var">betrag</span>
+    <span class="kw">return</span> <span class="var">self</span>.<span class="attr">kontostand</span></pre>
+      </div>
+    </section>
+
+    <!-- 4. Deine Aufgaben -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>12_exceptions_und_fehlerbehandlung/aufgabe.py</code> und baue den sicheren Geldautomaten-Simulator:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t12_1">
+          <label for="t12_1" class="task-label">
+            <strong>TODO 1:</strong> Definiere die Exception-Hierarchie: <code>BankFehler(Exception)</code> als Basis und die 4 abgeleiteten Klassen <code>UngueltigePinError</code>, <code>KontoGesperrtError</code>, <code>NichtGenugGuthabenError</code>, <code>UngueltigerBetragError</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t12_2">
+          <label for="t12_2" class="task-label">
+            <strong>TODO 2:</strong> Implementiere <code>Bankkonto.__init__</code> mit <code>inhaber</code>, <code>pin</code>, <code>kontostand</code>, <code>gesperrt = False</code> und <code>fehlversuche = 0</code>. Wirf <code>UngueltigerBetragError</code> bei negativem Startguthaben!
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t12_3">
+          <label for="t12_3" class="task-label">
+            <strong>TODO 3:</strong> Implementiere <code>pin_pruefen(self, eingegebene_pin: str)</code>. Nach 3 falschen Versuchen wird das Konto gesperrt (<code>self.gesperrt = True</code>) und <code>KontoGesperrtError</code> geworfen.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t12_4">
+          <label for="t12_4" class="task-label">
+            <strong>TODO 4:</strong> Implementiere <code>einzahlen(self, betrag)</code> und <code>abheben(self, betrag, pin)</code> mit sauberer Überprüfung aller Randfälle.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t12_5">
+          <label for="t12_5" class="task-label">
+            <strong>TODO 5:</strong> Implementiere <code>geldautomat_abheben(konto, betrag, pin)</code> mit der vollständigen <code>try-except-else-finally</code>-Struktur!
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zur PIN-Prüfung &amp; Fehlversuchen</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">if</span> <span class="var">self</span>.<span class="attr">gesperrt</span>:
+    <span class="kw">raise</span> <span class="fn">KontoGesperrtError</span>(<span class="str">"Konto ist gesperrt!"</span>)
+
+<span class="kw">if</span> <span class="var">eingegebene_pin</span> == <span class="var">self</span>.<span class="attr">pin</span>:
+    <span class="var">self</span>.<span class="attr">fehlversuche</span> = <span class="num">0</span>
+    <span class="kw">return</span> <span class="kw">True</span>
+<span class="kw">else</span>:
+    <span class="var">self</span>.<span class="attr">fehlversuche</span> += <span class="num">1</span>
+    <span class="kw">if</span> <span class="var">self</span>.<span class="attr">fehlversuche</span> >= <span class="num">3</span>:
+        <span class="var">self</span>.<span class="attr">gesperrt</span> = <span class="kw">True</span>
+        <span class="kw">raise</span> <span class="fn">KontoGesperrtError</span>(<span class="str">"PIN 3-mal falsch. Konto wurde gesperrt!"</span>)
+    <span class="kw">raise</span> <span class="fn">UngueltigePinError</span>(<span class="str">f"Falsche PIN! Noch {3 - self.fehlversuche} Versuche."</span>)</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu geldautomat_abheben (try-except-else-finally)</summary>
+        <div class="details-content">
+          <p>
+            Im <code>try</code>-Block rufst du einfach <code>konto.abheben(betrag, pin)</code> auf. Fange die verschiedenen Exception-Typen in separaten <code>except</code>-Blöcken ab und füge die Meldung zu deiner Liste hinzu. 
+            Im <code>else</code>-Block meldest du den Erfolg und im <code>finally</code>-Block "Bitte Karte entnehmen.".
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>12_exceptions_und_fehlerbehandlung</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../11_polymorphie_und_interfaces/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 11</a>
+        <a href="../13_persistenz_json_und_csv/index.html" class="btn">Weiter zu Kapitel 13 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

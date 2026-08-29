@@ -25,12 +25,13 @@ Diese Übungsreihe ist didaktisch aufbereitet und **1:1 mit dem offiziellen Lehr
 | Kapitel | Thema | Was du lernst |
 | :--- | :--- | :--- |
 | **[07. Referenzen, Speicher & Stammbäume](./07_referenzen_und_speicher/)** | **Speicher & RAM** | **Referenzen, Aliasing (`b = a`), Mutable vs. Immutable, `is` vs. `==` & Familienstammbaum** |
-| *08. Operator Overloading* | *Dunder-Methoden* | *`__add__`, `__eq__`, `__lt__` (2D-Vektoren & Kartenspiele)* |
-| *09. Eigene Unit Tests & TDD* | *Softwarequalität* | *Testsuiten schreiben mit `unittest`, `assertEqual`, `assertTrue`, `assertRaises`* |
-| *10. Vererbung & `super()`* | *Inheritance* | *Basisklassen, Kindklassen & `super().__init__()` (Fahrzeuge & RPG-Helden)* |
-| *11. Polymorphie & Interfaces* | *Polymorphism* | *Methoden überschreiben, Geometrie- & Grafik-Engine* |
-| *12. Exceptions & Fehler* | *Robustes Coding* | *`try/except/else/finally`, `raise`, eigene Exception-Klassen* |
-| *13. JSON & CSV Speichern* | *Persistenz* | *Spielstände dauerhaft mit JSON/CSV auf der Festplatte sichern* |
+| **[08. Operator Overloading](./08_operator_overloading_dunder/)** | **Dunder-Methoden** | **`__add__`, `__mul__`, `__eq__`, `__lt__` (2D-Vektoren & Wegstrecken)** |
+| **[09. Eigene Unit Tests & TDD](./09_eigene_unit_tests_schreiben/)** | **Softwarequalität** | **Testsuiten schreiben mit `unittest`, `assertEqual`, `assertTrue`, `assertRaises`** |
+| **[10. Vererbung & `super()`](./10_vererbung_und_super/)** | **Inheritance** | **Basisklassen, Kindklassen, DRY-Prinzip & `super().__init__()` (Fahrzeugflotte)** |
+| **[11. Polymorphie & Interfaces](./11_polymorphie_und_interfaces/)** | **Polymorphism** | **Vielgestaltigkeit, Duck Typing, abstrakte Basisklassen (`ABC`) & Geometrie-Engine** |
+| **[12. Exceptions & Fehler](./12_exceptions_und_fehlerbehandlung/)** | **Robustes Coding** | **`try/except/else/finally`, `raise`, eigene Exception-Klassen (Bankkonto)** |
+| **[13. JSON & CSV Speichern](./13_persistenz_json_und_csv/)** | **Persistenz** | **Spielstände dauerhaft mit JSON/CSV auf der Festplatte sichern** |
+| **[14. Desktop-GUIs mit Tkinter](./14_gui_mit_tkinter/)** | **Grafische Oberflächen** | **Fenster, Buttons, Labels, Grid-Layout & MVC-Architektur** |
 
 *(Den vollständigen didaktischen Masterplan für alle Kapitel bis 16 findest du in [`LEHRPLAN.md`](./LEHRPLAN.md).)*
 

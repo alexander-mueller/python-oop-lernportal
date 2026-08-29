@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 08: Operator Overloading & Dunder-Methoden</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <nav class="nav-links">
+        <a href="../index.html">🏠 Zur Kursübersicht</a>
+        <span>&rsaquo;</span>
+        <a href="../07_referenzen_und_speicher/index.html">Kapitel 07</a>
+        <span>&rsaquo;</span>
+        <span style="color: white; font-weight: 600;">Kapitel 08</span>
+      </nav>
+      <div class="header-badge">Kapitel 08 &bull; Schulabgleich 28.0 Spezielle Methoden</div>
+      <h1>Operator Overloading &amp; Dunder-Methoden ➕📐</h1>
+      <p>Bringe deinen eigenen Objekten das Rechnen und Vergleichen bei – mit Pythons magischen Methoden!</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Das Konzept: Was sind Dunder-Methoden? -->
+    <section class="card">
+      <h2>1. Was bedeutet "Dunder" &amp; Operator Overloading?</h2>
+      
+      <p>
+        In Python steht <strong>"Dunder"</strong> kurz für <em>Double Underscore</em> (doppelter Unterstrich), wie bei <code>__init__</code> oder <code>__str__</code>.
+        Man nennt sie auch <strong>magische Methoden</strong> (Magic Methods) oder <strong>spezielle Methoden</strong>.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🧙‍♂️ Der Universal-Übersetzer von Python:</div>
+        Wenn du in Python schreibst: <code>a + b</code>, dann weiß Python von Natur aus nicht, was deine eigenen Klassen bedeuten.
+        Python ruft stattdessen heimlich im Hintergrund die Methode <code>a.__add__(b)</code> auf!<br>
+        <strong>Operator Overloading</strong> bedeutet einfach: Du schreibst die Methode <code>__add__</code> in deine Klasse, und schon funktioniert das Plus-Zeichen <code>+</code> für deine Objekte!
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Was Python im Hintergrund wirklich tut</span>
+        </div>
+        <pre><span class="cm"># Was du im Code schreibst:</span>
+<span class="var">ergebnis</span> = <span class="var">v1</span> + <span class="var">v2</span>
+<span class="var">ist_gleich</span> = (<span class="var">v1</span> == <span class="var">v2</span>)
+<span class="var">laenge</span> = <span class="fn">len</span>(<span class="var">meine_liste</span>)
+
+<span class="cm"># Was Python intern daraus macht:</span>
+<span class="var">ergebnis</span> = <span class="var">v1</span>.<span class="fn">__add__</span>(<span class="var">v2</span>)
+<span class="var">ist_gleich</span> = <span class="var">v1</span>.<span class="fn">__eq__</span>(<span class="var">v2</span>)
+<span class="var">laenge</span> = <span class="var">meine_liste</span>.<span class="fn">__len__</span>()</pre>
+      </div>
+    </section>
+
+    <!-- 2. Die wichtigsten Dunder-Methoden im Überblick -->
+    <section class="card">
+      <h2>2. Die wichtigste Dunder-Methoden-Tabelle</h2>
+
+      <p>Hier sind die am häufigsten genutzten magischen Methoden in Python:</p>
+
+      <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+          <tr style="background: var(--primary-light); text-align: left;">
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Kategorie</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Operator / Funktion</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Dunder-Methode</th>
+            <th style="padding: 10px; border: 1px solid var(--border-color);">Bedeutung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);" rowspan="4"><strong>Mathematik</strong></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a + b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__add__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Addition</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a - b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__sub__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Subtraktion</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a * b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__mul__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Multiplikation (von links)</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>b * a</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__rmul__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Rechts-Multiplikation (z.B. <code>3 * v</code>)</td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);" rowspan="3"><strong>Vergleiche</strong></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a == b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__eq__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Gleichheit (Equal)</td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a &lt; b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__lt__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Kleiner als (Less Than)</td>
+          </tr>
+          <tr style="background: #fafafa;">
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>a &lt;= b</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__le__(self, other)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Kleiner gleich (Less or Equal)</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);" rowspan="4"><strong>Darstellung &amp; Container</strong></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>print(a)</code> / <code>str(a)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__str__(self)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Schöne Ausgabe für Menschen</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>repr(a)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__repr__(self)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Eindeutige Debug-Ausgabe</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>abs(a)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__abs__(self)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Betrag / Länge</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>len(a)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__len__(self)</code></td>
+            <td style="padding: 10px; border: 1px solid var(--border-color);">Anzahl von Elementen</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-tipp">
+        <div class="box-title">💡 Unterschied zwischen <code>__str__</code> und <code>__repr__</code>:</div>
+        <ul>
+          <li><strong><code>__str__</code></strong> ist für <em>Endbenutzer</em> gedacht. Beispiel: <code>(3.0, 4.0)</code>.</li>
+          <li><strong><code>__repr__</code></strong> ist für <em>Entwickler &amp; Debugger</em> gedacht. Sie soll so präzise sein, dass man das Objekt idealerweise wieder nachbauen könnte: <code>Vektor2D(3.0, 4.0)</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Praxisbeispiel: 2D-Vektor in Aktion -->
+    <section class="card">
+      <h2>3. Praxisbeispiel: Der 2D-Vektor 🚀</h2>
+
+      <p>
+        In Videospielen, Physiksimulationen und in der Geometrie rechnet man ständig mit 2D-Vektoren.
+        Mit Dunder-Methoden liest sich dein Code wie echte Mathematik!
+      </p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Beispiel: Vektor-Addition &amp; Multiplikation</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="fn">Vektor2D</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">x</span>: <span class="fn">float</span>, <span class="var">y</span>: <span class="fn">float</span>):
+        <span class="var">self</span>.<span class="attr">x</span> = <span class="fn">float</span>(<span class="var">x</span>)
+        <span class="var">self</span>.<span class="attr">y</span> = <span class="fn">float</span>(<span class="var">y</span>)
+
+    <span class="kw">def</span> <span class="fn">__add__</span>(<span class="var">self</span>, <span class="var">other</span>: <span class="str">'Vektor2D'</span>) -> <span class="str">'Vektor2D'</span>:
+        <span class="kw">if</span> <span class="fn">isinstance</span>(<span class="var">other</span>, <span class="fn">Vektor2D</span>):
+            <span class="kw">return</span> <span class="fn">Vektor2D</span>(<span class="var">self</span>.<span class="attr">x</span> + <span class="var">other</span>.<span class="attr">x</span>, <span class="var">self</span>.<span class="attr">y</span> + <span class="var">other</span>.<span class="attr">y</span>)
+        <span class="kw">return</span> <span class="kw">NotImplemented</span>
+
+    <span class="kw">def</span> <span class="fn">__mul__</span>(<span class="var">self</span>, <span class="var">other</span>):
+        <span class="cm"># Skalarmultiplikation mit Zahl: v * 3</span>
+        <span class="kw">if</span> <span class="fn">isinstance</span>(<span class="var">other</span>, (<span class="fn">int</span>, <span class="fn">float</span>)):
+            <span class="kw">return</span> <span class="fn">Vektor2D</span>(<span class="var">self</span>.<span class="attr">x</span> * <span class="var">other</span>, <span class="var">self</span>.<span class="attr">y</span> * <span class="var">other</span>)
+        <span class="cm"># Skalarprodukt mit anderem Vektor: v1 * v2</span>
+        <span class="kw">elif</span> <span class="fn">isinstance</span>(<span class="var">other</span>, <span class="fn">Vektor2D</span>):
+            <span class="kw">return</span> <span class="var">self</span>.<span class="attr">x</span> * <span class="var">other</span>.<span class="attr">x</span> + <span class="var">self</span>.<span class="attr">y</span> * <span class="var">other</span>.<span class="attr">y</span>
+        <span class="kw">return</span> <span class="kw">NotImplemented</span>
+
+    <span class="kw">def</span> <span class="fn">__rmul__</span>(<span class="var">self</span>, <span class="var">other</span>):
+        <span class="cm"># Ermöglicht: 3 * v (Zahl steht links)</span>
+        <span class="kw">return</span> <span class="var">self</span>.<span class="fn">__mul__</span>(<span class="var">other</span>)</pre>
+      </div>
+    </section>
+
+    <!-- 4. Deine Aufgaben -->
+    <section class="card">
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+      <p>Öffne die Datei <code>08_operator_overloading_dunder/aufgabe.py</code> und vervollständige die folgenden Klassen:</p>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_1">
+          <label for="t8_1" class="task-label">
+            <strong>TODO 1:</strong> <code>Vektor2D.__init__</code> mit <code>x</code> und <code>y</code> (als <code>float</code> konvertiert).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_2">
+          <label for="t8_2" class="task-label">
+            <strong>TODO 2:</strong> <code>__repr__</code> (<code>"Vektor2D(3.0, 4.0)"</code>) und <code>__str__</code> (<code>"(3.0, 4.0)"</code>).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_3">
+          <label for="t8_3" class="task-label">
+            <strong>TODO 3:</strong> <code>laenge(self)</code> ($\sqrt{x^2 + y^2}$) und <code>__abs__(self)</code>.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_4">
+          <label for="t8_4" class="task-label">
+            <strong>TODO 4:</strong> <code>__add__</code> und <code>__sub__</code> für komponentenweise Vektor-Arithmetik.
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_5">
+          <label for="t8_5" class="task-label">
+            <strong>TODO 5:</strong> <code>__mul__</code> (für Zahlen &amp; Skalarprodukt) und <code>__rmul__</code> (für <code>3 * v</code>).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_6">
+          <label for="t8_6" class="task-label">
+            <strong>TODO 6:</strong> <code>__eq__</code> (Komponenten prüfen) sowie <code>__lt__</code> und <code>__le__</code> (nach Vektorlänge vergleichen).
+          </label>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" class="task-checkbox" id="t8_7">
+          <label for="t8_7" class="task-label">
+            <strong>TODO 7, 8, 9:</strong> Die Klasse <code>Wegstrecke</code> mit <code>__len__</code>, <code>__getitem__</code> und <code>gesamtlaenge()</code> (nutzt Vektordifferenz und <code>abs()</code>).
+          </label>
+        </li>
+      </ul>
+
+      <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 3 (Länge berechnen mit math.sqrt)</summary>
+        <div class="details-content">
+          <div class="code-container">
+            <pre><span class="kw">import</span> <span class="var">math</span>
+
+<span class="kw">def</span> <span class="fn">laenge</span>(<span class="var">self</span>) -> <span class="fn">float</span>:
+    <span class="kw">return</span> <span class="var">math</span>.<span class="fn">sqrt</span>(<span class="var">self</span>.<span class="attr">x</span>**<span class="num">2</span> + <span class="var">self</span>.<span class="attr">y</span>**<span class="num">2</span>)
+
+<span class="kw">def</span> <span class="fn">__abs__</span>(<span class="var">self</span>) -> <span class="fn">float</span>:
+    <span class="kw">return</span> <span class="var">self</span>.<span class="fn">laenge</span>()</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔍 Tipp zu TODO 9 (Gesamtlänge der Wegstrecke berechnen)</summary>
+        <div class="details-content">
+          <p>Iteriere über alle Punkte von <code>0</code> bis <code>len(self.punkte) - 2</code>. Die Distanz zwischen zwei Punkten ist einfach <code>abs(self.punkte[i+1] - self.punkte[i])</code>!</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- 5. Testen & Navigation -->
+    <section class="card">
+      <h2>5. 🧪 Lösung überprüfen</h2>
+      <p>Führe im Terminal im Ordner <code>08_operator_overloading_dunder</code> folgenden Befehl aus:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code>python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../07_referenzen_und_speicher/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 07</a>
+        <a href="../09_eigene_unit_tests_schreiben/index.html" class="btn">Weiter zu Kapitel 09 &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
