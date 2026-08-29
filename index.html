@@ -49,6 +49,16 @@
       <h1>Vom Einsteiger zum Software-Entwickler</h1>
       <p>3 strukturierte Lehrpfade: Prozedurale Grundlagen &bull; Objektorientierung &bull; Professionelle Werkzeuge (Git, TDD, Tkinter)</p>
     </div>
+        <nav class="nav-links" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px;">
+        <a href="#tutorial" style="background: rgba(255,255,255,0.25); font-weight: bold;">📖 Anleitung &amp; Workflow</a>
+        <a href="#lehrpfad-1">🌱 Lehrpfad 1 (Grundlagen)</a>
+        <a href="#lehrpfad-2">🏗️ Lehrpfad 2 (OOP Einstieg)</a>
+        <a href="#lehrpfad-3">🚀 Lehrpfad 3 (Fortgeschrittenes OOP)</a>
+        <a href="#python-live-playground">⚡ Live-Playground</a>
+        <a href="#error-interpreter-widget">🩺 Fehler-Dolmetscher</a>
+        <a href="#zertifikate">🏆 Zertifikate</a>
+      </nav>
+    </div>
   </header>
 
   <main class="container">
@@ -84,11 +94,92 @@
       </div>
     </section>
 
+    
+    <!-- 📖 Ausführliches Schritt-für-Schritt Tutorial -->
+    <section class="card" id="tutorial" style="border-left: 5px solid var(--primary);">
+      <h2>📖 Schritt-für-Schritt-Tutorial: So nutzt du dieses Lernportal</h2>
+      <p style="font-size: 1.05rem; color: var(--text-main);">
+        Willkommen! Dieses Portal wurde nach den neuesten wissenschaftlichen Erkenntnissen der <strong>Informatikdidaktik (PRIMM-Modell &amp; Cognitive Load Theory)</strong> gestaltet. Hier erfährst du, wie du das Beste aus den 27 Lerneinheiten herausholst:
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+
+        <!-- Schritt 1 -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="background: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
+          <div style="flex: 1;">
+            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.15rem;">📥 Lokal nutzen oder im Browser lernen</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 8px;">
+              Du kannst das Lernportal direkt online nutzen oder <strong>100% offline</strong> auf deinem Computer speichern:
+            </p>
+            <div class="code-container" style="margin: 8px 0;">
+              <div class="code-header"><span>Terminal (Repository lokal klonen)</span></div>
+              <pre><code>git clone https://github.com/alexander-mueller/python-oop-lernportal.git
+cd python-oop-lernportal</code></pre>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              💡 <em>Tipp:</em> Öffne <code>index.html</code> einfach per Doppelklick in deinem Webbrowser – alle Skripte und der Gamification-Status funktionieren auch offline!
+            </p>
+          </div>
+        </div>
+
+        <!-- Schritt 2 -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="background: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
+          <div style="flex: 1;">
+            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.15rem;">🔄 Der didaktische Lernkreislauf (PRIMM-Workflow)</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 10px 0;">
+              <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm);">
+                <strong style="color: var(--primary);">1. Verstehen &amp; Vorhersagen</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Lies die Alltagsanalogie im Kapitel-Guide und löse das interaktive <strong>Parsons Code-Puzzle</strong> (+25 XP).</p>
+              </div>
+              <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm);">
+                <strong style="color: var(--primary);">2. Programmieren</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Öffne <code>aufgabe.py</code> in deinem Editor (z.B. VS Code) und folge den nummerierten <strong>Teilzielen (Subgoals)</strong>.</p>
+              </div>
+              <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm);">
+                <strong style="color: var(--success);">3. Testen &amp; Feiern</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Führe <code>python3 test_aufgabe.py</code> aus. Sobald alle Tests grün sind, steigen deine XP automatisch!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schritt 3 -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="background: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
+          <div style="flex: 1;">
+            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.15rem;">🎮 Entwickler-Pass &amp; Trophäen im Terminal</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 8px;">
+              Überprüfe deinen Fortschritt, deinen aktuellen Rang und deine 14 freischaltbaren Trophäen:
+            </p>
+            <div class="code-container" style="margin: 8px 0;">
+              <div class="code-header"><span>Terminal</span></div>
+              <pre><code>python3 profil.py      # Zeigt deinen animierten Entwickler-Pass
+python3 test_all.py    # Prüft alle 27 Kapitel auf einen Schlag und synchronisiert XP</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schritt 4 -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="background: var(--primary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">4</div>
+          <div style="flex: 1;">
+            <h3 style="margin-top: 0; color: var(--text-main); font-size: 1.15rem;">🩺 Hilfe bei Fehlern &amp; Tracebacks</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">
+              Wenn ein Test fehlschlägt oder dein Programm mit einem Fehler abbricht, kopiere die rote Fehlermeldung aus dem Terminal und füge sie unten in den <a href="#error-interpreter-widget" style="color: var(--secondary); font-weight: bold;">Interaktiven Fehler-Dolmetscher</a> ein! Du erhältst sofort eine deutsche Erklärung und 3 konkrete Lösungsschritte.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- LEHRPFAD 1: GRUNDLAGEN -->
     <section>
       <div class="section-header">
         <div>
-          <h2>🛣️ Lehrpfad 1: Grundlagen der Programmierung (Prozedural)</h2>
+          <h2 id="lehrpfad-1">🛣️ Lehrpfad 1: Grundlagen der Programmierung (Prozedural)</h2>
           <div class="section-desc">Die unverzichtbare Basis: Datentypen, Kontrollstrukturen, Funktionen und Datenstrukturen.</div>
         </div>
         <span class="track-badge track-1-badge">10 Kapitel &bull; G01 bis G10</span>
@@ -103,6 +194,13 @@
             <div class="roadmap-title">🧮 Python als Taschenrechner</div>
             <div class="roadmap-desc">Zahlen (<code>int</code>, <code>float</code>), Grundrechenarten, Ganzzahldivision <code>//</code>, Modulo <code>%</code>, Potenzen <code>**</code> &amp; <code>print()</code>.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G01 öffnen &rarr;</span></div>
         </a>
 
@@ -113,6 +211,13 @@
             <div class="roadmap-title">📦 Variablen &amp; Datentypen</div>
             <div class="roadmap-desc">Speicherboxen, die 4 Basisdatentypen (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>), Type Casting &amp; Type Hints.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G02 öffnen &rarr;</span></div>
         </a>
 
@@ -123,6 +228,13 @@
             <div class="roadmap-title">💬 Interaktive Ein- &amp; Ausgabe</div>
             <div class="roadmap-desc">Benutzereingaben mit <code>input()</code>, Textumwandlung und moderne formatierte <code>f-Strings</code> (z.B. <code>{preis:.2f} €</code>).</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G03 öffnen &rarr;</span></div>
         </a>
 
@@ -133,6 +245,13 @@
             <div class="roadmap-title">🚦 Bedingungen &amp; Verzweigungen</div>
             <div class="roadmap-desc">Entscheidungen treffen mit <code>if</code>, <code>elif</code>, <code>else</code>, Vergleichs- und Logikoperatoren (<code>and</code>, <code>or</code>, <code>not</code>).</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G04 öffnen &rarr;</span></div>
         </a>
 
@@ -143,6 +262,13 @@
             <div class="roadmap-title">🎡 Schleifen &amp; Wiederholungen</div>
             <div class="roadmap-desc">Zählschleifen mit <code>for in range(...)</code>, Bedingungsschleifen mit <code>while</code>, <code>break</code> &amp; <code>continue</code>.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G05 öffnen &rarr;</span></div>
         </a>
 
@@ -153,6 +279,13 @@
             <div class="roadmap-title">🪄 Eigene Funktionen &amp; Module</div>
             <div class="roadmap-desc">Wiederverwendbarer Code mit <code>def</code>, <code>return</code>, Parametern, Scope und Modulen (<code>math</code>, <code>random</code>).</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G06 öffnen &rarr;</span></div>
         </a>
 
@@ -163,6 +296,13 @@
             <div class="roadmap-title">📋 Listen &amp; Sequenzen</div>
             <div class="roadmap-desc">Elemente speichern, Indexzugriff, Slicing (<code>[1:4]</code>), Listen-Methoden (<code>append</code>, <code>pop</code>) &amp; <code>sum/len/min/max</code>.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G07 öffnen &rarr;</span></div>
         </a>
 
@@ -173,6 +313,13 @@
             <div class="roadmap-title">🔤 Textverarbeitung &amp; Strings</div>
             <div class="roadmap-desc">String-Methoden wie <code>.strip()</code>, <code>.replace()</code>, <code>.split()</code>, <code>.join()</code> und Palindrom-Analyse.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G08 öffnen &rarr;</span></div>
         </a>
 
@@ -183,6 +330,13 @@
             <div class="roadmap-title">🗃️ Dictionaries &amp; Sets</div>
             <div class="roadmap-desc">Schlüssel-Wert-Paare (<code>{key: val}</code>), sicheres <code>.get()</code>, Telefonbuch-Suche &amp; Mengen (<code>set</code>) ohne Duplikate.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G09 öffnen &rarr;</span></div>
         </a>
 
@@ -193,6 +347,13 @@
             <div class="roadmap-title">🚀 Comprehensions &amp; Algorithmen</div>
             <div class="roadmap-desc">List Comprehensions (<code>[x for x in ...]</code>), <code>datetime</code> für Kalenderberechnungen &amp; Min/Max-Suche.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel G10 öffnen &rarr;</span></div>
         </a>
 
@@ -218,6 +379,13 @@
             <div class="roadmap-title">🔍 Fehlersuche &amp; Bugs</div>
             <div class="roadmap-desc">Tracebacks von unten lesen, Einrückungen (IndentationError), Typfehler und Detektiv-Aufgabe.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -228,6 +396,13 @@
             <div class="roadmap-title">🐶 Die erste Klasse</div>
             <div class="roadmap-desc">Bauplan vs. Objekt, Instanziierung, Punktnotation und Type Hints am Fahrrad- &amp; Haustier-Beispiel.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -238,6 +413,13 @@
             <div class="roadmap-title">💳 Konstruktor & self</div>
             <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht, was <code>self</code> bedeutet und erste UML-Klassendiagramme.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -248,6 +430,13 @@
             <div class="roadmap-title">⚔️ Methoden & Verhalten</div>
             <div class="roadmap-desc">Objekte führen Aktionen aus! Interaktion zwischen Objekten in Rennautos und RPG-Heldenduellen.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -258,6 +447,13 @@
             <div class="roadmap-title">🧾 Schöne Textausgabe</div>
             <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Rechnungsdruck im Warenkorb.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -268,6 +464,12 @@
             <div class="roadmap-title">🚀 Installation &amp; Setup VS Code</div>
             <div class="roadmap-desc">Installationsanleitung (Win/Mac/Linux), Plugins (Error Lens, Python), Shortcuts &amp; Terminal.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/vscode_test.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            
+          </div>
+    
           <div class="roadmap-footer"><span>VS Code Guide &rarr;</span></div>
         </a>
 
@@ -278,6 +480,12 @@
             <div class="roadmap-title">🌿 Git &amp; Versionskontrolle</div>
             <div class="roadmap-desc">Die Programmier-Zeitmaschine: Spielstände (Commits) sichern, Diffs in VS Code, Terminal &amp; Push.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/git_uebung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            
+          </div>
+    
           <div class="roadmap-footer"><span>Git Guide &rarr;</span></div>
         </a>
 
@@ -288,6 +496,13 @@
             <div class="roadmap-title">🎵 Assoziation & Komposition</div>
             <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -298,6 +513,13 @@
             <div class="roadmap-title">🥚 Mini-Projekt: Tamagotchi</div>
             <div class="roadmap-desc">Kombiniere alles in einem voll spielbaren, interaktiven virtuellen Haustier für dein Terminal!</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -323,6 +545,13 @@
             <div class="roadmap-title">🌳 Referenzen &amp; Stammbäume</div>
             <div class="roadmap-desc">Speicherbereiche im RAM, Aliasing (<code>b = a</code>), <code>is</code> vs. <code>==</code> und Familienstammbäume.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -333,6 +562,13 @@
             <div class="roadmap-title">➕ Operator Overloading &amp; Dunder</div>
             <div class="roadmap-desc">Eigene Klassen rechenbar machen mit <code>__add__</code>, <code>__mul__</code>, <code>__eq__</code> für 2D-Vektoren &amp; Wegstrecken.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -343,6 +579,13 @@
             <div class="roadmap-title">🧪 Eigene Unit Tests &amp; TDD</div>
             <div class="roadmap-desc">Schreibe eigene Testsuiten mit <code>unittest</code>, <code>self.assertEqual()</code>, <code>assertRaises()</code> und lerne TDD.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -353,6 +596,13 @@
             <div class="roadmap-title">🧬 Vererbung &amp; super()</div>
             <div class="roadmap-desc">DRY-Prinzip, Basis- &amp; Kindklassen, <code>super().__init__()</code>, Methoden erweitern &amp; Fahrzeugflotten.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -363,6 +613,13 @@
             <div class="roadmap-title">🎭 Polymorphie &amp; Interfaces</div>
             <div class="roadmap-desc">Vielgestaltigkeit, Duck Typing, abstrakte Basisklassen (<code>ABC</code>), Geometrie-Engine &amp; Zeichenflächen.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -373,6 +630,13 @@
             <div class="roadmap-title">🛡️ Exceptions &amp; Fehlerbehandlung</div>
             <div class="roadmap-desc">Robuste Fehlerkontrolle mit <code>try-except-else-finally</code>, <code>raise</code> und eigene Fehlerklassen im Banking.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -383,6 +647,13 @@
             <div class="roadmap-title">💾 Datei-Persistenz: JSON &amp; CSV</div>
             <div class="roadmap-desc">Dauerhaftes Speichern &amp; Laden: Savegames mit <code>to_dict()</code>/<code>from_dict()</code>, <code>json.dump</code> und CSV-Export.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -393,6 +664,13 @@
             <div class="roadmap-title">🖥️ Desktop-GUIs mit Tkinter</div>
             <div class="roadmap-desc">Fenster, Buttons, Labels, Grid-Layout, Event-Loop und MVC-Architektur im interaktiven Zähler &amp; Rechner.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -403,6 +681,13 @@
             <div class="roadmap-title">🎒 Parameter &amp; Eigene Container</div>
             <div class="roadmap-desc">Variable Argumente (<code>*args</code>, <code>**kwargs</code>), Unpacking und Container-Dunder (<code>len</code>, <code>[]</code>, <code>in</code>, <code>iter</code>) im Gaming-Inventar.</div>
           </div>
+          
+          <div class="card-quick-links" style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">📄 aufgabe.py</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/test_aufgabe.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">🧪 tests</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/musterloesung.py" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #e2e8f0; color: #1e293b; box-shadow: none;" download onclick="event.stopPropagation();">💡 lösung</a>
+          </div>
+    
           <div class="roadmap-footer"><span>Kapitel öffnen &rarr;</span></div>
         </a>
 
@@ -492,6 +777,7 @@ object has no attribute 'gang'</code></pre>
     <!-- Interaktiver Traceback-Dolmetscher -->
     <section id="error-interpreter-widget"></section>
 
+    <section id="zertifikate"></section>
     <!-- Lehrpfad-Zertifikate Card -->
     <section class="card" style="border-left: 5px solid #d97706; background: linear-gradient(180deg, #ffffff 0%, #fffdfa 100%);">
       <h2>🏆 Offizielle Lehrpfad-Abschlusszertifikate</h2>
