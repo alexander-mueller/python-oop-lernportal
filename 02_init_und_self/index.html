@@ -19,43 +19,36 @@
       </nav>
       <div class="header-badge">Kapitel 02</div>
       <h1>Der Konstruktor <code>__init__</code> &amp; das geheimnisvolle <code>self</code> 💳</h1>
-      <p>Lerne, wie Objekte direkt beim Erstellen startklar gemacht werden und baue eine Taschengeld-Konto App.</p>
+      <p>Lerne, wie Objekte direkt beim Erstellen startklar gemacht werden – mit vollständigen Codebeispielen.</p>
     </div>
   </header>
 
   <main class="container">
 
-    <!-- Theorie Card -->
+    <!-- 1. Warum __init__ -->
     <section class="card">
       <h2>1. Warum brauchen wir <code>__init__</code>?</h2>
       
       <p>
-        In Kapitel 01 mussten wir jedes Attribut mühsam von Hand setzen:
+        In Kapitel 01 mussten wir jedes Attribut mühsam nach dem Erstellen von Hand setzen:
       </p>
       
       <div class="code-container">
         <pre><span class="var">bello</span> = <span class="fn">Haustier</span>()
 <span class="var">bello</span>.<span class="attr">name</span> = <span class="str">"Bello"</span>
-<span class="var">bello</span>.<span class="attr">alter</span> = <span class="num">3</span>  <span class="cm"># Was passiert, wenn man hier das Alter vergisst? -> Programm stürzt ab!</span></pre>
+<span class="var">bello</span>.<span class="attr">alter</span> = <span class="num">3</span>  <span class="cm"># Wenn wir 100 Tiere haben, müssen wir hunderte Zeilen schreiben!</span></pre>
       </div>
 
       <p>
-        Deshalb gibt es den <strong>Konstruktor</strong> <code>__init__</code>. Er wird von Python <strong>automatisch aufgerufen</strong>, sobald ein neues Objekt erstellt wird!
+        Die Lösung heißt <strong>Konstruktor</strong>: Die spezielle Methode <code>__init__</code>. Sie wird von Python <strong>automatisch aufgerufen</strong>, genau in dem Moment, in dem du ein Objekt erzeugst!
       </p>
-
-      <div class="box box-analogie">
-        <div class="box-title">🏗️ Die Geburtsurkunde-Analogie:</div>
-        Wenn ein neues Objekt "geboren" wird, muss es sofort seine grundlegenden Daten erhalten (Name, Startwert). <code>__init__</code> ist wie das Ausfüllen des Datenblattes bei der Geburt – danach ist das Objekt sofort einsatzbereit!
-      </div>
     </section>
 
-    <!-- self Erklärung -->
+    <!-- 2. Vollständiges Beispiel: Smartphone -->
     <section class="card">
-      <h2>2. Was bedeutet <code>self</code>?</h2>
+      <h2>2. 📱 Vollständiges Beispiel: Die Smartphone-Klasse</h2>
 
-      <p>
-        Das Wörtchen <code>self</code> steht auf Deutsch für <strong>"ich selbst"</strong> bzw. <strong>"dieses konkrete Objekt hier"</strong>.
-      </p>
+      <p>Schau dir an, wie eine vollständige Klasse mit Konstruktor und Methoden in der Praxis aussieht:</p>
 
       <div class="code-container">
         <div class="code-header">
@@ -64,44 +57,98 @@
             <span class="code-dot dot-yellow"></span>
             <span class="code-dot dot-green"></span>
           </div>
-          <span>Python</span>
+          <span>Python (Komplettes Beispiel: smartphone.py)</span>
         </div>
-        <pre><span class="kw">class</span> <span class="fn">Bankkonto</span>:
-    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">inhaber</span>, <span class="var">kontostand</span>=<span class="num">0.0</span>):
-        <span class="var">self</span>.<span class="attr">inhaber</span> = <span class="var">inhaber</span>          <span class="cm"># Speichere 'inhaber' im Attribut DIESES Objekts</span>
-        <span class="var">self</span>.<span class="attr">kontostand</span> = <span class="var">kontostand</span>    <span class="cm"># Speichere 'kontostand' in MEINEM Speicher</span>
+        <pre><span class="cm"># 1. Die vollständige Klasse definieren:</span>
+<span class="kw">class</span> <span class="fn">Smartphone</span>:
+    <span class="cm"># Der Konstruktor wird automatisch beim Erstellen aufgerufen:</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">modell</span>, <span class="var">speicher_gb</span>, <span class="var">akku</span>=<span class="num">100</span>):
+        <span class="var">self</span>.<span class="attr">modell</span> = <span class="var">modell</span>              <span class="cm"># z.B. "iPhone 15"</span>
+        <span class="var">self</span>.<span class="attr">speicher_gb</span> = <span class="var">speicher_gb</span>      <span class="cm"># z.B. 128</span>
+        <span class="var">self</span>.<span class="attr">akku</span> = <span class="var">akku</span>                  <span class="cm"># Standardwert ist 100%</span>
 
-<span class="cm"># Verwendung:</span>
-<span class="var">konto_anna</span> = <span class="fn">Bankkonto</span>(<span class="str">"Anna"</span>, <span class="num">50.0</span>)
-<span class="var">konto_ben</span> = <span class="fn">Bankkonto</span>(<span class="str">"Ben"</span>)          <span class="cm"># Verwendet den Standardwert 0.0</span></pre>
+    <span class="cm"># Eine Methode, die den Akkustand verringert:</span>
+    <span class="kw">def</span> <span class="fn">benutzen</span>(<span class="var">self</span>, <span class="var">minuten</span>):
+        <span class="var">verbrauch</span> = <span class="var">minuten</span> * <span class="num">0.5</span>
+        <span class="kw">if</span> <span class="var">self</span>.<span class="attr">akku</span> >= <span class="var">verbrauch</span>:
+            <span class="var">self</span>.<span class="attr">akku</span> -= <span class="var">verbrauch</span>
+            <span class="kw">return</span> <span class="str">f"{self.modell}: {minuten} Min. genutzt. Akku: {self.akku:.0f}%"</span>
+        <span class="kw">else</span>:
+            <span class="var">self</span>.<span class="attr">akku</span> = <span class="num">0</span>
+            <span class="kw">return</span> <span class="str">f"{self.modell}: Akku ist leer!"</span>
+
+    <span class="cm"># Eine Methode zum Aufladen:</span>
+    <span class="kw">def</span> <span class="fn">aufladen</span>(<span class="var">self</span>):
+        <span class="var">self</span>.<span class="attr">akku</span> = <span class="num">100</span>
+        <span class="kw">return</span> <span class="str">f"{self.modell} ist wieder voll aufgeladen (100%)!"</span>
+
+
+<span class="cm"># ==============================================================================</span>
+<span class="cm"># Jetzt verwenden wir die Smartphone-Klasse:</span>
+<span class="cm"># ==============================================================================</span>
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="cm"># Handy 1 erstellen (nutzt Standard-Akku 100%):</span>
+    <span class="var">mein_handy</span> = <span class="fn">Smartphone</span>(<span class="str">"iPhone 15"</span>, <span class="num">256</span>)
+
+    <span class="cm"># Handy 2 erstellen (mit 40% Start-Akku):</span>
+    <span class="var">altes_handy</span> = <span class="fn">Smartphone</span>(<span class="str">"Galaxy S10"</span>, <span class="num">64</span>, <span class="var">akku</span>=<span class="num">40</span>)
+
+    <span class="fn">print</span>(<span class="var">mein_handy</span>.<span class="fn">benutzen</span>(<span class="num">30</span>))   <span class="cm"># Verbraucht 15% -> 85% Rest</span>
+    <span class="fn">print</span>(<span class="var">altes_handy</span>.<span class="fn">benutzen</span>(<span class="num">90</span>))  <span class="cm"># Akku wird leer!</span>
+    <span class="fn">print</span>(<span class="var">altes_handy</span>.<span class="fn">aufladen</span>())     <span class="cm"># Wieder 100%</span></pre>
+      </div>
+    </section>
+
+    <!-- 3. Was bedeutet self im Detail? -->
+    <section class="card">
+      <h2>3. Was bedeutet <code>self</code> ganz genau?</h2>
+
+      <p>
+        Das Wörtchen <code>self</code> steht für <strong>"dieses konkrete Objekt hier"</strong>.
+      </p>
+
+      <div class="box box-analogie">
+        <div class="box-title">🪞 Das Namensschild-Prinzip:</div>
+        Wenn du <code>mein_handy.benutzen(30)</code> aufrufst, übergibt Python im Hintergrund automatisch <code>mein_handy</code> als erstes Argument <code>self</code>.
+        <br><br>
+        <code>self.akku -= verbrauch</code> bedeutet: <em>"Ziehe den Verbrauch vom Akku DIESES Handys ab – nicht von allen anderen Handys auf der Welt!"</em>
       </div>
 
       <div class="box box-tipp">
         <div class="box-title">💡 Warum <code>self.inhaber = inhaber</code>?</div>
-        Links vom Gleichheitszeichen steht <code>self.inhaber</code> – das ist die Variable, die <strong>am Objekt dauerhaft gespeichert</strong> bleibt. Rechts steht <code>inhaber</code> – das ist nur der temporäre Übergabeparameter der Funktion.
+        <ul>
+          <li><strong>Links (<code>self.inhaber</code>):</strong> Das Attribut, das fest am Objekt im Arbeitsspeicher abgespeichert wird.</li>
+          <li><strong>Rechts (<code>inhaber</code>):</strong> Der Wert, den jemand beim Aufruf in die Klammern übergeben hat.</li>
+        </ul>
       </div>
     </section>
 
-    <!-- Stolperfallen -->
+    <!-- 4. Stolperfallen -->
     <section class="card">
-      <h2>3. Häufige Stolperfallen beim Konstruktor</h2>
+      <h2>4. ⚠️ Häufige Fehler beim Konstruktor</h2>
 
       <div class="box box-warning">
-        <div class="box-title">⚠️ Fehler 1: Doppel-Unterstrich vs. Einzel-Unterstrich</div>
-        Es heißt <code>__init__</code> mit <strong>zwei Unterstrichen</strong> davor und danach (Dunder), NICHT <code>_init_</code>! Wenn du nur einen Unterstrich schreibst, ignoriert Python die Methode einfach.
+        <div class="box-title">1. Tippfehler bei den Unterstrichen:</div>
+        <code>def __init__(self):</code> &nbsp;&check; (2 Unterstriche vorne, 2 hinten: Dunder!)<br>
+        <code>def _init_(self):</code> &nbsp;&cross; (Falsch! Python ruft die Methode nicht auf!)
       </div>
 
       <div class="box box-danger">
-        <div class="box-title">⚠️ Fehler 2: <code>self</code> im Methodenkopf vergessen</div>
-        Jede Methode in einer Klasse <strong>muss</strong> als allerersten Parameter <code>self</code> haben:
-        <br><code>def einzahlen(self, betrag):</code> &nbsp;&check;
-        <br><code>def einzahlen(betrag):</code> &nbsp;&cross; (Führt zu <code>TypeError</code>!)
+        <div class="box-title">2. 'self' im Methodenkopf vergessen:</div>
+        <code>def einzahlen(self, betrag):</code> &nbsp;&check;<br>
+        <code>def einzahlen(betrag):</code> &nbsp;&cross; (Führt zu <code>TypeError: takes 1 positional argument but 2 were given</code>)
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-title">3. Falsche Zuweisungsrichtung:</div>
+        <code>self.kontostand = kontostand</code> &nbsp;&check;<br>
+        <code>kontostand = self.kontostand</code> &nbsp;&cross; (Überschreibt den Parameter, speichert nichts am Objekt!)
       </div>
     </section>
 
-    <!-- Aufgaben -->
+    <!-- 5. Aufgaben -->
     <section class="card">
-      <h2>4. Deine Aufgaben in <code>aufgabe.py</code></h2>
+      <h2>5. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
 
       <p>Öffne die Datei <code>02_init_und_self/aufgabe.py</code>:</p>
 
@@ -135,7 +182,7 @@
       <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
 
       <details>
-        <summary>Tipp zu TODO 3 (Auszahlen mit Absicherung)</summary>
+        <summary>🔍 Tipp zu TODO 3 (Auszahlen mit Absicherung)</summary>
         <div class="details-content">
           <div class="code-container">
             <pre><span class="kw">def</span> <span class="fn">auszahlen</span>(<span class="var">self</span>, <span class="var">betrag</span>):
@@ -148,9 +195,9 @@
       </details>
     </section>
 
-    <!-- Testen & Footer Navigation -->
+    <!-- 6. Testen & Footer Navigation -->
     <section class="card">
-      <h2>5. Lösung überprüfen</h2>
+      <h2>6. 🧪 Lösung überprüfen</h2>
       <p>Führe im Terminal im Ordner <code>02_init_und_self</code> folgenden Befehl aus:</p>
       <div class="code-container">
         <div class="code-header">

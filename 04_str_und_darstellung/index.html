@@ -19,18 +19,18 @@
       </nav>
       <div class="header-badge">Kapitel 04</div>
       <h1>Schöne Ausgaben mit <code>__str__</code> &amp; Objektlisten 🧾</h1>
-      <p>Lerne, wie du bestimmst, was beim <code>print(objekt)</code> erscheint und wie Objekte andere Objekte in Listen verwalten.</p>
+      <p>Lerne anhand eines Pizzeria-Beispiels, wie du <code>print(objekt)</code> formatierst und Objekte in Listen sammelst.</p>
     </div>
   </header>
 
   <main class="container">
 
-    <!-- Theorie Card -->
+    <!-- 1. Das Problem mit Standard print -->
     <section class="card">
-      <h2>1. Warum sieht <code>print(objekt)</code> standardmäßig so hässlich aus?</h2>
+      <h2>1. Warum sieht <code>print(objekt)</code> standardmäßig so kryptisch aus?</h2>
       
       <p>
-        Wenn du versuchst, ein Objekt ohne Dunder-Methode zu drucken:
+        Wenn du versuchst, ein Objekt ohne die Dunder-Methode <code>__str__</code> auszudrucken:
       </p>
       
       <div class="code-container">
@@ -39,13 +39,20 @@
       </div>
 
       <p>
-        Python weiß ohne deine Hilfe nicht, wie du dein Objekt darstellen möchtest.
+        Python weiß nicht, welche Attribute für einen Menschen interessant sind.
       </p>
 
       <div class="box box-tipp">
         <div class="box-title">✨ Die Magie von <code>__str__</code>:</div>
-        Sobald du in deiner Klasse eine Methode <code>def __str__(self):</code> definierst, ruft Python diese automatisch auf, wann immer das Objekt zu Text umgewandelt wird (bei <code>print()</code>, <code>str()</code> oder in f-Strings)!
+        Sobald du in deiner Klasse die Methode <code>def __str__(self):</code> definierst, ruft Python diese automatisch auf, sobald das Objekt in Text umgewandelt werden soll (bei <code>print()</code>, <code>str()</code> oder in f-Strings <code>f"{objekt}"</code>)!
       </div>
+    </section>
+
+    <!-- 2. Vollständiges Beispiel: Pizza & Pizzeria -->
+    <section class="card">
+      <h2>2. 🍕 Vollständiges Beispiel: Pizza &amp; Pizzeria-Bestellung</h2>
+
+      <p>Hier siehst du zwei vollständige Klassen, die zusammenarbeiten: <code>Pizza</code> (mit <code>__str__</code>) und <code>Bestellung</code> (die eine Liste von Pizzen verwaltet):</p>
 
       <div class="code-container">
         <div class="code-header">
@@ -54,38 +61,81 @@
             <span class="code-dot dot-yellow"></span>
             <span class="code-dot dot-green"></span>
           </div>
-          <span>Python</span>
+          <span>Python (Komplettes Beispiel: pizzeria.py)</span>
         </div>
-        <pre><span class="kw">class</span> <span class="fn">Buch</span>:
-    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">titel</span>, <span class="var">autor</span>):
-        <span class="var">self</span>.<span class="attr">titel</span> = <span class="var">titel</span>
-        <span class="var">self</span>.<span class="attr">autor</span> = <span class="var">autor</span>
+        <pre><span class="cm"># ==============================================================================</span>
+<span class="cm"># KLASSE 1: Einzelne Pizza mit schöner __str__ Ausgabe</span>
+<span class="cm"># ==============================================================================</span>
+<span class="kw">class</span> <span class="fn">Pizza</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">name</span>, <span class="var">preis</span>, <span class="var">extra_kaese</span>=<span class="kw">False</span>):
+        <span class="var">self</span>.<span class="attr">name</span> = <span class="var">name</span>
+        <span class="var">self</span>.<span class="attr">preis</span> = <span class="var">preis</span>
+        <span class="var">self</span>.<span class="attr">extra_kaese</span> = <span class="var">extra_kaese</span>
+        <span class="kw">if</span> <span class="var">extra_kaese</span>:
+            <span class="var">self</span>.<span class="attr">preis</span> += <span class="num">1.50</span>  <span class="cm"># Extra Käse kostet 1.50€ mehr</span>
 
+    <span class="cm"># Diese Methode bestimmt, wie die Pizza als Text aussieht:</span>
     <span class="kw">def</span> <span class="fn">__str__</span>(<span class="var">self</span>):
-        <span class="kw">return</span> <span class="str">f"'{self.titel}' von {self.autor}"</span>  <span class="cm"># MUSS ein String sein!</span>
+        <span class="var">kaese_hinweis</span> = <span class="str">" (mit Extra-Käse 🧀)"</span> <span class="kw">if</span> <span class="var">self</span>.<span class="attr">extra_kaese</span> <span class="kw">else</span> <span class="str">""</span>
+        <span class="kw">return</span> <span class="str">f"Pizza {self.name}{kaese_hinweis} - {self.preis:.2f} €"</span>
 
-<span class="var">mein_buch</span> = <span class="fn">Buch</span>(<span class="str">"Harry Potter"</span>, <span class="str">"J.K. Rowling"</span>)
-<span class="fn">print</span>(<span class="var">mein_buch</span>)  <span class="cm"># Ausgabe: 'Harry Potter' von J.K. Rowling</span></pre>
+
+<span class="cm"># ==============================================================================</span>
+<span class="cm"># KLASSE 2: Bestellung verwaltet eine Liste von Pizzen</span>
+<span class="cm"># ==============================================================================</span>
+<span class="kw">class</span> <span class="fn">Bestellung</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">kunden_name</span>):
+        <span class="var">self</span>.<span class="attr">kunden_name</span> = <span class="var">kunden_name</span>
+        <span class="var">self</span>.<span class="attr">pizzen</span> = []  <span class="cm"># Startet mit einer leeren Liste</span>
+
+    <span class="kw">def</span> <span class="fn">pizza_hinzufuegen</span>(<span class="var">self</span>, <span class="var">pizza</span>):
+        <span class="var">self</span>.<span class="attr">pizzen</span>.<span class="fn">append</span>(<span class="var">pizza</span>)
+
+    <span class="kw">def</span> <span class="fn">gesamtpreis</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="fn">sum</span>(<span class="var">p</span>.<span class="attr">preis</span> <span class="kw">for</span> <span class="var">p</span> <span class="kw">in</span> <span class="var">self</span>.<span class="attr">pizzen</span>)
+
+    <span class="kw">def</span> <span class="fn">rechnung_drucken</span>(<span class="var">self</span>):
+        <span class="var">zeilen</span> = [<span class="str">f"=== RECHNUNG FÜR {self.kunden_name.upper()} ==="</span>]
+        <span class="kw">for</span> <span class="var">p</span> <span class="kw">in</span> <span class="var">self</span>.<span class="attr">pizzen</span>:
+            <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="str">f"- {p}"</span>)  <span class="cm"># Hier wird automatisch p.__str__() aufgerufen!</span>
+        <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="str">"--------------------------------"</span>)
+        <span class="var">zeilen</span>.<span class="fn">append</span>(<span class="str">f"Gesamtsumme: {self.gesamtpreis():.2f} €"</span>)
+        <span class="kw">return</span> <span class="str">"\n"</span>.<span class="fn">join</span>(<span class="var">zeilen</span>)
+
+
+<span class="cm"># Ausprobieren:</span>
+<span class="kw">if</span> <span class="var">__name__</span> == <span class="str">"__main__"</span>:
+    <span class="var">bestellung</span> = <span class="fn">Bestellung</span>(<span class="str">"Lisa"</span>)
+
+    <span class="var">p1</span> = <span class="fn">Pizza</span>(<span class="str">"Margherita"</span>, <span class="num">8.50</span>)
+    <span class="var">p2</span> = <span class="fn">Pizza</span>(<span class="str">"Salami"</span>, <span class="num">9.50</span>, <span class="var">extra_kaese</span>=<span class="kw">True</span>)
+
+    <span class="var">bestellung</span>.<span class="fn">pizza_hinzufuegen</span>(<span class="var">p1</span>)
+    <span class="var">bestellung</span>.<span class="fn">pizza_hinzufuegen</span>(<span class="var">p2</span>)
+
+    <span class="fn">print</span>(<span class="var">bestellung</span>.<span class="fn">rechnung_drucken</span>())</pre>
       </div>
     </section>
 
-    <!-- Objektlisten Card -->
+    <!-- 3. Stolperfallen -->
     <section class="card">
-      <h2>2. Objekte in Listen verwalten</h2>
+      <h2>3. ⚠️ Wichtig bei <code>__str__</code></h2>
 
-      <p>
-        Eine Klasse kann als Attribut eine <strong>Liste von anderen Objekten</strong> haben:
-      </p>
+      <div class="box box-danger">
+        <div class="box-title">1. Immer 'return', niemals 'print'!</div>
+        <code>def __str__(self): return f"..."</code> &nbsp;&check;<br>
+        <code>def __str__(self): print(f"...")</code> &nbsp;&cross; (Falsch! <code>__str__</code> MUSS einen String mit <code>return</code> zurückgeben!)
+      </div>
 
-      <div class="box box-analogie">
-        <div class="box-title">🛒 Der Warenkorb:</div>
-        Ein <code>Warenkorb</code> besitzt eine Liste <code>self.artikel_liste = []</code>. Wenn du einen <code>Artikel</code> hinzufügst, landet das ganze Artikel-Objekt in der Liste!
+      <div class="box box-warning">
+        <div class="box-title">2. Rückgabewert muss zwingend ein String sein:</div>
+        Wenn du eine Zahl zurückgibst (z.B. <code>return self.preis</code>), stürzt Python ab mit <code>TypeError: __str__ returned non-string</code>. Nutze immer f-Strings <code>f"{self.preis}"</code> oder <code>str(...)</code>.
       </div>
     </section>
 
-    <!-- Aufgaben Card -->
+    <!-- 4. Aufgaben Card -->
     <section class="card">
-      <h2>3. Deine Aufgaben in <code>aufgabe.py</code></h2>
+      <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
 
       <ul class="task-list">
         <li class="task-item">
@@ -103,7 +153,7 @@
         <li class="task-item">
           <input type="checkbox" class="task-checkbox" id="t4_3">
           <label for="t4_3" class="task-label">
-            <strong>TODO 3:</strong> <code>Artikel.__str__(self)</code> -> z.B. <code>"2x Milch (je 1.29 €) = 2.58 €"</code>.
+            <strong>TODO 3:</strong> <code>Artikel.__str__(self)</code> -> <code>"{anzahl}x {name} (je {preis:.2f} €) = {gesamtpreis:.2f} €"</code>.
           </label>
         </li>
         <li class="task-item">
@@ -117,7 +167,7 @@
       <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
 
       <details>
-        <summary>Tipp zu TODO 7 (Kassenzettel zusammensetzen)</summary>
+        <summary>🔍 Tipp zu TODO 7 (Kassenzettel zusammensetzen)</summary>
         <div class="details-content">
           <div class="code-container">
             <pre><span class="kw">def</span> <span class="fn">bon_text</span>(<span class="var">self</span>):
@@ -132,9 +182,9 @@
       </details>
     </section>
 
-    <!-- Testen & Footer Navigation -->
+    <!-- 5. Testen & Navigation -->
     <section class="card">
-      <h2>4. Lösung überprüfen</h2>
+      <h2>5. 🧪 Lösung überprüfen</h2>
       <p>Führe im Terminal im Ordner <code>04_str_und_darstellung</code> folgenden Befehl aus:</p>
       <div class="code-container">
         <div class="code-header">

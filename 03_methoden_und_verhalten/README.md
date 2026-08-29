@@ -6,53 +6,50 @@ Funktionen, die innerhalb einer Klasse definiert sind, nennt man **Methoden**.
 
 ---
 
-## 🏃‍♀️ Was unterscheidet eine Methode von einer normalen Funktion?
-
-1. Eine Methode steht **eingerückt in der Klasse**.
-2. Das **erste Argument ist immer `self`**.
-3. Über `self` hat die Methode direkten Zugriff auf alle Eigenschaften des Objekts und kann diese verändern.
+## 🏎️ Vollständiges Praxisbeispiel: Die Rennauto-Klasse
 
 ```python
-class Zauberer:
-    def __init__(self, name, mana=50):
-        self.name = name
-        self.mana = mana
+class Rennauto:
+    def __init__(self, fahrer, speed, tank=50):
+        self.fahrer = fahrer
+        self.speed = speed          # z.B. 220 km/h
+        self.tank = tank            # Aktueller Tank in Litern
+        self.max_tank = tank        # Maximales Tankvolumen
+        self.gefahrene_km = 0
 
-    # Das hier ist eine Methode:
-    def zauberspruch_wirken(self, mana_kosten):
-        if self.mana >= mana_kosten:
-            self.mana -= mana_kosten
-            print(f"{self.name} wirkt einen Zauber! Verbleibendes Mana: {self.mana}")
-            return True
+    def fahren(self, km):
+        verbrauch = km * 0.2
+        if self.tank >= verbrauch:
+            self.tank -= verbrauch
+            self.gefahrene_km += km
+            return f"{self.fahrer} fährt {km} km (Tank: {self.tank:.1f}L übrig)"
         else:
-            print(f"{self.name} hat nicht genug Mana!")
-            return False
+            return f"{self.fahrer} hat nicht genug Sprit für {km} km!"
 
-merlin = Zauberer("Merlin", 30)
-merlin.zauberspruch_wirken(10)  # self wird automatisch merlin!
+    def tanken(self, liter):
+        freier_platz = self.max_tank - self.tank
+        getankt = min(freier_platz, liter)
+        self.tank += getankt
+        return f"{self.fahrer} tankt {getankt:.1f} Liter nach"
+
+    def duell_gegen(self, gegner_auto):
+        if self.speed > gegner_auto.speed:
+            return f"{self.fahrer} überholt {gegner_auto.fahrer}!"
+        else:
+            return f"{gegner_auto.fahrer} zieht an {self.fahrer} vorbei!"
+
+# Testen:
+auto1 = Rennauto("Max", 240, 40)
+auto2 = Rennauto("Lewis", 235, 50)
+print(auto1.fahren(100))
+print(auto1.duell_gegen(auto2))
 ```
 
 ---
 
 ## 🤝 Wenn Objekte miteinander interagieren!
 
-Das Spannendste an der objektorientierten Programmierung ist, wenn **ein Objekt mit einem anderen Objekt interagiert**.
-
-Du kannst ein ganzes Objekt als Parameter an die Methode eines anderen Objekts übergeben:
-
-```python
-class Spieler:
-    def __init__(self, name, geld):
-        self.name = name
-        self.geld = geld
-
-    def bezahle_an(self, empfaenger, betrag):
-        if self.geld >= betrag:
-            self.geld -= betrag
-            empfaenger.geld += betrag  # Wir greifen direkt auf das andere Objekt zu!
-            return True
-        return False
-```
+Du kannst ein ganzes Objekt als Parameter an die Methode eines anderen Objekts übergeben (wie bei `auto1.duell_gegen(auto2)` oder `ritter.angreifen(drache)`).
 
 ---
 
@@ -68,10 +65,12 @@ class Spieler:
 
 ## 🎯 Deine Aufgabe: Das RPG-Duell
 
-In `aufgabe.py` erstellst du eine Klasse `Held` für ein Rollenspiel:
-- Ein Held hat `name`, `leben`, `max_leben` und `angriffskraft`.
-- Ein Held kann Schaden erleiden (`schaden_erleiden`), geheilt werden (`heilen`) und einen anderen Helden angreifen (`angreifen(gegner)`).
-- Du sorgst mit Bedingungen dafür, dass die Lebenspunkte nicht unter `0` fallen und nicht über `max_leben` steigen!
+In `aufgabe.py` erstellst du die Klasse `Held`:
+- `__init__(self, name, leben=100, angriffskraft=15)`
+- `schaden_erleiden(self, schaden)`
+- `heilen(self, heilung)`
+- `angreifen(self, gegner)`
+- `status_text(self)`
 
 ### Testen:
 ```bash

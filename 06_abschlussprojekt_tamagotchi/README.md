@@ -7,23 +7,55 @@ Herzlichen Glückwunsch! Du hast alle grundlegenden Konzepte der objektorientier
 - `__str__` für ansprechende Textausgaben
 - Beziehungen zwischen Objekten
 
-Jetzt setzen wir alles in einem **vollwertigen, interaktiven Mini-Projekt** zusammen: Einem virtuellen Haustier (Tamagotchi)!
+---
+
+## 🤖 Vollständiges Beispiel: Roboter mit Lebenszyklus
+
+```python
+class Roboter:
+    def __init__(self, name):
+        self.name = name
+        self.energie = 100
+        self.ist_aktiv = True
+
+    def _begrenzen(self, wert):
+        return max(0, min(100, wert))
+
+    def arbeiten(self, stunden):
+        if not self.ist_aktiv:
+            return f"{self.name} ist ausgeschaltet!"
+        verbrauch = stunden * 20
+        self.energie = self._begrenzen(self.energie - verbrauch)
+        if self.energie == 0:
+            self.ist_aktiv = False
+            return f"{self.name} schaltet sich ab!"
+        return f"{self.name} hat gearbeitet (Energie: {self.energie}%)"
+
+    def aufladen(self):
+        self.energie = 100
+        self.ist_aktiv = True
+        return f"{self.name} ist wieder voll!"
+
+    def __str__(self):
+        status = "Aktiv ⚡" if self.ist_aktiv else "Ausgeschaltet 💤"
+        return f"[{self.name}] Energie: {self.energie}% | Status: {status}"
+
+# Testen:
+bot = Roboter("Wall-E")
+print(bot)
+print(bot.arbeiten(3))
+print(bot)
+print(bot.aufladen())
+```
 
 ---
 
 ## 🎮 Wie funktioniert das Tamagotchi?
 
-Dein Tamagotchi hat Eigenschaften, die sich durch deine Aktionen (und mit der Zeit) verändern:
-- **Hunger** (0 = vollgefressen, 100 = verhungert)
-- **Müdigkeit** (0 = voller Energie, 100 = total erschöpft)
-- **Glück** (0 = unglücklich, 100 = überglücklich)
+- **Hunger** (0 bis 100)
+- **Müdigkeit** (0 bis 100)
+- **Glück** (0 bis 100)
 - **Alter in Tagen**
-
-Du kannst mit ihm interagieren:
-- 🍎 **Füttern** (`fuettern`): Senkt den Hunger, macht etwas müde und etwas glücklicher.
-- ⚽ **Spielen** (`spielen`): Steigert das Glück, macht aber hungrig und müde. Zu müde Haustiere weigern sich zu spielen!
-- 💤 **Schlafen** (`schlafen`): Setzt die Müdigkeit auf 0, lässt einen Tag vergehen (`alter_tage += 1`), macht aber etwas hungrig.
-- ⏳ **Zeit vergeht** (`zeit_vergeht`): Das Haustier wird hungriger, müder und etwas trauriger. Wenn der Hunger 100 erreicht oder Glück 0 wird, schläft es für immer ein...
 
 ---
 
@@ -34,7 +66,6 @@ Sobald du die `Tamagotchi`-Klasse in `aufgabe.py` fertig programmiert hast und a
 ```bash
 python3 tamagotchi_spiel.py
 ```
-Dort kannst du deinem Haustier einen Namen geben und dich live um es kümmern!
 
 ---
 

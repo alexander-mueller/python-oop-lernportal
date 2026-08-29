@@ -19,43 +19,46 @@ Das ist kryptisch und hilft im Alltag nicht weiter. Aber Python hat dafür eine 
 
 ---
 
-## ✨ Die `__str__`-Methode
-
-Wann immer Python ein Objekt in einen Text umwandeln soll (z.B. bei `print(mein_objekt)` oder `str(mein_objekt)` oder in einem f-String `f"Das Buch: {mein_objekt}"`), schaut Python nach, ob deine Klasse eine `__str__`-Methode hat.
-
-Wenn ja, ruft Python sie automatisch auf:
+## 🍕 Vollständiges Praxisbeispiel: Pizza & Pizzeria-Bestellung
 
 ```python
-class Buch:
-    def __init__(self, titel, autor):
-        self.titel = titel
-        self.autor = autor
+# 1. Klasse Pizza mit __str__:
+class Pizza:
+    def __init__(self, name, preis, extra_kaese=False):
+        self.name = name
+        self.preis = preis
+        self.extra_kaese = extra_kaese
+        if extra_kaese:
+            self.preis += 1.50
 
     def __str__(self):
-        # Muss immer einen STRING zurückgeben (return)!
-        return f"'{self.titel}' von {self.autor}"
+        kaese = " (mit Extra-Käse)" if self.extra_kaese else ""
+        return f"Pizza {self.name}{kaese} - {self.preis:.2f} €"
 
-mein_buch = Buch("Harry Potter", "J.K. Rowling")
-print(mein_buch)  # Ausgabe: 'Harry Potter' von J.K. Rowling 🎉
-```
+# 2. Klasse Bestellung verwaltet Pizza-Objekte:
+class Bestellung:
+    def __init__(self, kunden_name):
+        self.kunden_name = kunden_name
+        self.pizzen = []
 
----
+    def pizza_hinzufuegen(self, pizza):
+        self.pizzen.append(pizza)
 
-## 🧺 Objekte in Listen verwalten
+    def gesamtpreis(self):
+        return sum(p.preis for p in self.pizzen)
 
-Oft hat man Objekte, die eine Liste von *anderen* Objekten verwalten (z.B. ein Warenkorb, der Artikel enthält, oder ein Bus, der Fahrgäste enthält):
+    def rechnung_drucken(self):
+        zeilen = [f"=== RECHNUNG FÜR {self.kunden_name} ==="]
+        for p in self.pizzen:
+            zeilen.append(f"- {p}")  # Ruft p.__str__() auf!
+        zeilen.append(f"Gesamt: {self.gesamtpreis():.2f} €")
+        return "\n".join(zeilen)
 
-```python
-class Schultasche:
-    def __init__(self):
-        self.buecher = []  # Startet mit einer leeren Liste
-
-    def buch_einpacken(self, buch):
-        self.buecher.append(buch)
-
-    def inhalt_anzeigen(self):
-        for b in self.buecher:
-            print(f"- {b}")  # Hier wird automatisch b.__str__() genutzt!
+# Testen:
+bestellung = Bestellung("Lisa")
+bestellung.pizza_hinzufuegen(Pizza("Margherita", 8.50))
+bestellung.pizza_hinzufuegen(Pizza("Salami", 9.50, extra_kaese=True))
+print(bestellung.rechnung_drucken())
 ```
 
 ---
