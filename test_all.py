@@ -45,6 +45,14 @@ KAPITEL = [
     ("Kapitel 14: Desktop-GUIs mit Tkinter", "lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter"),
     ("Kapitel 15: Parameter & Eigene Container", "lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container"),
     ("Kapitel 16: Master-Abschlussprojekt", "lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt"),
+
+    # LEHRPFAD 4: PROFESSIONAL DATA ENGINEERING
+    ("Kapitel 17: Reguläre Ausdrücke (re)", "lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re"),
+    ("Kapitel 18: Funktionale Programmierung", "lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda"),
+    ("Kapitel 19: Generatoren & itertools", "lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools"),
+    ("Kapitel 20: Dataclasses & Type Hints", "lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints"),
+    ("Kapitel 21: Datenbanken & SQLite", "lehrpfad_4_professional_data_engineering/21_datenbanken_und_sqlite"),
+    ("Kapitel 22: Web-APIs & JSON-Feeds", "lehrpfad_4_professional_data_engineering/22_web_apis_und_json_feeds"),
 ]
 
 def main():

@@ -33,9 +33,13 @@
       titel = "Fortgeschrittenes OOP, Softwarequalität & Desktop-GUIs";
       moduleDesc = "10 Module: Speicher-Referenzen, Dunder-Methoden, TDD Unit Testing, Vererbung, Polymorphie, Exceptions, JSON-Persistenz, Tkinter GUIs, Container & Masterprojekt";
       trackKey = "lehrpfad_3";
+    } else if (lehrpfadNummer === 4 || lehrpfadNummer === "lehrpfad_4") {
+      titel = "Python Professional & Data Engineering";
+      moduleDesc = "6 Master-Module: Reguläre Ausdrücke (re), Functional Programming (lambda, zip, map), Generatoren & itertools, Dataclasses & Type Hints, Relationale DBs mit SQLite, REST-APIs & JSON-Feeds";
+      trackKey = "lehrpfad_4";
     } else if (lehrpfadNummer === "master") {
-      titel = "Master of Python Software Engineering";
-      moduleDesc = "Vollständiger Abschluss aller 3 Lehrpfade (27 Module, 188 bestandene automatisierte Unittests, Model-View-Controller Desktop-App)";
+      titel = "Grandmaster of Python Software Engineering";
+      moduleDesc = "Vollständiger Abschluss aller 4 Lehrpfade (33 Module, über 220 bestandene automatisierte Unittests, SQLite-Persistenz, REST-APIs & MVC-Desktop-App)";
       trackKey = "master";
     }
 

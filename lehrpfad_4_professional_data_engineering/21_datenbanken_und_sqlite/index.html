@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 21: Relationale Datenbanken &amp; SQLite</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="../../index.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">🐍</div>
+          <div>
+            <div class="sidebar-title">Python Portal</div>
+            <div class="sidebar-subtitle">Lernplattform</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-quick-nav">
+        <a href="../../index.html" class="sidebar-link">🏠 Startseite</a>
+        <a href="../../index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
+        <a href="../../index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🌱 1. Grundlagen</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">G01–G10</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧮</span>
+              <span class="sidebar-link-text">G01. Taschenrechner</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📦</span>
+              <span class="sidebar-link-text">G02. Variablen &amp; Typen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💬</span>
+              <span class="sidebar-link-text">G03. Ein- &amp; Ausgabe</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚦</span>
+              <span class="sidebar-link-text">G04. Bedingungen (if)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎡</span>
+              <span class="sidebar-link-text">G05. Schleifen (for/while)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🪄</span>
+              <span class="sidebar-link-text">G06. Funktionen &amp; Module</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📋</span>
+              <span class="sidebar-link-text">G07. Listen &amp; Sequenzen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔤</span>
+              <span class="sidebar-link-text">G08. String-Methoden</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🗃️</span>
+              <span class="sidebar-link-text">G09. Dicts &amp; Sets</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚀</span>
+              <span class="sidebar-link-text">G10. Comprehensions</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🏗️ 2. OOP Einstieg</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">00–06</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔍</span>
+              <span class="sidebar-link-text">00. Fehlersuche &amp; Debug</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏗️</span>
+              <span class="sidebar-link-text">01. Einstieg in Klassen</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">⚙️</span>
+              <span class="sidebar-link-text">02. Konstruktor &amp; self</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏎️</span>
+              <span class="sidebar-link-text">03. Methoden &amp; Verhalten</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧾</span>
+              <span class="sidebar-link-text">04. __str__ Darstellung</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💻</span>
+              <span class="sidebar-link-text">04b. VS Code Setup</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌿</span>
+              <span class="sidebar-link-text">04c. Git-Versionskontrolle</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎵</span>
+              <span class="sidebar-link-text">05. Objekte kombinieren</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🥚</span>
+              <span class="sidebar-link-text">06. Projekt: Tamagotchi</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🚀 3. Fortgeschritten</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">07–16</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧠</span>
+              <span class="sidebar-link-text">07. Referenzen &amp; Speicher</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">➕</span>
+              <span class="sidebar-link-text">08. Operator Overloading</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧪</span>
+              <span class="sidebar-link-text">09. Unit Tests &amp; TDD</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧬</span>
+              <span class="sidebar-link-text">10. Vererbung &amp; super()</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎭</span>
+              <span class="sidebar-link-text">11. Polymorphie</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🛡️</span>
+              <span class="sidebar-link-text">12. Exceptions &amp; Fehler</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💾</span>
+              <span class="sidebar-link-text">13. Persistenz (JSON/CSV)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🖥️</span>
+              <span class="sidebar-link-text">14. Desktop-GUIs (Tkinter)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎒</span>
+              <span class="sidebar-link-text">15. Container &amp; *args</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏆</span>
+              <span class="sidebar-link-text">16. Master-Abschlussprojekt</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>📊 4. Data Engineering</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">21–22</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_4_professional_data_engineering/21_datenbanken_und_sqlite/index.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">🗄️</span>
+              <span class="sidebar-link-text">21. Datenbanken &amp; SQLite</span>
+            </a>
+            <a href="../../lehrpfad_4_professional_data_engineering/22_web_apis_und_json_feeds/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌐</span>
+              <span class="sidebar-link-text">22. Web-APIs &amp; JSON</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: white;" id="sidebar-level-text">⭐ Level 1</div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;" id="sidebar-xp-text">0 XP</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <nav class="nav-links">
+            <a href="../../index.html">🏠 Zur Kursübersicht</a>
+            <span>&rsaquo;</span>
+            <span>Lehrpfad 4</span>
+            <span>&rsaquo;</span>
+            <span style="color: white; font-weight: 600;">Kapitel 21</span>
+          </nav>
+          <div class="header-badge">Kapitel 21 &bull; Data Engineering &bull; SQL &amp; Persistenz</div>
+          <h1>Relationale Datenbanken &amp; SQLite 🗄️⚡</h1>
+          <p>Lerne die Grundlagen relationaler Datenbanken mit Pythons integriertem <code>sqlite3</code>-Modul, meistere CRUD-Operationen und schütze deine Daten vor SQL-Injections.</p>
+        </div>
+      </header>
+
+      <main class="container">
+
+        <!-- 📂 Schnellzugriff & Download aller Dateien dieser Einheit -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.py" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.py (Startercode)</a>
+            <a href="test_aufgabe.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.py (Tests)</a>
+            <a href="musterloesung.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.py (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Analogie & Konzept -->
+        <section class="card">
+          <h2>1. Was ist eine relationale Datenbank? (Die Aktenschrank-Analogie)</h2>
+          
+          <p>
+            In vorherigen Kapiteln haben wir Daten in einfachen JSON- oder CSV-Dateien gespeichert. Bei größeren Anwendungen stoßen Textdateien jedoch schnell an ihre Grenzen:
+            Man kann nicht blitzschnell nach einzelnen Datensätzen suchen, ohne die gesamte Datei einzulesen, und gleichzeitige Schreibzugriffe führen zu Datenverlust.
+            Hier kommen <strong>relationale Datenbanksysteme (RDBMS)</strong> ins Spiel!
+          </p>
+
+          <div class="box box-analogie">
+            <div class="box-title">🗄️ Die Aktenschrank-Analogie:</div>
+            Stell dir eine relationale Datenbank wie einen soliden Büroschrank vor:
+            <ul style="margin-top: 8px; margin-left: 20px;">
+              <li><strong>Die Datenbankdatei (<code>.db</code>):</strong> Der gesamte Aktenschrank im Büro.</li>
+              <li><strong>Die Tabelle (<code>Table</code>):</strong> Eine einzelne ausziehbare Schublade (z.B. Schublade „Kunden“).</li>
+              <li><strong>Die Spalte (<code>Column / Field</code>):</strong> Ein vorgedrucktes Formularfeld auf den Karteikarten (z.B. „Name“, „E-Mail“, „Guthaben“).</li>
+              <li><strong>Die Zeile (<code>Row / Record</code>):</strong> Eine einzelne, ausgefüllte Karteikarte für genau einen Kunden.</li>
+              <li><strong>Der Primärschlüssel (<code>PRIMARY KEY</code>):</strong> Die eindeutige Kundennummer oben rechts auf jeder Karteikarte.</li>
+            </ul>
+          </div>
+
+          <h3>Der Lebenszyklus einer SQLite-Verbindung in Python</h3>
+          <p>
+            Python bringt mit <code>sqlite3</code> eine vollständige, vollwertige SQL-Datenbank direkt in der Standardbibliothek mit – ohne Server-Installation!
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span>Grundgerüst mit sqlite3</span>
+            </div>
+            <pre><span class="kw">import</span> <span class="var">sqlite3</span>
+
+<span class="cm"># 1. Verbindung herstellen (erstellt die Datei automatisch, falls nicht vorhanden)</span>
+<span class="var">conn</span> = <span class="var">sqlite3</span>.<span class="fn">connect</span>(<span class="str">"kunden.db"</span>)
+
+<span class="cm"># 2. row_factory aktivieren: Erlaubt Dict-artigen Spaltenzugriff wie row["name"]</span>
+<span class="var">conn</span>.<span class="attr">row_factory</span> = <span class="var">sqlite3</span>.<span class="var">Row</span>
+
+<span class="cm"># 3. Cursor erzeugen (der 'Stift', mit dem wir Befehle an die DB schicken)</span>
+<span class="var">cursor</span> = <span class="var">conn</span>.<span class="fn">cursor</span>()
+
+<span class="cm"># 4. SQL-Befehl ausführen</span>
+<span class="var">cursor</span>.<span class="fn">execute</span>(<span class="str">"""
+    CREATE TABLE IF NOT EXISTS kunden (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        guthaben REAL DEFAULT 0.0
+    )
+"""</span>)
+
+<span class="cm"># 5. Transaktion dauerhaft speichern (Commit)</span>
+<span class="var">conn</span>.<span class="fn">commit</span>()
+
+<span class="cm"># 6. Verbindung sauber schließen</span>
+<span class="var">conn</span>.<span class="fn">close</span>()</pre>
+          </div>
+        </section>
+
+        <!-- 2. CRUD SQL Befehle -->
+        <section class="card">
+          <h2>2. Die 4 Säulen von SQL: CRUD im Überblick</h2>
+          <p>In relationalen Datenbanken dreht sich alles um die vier elementaren <strong>CRUD</strong>-Operationen:</p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+            <thead>
+              <tr style="background: var(--primary-light); text-align: left;">
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Operation</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">SQL-Befehl</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Python-Beispiel mit Platzhaltern (<code>?</code>)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Create</strong> (Erstellen)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>INSERT INTO ...</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>cursor.execute("INSERT INTO kunden (name, email, guthaben) VALUES (?, ?, ?)", (name, email, 50.0))</code></td>
+              </tr>
+              <tr style="background: #fafafa;">
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Read</strong> (Lesen / Suchen)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>SELECT ... WHERE</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>cursor.execute("SELECT * FROM kunden WHERE id = ?", (kunden_id,))</code><br><code>row = cursor.fetchone()</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Update</strong> (Aktualisieren)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>UPDATE ... SET</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>cursor.execute("UPDATE kunden SET guthaben = guthaben + ? WHERE id = ?", (betrag, kunden_id))</code></td>
+              </tr>
+              <tr style="background: #fafafa;">
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Delete</strong> (Löschen)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>DELETE FROM ...</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>cursor.execute("DELETE FROM kunden WHERE id = ?", (kunden_id,))</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="box" style="background: #eff6ff; border-left: 4px solid #3b82f6;">
+            <div class="box-title" style="color: #1d4ed8;">💡 Cursor-Methoden im Detail:</div>
+            <ul style="margin-left: 20px; margin-top: 6px;">
+              <li><code>cursor.fetchone()</code>: Liefert die nächste einzelne Ergebniszeile (oder <code>None</code>).</li>
+              <li><code>cursor.fetchall()</code>: Liefert eine Liste aller passenden Ergebniszeilen (oder <code>[]</code>).</li>
+              <li><code>cursor.lastrowid</code>: Die automatisch generierte ID des zuletzt eingefügten Datensatzes.</li>
+              <li><code>cursor.rowcount</code>: Die Anzahl der Zeilen, die durch das letzte <code>UPDATE</code> oder <code>DELETE</code> verändert wurden.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 3. SQL Injection Sicherheit -->
+        <section class="card">
+          <h2>3. 🚨 Sicherheit: Schutz vor SQL-Injections mit <code>?</code>-Parametern</h2>
+
+          <p>
+            Eine der häufigsten und gefährlichsten Sicherheitslücken in der Software-Entwicklung ist die <strong>SQL-Injection</strong>.
+            Sie entsteht, wenn Benutzereingaben unbedacht per String-Formatierung (z.B. f-Strings) direkt in den SQL-Befehl eingebettet werden!
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+            <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: var(--radius-md); padding: 14px;">
+              <h4 style="color: #e11d48; margin-bottom: 8px;">❌ GEFÄHRLICH: String-Formatierung</h4>
+              <pre style="background: #0b0f19; color: #f87171; padding: 10px; border-radius: 6px; font-size: 0.82rem; overflow-x: auto;"><code># Angreifer gibt als Name ein:
+# Robert'); DROP TABLE kunden;--
+
+query = f"INSERT INTO kunden (name) VALUES ('{user_name}')"
+cursor.execute(query)
+# BUMM! Die Tabelle kunden wird gelöscht!</code></pre>
+            </div>
+
+            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); padding: 14px;">
+              <h4 style="color: #059669; margin-bottom: 8px;">✅ SICHER: Parametrisierte Abfrage</h4>
+              <pre style="background: #0b0f19; color: #34d399; padding: 10px; border-radius: 6px; font-size: 0.82rem; overflow-x: auto;"><code># Das sqlite3-Modul maskiert alle Zeichen:
+
+query = "INSERT INTO kunden (name) VALUES (?)"
+cursor.execute(query, (user_name,))
+
+# Der Name wird harmlos als Text gespeichert!</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. In-Memory SQLite -->
+        <section class="card">
+          <h2>4. In-Memory Datenbanken mit <code>:memory:</code></h2>
+          <p>
+            Für automatisierte Unit Tests oder temporäre Berechnungen bietet SQLite ein geniales Feature: die <strong>In-Memory-Datenbank</strong>.
+          </p>
+          <div class="code-container">
+            <pre><span class="var">conn</span> = <span class="var">sqlite3</span>.<span class="fn">connect</span>(<span class="str">":memory:"</span>)</pre>
+          </div>
+          <p>
+            Die Datenbank existiert ausschließlich im flüchtigen RAM. Sobald <code>conn.close()</code> aufgerufen wird oder der Test endet, ist alles rückstandslos bereinigt –
+            ideal für blitzschnelle, voneinander isolierte Tests ohne lästige temporäre Testdateien auf der Festplatte!
+          </p>
+        </section>
+
+        <!-- 5. Aufgabenstellung -->
+        <section class="card">
+          <h2>5. 🎯 Deine Aufgaben in <code><a href="aufgabe.py" style="color: inherit; text-decoration: underline;">aufgabe.py</a></code></h2>
+
+          <p>Öffne die Datei <code><a href="aufgabe.py" style="color: inherit; text-decoration: underline;">aufgabe.py</a></code> und implementiere die Klasse <code>KundenDatenbank</code>:</p>
+
+          <ul class="task-list">
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_1">
+              <label for="t21_1" class="task-label">
+                <strong>TODO 1 (Konstruktor):</strong> Verbindung zu <code>db_pfad</code> aufbauen, <code>row_factory = sqlite3.Row</code> setzen, Cursor erstellen und Tabelle <code>kunden</code> mit <code>id</code>, <code>name</code>, <code>email</code> und <code>guthaben</code> anlegen.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_2">
+              <label for="t21_2" class="task-label">
+                <strong>TODO 2 (kunde_hinzufuegen):</strong> Per <code>INSERT INTO kunden ... VALUES (?, ?, ?)</code> Datensatz einfügen, <code>commit()</code> aufrufen und <code>cursor.lastrowid</code> zurückgeben.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_3">
+              <label for="t21_3" class="task-label">
+                <strong>TODO 3 (kunde_suchen_nach_id):</strong> Per <code>SELECT</code> nach ID suchen, <code>cursor.fetchone()</code> prüfen und ein Dictionary oder <code>None</code> zurückgeben.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_4">
+              <label for="t21_4" class="task-label">
+                <strong>TODO 4 (guthaben_aufladen):</strong> Prüfen, ob Betrag > 0 ist, mit <code>UPDATE kunden SET guthaben = guthaben + ? WHERE id = ?</code> aktualisieren und <code>cursor.rowcount > 0</code> zurückgeben.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_5">
+              <label for="t21_5" class="task-label">
+                <strong>TODO 5 (kunden_mit_mindestguthaben):</strong> Mit <code>SELECT ... WHERE guthaben >= ? ORDER BY guthaben DESC</code> abfragen und Liste von Dicts zurückgeben.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t21_6">
+              <label for="t21_6" class="task-label">
+                <strong>TODO 6 (kunde_loeschen):</strong> Mit <code>DELETE FROM kunden WHERE id = ?</code> Kunde löschen und <code>cursor.rowcount > 0</code> zurückgeben.
+              </label>
+            </li>
+          </ul>
+
+          <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+          <details>
+            <summary>🔍 Tipp zur Tabellenerstellung</summary>
+            <div class="details-content">
+              <div class="code-container">
+                <pre><span class="var">self</span>.<span class="attr">cursor</span>.<span class="fn">execute</span>(<span class="str">"""
+    CREATE TABLE IF NOT EXISTS kunden (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        guthaben REAL DEFAULT 0.0
+    )
+"""</span>)
+<span class="var">self</span>.<span class="attr">conn</span>.<span class="fn">commit</span>()</pre>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>🔍 Tipp zu row_factory &amp; Dict-Rückgabe</summary>
+            <div class="details-content">
+              <div class="code-container">
+                <pre><span class="var">self</span>.<span class="attr">cursor</span>.<span class="fn">execute</span>(<span class="str">"SELECT id, name, email, guthaben FROM kunden WHERE id = ?"</span>, (<span class="var">kunden_id</span>,))
+<span class="var">row</span> = <span class="var">self</span>.<span class="attr">cursor</span>.<span class="fn">fetchone</span>()
+<span class="kw">if</span> <span class="var">row</span> <span class="kw">is None</span>:
+    <span class="kw">return None</span>
+<span class="kw">return</span> {
+    <span class="str">"id"</span>: <span class="var">row</span>[<span class="str">"id"</span>],
+    <span class="str">"name"</span>: <span class="var">row</span>[<span class="str">"name"</span>],
+    <span class="str">"email"</span>: <span class="var">row</span>[<span class="str">"email"</span>],
+    <span class="str">"guthaben"</span>: <span class="fn">float</span>(<span class="var">row</span>[<span class="str">"guthaben"</span>])
+}</pre>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- 6. Testen & Navigation -->
+        <section class="card">
+          <h2>6. 🧪 Lösung überprüfen</h2>
+          <p>Führe im Terminal im Ordner <code>21_datenbanken_und_sqlite</code> folgenden Befehl aus:</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Terminal</span>
+            </div>
+            <pre><code>python3 test_aufgabe.py</code></pre>
+          </div>
+
+          <div class="footer-nav">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 16</a>
+            <a href="../22_web_apis_und_json_feeds/index.html" class="btn">Weiter zu Kapitel 22 &rarr;</a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <button type="button" class="sidebar-mobile-toggle"><span>☰ Menü</span></button>
+  <div class="sidebar-overlay"></div>
+
+  <!-- Scripts -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+  <script src="../../assets/interpreter.js"></script>
+  <script src="../../assets/certificate.js"></script>
+  <script src="../../assets/parsons.js"></script>
+  <script src="../../assets/runner.js"></script>
+  <script src="../../assets/ui_enhancements.js"></script>
+  <script src="../../assets/sidebar.js"></script>
+</body>
+</html>

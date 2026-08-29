@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 20: Dataclasses, Type Hints & Decorators</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="../../index.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">🐍</div>
+          <div>
+            <div class="sidebar-title">Python Portal</div>
+            <div class="sidebar-subtitle">Lernplattform</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-quick-nav">
+        <a href="../../index.html" class="sidebar-link">🏠 Startseite</a>
+        <a href="../../index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
+        <a href="../../index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🌱 1. Grundlagen</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">G01–G10</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧮</span>
+              <span class="sidebar-link-text">G01. Taschenrechner</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📦</span>
+              <span class="sidebar-link-text">G02. Variablen & Typen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💬</span>
+              <span class="sidebar-link-text">G03. Ein- & Ausgabe</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚦</span>
+              <span class="sidebar-link-text">G04. Bedingungen (if)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎡</span>
+              <span class="sidebar-link-text">G05. Schleifen (for/while)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🪄</span>
+              <span class="sidebar-link-text">G06. Funktionen & Module</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📋</span>
+              <span class="sidebar-link-text">G07. Listen & Sequenzen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔤</span>
+              <span class="sidebar-link-text">G08. String-Methoden</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🗃️</span>
+              <span class="sidebar-link-text">G09. Dicts & Sets</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚀</span>
+              <span class="sidebar-link-text">G10. Comprehensions</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🏗️ 2. OOP Einstieg</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">00–06</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔍</span>
+              <span class="sidebar-link-text">00. Fehlersuche & Debug</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏗️</span>
+              <span class="sidebar-link-text">01. Einstieg in Klassen</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">⚙️</span>
+              <span class="sidebar-link-text">02. Konstruktor & self</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏎️</span>
+              <span class="sidebar-link-text">03. Methoden & Verhalten</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧾</span>
+              <span class="sidebar-link-text">04. __str__ Darstellung</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💻</span>
+              <span class="sidebar-link-text">04b. VS Code Setup</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌿</span>
+              <span class="sidebar-link-text">04c. Git-Versionskontrolle</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎵</span>
+              <span class="sidebar-link-text">05. Objekte kombinieren</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🥚</span>
+              <span class="sidebar-link-text">06. Projekt: Tamagotchi</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🚀 3. Fortgeschritten</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">07–16</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧠</span>
+              <span class="sidebar-link-text">07. Referenzen & Speicher</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">➕</span>
+              <span class="sidebar-link-text">08. Operator Overloading</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧪</span>
+              <span class="sidebar-link-text">09. Unit Tests & TDD</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧬</span>
+              <span class="sidebar-link-text">10. Vererbung & super()</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎭</span>
+              <span class="sidebar-link-text">11. Polymorphie</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🛡️</span>
+              <span class="sidebar-link-text">12. Exceptions & Fehler</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💾</span>
+              <span class="sidebar-link-text">13. Persistenz (JSON/CSV)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🖥️</span>
+              <span class="sidebar-link-text">14. Desktop-GUIs (Tkinter)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎒</span>
+              <span class="sidebar-link-text">15. Container & *args</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏆</span>
+              <span class="sidebar-link-text">16. Master-Abschlussprojekt</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>⚡ 4. Data Engineering</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">19–20</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../19_generatoren_und_itertools/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌊</span>
+              <span class="sidebar-link-text">19. Generatoren & itertools</span>
+            </a>
+            <a href="index.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">🏷️</span>
+              <span class="sidebar-link-text">20. Dataclasses & Types</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: white;" id="sidebar-level-text">⭐ Level 1</div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;" id="sidebar-xp-text">0 XP</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <nav class="nav-links">
+            <a href="../../index.html">🏠 Zur Kursübersicht</a>
+            <span>&rsaquo;</span>
+            <a href="../19_generatoren_und_itertools/index.html">Kapitel 19</a>
+            <span>&rsaquo;</span>
+            <span style="color: white; font-weight: 600;">Kapitel 20</span>
+          </nav>
+          <div class="header-badge">Lehrpfad 4 &bull; Professional Data Engineering</div>
+          <h1>Dataclasses, Type Hints &amp; Decorators 🏷️✨</h1>
+          <p>Schreibe eleganten, selbstdokumentierenden und typsicheren Code mit <code>@dataclass</code>, modernen Type Hints und maßgeschneiderten Decorators.</p>
+        </div>
+      </header>
+
+      <main class="container">
+
+        <!-- 📂 Schnellzugriff & Download aller Dateien dieser Einheit -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.py" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.py (Startercode)</a>
+            <a href="test_aufgabe.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.py (Tests)</a>
+            <a href="musterloesung.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.py (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Dataclasses: Das Fertighaus für Klassen -->
+        <section class="card">
+          <h2>1. @dataclass: Die Fertighaus-Gussform 🏗️📦</h2>
+          
+          <p>
+            In vielen Programmen dienen Klassen primär als Datenbehälter. Bisher musstest du dafür seitenweise denselben Standard-Code schreiben:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+            <div style="background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+              <h3 style="color: var(--rose); margin-top: 0;">🔴 Klassisch (Viel Tipparbeit)</h3>
+              <div class="code-container" style="margin: 8px 0;">
+                <pre><span class="kw">class</span> <span class="fn">Artikel</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">name</span>, <span class="var">preis</span>):
+        <span class="var">self</span>.<span class="attr">name</span> = <span class="var">name</span>
+        <span class="var">self</span>.<span class="attr">preis</span> = <span class="var">preis</span>
+
+    <span class="kw">def</span> <span class="fn">__repr__</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="str">f"Artikel({self.name}, {self.preis})"</span>
+
+    <span class="kw">def</span> <span class="fn">__eq__</span>(<span class="var">self</span>, <span class="var">other</span>):
+        <span class="kw">return</span> (<span class="var">self</span>.<span class="attr">name</span>, <span class="var">self</span>.<span class="attr">preis</span>) == (<span class="var">other</span>.<span class="attr">name</span>, <span class="var">other</span>.<span class="attr">preis</span>)</pre>
+              </div>
+            </div>
+
+            <div style="background: var(--emerald-light); border: 2px solid var(--emerald); border-radius: var(--radius-md); padding: 16px;">
+              <h3 style="color: var(--emerald); margin-top: 0;">🟢 Modern mit @dataclass</h3>
+              <div class="code-container" style="margin: 8px 0;">
+                <pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
+
+<span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="fn">Artikel</span>:
+    <span class="attr">name</span>: <span class="var">str</span>
+    <span class="attr">preis</span>: <span class="var">float</span>
+    <span class="attr">kategorie</span>: <span class="var">str</span> = <span class="str">"Allgemein"</span></pre>
+              </div>
+              <span style="font-weight: 700; color: #064e3b; font-size: 0.85rem;">✨ __init__, __repr__ und __eq__ sind automatisch fertig!</span>
+            </div>
+          </div>
+
+          <div class="box box-warning">
+            <div class="box-title">⚠️ Wichtig: Veränderliche Default-Listen mit field(default_factory=list)</div>
+            <p>Schreibe in einer Dataclass niemals <code>liste: list = []</code>, da sonst alle Instanzen dieselbe Liste teilen! Nutze stattdessen immer <code>field(default_factory=list)</code>.</p>
+          </div>
+        </section>
+
+        <!-- 2. Type Hints Cheat-Sheet -->
+        <section class="card">
+          <h2>2. Moderne Type Hints im Überblick 🏷️</h2>
+
+          <p>
+            Type Hints machen deinen Code selbsterklärend und ermöglichen IDEs wie VS Code blitzschnelle Autovervollständigung und Fehlerwarnungen:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+            <thead>
+              <tr style="background: var(--primary-light); text-align: left;">
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Type Hint</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Bedeutung</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Praxis-Beispiel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>Optional[str]</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Kann <code>str</code> oder <code>None</code> sein</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>def suche(id: int) -&gt; Optional[User]: ...</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>Union[int, float]</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Zahl kann Ganzzahl oder Fließkomma sein</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>def runden(wert: Union[int, float]) -&gt; float: ...</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>Callable[[A, B], C]</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Eine übergebene Funktion</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>def ausfuehren(func: Callable) -&gt; None: ...</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>Dict[str, Any]</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Schlüssel sind Strings, Werte beliebig</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>user_config: Dict[str, Any] = {"theme": "dark"}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 3. Eigene Decorators schreiben -->
+        <section class="card">
+          <h2>3. Eigene Decorators schreiben: Das Geschenkverpackungs-Muster 🎁</h2>
+
+          <p>
+            Ein <strong>Decorator</strong> ist eine Funktion, die eine andere Funktion einpackt und ihr zusätzliche Fähigkeiten verleiht (z.B. Zeitmessung, Logging, Aufrufzählung):
+          </p>
+
+          <div class="code-container">
+            <div class="code-header"><span>Eigener Zeitmessungs-Decorator mit @functools.wraps</span></div>
+            <pre><span class="kw">import</span> time
+<span class="kw">import</span> functools
+
+<span class="kw">def</span> <span class="fn">zeitmessung</span>(<span class="var">func</span>):
+    <span class="kw">@functools.wraps</span>(<span class="var">func</span>)  <span class="cm"># Erhält Name und Docstring der Originalfunktion</span>
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>):
+        <span class="var">start</span> = time.<span class="fn">perf_counter</span>()
+        <span class="var">ergebnis</span> = <span class="var">func</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>)
+        <span class="var">dauer</span> = time.<span class="fn">perf_counter</span>() - <span class="var">start</span>
+        <span class="fn">print</span>(<span class="str">f"[⏱️] {func.__name__} brauchte {dauer:.6f}s"</span>)
+        <span class="kw">return</span> <span class="var">ergebnis</span>
+    <span class="kw">return</span> <span class="var">wrapper</span>
+
+<span class="kw">@zeitmessung</span>
+<span class="kw">def</span> <span class="fn">schwere_berechnung</span>():
+    <span class="kw">return</span> <span class="fn">sum</span>(<span class="var">x</span>**<span class="num">2</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">500_000</span>))</pre>
+          </div>
+        </section>
+
+        <!-- 4. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>4. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+          <p>Öffne die Datei <code><a href="aufgabe.py" style="color: inherit; text-decoration: underline;">aufgabe.py</a></code> und hake die Schritte nach und nach ab:</p>
+
+          <ul class="task-list">
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_1">
+              <label for="t20_1" class="task-label">
+                <strong>TODO 1 &amp; 2 (Dataclass Artikel):</strong> Erstelle <code>__post_init__</code> zur Validierung von Preis (>= 0) und Name (nicht leer), sowie <code>berechne_bruttopreis(mwst_satz)</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_2">
+              <label for="t20_2" class="task-label">
+                <strong>TODO 3 &amp; 4 (Class- &amp; Staticmethod):</strong> Implementiere <code>aus_csv_zeile(csv_zeile)</code> als <code>@classmethod</code> und <code>ist_gueltiger_preis(preis)</code> als <code>@staticmethod</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_3">
+              <label for="t20_3" class="task-label">
+                <strong>TODO 5 (Warenkorb Artikel hinzufügen):</strong> Implementiere <code>artikel_hinzufuegen(*artikel)</code> mit Typprüfung (nur <code>Artikel</code>-Instanzen erlaubt).
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_4">
+              <label for="t20_4" class="task-label">
+                <strong>TODO 6 (Warenkorb Artikel entfernen):</strong> Implementiere <code>artikel_entfernen(name)</code> (Groß-/Kleinschreibung ignorieren).
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_5">
+              <label for="t20_5" class="task-label">
+                <strong>TODO 7 (Warenkorb Gesamtsumme):</strong> Implementiere <code>gesamtsumme(brutto=False, mwst_satz=0.19)</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_6">
+              <label for="t20_6" class="task-label">
+                <strong>TODO 8 (Decorator aufruf_zaehler):</strong> Zähle Aufrufe der dekorierten Funktion und speichere sie in <code>wrapper.aufrufe</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_7">
+              <label for="t20_7" class="task-label">
+                <strong>TODO 9 (Decorator zeitmessung):</strong> Miss die Laufzeit mit <code>time.perf_counter()</code> und speichere sie in <code>wrapper.letzte_dauer</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t20_8">
+              <label for="t20_8" class="task-label">
+                <strong>TODO 10 (Type Hints Formatierer):</strong> Implementiere <code>formatiere_benutzer(daten)</code> mit Fehlerprüfung für fehlende oder leere Benutzernamen.
+              </label>
+            </li>
+          </ul>
+
+          <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+          <details>
+            <summary>🔍 Tipp zu TODO 8: Aufruf-Zähler als Decorator</summary>
+            <div class="details-content">
+              <p>Initialisiere das Attribut am Wrapper vor der Rückgabe:</p>
+              <div class="code-container">
+                <pre><span class="kw">def</span> <span class="fn">aufruf_zaehler</span>(<span class="var">func</span>):
+    <span class="kw">@functools.wraps</span>(<span class="var">func</span>)
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>):
+        <span class="var">wrapper</span>.<span class="attr">aufrufe</span> += <span class="num">1</span>
+        <span class="kw">return</span> <span class="var">func</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>)
+    <span class="var">wrapper</span>.<span class="attr">aufrufe</span> = <span class="num">0</span>
+    <span class="kw">return</span> <span class="var">wrapper</span></pre>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>🔍 Tipp zu TODO 3: @classmethod als Fabrikmethode</summary>
+            <div class="details-content">
+              <p><code>cls</code> ist die Klasse selbst. Teile den String und rufe <code>cls(...)</code> auf:</p>
+              <div class="code-container">
+                <pre><span class="kw">@classmethod</span>
+<span class="kw">def</span> <span class="fn">aus_csv_zeile</span>(<span class="var">cls</span>, <span class="var">csv_zeile</span>: <span class="var">str</span>) -&gt; <span class="str">"Artikel"</span>:
+    <span class="var">teile</span> = [t.<span class="fn">strip</span>() <span class="kw">for</span> t <span class="kw">in</span> <span class="var">csv_zeile</span>.<span class="fn">split</span>(<span class="str">";"</span>)]
+    <span class="kw">return</span> <span class="var">cls</span>(<span class="attr">name</span>=<span class="var">teile</span>[<span class="num">0</span>], <span class="attr">preis</span>=<span class="fn">float</span>(<span class="var">teile</span>[<span class="num">1</span>]), <span class="attr">kategorie</span>=<span class="var">teile</span>[<span class="num">2</span>] <span class="kw">if</span> <span class="fn">len</span>(<span class="var">teile</span>) &gt; <span class="num">2</span> <span class="kw">else</span> <span class="str">"Allgemein"</span>)</pre>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- 5. Testen & Navigation -->
+        <section class="card">
+          <h2>5. 🧪 Lösung überprüfen &amp; Testen</h2>
+
+          <h3>1. Automatische Tests ausführen:</h3>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Terminal (im Ordner 20_dataclasses_und_typehints)</span>
+            </div>
+            <pre><code>python3 test_aufgabe.py</code></pre>
+          </div>
+
+          <h3>2. Interaktives Skript starten:</h3>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Terminal</span>
+            </div>
+            <pre><code>python3 aufgabe.py</code></pre>
+          </div>
+
+          <div class="footer-nav">
+            <a href="../19_generatoren_und_itertools/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 19 (Generatoren &amp; itertools)</a>
+            <a href="../../index.html" class="btn btn-secondary">🏠 Kursübersicht</a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <button type="button" class="sidebar-mobile-toggle"><span>☰ Menü</span></button>
+  <div class="sidebar-overlay"></div>
+
+  <!-- Scripts -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+  <script src="../../assets/interpreter.js"></script>
+  <script src="../../assets/certificate.js"></script>
+  <script src="../../assets/parsons.js"></script>
+  <script src="../../assets/runner.js"></script>
+  <script src="../../assets/ui_enhancements.js"></script>
+  <script src="../../assets/sidebar.js"></script>
+</body>
+</html>

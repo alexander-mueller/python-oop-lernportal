@@ -42,6 +42,14 @@ Es gleicht die gesamte Übungsreihe (Grundlagen &amp; Fortgeschrittene Objektori
   ├── 14: Desktop-GUIs mit Tkinter & MVC-Architektur (Zähler & Rechner)    (Lehrer 27.0)
   ├── 15: Parameter (*args, **kwargs) & Eigene Container (Gaming-Inventar) (Lehrer 29.0 & 30.0)
   └── 16: Master-Abschlussprojekt: Professionelle Desktop-App (PetCare)    (Meisterstück & MVC)
+
+[ 🛣️ LEHRPFAD 4: PROFESSIONAL DATA ENGINEERING & WEB-APIS ]
+  ├── 17: Reguläre Ausdrücke & Text-Mining (re, Muster, Quantifizierer, Gruppen)  (Text & Data Mining)
+  ├── 18: Funktionale Programmierung (lambda, zip, enumerate, map/filter, sort)    (Pythonic Code)
+  ├── 19: Generatoren, Iteratoren & itertools (yield, Lazy Evaluation, Streams)   (Memory Efficiency)
+  ├── 20: Dataclasses, Type Hints & Decorators (@dataclass, typing, Wrappers)     (Moderne Architektur)
+  ├── 21: Relationale Datenbanken & SQLite (CRUD, sqlite3, SQL-Injection Schutz) (SQL & Persistenz)
+  └── 22: Web-APIs, REST & JSON-Feeds (REST, JSON-Parsing, Statuscodes, Fehlerbehandlung) (Web & Daten)
 ```
 
 ---
@@ -79,4 +87,10 @@ Es gleicht die gesamte Übungsreihe (Grundlagen &amp; Fortgeschrittene Objektori
 | **14** | **Tkinter GUI** | Echte Desktop-Apps, Widgets, `grid()`, MVC-Muster | Interaktive Zähler- & Rechner-App |
 | **15** | **Parameter & Container** | `*args`, `**kwargs`, Unpacking & Container-Dunder (`__getitem__`, `__setitem__`, `__delitem__`, `__contains__`, `__iter__`) | Gaming-Rucksack & Inventar |
 | **16** | **Master-Abschlussprojekt** | Vollständiges Desktop-Meisterstück: MVC-Architektur, Vererbung & Polymorphie, JSON-Savegames, CSV-Export, Exceptions & Tkinter-GUI | PetCare- & Tierheim-Manager Pro |
+| **17** | **Reguläre Ausdrücke (re)** | Metazeichen (`\d`, `\w`, `\s`), Quantifizierer, Gruppen, `re.search`, `re.findall`, `re.sub` | E-Mail-Check, Telefon-Finder & IBAN-Maskierung |
+| **18** | **Funktionale Programmierung** | `enumerate()`, `zip()`, `lambda`, `map()`, `filter()`, `sorted(..., key=...)`, `all()`, `any()` | Fließband-Datenpipeline, Kataloge & Alterssortierung |
+| **19** | **Generatoren & itertools** | `yield`, Lazy Evaluation, `iter()`, `next()`, `itertools` (`chain`, `cycle`, `permutations`) | Riesige Datenströme & Speicher-Benchmarks |
+| **20** | **Dataclasses & Type Hints** | `@dataclass`, `field(default_factory=...)`, Eigene Decorators, `Union`, `Callable` | Online-Shop-Architektur & Funktions-Tracker |
+| **21** | **Datenbanken & SQLite** | `sqlite3`, Tabellen, CRUD, Parametrisierte Abfragen (`?`), Transaktionen | KundenDatenbank mit Kontoständen |
+| **22** | **Web-APIs & JSON-Feeds** | REST-Architektur, `json.loads/dumps`, Statuscodes, defensive Fehlerbehandlung | Wetter- & Finanz-Feeds, Ticker-Generator |
 

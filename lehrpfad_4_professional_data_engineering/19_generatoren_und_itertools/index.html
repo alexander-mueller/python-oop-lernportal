@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapitel 19: Generatoren, Iteratoren & itertools</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="../../index.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">🐍</div>
+          <div>
+            <div class="sidebar-title">Python Portal</div>
+            <div class="sidebar-subtitle">Lernplattform</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-quick-nav">
+        <a href="../../index.html" class="sidebar-link">🏠 Startseite</a>
+        <a href="../../index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
+        <a href="../../index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🌱 1. Grundlagen</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">G01–G10</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧮</span>
+              <span class="sidebar-link-text">G01. Taschenrechner</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📦</span>
+              <span class="sidebar-link-text">G02. Variablen & Typen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💬</span>
+              <span class="sidebar-link-text">G03. Ein- & Ausgabe</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚦</span>
+              <span class="sidebar-link-text">G04. Bedingungen (if)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎡</span>
+              <span class="sidebar-link-text">G05. Schleifen (for/while)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🪄</span>
+              <span class="sidebar-link-text">G06. Funktionen & Module</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📋</span>
+              <span class="sidebar-link-text">G07. Listen & Sequenzen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔤</span>
+              <span class="sidebar-link-text">G08. String-Methoden</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🗃️</span>
+              <span class="sidebar-link-text">G09. Dicts & Sets</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚀</span>
+              <span class="sidebar-link-text">G10. Comprehensions</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🏗️ 2. OOP Einstieg</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">00–06</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔍</span>
+              <span class="sidebar-link-text">00. Fehlersuche & Debug</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏗️</span>
+              <span class="sidebar-link-text">01. Einstieg in Klassen</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">⚙️</span>
+              <span class="sidebar-link-text">02. Konstruktor & self</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏎️</span>
+              <span class="sidebar-link-text">03. Methoden & Verhalten</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧾</span>
+              <span class="sidebar-link-text">04. __str__ Darstellung</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💻</span>
+              <span class="sidebar-link-text">04b. VS Code Setup</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌿</span>
+              <span class="sidebar-link-text">04c. Git-Versionskontrolle</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎵</span>
+              <span class="sidebar-link-text">05. Objekte kombinieren</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🥚</span>
+              <span class="sidebar-link-text">06. Projekt: Tamagotchi</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🚀 3. Fortgeschritten</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">07–16</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧠</span>
+              <span class="sidebar-link-text">07. Referenzen & Speicher</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">➕</span>
+              <span class="sidebar-link-text">08. Operator Overloading</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧪</span>
+              <span class="sidebar-link-text">09. Unit Tests & TDD</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧬</span>
+              <span class="sidebar-link-text">10. Vererbung & super()</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎭</span>
+              <span class="sidebar-link-text">11. Polymorphie</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🛡️</span>
+              <span class="sidebar-link-text">12. Exceptions & Fehler</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💾</span>
+              <span class="sidebar-link-text">13. Persistenz (JSON/CSV)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🖥️</span>
+              <span class="sidebar-link-text">14. Desktop-GUIs (Tkinter)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎒</span>
+              <span class="sidebar-link-text">15. Container & *args</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏆</span>
+              <span class="sidebar-link-text">16. Master-Abschlussprojekt</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>⚡ 4. Data Engineering</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">19–20</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/index.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">🌊</span>
+              <span class="sidebar-link-text">19. Generatoren & itertools</span>
+            </a>
+            <a href="../../lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏷️</span>
+              <span class="sidebar-link-text">20. Dataclasses & Types</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: white;" id="sidebar-level-text">⭐ Level 1</div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;" id="sidebar-xp-text">0 XP</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <nav class="nav-links">
+            <a href="../../index.html">🏠 Zur Kursübersicht</a>
+            <span>&rsaquo;</span>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html">Kapitel 16</a>
+            <span>&rsaquo;</span>
+            <span style="color: white; font-weight: 600;">Kapitel 19</span>
+          </nav>
+          <div class="header-badge">Lehrpfad 4 &bull; Professional Data Engineering</div>
+          <h1>Generatoren, Iteratoren &amp; itertools 🌊⚡</h1>
+          <p>Verarbeite riesige Datenströme mit 0 RAM-Verschwendung: Entdecke das Geheimnis von <code>yield</code>, Lazy Evaluation und Pythons High-Performance-Modul <code>itertools</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+
+        <!-- 📂 Schnellzugriff & Download aller Dateien dieser Einheit -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.py" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.py (Startercode)</a>
+            <a href="test_aufgabe.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.py (Tests)</a>
+            <a href="musterloesung.py" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.py (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Das Konzept: Badewanne vs. Wasserhahn -->
+        <section class="card">
+          <h2>1. Warum Generatoren? Die Badewannen-Analogie 🚰🛁</h2>
+          
+          <p>
+            Stelle dir vor, du möchtest 10 Millionen Sensor-Messwerte analysieren. Wie verarbeitet ein Rechner diese Daten?
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+            <div style="background: var(--rose-light); border: 2px solid var(--rose); border-radius: var(--radius-md); padding: 16px;">
+              <h3 style="color: var(--rose); margin-top: 0;">🔴 Die Badewanne (Klassische Listen)</h3>
+              <p style="font-size: 0.9rem;">Du lässt erst <strong>die gesamte Badewanne vollaufen</strong> (alle 10 Mio. Werte im RAM erzeugen), bevor du einen Schluck nimmst.</p>
+              <div class="code-container" style="margin: 8px 0;">
+                <pre><span class="cm"># Belegt ~80 MB bis 1 GB RAM!</span>
+<span class="var">daten</span> = [<span class="var">x</span>**<span class="num">2</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10_000_000</span>)]</pre>
+              </div>
+              <span style="font-weight: 700; color: #881337; font-size: 0.85rem;">⚠️ Gefahr: Out of Memory Crash bei Big Data!</span>
+            </div>
+
+            <div style="background: var(--emerald-light); border: 2px solid var(--emerald); border-radius: var(--radius-md); padding: 16px;">
+              <h3 style="color: var(--emerald); margin-top: 0;">🟢 Der Wasserhahn (Generatoren mit yield)</h3>
+              <p style="font-size: 0.9rem;">Du drehst den Hahn auf: Die Daten fließen <strong>Tropfen für Tropfen (on-demand)</strong> direkt in deinen Mund.</p>
+              <div class="code-container" style="margin: 8px 0;">
+                <pre><span class="cm"># Belegt nur ~104 Bytes RAM!</span>
+<span class="var">daten</span> = (<span class="var">x</span>**<span class="num">2</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10_000_000</span>))</pre>
+              </div>
+              <span style="font-weight: 700; color: #064e3b; font-size: 0.85rem;">✨ 100.000x speichereffizienter &amp; ultraschnell!</span>
+            </div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">💡 Kernprinzip: Lazy Evaluation (Verzögerte Auswertung)</div>
+            <p>Ein Generator berechnet den nächsten Wert erst in der exakten Millisekunde, in der du ihn mit <code>next()</code> oder in einer <code>for</code>-Schleife abfragst!</p>
+          </div>
+        </section>
+
+        <!-- 2. Iterables vs. Iterators -->
+        <section class="card">
+          <h2>2. Das Protokoll: Iterable vs. Iterator 🔄</h2>
+
+          <p>Jedes Mal, wenn du in Python eine <code>for</code>-Schleife schreibst, passiert Folgendes:</p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+            <thead>
+              <tr style="background: var(--primary-light); text-align: left;">
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Konzept</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Magische Methode</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Bedeutung</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Code-Beispiel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Iterable</strong></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__iter__()</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Objekt, über das iteriert werden kann.</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>liste = [1, 2, 3]</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>Iterator</strong></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>__next__()</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Zeiger-Objekt, das den aktuellen Zustand hält.</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>it = iter(liste); next(it)</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><strong>StopIteration</strong></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Exception</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Wird automatisch geworfen, wenn alle Werte verbraucht sind.</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Beendet <code>for</code>-Schleifen lautlos.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-container">
+            <div class="code-header"><span>Iteratoren manuell steuern mit iter() und next()</span></div>
+            <pre><span class="var">farben</span> = [<span class="str">"Rot"</span>, <span class="str">"Gruen"</span>, <span class="str">"Blau"</span>]
+<span class="var">it</span> = <span class="fn">iter</span>(<span class="var">farben</span>)
+
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">it</span>))  <span class="cm"># -> "Rot"</span>
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">it</span>))  <span class="cm"># -> "Gruen"</span>
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">it</span>))  <span class="cm"># -> "Blau"</span>
+<span class="cm"># next(it) wirft jetzt StopIteration!</span></pre>
+          </div>
+        </section>
+
+        <!-- 3. Eigene Generatoren mit yield -->
+        <section class="card">
+          <h2>3. Magie im Einsatz: Eigene Generatoren mit <code>yield</code> 🪄</h2>
+
+          <p>
+            Im Gegensatz zu <code>return</code> (welches eine Funktion komplett beendet) unterbricht <strong><code>yield</code></strong> die Funktion nur kurzzeitig, gibt den Wert zurück und friert den gesamten Zustand (lokale Variablen, Zeilennummer) ein!
+          </p>
+
+          <div class="code-container">
+            <div class="code-header"><span>Endloszähler &amp; Fibonacci mit yield</span></div>
+            <pre><span class="kw">def</span> <span class="fn">endlos_zaehler</span>(<span class="var">start</span>=<span class="num">0</span>, <span class="var">schritt</span>=<span class="num">1</span>):
+    <span class="var">aktuell</span> = <span class="var">start</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">yield</span> <span class="var">aktuell</span>       <span class="cm"># Pausiert hier und gibt den Wert zurück</span>
+        <span class="var">aktuell</span> += <span class="var">schritt</span>  <span class="cm"># Macht beim nächsten next() genau hier weiter!</span>
+
+<span class="var">z</span> = <span class="fn">endlos_zaehler</span>(<span class="num">10</span>, <span class="num">5</span>)
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">z</span>))  <span class="cm"># -> 10</span>
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">z</span>))  <span class="cm"># -> 15</span>
+<span class="fn">print</span>(<span class="fn">next</span>(<span class="var">z</span>))  <span class="cm"># -> 20</span></pre>
+          </div>
+        </section>
+
+        <!-- 4. Das itertools Modul -->
+        <section class="card">
+          <h2>4. Das <code>itertools</code> Power-Modul 🧰</h2>
+
+          <p>
+            Das eingebaute Modul <code>itertools</code> bietet blitzschnelle, in C geschriebene Iterator-Bausteine:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+            <thead>
+              <tr style="background: var(--primary-light); text-align: left;">
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Werkzeug</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Zweck</th>
+                <th style="padding: 10px; border: 1px solid var(--border-color);">Beispiel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>itertools.chain(*iterables)</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Verkettet mehrere Listen/Generatoren ohne Kopieren</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>chain([1, 2], [3, 4]) &rarr; 1, 2, 3, 4</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>itertools.cycle(iterable)</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Wiederholt eine Liste unendlich oft im Kreis</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>cycle(['Rot', 'Gruen']) &rarr; Rot, Gruen, Rot...</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>itertools.permutations(p, r)</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Alle geordneten Anordnungen (Passwort-Cracker)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>permutations('AB', 2) &rarr; ('A','B'), ('B','A')</code></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>itertools.combinations(p, r)</code></td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);">Alle ungeordneten Teilmengen (Lotto, Teams)</td>
+                <td style="padding: 10px; border: 1px solid var(--border-color);"><code>combinations('ABC', 2) &rarr; ('A','B'), ('A','C'), ('B','C')</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 5. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>5. 🎯 Deine Aufgaben in <code>aufgabe.py</code></h2>
+
+          <p>Öffne die Datei <code><a href="aufgabe.py" style="color: inherit; text-decoration: underline;">aufgabe.py</a></code> und setze die folgenden Meilensteine um:</p>
+
+          <ul class="task-list">
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_1">
+              <label for="t19_1" class="task-label">
+                <strong>TODO 1 (Endloszähler):</strong> Implementiere <code>endlos_zaehler(start, schritt)</code> mit <code>while True</code> und <code>yield</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_2">
+              <label for="t19_2" class="task-label">
+                <strong>TODO 2 (Fibonacci Generator):</strong> Implementiere <code>fibonacci_generator(anzahl)</code> mit Validierung (keine negativen Zahlen) und Tupel-Update <code>a, b = b, a + b</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_3">
+              <label for="t19_3" class="task-label">
+                <strong>TODO 3 (Filter-Stream):</strong> Implementiere <code>filter_grosse_zahlen(zahlen_iterable, schwellenwert)</code>, der speicherschonend nur Werte <code>> schwellenwert</code> liefert.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_4">
+              <label for="t19_4" class="task-label">
+                <strong>TODO 4 (Generator Expression):</strong> Implementiere <code>erzeuge_quadrat_generator(n)</code> mit einer kompakten Generator-Expression <code>(x**2 for x in ...)</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_5">
+              <label for="t19_5" class="task-label">
+                <strong>TODO 5 (itertools.chain):</strong> Implementiere <code>kette_listen(*listen)</code> zum Zusammenführen beliebiger Iterables in eine flache Liste.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_6">
+              <label for="t19_6" class="task-label">
+                <strong>TODO 6 (itertools.permutations):</strong> Implementiere <code>erzeuge_passwort_kombinationen(zeichen, laenge)</code> mit <code>"".join()</code>.
+              </label>
+            </li>
+            <li class="task-item">
+              <input type="checkbox" class="task-checkbox" id="t19_7">
+              <label for="t19_7" class="task-label">
+                <strong>TODO 7 (itertools.cycle):</strong> Implementiere <code>zyklische_elemente(elemente, anzahl)</code> für periodische Taktgeber.
+              </label>
+            </li>
+          </ul>
+
+          <h3>💡 Lösungshinweise (Aufklappen bei Bedarf)</h3>
+
+          <details>
+            <summary>🔍 Tipp zu TODO 2: Fibonacci mit yield</summary>
+            <div class="details-content">
+              <p>Validiere zuerst die Eingabe und iteriere mit einer Zählschleife:</p>
+              <div class="code-container">
+                <pre><span class="kw">if</span> <span class="var">anzahl</span> &lt; <span class="num">0</span>:
+    <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="str">"Anzahl darf nicht negativ sein!"</span>)
+<span class="var">a</span>, <span class="var">b</span> = <span class="num">0</span>, <span class="num">1</span>
+<span class="kw">for</span> <span class="var">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">anzahl</span>):
+    <span class="kw">yield</span> <span class="var">a</span>
+    <span class="var">a</span>, <span class="var">b</span> = <span class="var">b</span>, <span class="var">a</span> + <span class="var">b</span></pre>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>🔍 Tipp zu TODO 6: Passwort-Permutationen als String-Liste</summary>
+            <div class="details-content">
+              <p><code>itertools.permutations</code> liefert Tupel von Zeichen. Mit <code>"".join()</code> machst du daraus Strings:</p>
+              <div class="code-container">
+                <pre><span class="kw">return</span> [<span class="str">""</span>.<span class="fn">join</span>(<span class="var">p</span>) <span class="kw">for</span> <span class="var">p</span> <span class="kw">in</span> <span class="var">itertools</span>.<span class="fn">permutations</span>(<span class="var">zeichen</span>, <span class="var">laenge</span>)]</pre>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- 6. Testen & Navigation -->
+        <section class="card">
+          <h2>6. 🧪 Lösung überprüfen &amp; Testen</h2>
+
+          <h3>1. Automatische Tests ausführen:</h3>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Terminal (im Ordner 19_generatoren_und_itertools)</span>
+            </div>
+            <pre><code>python3 test_aufgabe.py</code></pre>
+          </div>
+
+          <h3>2. Benchmark-Skript starten:</h3>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Terminal</span>
+            </div>
+            <pre><code>python3 aufgabe.py</code></pre>
+          </div>
+
+          <div class="footer-nav">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="btn btn-secondary">&larr; Zurück zu Kapitel 16 (Master-Abschluss)</a>
+            <a href="../../index.html" class="btn btn-secondary">🏠 Kursübersicht</a>
+            <a href="../20_dataclasses_und_typehints/index.html" class="btn">Weiter zu Kapitel 20 (Dataclasses &amp; Types) &rarr;</a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <button type="button" class="sidebar-mobile-toggle"><span>☰ Menü</span></button>
+  <div class="sidebar-overlay"></div>
+
+  <!-- Scripts -->
+  <script src="../../assets/gamification_data.js"></script>
+  <script src="../../assets/gamification.js"></script>
+  <script src="../../assets/interpreter.js"></script>
+  <script src="../../assets/certificate.js"></script>
+  <script src="../../assets/parsons.js"></script>
+  <script src="../../assets/runner.js"></script>
+  <script src="../../assets/ui_enhancements.js"></script>
+  <script src="../../assets/sidebar.js"></script>
+</body>
+</html>
