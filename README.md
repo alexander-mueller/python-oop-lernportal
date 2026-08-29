@@ -1,12 +1,36 @@
 # 🐍 Python Lernportal: Vom Einsteiger zum Software-Entwickler
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/Tests-188%20%2F%20188%20Passing-success.svg)](./test_all.py)
+[![Lehrpfade](https://img.shields.io/badge/Lehrpfade-3%20Pfade%20%7C%2027%20Module-indigo.svg)](./LEHRPLAN.md)
+[![Gamification](https://img.shields.io/badge/Gamification-Level%201--10%20%7C%2014%20Badges-gold.svg)](./profil.py)
+[![Live Portal](https://img.shields.io/badge/Live%20Portal-GitHub%20Pages-success.svg)](https://alexander-mueller.github.io/python-oop-lernportal/)
+
+> 🌍 **Interaktives Web-Portal:** [https://alexander-mueller.github.io/python-oop-lernportal/](https://alexander-mueller.github.io/python-oop-lernportal/)
+
 Willkommen zum interaktiven **Python Lernportal**! 🎉
 
-Dieses Portal ist didaktisch aufbereitet, voll **abgeglichen mit dem Informatik-Schulunterricht** ([`LEHRPLAN.md`](./LEHRPLAN.md)) und gliedert sich in **3 strukturierte Lehrpfade**:
+Dieses Portal ist didaktisch strukturiert, zu 100% **abgeglichen mit dem Informatik-Schulunterricht** ([`LEHRPLAN.md`](./LEHRPLAN.md)) und gliedert sich in **3 strukturierte Lehrpfade** mit **27 aufeinander aufbauenden Modulen**.
 
 ---
 
-## 🧭 Die 3 Lehrpfade
+## 🎮 Entwickler-Pass & Gamification (100% Offline & Lokal)
+
+Das Lernportal besitzt ein wissenschaftlich fundiertes Gamification-System (Self-Determination Theory & Octalysis), das **vollständig lokal auf deinem Computer funktioniert**:
+
+- 🪪 **Entwickler-Pass im Terminal anzeigen:**
+  ```bash
+  python3 profil.py
+  ```
+- 🧪 **Gesamtfortschritt & XP synchronisieren:**
+  ```bash
+  python3 test_all.py
+  ```
+- 🏆 **10 Entwickler-Level** (vom *Code-Küken 🐣* bis zur *Software-Architektin 🏆*) und **14 freischaltbare Trophäen**.
+
+---
+
+## 🧭 Die 3 Lehrpfade im Überblick
 
 ### 🛣️ Lehrpfad 1: Grundlagen der Programmierung (Prozedural & Datenstrukturen)
 | Modul | Titel | Themenschwerpunkte |
@@ -68,7 +92,7 @@ python3 test_aufgabe.py
 ```
 
 ### 2. Testausgabe richtig lesen:
-- ✅ **`OK`**: Perfekt! Alle Tests sind grün und bestanden. Du kannst mit dem nächsten Kapitel weitermachen.
+- ✅ **`OK`**: Perfekt! Alle Tests sind grün und bestanden. Du erhältst sofort XP und kannst mit dem nächsten Kapitel weitermachen.
 - ❌ **`FAIL` (AssertionError)**: Dein Code läuft, liefert aber einen falschen Wert zurück (z.B. Rechenfehler oder falsche Bedingung). Lies die letzte Zeile der Fehlermeldung!
 - 💥 **`ERROR` (Syntax / AttributeError)**: Dein Code hat einen Absturz (z.B. Tippfehler im Funktionsnamen).
 
@@ -77,7 +101,7 @@ Führe im Hauptordner folgenden Befehl aus:
 ```bash
 python3 test_all.py
 ```
-Dieser Befehl zeigt dir eine Übersicht über alle Kapitel mit `✅` (bestanden) und `⏳` (noch offen).
+Dieser Befehl zeigt dir eine Übersicht über alle Kapitel mit `✅` (bestanden) und `⏳` (noch offen) und aktualisiert deinen Gamification-Pass.
 
 ---
 
