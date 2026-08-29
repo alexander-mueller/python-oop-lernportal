@@ -37,9 +37,25 @@
       titel = "Python Professional & Data Engineering";
       moduleDesc = "6 Master-Module: Reguläre Ausdrücke (re), Functional Programming (lambda, zip, map), Generatoren & itertools, Dataclasses & Type Hints, Relationale DBs mit SQLite, REST-APIs & JSON-Feeds";
       trackKey = "lehrpfad_4";
+    } else if (lehrpfadNummer === "js_grundlagen") {
+      titel = "JavaScript ES6+ Grundlagen & DOM-Manipulation";
+      moduleDesc = "4 Module: Variablen (let/const), Arrow Functions, Arrays (map/filter/reduce), Objekte, Destructuring und DOM-Event-Driven Architecture";
+      trackKey = "js_grundlagen";
+    } else if (lehrpfadNummer === "js_async") {
+      titel = "Asynchrones JavaScript & REST-APIs";
+      moduleDesc = "2 Module: Callbacks, Event Loop, Promises, Chaining, Promise.all, Async/Await und REST-APIs mit Fetch & JSON";
+      trackKey = "js_async";
+    } else if (lehrpfadNummer === "js_master") {
+      titel = "Master of Modern JavaScript & TypeScript Development";
+      moduleDesc = "Vollständiger Abschluss des JS/TS Curriculums (8 Module, TypeScript Type Safety, Interfaces, Generics & Task-App Masterprojekt)";
+      trackKey = "js_master";
+    } else if (lehrpfadNummer === "sql_grundlagen") {
+      titel = "SQL & Relationale Datenbanken";
+      moduleDesc = "CREATE TABLE, Primary Keys, INSERT, SELECT, Filter mit WHERE und SQLite WebAssembly Abfragen";
+      trackKey = "sql_grundlagen";
     } else if (lehrpfadNummer === "master") {
-      titel = "Grandmaster of Python Software Engineering";
-      moduleDesc = "Vollständiger Abschluss aller 4 Lehrpfade (33 Module, über 220 bestandene automatisierte Unittests, SQLite-Persistenz, REST-APIs & MVC-Desktop-App)";
+      titel = "Grandmaster of Software Engineering (Polyglot)";
+      moduleDesc = "Vollständiger Abschluss der plattformweiten Curricula (Python, JavaScript, TypeScript & SQL)";
       trackKey = "master";
     }
 

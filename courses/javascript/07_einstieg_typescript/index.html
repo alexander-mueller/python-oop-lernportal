@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TS 07: TypeScript Type Safety &amp; Interfaces</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ TypeScript &amp; Type Safety</div>
+          <h1>TS 07: TypeScript Type Safety &amp; Interfaces</h1>
+          <p>Entdecke die Macht statischer Typen: Interfaces, Union Types, Generics und robuster Code ohne Laufzeit-Überraschungen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.js" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.js (Startercode)</a>
+            <a href="test_aufgabe.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.js (Tests)</a>
+            <a href="musterloesung.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.js (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Didaktisches Intro -->
+        <section class="card">
+          <h2>1. 🛡️ Warum TypeScript? Der digitale Sicherheitsgurt</h2>
+          <p>
+            In reinem JavaScript treten Typfehler oft erst spät zur Laufzeit auf – beispielsweise wenn ein Kunde im Online-Shop auf „Kaufen“ klickt und das Programm mit <code>TypeError: Cannot read properties of undefined</code> abstürzt.
+          </p>
+          <p>
+            <strong>TypeScript</strong> erweitert JavaScript um statische Typüberprüfungen. Es wirkt wie ein <strong>digitaler Sicherheitsgurt</strong> und ein unbestechlicher <strong>Bauplan-Wächter</strong>: Jeder Parameter, jedes Objekt und jede Schnittstelle wird genau geprüft, noch bevor der Code im Browser ausgeführt wird.
+          </p>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏗️ Die Architekten-Analogie:</div>
+            JavaScript ohne Typen ist wie eine Baustelle ohne Plan: Man merkt erst beim Einzug, dass das Treppenhaus fehlt. TypeScript liefert den geprüften Bauplan: Passt ein Baustein nicht, warnt dich der Compiler sofort im Editor!
+          </div>
+        </section>
+
+        <!-- 2. Cheat Sheet: Basis-Typen & Union Types -->
+        <section class="card">
+          <h2>2. 📋 TypeScript Cheat-Sheet: Basis-Typen &amp; Union Types</h2>
+          <p>TypeScript bietet alle vertrauten Datentypen sowie mächtige Kompositionswerkzeuge:</p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot dot-red"></span>
+                <span class="code-dot dot-yellow"></span>
+                <span class="code-dot dot-green"></span>
+              </div>
+              <span>TypeScript (Basis-Typen &amp; Type Aliases)</span>
+            </div>
+            <pre><span class="comment">// 1. Primitive Typen</span>
+<span class="kw">const</span> <span class="var">name</span>: <span class="cls">string</span> = <span class="str">"Max Mustermann"</span>;
+<span class="kw">const</span> <span class="var">alter</span>: <span class="cls">number</span> = <span class="num">34</span>;
+<span class="kw">const</span> <span class="var">aktiv</span>: <span class="cls">boolean</span> = <span class="kw">true</span>;
+<span class="kw">const</span> <span class="var">hobbies</span>: <span class="cls">string[]</span> = [<span class="str">"Coding"</span>, <span class="str">"Design"</span>];
+
+<span class="comment">// 2. Type Aliases &amp; Union Types (|)</span>
+<span class="kw">type</span> <span class="cls">ID</span> = <span class="cls">string</span> | <span class="cls">number</span>;
+<span class="kw">type</span> <span class="cls">Status</span> = <span class="str">"offen"</span> | <span class="str">"in_bearbeitung"</span> | <span class="str">"abgeschlossen"</span> | <span class="str">"storniert"</span>;
+
+<span class="comment">// 3. Spezialtypen</span>
+<span class="kw">let</span> <span class="var">beliebig</span>: <span class="cls">any</span> = <span class="str">"Gefährlich: Deaktiviert alle Checks"</span>;
+<span class="kw">let</span> <span class="var">sicherer</span>: <span class="cls">unknown</span> = JSON.<span class="fn">parse</span>(daten); <span class="comment">// Erfordert Prüfung vor Zugriff</span>
+<span class="kw">function</span> <span class="fn">loggen</span>(<span class="var">msg</span>: <span class="cls">string</span>): <span class="cls">void</span> { console.<span class="fn">log</span>(<span class="var">msg</span>); }</pre>
+          </div>
+        </section>
+
+        <!-- 3. Interfaces & Diagramm -->
+        <section class="card">
+          <h2>3. 📐 Interfaces: Verträge für Datenstrukturen</h2>
+          <p>Ein <code>interface</code> beschreibt die exakte Form von Objekten. Optionale Eigenschaften werden mit <code>?</code> gekennzeichnet:</p>
+
+          <div style="background: #0f172a; border: 1px solid #334155; border-radius: var(--radius-sm); padding: 16px; margin: 15px 0; color: #f8fafc; font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.6;">
+            <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">📊 Interface-Diagramm: Auftrag &amp; Positionen</div>
+            <div style="border-left: 2px solid #38bdf8; padding-left: 12px; margin-bottom: 12px;">
+              <span style="color: #fbbf24;">interface Auftrag</span> {<br>
+              &nbsp;&nbsp;id: <span style="color: #a78bfa;">string | number</span>;<br>
+              &nbsp;&nbsp;kundeId: <span style="color: #a78bfa;">string | number</span>;<br>
+              &nbsp;&nbsp;positionen: <span style="color: #34d399;">Auftragsposition[]</span>;<br>
+              &nbsp;&nbsp;summe: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;status: <span style="color: #f472b6;">AuftragsStatus</span>;<br>
+              }
+            </div>
+            <div style="border-left: 2px solid #34d399; padding-left: 12px;">
+              <span style="color: #fbbf24;">interface Auftragsposition</span> {<br>
+              &nbsp;&nbsp;titel: <span style="color: #a78bfa;">string</span>;<br>
+              &nbsp;&nbsp;menge: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;einzelpreis: <span style="color: #a78bfa;">number</span>;<br>
+              }
+            </div>
+          </div>
+
+          <div class="box box-tipp">
+            💡 <strong>Optional Chaining &amp; Nullish Coalescing:</strong><br>
+            Nutze <code>kunde?.adresse?.stadt ?? 'Unbekannt'</code>, um verschachtelte Eigenschaften sicher abzurufen, ohne dass Fehler bei <code>null</code> oder <code>undefined</code> auftreten.
+          </div>
+        </section>
+
+        <!-- 4. Generics -->
+        <section class="card">
+          <h2>4. 🧬 Generics: Typ-Parameter für flexible Funktionen</h2>
+          <p>
+            Mit <strong>Generics</strong> (<code>&lt;T&gt;</code>) schreibst du Funktionen, die für beliebige Typen funktionieren, ohne den Typenverlust von <code>any</code>:
+          </p>
+          <pre><code>function umkehren&lt;T&gt;(liste: T[]): T[] {
+  return [...liste].reverse();
+}
+
+const zahlen = umkehren([1, 2, 3]); // Typ bleibt number[]
+const strings = umkehren(["A", "B", "C"]); // Typ bleibt string[]</code></pre>
+        </section>
+
+        <!-- 5. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>5. 🎯 Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.js" style="color: inherit; text-decoration: underline;">aufgabe.js</a></code> und setze folgende 4 Teilziele um:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>erstelleKunde(id, name, istAktiv, email)</code> – Typprüfung, .trim() und Erstellung des Kunden-Objekts.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>validiereAuftrag(auftragObjekt)</code> – Vollständige Validierung gegen das Auftrags-Interface mit Fehler-Array.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>filtereNachStatus(eintraege, zielStatus)</code> – Generische Filterfunktion mit Fallback auf leeres Array.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>formatierePreisangabe(betrag, waehrung)</code> – Deutsches Format (z.B. <code>49,99 EUR</code>) mit Type-Check.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=javascript&track=track_3_typescript_und_master&chapter=07_einstieg_typescript" class="btn" style="background: #3178c6; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../02_funktionen_und_arrays/index.html" class="btn btn-secondary">&larr; Zurück zu Modul 02</a>
+          <a href="../08_abschlussprojekt_web_app/index.html" class="btn" style="background: var(--primary);">Weiter zum Master-Projekt Modul 08 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../../../assets/ui_enhancements.js"></script>
+</body>
+</html>

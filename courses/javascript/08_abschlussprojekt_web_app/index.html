@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 08: Interaktive Task-App (MVC &amp; Clean Architecture)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏆 Master-Abschlussprojekt</div>
+          <h1>Master 08: Interaktive Task-App (MVC)</h1>
+          <p>Kombiniere TypeScript-Typsicherheit, State-Management und reaktive DOM-Manipulation zu einer professionellen Web-Applikation.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.js" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.js (Startercode)</a>
+            <a href="test_aufgabe.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.js (Tests)</a>
+            <a href="musterloesung.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.js (Lösung)</a>
+            <a href="app.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🚀 app.js (Browser-App)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Intro -->
+        <section class="card">
+          <h2>1. 🏆 Dein Meisterstück: Das Master-Abschlussprojekt</h2>
+          <p>
+            Herzlichen Glückwunsch! Du hast moderne JavaScript-Grundlagen, funktionale Array-Transformationen und statische Typsicherheit mit TypeScript gemeistert.
+          </p>
+          <p>
+            In diesem <strong>Master-Abschlussprojekt</strong> vereinst du alle Konzepte in einer professionell strukturierten Aufgabenverwaltungs-App. Das Projekt folgt dem <strong>Model-View-Controller (MVC)</strong>-Muster, dem Industriestandard moderner Web-Architektur.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin-bottom: 6px;">🌱 1. ES6+ &amp; Arrays</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Unveränderliche Arrays, Filterung mit <code>.filter()</code>, Suchen mit <code>.find()</code> / <code>.findIndex()</code> und Template Strings.
+              </p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #1e40af; margin-bottom: 6px;">🛡️ 2. Type Safety &amp; Interfaces</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Definierte Datenstrukturen (<code>TaskPriority</code>, <code>FilterStatus</code>, <code>TaskStatistics</code>) und robuste Input-Validierung.
+              </p>
+            </div>
+            <div style="background: #f5f3ff; border-left: 4px solid #8b5cf6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #5b21b6; margin-bottom: 6px;">🚀 3. State &amp; UI-Sync</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Zentrales State Management in der Klasse <code>TaskManager</code>, Event-Delegation und 100% Unittest-Abdeckung!
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. MVC Architektur -->
+        <section class="card">
+          <h2>2. 🏛️ Die Architektur: Model-View-Controller (MVC)</h2>
+          <p>
+            Strikte Trennung von Geschäftslogik und Anzeige verhindert schwer wartbaren Code („Spaghetti-Code“):
+          </p>
+
+          <div class="mvc-grid">
+            <div class="mvc-card model">
+              <span class="badge-master" style="background: #10b981;">1. Das Model (State &amp; Logik)</span>
+              <h3 style="margin-top: 10px; color: #065f46;">Klasse <code>TaskManager</code></h3>
+              <p style="font-size: 0.9rem;">
+                Verwaltet das interne <code>tasks</code>-Array, vergibt IDs, schaltet Status um, filtert nach Kriterien und berechnet Aggregat-Statistiken.
+              </p>
+              <div class="box box-tipp" style="margin-top: 10px; font-size: 0.82rem; padding: 8px;">
+                💡 <strong>100% Headless:</strong> Funktioniert komplett ohne DOM im Testrunner!
+              </div>
+            </div>
+
+            <div class="mvc-card view">
+              <span class="badge-master" style="background: #3b82f6;">2. Die View (DOM-Renderer)</span>
+              <h3 style="margin-top: 10px; color: #1e40af;">HTML-Widgets &amp; Badges</h3>
+              <p style="font-size: 0.9rem;">
+                Rendert Formular, Status-Karten (Zähler), Filter-Buttons, Suchleiste und Task-Karten mit Prioritätsfarben.
+              </p>
+              <div class="box box-tipp" style="margin-top: 10px; font-size: 0.82rem; padding: 8px;">
+                👀 <strong>Dumb View:</strong> Zeigt nur den aktuellen State an.
+              </div>
+            </div>
+
+            <div class="mvc-card controller">
+              <span class="badge-master" style="background: #8b5cf6;">3. Der Controller (Event-Handler)</span>
+              <h3 style="margin-top: 10px; color: #5b21b6;">Klasse <code>TaskApp</code></h3>
+              <p style="font-size: 0.9rem;">
+                Lauscht auf Klicks, Tastatur-Eingaben und Form-Submits, delegiert Aktionen an den <code>TaskManager</code> und löst Neuzeichnungen aus.
+              </p>
+              <div class="box box-tipp" style="margin-top: 10px; font-size: 0.82rem; padding: 8px;">
+                🛡️ <strong>Sicher:</strong> Fängt Fehleingaben über Exceptions ab.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Interaktive Live-Vorschau -->
+        <section class="card">
+          <h2>3. 🚀 Interaktive Live-Applikation</h2>
+          <p>So sieht die fertige Anwendung aus – teste sie hier direkt interaktiv aus:</p>
+
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; margin-top: 15px;">
+            <div id="task-app-root"></div>
+          </div>
+        </section>
+
+        <!-- 4. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>4. 🎯 Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.js" style="color: inherit; text-decoration: underline;">aufgabe.js</a></code> und implementiere die <code>TaskManager</code>-Klasse:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>addTask(title, priority, dueDate)</code> – Validierung, ID-Vergabe (1, 2, ...), Default-Werte und Rückgabe des Tasks.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>toggleTask(id)</code> – Umschalten von <code>task.completed</code> (true <-> false) und Rückgabe oder <code>null</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>deleteTask(id)</code> – Entfernen aus dem Array, Rückgabe <code>true</code> bei Erfolg, sonst <code>false</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>getFilteredTasks(filterStatus, searchQuery)</code> – Filter nach 'all'/'active'/'completed' + Volltextsuche im Titel.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5">
+              <strong>TODO 5:</strong> <code>getStatistics()</code> – Rückgabe von <code>{ total, active, completed, highPriorityCount }</code>.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=javascript&track=track_3_typescript_und_master&chapter=08_abschlussprojekt_web_app" class="btn" style="background: #4f46e5; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Unittests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../07_einstieg_typescript/index.html" class="btn btn-secondary">&larr; Zurück zu Modul 07</a>
+          <a href="../../../index.html" class="btn" style="background: var(--success); color: white;">🏆 Kurs abgeschlossen &ndash; Zur Übersicht &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts für die Live-App -->
+  <script src="musterloesung.js"></script>
+  <script src="app.js"></script>
+  <script src="../../../assets/ui_enhancements.js"></script>
+</body>
+</html>

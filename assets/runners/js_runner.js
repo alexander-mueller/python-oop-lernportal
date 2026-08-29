@@ -72,8 +72,19 @@
 
             try {
               const runFn = new Function(e.data.code);
-              runFn();
-              self.postMessage({ type: 'done', success: true });
+              const result = runFn();
+              if (result && typeof result.then === 'function') {
+                result
+                  .then(() => {
+                    self.postMessage({ type: 'done', success: true });
+                  })
+                  .catch((err) => {
+                    self.postMessage({ type: 'stderr', text: '\\n❌ Laufzeitfehler: ' + (err && err.stack ? err.stack : (err && err.message ? err.message : String(err))) + '\\n' });
+                    self.postMessage({ type: 'done', success: false, error: err ? (err.message || String(err)) : 'Fehler' });
+                  });
+              } else {
+                self.postMessage({ type: 'done', success: true });
+              }
             } catch (err) {
               self.postMessage({ type: 'stderr', text: '\\n❌ Laufzeitfehler: ' + err.stack + '\\n' });
               self.postMessage({ type: 'done', success: false, error: err.message });
@@ -152,6 +163,32 @@
                 throw new Error(msg || 'Bedingung ist nicht wahr');
               }
               passed++;
+            },
+            async rejects(promiseOrFn, expectedMsg, msg) {
+              total++;
+              let threw = false;
+              let caughtError = null;
+              try {
+                if (typeof promiseOrFn === 'function') {
+                  await promiseOrFn();
+                } else {
+                  await promiseOrFn;
+                }
+              } catch (err) {
+                threw = true;
+                caughtError = err;
+              }
+              if (!threw) {
+                failures++;
+                throw new Error(msg || 'Promise sollte abgelehnt werden (reject), wurde aber erfolgreich aufgelöst.');
+              }
+              if (expectedMsg && typeof expectedMsg === 'string') {
+                if (!String(caughtError && (caughtError.message || caughtError)).includes(expectedMsg)) {
+                  failures++;
+                  throw new Error(msg || ('Erwartete Fehlermeldung "' + expectedMsg + '" nicht gefunden in: ' + caughtError));
+                }
+              }
+              passed++;
             }
           };
 
@@ -159,9 +196,9 @@
           ${userCode}
 
           // 2. Test-Suite ausführen
-          ${testCode}
-
-          ({ total, passed, failures });
+          return (async () => {
+            ${testCode}
+          })();
         `;
 
         this.runCode(fullScript, logCallback).then((res) => {

@@ -4,16 +4,38 @@
   "language": "javascript",
   "icon": "🌐",
   "runner": "javascript",
-  "description": "Vom Browser-Scripting über ES6-Funktionen, Arrays bis hin zu asynchronem JavaScript.",
+  "description": "Vom Browser-Scripting über ES6-Funktionen, Arrays bis hin zu TypeScript Type Safety und dem Master-Abschlussprojekt.",
   "tracks": [
     {
       "id": "track_1_grundlagen",
       "title": "🌱 Lehrpfad 1: JavaScript Grundlagen & ES6",
-      "description": "Variablen (let/const), Template Strings, Arrow Functions und Array-Methoden.",
+      "description": "Variablen, Template Strings, Arrow Functions, Arrays, Objekte, Destructuring und DOM-Manipulation & Events.",
       "certificateKey": "js_grundlagen",
       "chapters": [
         { "folder": "01_erste_schritte_variablen", "title": "JS 01: Variablen, Typen & Template-Strings", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
-        { "folder": "02_funktionen_und_arrays", "title": "JS 02: Arrow Functions, Arrays & Map/Filter", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" }
+        { "folder": "02_funktionen_und_arrays", "title": "JS 02: Arrow Functions, Arrays & Map/Filter", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
+        { "folder": "03_objekte_und_destructuring", "title": "JS 03: Objekte, Destructuring & Rest/Spread", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
+        { "folder": "04_dom_und_events", "title": "JS 04: DOM-Manipulation & Events", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" }
+      ]
+    },
+    {
+      "id": "track_2_async_und_apis",
+      "title": "⚡ Lehrpfad 2: Asynchrones JavaScript, Promises & REST-APIs",
+      "description": "Callbacks, Event Loop, Promises, Chaining, Promise.all, Async/Await und REST-APIs mit JSON.",
+      "certificateKey": "js_async",
+      "chapters": [
+        { "folder": "05_callbacks_und_promises", "title": "JS 05: Callbacks, Event Loop & Promises", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
+        { "folder": "06_async_await_und_fetch", "title": "JS 06: Async/Await & REST-APIs (Fetch)", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" }
+      ]
+    },
+    {
+      "id": "track_3_typescript_und_master",
+      "title": "🛡️ Lehrpfad 3: TypeScript & Master-Abschlussprojekt",
+      "description": "Statische Typsicherheit, Interfaces, Generics, State-Management und vollwertige Web-Applikation.",
+      "certificateKey": "js_master",
+      "chapters": [
+        { "folder": "07_einstieg_typescript", "title": "TS 07: TypeScript Type Safety & Interfaces", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" },
+        { "folder": "08_abschlussprojekt_web_app", "title": "Master 08: Interaktive Task-App (MVC)", "taskFile": "aufgabe.js", "testFile": "test_aufgabe.js" }
       ]
     }
   ]
