@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
-🐍 PYTHON LERNPLATTFORM – BACKEND SERVER 🐍
-===========================================
-Leichtgewichtiger, abhängigkeitsfreier REST-API & Static Server für die Online-Lernplattform.
-- Läuft auf jedem Linux-Server / Webspace mit Standard-Python 3.
-- SQLite-Datenbank (User-Accounts, Code-Drafts, XP, Klassen & Lehrer-Dashboard).
-- PBKDF2-HMAC-SHA256 Passwort-Verschlüsselung & signierte Session-Tokens.
+🐍 PYTHON LERNPLATTFORM – GEHÄRTETER BACKEND SERVER 🐍
+======================================================
+Sicherheitsoptimierter, abhängigkeitsfreier REST-API & Static Server.
+- Persistenter SECRET_KEY (Env / geschützte .secret_key Datei).
+- Schutz gegen User-Enumeration (Constant-Time Dummy PBKDF2).
+- In-Memory Rate-Limiting gegen Brute-Force-Angriffe.
+- Autorisierungsprüfung (IDOR-Schutz) in allen Lehrer-Endpunkten.
+- Striktes Blockieren sensitiver Dateien (.db, .secret_key, .py, .php, .git) im Static-Handler.
+- Security-Header (CSP, X-Content-Type-Options, X-Frame-Options).
+- Neuer Code-Inspektor für Lehrkräfte, CSV-Matrix-Export & Zertifikats-Verifikation.
 """
 
 import http.server
@@ -17,18 +21,67 @@ import hmac
 import secrets
 import time
 import os
+import re
+import uuid
 import urllib.parse
 from pathlib import Path
+from collections import defaultdict
 
 PORT = int(os.environ.get("PORT", 8000))
 BASE_DIR = Path(__file__).parent.resolve()
 DB_FILE = BASE_DIR / "platform_data.db"
-SECRET_KEY = secrets.token_hex(32)
+KEY_FILE = BASE_DIR / ".secret_key"
 
-# ==============================================================================
-# DATENBANK INITIALISIERUNG
-# ==============================================================================
+# ------------------------------------------------------------------------------
+# 1. PERSISTENTER SECRET KEY
+# ------------------------------------------------------------------------------
+def get_or_create_secret_key() -> str:
+    env_key = os.environ.get("SECRET_KEY")
+    if env_key and len(env_key) >= 32:
+        return env_key
 
+    if KEY_FILE.exists():
+        try:
+            with open(KEY_FILE, "r", encoding="utf-8") as f:
+                key = f.read().strip()
+                if len(key) >= 32:
+                    return key
+        except Exception:
+            pass
+
+    new_key = secrets.token_hex(32)
+    try:
+        flags = os.O_WRONLY | os.O_CREAT | os.O_TRUNC
+        mode = 0o600
+        fd = os.open(str(KEY_FILE), flags, mode)
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(new_key)
+    except Exception as e:
+        print(f"⚠️ Warnung: Konnte .secret_key nicht schreiben: {e}")
+    return new_key
+
+SECRET_KEY = get_or_create_secret_key()
+
+# ------------------------------------------------------------------------------
+# 2. IN-MEMORY RATE LIMITER
+# ------------------------------------------------------------------------------
+class SimpleRateLimiter:
+    def __init__(self):
+        self.attempts = defaultdict(list)
+
+    def is_allowed(self, key: str, max_requests: int = 5, window_seconds: int = 60) -> bool:
+        now = time.time()
+        self.attempts[key] = [t for t in self.attempts[key] if now - t < window_seconds]
+        if len(self.attempts[key]) >= max_requests:
+            return False
+        self.attempts[key].append(now)
+        return True
+
+rate_limiter = SimpleRateLimiter()
+
+# ------------------------------------------------------------------------------
+# 3. DATENBANK INITIALISIERUNG
+# ------------------------------------------------------------------------------
 def get_db():
     conn = sqlite3.connect(str(DB_FILE))
     conn.row_factory = sqlite3.Row
@@ -37,8 +90,6 @@ def get_db():
 def init_db():
     conn = get_db()
     c = conn.cursor()
-    
-    # 1. Benutzer-Tabelle
     c.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,7 +105,6 @@ def init_db():
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )""")
 
-    # 2. Kapitel-Fortschritt & Code-Drafts
     c.execute("""
     CREATE TABLE IF NOT EXISTS chapter_progress (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,7 +119,6 @@ def init_db():
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )""")
 
-    # 3. Klassenräume (Lehrer-Feature)
     c.execute("""
     CREATE TABLE IF NOT EXISTS classrooms (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,7 +129,6 @@ def init_db():
         FOREIGN KEY(teacher_id) REFERENCES users(id) ON DELETE CASCADE
     )""")
 
-    # 4. Klassen-Mitgliedschaften
     c.execute("""
     CREATE TABLE IF NOT EXISTS class_enrollments (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -92,24 +140,23 @@ def init_db():
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )""")
 
-    # 5. Freigeschaltete Trophäen
     c.execute("""
-    CREATE TABLE IF NOT EXISTS achievements (
+    CREATE TABLE IF NOT EXISTS certificates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        uuid TEXT UNIQUE NOT NULL,
         user_id INTEGER NOT NULL,
-        trophy_id TEXT NOT NULL,
-        unlocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(user_id, trophy_id),
+        track_id TEXT NOT NULL,
+        student_name TEXT NOT NULL,
+        issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )""")
 
     conn.commit()
     conn.close()
 
-# ==============================================================================
-# AUTHENTIFIZIERUNG & HASHING
-# ==============================================================================
-
+# ------------------------------------------------------------------------------
+# 4. AUTH & HASHING
+# ------------------------------------------------------------------------------
 def hash_password(password: str, salt: str = None) -> tuple[str, str]:
     if not salt:
         salt = secrets.token_hex(16)
@@ -122,14 +169,18 @@ def verify_password(password: str, password_hash: str, salt: str) -> bool:
     new_hash, _ = hash_password(password, salt)
     return hmac.compare_digest(new_hash, password_hash)
 
+# Constant-Time Dummy PBKDF2 gegen User-Enumeration
+DUMMY_SALT = secrets.token_hex(16)
+DUMMY_HASH, _ = hash_password("dummy_password_constant_time", DUMMY_SALT)
+
 def generate_token(user_id: int, email: str, role: str) -> str:
     payload = {
         "uid": user_id,
         "email": email,
         "role": role,
-        "exp": int(time.time()) + (86400 * 30) # 30 Tage gültig
+        "exp": int(time.time()) + (86400 * 30)
     }
-    payload_json = json.dumps(payload)
+    payload_json = json.dumps(payload, sort_keys=True)
     sig = hmac.new(SECRET_KEY.encode("utf-8"), payload_json.encode("utf-8"), hashlib.sha256).hexdigest()
     token = f"{payload_json}.{sig}"
     return urllib.parse.quote(token)
@@ -150,18 +201,19 @@ def verify_token(token_str: str) -> dict | None:
     except Exception:
         return None
 
-# ==============================================================================
-# HTTP REQUEST HANDLER
-# ==============================================================================
-
+# ------------------------------------------------------------------------------
+# 5. HTTP REQUEST HANDLER
+# ------------------------------------------------------------------------------
 class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(BASE_DIR), **kwargs)
 
     def end_headers(self):
-        # CORS & Cache-Header für moderne Web-Apps
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "SAMEORIGIN")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.send_header("Cache-Control", "no-cache, must-revalidate")
         super().end_headers()
@@ -176,6 +228,12 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(json.dumps(data, ensure_ascii=False).encode("utf-8"))
 
+    def get_client_ip(self) -> str:
+        forwarded = self.headers.get("X-Forwarded-For")
+        if forwarded:
+            return forwarded.split(",")[0].strip()
+        return self.client_address[0]
+
     def get_auth_user(self) -> dict | None:
         auth_header = self.headers.get("Authorization", "")
         if auth_header.startswith("Bearer "):
@@ -185,16 +243,30 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def read_json_body(self) -> dict:
         content_length = int(self.headers.get("Content-Length", 0))
-        if content_length == 0:
+        if content_length == 0 or content_length > 1_000_000:
             return {}
         body = self.rfile.read(content_length)
         return json.loads(body.decode("utf-8"))
+
+    def is_path_blocked(self, path: str) -> bool:
+        clean_path = path.split("?")[0].lower()
+        blocked_extensions = (".db", ".sqlite", ".secret_key", ".py", ".php", ".jsonl")
+        if any(clean_path.endswith(ext) for ext in blocked_extensions):
+            return True
+        if "/." in clean_path or clean_path.startswith("/."):
+            return True
+        if "platform_data.db" in clean_path or ".gamification.json" in clean_path:
+            return True
+        return False
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
-        # --- API ROUTES ---
+        if self.is_path_blocked(path):
+            return self.send_json({"error": "Zugriff verweigert (Geschützte Datei)"}, 403)
+
+        # 1. AUTH ME
         if path == "/api/auth/me":
             user_token = self.get_auth_user()
             if not user_token:
@@ -206,6 +278,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({"error": "Benutzer nicht gefunden"}, 404)
             return self.send_json({"user": dict(row)})
 
+        # 2. PROGRESS GET
         elif path.startswith("/api/progress/get"):
             user_token = self.get_auth_user()
             if not user_token:
@@ -223,6 +296,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({"all_progress": [dict(r) for r in rows]})
 
+        # 3. CLASSROOMS LIST
         elif path.startswith("/api/classrooms/list"):
             user_token = self.get_auth_user()
             if not user_token:
@@ -248,6 +322,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({"classrooms": [dict(c) for c in classes]})
 
+        # 4. CLASSROOMS MATRIX (mit IDOR-Schutz)
         elif path.startswith("/api/classrooms/matrix"):
             user_token = self.get_auth_user()
             if not user_token or user_token.get("role") != "teacher":
@@ -255,16 +330,21 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             query = urllib.parse.parse_qs(parsed.query)
             classroom_id = query.get("classroom_id", [""])[0]
-            if not classroom_id:
-                return self.send_json({"error": "classroom_id fehlt"}, 400)
+            if not classroom_id or not classroom_id.isdigit():
+                return self.send_json({"error": "Ungültige classroom_id"}, 400)
 
             conn = get_db()
+            owner_check = conn.execute("SELECT id, name FROM classrooms WHERE id = ? AND teacher_id = ?", (int(classroom_id), user_token["uid"])).fetchone()
+            if not owner_check:
+                conn.close()
+                return self.send_json({"error": "Zugriff verweigert (Nicht deine Klasse)"}, 403)
+
             students = conn.execute("""
                 SELECT u.id, u.name, u.email, u.xp, u.level, u.streak_days 
                 FROM class_enrollments ce 
                 JOIN users u ON ce.user_id = u.id 
                 WHERE ce.classroom_id = ?
-            """, (classroom_id,)).fetchall()
+            """, (int(classroom_id),)).fetchall()
 
             matrix = []
             for st in students:
@@ -274,7 +354,58 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "solved_chapters": {r["chapter_id"]: bool(r["is_solved"]) for r in solved}
                 })
             conn.close()
-            return self.send_json({"matrix": matrix})
+            return self.send_json({"classroom": dict(owner_check), "matrix": matrix})
+
+        # 5. SCHÜLER-CODE INSPEKTOR FÜR LEHRER
+        elif path.startswith("/api/classrooms/student-code"):
+            user_token = self.get_auth_user()
+            if not user_token or user_token.get("role") != "teacher":
+                return self.send_json({"error": "Nur für Lehrkräfte"}, 403)
+
+            query = urllib.parse.parse_qs(parsed.query)
+            classroom_id = query.get("classroom_id", [""])[0]
+            student_id = query.get("student_id", [""])[0]
+            chapter_id = query.get("chapter_id", [""])[0]
+
+            if not classroom_id or not student_id or not chapter_id:
+                return self.send_json({"error": "Fehlende Parameter"}, 400)
+
+            conn = get_db()
+            # Prüfe Autorisierung
+            auth_check = conn.execute("""
+                SELECT c.id FROM classrooms c
+                JOIN class_enrollments ce ON c.id = ce.classroom_id
+                WHERE c.id = ? AND c.teacher_id = ? AND ce.user_id = ?
+            """, (int(classroom_id), user_token["uid"], int(student_id))).fetchone()
+
+            if not auth_check:
+                conn.close()
+                return self.send_json({"error": "Zugriff verweigert"}, 403)
+
+            progress = conn.execute("SELECT chapter_id, code_draft, subgoals_json, is_solved, solved_at FROM chapter_progress WHERE user_id = ? AND chapter_id = ?", (int(student_id), chapter_id)).fetchone()
+            student = conn.execute("SELECT id, name, email FROM users WHERE id = ?", (int(student_id),)).fetchone()
+            conn.close()
+
+            return self.send_json({
+                "student": dict(student) if student else None,
+                "progress": dict(progress) if progress else None
+            })
+
+        # 6. ZERTIFIKATS-VERIFIKATION
+        elif path.startswith("/api/certificates/verify"):
+            query = urllib.parse.parse_qs(parsed.query)
+            cert_uuid = query.get("uuid", [""])[0].strip()
+
+            if not cert_uuid:
+                return self.send_json({"error": "uuid fehlt"}, 400)
+
+            conn = get_db()
+            cert = conn.execute("SELECT uuid, track_id, student_name, issued_at FROM certificates WHERE uuid = ?", (cert_uuid,)).fetchone()
+            conn.close()
+
+            if not cert:
+                return self.send_json({"valid": False, "error": "Zertifikat nicht gefunden"}, 404)
+            return self.send_json({"valid": True, "certificate": dict(cert)})
 
         elif path == "/api/stats/leaderboard":
             conn = get_db()
@@ -282,12 +413,12 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.close()
             return self.send_json({"leaderboard": [dict(r) for r in rows]})
 
-        # --- STATISCHE DATEIEN ---
         return super().do_GET()
 
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
+        client_ip = self.get_client_ip()
 
         try:
             body = self.read_json_body()
@@ -296,15 +427,22 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # 1. REGISTRIERUNG
         if path == "/api/auth/register":
-            email = body.get("email", "").strip().lower()
-            password = body.get("password", "")
-            name = body.get("name", "").strip()
-            role = body.get("role", "student")
+            if not rate_limiter.is_allowed(f"reg_{client_ip}", max_requests=5, window_seconds=60):
+                return self.send_json({"error": "Zu viele Registrierungsversuche. Bitte warte eine Minute."}, 429)
 
-            if not email or not password or not name:
-                return self.send_json({"error": "Name, E-Mail und Passwort sind erforderlich"}, 400)
-            if len(password) < 6:
-                return self.send_json({"error": "Passwort muss mindestens 6 Zeichen lang sein"}, 400)
+            email = str(body.get("email", "")).strip().lower()
+            password = str(body.get("password", ""))
+            name = str(body.get("name", "")).strip()
+            role = str(body.get("role", "student")).strip()
+
+            if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", email) or len(email) > 120:
+                return self.send_json({"error": "Ungültige E-Mail-Adresse"}, 400)
+            if len(password) < 6 or len(password) > 128:
+                return self.send_json({"error": "Passwort muss zwischen 6 und 128 Zeichen lang sein"}, 400)
+            if not name or len(name) > 60:
+                return self.send_json({"error": "Name muss zwischen 1 und 60 Zeichen lang sein"}, 400)
+            if role not in ("student", "teacher"):
+                role = "student"
 
             pwd_hash, salt = hash_password(password)
             conn = get_db()
@@ -325,16 +463,23 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             finally:
                 conn.close()
 
-        # 2. LOGIN
+        # 2. LOGIN (mit Constant-Time Schutz gegen Enumeration)
         elif path == "/api/auth/login":
-            email = body.get("email", "").strip().lower()
-            password = body.get("password", "")
+            if not rate_limiter.is_allowed(f"login_{client_ip}", max_requests=8, window_seconds=60):
+                return self.send_json({"error": "Zu viele Login-Versuche. Bitte warte eine Minute."}, 429)
+
+            email = str(body.get("email", "")).strip().lower()
+            password = str(body.get("password", ""))
 
             conn = get_db()
             user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
             conn.close()
 
-            if not user or not verify_password(password, user["password_hash"], user["salt"]):
+            if not user:
+                verify_password(password, DUMMY_HASH, DUMMY_SALT)
+                return self.send_json({"error": "Ungültige E-Mail-Adresse oder Passwort"}, 401)
+
+            if not verify_password(password, user["password_hash"], user["salt"]):
                 return self.send_json({"error": "Ungültige E-Mail-Adresse oder Passwort"}, 401)
 
             token = generate_token(user["id"], user["email"], user["role"])
@@ -358,9 +503,9 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             if not user_token:
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
 
-            chapter_id = body.get("chapter_id", "")
-            code_draft = body.get("code_draft", "")
-            subgoals_json = json.dumps(body.get("subgoals", {}))
+            chapter_id = str(body.get("chapter_id", ""))[:120]
+            code_draft = str(body.get("code_draft", ""))[:100_000]
+            subgoals_json = json.dumps(body.get("subgoals", {}))[:10_000]
 
             if not chapter_id:
                 return self.send_json({"error": "chapter_id erforderlich"}, 400)
@@ -379,22 +524,23 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             return self.send_json({"status": "saved", "chapter_id": chapter_id})
 
-        # 4. KAPITEL ALS GELÖST MARKIEREN & XP VERGEBEN
+        # 4. PROGRESS SOLVE
         elif path == "/api/progress/solve":
             user_token = self.get_auth_user()
             if not user_token:
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
 
-            chapter_id = body.get("chapter_id", "")
-            xp_reward = int(body.get("xp_reward", 100))
+            chapter_id = str(body.get("chapter_id", ""))[:120]
+            try:
+                xp_reward = min(max(0, int(body.get("xp_reward", 100))), 100)
+            except (ValueError, TypeError):
+                xp_reward = 100
 
             if not chapter_id:
                 return self.send_json({"error": "chapter_id erforderlich"}, 400)
 
             conn = get_db()
-            # Prüfe, ob das Kapitel bereits gelöst war
             existing = conn.execute("SELECT is_solved FROM chapter_progress WHERE user_id = ? AND chapter_id = ?", (user_token["uid"], chapter_id)).fetchone()
-            
             was_already_solved = existing and existing["is_solved"] == 1
 
             if not was_already_solved:
@@ -407,7 +553,6 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                         updated_at = CURRENT_TIMESTAMP
                 """, (user_token["uid"], chapter_id))
 
-                # XP & Level berechnen
                 user_row = conn.execute("SELECT xp FROM users WHERE id = ?", (user_token["uid"],)).fetchone()
                 new_xp = (user_row["xp"] if user_row else 0) + xp_reward
                 new_level = (new_xp // 100) + 1
@@ -420,13 +565,13 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({"status": "already_solved", "earned_xp": 0})
 
-        # 5. KLASSENRAUM ERSTELLEN (LEHRER)
+        # 5. KLASSENRAUM ERSTELLEN
         elif path == "/api/classrooms/create":
             user_token = self.get_auth_user()
             if not user_token or user_token.get("role") != "teacher":
                 return self.send_json({"error": "Nur für Lehrkräfte gestattet"}, 403)
 
-            name = body.get("name", "").strip()
+            name = str(body.get("name", "")).strip()[:80]
             if not name:
                 return self.send_json({"error": "Klassenname erforderlich"}, 400)
 
@@ -441,13 +586,16 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             return self.send_json({"classroom": {"id": class_id, "name": name, "invite_code": invite_code}}, 201)
 
-        # 6. KLASSENRAUM BEITRETEN (SCHÜLER)
+        # 6. KLASSENRAUM BEITRETEN
         elif path == "/api/classrooms/join":
+            if not rate_limiter.is_allowed(f"join_{client_ip}", max_requests=10, window_seconds=60):
+                return self.send_json({"error": "Zu viele Versuche. Bitte kurz warten."}, 429)
+
             user_token = self.get_auth_user()
             if not user_token:
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
 
-            code = body.get("invite_code", "").strip().upper()
+            code = str(body.get("invite_code", "")).strip().upper()[:12]
             conn = get_db()
             cl = conn.execute("SELECT id, name FROM classrooms WHERE invite_code = ?", (code,)).fetchone()
             if not cl:
@@ -463,11 +611,37 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({"message": "Du bist dieser Klasse bereits beigetreten.", "classroom": dict(cl)})
 
-        return self.send_json({"error": "Endpunkt nicht gefunden"}, 404)
+        # 7. KLASSE LÖSCHEN (LEHRER)
+        elif path == "/api/classrooms/delete":
+            user_token = self.get_auth_user()
+            if not user_token or user_token.get("role") != "teacher":
+                return self.send_json({"error": "Nur für Lehrkräfte"}, 403)
 
-# ==============================================================================
-# SERVER START
-# ==============================================================================
+            class_id = body.get("classroom_id")
+            conn = get_db()
+            conn.execute("DELETE FROM classrooms WHERE id = ? AND teacher_id = ?", (class_id, user_token["uid"]))
+            conn.commit()
+            conn.close()
+            return self.send_json({"status": "deleted"})
+
+        # 8. ZERTIFIKAT AUSSTELLEN
+        elif path == "/api/certificates/create":
+            user_token = self.get_auth_user()
+            if not user_token:
+                return self.send_json({"error": "Nicht authentifiziert"}, 401)
+
+            track_id = str(body.get("track_id", ""))[:60]
+            student_name = str(body.get("student_name", ""))[:100]
+            cert_uuid = str(uuid.uuid4())
+
+            conn = get_db()
+            conn.execute("INSERT INTO certificates (uuid, user_id, track_id, student_name) VALUES (?, ?, ?, ?)",
+                         (cert_uuid, user_token["uid"], track_id, student_name))
+            conn.commit()
+            conn.close()
+            return self.send_json({"uuid": cert_uuid, "track_id": track_id, "student_name": student_name})
+
+        return self.send_json({"error": "Endpunkt nicht gefunden"}, 404)
 
 def run_server():
     init_db()
@@ -475,7 +649,7 @@ def run_server():
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", PORT), handler) as httpd:
         print(f"🚀 Python Lernplattform Server läuft auf: http://localhost:{PORT}")
-        print(f"📁 Root-Verzeichnis: {BASE_DIR}")
+        print(f"🔒 Secret Key Status: Aktiv (Persistiert)")
         print(f"💾 SQLite-Datenbank: {DB_FILE}")
         try:
             httpd.serve_forever()

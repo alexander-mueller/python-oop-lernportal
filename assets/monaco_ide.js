@@ -1,11 +1,12 @@
 /**
- * ⚡ MONACO WEB-IDE & PYODIDE TEST-RUNNER ENGINE ⚡
- * =================================================
- * Interaktive Split-Screen Entwicklungsumgebung mit:
+ * ⚡ GEHÄRTETE MONACO WEB-IDE & PYODIDE RUNNER ENGINE ⚡
+ * =====================================================
+ * Interaktive Entwicklungsumgebung mit:
  * - Monaco Editor (VS Code Engine mit Autocomplete & Syntax-Highlighting)
+ * - Tastatur-Shortcuts: Strg+Enter (Run), Strg+Shift+Enter (Test), Strg+S (Save)
  * - In-Browser Pyodide WebAssembly Python Runner (95% Client-Execution)
- * - Automatischer Test-Auswertung mit XP-Vergabe
- * - Cloud Auto-Save
+ * - Endlosschleifen-Timeout-Schutz (5000ms)
+ * - Reaktivität mit Fehler-Dolmetscher & Gamification
  */
 
 (function () {
@@ -14,6 +15,16 @@
   let pyodideLoading = false;
   let currentChapterData = null;
   let autoSaveTimeout = null;
+
+  function escapeHtml(text) {
+    if (!text) return "";
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
   // 1. Initialisiere Monaco Editor via CDN
   function initMonacoEditor(initialCode = "") {
@@ -25,7 +36,6 @@
       return;
     }
 
-    // Monaco CDN Loader
     const loaderScript = document.createElement("script");
     loaderScript.src = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js";
     loaderScript.onload = () => {
@@ -37,8 +47,7 @@
       });
     };
     loaderScript.onerror = () => {
-      // Fallback: Einfache Textarea falls CDN offline
-      editorContainer.innerHTML = `<textarea id="fallback-code-editor" style="width: 100%; height: 100%; background: #0b0f19; color: #f8fafc; font-family: monospace; font-size: 14px; padding: 14px; border: none; outline: none;">${initialCode}</textarea>`;
+      editorContainer.innerHTML = `<textarea id="fallback-code-editor" style="width: 100%; height: 100%; background: #0b0f19; color: #f8fafc; font-family: monospace; font-size: 14px; padding: 14px; border: none; outline: none;">${escapeHtml(initialCode)}</textarea>`;
     };
     document.head.appendChild(loaderScript);
   }
@@ -63,11 +72,30 @@
       bracketPairColorization: { enabled: true }
     });
 
-    // Auto-Save Trigger beim Tippen
+    // Auto-Save beim Tippen
     monacoEditor.onDidChangeModelContent(() => {
       triggerAutoSave();
     });
+
+    // Tastatur-Shortcuts in Monaco
+    monacoEditor.addCommand(window.monaco.KeyMod.CtrlCmd | window.monaco.KeyCode.Enter, () => {
+      runCode();
+    });
+    monacoEditor.addCommand(window.monaco.KeyMod.CtrlCmd | window.monaco.KeyMod.Shift | window.monaco.KeyCode.Enter, () => {
+      runTests();
+    });
+    monacoEditor.addCommand(window.monaco.KeyMod.CtrlCmd | window.monaco.KeyCode.KeyS, () => {
+      saveProgressDraft();
+    });
   }
+
+  // Globaler Keydown-Listener für Strg+S
+  window.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+      e.preventDefault();
+      saveProgressDraft();
+    }
+  });
 
   // 2. Pyodide WebAssembly Initialisierung
   async function getPyodide() {
@@ -98,7 +126,7 @@
         stderr: (text) => logToTerminal(text + "\n", "stderr")
       });
 
-      logToTerminal("✅ Python WebAssembly erfolgreich bereitgestellt!\n\n", "success");
+      logToTerminal("✅ Python WebAssembly bereitgestellt!\n\n", "success");
     } catch (err) {
       logToTerminal(`❌ Fehler beim Laden von Pyodide: ${err.message}\n`, "error");
     } finally {
@@ -107,17 +135,28 @@
     return pyodideInstance;
   }
 
-  // 3. Code-Ausführung (Run)
+  // 3. Code-Ausführung mit Timeout-Schutz (5s)
   async function runCode() {
     const code = getEditorCode();
     clearTerminal();
-    logToTerminal("▶ Starte Python-Skript...\n----------------------------------------\n", "info");
+    logToTerminal("▶ Starte Python-Skript (Strg+Enter)...\n----------------------------------------\n", "info");
 
     const py = await getPyodide();
     if (!py) return;
 
     try {
-      await py.runPythonAsync(code);
+      // Timeout-Rennen
+      let timeoutHandle;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          reject(new Error("Zeitüberschreitung: Dein Code lief länger als 5 Sekunden (Endlosschleife vermutet)."));
+        }, 5000);
+      });
+
+      const execPromise = py.runPythonAsync(code);
+      await Promise.race([execPromise, timeoutPromise]);
+      clearTimeout(timeoutHandle);
+
       logToTerminal("\n----------------------------------------\n✨ Skript erfolgreich ausgeführt!\n", "success");
     } catch (err) {
       logToTerminal(`\n❌ Ausführungsfehler:\n${err.message}\n`, "error");
@@ -134,16 +173,14 @@
 
     const userCode = getEditorCode();
     clearTerminal();
-    logToTerminal("🧪 Führe automatisierte Unittests aus...\n----------------------------------------\n", "info");
+    logToTerminal("🧪 Führe automatisierte Unittests aus (Strg+Shift+Enter)...\n----------------------------------------\n", "info");
 
     const py = await getPyodide();
     if (!py) return;
 
     try {
-      // 1. Schreibe aufgabe.py in das Pyodide-Dateisystem
       py.FS.writeFile("aufgabe.py", userCode);
 
-      // 2. Führe test_aufgabe.py aus
       const testRunnerScript = `
 import unittest, io, sys
 from unittest import TextTestRunner
@@ -169,7 +206,18 @@ errors = len(result.errors)
 (success, total_runs, failures, errors, output_text)
 `;
 
-      const [isSuccess, totalRuns, fails, errs, outputText] = await py.runPythonAsync(testRunnerScript);
+      let timeoutHandle;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          reject(new Error("Zeitüberschreitung: Unittest lief länger als 6 Sekunden."));
+        }, 6000);
+      });
+
+      const [isSuccess, totalRuns, fails, errs, outputText] = await Promise.race([
+        py.runPythonAsync(testRunnerScript),
+        timeoutPromise
+      ]);
+      clearTimeout(timeoutHandle);
 
       logToTerminal(outputText + "\n", "stdout");
 
@@ -225,17 +273,15 @@ errors = len(result.errors)
     clearTimeout(autoSaveTimeout);
     autoSaveTimeout = setTimeout(() => {
       saveProgressDraft();
-    }, 1500); // 1.5s nach letztem Tastenanschlag speichern
+    }, 1500);
   }
 
   async function saveProgressDraft() {
     if (!currentChapterData || !currentChapterData.chapterId) return;
     const code = getEditorCode();
 
-    // 1. Lokal in LocalStorage
     localStorage.setItem(`code_draft_${currentChapterData.chapterId}`, code);
 
-    // 2. In Backend-Cloud falls angemeldet
     const token = localStorage.getItem("auth_token");
     if (token) {
       try {
@@ -266,12 +312,12 @@ errors = len(result.errors)
   async function recordChapterSolved() {
     if (!currentChapterData || !currentChapterData.chapterId) return;
 
-    // 1. Lokale Gamification
+    // Lokale Gamification
     if (window.addXP) {
       window.addXP(100, currentChapterData.chapterId);
     }
 
-    // 2. Backend Cloud
+    // Backend Cloud
     const token = localStorage.getItem("auth_token");
     if (token) {
       try {
@@ -307,19 +353,20 @@ errors = len(result.errors)
       errorTab.style.borderColor = "var(--danger)";
       errorTab.innerHTML = "🩺 Fehler-Dolmetscher ⚠️";
     }
+    if (window.interpretWorkspaceError) {
+      window.interpretWorkspaceError();
+    }
   }
 
   // 6. Init Workspace Controller
   window.initWorkspace = function (chapterData) {
     currentChapterData = chapterData;
 
-    // Lade gespeicherten Code-Draft oder Startercode
     const savedDraft = localStorage.getItem(`code_draft_${chapterData.chapterId}`);
     const initialCode = savedDraft || chapterData.starterCode || "";
 
     initMonacoEditor(initialCode);
 
-    // Event Listener für Buttons
     document.getElementById("btn-run-code")?.addEventListener("click", runCode);
     document.getElementById("btn-run-tests")?.addEventListener("click", runTests);
     document.getElementById("btn-save-code")?.addEventListener("click", saveProgressDraft);

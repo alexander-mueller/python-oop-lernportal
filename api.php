@@ -1,11 +1,19 @@
 <?php
 /**
- * 🐘 PHP BACKEND REST API FÜR STANDARD-WEBSPACE (Hetzner, All-Inkl, Strato, cPanel)
- * ==============================================================================
- * SQLite-basierte REST-API für Benutzerverwaltung, Cloud-Speichern & Lehrerklassen.
+ * 🐘 GEHÄRTETES PHP REST API BACKEND FÜR SHARED-WEBSPACE (Hetzner, All-Inkl, Strato, cPanel)
+ * =========================================================================================
+ * - Signatur- und Ablauf-Prüfung für JWT-Tokens (Auth-Bypass behoben).
+ * - Sicherer Secret-Key aus Umgebung / geschützter Datei.
+ * - FastCGI Authorization Header Fallback.
+ * - Anti-Cheat Obergrenze bei XP-Vergabe.
+ * - Prepared Statements & SQL-Injection-Schutz.
  */
 
+declare(strict_types=1);
+
 header('Content-Type: application/json; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -15,11 +23,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$db_file = __DIR__ . '/platform_data.db';
-$pdo = new PDO('sqlite:' . $db_file);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// 1. SECRET KEY LADEN
+$secret_key = getenv('SECRET_KEY');
+if (!$secret_key || strlen($secret_key) < 32) {
+    $secret_file = __DIR__ . '/.secret_key';
+    if (file_exists($secret_file)) {
+        $secret_key = trim((string)file_get_contents($secret_file));
+    } else {
+        $secret_key = bin2hex(random_bytes(32));
+        @file_put_contents($secret_file, $secret_key, LOCK_EX);
+        @chmod($secret_file, 0600);
+    }
+}
 
-// Init Tabellen
+// 2. DATENBANK VERBINDUNG
+$db_file = __DIR__ . '/platform_data.db';
+try {
+    $pdo = new PDO('sqlite:' . $db_file);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Datenbankverbindung fehlgeschlagen']);
+    exit;
+}
+
+// 3. TABELLEN INITIALISIERUNG
 $pdo->exec("
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,19 +89,35 @@ CREATE TABLE IF NOT EXISTS class_enrollments (
 );
 ");
 
-$path = $_SERVER['PATH_INFO'] ?? $_GET['action'] ?? '';
-$body = json_decode(file_get_contents('php://input'), true) ?? [];
+// 4. AUTH HELPER MIT SICHERER HMAC-VERIFIKATION
+function get_auth_user(string $secret_key): ?array {
+    $auth = '';
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $auth = $_SERVER['HTTP_AUTHORIZATION'];
+    } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        $auth = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    } elseif (function_exists('getallheaders')) {
+        $headers = getallheaders();
+        $auth = $headers['Authorization'] ?? $headers['authorization'] ?? '';
+    }
 
-// Helper Auth
-function get_auth_user($pdo) {
-    $headers = getallheaders();
-    $auth = $headers['Authorization'] ?? $headers['authorization'] ?? '';
     if (strpos($auth, 'Bearer ') === 0) {
         $token = substr($auth, 7);
         $parts = explode('.', $token);
         if (count($parts) === 2) {
-            $payload = json_decode(base64_decode($parts[0]), true);
-            if ($payload && isset($payload['uid'])) {
+            $payload_raw = base64_decode($parts[0], true);
+            if ($payload_raw === false) return null;
+
+            $expected_sig = hash_hmac('sha256', $parts[0], $secret_key);
+            if (!hash_equals($expected_sig, $parts[1])) {
+                return null; // Ungültige Signatur
+            }
+
+            $payload = json_decode($payload_raw, true);
+            if ($payload && isset($payload['uid']) && isset($payload['exp'])) {
+                if ($payload['exp'] < time()) {
+                    return null; // Abgelaufen
+                }
                 return $payload;
             }
         }
@@ -80,22 +125,32 @@ function get_auth_user($pdo) {
     return null;
 }
 
-function create_token($uid, $email, $role) {
-    $payload = base64_encode(json_encode(['uid' => $uid, 'email' => $email, 'role' => $role]));
-    $sig = hash_hmac('sha256', $payload, 'python_lernportal_secret');
+function create_token(int $uid, string $email, string $role, string $secret_key): string {
+    $payload_data = [
+        'uid' => $uid,
+        'email' => $email,
+        'role' => $role,
+        'exp' => time() + (86400 * 30)
+    ];
+    $payload = base64_encode((string)json_encode($payload_data));
+    $sig = hash_hmac('sha256', $payload, $secret_key);
     return $payload . '.' . $sig;
 }
 
+$path = $_SERVER['PATH_INFO'] ?? $_GET['action'] ?? '';
+$raw_input = file_get_contents('php://input');
+$body = $raw_input ? (json_decode($raw_input, true) ?? []) : [];
+
 // 1. REGISTER
 if ($path === '/auth/register') {
-    $email = strtolower(trim($body['email'] ?? ''));
-    $password = $body['password'] ?? '';
-    $name = trim($body['name'] ?? '');
-    $role = $body['role'] ?? 'student';
+    $email = strtolower(trim((string)($body['email'] ?? '')));
+    $password = (string)($body['password'] ?? '');
+    $name = trim((string)($body['name'] ?? ''));
+    $role = ($body['role'] ?? 'student') === 'teacher' ? 'teacher' : 'student';
 
-    if (!$email || !$password || !$name) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 6 || strlen($name) < 1) {
         http_response_code(400);
-        echo json_encode(['error' => 'Pflichtfelder fehlen']);
+        echo json_encode(['error' => 'Ungültige Eingabedaten']);
         exit;
     }
 
@@ -105,34 +160,34 @@ if ($path === '/auth/register') {
     try {
         $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, salt, name, role) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$email, $hash, $salt, $name, $role]);
-        $uid = $pdo->lastInsertId();
-        $token = create_token($uid, $email, $role);
+        $uid = (int)$pdo->lastInsertId();
+        $token = create_token($uid, $email, $role, $secret_key);
         http_response_code(201);
         echo json_encode(['token' => $token, 'user' => ['id' => $uid, 'email' => $email, 'name' => $name, 'role' => $role, 'xp' => 0, 'level' => 1]]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         http_response_code(409);
         echo json_encode(['error' => 'E-Mail existiert bereits']);
     }
     exit;
 }
 
-// 2. LOGIN
+// 2. LOGIN (mit Constant-Time Dummy PBKDF2)
 if ($path === '/auth/login') {
-    $email = strtolower(trim($body['email'] ?? ''));
-    $password = $body['password'] ?? '';
+    $email = strtolower(trim((string)($body['email'] ?? '')));
+    $password = (string)($body['password'] ?? '');
 
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch();
 
     if ($user) {
         $hash = hash_pbkdf2('sha256', $password, $user['salt'], 100000);
         if (hash_equals($hash, $user['password_hash'])) {
-            $token = create_token($user['id'], $user['email'], $user['role']);
+            $token = create_token((int)$user['id'], $user['email'], $user['role'], $secret_key);
             echo json_encode([
                 'token' => $token,
                 'user' => [
-                    'id' => $user['id'],
+                    'id' => (int)$user['id'],
                     'email' => $user['email'],
                     'name' => $user['name'],
                     'role' => $user['role'],
@@ -142,7 +197,10 @@ if ($path === '/auth/login') {
             ]);
             exit;
         }
+    } else {
+        hash_pbkdf2('sha256', $password, 'dummy_salt_fixed', 100000);
     }
+
     http_response_code(401);
     echo json_encode(['error' => 'Ungültige Anmeldedaten']);
     exit;
@@ -150,11 +208,11 @@ if ($path === '/auth/login') {
 
 // 3. PROGRESS SAVE
 if ($path === '/progress/save') {
-    $user = get_auth_user($pdo);
+    $user = get_auth_user($secret_key);
     if (!$user) { http_response_code(401); echo json_encode(['error' => 'Nicht angemeldet']); exit; }
 
-    $chapter_id = $body['chapter_id'] ?? '';
-    $code_draft = $body['code_draft'] ?? '';
+    $chapter_id = substr(trim((string)($body['chapter_id'] ?? '')), 0, 120);
+    $code_draft = substr((string)($body['code_draft'] ?? ''), 0, 100000);
 
     $stmt = $pdo->prepare("INSERT INTO chapter_progress (user_id, chapter_id, code_draft) VALUES (?, ?, ?) ON CONFLICT(user_id, chapter_id) DO UPDATE SET code_draft = excluded.code_draft, updated_at = CURRENT_TIMESTAMP");
     $stmt->execute([$user['uid'], $chapter_id, $code_draft]);
@@ -162,13 +220,13 @@ if ($path === '/progress/save') {
     exit;
 }
 
-// 4. PROGRESS SOLVE
+// 4. PROGRESS SOLVE (mit Anti-Cheat Cap)
 if ($path === '/progress/solve') {
-    $user = get_auth_user($pdo);
+    $user = get_auth_user($secret_key);
     if (!$user) { http_response_code(401); echo json_encode(['error' => 'Nicht angemeldet']); exit; }
 
-    $chapter_id = $body['chapter_id'] ?? '';
-    $xp_reward = (int)($body['xp_reward'] ?? 100);
+    $chapter_id = substr(trim((string)($body['chapter_id'] ?? '')), 0, 120);
+    $xp_reward = min(max(0, (int)($body['xp_reward'] ?? 100)), 100);
 
     $stmt = $pdo->prepare("INSERT INTO chapter_progress (user_id, chapter_id, is_solved, solved_at) VALUES (?, ?, 1, CURRENT_TIMESTAMP) ON CONFLICT(user_id, chapter_id) DO UPDATE SET is_solved = 1, solved_at = CURRENT_TIMESTAMP");
     $stmt->execute([$user['uid'], $chapter_id]);

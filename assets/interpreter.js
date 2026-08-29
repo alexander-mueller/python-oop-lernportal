@@ -9,6 +9,18 @@
 (function () {
   const ERROR_RULES = [
     {
+      type: "SyntaxError",
+      pattern: /SyntaxError: (invalid syntax|expected ':'|was never closed|cannot assign to expression)/i,
+      title: "✍️ Schreibweise- & Grammatikfehler (SyntaxError)",
+      explanation: "Python versteht den Aufbau deines Codes an dieser Stelle nicht. Meist fehlt ein Satzzeichen oder eine Klammer.",
+      causes: [
+        "Fehlender Doppelpunkt <code>:</code> am Ende von <code>def</code>, <code>if</code>, <code>elif</code>, <code>else</code>, <code>for</code> oder <code>while</code>.",
+        "Eine geöffnete Klammer <code>(</code> oder ein Anführungszeichen <code>\"</code> wurde nicht geschlossen.",
+        "Verwechslung von Zuweisung <code>=</code> und Vergleich <code>==</code> in einer <code>if</code>-Bedingung."
+      ],
+      fix: "Prüfe die Zeile ganz genau: Steht am Zeilenende ein Doppelpunkt? Sind alle Klammern und Anführungszeichen paarweise geschlossen? Nutze <code>if a == b:</code> zum Vergleichen!"
+    },
+    {
       type: "IndentationError",
       pattern: /IndentationError: (expected an indented block|unindent does not match)/i,
       title: "📐 Einrückungsfehler (IndentationError)",
@@ -18,6 +30,16 @@
         "Leerzeichen und Tabulatoren wurden versehentlich gemischt."
       ],
       fix: "Drücke nach dem Doppelpunkt <kbd>Enter</kbd> und rücke die Zeile mit <kbd>Tab</kbd> oder 4 Leerzeichen ein. Mit <kbd>Umschalt</kbd> + <kbd>Tab</kbd> kannst du Zeilen wieder nach links rücken."
+    },
+    {
+      type: "TypeError String Concatenation",
+      pattern: /TypeError: can only concatenate str \(not "(int|float)"\) to str/i,
+      title: "🔤 Text und Zahl vermischt (TypeError)",
+      explanation: "Du versuchst einen Text (<code>str</code>) und eine Zahl (<code>int/float</code>) mit <code>+</code> zusammenzufügen.",
+      causes: [
+        "In Python kann man Text und Zahlen nicht einfach addieren (z.B. <code>\"Alter: \" + 16</code> schlägt fehl)."
+      ],
+      fix: "Nutze einen modernen <strong>f-String</strong>: <code>f\"Alter: {alter}\"</code> oder wandle die Zahl mit <code>str(zahl)</code> um."
     },
     {
       type: "TypeError NoneType",
@@ -86,6 +108,29 @@
       fix: "Prüfe, ob du die Variable vor ihrer Benutzung angelegt hast und ob alle benötigten Module oben mit <code>import ...</code> eingebunden sind."
     },
     {
+      type: "ValueError",
+      pattern: /ValueError: (invalid literal for int\(\)|math domain error)/i,
+      title: "⚠️ Ungültiger Wert (ValueError)",
+      explanation: "Der Datentyp war zwar richtig, aber der übergebene Wert macht für diesen Befehl keinen Sinn.",
+      causes: [
+        "Umwandlung von Text mit Buchstaben in eine Zahl (z.B. <code>int(\"hallo\")</code>).",
+        "Mathematisch unzulässige Werte (z.B. Wurzel aus einer negativen Zahl)."
+      ],
+      fix: "Prüfe vorher mit <code>text.isdigit()</code>, ob der Text nur aus Ziffern besteht, oder sichere die Umwandlung mit <code>try-except ValueError:</code> ab."
+    },
+    {
+      type: "AssertionError",
+      pattern: /AssertionError: (.+)/i,
+      title: "🧪 Unittest fehlgeschlagen (AssertionError)",
+      explanation: "Dein Programmcode läuft zwar ohne Absturz durch, liefert aber noch nicht das von der Aufgabe erwartete Ergebnis.",
+      causes: [
+        "Ein Rechenfehler oder eine falsche Formel in der Funktion.",
+        "Rückgabewert vergessen (<code>return</code> fehlt).",
+        "Grenzfall nicht beachtet (z.B. 0 oder leere Liste)."
+      ],
+      fix: "Vergleiche die Rückgabe deiner Funktion mit dem in der Testmeldung geforderten Soll-Wert. Lies die Aufgabenbeschreibung noch einmal aufmerksam durch!"
+    },
+    {
       type: "ZeroDivisionError",
       pattern: /ZeroDivisionError: division by zero/i,
       title: "➗ Division durch Null (ZeroDivisionError)",
@@ -101,9 +146,12 @@
     if (!errorText || !errorText.trim()) {
       return {
         matched: false,
+        name: "💡 Bitte füge eine Fehlermeldung ein",
         title: "💡 Bitte füge eine Fehlermeldung ein",
         explanation: "Kopiere deinen Traceback aus dem Terminal und füge ihn hier ein.",
-        fix: "Starte dein Skript im Terminal mit python3 test_aufgabe.py"
+        causes: ["Noch keine Fehlermeldung eingegeben."],
+        fixes: ["Starte deinen Code oder Unittests, um eventuelle Fehler zu sehen."],
+        fix: "Starte deinen Code oder Unittests, um eventuelle Fehler zu sehen."
       };
     }
 
@@ -112,9 +160,11 @@
         return {
           matched: true,
           type: rule.type,
+          name: rule.title,
           title: rule.title,
           explanation: rule.explanation,
           causes: rule.causes,
+          fixes: [rule.fix],
           fix: rule.fix
         };
       }
@@ -122,11 +172,18 @@
 
     return {
       matched: false,
+      name: "🔍 Allgemeiner Python-Fehler",
       title: "🔍 Allgemeiner Python-Fehler",
       explanation: "Lies den Traceback immer von ganz unten nach oben: In der allerletzten Zeile nennt Python die genaue Fehlerart und Zeilennummer.",
       causes: ["Syntax- oder Logikfehler in deinem Code."],
+      fixes: ["Überprüfe die in der letzten Zeile genannte Zeilennummer in deiner aufgabe.py Datei."],
       fix: "Überprüfe die in der letzten Zeile genannte Zeilennummer in deiner aufgabe.py Datei."
     };
+  };
+
+  // Exportiertes Objekt für Workspace & Widgets
+  window.INTERPRETER = {
+    translate: window.interpretiereTraceback
   };
 
   // Widget rendern, falls Container vorhanden
@@ -134,37 +191,21 @@
     const interpreterEl = document.getElementById("error-interpreter-widget");
     if (!interpreterEl) return;
 
-    interpreterEl.innerHTML = `
-      <div class="card" style="border-left: 5px solid var(--secondary);">
-        <h2>🩺 Interaktiver Python-Fehler-Dolmetscher</h2>
-        <p>Du verstehst eine Fehlermeldung aus dem Terminal nicht? Füge sie hier ein und erhalte sofort eine schülerfreundliche deutsche Erklärung mit Reparatur-Anleitung!</p>
-        
-        <textarea id="traceback-input" placeholder="Füge hier deinen Traceback ein (z.B. TypeError: ... oder IndexError: list index out of range)" style="width: 100%; height: 90px; padding: 12px; font-family: var(--font-mono); font-size: 0.88rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 12px;"></textarea>
-        
-        <button id="btn-interpret" class="btn" style="background: var(--secondary);">🔍 Fehlermeldung übersetzen</button>
-        
-        <div id="interpreter-result" style="margin-top: 15px; display: none;"></div>
-      </div>
-    `;
+    const input = document.getElementById("error-input");
+    const btn = document.getElementById("btn-interpret-error");
+    const result = document.getElementById("error-result");
 
-    const input = document.getElementById("traceback-input");
-    const btn = document.getElementById("btn-interpret");
-    const result = document.getElementById("interpreter-result");
-
-    btn.addEventListener("click", () => {
-      const res = window.interpretiereTraceback(input.value);
-      result.innerHTML = `
-        <div class="box ${res.matched ? 'box-warning' : 'box-tipp'}">
-          <div class="box-title">${res.title}</div>
-          <p><strong>Was bedeutet das?</strong> ${res.explanation}</p>
-          ${res.causes ? `<p><strong>Mögliche Ursachen:</strong></p><ul style="margin-left: 20px;">${res.causes.map(c => `<li>${c}</li>`).join("")}</ul>` : ''}
-          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.1);">
-            <strong>🔧 So behebst du den Fehler:</strong>
-            <p style="margin-top: 4px;">${res.fix}</p>
-          </div>
-        </div>
-      `;
-      result.style.display = "block";
-    });
+    if (btn && input && result) {
+      btn.addEventListener("click", () => {
+        const res = window.interpretiereTraceback(input.value);
+        document.getElementById("error-name").innerText = res.title;
+        document.getElementById("error-explanation").innerHTML = res.explanation;
+        const fixList = document.getElementById("error-fixes");
+        if (fixList) {
+          fixList.innerHTML = (res.causes || []).map(c => `<li>${c}</li>`).join("") + `<li><strong>Lösung:</strong> ${res.fix}</li>`;
+        }
+        result.style.display = "block";
+      });
+    }
   });
 })();

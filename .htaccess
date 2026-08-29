@@ -1,0 +1,20 @@
+# 🔒 APACHE / WEBSPACE SICHERHEITSKONFIGURATION
+
+# 1. Blockiere Zugriff auf SQLite-Datenbanken und sensible Dateien
+<FilesMatch "\.(db|sqlite|secret_key|jsonl|py|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# 2. Blockiere versteckte Dateien (.git, .env, etc.)
+<FilesMatch "^\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# 3. Security Header
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

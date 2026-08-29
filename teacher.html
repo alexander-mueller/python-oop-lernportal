@@ -75,7 +75,7 @@
         <div class="header-container">
           <div class="header-badge">👨‍🏫 Dozenten- &amp; Lehrer-Portal</div>
           <h1>Klassenverwaltung &amp; Lernfortschritts-Matrix</h1>
-          <p>Behalte den Überblick über deine Klassen, lade Schüler per Code ein und verfolge gelöste Aufgaben in Echtzeit.</p>
+          <p>Behalte den Überblick über deine Klassen, lade Schüler per Code ein, inspiziere ihren Code und exportiere Notenlisten als CSV.</p>
         </div>
       </header>
 
@@ -108,8 +108,28 @@
 
   </div>
 
+  <!-- Student Code Inspector Modal -->
+  <div class="certificate-overlay" id="code-inspector-modal" style="display: none;">
+    <div class="certificate-container" style="max-width: 720px; text-align: left; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 id="inspector-title" style="margin: 0; color: var(--text-main);">🔍 Code-Inspektor</h3>
+        <button class="btn btn-secondary" style="padding: 4px 10px;" onclick="document.getElementById('code-inspector-modal').style.display='none'">✕</button>
+      </div>
+      <div id="inspector-meta" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;"></div>
+      <pre id="inspector-code-content" style="background: #0b0f19; color: #f8fafc; padding: 16px; border-radius: 6px; font-family: monospace; font-size: 0.88rem; max-height: 380px; overflow-y: auto; white-space: pre-wrap; margin: 0;"></pre>
+      <div style="text-align: right; margin-top: 14px;">
+        <button class="btn" onclick="document.getElementById('code-inspector-modal').style.display='none'">Schließen</button>
+      </div>
+    </div>
+  </div>
+
   <script src="assets/app_auth.js"></script>
   <script>
+    function escapeHtml(text) {
+      if (!text) return "";
+      return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
     async function loadClassrooms() {
       const container = document.getElementById("classrooms-list-container");
       const token = localStorage.getItem("auth_token");
@@ -144,16 +164,20 @@
           <div class="class-card">
             <div class="class-header">
               <div>
-                <h3 style="margin: 0 0 4px 0; color: var(--text-main); font-size: 1.25rem;">${cl.name}</h3>
+                <h3 style="margin: 0 0 4px 0; color: var(--text-main); font-size: 1.25rem;">${escapeHtml(cl.name)}</h3>
                 <span style="font-size: 0.85rem; color: var(--text-muted);">${cl.student_count || 0} Schüler eingeschrieben</span>
               </div>
               <div style="text-align: right;">
                 <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px;">EINLADUNGSCODE:</div>
-                <div class="invite-code-box">${cl.invite_code}</div>
+                <div class="invite-code-box">${escapeHtml(cl.invite_code)}</div>
               </div>
             </div>
 
-            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem; margin-top: 10px;" onclick="loadClassMatrix(${cl.id}, '${cl.name}')">📊 Lernmatrix &amp; Fortschritt anzeigen</button>
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;" onclick="loadClassMatrix(${cl.id}, '${escapeHtml(cl.name)}')">📊 Lernmatrix anzeigen</button>
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;" onclick="exportClassCsv(${cl.id}, '${escapeHtml(cl.name)}')">📥 CSV-Export</button>
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem; color: var(--danger); border-color: var(--danger);" onclick="deleteClassroom(${cl.id}, '${escapeHtml(cl.name)}')">🗑️ Löschen</button>
+            </div>
             <div id="matrix-container-${cl.id}" style="display: none; margin-top: 14px;"></div>
           </div>
         `).join("");
@@ -195,16 +219,18 @@
                 <th>XP</th>
                 <th>Streak</th>
                 <th>Gelöste Kapitel</th>
+                <th>Aktion</th>
               </tr>
             </thead>
             <tbody>
               ${matrix.map(m => `
                 <tr>
-                  <td><strong>${m.student.name}</strong><br><span style="font-size: 0.75rem; color: #64748b;">${m.student.email}</span></td>
+                  <td><strong>${escapeHtml(m.student.name)}</strong><br><span style="font-size: 0.75rem; color: #64748b;">${escapeHtml(m.student.email)}</span></td>
                   <td>⭐ Level ${m.student.level}</td>
                   <td><span style="font-weight: 700; color: #0284c7;">${m.student.xp} XP</span></td>
                   <td>🔥 ${m.student.streak_days} Tage</td>
                   <td><span style="background: #ecfdf5; color: #059669; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.8rem;">${Object.values(m.solved_chapters).filter(Boolean).length} / 27</span></td>
+                  <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="inspectStudentCode(${classId}, ${m.student.id}, '${escapeHtml(m.student.name)}')">🔍 Code ansehen</button></td>
                 </tr>
               `).join("")}
             </tbody>
@@ -212,6 +238,68 @@
         `;
       } catch (e) {
         target.innerHTML = `<span style="color: var(--danger);">Fehler: ${e.message}</span>`;
+      }
+    }
+
+    async function inspectStudentCode(classId, studentId, studentName) {
+      const chapterId = prompt("Welches Kapitel möchtest du inspizieren? (z.B. lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner)", "lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner");
+      if (!chapterId) return;
+
+      const token = localStorage.getItem("auth_token");
+      try {
+        const res = await fetch(`/api/classrooms/student-code?classroom_id=${classId}&student_id=${studentId}&chapter_id=${encodeURIComponent(chapterId)}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        
+        document.getElementById("inspector-title").innerText = `🔍 Code von ${studentName}`;
+        document.getElementById("inspector-meta").innerText = `Kapitel: ${chapterId} | Gelöst: ${data.progress && data.progress.is_solved ? '✅ Ja' : '❌ Nein'}`;
+        document.getElementById("inspector-code-content").innerText = (data.progress && data.progress.code_draft) ? data.progress.code_draft : "# Kein Code-Entwurf für dieses Kapitel vorhanden.";
+        document.getElementById("code-inspector-modal").style.display = "flex";
+      } catch (err) {
+        alert("Fehler beim Abrufen des Codes: " + err.message);
+      }
+    }
+
+    async function exportClassCsv(classId, className) {
+      const token = localStorage.getItem("auth_token");
+      try {
+        const res = await fetch(`/api/classrooms/matrix?classroom_id=${classId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const matrix = data.matrix || [];
+
+        let csv = "Name,E-Mail,Level,XP,Streak,Geloeste_Kapitel_Anzahl\n";
+        matrix.forEach(m => {
+          const solved = Object.values(m.solved_chapters).filter(Boolean).length;
+          csv += `"${m.student.name}","${m.student.email}",${m.student.level},${m.student.xp},${m.student.streak_days},${solved}\n`;
+        });
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Notenmatrix_${className.replace(/\s+/g, "_")}.csv`;
+        a.click();
+      } catch (e) {
+        alert("CSV-Export fehlgeschlagen: " + e.message);
+      }
+    }
+
+    async function deleteClassroom(classId, className) {
+      if (!confirm(`Möchtest du die Klasse '${className}' wirklich unwiderruflich löschen?`)) return;
+      const token = localStorage.getItem("auth_token");
+      try {
+        await fetch("/api/classrooms/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ classroom_id: classId })
+        });
+        alert("Klasse gelöscht.");
+        loadClassrooms();
+      } catch (e) {
+        alert("Fehler beim Löschen: " + e.message);
       }
     }
 
