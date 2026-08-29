@@ -11,6 +11,7 @@ import unittest
 from pathlib import Path
 
 KAPITEL = [
+    ("Kapitel 00: Python-Fehlersuche (Warm-up)", "00_fehlersuche_und_grundlagen"),
     ("Kapitel 01: Einstieg in Klassen", "01_einstieg_klassen"),
     ("Kapitel 02: Konstruktor & self", "02_init_und_self"),
     ("Kapitel 03: Methoden & Verhalten", "03_methoden_und_verhalten"),
@@ -21,9 +22,9 @@ KAPITEL = [
 
 def main():
     root = Path(__file__).parent.resolve()
-    print("=" * 60)
+    print("=" * 65)
     print("🎓 PYTHON OOP ÜBUNGSREIHE – GESAMTFORTSCHRITT")
-    print("=" * 60)
+    print("=" * 65)
     
     gesamt_bestanden = 0
     
@@ -42,31 +43,30 @@ def main():
         runner = unittest.TextTestRunner(stream=open("/dev/null", "w"), verbosity=0)
         result = runner.run(suite)
         
-        # Modul aus sys.path und sys.modules entfernen für saubere Isolation
+        # Module für saubere Isolation entfernen
         if str(kapitel_pfad) in sys.path:
             sys.path.remove(str(kapitel_pfad))
-        if "aufgabe" in sys.modules:
-            del sys.modules["aufgabe"]
-        if "test_aufgabe" in sys.modules:
-            del sys.modules["test_aufgabe"]
+        for m in list(sys.modules.keys()):
+            if m in ("aufgabe", "test_aufgabe", "musterloesung"):
+                del sys.modules[m]
 
         anzahl_tests = result.testsRun
         erfolgreich = result.wasSuccessful() and anzahl_tests > 0
 
         if erfolgreich:
-            print(f"  ✅ {titel:42s} ({anzahl_tests}/{anzahl_tests} Tests OK)")
+            print(f"  ✅ {titel:45s} ({anzahl_tests}/{anzahl_tests} Tests OK)")
             gesamt_bestanden += 1
         else:
             fehlgeschlagen = len(result.failures) + len(result.errors)
-            print(f"  ⏳ {titel:42s} (Noch offen / {fehlgeschlagen} Fehler)")
+            print(f"  ⏳ {titel:45s} (Noch offen / {fehlgeschlagen} Fehler)")
 
-    print("=" * 60)
+    print("=" * 65)
     print(f"Ergebnis: {gesamt_bestanden} von {len(KAPITEL)} Kapiteln vollständig gelöst!")
     if gesamt_bestanden == len(KAPITEL):
-        print("🏆 PERFEKT! Du hast alle OOP-Aufgaben mit Bravour gemeistert! 🎉")
+        print("🏆 PERFEKT! Du hast alle Aufgaben mit Bravour gemeistert! 🎉")
     else:
         print("💡 Öffne das nächste offene Kapitel und starte mit aufgabe.py!")
-    print("=" * 60)
+    print("=" * 65)
 
 
 if __name__ == "__main__":

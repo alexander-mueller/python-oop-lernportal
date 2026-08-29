@@ -26,26 +26,36 @@
         Jetzt machen wir den nächsten großen Schritt in der Softwareentwicklung: <strong>Klassen & Objekte</strong>!
       </p>
       <p>
-        Mit Klassen kannst du zusammengehörige Daten und Aktionen an einem Ort bündeln. Fast jede moderne App (ob Instagram, Spotify oder Computerspiele) basiert auf objektorientierter Programmierung.
+        Damit du beim Programmieren nie an kleinen Syntaxfehlern verzweifelst, starten wir mit einem kurzen <strong>Warm-up zur Fehlersuche (Kapitel 00)</strong>, bevor es mit den Klassen losgeht.
       </p>
       
       <div class="box box-analogie">
-        <div class="box-title">🏗️ Die Grundidee in einem Satz:</div>
+        <div class="box-title">🏗️ Die Grundidee von OOP in einem Satz:</div>
         Eine <strong>Klasse</strong> ist wie ein Bauplan (oder eine Plätzchen-Ausstechform). Ein <strong>Objekt</strong> ist das fertige Haus (oder das gebackene Plätzchen), das nach diesem Bauplan entstanden ist!
       </div>
     </section>
 
     <!-- Roadmap Grid -->
     <section>
-      <h2 style="margin: 30px 0 15px 0; color: var(--text-main); font-size: 1.5rem;">🗺️ Dein Lernpfad (Kapitel 01 bis 06)</h2>
+      <h2 style="margin: 30px 0 15px 0; color: var(--text-main); font-size: 1.5rem;">🗺️ Dein Lernpfad (Kapitel 00 bis 06)</h2>
       <div class="roadmap-grid">
         
+        <!-- Kapitel 0 -->
+        <a href="00_fehlersuche_und_grundlagen/index.html" class="roadmap-card" style="border-left: 4px solid var(--purple);">
+          <div>
+            <span class="roadmap-number" style="background: var(--purple-light); color: var(--purple);">Vorkapitel 00</span>
+            <div class="roadmap-title">🔍 Fehlersuche &amp; Bugs</div>
+            <div class="roadmap-desc">Tracebacks richtig lesen, Einrückungsfehler (IndentationError), Typfehler und eine interaktive Detektiv-Aufgabe.</div>
+          </div>
+          <div class="roadmap-footer">Vorkapitel öffnen &rarr;</div>
+        </a>
+
         <!-- Kapitel 1 -->
         <a href="01_einstieg_klassen/index.html" class="roadmap-card">
           <div>
             <span class="roadmap-number">Kapitel 01</span>
             <div class="roadmap-title">🐶 Die erste Klasse</div>
-            <div class="roadmap-desc">Was ist eine Klasse? Bauplan vs. Objekt, Instanziierung und erste Attribute am Haustier-Beispiel.</div>
+            <div class="roadmap-desc">Was ist eine Klasse? Bauplan vs. Objekt, Instanziierung und erste Attribute am Haustier- &amp; Fahrrad-Beispiel.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -55,7 +65,7 @@
           <div>
             <span class="roadmap-number">Kapitel 02</span>
             <div class="roadmap-title">💳 Konstruktor & self</div>
-            <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht und was das Wörtchen <code>self</code> wirklich bedeutet (Bankkonto-App).</div>
+            <div class="roadmap-desc">Wie <code>__init__</code> Objekte startklar macht und was <code>self</code> bedeutet (Smartphone- &amp; Bankkonto-App).</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -65,7 +75,7 @@
           <div>
             <span class="roadmap-number">Kapitel 03</span>
             <div class="roadmap-title">⚔️ Methoden & Verhalten</div>
-            <div class="roadmap-desc">Objekte führen Aktionen aus! Interaktion zwischen Helden und Monstern in einem RPG-Kampfsimulator.</div>
+            <div class="roadmap-desc">Objekte führen Aktionen aus! Interaktion zwischen Objekten in Rennautos und RPG-Heldenduellen.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -75,7 +85,7 @@
           <div>
             <span class="roadmap-number">Kapitel 04</span>
             <div class="roadmap-title">🧾 Schöne Textausgabe</div>
-            <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Objekte im Warenkorb sammelt.</div>
+            <div class="roadmap-desc">Wie man <code>print(objekt)</code> mit <code>__str__</code> lesbar macht und Objekte im Warenkorb &amp; bei Pizza-Bestellungen sammelt.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -85,7 +95,7 @@
           <div>
             <span class="roadmap-number">Kapitel 05</span>
             <div class="roadmap-title">🎵 Komposition & Playlists</div>
-            <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists.</div>
+            <div class="roadmap-desc">Objekte verwalten andere Objekte: Song-Suche, Längenberechnung und Filter in Spotify-Playlists &amp; Schulklassen.</div>
           </div>
           <div class="roadmap-footer">Kapitel öffnen &rarr;</div>
         </a>
@@ -107,9 +117,9 @@
     <section class="card">
       <h2>🚀 Wie du vorgehst (Schritt-für-Schritt)</h2>
       <ol style="margin-left: 20px; margin-bottom: 15px;">
-        <li style="margin-bottom: 8px;">Wähle das nächste offene Kapitel aus der Liste oben.</li>
-        <li style="margin-bottom: 8px;">Lies die Erklärungen und schau dir die Codebeispiele und „Stolperfallen“ an.</li>
-        <li style="margin-bottom: 8px;">Öffne die <code>aufgabe.py</code> im entsprechenden Kapitelordner und löse die <code>TODO</code>s.</li>
+        <li style="margin-bottom: 8px;">Wähle das nächste offene Kapitel aus der Liste oben (am besten startest du mit Kapitel 00).</li>
+        <li style="margin-bottom: 8px;">Lies die Erklärungen und schau dir die vollständigen Codebeispiele an.</li>
+        <li style="margin-bottom: 8px;">Öffne die <code>aufgabe.py</code> im entsprechenden Kapitelordner und löse die Aufgaben.</li>
         <li style="margin-bottom: 8px;">
           Führe im Terminal den automatischen Test aus:
           <div class="code-container" style="margin: 10px 0;">
