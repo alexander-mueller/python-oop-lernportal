@@ -8,7 +8,177 @@
 </head>
 <body>
 
-  <header>
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="../../index.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">🐍</div>
+          <div>
+            <div class="sidebar-title">Python Portal</div>
+            <div class="sidebar-subtitle">Lernplattform</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-quick-nav">
+        <a href="../../index.html" class="sidebar-link">🏠 Startseite</a>
+        <a href="../../index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
+        <a href="../../index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🌱 1. Grundlagen</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">G01–G10</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧮</span>
+              <span class="sidebar-link-text">G01. Taschenrechner</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📦</span>
+              <span class="sidebar-link-text">G02. Variablen & Typen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💬</span>
+              <span class="sidebar-link-text">G03. Ein- & Ausgabe</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚦</span>
+              <span class="sidebar-link-text">G04. Bedingungen (if)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎡</span>
+              <span class="sidebar-link-text">G05. Schleifen (for/while)</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🪄</span>
+              <span class="sidebar-link-text">G06. Funktionen & Module</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">📋</span>
+              <span class="sidebar-link-text">G07. Listen & Sequenzen</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔤</span>
+              <span class="sidebar-link-text">G08. String-Methoden</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">🗃️</span>
+              <span class="sidebar-link-text">G09. Dicts & Sets</span>
+            </a>
+            <a href="../../lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🚀</span>
+              <span class="sidebar-link-text">G10. Comprehensions</span>
+            </a>
+          </div>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🏗️ 2. OOP Einstieg</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">00–06</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🔍</span>
+              <span class="sidebar-link-text">00. Fehlersuche & Debug</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏗️</span>
+              <span class="sidebar-link-text">01. Einstieg in Klassen</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">⚙️</span>
+              <span class="sidebar-link-text">02. Konstruktor & self</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏎️</span>
+              <span class="sidebar-link-text">03. Methoden & Verhalten</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧾</span>
+              <span class="sidebar-link-text">04. __str__ Darstellung</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💻</span>
+              <span class="sidebar-link-text">04b. VS Code Setup</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🌿</span>
+              <span class="sidebar-link-text">04c. Git-Versionskontrolle</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎵</span>
+              <span class="sidebar-link-text">05. Objekte kombinieren</span>
+            </a>
+            <a href="../../lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🥚</span>
+              <span class="sidebar-link-text">06. Projekt: Tamagotchi</span>
+            </a>
+          </div>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-title">
+            <span>🚀 3. Fortgeschritten</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">07–16</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧠</span>
+              <span class="sidebar-link-text">07. Referenzen & Speicher</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">➕</span>
+              <span class="sidebar-link-text">08. Operator Overloading</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧪</span>
+              <span class="sidebar-link-text">09. Unit Tests & TDD</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🧬</span>
+              <span class="sidebar-link-text">10. Vererbung & super()</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎭</span>
+              <span class="sidebar-link-text">11. Polymorphie</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🛡️</span>
+              <span class="sidebar-link-text">12. Exceptions & Fehler</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">💾</span>
+              <span class="sidebar-link-text">13. Persistenz (JSON/CSV)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🖥️</span>
+              <span class="sidebar-link-text">14. Desktop-GUIs (Tkinter)</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🎒</span>
+              <span class="sidebar-link-text">15. Container & *args</span>
+            </a>
+            <a href="../../lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="sidebar-link">
+              <span class="sidebar-link-icon">🏆</span>
+              <span class="sidebar-link-text">16. Master-Abschlussprojekt</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: white;" id="sidebar-level-text">⭐ Level 1</div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;" id="sidebar-xp-text">0 XP</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header>
     <div class="header-container">
       <nav class="nav-links">
         <a href="../../index.html">🏠 Zur Kursübersicht</a>
@@ -24,8 +194,7 @@
       <p>Lerne, wie du Daten in Schlüssel-Wert-Paaren organisierst, blitzschnell nachschlägst und mit mathematischen Mengen Duplikate eliminierst.</p>
     </div>
   </header>
-
-  <main class="container">
+      <main class="container">
 
     <!-- 📂 Schnellzugriff & Download aller Dateien dieser Einheit -->
     <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
@@ -314,13 +483,19 @@
     </section>
 
   </main>
+    </div>
+  </div>
 
+  <button type="button" class="sidebar-mobile-toggle"><span>☰ Menü</span></button>
+  <div class="sidebar-overlay"></div>
 
-  <!-- Lokale Gamification-Scripts (funktionieren auch offline per Doppelklick via file://) -->
+  <!-- Scripts -->
   <script src="../../assets/gamification_data.js"></script>
   <script src="../../assets/gamification.js"></script>
-  <script src="../../assets/parsons.js"></script>
   <script src="../../assets/interpreter.js"></script>
+  <script src="../../assets/certificate.js"></script>
+  <script src="../../assets/parsons.js"></script>
+  <script src="../../assets/runner.js"></script>
   <script src="../../assets/ui_enhancements.js"></script>
   <script src="../../assets/sidebar.js"></script>
 </body>
