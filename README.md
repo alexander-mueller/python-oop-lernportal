@@ -34,31 +34,34 @@ Diese Übungsreihe ist didaktisch aufbereitet und **1:1 mit dem offiziellen Lehr
 
 ---
 
-## 📁 Aufbau eines Kapitels
+## 🧪 Wie benutze ich die automatischen Tests?
 
-In jedem Kapitelordner findest du:
-1. **`index.html`**: Eine interaktive, schön gestaltete Webseite mit ausführlichen Erklärungen, Vollbeispielen und aufklappbaren Lösungshinweisen.
-2. **`README.md`**: Die Erklärung im Markdown-Format.
-3. **`aufgabe.py`**: Dein Arbeitsblatt! Hier steht der Starter-Code mit klaren `TODO`-Kommentaren.
-4. **`test_aufgabe.py`**: Automatische Tests, mit denen du deine Lösung jederzeit überprüfen kannst.
-5. **`musterloesung.py`**: Eine ausführlich kommentierte Beispiellösung.
+In jedem Kapitelordner liegt eine Datei namens `test_aufgabe.py`. Sie enthält automatische **Unit Tests**, die überprüfen, ob deine Lösung alle Anforderungen erfüllt.
 
----
+### 1. Einzelnes Kapitel testen
+Öffne das Terminal in VS Code (`Strg + \``) und führe den Test im jeweiligen Ordner aus:
+```bash
+# Beispiel für Kapitel 01:
+cd 01_einstieg_klassen
+python3 test_aufgabe.py
+```
 
-## 🚀 Wie du vorgehst
+### 2. Testausgabe richtig lesen:
+- ✅ **`OK`**: Perfekt! Alle Tests sind grün und bestanden. Du kannst mit dem nächsten Kapitel weitermachen.
+- ❌ **`FAIL` (AssertionError)**: Dein Code läuft, liefert aber einen falschen Wert zurück (z.B. Rechenfehler oder falsche Bedingung). Lies die letzte Zeile der Fehlermeldung!
+- 💥 **`ERROR` (Syntax / AttributeError)**: Dein Code hat einen Absturz (z.B. Tippfehler im Methodennamen oder `self` im Methodenkopf vergessen).
 
-1. Öffne den Ordner des aktuellen Kapitels (z.B. `07_referenzen_und_speicher`).
-2. Öffne die `index.html` im Browser oder lies die `README.md`.
-3. Öffne `aufgabe.py` und bearbeite die Aufgaben.
-4. Führe die Tests aus, um deine Lösung zu prüfen:
-   ```bash
-   python3 test_aufgabe.py
-   ```
-5. Wenn alle Tests mit einem grünen `OK` durchlaufen: **Herzlichen Glückwunsch!** Du bist bereit für das nächste Kapitel! 🏆
-
----
-
-## 💡 Gesamten Fortschritt prüfen
+### 3. Gesamten Fortschritt aller Kapitel prüfen:
+Führe im Hauptordner folgenden Befehl aus:
 ```bash
 python3 test_all.py
 ```
+Dieser Befehl zeigt dir eine Übersicht über alle Kapitel mit `✅` (bestanden) und `⏳` (noch offen).
+
+---
+
+## 💡 3 Wichtige Regeln für die Aufgaben
+
+1. **`return` statt `print()`:** Tests prüfen das, was eine Methode mit `return` zurückliefert. Ein reines `print()` genügt dem Test nicht!
+2. **Exakte Namen:** Die Namen der Methoden und Attribute müssen exakt der Aufgabenstellung entsprechen (`mutter_setzen`, nicht `MutterSetzen`).
+3. **Immer `self` als erster Methoden-Parameter:** Jede Methode in einer Klasse muss `def meine_methode(self, ...):` geschrieben werden.

@@ -12,7 +12,7 @@
     <div class="header-container">
       <div class="header-badge">🐍 Python Nachhilfe & Selbstlern-Kurs</div>
       <h1>Objektorientierte Programmierung (OOP)</h1>
-      <p>Lerne Schritt für Schritt, wie du eigene Klassen baust, Methoden nutzt und komplexe Programme strukturierst.</p>
+      <p>Lerne Schritt für Schritt, wie du eigene Klassen baust, Methoden nutzt und professionell mit automatischen Tests arbeitest.</p>
     </div>
   </header>
 
@@ -32,7 +32,7 @@
 
       <div class="box box-tipp">
         <div class="box-title">📚 Schulabgleich &amp; Lehrplan:</div>
-        Alle Kapitel sind 1:1 mit den Themen deines Informatik-Unterrichts (Type Hints, UML, Assoziationen, Referenzen, Vererbung, Tkinter) abgestimmt.
+        Alle Kapitel sind 1:1 mit den Themen deines Informatik-Unterrichts (Type Hints, UML, Assoziationen, Referenzen, Vererbung, Tkinter) abgestimmt. Ausführlicher Plan in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
       </div>
     </section>
 
@@ -172,32 +172,101 @@
       </div>
     </section>
 
-    <!-- Wie lerne ich Card -->
-    <section class="card" style="margin-top: 35px;">
-      <h2>🚀 Wie du vorgehst (Schritt-für-Schritt)</h2>
-      <ol style="margin-left: 20px; margin-bottom: 15px;">
-        <li style="margin-bottom: 8px;">Wähle das nächste offene Kapitel aus der Liste oben (starte mit Kapitel 00 zum Warm-up).</li>
-        <li style="margin-bottom: 8px;">Lies die Erklärungen und schau dir die vollständigen Codebeispiele an.</li>
-        <li style="margin-bottom: 8px;">Öffne die <code>aufgabe.py</code> im entsprechenden Kapitelordner und löse die Aufgaben.</li>
-        <li style="margin-bottom: 8px;">
-          Führe im Terminal den automatischen Test aus:
-          <div class="code-container" style="margin: 10px 0;">
-            <div class="code-header">
-              <span>Terminal</span>
-            </div>
-            <pre><code>python3 test_aufgabe.py</code></pre>
-          </div>
-        </li>
-        <li>Wenn alle Tests mit <strong>OK</strong> durchlaufen, hast du das Kapitel erfolgreich gemeistert! 🎉</li>
-      </ol>
+    <!-- AUSFÜHRLICHE TEST-ANLEITUNG -->
+    <section class="card" style="margin-top: 35px; border-left: 5px solid var(--primary);">
+      <h2>🧪 Wie benutze ich die Tests? (Komplette Test-Anleitung)</h2>
+
+      <p>
+        In der professionellen Softwareentwicklung schreibt man zu jedem Code automatische <strong>Unit Tests</strong>.
+        Das Geniale daran: <strong>Du musst nie raten, ob deine Lösung stimmt!</strong> Das Testskript überprüft deine Funktionen in Sekundenbruchteilen mit vielen verschiedenen Testfällen.
+      </p>
+
+      <h3>1. Einen Test für ein einzelnes Kapitel ausführen</h3>
+      <p>Öffne das Terminal in VS Code mit <kbd>Strg</kbd> + <kbd>`</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>`</kbd>). Wechsle in den jeweiligen Kapitelordner und starte das Testskript:</p>
+      
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal (Beispiel für Kapitel 01)</span>
+        </div>
+        <pre><code>cd 01_einstieg_klassen
+python3 test_aufgabe.py</code></pre>
+      </div>
+
+      <h3>2. Wie lese ich das Testergebnis?</h3>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 15px 0;">
+        
+        <div style="background: var(--success-light); border: 1px solid var(--success); border-radius: var(--radius-sm); padding: 14px;">
+          <h4 style="color: var(--success); margin-bottom: 6px;">✅ Alles bestanden (OK)</h4>
+          <pre style="padding: 6px; font-size: 0.82rem; background: rgba(0,0,0,0.05); color: #064e3b; border-radius: 4px;"><code>Ran 4 tests in 0.002s
+OK</code></pre>
+          <p style="font-size: 0.88rem; margin: 6px 0 0 0; color: #064e3b;">Perfekt! Alle Anforderungen sind erfüllt. Du bist bereit für das nächste Kapitel!</p>
+        </div>
+
+        <div style="background: var(--warning-light); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 14px;">
+          <h4 style="color: var(--warning); margin-bottom: 6px;">❌ Falsches Ergebnis (FAIL)</h4>
+          <pre style="padding: 6px; font-size: 0.82rem; background: rgba(0,0,0,0.05); color: #78350f; border-radius: 4px;"><code>AssertionError: 25 != 40
+berechne_endstand falsch</code></pre>
+          <p style="font-size: 0.88rem; margin: 6px 0 0 0; color: #78350f;">Dein Code stürzt nicht ab, aber liefert einen falschen Wert (z.B. falsche Rechenformel).</p>
+        </div>
+
+        <div style="background: var(--danger-light); border: 1px solid var(--danger); border-radius: var(--radius-sm); padding: 14px;">
+          <h4 style="color: var(--danger); margin-bottom: 6px;">💥 Absturz / Syntax (ERROR)</h4>
+          <pre style="padding: 6px; font-size: 0.82rem; background: rgba(0,0,0,0.05); color: #7f1d1d; border-radius: 4px;"><code>AttributeError: 'Fahrrad'
+object has no attribute 'gang'</code></pre>
+          <p style="font-size: 0.88rem; margin: 6px 0 0 0; color: #7f1d1d;">Ein Attribut oder Methodenname fehlt oder ist falsch geschrieben (z.B. Tippfehler).</p>
+        </div>
+
+      </div>
+
+      <h3>3. Gesamten Kursfortschritt auf einen Klick prüfen</h3>
+      <p>Du möchtest wissen, wie viele Kapitel du schon gelöst hast? Führe im Hauptordner <code>Aufgaben-Python</code> einfach folgenden Befehl aus:</p>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span>Terminal (Hauptordner)</span>
+        </div>
+        <pre><code>python3 test_all.py</code></pre>
+      </div>
 
       <div class="box box-tipp">
-        <div class="box-title">💡 Gesamten Fortschritt auf einen Blick prüfen:</div>
-        Du kannst jederzeit im Hauptordner folgenden Befehl ausführen, um zu sehen, wie viele Kapitel du schon gelöst hast:
-        <div class="code-container" style="margin: 8px 0 0 0;">
-          <pre><code>python3 test_all.py</code></pre>
-        </div>
+        <div class="box-title">💡 Die 3 goldenen Regeln beim Arbeiten mit Tests:</div>
+        <ol style="margin-left: 20px; margin-top: 6px;">
+          <li style="margin-bottom: 6px;"><strong>Immer <code>return</code> statt nur <code>print()</code>:</strong> Tests prüfen das, was eine Funktion mit <code>return</code> zurückliefert. Ein <code>print()</code> zeigt es zwar auf dem Bildschirm an, reicht dem Test aber nicht!</li>
+          <li style="margin-bottom: 6px;"><strong>Exakte Namen beachten:</strong> Wenn die Aufgabe <code>def mutter_setzen(self):</code> verlangt, darf die Methode nicht <code>def MutterSetzen</code> heißen (Python unterscheidet Groß- und Kleinschreibung).</li>
+          <li style="margin-bottom: 6px;"><strong>Fehlermeldungen von unten nach oben lesen:</strong> Ganz unten steht immer genau, was nicht gepasst hat!</li>
+        </ol>
       </div>
+    </section>
+
+    <!-- FAQ & Troubleshooting Card -->
+    <section class="card">
+      <h2>🩺 Häufige Fragen & Troubleshooting</h2>
+
+      <details>
+        <summary>❌ Fehlermeldung: <code>TypeError: ... takes 0 positional arguments but 1 was given</code></summary>
+        <div class="details-content">
+          <p><strong>Ursache:</strong> Du hast bei einer Methode in deiner Klasse das <code>self</code> im Methodenkopf vergessen!</p>
+          <p><strong>Lösung:</strong> Schreibe <code>def meine_methode(self):</code> statt <code>def meine_methode():</code>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>❌ Fehlermeldung: <code>AttributeError: 'NoneType' object has no attribute '...'</code></summary>
+        <div class="details-content">
+          <p><strong>Ursache:</strong> Eine Funktion oder Methode hat nichts zurückgegeben (also <code>None</code>), und du versuchst, darauf zuzugreifen.</p>
+          <p><strong>Lösung:</strong> Prüfe, ob du am Ende der Methode das <code>return ...</code> vergessen hast!</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>❌ Wie wechsle ich im Terminal zwischen den Ordnern hin und her?</summary>
+        <div class="details-content">
+          <p><strong>In einen Unterordner hinein:</strong> <code>cd 01_einstieg_klassen</code></p>
+          <p><strong>Einen Ordner nach oben zurück:</strong> <code>cd ..</code></p>
+          <p><strong>Inhalt des aktuellen Ordners auflisten:</strong> <code>ls</code> (oder <code>dir</code> auf Windows)</p>
+        </div>
+      </details>
     </section>
 
   </main>
