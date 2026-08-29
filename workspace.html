@@ -328,47 +328,19 @@
   <script src="assets/certificate.js"></script>
   <script src="assets/parsons.js"></script>
   <script src="assets/code_guard.js"></script>
+  <script src="assets/runners/runner_registry.js"></script>
+  <script src="assets/runners/python_runner.js"></script>
   <script src="assets/monaco_ide.js"></script>
 
   <script>
-    // Manifest aller Kapitel für sequentielle Navigation
-    const CHAPTERS_MANIFEST = [
-      { track: "lehrpfad_1_grundlagen", folder: "01_erste_schritte_taschenrechner", title: "G01. Taschenrechner" },
-      { track: "lehrpfad_1_grundlagen", folder: "02_variablen_und_datentypen", title: "G02. Variablen & Typen" },
-      { track: "lehrpfad_1_grundlagen", folder: "03_ein_und_ausgabe", title: "G03. Ein- & Ausgabe" },
-      { track: "lehrpfad_1_grundlagen", folder: "04_verzweigungen_und_bedingungen", title: "G04. Bedingungen" },
-      { track: "lehrpfad_1_grundlagen", folder: "05_schleifen_und_wiederholungen", title: "G05. Schleifen" },
-      { track: "lehrpfad_1_grundlagen", folder: "06_funktionen_und_module", title: "G06. Funktionen & Module" },
-      { track: "lehrpfad_1_grundlagen", folder: "07_listen_und_sequenzen", title: "G07. Listen" },
-      { track: "lehrpfad_1_grundlagen", folder: "08_textverarbeitung_und_strings", title: "G08. Strings" },
-      { track: "lehrpfad_1_grundlagen", folder: "09_dictionaries_und_sets", title: "G09. Dicts & Sets" },
-      { track: "lehrpfad_1_grundlagen", folder: "10_comprehensions_datum_algorithmen", title: "G10. Comprehensions" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "00_fehlersuche_und_grundlagen", title: "OOP 00. Debugging" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "01_einstieg_klassen", title: "OOP 01. Klassen" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "02_init_und_self", title: "OOP 02. Konstruktor" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "03_methoden_und_verhalten", title: "OOP 03. Methoden" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "04_str_und_darstellung", title: "OOP 04. __str__" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "04b_umstieg_vscode", title: "Tooling 04b. VS Code" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "04c_git_und_versionskontrolle", title: "Tooling 04c. Git" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "05_objekte_kombinieren", title: "OOP 05. Komposition" },
-      { track: "lehrpfad_2_oop_einstieg", folder: "06_abschlussprojekt_tamagotchi", title: "Projekt 06. Tamagotchi" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "07_referenzen_und_speicher", title: "Adv 07. Speicher" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "08_operator_overloading_dunder", title: "Adv 08. Dunder" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "09_eigene_unit_tests_schreiben", title: "Adv 09. TDD Tests" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "10_vererbung_und_super", title: "Adv 10. Vererbung" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "11_polymorphie_und_interfaces", title: "Adv 11. Polymorphie" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "12_exceptions_und_fehlerbehandlung", title: "Adv 12. Exceptions" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "13_persistenz_json_und_csv", title: "Adv 13. Persistenz" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "14_gui_mit_tkinter", title: "Adv 14. Tkinter" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "15_parameter_und_container", title: "Adv 15. Container" },
-      { track: "lehrpfad_3_fortgeschrittenes_oop", folder: "16_master_abschlussprojekt", title: "Master 16. Abschlussprojekt" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "17_regulaere_ausdruecke_re", title: "Pro 17. Regex & Text Mining" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "18_funktionale_programmierung_lambda", title: "Pro 18. Functional & Lambda" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "19_generatoren_und_itertools", title: "Pro 19. Generatoren & Itertools" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "20_dataclasses_und_typehints", title: "Pro 20. Dataclasses & Decorators" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "21_datenbanken_und_sqlite", title: "Pro 21. SQLite & Relationale DBs" },
-      { track: "lehrpfad_4_professional_data_engineering", folder: "22_web_apis_und_json_feeds", title: "Pro 22. REST APIs & JSON Feeds" }
-    ];
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get("course") || "python";
+    const trackFolder = urlParams.get("track") || "lehrpfad_1_grundlagen";
+    const chapterFolder = urlParams.get("chapter") || "01_erste_schritte_taschenrechner";
+    const chapterId = `${trackFolder}/${chapterFolder}`;
+
+    let CHAPTERS_MANIFEST = [];
+    let currentCourseManifest = null;
 
     function switchTab(tabId) {
       document.querySelectorAll(".pane-tab-btn").forEach(b => b.classList.remove("active"));
@@ -385,22 +357,45 @@
       if (el) el.style.display = el.style.display === "block" ? "none" : "block";
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const trackFolder = urlParams.get("track") || "lehrpfad_1_grundlagen";
-    const chapterFolder = urlParams.get("chapter") || "01_erste_schritte_taschenrechner";
-    const chapterId = `${trackFolder}/${chapterFolder}`;
-
-    // Nächstes Kapitel ermitteln
-    const currentIndex = CHAPTERS_MANIFEST.findIndex(c => c.folder === chapterFolder);
-    const nextChapter = (currentIndex >= 0 && currentIndex < CHAPTERS_MANIFEST.length - 1) ? CHAPTERS_MANIFEST[currentIndex + 1] : null;
-
-    document.getElementById("btn-next-chapter")?.addEventListener("click", () => {
-      if (nextChapter) {
-        window.location.href = `workspace.html?track=${nextChapter.track}&chapter=${nextChapter.folder}`;
-      } else {
-        window.location.href = "index.html#zertifikate";
+    async function loadCourseManifest() {
+      try {
+        const res = await fetch(`courses/${courseId}/course.json`);
+        if (res.ok) {
+          currentCourseManifest = await res.json();
+          const list = [];
+          (currentCourseManifest.tracks || []).forEach(tr => {
+            (tr.chapters || []).forEach(ch => {
+              list.push({
+                track: tr.id,
+                folder: ch.folder,
+                title: ch.title,
+                taskFile: ch.taskFile || "aufgabe.py",
+                testFile: ch.testFile || "test_aufgabe.py"
+              });
+            });
+          });
+          CHAPTERS_MANIFEST = list;
+        }
+      } catch (e) {
+        console.warn("Konnte course.json nicht laden, nutze Fallback-Manifest:", e);
       }
-    });
+    }
+
+    async function setupNextChapterButton() {
+      const currentIndex = CHAPTERS_MANIFEST.findIndex(c => c.folder === chapterFolder);
+      const nextChapter = (currentIndex >= 0 && currentIndex < CHAPTERS_MANIFEST.length - 1) ? CHAPTERS_MANIFEST[currentIndex + 1] : null;
+
+      const nextBtn = document.getElementById("btn-next-chapter");
+      if (nextBtn) {
+        nextBtn.onclick = () => {
+          if (nextChapter) {
+            window.location.href = `workspace.html?course=${courseId}&track=${nextChapter.track}&chapter=${nextChapter.folder}`;
+          } else {
+            window.location.href = "index.html#zertifikate";
+          }
+        };
+      }
+    }
 
     async function loadWorkspaceData() {
       try {
@@ -488,13 +483,17 @@
           document.getElementById("hints-modal-overlay").style.display = "flex";
         });
 
-        // 5. Monaco IDE initialisieren
+        await loadCourseManifest();
+        setupNextChapterButton();
+
+        // 5. Monaco IDE initialisieren mit modularer Sprache
+        const lang = currentCourseManifest ? (currentCourseManifest.language || "python") : "python";
         window.initWorkspace({
           chapterId: chapterId,
           starterCode: aufgabeCode,
           testCode: testCode,
           solutionCode: loesungCode
-        });
+        }, lang);
 
       } catch (err) {
         document.getElementById("tab-content-theorie").innerHTML = `<div class="box box-danger">Fehler beim Laden: ${err.message}</div>`;

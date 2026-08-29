@@ -1,20 +1,17 @@
 /**
- * ⚡ GEHÄRTETE MONACO WEB-IDE & PYODIDE RUNNER ENGINE ⚡
- * =====================================================
- * Interaktive Entwicklungsumgebung mit:
- * - Integriertem CODE_GUARD Sicherheits-Filter (Schadcode- & Exploit-Sperre)
- * - Monaco Editor (VS Code Engine mit Autocomplete & Syntax-Highlighting)
+ * ⚡ UNIVERSAL MODULAR MONACO WEB-IDE ⚡
+ * =======================================
+ * Sprachunabhängige Entwicklungsumgebung mit:
+ * - Dynamischer Monaco Editor Initialisierung (Python, JavaScript, SQL, Rust etc.)
+ * - Delegierung an pluggbare Language Runner via RunnerRegistry
  * - Tastatur-Shortcuts: Strg+Enter (Run), Strg+Shift+Enter (Test), Strg+S (Save)
- * - In-Browser Pyodide WebAssembly Python Runner (95% Client-Execution)
- * - Endlosschleifen-Timeout-Schutz (5000ms)
- * - Reaktivität mit Fehler-Dolmetscher & Gamification
+ * - Reaktives Terminal, Auto-Save & Gamification Integration
  */
 
 (function () {
   let monacoEditor = null;
-  let pyodideInstance = null;
-  let pyodideLoading = false;
   let currentChapterData = null;
+  let currentLanguage = "python";
   let autoSaveTimeout = null;
 
   function escapeHtml(text) {
@@ -27,13 +24,22 @@
       .replace(/'/g, "&#039;");
   }
 
-  // 1. Initialisiere Monaco Editor via CDN
-  function initMonacoEditor(initialCode = "") {
+  function getActiveRunner() {
+    if (window.RunnerRegistry) {
+      const runner = window.RunnerRegistry.get(currentLanguage);
+      if (runner) return runner;
+    }
+    return null;
+  }
+
+  // 1. Initialisiere Monaco Editor
+  function initMonacoEditor(initialCode = "", langId = "python") {
+    currentLanguage = langId;
     const editorContainer = document.getElementById("monaco-editor-container");
     if (!editorContainer) return;
 
     if (window.monaco) {
-      createMonacoInstance(initialCode);
+      createMonacoInstance(initialCode, langId);
       return;
     }
 
@@ -44,7 +50,7 @@
         paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs" }
       });
       window.require(["vs/editor/editor.main"], () => {
-        createMonacoInstance(initialCode);
+        createMonacoInstance(initialCode, langId);
       });
     };
     loaderScript.onerror = () => {
@@ -53,14 +59,17 @@
     document.head.appendChild(loaderScript);
   }
 
-  function createMonacoInstance(initialCode) {
+  function createMonacoInstance(initialCode, langId) {
     const editorContainer = document.getElementById("monaco-editor-container");
     if (!editorContainer) return;
     editorContainer.innerHTML = "";
 
+    const runner = getActiveRunner();
+    const monacoLang = runner ? runner.monacoLanguage : langId;
+
     monacoEditor = window.monaco.editor.create(editorContainer, {
       value: initialCode,
-      language: "python",
+      language: monacoLang,
       theme: "vs-dark",
       fontSize: 14,
       fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
@@ -95,88 +104,29 @@
     }
   });
 
-  // 2. Pyodide WebAssembly Initialisierung mit Sandbox-Bootstrap
-  async function getPyodide() {
-    if (pyodideInstance) return pyodideInstance;
-    if (pyodideLoading) {
-      while (pyodideLoading) {
-        await new Promise((r) => setTimeout(r, 100));
-      }
-      return pyodideInstance;
-    }
-
-    pyodideLoading = true;
-    logToTerminal("⏳ Initialisiere geschützte Python Sandbox Engine... Bitte kurz warten.\n", "info");
-
-    try {
-      if (!window.loadPyodide) {
-        await new Promise((resolve, reject) => {
-          const script = document.createElement("script");
-          script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
-        });
-      }
-
-      pyodideInstance = await window.loadPyodide({
-        stdout: (text) => logToTerminal(text + "\n", "stdout"),
-        stderr: (text) => logToTerminal(text + "\n", "stderr")
-      });
-
-      // Sandbox-Härtung im Pyodide-Interpreter aktivieren
-      if (window.CODE_GUARD && window.CODE_GUARD.getSandboxBootstrap) {
-        await pyodideInstance.runPythonAsync(window.CODE_GUARD.getSandboxBootstrap());
-      }
-
-      logToTerminal("✅ Geschützte Python WebAssembly Sandbox bereitgestellt!\n\n", "success");
-    } catch (err) {
-      logToTerminal(`❌ Fehler beim Laden der Sandbox: ${err.message}\n`, "error");
-    } finally {
-      pyodideLoading = false;
-    }
-    return pyodideInstance;
-  }
-
-  // 3. Code-Ausführung mit Sicherheitsprüfung & Timeout
+  // 2. Code-Ausführung via aktivem Language-Runner
   async function runCode() {
     const code = getEditorCode();
     clearTerminal();
 
-    // Layer 1: Code-Guard Sicherheits-Prüfung
-    if (window.CODE_GUARD) {
-      const check = window.CODE_GUARD.validate(code);
-      if (!check.safe) {
-        logToTerminal(`\n${check.error}\n\n`, "error");
-        return;
-      }
+    const runner = getActiveRunner();
+    if (!runner) {
+      logToTerminal(`❌ Kein Language-Runner für '${currentLanguage}' registriert.\n`, "error");
+      return;
     }
 
-    logToTerminal("▶ Starte Python-Skript (Strg+Enter)...\n----------------------------------------\n", "info");
+    logToTerminal(`▶ Starte Ausführung mit ${runner.displayName} (Strg+Enter)...\n----------------------------------------\n`, "info");
 
-    const py = await getPyodide();
-    if (!py) return;
+    const result = await runner.runCode(code, logToTerminal);
 
-    try {
-      let timeoutHandle;
-      const timeoutPromise = new Promise((_, reject) => {
-        timeoutHandle = setTimeout(() => {
-          reject(new Error("Zeitüberschreitung: Dein Code lief länger als 5 Sekunden (Endlosschleife vermutet)."));
-        }, 5000);
-      });
-
-      const execPromise = py.runPythonAsync(code);
-      await Promise.race([execPromise, timeoutPromise]);
-      clearTimeout(timeoutHandle);
-
-      logToTerminal("\n----------------------------------------\n✨ Skript erfolgreich ausgeführt!\n", "success");
-    } catch (err) {
-      logToTerminal(`\n❌ Ausführungsfehler:\n${err.message}\n`, "error");
-      suggestErrorInterpreter(err.message);
+    if (result.success) {
+      logToTerminal("\n----------------------------------------\n✨ Erfolgreich ausgeführt!\n", "success");
+    } else if (result.error) {
+      suggestErrorInterpreter(result.error);
     }
   }
 
-  // 4. Unittest-Ausführung mit Sicherheitsprüfung
+  // 3. Test-Ausführung via aktivem Language-Runner
   async function runTests() {
     if (!currentChapterData || !currentChapterData.testCode) {
       logToTerminal("❌ Keine Unittests für dieses Kapitel gefunden.\n", "error");
@@ -186,78 +136,29 @@
     const userCode = getEditorCode();
     clearTerminal();
 
-    // Layer 1: Code-Guard Sicherheits-Prüfung
-    if (window.CODE_GUARD) {
-      const check = window.CODE_GUARD.validate(userCode);
-      if (!check.safe) {
-        logToTerminal(`\n${check.error}\n\n`, "error");
-        return;
-      }
+    const runner = getActiveRunner();
+    if (!runner) {
+      logToTerminal(`❌ Kein Test-Runner für '${currentLanguage}' verfügbar.\n`, "error");
+      return;
     }
 
-    logToTerminal("🧪 Führe automatisierte Unittests aus (Strg+Shift+Enter)...\n----------------------------------------\n", "info");
+    logToTerminal(`🧪 Führe automatisierte Tests aus (Strg+Shift+Enter)...\n----------------------------------------\n`, "info");
 
-    const py = await getPyodide();
-    if (!py) return;
+    const result = await runner.runTests(userCode, currentChapterData.testCode, logToTerminal);
 
-    try {
-      py.FS.writeFile("aufgabe.py", userCode);
-
-      const testRunnerScript = `
-import unittest, io, sys
-from unittest import TextTestRunner
-
-for mod in list(sys.modules.keys()):
-    if mod in ('aufgabe', 'test_aufgabe'):
-        del sys.modules[mod]
-
-import aufgabe
-
-${currentChapterData.testCode}
-
-suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
-stream = io.StringIO()
-runner = TextTestRunner(stream=stream, verbosity=2)
-result = runner.run(suite)
-
-output_text = stream.getvalue()
-success = result.wasSuccessful()
-total_runs = result.testsRun
-failures = len(result.failures)
-errors = len(result.errors)
-(success, total_runs, failures, errors, output_text)
-`;
-
-      let timeoutHandle;
-      const timeoutPromise = new Promise((_, reject) => {
-        timeoutHandle = setTimeout(() => {
-          reject(new Error("Zeitüberschreitung: Unittest lief länger als 6 Sekunden."));
-        }, 6000);
-      });
-
-      const [isSuccess, totalRuns, fails, errs, outputText] = await Promise.race([
-        py.runPythonAsync(testRunnerScript),
-        timeoutPromise
-      ]);
-      clearTimeout(timeoutHandle);
-
-      logToTerminal(outputText + "\n", "stdout");
-
-      if (isSuccess) {
-        logToTerminal(`\n🎉 HERVORRAGEND! Alle ${totalRuns} Tests erfolgreich bestanden! (+100 XP)\n`, "success");
-        triggerSuccessCelebration();
-        recordChapterSolved();
-      } else {
-        logToTerminal(`\n⚠️ ${fails + errs} von ${totalRuns} Tests fehlgeschlagen. Überarbeite deinen Code!\n`, "warning");
-        suggestErrorInterpreter(outputText);
+    if (result.success) {
+      logToTerminal(`\n🎉 HERVORRAGEND! Alle ${result.total || 'erforderlichen'} Tests erfolgreich bestanden! (+100 XP)\n`, "success");
+      triggerSuccessCelebration();
+      recordChapterSolved();
+    } else {
+      logToTerminal(`\n⚠️ ${result.failures || 1} Tests fehlgeschlagen. Überarbeite deinen Code!\n`, "warning");
+      if (result.rawOutput) {
+        suggestErrorInterpreter(result.rawOutput);
       }
-    } catch (err) {
-      logToTerminal(`\n❌ Fehler beim Ausführen der Testsuite:\n${err.message}\n`, "error");
-      suggestErrorInterpreter(err.message);
     }
   }
 
-  // 5. Hilfsfunktionen
+  // 4. Hilfsfunktionen
   function getEditorCode() {
     if (monacoEditor) {
       return monacoEditor.getValue();
@@ -378,14 +279,15 @@ errors = len(result.errors)
     }
   }
 
-  // 6. Init Workspace Controller
-  window.initWorkspace = function (chapterData) {
+  // 5. Init Workspace Controller
+  window.initWorkspace = function (chapterData, language = "python") {
     currentChapterData = chapterData;
+    currentLanguage = language || "python";
 
     const savedDraft = localStorage.getItem(`code_draft_${chapterData.chapterId}`);
     const initialCode = savedDraft || chapterData.starterCode || "";
 
-    initMonacoEditor(initialCode);
+    initMonacoEditor(initialCode, currentLanguage);
 
     document.getElementById("btn-run-code")?.addEventListener("click", runCode);
     document.getElementById("btn-run-tests")?.addEventListener("click", runTests);

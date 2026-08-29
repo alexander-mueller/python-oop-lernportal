@@ -1,0 +1,77 @@
+{
+  "id": "python",
+  "title": "Python Software Engineering",
+  "language": "python",
+  "icon": "🐍",
+  "runner": "python",
+  "description": "Vom Einsteiger über professionelle Objektorientierung bis hin zu Data Engineering und Desktop-Apps in 33 Modulen.",
+  "tracks": [
+    {
+      "id": "lehrpfad_1_grundlagen",
+      "title": "🌱 Lehrpfad 1: Grundlagen der Programmierung",
+      "description": "Zahlen, Variablen, Bedingungen, Schleifen, Funktionen, Listen, Strings, Dicts & Sets.",
+      "certificateKey": "lehrpfad_1",
+      "chapters": [
+        { "folder": "01_erste_schritte_taschenrechner", "title": "G01: Python als Taschenrechner", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "02_variablen_und_datentypen", "title": "G02: Variablen & Datentypen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "03_ein_und_ausgabe", "title": "G03: Interaktive Ein- & Ausgabe", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "04_verzweigungen_und_bedingungen", "title": "G04: Verzweigungen & Bedingungen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "05_schleifen_und_wiederholungen", "title": "G05: Schleifen & Wiederholungen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "06_funktionen_und_module", "title": "G06: Eigene Funktionen & Module", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "07_listen_und_sequenzen", "title": "G07: Listen & Sequenzen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "08_textverarbeitung_und_strings", "title": "G08: Textverarbeitung & Strings", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "09_dictionaries_und_sets", "title": "G09: Dictionaries & Sets", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "10_comprehensions_datum_algorithmen", "title": "G10: Comprehensions & Algorithmen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" }
+      ]
+    },
+    {
+      "id": "lehrpfad_2_oop_einstieg",
+      "title": "🏗️ Lehrpfad 2: Einstieg in die Objektorientierung (OOP)",
+      "description": "Klassen, Konstruktor, self, Methoden, Tools (VS Code & Git) und Tamagotchi-Projekt.",
+      "certificateKey": "lehrpfad_2",
+      "chapters": [
+        { "folder": "00_fehlersuche_und_grundlagen", "title": "OOP 00: Python-Fehlersuche", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "01_einstieg_klassen", "title": "OOP 01: Erste Klassen & Instanzen", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "02_init_und_self", "title": "OOP 02: Konstruktor __init__ & self", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "03_methoden_und_verhalten", "title": "OOP 03: Methoden & Verhalten", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "04_str_und_darstellung", "title": "OOP 04: __str__ & String-Darstellung", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "04b_umstieg_vscode", "title": "Tooling 04b: Umstieg auf VS Code", "taskFile": "vscode_test.py", "testFile": "" },
+        { "folder": "04c_git_und_versionskontrolle", "title": "Tooling 04c: Git & Versionskontrolle", "taskFile": "git_uebung.py", "testFile": "" },
+        { "folder": "05_objekte_kombinieren", "title": "OOP 05: Objekte kombinieren", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "06_abschlussprojekt_tamagotchi", "title": "Projekt 06: Virtuelles Haustier (Tamagotchi)", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" }
+      ]
+    },
+    {
+      "id": "lehrpfad_3_fortgeschrittenes_oop",
+      "title": "🚀 Lehrpfad 3: Fortgeschrittenes OOP & GUIs",
+      "description": "Speicher-Referenzen, Dunder-Methoden, TDD, Vererbung, Polymorphie, Exceptions, JSON/CSV, Tkinter & Masterprojekt.",
+      "certificateKey": "lehrpfad_3",
+      "chapters": [
+        { "folder": "07_referenzen_und_speicher", "title": "Adv 07: Referenzen & Speicher", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "08_operator_overloading_dunder", "title": "Adv 08: Operator Overloading & Dunder", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "09_eigene_unit_tests_schreiben", "title": "Adv 09: Eigene Unit Tests & TDD", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "10_vererbung_und_super", "title": "Adv 10: Vererbung & super()", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "11_polymorphie_und_interfaces", "title": "Adv 11: Polymorphie & Interfaces", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "12_exceptions_und_fehlerbehandlung", "title": "Adv 12: Exceptions & Fehlerbehandlung", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "13_persistenz_json_und_csv", "title": "Adv 13: Datei-Persistenz (JSON & CSV)", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "14_gui_mit_tkinter", "title": "Adv 14: Desktop-GUIs mit Tkinter", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "15_parameter_und_container", "title": "Adv 15: Parameter & Eigene Container", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "16_master_abschlussprojekt", "title": "Master 16: Master-Abschlussprojekt", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" }
+      ]
+    },
+    {
+      "id": "lehrpfad_4_professional_data_engineering",
+      "title": "🌟 Lehrpfad 4: Python Professional & Data Engineering",
+      "description": "Reguläre Ausdrücke (re), funktionale Idiome, Generatoren, Dataclasses, Type Hints, SQLite & REST-APIs.",
+      "certificateKey": "lehrpfad_4",
+      "chapters": [
+        { "folder": "17_regulaere_ausdruecke_re", "title": "Pro 17: Reguläre Ausdrücke (re)", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "18_funktionale_programmierung_lambda", "title": "Pro 18: Funktionale Programmierung (lambda)", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "19_generatoren_und_itertools", "title": "Pro 19: Generatoren & itertools (yield)", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "20_dataclasses_und_typehints", "title": "Pro 20: Dataclasses & Type Hints", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "21_datenbanken_und_sqlite", "title": "Pro 21: Relationale Datenbanken & SQLite", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" },
+        { "folder": "22_web_apis_und_json_feeds", "title": "Pro 22: Web-APIs & JSON-Feeds", "taskFile": "aufgabe.py", "testFile": "test_aufgabe.py" }
+      ]
+    }
+  ]
+}
