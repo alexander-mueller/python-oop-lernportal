@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lehrer-Dashboard | Klassen &amp; Lernfortschritt</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .class-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .class-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .invite-code-box {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+    .student-table th, .student-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    .student-table th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">🐍</div>
+          <div>
+            <div class="sidebar-title">Python Portal</div>
+            <div class="sidebar-subtitle">Lehrerbereich</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-quick-nav">
+        <a href="index.html" class="sidebar-link">🏠 Schüler-Dashboard</a>
+        <a href="teacher.html" class="sidebar-link active">👨‍🏫 Klassenverwaltung</a>
+        <a href="index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">👨‍🏫 Dozenten- &amp; Lehrer-Portal</div>
+          <h1>Klassenverwaltung &amp; Lernfortschritts-Matrix</h1>
+          <p>Behalte den Überblick über deine Klassen, lade Schüler per Code ein und verfolge gelöste Aufgaben in Echtzeit.</p>
+        </div>
+      </header>
+
+      <main class="container">
+
+        <!-- Neue Klasse erstellen -->
+        <section class="card">
+          <h2>✨ Neue Schulklasse / Kursgruppe anlegen</h2>
+          <form id="create-class-form" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px;">
+            <input type="text" id="input-class-name" required placeholder="Klassenname (z.B. Informatik 10a 2026/27)" style="flex: 1; min-width: 260px; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.95rem;">
+            <button type="submit" class="btn" style="padding: 10px 20px;">➕ Klasse erstellen</button>
+          </form>
+        </section>
+
+        <!-- Vorhandene Klassen -->
+        <section>
+          <div class="section-header">
+            <h2>📚 Deine aktiven Klassen</h2>
+          </div>
+
+          <div id="classrooms-list-container">
+            <div class="card" style="text-align: center; color: var(--text-muted); padding: 40px;">
+              Lade Klassenräume...
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="assets/app_auth.js"></script>
+  <script>
+    async function loadClassrooms() {
+      const container = document.getElementById("classrooms-list-container");
+      const token = localStorage.getItem("auth_token");
+
+      if (!token) {
+        container.innerHTML = `
+          <div class="card" style="text-align: center; padding: 30px;">
+            <p>Du musst als <strong>Lehrkraft</strong> angemeldet sein, um Klassen zu verwalten.</p>
+            <button class="btn" onclick="window.openAuthModal('login')">🔑 Als Lehrer anmelden</button>
+          </div>
+        `;
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/classrooms/list", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const classrooms = data.classrooms || [];
+
+        if (classrooms.length === 0) {
+          container.innerHTML = `
+            <div class="card" style="text-align: center; padding: 30px; color: var(--text-muted);">
+              Noch keine Klassen angelegt. Erstelle oben deine erste Klasse!
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = classrooms.map(cl => `
+          <div class="class-card">
+            <div class="class-header">
+              <div>
+                <h3 style="margin: 0 0 4px 0; color: var(--text-main); font-size: 1.25rem;">${cl.name}</h3>
+                <span style="font-size: 0.85rem; color: var(--text-muted);">${cl.student_count || 0} Schüler eingeschrieben</span>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px;">EINLADUNGSCODE:</div>
+                <div class="invite-code-box">${cl.invite_code}</div>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem; margin-top: 10px;" onclick="loadClassMatrix(${cl.id}, '${cl.name}')">📊 Lernmatrix &amp; Fortschritt anzeigen</button>
+            <div id="matrix-container-${cl.id}" style="display: none; margin-top: 14px;"></div>
+          </div>
+        `).join("");
+
+      } catch (err) {
+        container.innerHTML = `<div class="box box-danger">Fehler beim Laden: ${err.message}</div>`;
+      }
+    }
+
+    async function loadClassMatrix(classId, className) {
+      const target = document.getElementById(`matrix-container-${classId}`);
+      if (target.style.display === "block") {
+        target.style.display = "none";
+        return;
+      }
+
+      target.style.display = "block";
+      target.innerHTML = "Lade Schüler-Fortschritt...";
+
+      const token = localStorage.getItem("auth_token");
+      try {
+        const res = await fetch(`/api/classrooms/matrix?classroom_id=${classId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const matrix = data.matrix || [];
+
+        if (matrix.length === 0) {
+          target.innerHTML = "<p style='color: var(--text-muted); font-size: 0.88rem;'>Noch keine Schüler in dieser Klasse beigetreten.</p>";
+          return;
+        }
+
+        target.innerHTML = `
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Schüler</th>
+                <th>Level</th>
+                <th>XP</th>
+                <th>Streak</th>
+                <th>Gelöste Kapitel</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${matrix.map(m => `
+                <tr>
+                  <td><strong>${m.student.name}</strong><br><span style="font-size: 0.75rem; color: #64748b;">${m.student.email}</span></td>
+                  <td>⭐ Level ${m.student.level}</td>
+                  <td><span style="font-weight: 700; color: #0284c7;">${m.student.xp} XP</span></td>
+                  <td>🔥 ${m.student.streak_days} Tage</td>
+                  <td><span style="background: #ecfdf5; color: #059669; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.8rem;">${Object.values(m.solved_chapters).filter(Boolean).length} / 27</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      } catch (e) {
+        target.innerHTML = `<span style="color: var(--danger);">Fehler: ${e.message}</span>`;
+      }
+    }
+
+    document.getElementById("create-class-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("input-class-name").value.trim();
+      const token = localStorage.getItem("auth_token");
+
+      if (!token) {
+        window.openAuthModal("login");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/classrooms/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ name })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Fehler beim Erstellen");
+
+        alert(`Klasse '${name}' mit Einladungscode '${data.classroom.invite_code}' erstellt! 🎉`);
+        document.getElementById("input-class-name").value = "";
+        loadClassrooms();
+      } catch (err) {
+        alert("Fehler: " + err.message);
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", loadClassrooms);
+  </script>
+</body>
+</html>

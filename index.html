@@ -9,7 +9,7 @@
 <body>
 
   <div class="app-layout">
-    <aside class="app-sidebar">
+<aside class="app-sidebar">
       <div class="sidebar-header">
         <a href="./index.html" class="sidebar-brand-link">
           <div class="sidebar-logo">🐍</div>
@@ -176,121 +176,129 @@
         </div>
       </div>
     </aside>
-
     <div class="app-main">
+
       <header>
-      <div class="header-container">
-        <div class="header-badge">🐍 Python Nachhilfe- &amp; Selbstlern-Portal</div>
-        <h1>Vom Einsteiger zum Software-Entwickler</h1>
-        <p>3 didaktisch strukturierte Lehrpfade: Prozedurale Grundlagen &bull; Objektorientierung &bull; Professionelle Werkzeuge (Git, TDD, Tkinter, Persistenz)</p>
-        
-        <nav class="nav-links" style="margin-top: 18px;">
-          <a href="#tutorial">📖 Anleitung &amp; Workflow</a>
-          <a href="#lehrpfad-1">🌱 1. Grundlagen</a>
-          <a href="#lehrpfad-2">🏗️ 2. OOP Einstieg</a>
-          <a href="#lehrpfad-3">🚀 3. Fortgeschritten</a>
-          <a href="#python-live-playground">⚡ Live-Playground</a>
-          <a href="#error-interpreter-widget">🩺 Fehler-Dolmetscher</a>
-          <a href="#zertifikate">🏆 Zertifikate</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="container">
-
-      <!-- Willkommen Card -->
-      <section class="card">
-        <h2>👋 Willkommen zu deiner Python-Lernreise!</h2>
-        <p>
-          Dieses interaktive Portal begleitet dich Schritt für Schritt von den allerersten Zeilen Code bis hin zu vollständigen, objektorientierten Desktop-Anwendungen. Jede Einheit bietet didaktische Alltagsanalogien, Subgoal-Schritte und <strong>automatische Unittests</strong> für sofortiges Feedback.
-        </p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0;">
-          <div style="background: #f8fafc; border-left: 4px solid #059669; padding: 14px; border-radius: var(--radius-sm);">
-            <span class="track-badge track-1-badge">Lehrpfad 1</span>
-            <h4 style="margin: 4px 0; color: #065f46;">🌱 Grundlagen der Programmierung</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Rechnen, Variablen, Bedingungen, Schleifen, Funktionen, Listen, Dictionaries &amp; Strings (G01–G10).</p>
+        <div class="header-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div class="header-badge">🐍 Python Online-Lernplattform &amp; Web-IDE</div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span id="nav-auth-user" style="display: none; font-size: 0.85rem; font-weight: 700; color: white;"></span>
+              <button type="button" class="btn" id="nav-btn-login" style="padding: 5px 12px; font-size: 0.8rem; background: rgba(255,255,255,0.15);" onclick="window.openAuthModal('login')">🔑 Anmelden</button>
+              <button type="button" class="btn" id="nav-btn-register" style="padding: 5px 12px; font-size: 0.8rem; background: var(--primary);" onclick="window.openAuthModal('register')">Konto erstellen</button>
+              <a href="teacher.html" class="btn" id="nav-teacher-link" style="padding: 5px 12px; font-size: 0.8rem; background: #059669; display: none;">👨‍🏫 Lehrerbereich</a>
+            </div>
           </div>
-          <div style="background: #f8fafc; border-left: 4px solid #4f46e5; padding: 14px; border-radius: var(--radius-sm);">
-            <span class="track-badge track-2-badge">Lehrpfad 2</span>
-            <h4 style="margin: 4px 0; color: #312e81;">🏗️ Einstieg in OOP &amp; Tools</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Klassen, __init__, Methoden, UML-Diagramme, VS Code, Git-Versionskontrolle &amp; Tamagotchi (00–06).</p>
-          </div>
-          <div style="background: #f8fafc; border-left: 4px solid #7c3aed; padding: 14px; border-radius: var(--radius-sm);">
-            <span class="track-badge track-3-badge">Lehrpfad 3</span>
-            <h4 style="margin: 4px 0; color: #4c1d95;">🚀 Fortgeschrittenes OOP &amp; GUIs</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Speicher, Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</p>
-          </div>
-        </div>
-
-        <div class="box box-tipp">
-          <div class="box-title">📚 Lehrplan-Abstimmung:</div>
-          Alle Einheiten sind exakt auf das offizielle Unterrichtsskriptum abgestimmt. Detaillierter Leitfaden in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
-        </div>
-      </section>
-
-      <!-- 📖 Schritt-für-Schritt Tutorial -->
-      <section class="card" id="tutorial" style="border-left: 4px solid var(--primary);">
-        <h2>📖 Schritt-für-Schritt-Tutorial: So lernst du mit dem Portal</h2>
-        <p>
-          Dieses Portal basiert auf dem <strong>PRIMM-Modell</strong> der Informatikdidaktik (Predict &bull; Read &bull; Investigate &bull; Modify &bull; Make):
-        </p>
-
-        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 18px;">
+          <h1>Vom Einsteiger zum Software-Entwickler</h1>
+          <p>3 didaktisch strukturierte Lehrpfade mit integrierter **Monaco Web-IDE**, In-Browser Python-Runner (Pyodide), Aufgaben-Checklisten &amp; persistentem Entwickler-Pass.</p>
           
-          <div style="display: flex; gap: 14px; align-items: flex-start;">
-            <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
-            <div>
-              <h4 style="margin: 0 0 4px 0; color: var(--text-main);">📥 Lokal nutzen oder online lernen</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Du kannst das Repository lokal klonen (<code>git clone https://github.com/alexander-mueller/python-oop-lernportal.git</code>) oder die Seiten direkt offline per Doppelklick auf <code>index.html</code> öffnen.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 14px; align-items: flex-start;">
-            <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
-            <div>
-              <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🧩 Kapitel lesen &amp; Parsons-Puzzle lösen (+25 XP)</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Lies die Alltagsanalogie im Kapitel-Guide und bringe die durcheinandergeratenen Code-Zeilen im interaktiven Puzzle per Klick in die richtige Reihenfolge.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 14px; align-items: flex-start;">
-            <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
-            <div>
-              <h4 style="margin: 0 0 4px 0; color: var(--text-main);">💻 Startercode lösen &amp; Tests ausführen (+100 XP)</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Öffne <code>aufgabe.py</code> im Editor, bearbeite die nummerierten Teilziele und teste deine Lösung im Terminal mit <code>python3 test_aufgabe.py</code>.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 14px; align-items: flex-start;">
-            <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">4</div>
-            <div>
-              <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🩺 Hilfe bei Fehlern</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Kopiere rote Traceback-Fehlermeldungen aus dem Terminal in den untenstehenden <strong>Fehler-Dolmetscher</strong>, um verständliche Lösungsschritte auf Deutsch zu erhalten.</p>
-            </div>
-          </div>
-
+          <nav class="nav-links" style="margin-top: 18px;">
+            <a href="#tutorial">📖 Anleitung &amp; Workflow</a>
+            <a href="#lehrpfad-1">🌱 1. Grundlagen</a>
+            <a href="#lehrpfad-2">🏗️ 2. OOP Einstieg</a>
+            <a href="#lehrpfad-3">🚀 3. Fortgeschritten</a>
+            <a href="#python-live-playground">⚡ Live-Playground</a>
+            <a href="#error-interpreter-widget">🩺 Fehler-Dolmetscher</a>
+            <a href="#zertifikate">🏆 Zertifikate</a>
+          </nav>
         </div>
-      </section>
+      </header>
 
-      <!-- 🔍 Live-Suche -->
-      <div class="search-bar-container">
-        <span style="font-size: 1.1rem;">🔍</span>
-        <input type="text" id="portal-search-input" class="search-input" placeholder="Kapitel oder Thema durchsuchen (z.B. Schleifen, Klassen, Git, Tkinter, Dunder, Exceptions)...">
-        <span id="search-results-count" style="font-size: 0.8rem; font-weight: 700; color: var(--primary); display: none;"></span>
-      </div>
+      <main class="container">
 
-      <!-- LEHRPFAD 1 -->
-      <section>
-        <div class="section-header">
-          <div>
-            <h2 id="lehrpfad-1">🌱 Lehrpfad 1: Grundlagen der Programmierung</h2>
-            <div class="section-desc">Datentypen, Kontrollstrukturen, Funktionen und Datenstrukturen (G01–G10).</div>
+        <!-- Willkommen Card -->
+        <section class="card">
+          <h2>👋 Willkommen zu deiner Python-Lernreise!</h2>
+          <p>
+            Dieses Portal begleitet dich Schritt für Schritt von den ersten Schritten in Python bis hin zu vollständigen Desktop-Apps. Du kannst jedes Kapitel direkt in der <strong>integrierten Monaco Web-IDE</strong> im Browser programmieren und mit 1 Klick gegen automatische Tests prüfen!
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0;">
+            <div style="background: #f8fafc; border-left: 4px solid #059669; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge track-1-badge">Lehrpfad 1</span>
+              <h4 style="margin: 4px 0; color: #065f46;">🌱 Grundlagen der Programmierung</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Rechnen, Variablen, Bedingungen, Schleifen, Funktionen, Listen, Dictionaries &amp; Strings (G01–G10).</p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #4f46e5; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge track-2-badge">Lehrpfad 2</span>
+              <h4 style="margin: 4px 0; color: #312e81;">🏗️ Einstieg in OOP &amp; Tools</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Klassen, __init__, Methoden, UML-Diagramme, VS Code, Git-Versionskontrolle &amp; Tamagotchi (00–06).</p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #7c3aed; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge track-3-badge">Lehrpfad 3</span>
+              <h4 style="margin: 4px 0; color: #4c1d95;">🚀 Fortgeschrittenes OOP &amp; GUIs</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Speicher, Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</p>
+            </div>
           </div>
-          <span class="track-badge track-1-badge">10 Kapitel</span>
+
+          <div class="box box-tipp">
+            <div class="box-title">📚 Lehrplan-Abstimmung:</div>
+            Alle Einheiten sind exakt auf das offizielle Unterrichtsskriptum abgestimmt. Detaillierter Leitfaden in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
+          </div>
+        </section>
+
+        <!-- 📖 Schritt-für-Schritt Tutorial -->
+        <section class="card" id="tutorial" style="border-left: 4px solid var(--primary);">
+          <h2>📖 Schritt-für-Schritt-Tutorial: So lernst du mit der Online-Plattform</h2>
+          <p>
+            Dieses Portal basiert auf dem <strong>PRIMM-Modell</strong> der Informatikdidaktik:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 18px;">
+            
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
+              <div>
+                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">💻 In Web-IDE öffnen</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Klicke bei jedem Kapitel auf <strong>'In Web-IDE öffnen'</strong>, um den Monaco Code-Editor mit Startercode und Teilzielen direkt im Browser zu starten.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
+              <div>
+                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🧩 Parsons-Puzzle lösen (+25 XP)</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Bringe im Tab 'Puzzle' die durcheinandergeratenen Code-Zeilen in die richtige Reihenfolge, um ein intuitives Verständnis des Codes aufzubauen.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
+              <div>
+                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🧪 Tests im Browser ausführen (+100 XP)</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Klicke oben auf <strong>'🧪 Tests starten'</strong>. Die Python WebAssembly-Engine prüft deinen Code sofort und vergibt bei Erfolg XP und Trophäen.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">4</div>
+              <div>
+                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🩺 Hilfe bei Fehlern &amp; Auto-Save</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Dein Code wird automatisch in deinem Konto gespeichert. Tritt ein Fehler auf, erhältst du im Fehler-Dolmetscher sofort eine verständliche Erklärung auf Deutsch.</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 🔍 Live-Suche -->
+        <div class="search-bar-container">
+          <span style="font-size: 1.1rem;">🔍</span>
+          <input type="text" id="portal-search-input" class="search-input" placeholder="Kapitel oder Thema durchsuchen (z.B. Schleifen, Klassen, Git, Tkinter, Dunder, Exceptions)...">
+          <span id="search-results-count" style="font-size: 0.8rem; font-weight: 700; color: var(--primary); display: none;"></span>
         </div>
-        <div class="roadmap-grid">
-          
+
+        <!-- LEHRPFAD 1 -->
+        <section>
+          <div class="section-header">
+            <div>
+              <h2 id="lehrpfad-1">🌱 Lehrpfad 1: Grundlagen der Programmierung</h2>
+              <div class="section-desc">Datentypen, Kontrollstrukturen, Funktionen und Datenstrukturen (G01–G10).</div>
+            </div>
+            <span class="track-badge track-1-badge">10 Kapitel</span>
+          </div>
+          <div class="roadmap-grid">
+            
         <div class="roadmap-card" style="border-left: 4px solid #059669;">
           <div>
             <span class="roadmap-number" style="background: #05966918; color: #059669;">G01</span>
@@ -298,7 +306,8 @@
             <div class="roadmap-desc">Zahlen (<code>int</code>, <code>float</code>), Grundrechenarten, Ganzzahldivision <code>//</code>, Modulo <code>%</code>, Potenzen <code>**</code> & print().</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=01_erste_schritte_taschenrechner" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/aufgabe.py" download>📄 aufgabe.py</a>
@@ -314,7 +323,8 @@
             <div class="roadmap-desc">Typen (<code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>), Typumwandlung (Casting) & Vermeidung typischer Typfehler.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=02_variablen_und_datentypen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -330,7 +340,8 @@
             <div class="roadmap-desc">Tastatureingaben mit <code>input()</code>, Textformatierung mit modernen f-Strings und Parametern.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=03_ein_und_ausgabe" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/aufgabe.py" download>📄 aufgabe.py</a>
@@ -346,7 +357,8 @@
             <div class="roadmap-desc">Entscheidungen treffen mit <code>if</code>, <code>elif</code>, <code>else</code>, Vergleichsoperatoren & logischen Verknüpfungen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=04_verzweigungen_und_bedingungen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -362,7 +374,8 @@
             <div class="roadmap-desc">Zählschleifen <code>for ... in range()</code>, Bedingungsschleifen <code>while</code>, <code>break</code> & <code>continue</code>.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=05_schleifen_und_wiederholungen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -378,7 +391,8 @@
             <div class="roadmap-desc">Eigene Funktionen definieren mit <code>def</code>, <code>return</code>, Default-Parameter und Importe (<code>math</code>, <code>random</code>).</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=06_funktionen_und_module" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/aufgabe.py" download>📄 aufgabe.py</a>
@@ -394,7 +408,8 @@
             <div class="roadmap-desc">Listen erstellen, Indexzugriff <code>[0]</code>, Slicing <code>[1:4]</code>, Methoden (<code>append</code>, <code>pop</code>) & Schleifen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=07_listen_und_sequenzen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -410,7 +425,8 @@
             <div class="roadmap-desc">String-Methoden (<code>split</code>, <code>join</code>, <code>strip</code>, <code>replace</code>), Groß/Klein und Zeichenanalysen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=08_textverarbeitung_und_strings" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/aufgabe.py" download>📄 aufgabe.py</a>
@@ -426,7 +442,8 @@
             <div class="roadmap-desc">Schlüssel-Wert-Paare <code>dict</code>, sicherer Zugriff mit <code>.get()</code>, eindeutige Mengen <code>set</code> & Operationen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=09_dictionaries_und_sets" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/aufgabe.py" download>📄 aufgabe.py</a>
@@ -442,7 +459,8 @@
             <div class="roadmap-desc">Kompakte List-Comprehensions, Datumsberechnungen mit <code>datetime</code> & grundlegende Algorithmen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="card-primary-btn" style="background: #059669;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=10_comprehensions_datum_algorithmen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -451,20 +469,20 @@
               </div>
           </div>
         </div>
-        </div>
-      </section>
-
-      <!-- LEHRPFAD 2 -->
-      <section>
-        <div class="section-header">
-          <div>
-            <h2 id="lehrpfad-2">🏗️ Lehrpfad 2: Einstieg in OOP &amp; Entwickler-Tools</h2>
-            <div class="section-desc">Klassen, Konstruktoren, Methoden, Komposition, VS Code, Git &amp; Tamagotchi (00–06).</div>
           </div>
-          <span class="track-badge track-2-badge">9 Module</span>
-        </div>
-        <div class="roadmap-grid">
-          
+        </section>
+
+        <!-- LEHRPFAD 2 -->
+        <section>
+          <div class="section-header">
+            <div>
+              <h2 id="lehrpfad-2">🏗️ Lehrpfad 2: Einstieg in OOP &amp; Entwickler-Tools</h2>
+              <div class="section-desc">Klassen, Konstruktoren, Methoden, Komposition, VS Code, Git &amp; Tamagotchi (00–06).</div>
+            </div>
+            <span class="track-badge track-2-badge">9 Module</span>
+          </div>
+          <div class="roadmap-grid">
+            
         <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
           <div>
             <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 00</span>
@@ -472,7 +490,8 @@
             <div class="roadmap-desc">Typische Syntax-, Type- und Index-Fehler verstehen, Fehlermeldungen lesen und gezielt beheben.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=00_fehlersuche_und_grundlagen" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -488,7 +507,8 @@
             <div class="roadmap-desc">Objektorientierung verstehen: Vom Bauplan zum fertigen Objekt (Instanz) im Speicher.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=01_einstieg_klassen" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/aufgabe.py" download>📄 aufgabe.py</a>
@@ -504,7 +524,8 @@
             <div class="roadmap-desc">Objekte initialisieren, Instanzvariablen mit <code>self</code> anlegen und Parameter übergeben.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=02_init_und_self" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/02_init_und_self/aufgabe.py" download>📄 aufgabe.py</a>
@@ -520,7 +541,8 @@
             <div class="roadmap-desc">Objekten Fähigkeiten begeben: Methoden definieren, Zustand verändern und Werte berechnen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=03_methoden_und_verhalten" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/aufgabe.py" download>📄 aufgabe.py</a>
@@ -536,7 +558,8 @@
             <div class="roadmap-desc">Magische Dunder-Methode <code>__str__</code> für saubere Textausgaben beim Drucken mit <code>print()</code>.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04_str_und_darstellung" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/aufgabe.py" download>📄 aufgabe.py</a>
@@ -552,7 +575,8 @@
             <div class="roadmap-desc">Vom Schul-IDLE zu einer modernen Entwicklerumgebung: Installation, Python-Extension & Terminal.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04b_umstieg_vscode" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/vscode_test.py" download>💻 vscode_test.py</a>
@@ -567,7 +591,8 @@
             <div class="roadmap-desc">Versionskontrolle: Commits, Branches, Status und kollaboratives Arbeiten im Terminal.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04c_git_und_versionskontrolle" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/git_uebung.py" download>🌿 git_uebung.py</a>
@@ -582,7 +607,8 @@
             <div class="roadmap-desc">Klassen interagieren lassen: Eine Playlist besitzt mehrere Songs, ein Warenkorb mehrere Artikel.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=05_objekte_kombinieren" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/aufgabe.py" download>📄 aufgabe.py</a>
@@ -598,7 +624,8 @@
             <div class="roadmap-desc">Das große interaktive Terminal-Haustier: Hunger, Energie, Glück, Schlafen, Füttern & Spielen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="card-primary-btn" style="background: #4f46e5;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=06_abschlussprojekt_tamagotchi" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/aufgabe.py" download>📄 aufgabe.py</a>
@@ -607,20 +634,20 @@
               </div>
           </div>
         </div>
-        </div>
-      </section>
-
-      <!-- LEHRPFAD 3 -->
-      <section>
-        <div class="section-header">
-          <div>
-            <h2 id="lehrpfad-3">🚀 Lehrpfad 3: Fortgeschrittenes OOP &amp; GUIs</h2>
-            <div class="section-desc">Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</div>
           </div>
-          <span class="track-badge track-3-badge">10 Module</span>
-        </div>
-        <div class="roadmap-grid">
-          
+        </section>
+
+        <!-- LEHRPFAD 3 -->
+        <section>
+          <div class="section-header">
+            <div>
+              <h2 id="lehrpfad-3">🚀 Lehrpfad 3: Fortgeschrittenes OOP &amp; GUIs</h2>
+              <div class="section-desc">Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</div>
+            </div>
+            <span class="track-badge track-3-badge">10 Module</span>
+          </div>
+          <div class="roadmap-grid">
+            
         <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
           <div>
             <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 07</span>
@@ -628,7 +655,8 @@
             <div class="roadmap-desc">Veränderliche vs. unveränderliche Datentypen, <code>is</code> vs. <code>==</code>, flache und tiefe Kopien.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=07_referenzen_und_speicher" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/aufgabe.py" download>📄 aufgabe.py</a>
@@ -644,7 +672,8 @@
             <div class="roadmap-desc">Klassen rechen- und vergleichbar machen mit <code>__add__</code>, <code>__eq__</code>, <code>__len__</code>.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=08_operator_overloading_dunder" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/aufgabe.py" download>📄 aufgabe.py</a>
@@ -660,7 +689,8 @@
             <div class="roadmap-desc">Software-Qualität sichern: Eigene Testsuiten mit <code>unittest</code> schreiben (Test-Driven Development).</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=09_eigene_unit_tests_schreiben" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/aufgabe.py" download>📄 aufgabe.py</a>
@@ -676,7 +706,8 @@
             <div class="roadmap-desc">Code wiederverwenden nach dem DRY-Prinzip: Basisklassen und abgeleitete Kindklassen.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=10_vererbung_und_super" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/aufgabe.py" download>📄 aufgabe.py</a>
@@ -692,7 +723,8 @@
             <div class="roadmap-desc">Vielgestaltigkeit: Gleiche Methodennamen bei unterschiedlichen Klassen (Duck Typing).</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=11_polymorphie_und_interfaces" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/aufgabe.py" download>📄 aufgabe.py</a>
@@ -708,7 +740,8 @@
             <div class="roadmap-desc">Fehler abfangen mit <code>try/except/finally</code> und eigene Exception-Klassen definieren.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=12_exceptions_und_fehlerbehandlung" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/aufgabe.py" download>📄 aufgabe.py</a>
@@ -724,7 +757,8 @@
             <div class="roadmap-desc">Daten dauerhaft speichern und laden: Savegames, Konfigurationen und Tabellen-Export.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=13_persistenz_json_und_csv" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/aufgabe.py" download>📄 aufgabe.py</a>
@@ -740,7 +774,8 @@
             <div class="roadmap-desc">Grafische Benutzeroberflächen: Fenster, Buttons, Eingabefelder und Event-Handler.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=14_gui_mit_tkinter" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/aufgabe.py" download>📄 aufgabe.py</a>
@@ -756,7 +791,8 @@
             <div class="roadmap-desc">Variable Argumente, Unpacking und eigene Container-Klassen mit <code>__getitem__</code>.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=15_parameter_und_container" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/aufgabe.py" download>📄 aufgabe.py</a>
@@ -772,7 +808,8 @@
             <div class="roadmap-desc">Die Königsdisziplin: Eine vollständige Desktop-App mit MVC, Persistenz, Tests und GUI.</div>
           </div>
           <div class="card-actions">
-            <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="card-primary-btn" style="background: #7c3aed;">📖 Kapitel öffnen &rarr;</a>
+            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=16_master_abschlussprojekt" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
             
               <div class="card-sublinks">
                 <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/aufgabe.py" download>📄 aufgabe.py</a>
@@ -781,70 +818,70 @@
               </div>
           </div>
         </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <!-- 🎮 Gamification Dashboard -->
-      <section class="hud-card" id="gamification-hud">
-        <div class="hud-header">
-          <div class="hud-user">
-            <div class="hud-avatar" id="hud-avatar-icon">🐣</div>
-            <div>
-              <div class="hud-name" id="hud-user-name">Entwickler-Pass</div>
-              <div class="hud-title"><span id="hud-user-title">Code-Küken</span> &bull; <span class="hud-rank" id="hud-user-rank">Rang: Bronze</span></div>
+        <!-- 🎮 Gamification Dashboard -->
+        <section class="hud-card" id="gamification-hud">
+          <div class="hud-header">
+            <div class="hud-user">
+              <div class="hud-avatar" id="hud-avatar-icon">🐣</div>
+              <div>
+                <div class="hud-name" id="hud-user-name">Entwickler-Pass</div>
+                <div class="hud-title"><span id="hud-user-title">Code-Küken</span> &bull; <span class="hud-rank" id="hud-user-rank">Rang: Bronze</span></div>
+              </div>
+            </div>
+            <div class="hud-stats">
+              <div class="hud-stat-box">
+                <span class="hud-stat-value" id="hud-stat-level">1</span>
+                <span class="hud-stat-label">Level</span>
+              </div>
+              <div class="hud-stat-box">
+                <span class="hud-stat-value" id="hud-stat-xp">0 XP</span>
+                <span class="hud-stat-label">Erfahrung</span>
+              </div>
+              <div class="hud-stat-box">
+                <span class="hud-stat-value" id="hud-stat-solved">0 / 27</span>
+                <span class="hud-stat-label">Gelöst</span>
+              </div>
+              <div class="hud-stat-box">
+                <span class="hud-stat-value" id="hud-stat-streak">🔥 1 Tag</span>
+                <span class="hud-stat-label">Streak</span>
+              </div>
             </div>
           </div>
-          <div class="hud-stats">
-            <div class="hud-stat-box">
-              <span class="hud-stat-value" id="hud-stat-level">1</span>
-              <span class="hud-stat-label">Level</span>
-            </div>
-            <div class="hud-stat-box">
-              <span class="hud-stat-value" id="hud-stat-xp">0 XP</span>
-              <span class="hud-stat-label">Erfahrung</span>
-            </div>
-            <div class="hud-stat-box">
-              <span class="hud-stat-value" id="hud-stat-solved">0 / 27</span>
-              <span class="hud-stat-label">Gelöst</span>
-            </div>
-            <div class="hud-stat-box">
-              <span class="hud-stat-value" id="hud-stat-streak">🔥 1 Tag</span>
-              <span class="hud-stat-label">Streak</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="hud-progress-container">
-          <div class="hud-progress-labels">
-            <span>Fortschritt zum nächsten Level</span>
-            <span id="hud-progress-text">0 / 100 XP</span>
+          <div class="hud-progress-container">
+            <div class="hud-progress-labels">
+              <span>Fortschritt zum nächsten Level</span>
+              <span id="hud-progress-text">0 / 100 XP</span>
+            </div>
+            <div class="hud-progress-bar-bg">
+              <div class="hud-progress-bar-fill" id="hud-progress-bar" style="width: 0%;"></div>
+            </div>
           </div>
-          <div class="hud-progress-bar-bg">
-            <div class="hud-progress-bar-fill" id="hud-progress-bar" style="width: 0%;"></div>
-          </div>
-        </div>
 
-        <div class="hud-footer">
-          <div class="hud-cli-tip">
-            💻 Terminal-Befehl: <code>python3 profil.py</code> &bull; Gesamttest: <code>python3 test_all.py</code>
+          <div class="hud-footer">
+            <div class="hud-cli-tip">
+              💻 Terminal-Befehl: <code>python3 profil.py</code> &bull; Gesamttest: <code>python3 test_all.py</code>
+            </div>
+            <button type="button" class="hud-btn" onclick="if(window.renderGamificationHUD) window.renderGamificationHUD();">
+              🔄 Status aktualisieren
+            </button>
           </div>
-          <button type="button" class="hud-btn" onclick="if(window.renderGamificationHUD) window.renderGamificationHUD();">
-            🔄 Status aktualisieren
-          </button>
-        </div>
-      </section>
+        </section>
 
-      <!-- ⚡ Live Python Playground -->
-      <section class="card" id="python-live-playground">
-        <h2>⚡ Interaktiver Python Live-Playground (Pyodide WebAssembly)</h2>
-        <p>Führe beliebigen Python-Code direkt im Browser aus – ohne Installation!</p>
-        
-        <div class="code-container">
-          <div class="code-header">
-            <span>🐍 Python Code-Editor</span>
-            <button type="button" class="btn" id="btn-run-code" style="padding: 4px 12px; font-size: 0.8rem;">▶ Code ausführen</button>
-          </div>
-          <textarea id="playground-editor" style="width: 100%; height: 160px; background: #0b0f19; color: #f8fafc; font-family: var(--font-mono); font-size: 0.95rem; border: none; padding: 14px; outline: none; resize: vertical;"># Schreibe hier deinen Python-Code:
+        <!-- ⚡ Live Python Playground -->
+        <section class="card" id="python-live-playground">
+          <h2>⚡ Interaktiver Python Live-Playground (Pyodide WebAssembly)</h2>
+          <p>Führe beliebigen Python-Code direkt im Browser aus – ohne Installation!</p>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span>🐍 Python Code-Editor</span>
+              <button type="button" class="btn" id="btn-run-code" style="padding: 4px 12px; font-size: 0.8rem;">▶ Code ausführen</button>
+            </div>
+            <textarea id="playground-editor" style="width: 100%; height: 160px; background: #0b0f19; color: #f8fafc; font-family: var(--font-mono); font-size: 0.95rem; border: none; padding: 14px; outline: none; resize: vertical;"># Schreibe hier deinen Python-Code:
 class Auto:
     def __init__(self, marke, ps):
         self.marke = marke
@@ -856,44 +893,44 @@ class Auto:
 mein_auto = Auto("Porsche 911", 450)
 print(mein_auto.hupen())
 </textarea>
-        </div>
+          </div>
 
-        <div style="background: #060911; border-radius: var(--radius-sm); border: 1px solid var(--border-color); padding: 14px; margin-top: 10px;">
-          <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🖥️ Programmausgabe (Terminal):</div>
-          <pre id="playground-output" style="color: #38bdf8; min-height: 50px;">Klicke oben auf '▶ Code ausführen', um das Skript zu starten...</pre>
-        </div>
-      </section>
+          <div style="background: #060911; border-radius: var(--radius-sm); border: 1px solid var(--border-color); padding: 14px; margin-top: 10px;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🖥️ Programmausgabe (Terminal):</div>
+            <pre id="playground-output" style="color: #38bdf8; min-height: 50px;">Klicke oben auf '▶ Code ausführen', um das Skript zu starten...</pre>
+          </div>
+        </section>
 
-      <!-- 🩺 Fehler-Dolmetscher -->
-      <section class="card" id="error-interpreter-widget">
-        <h2>🩺 Interaktiver Python Fehler-Dolmetscher</h2>
-        <p>Füge eine englische Fehlermeldung (Traceback) aus dem Terminal ein:</p>
-        
-        <textarea id="error-input" placeholder="Beispiel: TypeError: unsupported operand type(s) for +: 'int' and 'str'" style="width: 100%; height: 90px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 10px;"></textarea>
-        <button type="button" class="btn" id="btn-interpret-error">🔍 Fehler übersetzen &amp; erklären</button>
+        <!-- 🩺 Fehler-Dolmetscher -->
+        <section class="card" id="error-interpreter-widget">
+          <h2>🩺 Interaktiver Python Fehler-Dolmetscher</h2>
+          <p>Füge eine englische Fehlermeldung (Traceback) aus dem Terminal ein:</p>
+          
+          <textarea id="error-input" placeholder="Beispiel: TypeError: unsupported operand type(s) for +: 'int' and 'str'" style="width: 100%; height: 90px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 10px;"></textarea>
+          <button type="button" class="btn" id="btn-interpret-error">🔍 Fehler übersetzen &amp; erklären</button>
 
-        <div id="error-result" style="display: none; margin-top: 15px; padding: 15px; border-radius: var(--radius-sm); background: #f0fdf4; border: 1px solid #bbf7d0;">
-          <h4 id="error-name" style="margin-top: 0; color: #166534;"></h4>
-          <p id="error-explanation" style="color: #1e293b; margin: 8px 0;"></p>
-          <div style="font-weight: 700; color: #166534; margin-top: 8px;">🛠️ So behebst du das Problem:</div>
-          <ul id="error-fixes" style="padding-left: 20px; color: #334155; margin-top: 4px;"></ul>
-        </div>
-      </section>
+          <div id="error-result" style="display: none; margin-top: 15px; padding: 15px; border-radius: var(--radius-sm); background: #f0fdf4; border: 1px solid #bbf7d0;">
+            <h4 id="error-name" style="margin-top: 0; color: #166534;"></h4>
+            <p id="error-explanation" style="color: #1e293b; margin: 8px 0;"></p>
+            <div style="font-weight: 700; color: #166534; margin-top: 8px;">🛠️ So behebst du das Problem:</div>
+            <ul id="error-fixes" style="padding-left: 20px; color: #334155; margin-top: 4px;"></ul>
+          </div>
+        </section>
 
-      <!-- 🏆 Zertifikate -->
-      <section class="card" id="zertifikate">
-        <h2>🏆 Lehrpfad-Abschluss-Zertifikate</h2>
-        <p>Generiere offizielle, druckbare Zertifikate nach erfolgreichem Abschluss eines Lehrpfads:</p>
+        <!-- 🏆 Zertifikate -->
+        <section class="card" id="zertifikate">
+          <h2>🏆 Lehrpfad-Abschluss-Zertifikate</h2>
+          <p>Generiere offizielle, druckbare Zertifikate nach erfolgreichem Abschluss eines Lehrpfads:</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
-          <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_1');">📜 Zertifikat Lehrpfad 1</button>
-          <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_2');">📜 Zertifikat Lehrpfad 2</button>
-          <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_3');">📜 Zertifikat Lehrpfad 3</button>
-          <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('master');">👑 Master-Zertifikat</button>
-        </div>
-      </section>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
+            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_1');">📜 Zertifikat Lehrpfad 1</button>
+            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_2');">📜 Zertifikat Lehrpfad 2</button>
+            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_3');">📜 Zertifikat Lehrpfad 3</button>
+            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('master');">👑 Master-Zertifikat</button>
+          </div>
+        </section>
 
-    </main>
+      </main>
     </div>
   </div>
 
@@ -908,6 +945,7 @@ print(mein_auto.hupen())
   <script src="assets/parsons.js"></script>
   <script src="assets/runner.js"></script>
   <script src="assets/ui_enhancements.js"></script>
+  <script src="assets/app_auth.js"></script>
   <script src="assets/sidebar.js"></script>
 </body>
 </html>
