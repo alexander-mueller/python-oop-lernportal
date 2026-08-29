@@ -40,7 +40,7 @@ def berechne_gesamtsumme(*zahlen: float, rabatt_prozent: float = 0.0) -> float:
         berechne_gesamtsumme() -> 0.0
     """
     # ==========================================================================
-    # TODO 1: Implementiere berechne_gesamtsumme
+    # 🎯 TEILZIEL 1 (TODO 1): Implementiere berechne_gesamtsumme
     # 1. Validiere rabatt_prozent: Liegt der Wert nicht zwischen 0.0 und 100.0,
     #    löse einen ValueError mit passender Nachricht aus.
     # 2. Summiere alle Werte in `zahlen` (wenn zahlen leer ist, ist die Summe 0.0).
@@ -68,7 +68,7 @@ def erstelle_profil(name: str, **details: Any) -> Dict[str, Any]:
         -> {"name": "Aragorn", "klasse": "Waldlaeufer", "level": 20}
     """
     # ==========================================================================
-    # TODO 2: Implementiere erstelle_profil
+    # 🎯 TEILZIEL 2 (TODO 2): Implementiere erstelle_profil
     # 1. Erstelle ein Dictionary mit {"name": str(name)}.
     # 2. Füge alle Schlüssel-Wert-Paare aus `details` hinzu.
     # 3. Gib das fertige Dictionary zurück.
@@ -98,7 +98,7 @@ class Gegenstand:
             ValueError: Falls gewicht < 0 oder wert < 0 ist.
         """
         # ==========================================================================
-        # TODO 3: Implementiere Gegenstand.__init__, __repr__, __str__ und __eq__
+        # 🎯 TEILZIEL 3 (TODO 3): Implementiere Gegenstand.__init__, __repr__, __str__ und __eq__
         # 1. Validiere gewicht >= 0 und wert >= 0 (sonst ValueError).
         # 2. Setze self.name = str(name), self.gewicht = float(gewicht), self.wert = int(wert).
         # ==========================================================================
@@ -145,7 +145,7 @@ class Inventar:
             ValueError: Falls max_gewicht <= 0 oder die Start-Gegenstände das Maximalgewicht überschreiten.
         """
         # ==========================================================================
-        # TODO 4: Inventar-Initialisierung
+        # 🎯 TEILZIEL 4 (TODO 4): Inventar-Initialisierung
         # 1. Validiere max_gewicht > 0 (sonst ValueError).
         # 2. Speichere self.max_gewicht = float(max_gewicht).
         # 3. Initialisiere eine interne Liste self._items = [].
@@ -187,7 +187,7 @@ class Inventar:
                         das Maximalgewicht des Inventars überschreiten würde.
         """
         # ==========================================================================
-        # TODO 6: hinzufuegen mit *args
+        # 🎯 TEILZIEL 6 (TODO 6): hinzufuegen mit *args
         # 1. Prüfe für jedes item in `items`, ob es eine Instanz von Gegenstand ist (sonst TypeError).
         # 2. Berechne das Zusatzgewicht aller neuen Gegenstände.
         # 3. Wenn self.gesamtgewicht + zusatz_gewicht > self.max_gewicht:
@@ -201,7 +201,7 @@ class Inventar:
         Ermöglicht len(inventar) -> Gibt die Anzahl der Gegenstände zurück.
         """
         # ==========================================================================
-        # TODO 7: __len__
+        # 🎯 TEILZIEL 7 (TODO 7): __len__
         # ==========================================================================
         pass
 
@@ -217,7 +217,7 @@ class Inventar:
             TypeError: Falls key weder int noch str ist.
         """
         # ==========================================================================
-        # TODO 8: __getitem__ (Multi-Type Lookup: int und str)
+        # 🎯 TEILZIEL 8 (TODO 8): __getitem__ (Multi-Type Lookup: int und str)
         # 1. Wenn isinstance(key, int): gib self._items[key] zurück.
         # 2. Wenn isinstance(key, str): suche den ersten Gegenstand mit passendem Namen
         #    (Vergleich mit g.name.lower() == key.lower()). Wenn gefunden, zurückgeben.
@@ -236,7 +236,7 @@ class Inventar:
             ValueError: Falls durch den Austausch das Maximalgewicht überschritten würde.
         """
         # ==========================================================================
-        # TODO 9: __setitem__
+        # 🎯 TEILZIEL 9 (TODO 9): __setitem__
         # 1. Prüfe Typen (index muss int sein, value muss Gegenstand sein, sonst TypeError).
         # 2. Prüfe Indexgrenzen: -len(self._items) <= index < len(self._items) (sonst IndexError).
         # 3. Berechne neues Gesamtgewicht: gesamtgewicht - altes_item.gewicht + value.gewicht.
@@ -257,7 +257,7 @@ class Inventar:
             TypeError: Falls key weder int noch str ist.
         """
         # ==========================================================================
-        # TODO 10: __delitem__
+        # 🎯 TEILZIEL 10 (TODO 10): __delitem__
         # 1. Wenn int: del self._items[key].
         # 2. Wenn str: suche erstes Element mit passendem Namen (case-insensitive) und entferne es.
         #    Falls nicht vorhanden -> KeyError.
@@ -272,7 +272,7 @@ class Inventar:
         - gegenstand_objekt in inventar -> True/False (Objekt-Prüfung)
         """
         # ==========================================================================
-        # TODO 11: __contains__
+        # 🎯 TEILZIEL 11 (TODO 11): __contains__
         # 1. Wenn str: prüfe, ob ein Gegenstand mit diesem Namen existiert (case-insensitive).
         # 2. Wenn Gegenstand: prüfe `item in self._items`.
         # 3. Andernfalls gebe False zurück.
@@ -284,7 +284,7 @@ class Inventar:
         Ermöglicht Iteration: for item in inventar: ...
         """
         # ==========================================================================
-        # TODO 12: __iter__
+        # 🎯 TEILZIEL 12 (TODO 12): __iter__
         # Gib einen Iterator über self._items zurück (z.B. iter(self._items)).
         # ==========================================================================
         pass
@@ -308,7 +308,7 @@ def packe_inventar(*gegenstaende: Gegenstand, max_gewicht: float = 20.0) -> Inve
     Demonstriert Argument-Unpacking und flexible Parameter.
     """
     # ==========================================================================
-    # TODO 13: packe_inventar
+    # 🎯 TEILZIEL 13 (TODO 13): packe_inventar
     # 1. Erstelle ein Inventar mit `max_gewicht=max_gewicht`.
     # 2. Füge alle `gegenstaende` mit inv.hinzufuegen(*gegenstaende) hinzu.
     # 3. Gib das befüllte Inventar zurück.

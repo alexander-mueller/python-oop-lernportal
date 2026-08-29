@@ -16,7 +16,7 @@ from typing import List, Dict, Set
 
 
 # ==============================================================================
-# TODO 1: Wörter-Häufigkeitszähler
+# 🎯 TEILZIEL 1 (TODO 1): Wörter-Häufigkeitszähler
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'woerter_haeufigkeit(text: str) -> dict[str, int]'.
 #
@@ -34,12 +34,13 @@ from typing import List, Dict, Set
 
 def woerter_haeufigkeit(text: str) -> Dict[str, int]:
     """Zählt die Häufigkeit aller Wörter in einem gegebenen Text (case-insensitive)."""
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Telefonbuch-Suche mit .get()
+# 🎯 TEILZIEL 2 (TODO 2): Telefonbuch-Suche mit .get()
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'telefonbuch_suche(telefonbuch: dict[str, str], name: str) -> str'.
 #
@@ -58,12 +59,13 @@ def woerter_haeufigkeit(text: str) -> Dict[str, int]:
 
 def telefonbuch_suche(telefonbuch: Dict[str, str], name: str) -> str:
     """Sucht eine Telefonnummer im Telefonbuch mit sicherer .get() Abfrage."""
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Gemeinsame Interessen (Mengenoperation Schnittmenge)
+# 🎯 TEILZIEL 3 (TODO 3): Gemeinsame Interessen (Mengenoperation Schnittmenge)
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'gemeinsame_interessen(person_a_hobbys: set, person_b_hobbys: set) -> set'.
 #
@@ -81,12 +83,13 @@ def telefonbuch_suche(telefonbuch: Dict[str, str], name: str) -> str:
 
 def gemeinsame_interessen(person_a_hobbys: Set[str], person_b_hobbys: Set[str]) -> Set[str]:
     """Ermittelt die Schnittmenge der Hobbys zweier Personen."""
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Duplikate entfernen & Reihenfolge beibehalten
+# 🎯 TEILZIEL 4 (TODO 4): Duplikate entfernen & Reihenfolge beibehalten
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'entferne_duplikate_behalte_reihenfolge(liste: list) -> list'.
 #
@@ -105,7 +108,8 @@ def gemeinsame_interessen(person_a_hobbys: Set[str], person_b_hobbys: Set[str]) 
 
 def entferne_duplikate_behalte_reihenfolge(liste: list) -> list:
     """Entfernt Duplikate aus einer Liste unter Beibehaltung der Reihenfolge."""
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

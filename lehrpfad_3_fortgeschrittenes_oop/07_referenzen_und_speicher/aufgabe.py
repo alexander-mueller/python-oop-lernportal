@@ -10,7 +10,7 @@ from typing import Optional, List
 
 class Person:
     # ==========================================================================
-    # TODO 1: Konstruktor __init__
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__
     # Parameter: name (str), geburtsjahr (int)
     # Attribute:
     #   - self.name: str
@@ -23,7 +23,7 @@ class Person:
         pass
 
     # ==========================================================================
-    # TODO 2: Methode mutter_setzen(self, mutter: 'Person') -> None
+    # 🎯 TEILZIEL 2 (TODO 2): Methode mutter_setzen(self, mutter: 'Person') -> None
     # 1. Setze self.mutter = mutter
     # 2. Füge self zur Liste mutter.kinder hinzu (falls self noch nicht drin ist)
     # ==========================================================================
@@ -31,7 +31,7 @@ class Person:
         pass
 
     # ==========================================================================
-    # TODO 3: Methode vater_setzen(self, vater: 'Person') -> None
+    # 🎯 TEILZIEL 3 (TODO 3): Methode vater_setzen(self, vater: 'Person') -> None
     # 1. Setze self.vater = vater
     # 2. Füge self zur Liste vater.kinder hinzu (falls self noch nicht drin ist)
     # ==========================================================================
@@ -39,7 +39,7 @@ class Person:
         pass
 
     # ==========================================================================
-    # TODO 4: Methode geschwister(self) -> list['Person']
+    # 🎯 TEILZIEL 4 (TODO 4): Methode geschwister(self) -> list['Person']
     # Gibt eine Liste aller Personen zurück, die dieselbe Mutter ODER denselben
     # Vater haben wie self.
     # WICHTIG:
@@ -50,7 +50,7 @@ class Person:
         pass
 
     # ==========================================================================
-    # TODO 5: Methode grosseltern(self) -> list['Person']
+    # 🎯 TEILZIEL 5 (TODO 5): Methode grosseltern(self) -> list['Person']
     # Gibt eine Liste aller bekannten Großeltern zurück:
     # (Mutter der Mutter, Vater der Mutter, Mutter des Vaters, Vater des Vaters)
     # Nur Großeltern hinzufügen, die nicht None sind!
@@ -59,7 +59,7 @@ class Person:
         pass
 
     # ==========================================================================
-    # TODO 6: Dunder-Methode __str__(self) -> str
+    # 🎯 TEILZIEL 6 (TODO 6): Dunder-Methode __str__(self) -> str
     # Gibt einen String im Format: "Name (*Geburtsjahr)" zurück.
     # Beispiel: "Mia (*2008)"
     # ==========================================================================

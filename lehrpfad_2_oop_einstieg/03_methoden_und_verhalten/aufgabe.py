@@ -7,7 +7,7 @@ In dieser Aufgabe programmierst du eine Klasse 'Held' für ein Rollenspiel.
 
 class Held:
     # ==========================================================================
-    # TODO 1: Konstruktor __init__(self, name, leben=100, angriffskraft=15)
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__(self, name, leben=100, angriffskraft=15)
     #
     # Speichere die folgenden Attribute an self:
     # - self.name = name
@@ -17,11 +17,12 @@ class Held:
     # - self.ist_am_leben = True
     # ==========================================================================
     def __init__(self, name, leben=100, angriffskraft=15):
-        # Schreibe hier deinen Code für TODO 1:
+        # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 2: Methode "schaden_erleiden(self, schaden)"
+    # 🎯 TEILZIEL 2 (TODO 2): Methode "schaden_erleiden(self, schaden)"
     #
     # Schritt-für-Schritt:
     # 1. Wenn der Held schon tot ist (not self.ist_am_leben) oder schaden <= 0:
@@ -33,11 +34,12 @@ class Held:
     # 4. Gib den erlittenen Schaden zurück (z.B. return schaden).
     # ==========================================================================
     def schaden_erleiden(self, schaden):
-        # Schreibe hier deinen Code für TODO 2:
+        # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 3: Methode "heilen(self, heilung)"
+    # 🎯 TEILZIEL 3 (TODO 3): Methode "heilen(self, heilung)"
     #
     # Schritt-für-Schritt:
     # 1. Wenn der Held tot ist (not self.ist_am_leben) oder heilung <= 0:
@@ -50,11 +52,12 @@ class Held:
     # 5. Gib tatsaechlich_geheilt zurück.
     # ==========================================================================
     def heilen(self, heilung):
-        # Schreibe hier deinen Code für TODO 3:
+        # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 4: Methode "angreifen(self, gegner)"
+    # 🎯 TEILZIEL 4 (TODO 4): Methode "angreifen(self, gegner)"
     # Parameter 'gegner' ist ein anderes Held-Objekt!
     #
     # Schritt-für-Schritt:
@@ -67,11 +70,12 @@ class Held:
     #    - Gib False zurück.
     # ==========================================================================
     def angreifen(self, gegner):
-        # Schreibe hier deinen Code für TODO 4:
+        # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 5: Methode "status_text(self)"
+    # 🎯 TEILZIEL 5 (TODO 5): Methode "status_text(self)"
     #
     # Gibt einen formatierten String zurück:
     # Wenn am Leben:
@@ -80,7 +84,8 @@ class Held:
     #   "[{self.name}] HP: 0/{self.max_leben} | Kraft: {self.angriffskraft} | Status: Besiegt"
     # ==========================================================================
     def status_text(self):
-        # Schreibe hier deinen Code für TODO 5:
+        # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
 

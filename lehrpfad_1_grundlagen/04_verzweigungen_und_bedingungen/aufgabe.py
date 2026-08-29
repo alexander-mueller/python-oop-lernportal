@@ -15,7 +15,7 @@ Führe danach die Tests aus mit:
 """
 
 # ==============================================================================
-# TODO 1: Kinokarten-Preisrechner
+# 🎯 TEILZIEL 1 (TODO 1): Kinokarten-Preisrechner
 #
 # Schreibe eine Funktion 'ticket_preis(alter: int, ist_student: bool) -> float'.
 # Sie berechnet den Ticketpreis nach folgenden Tarif-Regeln:
@@ -33,12 +33,13 @@ Führe danach die Tests aus mit:
 # ==============================================================================
 
 def ticket_preis(alter: int, ist_student: bool) -> float:
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Schulnoten-Ermittlung
+# 🎯 TEILZIEL 2 (TODO 2): Schulnoten-Ermittlung
 #
 # Schreibe eine Funktion 'schulnote_text(punkte: int) -> str'.
 # Sie ordnet einer erreichten Punktezahl (0 bis 100) die passende Textnote zu:
@@ -58,12 +59,13 @@ def ticket_preis(alter: int, ist_student: bool) -> float:
 # ==============================================================================
 
 def schulnote_text(punkte: int) -> str:
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Schaltjahr-Erkennung
+# 🎯 TEILZIEL 3 (TODO 3): Schaltjahr-Erkennung
 #
 # Schreibe eine Funktion 'ist_schaltjahr(jahr: int) -> bool'.
 # Die Funktion soll prüfen, ob ein übergebenes Kalenderjahr ein Schaltjahr ist.
@@ -81,12 +83,13 @@ def schulnote_text(punkte: int) -> str:
 # ==============================================================================
 
 def ist_schaltjahr(jahr: int) -> bool:
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Achterbahn-Zulassung
+# 🎯 TEILZIEL 4 (TODO 4): Achterbahn-Zulassung
 #
 # Schreibe eine Funktion 'kann_achterbahn_fahren(groesse_cm: int, begleitung_erwachsen: bool) -> bool'.
 # Ein Freizeitpark hat folgende Sicherheitsbestimmungen:
@@ -103,7 +106,8 @@ def ist_schaltjahr(jahr: int) -> bool:
 # ==============================================================================
 
 def kann_achterbahn_fahren(groesse_cm: int, begleitung_erwachsen: bool) -> bool:
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

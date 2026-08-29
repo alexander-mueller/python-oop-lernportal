@@ -12,7 +12,7 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 """
 
 # ==============================================================================
-# TODO 1: Schreibe die Funktion 'bestimme_typ_name(wert)'
+# 🎯 TEILZIEL 1 (TODO 1): Schreibe die Funktion 'bestimme_typ_name(wert)'
 #
 # Die Funktion bekommt einen beliebigen Wert übergeben und soll als String
 # den deutschen Namen des Datentyps zurückgeben:
@@ -34,12 +34,13 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 # ==============================================================================
 
 def bestimme_typ_name(wert) -> str:
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Schreibe die Funktion 'summe_aus_texten(text_a, text_b)'
+# 🎯 TEILZIEL 2 (TODO 2): Schreibe die Funktion 'summe_aus_texten(text_a, text_b)'
 #
 # Oft kommen Benutzereingaben (z.B. von input()) als Text (str) an.
 # Wenn man "10" + "20" rechnet, entsteht fälschlicherweise "1020" (Textverkettung).
@@ -54,12 +55,13 @@ def bestimme_typ_name(wert) -> str:
 # ==============================================================================
 
 def summe_aus_texten(text_a: str, text_b: str) -> int:
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Schreibe die Funktion 'formatiere_preis(preis_float)'
+# 🎯 TEILZIEL 3 (TODO 3): Schreibe die Funktion 'formatiere_preis(preis_float)'
 #
 # Die Funktion bekommt einen Preis als float (Kommazahl) übergeben und soll
 # einen formatierten String mit genau 2 Nachkommastellen und dem Euro-Zeichen '€'
@@ -74,12 +76,13 @@ def summe_aus_texten(text_a: str, text_b: str) -> int:
 # ==============================================================================
 
 def formatiere_preis(preis_float: float) -> str:
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Schreibe die Funktion 'ist_volljaehrig(alter)'
+# 🎯 TEILZIEL 4 (TODO 4): Schreibe die Funktion 'ist_volljaehrig(alter)'
 #
 # Die Funktion bekommt ein Alter als Ganzzahl übergeben.
 # Sie soll 'True' zurückgeben, wenn 'alter' größer oder gleich 18 ist,
@@ -95,7 +98,8 @@ def formatiere_preis(preis_float: float) -> str:
 # ==============================================================================
 
 def ist_volljaehrig(alter: int) -> bool:
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

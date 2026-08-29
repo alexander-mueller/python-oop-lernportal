@@ -11,7 +11,7 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 """
 
 # ==============================================================================
-# TODO 1: Schreibe die Funktion 'addieren(a, b)'
+# 🎯 TEILZIEL 1 (TODO 1): Schreibe die Funktion 'addieren(a, b)'
 #
 # Die Funktion soll zwei Zahlen (int oder float) entgegennehmen und deren
 # mathematische Summe (a + b) zurückgeben.
@@ -22,12 +22,13 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 # ==============================================================================
 
 def addieren(a: float, b: float) -> float:
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Schreibe die Funktion 'subtrahieren(a, b)'
+# 🎯 TEILZIEL 2 (TODO 2): Schreibe die Funktion 'subtrahieren(a, b)'
 #
 # Die Funktion soll die Differenz von a und b (a - b) berechnen und zurückgeben.
 #
@@ -37,12 +38,13 @@ def addieren(a: float, b: float) -> float:
 # ==============================================================================
 
 def subtrahieren(a: float, b: float) -> float:
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Schreibe die Funktion 'multiplizieren(a, b)'
+# 🎯 TEILZIEL 3 (TODO 3): Schreibe die Funktion 'multiplizieren(a, b)'
 #
 # Die Funktion soll das Produkt von a und b (a * b) berechnen und zurückgeben.
 #
@@ -52,12 +54,13 @@ def subtrahieren(a: float, b: float) -> float:
 # ==============================================================================
 
 def multiplizieren(a: float, b: float) -> float:
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Schreibe die Funktion 'dividieren(a, b)'
+# 🎯 TEILZIEL 4 (TODO 4): Schreibe die Funktion 'dividieren(a, b)'
 #
 # Die Funktion soll den Quotienten von a und b (a / b) berechnen und zurückgeben.
 # Hinweis: Die Division '/' in Python liefert immer eine Kommazahl (float).
@@ -68,12 +71,13 @@ def multiplizieren(a: float, b: float) -> float:
 # ==============================================================================
 
 def dividieren(a: float, b: float) -> float:
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 5: Schreibe die Funktion 'ganzzahl_rest(a, b)'
+# 🎯 TEILZIEL 5 (TODO 5): Schreibe die Funktion 'ganzzahl_rest(a, b)'
 #
 # Die Funktion soll zwei ganze Zahlen a und b annehmen und ein Tupel mit zwei
 # Werten zurückgeben: (quotient, rest)
@@ -86,12 +90,13 @@ def dividieren(a: float, b: float) -> float:
 # ==============================================================================
 
 def ganzzahl_rest(a: int, b: int) -> tuple:
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 6: Schreibe die Funktion 'potenz(basis, exponent)'
+# 🎯 TEILZIEL 6 (TODO 6): Schreibe die Funktion 'potenz(basis, exponent)'
 #
 # Die Funktion soll 'basis' hoch 'exponent' berechnen (mit dem Operator '**').
 #
@@ -102,12 +107,13 @@ def ganzzahl_rest(a: int, b: int) -> tuple:
 # ==============================================================================
 
 def potenz(basis: float, exponent: float) -> float:
-    # Schreibe hier deinen Code für TODO 6:
+    # 🎯 TEILZIEL 6: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 7: Schreibe die Funktion 'kreis_flaeche(radius)'
+# 🎯 TEILZIEL 7 (TODO 7): Schreibe die Funktion 'kreis_flaeche(radius)'
 #
 # Berechne die Fläche eines Kreises mit der Formel:
 #   flaeche = pi * r^2
@@ -120,7 +126,8 @@ def potenz(basis: float, exponent: float) -> float:
 # ==============================================================================
 
 def kreis_flaeche(radius: float) -> float:
-    # Schreibe hier deinen Code für TODO 7:
+    # 🎯 TEILZIEL 7: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

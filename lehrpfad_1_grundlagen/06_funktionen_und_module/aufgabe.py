@@ -24,7 +24,7 @@ import random
 
 
 # ==============================================================================
-# TODO 1: Schreibe die Funktion "hypotenuse(a: float, b: float) -> float".
+# 🎯 TEILZIEL 1 (TODO 1): Schreibe die Funktion "hypotenuse(a: float, b: float) -> float".
 #
 # Beschreibung:
 # Berechnet die Länge der Hypotenuse c eines rechtwinkligen Dreiecks nach dem
@@ -39,12 +39,13 @@ import random
 
 def hypotenuse(a: float, b: float) -> float:
     """Berechnet die Hypotenuse c = sqrt(a^2 + b^2)."""
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Schreibe die Funktion "zylinder_volumen(radius: float, hoehe: float) -> float".
+# 🎯 TEILZIEL 2 (TODO 2): Schreibe die Funktion "zylinder_volumen(radius: float, hoehe: float) -> float".
 #
 # Beschreibung:
 # Berechnet das Volumen eines Zylinders: V = pi * r² * h.
@@ -58,12 +59,13 @@ def hypotenuse(a: float, b: float) -> float:
 
 def zylinder_volumen(radius: float, hoehe: float) -> float:
     """Berechnet das Volumen eines Zylinders: V = pi * r^2 * h."""
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Schreibe die Funktion "wuerfle_wuerfel(anzahl: int, seiten: int = 6) -> list[int]".
+# 🎯 TEILZIEL 3 (TODO 3): Schreibe die Funktion "wuerfle_wuerfel(anzahl: int, seiten: int = 6) -> list[int]".
 #
 # Beschreibung:
 # Simuliert das Würfeln von 'anzahl' Würfeln mit jeweils 'seiten' Seiten.
@@ -80,12 +82,13 @@ def zylinder_volumen(radius: float, hoehe: float) -> float:
 
 def wuerfle_wuerfel(anzahl: int, seiten: int = 6) -> list[int]:
     """Würfelt 'anzahl' Würfel mit je 'seiten' Seiten (Standard: 6-seitig)."""
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Schreibe die Funktion "statistik(zahlen: list[float]) -> tuple[float, float, float]".
+# 🎯 TEILZIEL 4 (TODO 4): Schreibe die Funktion "statistik(zahlen: list[float]) -> tuple[float, float, float]".
 #
 # Beschreibung:
 # Berechnet das Minimum, das Maximum und den arithmetischen Mittelwert (Durchschnitt)
@@ -104,7 +107,8 @@ def wuerfle_wuerfel(anzahl: int, seiten: int = 6) -> list[int]:
 
 def statistik(zahlen: list[float]) -> tuple[float, float, float]:
     """Gibt (min_wert, max_wert, mittelwert) einer Zahlenliste zurück."""
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

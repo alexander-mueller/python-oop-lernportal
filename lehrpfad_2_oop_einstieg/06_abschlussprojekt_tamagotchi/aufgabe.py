@@ -7,7 +7,7 @@ Programmiere hier die Klasse 'Tamagotchi'.
 
 class Tamagotchi:
     # ==========================================================================
-    # TODO 1: Konstruktor __init__(self, name, tierart="Drache")
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__(self, name, tierart="Drache")
     #
     # Initialisiere die folgenden Attribute an self:
     # - self.name = name
@@ -19,7 +19,8 @@ class Tamagotchi:
     # - self.ist_lebendig = True
     # ==========================================================================
     def __init__(self, name, tierart="Drache"):
-        # Schreibe hier deinen Code für TODO 1:
+        # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # Hilfsmethode: Begrenzt Werte immer zwischen min_wert (0) und max_wert (100)
@@ -27,7 +28,7 @@ class Tamagotchi:
         return max(min_wert, min(max_wert, wert))
 
     # ==========================================================================
-    # TODO 2: Methode "fuettern(self, menge=20)"
+    # 🎯 TEILZIEL 2 (TODO 2): Methode "fuettern(self, menge=20)"
     #
     # Regeln:
     # 1. Wenn not self.ist_lebendig:
@@ -39,11 +40,12 @@ class Tamagotchi:
     #    - Gib zurück: f"{self.name} mampft genüsslich! (Hunger: {self.hunger}/100)"
     # ==========================================================================
     def fuettern(self, menge=20):
-        # Schreibe hier deinen Code für TODO 2:
+        # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 3: Methode "spielen(self, spass=25)"
+    # 🎯 TEILZIEL 3 (TODO 3): Methode "spielen(self, spass=25)"
     #
     # Regeln:
     # 1. Wenn not self.ist_lebendig:
@@ -58,11 +60,12 @@ class Tamagotchi:
     #    - Gib zurück: f"{self.name} hatte riesigen Spaß beim Spielen! (Glück: {self.glueck}/100)"
     # ==========================================================================
     def spielen(self, spass=25):
-        # Schreibe hier deinen Code für TODO 3:
+        # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 4: Methode "schlafen(self)"
+    # 🎯 TEILZIEL 4 (TODO 4): Methode "schlafen(self)"
     #
     # Regeln:
     # 1. Wenn not self.ist_lebendig:
@@ -74,11 +77,12 @@ class Tamagotchi:
     #    - Gib zurück: f"{self.name} hat tief geschlafen und ist ausgeruht! Ein neuer Tag bricht an."
     # ==========================================================================
     def schlafen(self):
-        # Schreibe hier deinen Code für TODO 4:
+        # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 5: Methode "zeit_vergeht(self)"
+    # 🎯 TEILZIEL 5 (TODO 5): Methode "zeit_vergeht(self)"
     # Simuliert das Verstreichen von Zeit.
     #
     # Regeln:
@@ -94,11 +98,12 @@ class Tamagotchi:
     #    - Gib self.ist_lebendig zurück (True wenn noch am Leben, False wenn gestorben).
     # ==========================================================================
     def zeit_vergeht(self):
-        # Schreibe hier deinen Code für TODO 5:
+        # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 6: Dunder-Methode "__str__(self)"
+    # 🎯 TEILZIEL 6 (TODO 6): Dunder-Methode "__str__(self)"
     # Gibt eine hübsche Statusübersicht als mehrzeiligen String zurück.
     #
     # Format (wenn lebendig):
@@ -111,7 +116,8 @@ class Tamagotchi:
     # "=== {self.name} ({self.tierart}) - RIP 🪦 ==="
     # ==========================================================================
     def __str__(self):
-        # Schreibe hier deinen Code für TODO 6:
+        # 🎯 TEILZIEL 6: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
 

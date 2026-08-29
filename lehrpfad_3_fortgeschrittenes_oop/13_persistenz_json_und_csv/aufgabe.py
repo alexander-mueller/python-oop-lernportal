@@ -16,7 +16,7 @@ from typing import List, Optional, Dict, Any
 
 
 # ==============================================================================
-# TODO 1: Klasse Spieler mit Serialisierung
+# 🎯 TEILZIEL 1 (TODO 1): Klasse Spieler mit Serialisierung
 # ==============================================================================
 class Spieler:
     def __init__(self, name: str, level: int, punkte: int, inventar: Optional[List[str]] = None):
@@ -71,7 +71,7 @@ class Spieler:
 
 
 # ==============================================================================
-# TODO 2: Klasse Spielstand mit JSON- und CSV-Persistenz
+# 🎯 TEILZIEL 2 (TODO 2): Klasse Spielstand mit JSON- und CSV-Persistenz
 # ==============================================================================
 class Spielstand:
     def __init__(self, titel: str = "Neuer Spielstand"):

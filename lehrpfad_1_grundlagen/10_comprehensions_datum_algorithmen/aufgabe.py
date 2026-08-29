@@ -18,7 +18,7 @@ from typing import List, Dict, Union
 
 
 # ==============================================================================
-# TODO 1: Quadratzahlen gerader Zahlen (List Comprehension)
+# 🎯 TEILZIEL 1 (TODO 1): Quadratzahlen gerader Zahlen (List Comprehension)
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'quadratzahlen_gerade(zahlen: list[int]) -> list[int]'.
 #
@@ -35,12 +35,13 @@ from typing import List, Dict, Union
 
 def quadratzahlen_gerade(zahlen: List[int]) -> List[int]:
     """Gibt die Quadrate aller geraden Zahlen als List Comprehension zurück."""
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Wörter nach Mindestlänge filtern
+# 🎯 TEILZIEL 2 (TODO 2): Wörter nach Mindestlänge filtern
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'filtriere_lange_woerter(woerter: list[str], min_laenge: int) -> list[str]'.
 #
@@ -56,12 +57,13 @@ def quadratzahlen_gerade(zahlen: List[int]) -> List[int]:
 
 def filtriere_lange_woerter(woerter: List[str], min_laenge: int) -> List[str]:
     """Filtert alle Wörter heraus, die mindestens 'min_laenge' Zeichen lang sind."""
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Tage bis Zieldatum berechnen (datetime & timedelta)
+# 🎯 TEILZIEL 3 (TODO 3): Tage bis Zieldatum berechnen (datetime & timedelta)
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'tage_bis_datum(ziel_datum_str: str) -> int'.
 #
@@ -76,12 +78,13 @@ def filtriere_lange_woerter(woerter: List[str], min_laenge: int) -> List[str]:
 
 def tage_bis_datum(ziel_datum_str: str) -> int:
     """Berechnet die Anzahl der Tage von heute bis zum angegebenen Zieldatum (YYYY-MM-DD)."""
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Datum im deutschen Format darstellen (.strftime)
+# 🎯 TEILZIEL 4 (TODO 4): Datum im deutschen Format darstellen (.strftime)
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'formatiere_deutsches_datum(datum_obj: Union[date, datetime]) -> str'.
 #
@@ -94,12 +97,13 @@ def tage_bis_datum(ziel_datum_str: str) -> int:
 
 def formatiere_deutsches_datum(datum_obj: Union[date, datetime]) -> str:
     """Formatiert ein date- oder datetime-Objekt in das deutsche Format DD.MM.YYYY."""
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 5: Älteste Person finden (Algorithmus: Maximum / Key-Suche)
+# 🎯 TEILZIEL 5 (TODO 5): Älteste Person finden (Algorithmus: Maximum / Key-Suche)
 # ------------------------------------------------------------------------------
 # Schreibe eine Funktion 'finde_aelteste_person(personen: list[dict]) -> str'.
 #
@@ -113,7 +117,8 @@ def formatiere_deutsches_datum(datum_obj: Union[date, datetime]) -> str:
 
 def finde_aelteste_person(personen: List[Dict[str, Union[str, int]]]) -> str:
     """Findet in einer Liste von Personen-Dicts die älteste Person und gibt deren Namen zurück."""
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

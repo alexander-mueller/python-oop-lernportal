@@ -16,7 +16,7 @@ Teste deine Lösungen jederzeit im Terminal mit:
 
 
 # ==============================================================================
-# TODO 1: Schreibe die Funktion "summe_bis(n: int) -> int".
+# 🎯 TEILZIEL 1 (TODO 1): Schreibe die Funktion "summe_bis(n: int) -> int".
 #
 # Beschreibung:
 # Berechnet die Summe aller ganzen Zahlen von 1 bis n (inklusive).
@@ -29,12 +29,13 @@ Teste deine Lösungen jederzeit im Terminal mit:
 
 def summe_bis(n: int) -> int:
     """Berechnet 1 + 2 + ... + n."""
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Schreibe die Funktion "fakultaet(n: int) -> int".
+# 🎯 TEILZIEL 2 (TODO 2): Schreibe die Funktion "fakultaet(n: int) -> int".
 #
 # Beschreibung:
 # Die Fakultät n! ist das Produkt aller ganzen Zahlen von 1 bis n.
@@ -50,12 +51,13 @@ def summe_bis(n: int) -> int:
 
 def fakultaet(n: int) -> int:
     """Berechnet n! (Fakultät von n)."""
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Schreibe die Funktion "zaehle_gerade_zahlen(start: int, ende: int) -> int".
+# 🎯 TEILZIEL 3 (TODO 3): Schreibe die Funktion "zaehle_gerade_zahlen(start: int, ende: int) -> int".
 #
 # Beschreibung:
 # Zählt, wie viele gerade Zahlen im Intervall von start bis ende (beide inklusive!)
@@ -74,12 +76,13 @@ def fakultaet(n: int) -> int:
 
 def zaehle_gerade_zahlen(start: int, ende: int) -> int:
     """Zählt alle geraden Zahlen im Bereich [start, ende]."""
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Schreibe die Funktion "ist_primzahl(n: int) -> bool".
+# 🎯 TEILZIEL 4 (TODO 4): Schreibe die Funktion "ist_primzahl(n: int) -> bool".
 #
 # Beschreibung:
 # Eine Primzahl ist eine ganze Zahl größer als 1, die nur durch 1 und sich selbst
@@ -97,12 +100,13 @@ def zaehle_gerade_zahlen(start: int, ende: int) -> int:
 
 def ist_primzahl(n: int) -> bool:
     """Prüft, ob n eine Primzahl ist."""
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 5: Schreibe die Funktion "quorsumme(n: int) -> int".
+# 🎯 TEILZIEL 5 (TODO 5): Schreibe die Funktion "quorsumme(n: int) -> int".
 #
 # Beschreibung:
 # Berechnet die Quersumme einer Zahl n mittels einer WHILE-Schleife.
@@ -125,7 +129,8 @@ def ist_primzahl(n: int) -> bool:
 
 def quorsumme(n: int) -> int:
     """Berechnet die Quersumme von n mittels einer while-Schleife."""
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

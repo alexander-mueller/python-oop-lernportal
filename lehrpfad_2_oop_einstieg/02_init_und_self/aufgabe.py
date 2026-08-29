@@ -7,7 +7,7 @@ In dieser Aufgabe erstellst du eine Klasse "Bankkonto" für eine Taschengeld-App
 
 class Bankkonto:
     # ==========================================================================
-    # TODO 1: Schreibe die __init__-Methode.
+    # 🎯 TEILZIEL 1 (TODO 1): Schreibe die __init__-Methode.
     # Parameter: self, inhaber (String), kontostand (Float, Standardwert 0.0)
     #
     # Anleitung:
@@ -17,11 +17,12 @@ class Bankkonto:
     #    self.kontostand = kontostand
     # ==========================================================================
     def __init__(self, inhaber, kontostand=0.0):
-        # Schreibe hier deinen Code für TODO 1:
+        # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 2: Schreibe die Methode "einzahlen(self, betrag)".
+    # 🎯 TEILZIEL 2 (TODO 2): Schreibe die Methode "einzahlen(self, betrag)".
     #
     # Regeln:
     # 1. Wenn 'betrag' größer als 0 ist:
@@ -32,11 +33,12 @@ class Bankkonto:
     #    - Gib False zurück.
     # ==========================================================================
     def einzahlen(self, betrag):
-        # Schreibe hier deinen Code für TODO 2:
+        # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 3: Schreibe die Methode "auszahlen(self, betrag)".
+    # 🎯 TEILZIEL 3 (TODO 3): Schreibe die Methode "auszahlen(self, betrag)".
     #
     # Regeln:
     # 1. Prüfe mit 'if', ob 'betrag > 0' UND 'self.kontostand >= betrag':
@@ -46,11 +48,12 @@ class Bankkonto:
     #    - Gib False zurück.
     # ==========================================================================
     def auszahlen(self, betrag):
-        # Schreibe hier deinen Code für TODO 3:
+        # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
     # ==========================================================================
-    # TODO 4: Schreibe die Methode "info_text(self)".
+    # 🎯 TEILZIEL 4 (TODO 4): Schreibe die Methode "info_text(self)".
     #
     # Sie soll einen formatierten String zurückgeben:
     # "Konto von {inhaber}: {kontostand:.2f} Euro"
@@ -59,7 +62,8 @@ class Bankkonto:
     # Tipp: f"Konto von {self.inhaber}: {self.kontostand:.2f} Euro"
     # ==========================================================================
     def info_text(self):
-        # Schreibe hier deinen Code für TODO 4:
+        # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
         pass
 
 

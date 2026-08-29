@@ -8,19 +8,20 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 """
 
 # ==============================================================================
-# TODO 1: Definiere eine leere Klasse namens "Haustier".
+# 🎯 TEILZIEL 1 (TODO 1): Definiere eine leere Klasse namens "Haustier".
 # 
 # Erklärung:
 # Eine Klasse ist ein Bauplan.
 # Schreibe 'class Haustier:' und rück in der nächsten Zeile 'pass' ein.
 # ==============================================================================
 
-# Schreibe hier deinen Code für TODO 1:
+# 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
 
 
 
 # ==============================================================================
-# TODO 2: Erstelle eine Funktion namens "erstelle_bello()".
+# 🎯 TEILZIEL 2 (TODO 2): Erstelle eine Funktion namens "erstelle_bello()".
 #
 # Schritt-für-Schritt-Anleitung:
 # 1. Erstelle ein neues Haustier-Objekt: z.B. hund = Haustier()
@@ -32,12 +33,13 @@ Wenn du fertig bist, überprüfe deine Lösung im Terminal mit:
 # ==============================================================================
 
 def erstelle_bello():
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Erstelle eine Funktion namens "erstelle_mimi()".
+# 🎯 TEILZIEL 3 (TODO 3): Erstelle eine Funktion namens "erstelle_mimi()".
 #
 # Ähnlich wie bei Bello:
 # - name = "Mimi"
@@ -47,12 +49,13 @@ def erstelle_bello():
 # ==============================================================================
 
 def erstelle_mimi():
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Schreibe eine Funktion "steckbrief_text(haustier)".
+# 🎯 TEILZIEL 4 (TODO 4): Schreibe eine Funktion "steckbrief_text(haustier)".
 #
 # Die Funktion bekommt ein Haustier-Objekt als Parameter übergeben.
 # Sie soll einen formatierten Text im folgenden Format zurückgeben:
@@ -65,12 +68,13 @@ def erstelle_mimi():
 # ==============================================================================
 
 def steckbrief_text(haustier):
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 5: Schreibe eine Funktion "aelteres_tier(tier1, tier2)".
+# 🎯 TEILZIEL 5 (TODO 5): Schreibe eine Funktion "aelteres_tier(tier1, tier2)".
 #
 # Die Funktion bekommt zwei Haustier-Objekte übergeben.
 # Sie soll dasjenige Haustier-Objekt zurückgeben, dessen 'alter' größer ist.
@@ -84,7 +88,8 @@ def steckbrief_text(haustier):
 # ==============================================================================
 
 def aelteres_tier(tier1, tier2):
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

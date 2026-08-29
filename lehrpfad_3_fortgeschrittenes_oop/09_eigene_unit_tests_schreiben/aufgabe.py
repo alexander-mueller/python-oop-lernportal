@@ -83,14 +83,14 @@ class Bankkonto:
 class TestTaschenrechner(unittest.TestCase):
 
     # ==========================================================================
-    # TODO 1: setUp(self)
+    # 🎯 TEILZIEL 1 (TODO 1): setUp(self)
     # Erstelle vor jedem Test eine frische Rechner-Instanz: self.calc = Taschenrechner()
     # ==========================================================================
     def setUp(self):
         pass
 
     # ==========================================================================
-    # TODO 2: test_01_grundrechenarten(self)
+    # 🎯 TEILZIEL 2 (TODO 2): test_01_grundrechenarten(self)
     # Teste mit self.assertEqual:
     # - self.calc.add(2, 3) soll 5 sein
     # - self.calc.sub(10, 4) soll 6 sein
@@ -100,7 +100,7 @@ class TestTaschenrechner(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 3: test_02_division_und_kommazahlen(self)
+    # 🎯 TEILZIEL 3 (TODO 3): test_02_division_und_kommazahlen(self)
     # - Teste self.calc.div(10, 2) mit self.assertEqual (soll 5.0 sein)
     # - Teste self.calc.div(10, 3) mit self.assertAlmostEqual(..., places=2) (ca. 3.33)
     # ==========================================================================
@@ -108,7 +108,7 @@ class TestTaschenrechner(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 4: test_03_division_durch_null_exception(self)
+    # 🎯 TEILZIEL 4 (TODO 4): test_03_division_durch_null_exception(self)
     # Teste mit 'with self.assertRaises(ZeroDivisionError):'
     # dass self.calc.div(10, 0) den Fehler auslöst!
     # ==========================================================================
@@ -116,7 +116,7 @@ class TestTaschenrechner(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 5: test_04_wurzel_negativ_exception(self)
+    # 🎯 TEILZIEL 5 (TODO 5): test_04_wurzel_negativ_exception(self)
     # - Teste self.calc.wurzel(16) soll 4.0 sein (assertEqual oder assertAlmostEqual)
     # - Teste mit 'with self.assertRaises(ValueError):' dass self.calc.wurzel(-9)
     #   einen ValueError auslöst!
@@ -125,7 +125,7 @@ class TestTaschenrechner(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 6: test_05_speicher_funktionen(self)
+    # 🎯 TEILZIEL 6 (TODO 6): test_05_speicher_funktionen(self)
     # - Prüfe, dass self.calc.speicher zu Beginn 0.0 ist
     # - Rufe self.calc.speicher_plus(15.5) und self.calc.speicher_plus(4.5) auf
     # - Prüfe, dass self.calc.speicher jetzt 20.0 ist
@@ -138,7 +138,7 @@ class TestTaschenrechner(unittest.TestCase):
 class TestBankkonto(unittest.TestCase):
 
     # ==========================================================================
-    # TODO 7: setUp(self)
+    # 🎯 TEILZIEL 7 (TODO 7): setUp(self)
     # Erstelle zwei Testkonten:
     # - self.k1 = Bankkonto("Alice", 100.0)
     # - self.k2 = Bankkonto("Bob", 50.0)
@@ -147,7 +147,7 @@ class TestBankkonto(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 8: test_06_einzahlen_und_abheben(self)
+    # 🎯 TEILZIEL 8 (TODO 8): test_06_einzahlen_und_abheben(self)
     # - Zahle 50.0 auf self.k1 ein und prüfe kontostand == 150.0
     # - Prüfe mit self.assertIn(50.0, self.k1.transaktionen), dass die Einzahlung gelistet ist
     # - Hebe 30.0 von self.k1 ab und prüfe kontostand == 120.0
@@ -157,7 +157,7 @@ class TestBankkonto(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 9: test_07_abheben_ueber_limit_exception(self)
+    # 🎯 TEILZIEL 9 (TODO 9): test_07_abheben_ueber_limit_exception(self)
     # Teste mit 'with self.assertRaises(ValueError):'
     # dass das Abheben von 200.0 (bei 100.0 Guthaben) einen ValueError auslöst!
     # ==========================================================================
@@ -165,7 +165,7 @@ class TestBankkonto(unittest.TestCase):
         pass
 
     # ==========================================================================
-    # TODO 10: test_08_ueberweisung(self)
+    # 🎯 TEILZIEL 10 (TODO 10): test_08_ueberweisung(self)
     # - Überweise 40.0 von self.k1 an self.k2
     # - Prüfe self.k1.kontostand == 60.0
     # - Prüfe self.k2.kontostand == 90.0

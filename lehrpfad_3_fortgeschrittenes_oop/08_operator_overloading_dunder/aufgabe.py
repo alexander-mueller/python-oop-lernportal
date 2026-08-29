@@ -16,14 +16,14 @@ class Vektor2D:
     """
 
     # ==========================================================================
-    # TODO 1: Konstruktor __init__(self, x: float, y: float)
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__(self, x: float, y: float)
     # Speichere self.x = float(x) und self.y = float(y).
     # ==========================================================================
     def __init__(self, x: float, y: float):
         pass
 
     # ==========================================================================
-    # TODO 2: Darstellungsmethoden __repr__ und __str__
+    # 🎯 TEILZIEL 2 (TODO 2): Darstellungsmethoden __repr__ und __str__
     # - __repr__(self) -> str: Gibt Entwickler-String "Vektor2D(x, y)" zurück (z.B. "Vektor2D(3.0, 4.0)")
     # - __str__(self) -> str:  Gibt benutzerfreundlichen String "(x, y)" zurück (z.B. "(3.0, 4.0)")
     # ==========================================================================
@@ -34,7 +34,7 @@ class Vektor2D:
         pass
 
     # ==========================================================================
-    # TODO 3: Länge und Absolutbetrag
+    # 🎯 TEILZIEL 3 (TODO 3): Länge und Absolutbetrag
     # - laenge(self) -> float: Berechnet sqrt(x² + y²)
     # - __abs__(self) -> float: Gibt self.laenge() zurück, damit abs(v) funktioniert!
     # ==========================================================================
@@ -45,7 +45,7 @@ class Vektor2D:
         pass
 
     # ==========================================================================
-    # TODO 4: Addition (__add__) und Subtraktion (__sub__)
+    # 🎯 TEILZIEL 4 (TODO 4): Addition (__add__) und Subtraktion (__sub__)
     # - __add__(self, other: 'Vektor2D') -> 'Vektor2D':
     #   Addiert zwei Vektoren komponentenweise: (self.x + other.x, self.y + other.y)
     # - __sub__(self, other: 'Vektor2D') -> 'Vektor2D':
@@ -59,7 +59,7 @@ class Vektor2D:
         pass
 
     # ==========================================================================
-    # TODO 5: Multiplikation (__mul__) und Rechts-Multiplikation (__rmul__)
+    # 🎯 TEILZIEL 5 (TODO 5): Multiplikation (__mul__) und Rechts-Multiplikation (__rmul__)
     # - __mul__(self, other):
     #   * Wenn other eine Zahl ist (int oder float):
     #     Skalarmultiplikation -> neuer Vektor2D(self.x * other, self.y * other)
@@ -76,7 +76,7 @@ class Vektor2D:
         pass
 
     # ==========================================================================
-    # TODO 6: Vergleiche (__eq__, __lt__, __le__)
+    # 🎯 TEILZIEL 6 (TODO 6): Vergleiche (__eq__, __lt__, __le__)
     # - __eq__(self, other: object) -> bool:
     #   True, wenn other ein Vektor2D ist und self.x == other.x und self.y == other.y (Tipp: math.isclose)
     # - __lt__(self, other: 'Vektor2D') -> bool:
@@ -100,7 +100,7 @@ class Wegstrecke:
     """
 
     # ==========================================================================
-    # TODO 7: Wegstrecke __init__ und punkt_hinzufuegen
+    # 🎯 TEILZIEL 7 (TODO 7): Wegstrecke __init__ und punkt_hinzufuegen
     # - __init__(self, punkte: list[Vektor2D] | None = None):
     #   Speichert self.punkte = list(punkte) if punkte else []
     # - punkt_hinzufuegen(self, punkt: Vektor2D) -> None:
@@ -113,7 +113,7 @@ class Wegstrecke:
         pass
 
     # ==========================================================================
-    # TODO 8: Container-Dunder (__len__ und __getitem__)
+    # 🎯 TEILZIEL 8 (TODO 8): Container-Dunder (__len__ und __getitem__)
     # - __len__(self) -> int:
     #   Gibt die Anzahl der Wegpunkte zurück (len(self.punkte)).
     # - __getitem__(self, index: int) -> Vektor2D:
@@ -126,7 +126,7 @@ class Wegstrecke:
         pass
 
     # ==========================================================================
-    # TODO 9: gesamtlaenge(self) -> float
+    # 🎯 TEILZIEL 9 (TODO 9): gesamtlaenge(self) -> float
     # Berechnet die Summe aller Teilstrecken zwischen aufeinanderfolgenden Punkten:
     # Distanz zwischen Punkt i und Punkt i+1 ist: abs(punkte[i+1] - punkte[i])
     # Wenn weniger als 2 Punkte vorhanden sind: gebe 0.0 zurück.

@@ -27,7 +27,8 @@ def ist_palindrom(text: str) -> bool:
         2. Entferne Leerzeichen mit `.replace(" ", "")`.
         3. Vergleiche den bereinigten Text mit seiner Umkehrung: `bereinigt == bereinigt[::-1]`.
     """
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -48,7 +49,8 @@ def zaehle_vokale(text: str) -> int:
         Wandle den Text in Kleinbuchstaben um (`text.lower()`) und zähle,
         wie viele Zeichen in `vokale` vorkommen.
     """
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -69,7 +71,8 @@ def bereinige_benutzernamen(name: str) -> str:
     Tipp:
         Du kannst String-Methoden verketten: `name.strip().lower().replace(" ", "_")`
     """
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -88,7 +91,8 @@ def woerter_zaehlen(text: str) -> int:
         Verwende `.split()`. Ohne Parameter teilt es an beliebigen Leerzeichen
         und ignoriert doppelte Leerzeichen automatisch! `len(text.split())`
     """
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -113,7 +117,8 @@ def maskiere_kreditkarte(nummer: str) -> str:
         3. Die letzten 4 Zeichen: `letzte_vier = nummer[-4:]`
         4. Gib `("*" * anzahl_sterne) + letzte_vier` zurück.
     """
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

@@ -12,7 +12,7 @@ from typing import Optional
 
 
 # ==============================================================================
-# TODO 1: Eigene Exception-Klassen definieren
+# 🎯 TEILZIEL 1 (TODO 1): Eigene Exception-Klassen definieren
 # ==============================================================================
 # Erstelle eine Basis-Exception-Klasse 'BankFehler', die von 'Exception' erbt.
 # Erstelle dann 4 abgeleitete Exception-Klassen, die alle von 'BankFehler' erben:
@@ -43,7 +43,7 @@ class UngueltigerBetragError(BankFehler):
 
 
 # ==============================================================================
-# TODO 2: Klasse Bankkonto
+# 🎯 TEILZIEL 2 (TODO 2): Klasse Bankkonto
 # ==============================================================================
 class Bankkonto:
     def __init__(self, inhaber: str, pin: str, kontostand: float = 0.0):
@@ -137,7 +137,7 @@ class Bankkonto:
 
 
 # ==============================================================================
-# TODO 3: Geldautomat-Auszahlung mit try - except - else - finally
+# 🎯 TEILZIEL 3 (TODO 3): Geldautomat-Auszahlung mit try - except - else - finally
 # ==============================================================================
 def geldautomat_abheben(konto: Bankkonto, betrag: float, pin: str) -> str:
     """

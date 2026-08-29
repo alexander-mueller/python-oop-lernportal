@@ -25,7 +25,7 @@ class Fahrzeug:
     """
 
     # ==========================================================================
-    # TODO 1: Konstruktor __init__ der Basisklasse
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__ der Basisklasse
     # Parameter: marke (str), modell (str), baujahr (int), grundpreis (float)
     # Attribute:
     #   - self.marke: str
@@ -38,7 +38,7 @@ class Fahrzeug:
         pass
 
     # ==========================================================================
-    # TODO 2: Methode fahren(self, km: float) -> None
+    # 🎯 TEILZIEL 2 (TODO 2): Methode fahren(self, km: float) -> None
     # Erhöht den Kilometerstand um 'km', wenn km > 0 ist.
     # Bei km <= 0 passiert nichts.
     # ==========================================================================
@@ -46,7 +46,7 @@ class Fahrzeug:
         pass
 
     # ==========================================================================
-    # TODO 3: Methode berechne_restwert(self, aktuelles_jahr: int) -> float
+    # 🎯 TEILZIEL 3 (TODO 3): Methode berechne_restwert(self, aktuelles_jahr: int) -> float
     # Berechnet den aktuellen Restwert des Fahrzeugs:
     # 1. Alter = max(0, aktuelles_jahr - self.baujahr)
     # 2. Wertverlust = self.grundpreis * 0.05 * Alter (5% Wertverlust pro Jahr)
@@ -58,7 +58,7 @@ class Fahrzeug:
         pass
 
     # ==========================================================================
-    # TODO 4: Methode info(self) -> str
+    # 🎯 TEILZIEL 4 (TODO 4): Methode info(self) -> str
     # Gibt einen formatierten Infostring zurück:
     # Format: "{marke} {modell} ({baujahr}) - {kilometerstand:.1f} km"
     # Beispiel: "BMW 320d (2020) - 45000.0 km"
@@ -80,7 +80,7 @@ class Auto(Fahrzeug):
     """
 
     # ==========================================================================
-    # TODO 5: Konstruktor __init__ von Auto
+    # 🎯 TEILZIEL 5 (TODO 5): Konstruktor __init__ von Auto
     # Parameter: marke (str), modell (str), baujahr (int), grundpreis (float),
     #            sitzplaetze (int = 5), anzahl_tueren (int = 5)
     # 1. Rufe den Konstruktor der Elternklasse mit super().__init__(...) auf!
@@ -98,7 +98,7 @@ class Auto(Fahrzeug):
         pass
 
     # ==========================================================================
-    # TODO 6: Methode hupen(self) -> str
+    # 🎯 TEILZIEL 6 (TODO 6): Methode hupen(self) -> str
     # Gibt einen Hup-Laut mit Marke und Modell zurück:
     # Format: "Hup hup! Platz da für den {marke} {modell}!"
     # Beispiel: "Hup hup! Platz da für den VW Golf!"
@@ -107,7 +107,7 @@ class Auto(Fahrzeug):
         pass
 
     # ==========================================================================
-    # TODO 7: Methode info(self) -> str (Method Overriding / Erweitern)
+    # 🎯 TEILZIEL 7 (TODO 7): Methode info(self) -> str (Method Overriding / Erweitern)
     # Rufe super().info() auf und hänge " | {sitzplaetze} Sitze, {anzahl_tueren} Türen" an.
     # Format: "{super().info()} | {self.sitzplaetze} Sitze, {self.anzahl_tueren} Türen"
     # Beispiel: "VW Golf (2021) - 12000.0 km | 5 Sitze, 5 Türen"
@@ -127,7 +127,7 @@ class ElektroAuto(Auto):
     """
 
     # ==========================================================================
-    # TODO 8: Konstruktor __init__ von ElektroAuto
+    # 🎯 TEILZIEL 8 (TODO 8): Konstruktor __init__ von ElektroAuto
     # Parameter: marke (str), modell (str), baujahr (int), grundpreis (float),
     #            batterie_kapazitaet_kwh (float), sitzplaetze (int = 5),
     #            anzahl_tueren (int = 5), verbrauch_pro_100km (float = 18.0)
@@ -150,7 +150,7 @@ class ElektroAuto(Auto):
         pass
 
     # ==========================================================================
-    # TODO 9: Methode reichweite(self) -> float
+    # 🎯 TEILZIEL 9 (TODO 9): Methode reichweite(self) -> float
     # Berechnet die verbleibende Reichweite in Kilometern:
     # Formel: (aktueller_ladestand / verbrauch_pro_100km) * 100
     # Wenn verbrauch_pro_100km <= 0: 0.0 zurückgeben.
@@ -159,7 +159,7 @@ class ElektroAuto(Auto):
         pass
 
     # ==========================================================================
-    # TODO 10: Methode fahren(self, km: float) -> bool (Überschreiben mit Logik)
+    # 🎯 TEILZIEL 10 (TODO 10): Methode fahren(self, km: float) -> bool (Überschreiben mit Logik)
     # 1. Wenn km <= 0: False zurückgeben.
     # 2. Berechne den benötigten Strom: benoetigt = (km / 100.0) * self.verbrauch_pro_100km
     # 3. Wenn self.batterie_ladestand_kwh >= benoetigt:
@@ -174,7 +174,7 @@ class ElektroAuto(Auto):
         pass
 
     # ==========================================================================
-    # TODO 11: Methode aufladen(self, kwh: float) -> float
+    # 🎯 TEILZIEL 11 (TODO 11): Methode aufladen(self, kwh: float) -> float
     # Lädt den Akku auf, aber maximal bis batterie_kapazitaet_kwh!
     # 1. Wenn kwh <= 0: return 0.0
     # 2. Berechne den freien Platz im Akku: batterie_kapazitaet_kwh - batterie_ladestand_kwh
@@ -186,7 +186,7 @@ class ElektroAuto(Auto):
         pass
 
     # ==========================================================================
-    # TODO 12: Methode info(self) -> str
+    # 🎯 TEILZIEL 12 (TODO 12): Methode info(self) -> str
     # Format: "{super().info()} | Akku: {batterie_ladestand_kwh:.1f}/{batterie_kapazitaet_kwh:.1f} kWh ({reichweite():.1f} km Reichweite)"
     # Beispiel: "Tesla Model 3 (2023) - 5000.0 km | 5 Sitze, 5 Türen | Akku: 60.0/60.0 kWh (333.3 km Reichweite)"
     # ==========================================================================
@@ -204,7 +204,7 @@ class Lkw(Fahrzeug):
     """
 
     # ==========================================================================
-    # TODO 13: Konstruktor __init__ von Lkw
+    # 🎯 TEILZIEL 13 (TODO 13): Konstruktor __init__ von Lkw
     # Parameter: marke (str), modell (str), baujahr (int), grundpreis (float),
     #            max_zuladung_kg (float)
     # 1. Rufe super().__init__(marke, modell, baujahr, grundpreis) auf.
@@ -222,7 +222,7 @@ class Lkw(Fahrzeug):
         pass
 
     # ==========================================================================
-    # TODO 14: Methode beladen(self, kg: float) -> bool
+    # 🎯 TEILZIEL 14 (TODO 14): Methode beladen(self, kg: float) -> bool
     # 1. Wenn kg > 0 und self.aktuelle_ladung_kg + kg <= self.max_zuladung_kg:
     #       - Erhöhe self.aktuelle_ladung_kg um kg
     #       - return True
@@ -232,7 +232,7 @@ class Lkw(Fahrzeug):
         pass
 
     # ==========================================================================
-    # TODO 15: Methode entladen(self, kg: float) -> float
+    # 🎯 TEILZIEL 15 (TODO 15): Methode entladen(self, kg: float) -> float
     # Entlädt maximal die vorhandene Ladung.
     # 1. Wenn kg <= 0: return 0.0
     # 2. tatsaechlich = min(self.aktuelle_ladung_kg, kg)
@@ -243,7 +243,7 @@ class Lkw(Fahrzeug):
         pass
 
     # ==========================================================================
-    # TODO 16: Methode info(self) -> str
+    # 🎯 TEILZIEL 16 (TODO 16): Methode info(self) -> str
     # Format: "{super().info()} | Ladung: {aktuelle_ladung_kg:.1f}/{max_zuladung_kg:.1f} kg"
     # Beispiel: "MAN TGX (2019) - 150000.0 km | Ladung: 8500.0/18000.0 kg"
     # ==========================================================================

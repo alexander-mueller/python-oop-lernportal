@@ -54,6 +54,22 @@
 <span class="fn">print</span>(<span class="var">liste_a</span>)  <span class="cm"># Ausgabe: [1, 2, 3, 99] &lt;-- liste_a hat sich mitverändert!</span></pre>
       </div>
 
+      <!-- Visuelles Speichermodell (Notional Machine) -->
+      <div style="background: #0f172a; color: #f8fafc; border-radius: var(--radius-md); padding: 18px; margin: 20px 0; border: 1px solid rgba(255,255,255,0.1);">
+        <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px; font-size: 1.05rem;">🧠 Was passiert im Computer-Speicher? (Notional Machine)</div>
+        <pre style="background: transparent; color: #e2e8f0; font-family: var(--font-mono); font-size: 0.88rem; padding: 0;">
+STACK (Variablen-Namen)                HEAP (Echter Speicher / RAM)
+┌──────────────┐                       ┌──────────────────────────────┐
+│  liste_a ────┼──────────────────────&gt;│  ID: 0x7ffd1a  [1, 2, 3, 99] │
+└──────────────┘                       └──────────────────────────────┘
+                                                       ▲
+┌──────────────┐                                       │
+│  liste_b ────┼───────────────────────────────────────┘
+└──────────────┘
+(Beide Variablen zeigen auf denselben Pfeil im Heap!)
+        </pre>
+      </div>
+
       <div class="box box-warning">
         <div class="box-title">⚠️ Vorsicht bei veränderlichen Objekten (Mutable vs. Immutable):</div>
         <ul>

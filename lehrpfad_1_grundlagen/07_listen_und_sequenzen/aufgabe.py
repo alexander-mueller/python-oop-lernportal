@@ -20,7 +20,8 @@ def liste_umdrehen(liste: list) -> list:
         Verwende Slicing mit Schrittweite -1: `liste[::-1]`
         oder erstelle eine Kopie und wende `.reverse()` an.
     """
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -36,7 +37,8 @@ def filtere_positive_zahlen(zahlen: list[float]) -> list[float]:
         Erstelle eine leere Ergebnisliste `positiv = []` und iteriere mit einer
         for-Schleife über alle Zahlen. Wenn `z > 0`, füge sie mit `.append(z)` hinzu.
     """
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -56,7 +58,8 @@ def entferne_element(liste: list, element) -> bool:
     Tipp:
         Prüfe zuerst mit `if element in liste:`, bevor du `liste.remove(element)` aufrufst.
     """
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -75,7 +78,8 @@ def mittlere_elemente(liste: list) -> list:
     Tipp:
         Nutze Slicing: `liste[1:-1]`. Wenn `len(liste) <= 2`, gib `[]` zurück.
     """
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
@@ -100,7 +104,8 @@ def noten_durchschnitt_ohne_ausreisser(noten: list[float]) -> float:
         4. Entferne je ein Exemplar mit `kopie.remove(...)`.
         5. Berechne den Schnitt mit `sum(kopie) / len(kopie)` und gib ihn zurück.
     """
-    # Schreibe hier deinen Code für TODO 5:
+    # 🎯 TEILZIEL 5: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 

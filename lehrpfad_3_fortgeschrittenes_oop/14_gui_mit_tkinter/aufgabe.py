@@ -99,7 +99,7 @@ class ZaehlerLogik:
     """
 
     # ==========================================================================
-    # TODO 1: Konstruktor __init__
+    # 🎯 TEILZIEL 1 (TODO 1): Konstruktor __init__
     # Parameter:
     #   - startwert (int, Standard: 0)
     #   - min_wert (int, Standard: -100)
@@ -181,7 +181,7 @@ class ZaehlerApp:
     """
 
     # ==========================================================================
-    # TODO 4: Konstruktor __init__(self, root: tk.Tk)
+    # 🎯 TEILZIEL 4 (TODO 4): Konstruktor __init__(self, root: tk.Tk)
     # Parameter: root (das Tkinter-Hauptfenster)
     #
     # 1. Speichere das Fenster:
@@ -269,7 +269,7 @@ class ZaehlerApp:
         pass
 
     # ==========================================================================
-    # TODO 6: Methode aktualisiere_anzeige(self) -> None
+    # 🎯 TEILZIEL 6 (TODO 6): Methode aktualisiere_anzeige(self) -> None
     # Synchronisiert die Oberfläche mit den aktuellen Werten aus self.logik:
     #
     # 1. Hauptanzeige:

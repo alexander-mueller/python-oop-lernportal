@@ -15,7 +15,7 @@ Führe danach die Tests aus mit:
 """
 
 # ==============================================================================
-# TODO 1: Begrüßungstext mit f-String
+# 🎯 TEILZIEL 1 (TODO 1): Begrüßungstext mit f-String
 #
 # Schreibe eine Funktion 'begruessungs_text(name: str, stadt: str) -> str'.
 # Sie soll folgenden Text zurückgeben:
@@ -26,12 +26,13 @@ Führe danach die Tests aus mit:
 # ==============================================================================
 
 def begruessungs_text(name: str, stadt: str) -> str:
-    # Schreibe hier deinen Code für TODO 1:
+    # 🎯 TEILZIEL 1: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 2: Alter in Tagen berechnen
+# 🎯 TEILZIEL 2 (TODO 2): Alter in Tagen berechnen
 #
 # Schreibe eine Funktion 'berechne_alter_in_tagen(jahre: int) -> int'.
 # Sie erhält das Alter in ganzen Jahren (z.B. 18) und soll das Alter in Tagen
@@ -43,12 +44,13 @@ def begruessungs_text(name: str, stadt: str) -> str:
 # ==============================================================================
 
 def berechne_alter_in_tagen(jahre: int) -> int:
-    # Schreibe hier deinen Code für TODO 2:
+    # 🎯 TEILZIEL 2: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 3: Rechnungsposten formatieren
+# 🎯 TEILZIEL 3 (TODO 3): Rechnungsposten formatieren
 #
 # Schreibe eine Funktion 'formatiere_rechnungsposten(artikel: str, anzahl: int, einzelpreis: float) -> str'.
 # Sie berechnet den Gesamtpreis (anzahl * einzelpreis) und gibt einen formatierten
@@ -66,12 +68,13 @@ def berechne_alter_in_tagen(jahre: int) -> int:
 # ==============================================================================
 
 def formatiere_rechnungsposten(artikel: str, anzahl: int, einzelpreis: float) -> str:
-    # Schreibe hier deinen Code für TODO 3:
+    # 🎯 TEILZIEL 3: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
 # ==============================================================================
-# TODO 4: Steckbrief mit BMI-Berechnung
+# 🎯 TEILZIEL 4 (TODO 4): Steckbrief mit BMI-Berechnung
 #
 # Schreibe eine Funktion 'steckbrief(name: str, groesse_m: float, gewicht_kg: float) -> str'.
 # 1. Berechne den BMI (Body-Mass-Index) nach der Formel:
@@ -90,7 +93,8 @@ def formatiere_rechnungsposten(artikel: str, anzahl: int, einzelpreis: float) ->
 # ==============================================================================
 
 def steckbrief(name: str, groesse_m: float, gewicht_kg: float) -> str:
-    # Schreibe hier deinen Code für TODO 4:
+    # 🎯 TEILZIEL 4: Implementiere die Logik Schritt für Schritt:
+    # 💡 Tipp: Beachte Datentypen und das abschließende return!
     pass
 
 
