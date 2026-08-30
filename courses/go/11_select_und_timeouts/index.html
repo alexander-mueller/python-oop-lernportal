@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 11: select Multiplexing, Context &amp; Timeouts</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Concurrency &amp; Flow Control</div>
+          <h1>Go 11: <code>select</code> Multiplexing, Timeouts &amp; Context</h1>
+          <p>Lerne die Kontrollzentrale für Go-Channels: Multiplexe parallele Datenströme mit <code>select</code>, verhindere Deadlocks mit <code>default</code> und steuere SLAs &amp; Stornierungen mit <code>context.Context</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: SELECT STATEMENT -->
+        <section class="card">
+          <h2>⚡ 1. Channel-Multiplexing mit <code>select</code></h2>
+          <p>
+            Das <code>select</code>-Statement ähnelt einem <code>switch</code>, jedoch für Channel-Operationen: Es wartet darauf, dass <strong>mindestens ein Case</strong> kommunikationsbereit ist (Senden oder Empfangen). Sind mehrere Cases gleichzeitig bereit, wählt Go pseudo-zufällig einen aus (Fairness-Garantie).
+          </p>
+
+          <!-- Concurrency-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌─── [Kanal A: Schnelle DB] &nbsp;&nbsp;───┐<br>
+            [select] ─────┼─── [Kanal B: Backup DB] &nbsp;&nbsp;&nbsp;&nbsp;───┼───&gt; Wer zuerst Daten hat, gewinnt!<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─── [time.After(100ms): Timeout] ┘
+          </div>
+
+          <pre><code>select {
+case msg1 := &lt;-ch1:
+    fmt.Println("Empfangen von ch1:", msg1)
+case msg2 := &lt;-ch2:
+    fmt.Println("Empfangen von ch2:", msg2)
+case &lt;-time.After(500 * time.Millisecond):
+    fmt.Println("⚠️ Timeout! Beide Kanäle antworten zu langsam.")
+default:
+    // Wird SOFORT ausgeführt, wenn kein Kanal bereit ist (Nicht-blockierend!)
+    fmt.Println("Keine Daten vorhanden.")
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CONTEXT & CANCELLATION -->
+        <section class="card">
+          <h2>🛡️ 2. Robuste Cancellation mit <code>context.Context</code></h2>
+          <p>
+            In Cloud-Microservices muss jeder Request bei Client-Abbrüchen oder Timeouts sofort kaskadierend gestoppt werden. Das <code>context</code>-Paket ist in Go der offizielle Standard für Deadlines und Abbruchsignale:
+          </p>
+
+          <pre><code>import (
+    "context"
+    "time"
+)
+
+func QueryDatabase(ctx context.Context) (string, error) {
+    // Erstelle einen Channel für das Abfrageergebnis
+    resultCh := make(chan string, 1)
+
+    go func() {
+        // Simuliere langwierige DB-Abfrage
+        time.Sleep(200 * time.Millisecond)
+        resultCh &lt;- "Kundendaten #42"
+    }()
+
+    select {
+    case &lt;-ctx.Done():
+        // Wurde abgebrochen (Timeout oder Cancel)
+        return "", ctx.Err() // z.B. context.DeadlineExceeded
+    case res := &lt;-resultCh:
+        return res, nil
+    }
+}
+
+func main() {
+    // 🎯 Timeout von 100ms definieren:
+    ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+    defer cancel() // Ressourcen immer freigeben!
+
+    res, err := QueryDatabase(ctx)
+    if err != nil {
+        fmt.Println("Fehler:", err) // Ausgabe: context deadline exceeded
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Die Rezeption mit Küchen-Gong</div>
+            <p>
+              Stell dir einen <strong>Hotel-Concierge</strong> vor:
+              Er hat ein rotes Telefon (<code>ch1</code>) für den Zimmerservice und ein blaues Telefon (<code>ch2</code>) für Taxibestellungen. Mit <code>select</code> nimmt er sofort den Hörer ab, der zuerst klingelt. Hat er eine Sanduhr aufgestellt (<code>time.After</code>) und nach 5 Minuten klingelt keines der Telefone, schließt er den Schalter (Timeout). <code>context.Context</code> ist der Generalschlüssel, mit dem die Geschäftsleitung alle laufenden Aufträge auf einen Schlag abbricht.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: select &amp; Context Patterns</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Muster</th>
+                  <th style="padding: 10px;">Code-Beispiel</th>
+                  <th style="padding: 10px;">Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Non-Blocking Read</strong></td>
+                  <td style="padding: 10px;"><code>select { case v := &lt;-ch: ... default: ... }</code></td>
+                  <td style="padding: 10px;">Liest sofort ohne Blockieren des aktuellen Threads</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Non-Blocking Write</strong></td>
+                  <td style="padding: 10px;"><code>select { case ch &lt;- v: ... default: ... }</code></td>
+                  <td style="padding: 10px;">Verwirft oder puffert Daten wenn Channel voll ist</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Hard Timeout</strong></td>
+                  <td style="padding: 10px;"><code>case &lt;-time.After(2 * time.Second):</code></td>
+                  <td style="padding: 10px;">Bricht Warten nach Zeitintervall zuverlässig ab</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Context Done</strong></td>
+                  <td style="padding: 10px;"><code>case &lt;-ctx.Done(): return ctx.Err()</code></td>
+                  <td style="padding: 10px;">Kaskadierende Stornierung durch Microservice-Chain</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>FastestResponse(ch1, ch2 &lt;-chan string) string</code> mit <code>select</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>FetchWithTimeout(ch &lt;-chan string, timeout time.Duration) (string, error)</code> mit <code>time.After</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>TrySend(ch chan&lt;- int, val int) bool</code> und <code>TryReceive(ch &lt;-chan int) (int, bool)</code> mit <code>default</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>QueryWithContext(ctx context.Context, fn func() string) (string, error)</code> mit <code>ctx.Done()</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Cloud-Architekt Best Practice: Context immer als erster Parameter</div>
+            <p>In Go ist es die feste Konvention, <code>ctx context.Context</code> immer als <strong>ersten Parameter</strong> an I/O- oder Netzwerkfunktionen zu übergeben (z.B. <code>func FetchUser(ctx context.Context, id int)</code>).</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_3_concurrency&chapter=11_select_und_timeouts" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_channels_und_datenfluss/index.html" class="btn btn-secondary">&larr; Zurück zu Go 10</a>
+            <a href="../12_mutex_und_thread_safety/index.html" class="btn btn-secondary">Weiter zu Go 12: Mutex &amp; Thread Safety &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

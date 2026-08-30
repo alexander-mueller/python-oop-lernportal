@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 06: Box-Modell &amp; Abstände</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🎨 Lehrpfad 2: CSS3 Styling</div>
+          <h1>CSS 06: Das CSS-Box-Modell &amp; Abstände</h1>
+          <p>Lerne die 4 Schichten jedes HTML-Elements (Content, Padding, Border, Margin), den Unterschied zwischen <code>content-box</code> und <code>border-box</code> sowie das Phänomen des Margin Collapses.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DIE 4 SCHICHTEN -->
+        <section class="card">
+          <h2>📦 1. Die 4 Schichten des Box-Modells</h2>
+          <p>Jedes gerenderte HTML-Element ist ein rechteckiger Kasten, der aus vier konzentrischen Bereichen besteht:</p>
+          
+          <div style="background: #0b0f19; border-radius: 12px; padding: 20px; text-align: center; color: #f8fafc; font-family: monospace; font-size: 0.88rem; margin: 15px 0;">
+            <div style="background: #ea580c; padding: 18px; border-radius: 8px; color: white;">
+              <strong>MARGIN (Außenabstand zum Nachbarn)</strong>
+              <div style="background: #ca8a04; padding: 16px; margin-top: 10px; border-radius: 6px; color: white;">
+                <strong>BORDER (Sichtbarer Rahmen)</strong>
+                <div style="background: #16a34a; padding: 14px; margin-top: 10px; border-radius: 4px; color: white;">
+                  <strong>PADDING (Innenabstand zum Inhalt)</strong>
+                  <div style="background: #2563eb; padding: 12px; margin-top: 10px; border-radius: 4px; color: white;">
+                    <strong>CONTENT (Text, Bild: width &times; height)</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: BORDER-BOX RESET -->
+        <section class="card">
+          <h2>📐 2. <code>box-sizing: border-box</code> – Der Lebensretter</h2>
+          <p>Im alten Standard (<code>content-box</code>) addieren sich Padding und Border zur Breite hinzu: Ein 200px breites Element mit 20px Padding und 2px Border wird plötzlich <strong>244px breit</strong> und sprengt das Layout!</p>
+          <p>Mit <code>box-sizing: border-box</code> bleibt die Gesamtbreite immer exakt 200px (Padding &amp; Border werden nach innen gerechnet):</p>
+
+          <pre><code>/* 🌟 Best Practice: Der universelle Box-Sizing Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: MARGIN COLLAPSE & AUTO-MARGIN -->
+        <section class="card">
+          <h2>🧲 3. Vertikaler Margin Collapse &amp; Zentrierung</h2>
+          <p>Wenn zwei vertikal aufeinanderfolgende Block-Elemente <code>margin-bottom: 20px</code> und <code>margin-top: 30px</code> haben, addieren sich die Abstände nicht zu 50px – sie verschmelzen (kollabieren) zum größeren Wert (<strong>30px</strong>)!</p>
+
+          <pre><code>/* Horizontale Zentrierung von Containern: */
+.container {
+  max-width: 800px;
+  margin: 0 auto; /* Oben/Unten: 0, Links/Rechts: auto */
+  padding: 24px;
+}
+
+/* Inline-Block für nebeneinanderstehende Badges: */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 8px;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Das Versandpaket</div>
+            <p><strong>Content:</strong> Das Smartphone im Paket.<br>
+            <strong>Padding:</strong> Die Luftpolsterfolie um das Smartphone herum.<br>
+            <strong>Border:</strong> Der feste Pappkarton.<br>
+            <strong>Margin:</strong> Der Sicherheitsabstand zu anderen Paketen im Lieferwagen.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Box-Modell Kurzschreibweisen (Shorthands)</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">1 Wert</td>
+                  <td style="padding: 10px;"><code>padding: 16px;</code></td>
+                  <td style="padding: 10px;">Alle 4 Seiten (Top, Right, Bottom, Left)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">2 Werte</td>
+                  <td style="padding: 10px;"><code>margin: 10px auto;</code></td>
+                  <td style="padding: 10px;">[Oben &amp; Unten] [Links &amp; Rechts]</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">3 Werte</td>
+                  <td style="padding: 10px;"><code>padding: 10px 20px 30px;</code></td>
+                  <td style="padding: 10px;">[Oben] [Links &amp; Rechts] [Unten]</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">4 Werte (Uhrzeigersinn)</td>
+                  <td style="padding: 10px;"><code>margin: 10px 20px 15px 5px;</code></td>
+                  <td style="padding: 10px;"><strong>TRBL:</strong> Top &rarr; Right &rarr; Bottom &rarr; Left</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Universellen <code>box-sizing: border-box</code> Reset auf <code>*, *::before, *::after</code> anwenden.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Einen Hauptcontainer <code>.card-container</code> mit <code>max-width</code>, <code>margin: 0 auto</code> und Innenabstand <code>padding</code> zentrieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>.profile-card</code> mit definiertem <code>padding</code>, sichtbarem <code>border</code> und abgerundeten Ecken (<code>border-radius</code>) stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Einen Abstandhalter nach unten mit <code>margin-bottom</code> setzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Tags/Badges mit <code>display: inline-block</code>, <code>padding</code> und horizontalem <code>margin-right</code> nebeneinander formatieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_2_css_styling&chapter=06_box_modell_und_abstaende" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_css_selektoren_und_kaskade/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 05</a>
+            <a href="../07_css_variablen_und_farbwelten/index.html" class="btn btn-secondary">Weiter zu CSS 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 01: Semantik &amp; Dokumentenstruktur</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌱 Lehrpfad 1: Semantisches HTML5</div>
+          <h1>HTML 01: Semantik &amp; Dokumentenstruktur</h1>
+          <p>Lerne die Anatomie eines modernen HTML5-Dokuments und wie semantische Tags wie <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code> und <code>&lt;footer&gt;</code> für Struktur, SEO und Barrierefreiheit sorgen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DOKUMENTEN-ANATOMIE -->
+        <section class="card">
+          <h2>💡 1. Anatomie eines HTML5-Dokuments</h2>
+          <p>Jedes moderne HTML-Dokument beginnt mit dem Doctype und der Grundstruktur im Head-Bereich. Hier werden Metadaten, Zeichenkodierung und Viewport für responsive Endgeräte festgelegt:</p>
+          
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Mein Tech-Blog | Webentwicklung&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Sichtbarer Seiteninhalt --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SEMANTISCHE LANDMARKS -->
+        <section class="card">
+          <h2>🏗️ 2. Semantische Landmark-Elemente</h2>
+          <p>Früher wurden Webseiten aus unzähligen bedeutungslosen <code>&lt;div class="header"&gt;</code>-Verschachtelungen gebaut (sog. <em>Div-Suppe</em>). HTML5 bietet aussagekräftige <strong>semantische Tags</strong>, die Suchmaschinen (SEO) und Screenreadern den genauen Zweck eines Bereichs vermitteln:</p>
+
+          <div style="background: #0b0f19; border: 1px solid #1e293b; border-radius: 8px; padding: 18px; margin: 15px 0; color: #f8fafc; font-family: monospace; font-size: 0.9rem;">
+            <div style="border: 2px dashed #38bdf8; padding: 10px; margin-bottom: 8px; border-radius: 4px;">
+              <strong>&lt;header&gt;</strong> (Kopfbereich: Logo, Titel)
+              <div style="border: 1px solid #818cf8; margin-top: 6px; padding: 6px; border-radius: 4px;">
+                <strong>&lt;nav&gt;</strong> (Hauptnavigation: &lt;ul&gt; &gt; &lt;li&gt; &gt; &lt;a&gt;)
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <div style="flex: 2; border: 2px dashed #4ade80; padding: 10px; border-radius: 4px;">
+                <strong>&lt;main&gt;</strong> (Einzigartiger Hauptinhalt)
+                <div style="border: 1px solid #a3e635; margin-top: 6px; padding: 6px; border-radius: 4px;">
+                  <strong>&lt;article&gt;</strong> (In sich geschlossener Blogbeitrag)
+                </div>
+                <div style="border: 1px solid #facc15; margin-top: 6px; padding: 6px; border-radius: 4px;">
+                  <strong>&lt;section&gt;</strong> (Thematischer Abschnitt mit &lt;h3&gt;)
+                </div>
+              </div>
+              <div style="flex: 1; border: 2px dashed #fb923c; padding: 10px; border-radius: 4px;">
+                <strong>&lt;aside&gt;</strong> (Sidebar, Zusatzinfos)
+              </div>
+            </div>
+            <div style="border: 2px dashed #f472b6; padding: 10px; border-radius: 4px;">
+              <strong>&lt;footer&gt;</strong> (Fußbereich: Copyright, Impressum)
+            </div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Das Zeitungs-Layout &amp; Hausbau</div>
+            <p><strong>Die Haus-Architektur:</strong> <code>&lt;header&gt;</code> ist das Dach mit Hausnummer und Eingangsschild, <code>&lt;nav&gt;</code> ist der Wegweiser im Flur, <code>&lt;main&gt;</code> ist das Wohnzimmer (wo das Leben stattfindet), <code>&lt;aside&gt;</code> ist das Bücherregal an der Seite und <code>&lt;footer&gt;</code> das Fundament mit Impressum und Baujahr.</p>
+            <p><strong>Screenreader &amp; Google Bot:</strong> Blinde Nutzer können mit Tastatur-Shortcuts direkt von Landmark zu Landmark springen (z.B. Navigation überspringen und sofort zu <code>&lt;main&gt;</code> hüpfen). Eine bloße <code>&lt;div&gt;</code> bietet keinerlei Orientierung!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: HTML5 Semantik-Tags</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Element</th>
+                  <th style="padding: 10px;">Bedeutung &amp; Zweck</th>
+                  <th style="padding: 10px;">Regel / Best Practice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;header&gt;</code></td>
+                  <td style="padding: 10px;">Einleitender Bereich einer Seite oder eines Artikels</td>
+                  <td style="padding: 10px;">Kann mehrfach verwendet werden (z.B. Seiten-Header &amp; Artikel-Header)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;nav&gt;</code></td>
+                  <td style="padding: 10px;">Haupt-Navigationslinks</td>
+                  <td style="padding: 10px;">Nur für bedeutsame Navigationsblöcke, nicht für jeden Link</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;main&gt;</code></td>
+                  <td style="padding: 10px;">Der zentrale Hauptinhalt des Dokuments</td>
+                  <td style="padding: 10px;"><strong>Darf nur 1x pro Seite existieren</strong></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;article&gt;</code></td>
+                  <td style="padding: 10px;">Eigenständiger, wiederverwendbarer Inhalt (Blogpost, News)</td>
+                  <td style="padding: 10px;">Sollte auch außerhalb der Seite eigenständig Sinn ergeben</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;section&gt;</code></td>
+                  <td style="padding: 10px;">Thematisch zusammenhängender Unterabschnitt</td>
+                  <td style="padding: 10px;">Sollte fast immer eine eigene Überschrift (<code>&lt;h2&gt;..&lt;h6&gt;</code>) besitzen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;aside&gt;</code></td>
+                  <td style="padding: 10px;">Randnotizen, verwandte Beiträge, Autoren-Bio</td>
+                  <td style="padding: 10px;">Inhalt ist tangential zum Hauptartikel</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>&lt;footer&gt;</code></td>
+                  <td style="padding: 10px;">Fußzeile mit Metadaten, Copyright, rechtlichen Links</td>
+                  <td style="padding: 10px;">Schließt Dokument oder Artikel ab</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Vollständigen HTML5-Kopfbereich (Doctype, <code>lang="de"</code>, UTF-8 Meta, Responsive Viewport, <code>&lt;title&gt;</code>) deklarieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>&lt;header&gt;</code> mit Seiten-Titel <code>&lt;h1&gt;</code> und <code>&lt;nav&gt;</code>-Leiste mit einer Liste von mindestens 3 Links anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>&lt;main&gt;</code>-Tag als Hauptbereich definieren, der einen <code>&lt;article&gt;</code> mit eigener <code>&lt;h2&gt;</code>-Überschrift und Absatz enthält.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Eine <code>&lt;section&gt;</code> innerhalb von <code>&lt;main&gt;</code> sowie eine begleitende <code>&lt;aside&gt;</code>-Sidebar mit Zusatzinfos hinzufügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>&lt;footer&gt;</code> am Dokumentenende mit Copyright-Hinweis <code>&amp;copy;</code> erstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Didaktischer Tipp</div>
+            <p>Achte darauf, dass <code>&lt;main&gt;</code> nicht innerhalb von <code>&lt;header&gt;</code> oder <code>&lt;footer&gt;</code> verschachtelt wird. Die Navigation <code>&lt;nav&gt;</code> nutzt semantisch am besten eine ungeordnete Liste <code>&lt;ul&gt; &gt; &lt;li&gt; &gt; &lt;a&gt;</code>.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_1_html_basics&chapter=01_semantisches_html_und_struktur" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_texte_listen_und_medien/index.html" class="btn btn-secondary">Weiter zu HTML 02 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Übung: BEM-Methodik &amp; Modularität</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #8b5cf6;
+      --amber: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+      align-items: center;
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 1: BEM Block & Elements für .pricing-card
+       - Stylinge .pricing-card (Hintergrund, Rahmen, Radius, Padding, Flex-Column)
+       - Stylinge .pricing-card__header (display: flex, justify-content: space-between)
+       - Stylinge .pricing-card__title (Schriftgröße, Gewicht)
+       - Stylinge .pricing-card__price (große Schriftgröße, Akzentfarbe)
+       - Stylinge .pricing-card__features (Listenstil entfernen, Abstände)
+       ========================================================== */
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .pricing-card__header {
+      /* TODO 1a: display: flex; justify-content: space-between; align-items: center; */
+    }
+
+    .pricing-card__title {
+      /* TODO 1b: font-size: 1.25rem; font-weight: 700; */
+    }
+
+    .pricing-card__price {
+      /* TODO 1c: font-size: 2.2rem; font-weight: 800; color: var(--text); */
+    }
+
+    .pricing-card__features {
+      /* TODO 1d: list-style: none; display: flex; flex-direction: column; gap: 10px; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 2: BEM Block-Modifier .pricing-card--popular
+       - Hebe die Karte hervor:
+         border-color: var(--accent)
+         box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.3)
+         transform: scale(1.03)
+       ========================================================== */
+    .pricing-card--popular {
+      /* TODO 2: Modifier-Regeln hier einfügen */
+      /* border-color: ...; */
+      /* box-shadow: ...; */
+      /* transform: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 3: BEM Button-Block .btn & Modifiers
+       - .btn: Basis-Button (display: inline-block, padding, border-radius, cursor)
+       - .btn--primary: background: var(--primary), color: white
+       - .btn--outline: background: transparent, border: 1px solid var(--border)
+       ========================================================== */
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn--primary {
+      /* TODO 3a: Hintergrund & Textfarbe für Primary Button */
+      /* background: ...; */
+      /* color: ...; */
+    }
+
+    .btn--outline {
+      /* TODO 3b: Outline Button */
+      /* background: transparent; */
+      /* border: 1px solid var(--border); */
+      /* color: var(--text); */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 4: BEM Badge-Element & Modifier
+       - .pricing-card__badge: font-size, padding, border-radius
+       - .pricing-card__badge--highlight: background: var(--amber), color: black
+       ========================================================== */
+    .pricing-card__badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-card__badge--highlight {
+      /* TODO 4: Highlight-Badge Farben */
+      /* background: ...; */
+      /* color: ...; */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="text-align: center;">
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Wähle deinen Plan</h1>
+      <p style="color: var(--text-muted);">Modulare BEM-Komponenten ohne Kaskaden-Konflikte.</p>
+    </header>
+
+    <main>
+      <div class="pricing-grid">
+        <!-- Starter Plan -->
+        <article class="pricing-card">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Starter</h3>
+            <span class="pricing-card__badge" style="background: rgba(255,255,255,0.1); color: var(--text-muted);">Basis</span>
+          </div>
+          <div class="pricing-card__price">€ 0 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/ Monat</span></div>
+          <ul class="pricing-card__features">
+            <li>✓ 1 Projekt</li>
+            <li>✓ Community Support</li>
+            <li>✓ Standard Analytics</li>
+          </ul>
+          <div class="pricing-card__footer">
+            <a href="#" class="btn btn--outline">Kostenlos starten</a>
+          </div>
+        </article>
+
+        <!-- Pro Plan (Popular Modifier) -->
+        <article class="pricing-card pricing-card--popular">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Professional</h3>
+            <span class="pricing-card__badge pricing-card__badge--highlight">🔥 Beliebt</span>
+          </div>
+          <div class="pricing-card__price">€ 29 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/ Monat</span></div>
+          <ul class="pricing-card__features">
+            <li>✓ Unbegrenzte Projekte</li>
+            <li>✓ Prioritäts-Support</li>
+            <li>✓ Erweiterte Metriken &amp; Dark Mode</li>
+          </ul>
+          <div class="pricing-card__footer">
+            <a href="#" class="btn btn--primary">Jetzt upgraden</a>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

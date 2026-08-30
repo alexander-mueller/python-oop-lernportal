@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 03: Formulare &amp; Validierung</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌱 Lehrpfad 1: Semantisches HTML5</div>
+          <h1>HTML 03: Formulare &amp; HTML5-Validierung</h1>
+          <p>Lerne die Konstruktion interaktiver Web-Formulare, barrierefreie <code>&lt;label&gt;</code>-Zuordnungen, moderne Eingabetypen und native Client-Side Validierung ohne JavaScript.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: FORMULAR-AUFBAU & LABELS -->
+        <section class="card">
+          <h2>💡 1. Formular-Grundgerüst &amp; Barrierefreie Labels</h2>
+          <p>Ein Formular wird mit dem <code>&lt;form&gt;</code>-Tag deklariert. Jedes Eingabefeld benötigt ein zugehöriges <code>&lt;label for="feld-id"&gt;</code>, dessen <code>for</code>-Attribut exakt mit der <code>id</code> des Feldes übereinstimmt:</p>
+          
+          <pre><code>&lt;form action="/api/register" method="POST"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="username"&gt;Benutzername:&lt;/label&gt;
+    &lt;input type="text" id="username" name="username" required minlength="3" placeholder="z.B. dev_anna"&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Registrieren&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: INPUT-TYPEN & AUSWAHL -->
+        <section class="card">
+          <h2>🎛️ 2. Moderne Input-Typen, Dropdowns &amp; Textareas</h2>
+          <p>HTML5 bietet spezialisierte Eingabetypen für mobile Tastaturen (z.B. <code>email</code> blendet auf Smartphones das @-Zeichen ein, <code>number</code> das Ziffernpad):</p>
+
+          <pre><code>&lt;!-- E-Mail mit Formatprüfung: --&gt;
+&lt;label for="user-email"&gt;E-Mail-Adresse:&lt;/label&gt;
+&lt;input type="email" id="user-email" name="email" required&gt;
+
+&lt;!-- Zahlenbereich mit min & max: --&gt;
+&lt;label for="experience"&gt;Jahre Erfahrung:&lt;/label&gt;
+&lt;input type="number" id="experience" name="experience" min="0" max="50" value="1"&gt;
+
+&lt;!-- Dropdown-Auswahl: --&gt;
+&lt;label for="course-select"&gt;Gewünschter Kurs:&lt;/label&gt;
+&lt;select id="course-select" name="course" required&gt;
+  &lt;option value=""&gt;-- Bitte wählen --&lt;/option&gt;
+  &lt;option value="html"&gt;HTML5 &amp; CSS3 Grundlagen&lt;/option&gt;
+  &lt;option value="js"&gt;JavaScript Masterclass&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;!-- Mehrzeiliges Textfeld: --&gt;
+&lt;label for="motivation"&gt;Dein Motivationsschreiben:&lt;/label&gt;
+&lt;textarea id="motivation" name="motivation" rows="4" placeholder="Erzähle über dich..."&gt;&lt;/textarea&gt;</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: VALIDIERUNG -->
+        <section class="card">
+          <h2>🛡️ 3. Native HTML5-Validierungsattribute</h2>
+          <p>Der Browser kann Eingaben vor dem Absenden vollständig ohne JavaScript prüfen:</p>
+
+          <div style="overflow-x: auto; margin: 15px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Attribut</th>
+                  <th style="padding: 10px;">Funktion</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>required</code></td>
+                  <td style="padding: 10px;">Pflichtfeld, darf nicht leer sein</td>
+                  <td style="padding: 10px;"><code>&lt;input type="email" required&gt;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>minlength / maxlength</code></td>
+                  <td style="padding: 10px;">Minimale und maximale Zeichenanzahl</td>
+                  <td style="padding: 10px;"><code>&lt;input type="password" minlength="8"&gt;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>min / max / step</code></td>
+                  <td style="padding: 10px;">Zahlen- und Datumsgrenzen</td>
+                  <td style="padding: 10px;"><code>&lt;input type="number" min="1" max="100"&gt;</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>pattern</code></td>
+                  <td style="padding: 10px;">Regulärer Ausdruck (Regex) zur Validierung</td>
+                  <td style="padding: 10px;"><code>&lt;input pattern="[0-9]{5}"&gt;</code> (Postleitzahl)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Die automatische Passkontrolle</div>
+            <p><strong>Das <code>&lt;label for="..."&gt;</code></strong> ist das Schild am Schalter. Wenn du auf das Schild klickst, aktiviert der Browser sofort das zugehörige Eingabefeld (wichtig für Motorik und Screenreader!).</p>
+            <p><strong>Die HTML5-Validierung</strong> ist die Schranke am Gate: Ist das Feld <code>required</code> oder das Passwort zu kurz, schlägt der Browser sofort Alarm und lässt den Nutzer gar nicht erst zum Server durch!</p>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>&lt;form&gt;</code> mit <code>action</code> und <code>method="POST"</code> erstellen, unterteilt mit <code>&lt;fieldset&gt;</code> und <code>&lt;legend&gt;</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Text- und E-Mail-Inputs mit barrierefreien <code>&lt;label for="..."&gt;</code> und <code>required</code>-Attribut anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Passwort-Feld mit <code>minlength="8"</code> und Number-Input mit <code>min="1"</code> und <code>max="50"</code> integrieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Dropdown-Menü <code>&lt;select&gt;</code> mit mehreren <code>&lt;option&gt;</code>-Werten sowie ein <code>&lt;textarea&gt;</code>-Feld einbinden.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Checkbox für AGB (<code>required</code>) und einen <code>&lt;button type="submit"&gt;</code> zum Absenden hinzufügen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_1_html_basics&chapter=03_formulare_und_validierung" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_texte_listen_und_medien/index.html" class="btn btn-secondary">&larr; Zurück zu HTML 02</a>
+            <a href="../04_barrierefreiheit_und_aria/index.html" class="btn btn-secondary">Weiter zu HTML 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

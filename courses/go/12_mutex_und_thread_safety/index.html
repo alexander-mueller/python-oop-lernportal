@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 12: Mutex, RWMutex &amp; Atomic Operations</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Thread Safety &amp; State</div>
+          <h1>Go 12: Race Conditions, <code>sync.Mutex</code> &amp; Atomics</h1>
+          <p>Schütze geteilte Speicherzustände in hochgradig parallelen Cloud-Systemen: Lerne <code>sync.Mutex</code>, optimierte <code>sync.RWMutex</code> Read-Locks und lock-freie <code>sync/atomic</code> Operationen kennen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: RACE CONDITIONS & MUTEX -->
+        <section class="card">
+          <h2>⚔️ 1. Was ist eine Data Race Condition?</h2>
+          <p>
+            Eine <strong>Data Race Condition</strong> entsteht, wenn zwei oder mehr Goroutines gleichzeitig auf dieselbe Speicheradresse zugreifen und <strong>mindestens ein Zugriff schreibend</strong> ist. Dies führt zu Speicher-Korruption oder Panics (z.B. <em>concurrent map writes</em>).
+          </p>
+
+          <!-- Concurrency-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Goroutine 1: Schreiben] ───&gt; [ mu.Lock() ] ──&gt; (Exklusiver Zugriff auf Map) ──&gt; [ mu.Unlock() ]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▲<br>
+            [Goroutine 2: Schreiben] ──────(Muss warten!)
+          </div>
+
+          <pre><code>package main
+
+import "sync"
+
+type SafeCounter struct {
+    mu    sync.Mutex
+    value int
+}
+
+func (c *SafeCounter) Inc() {
+    c.mu.Lock()         // Kritischen Abschnitt sperren
+    defer c.mu.Unlock() // Sicherstellen, dass das Lock immer freigegeben wird
+    c.value++
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: RWMUTEX & ATOMICS -->
+        <section class="card">
+          <h2>⚡ 2. High-Performance: <code>sync.RWMutex</code> &amp; <code>sync/atomic</code></h2>
+          <p>
+            Wenn 99% aller Zugriffe nur lesend sind (z.B. in einem Cache), blockieren sich parallele Leser mit <code>sync.Mutex</code> unnötig. <code>sync.RWMutex</code> erlaubt <strong>beliebig viele parallele Leser (<code>RLock</code>)</strong>, sperrt jedoch exklusiv für Schreiber (<code>Lock</code>).
+          </p>
+
+          <pre><code>// 1. sync.RWMutex für leselastige Caches:
+type Cache struct {
+    mu   sync.RWMutex
+    data map[string]string
+}
+
+func (c *Cache) Get(key string) (string, bool) {
+    c.mu.RLock()         // Mehrere Goroutines können gleichzeitig lesen!
+    defer c.mu.RUnlock()
+    val, ok := c.data[key]
+    return val, ok
+}
+
+// 2. Lock-freie Zähler mit Hardware-Atomics (sync/atomic):
+import "sync/atomic"
+
+var requestCount int64
+
+func TrackRequest() {
+    atomic.AddInt64(&amp;requestCount, 1) // Atomarer CPU-Befehl (kein Mutex-Overhead!)
+}
+
+func GetTotalRequests() int64 {
+    return atomic.LoadInt64(&amp;requestCount)
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Die Universitäts-Bibliothek</div>
+            <p>
+              Stell dir ein <strong>Buch im Lesesaal</strong> vor:
+              Mit <code>RWMutex</code> können 50 Studenten gleichzeitig das gleiche Buch lesen (<code>RLock</code>). Niemand stört den anderen. Kommt jedoch der Bibliothekar, um eine korrigierte Seite einzukleben (<code>Lock</code>), müssen alle Leser kurz absetzen, bis die Änderung fertig ist.
+              <code>sync/atomic</code> entspricht einem digitalen Drehkreuz am Eingang: Der Klickmechanismus schaltet blitzschnell mechanisch weiter, ohne dass ein Wachmann den Eingang absperren muss.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Concurrency-Primitive im Vergleich</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Mechanismus</th>
+                  <th style="padding: 10px;">Bester Anwendungsfall</th>
+                  <th style="padding: 10px;">Lese-Performance</th>
+                  <th style="padding: 10px;">Schreib-Performance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>sync.Mutex</code></td>
+                  <td style="padding: 10px;">Ausgewogene Lese-/Schreib-Muster, komplexe Zustände</td>
+                  <td style="padding: 10px;">Mittel (sequentiell)</td>
+                  <td style="padding: 10px;">Mittel</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>sync.RWMutex</code></td>
+                  <td style="padding: 10px;">Read-Heavy Workloads (&gt;90% Leser, z.B. In-Memory Cache)</td>
+                  <td style="padding: 10px; color: #166534;"><strong>Sehr hoch (parallel)</strong></td>
+                  <td style="padding: 10px;">Mittel</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>sync/atomic</code></td>
+                  <td style="padding: 10px;">Einfache Zähler, Flags, ID-Generierung, Metriken</td>
+                  <td style="padding: 10px; color: #166534;"><strong>Maximal (Lock-Free)</strong></td>
+                  <td style="padding: 10px; color: #166534;"><strong>Maximal (Lock-Free)</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Channels</code></td>
+                  <td style="padding: 10px;">Übergabe von Daten-Ownership, Event-Streaming, Work-Queues</td>
+                  <td style="padding: 10px;">Entkoppelt</td>
+                  <td style="padding: 10px;">Entkoppelt</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Struct <code>SafeCache</code> mit <code>sync.RWMutex</code> und <code>map[string]string</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Methoden <code>Set</code>, <code>Get</code>, <code>Delete</code> und <code>Len</code> thread-safe implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Struct <code>AtomicCounter</code> mit <code>sync/atomic</code> (<code>AddInt64</code>, <code>LoadInt64</code>, <code>StoreInt64</code>) umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Struct <code>SafeBankAccount</code> mit <code>sync.Mutex</code> für sichere Ein- und Auszahlungen bauen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tooling-Tipp: Gos Race Detector</div>
+            <p>Führe deine Tests immer mit dem Race Detector aus: <code>go test -race ./...</code>. Go instrumentiert den Code und schlägt sofort Alarm, falls ein nebenläufiger ungeschützter Speicherzugriff erkannt wird!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_3_concurrency&chapter=12_mutex_und_thread_safety" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_select_und_timeouts/index.html" class="btn btn-secondary">&larr; Zurück zu Go 11</a>
+            <a href="../13_http_server_und_routing/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 4: HTTP Server &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

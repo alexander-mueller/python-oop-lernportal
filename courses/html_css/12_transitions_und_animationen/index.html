@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 12: Transitions, Transforms &amp; Keyframes</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    @keyframes demo-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.12); opacity: 0.75; }
+    }
+    @keyframes demo-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .anim-demo-row {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .anim-card {
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      flex: 1 1 200px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .live-dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: demo-pulse 1.8s infinite ease-in-out;
+      margin-right: 6px;
+    }
+    .float-box {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #6366f1;
+      color: white;
+      border-radius: var(--radius-sm);
+      animation: demo-float 3s infinite ease-in-out;
+      font-weight: 700;
+    }
+    .hover-lift-demo {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #3b82f6;
+      color: white;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-weight: 600;
+    }
+    .hover-lift-demo:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📱 Lehrpfad 3: Responsive Layouts &amp; Animationen</div>
+          <h1>CSS 12: Transitions, Transforms &amp; Keyframes</h1>
+          <p>Bringe Dynamik und Micro-Interactions in dein UI: Lerne sanfte CSS Transitions, GPU-beschleunigte Transforms und Keyframe-Loops.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. LIVE DEMOS -->
+        <section class="card">
+          <h2>✨ 1. Interaktive Animationen im Überblick</h2>
+          <p>Bewege die Maus über die Demo-Elemente, um das Verhalten zu testen:</p>
+
+          <div class="anim-demo-row">
+            <div class="anim-card">
+              <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">PULSIERENDER STATUS</div>
+              <div><span class="live-dot"></span> <strong>Server Online</strong></div>
+            </div>
+            <div class="anim-card">
+              <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">SCHWEBENDES ELEMENT</div>
+              <div class="float-box">🚀 Floating Icon</div>
+            </div>
+            <div class="anim-card">
+              <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">HOVER-LIFT EFFEKT</div>
+              <div class="hover-lift-demo">Bewege mich! 👆</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. TRANSITIONS & TRANSFORMS -->
+        <section class="card">
+          <h2>⚡ 2. Transitions vs. Animationen</h2>
+          <p>Verwende <strong>Transitions</strong> für Nutzer-Reaktionen (Hover/Focus) und <strong>@keyframes Animationen</strong> für kontinuierliche Abläufe:</p>
+
+          <pre><code>/* 🎯 1. Sanfter Hover-Übergang mit Hardware-Beschleunigung: */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* 🎯 2. Endlos-Schleife mit Keyframes: */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+
+.badge {
+  animation: float 4s infinite ease-in-out;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🎬 Didaktische Analogie: Das Daumenkino</div>
+            <p><strong>Transitions</strong> sind die automatische Zwischenbildberechnung des Browsers zwischen zwei Fotos. <strong>@keyframes</strong> sind das detaillierte Regiebuch, bei dem du genau vorschreibst, was bei 0%, 50% und 100% der Szene passiert.</p>
+          </div>
+        </section>
+
+        <!-- 3. REDUCED MOTION -->
+        <section class="card">
+          <h2>♿ 3. Barrierefreiheit: prefers-reduced-motion</h2>
+          <p>Professionelles CSS respektiert stets Systemeinstellungen von Nutzern, die Animationen reduzieren möchten:</p>
+
+          <pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>.interactive-card</code> mit <code>transition: transform 0.3s ease, box-shadow 0.3s ease</code> ausstatten.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>.interactive-card:hover</code> mit <code>transform: translateY(-8px) scale(1.02)</code> und Schatten definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>@keyframes pulse</code> anlegen und mit <code>animation: pulse 2s infinite ease-in-out</code> verknüpfen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>@keyframes float</code> anlegen und mit <code>animation: float 4s infinite ease-in-out</code> verknüpfen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>@media (prefers-reduced-motion: reduce)</code> für Barrierefreiheit hinzufügen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_3_layouts_and_responsive&chapter=12_transitions_und_animationen" class="btn" style="background: #8b5cf6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_media_queries_und_mobile_first/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 11</a>
+            <a href="../13_bem_methodik_und_modularitaet/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 4 (CSS 13) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "id": "go",
+  "title": "Go (Golang) Cloud Microservices & Systems",
+  "language": "go",
+  "icon": "⚡",
+  "runner": "go",
+  "description": "Vom statischen Typensystem über Structs & Interfaces, Goroutines & Channels bis zu net/http REST-APIs und dem Cloud Microservice Master.",
+  "tracks": [
+    {
+      "id": "track_1_go_basics",
+      "title": "🌱 Lehrpfad 1: Go Syntax, Typensystem & Kontrollfluss",
+      "description": "Variablen, Typen, Type Inference (:=), Slices, Arrays, Maps, Schleifen (for/range) und Verzweigungen (if/switch).",
+      "certificateKey": "go_grundlagen",
+      "chapters": [
+        { "folder": "01_syntax_variablen_und_typen", "title": "Go 01: Go Syntax, Variablen & Typensystem", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "02_slices_arrays_und_maps", "title": "Go 02: Slices, Dynamische Arrays & Maps", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "03_kontrollfluss_und_schleifen", "title": "Go 03: Kontrollfluss, for-Loops & switch", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "04_funktionen_und_multiple_returns", "title": "Go 04: Funktionen & Mehrfache Rückgabewerte", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" }
+      ]
+    },
+    {
+      "id": "track_2_structs_interfaces",
+      "title": "🏗️ Lehrpfad 2: Idiomatisches Go: Structs & Interfaces",
+      "description": "Structs, Methoden mit Pointer-Receivern, Interfaces & Duck Typing, Explizites Error-Handling (if err != nil) & Defer/Panic/Recover.",
+      "certificateKey": "go_oop",
+      "chapters": [
+        { "folder": "05_structs_und_methoden", "title": "Go 05: Structs, Instanziierung & Pointer-Methoden", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "06_interfaces_und_polymorphie", "title": "Go 06: Interfaces, Duck Typing & Polymorphie", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "07_explizites_error_handling", "title": "Go 07: Idiomatisches Error-Handling (if err != nil)", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "08_defer_panic_und_recover", "title": "Go 08: Ressourcensicherheit mit defer & Recover", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" }
+      ]
+    },
+    {
+      "id": "track_3_concurrency",
+      "title": "🚀 Lehrpfad 3: Concurrency: Goroutines & Channels",
+      "description": "Leichtgewichtige Goroutines (go fn()), Unbuffered & Buffered Channels, select Multiplexing, sync.WaitGroup und sync.Mutex.",
+      "certificateKey": "go_concurrency",
+      "chapters": [
+        { "folder": "09_goroutines_und_waitgroups", "title": "Go 09: Goroutines (go worker) & sync.WaitGroup", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "10_channels_und_datenfluss", "title": "Go 10: Buffered & Unbuffered Channels (<-)", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "11_select_und_timeouts", "title": "Go 11: select Multiplexing, Context & Timeouts", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "12_mutex_und_thread_safety", "title": "Go 12: Race Conditions vermeiden mit sync.Mutex", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" }
+      ]
+    },
+    {
+      "id": "track_4_microservices_master",
+      "title": "💎 Lehrpfad 4: REST-APIs, Microservices & Master",
+      "description": "Standardbibliothek net/http, JSON Encoding/Decoding, Middleware-Pattern, automatisierte Unit-Tests mit testing Package & Cloud API Master.",
+      "certificateKey": "go_master",
+      "chapters": [
+        { "folder": "13_http_server_und_routing", "title": "Go 13: HTTP Web Server & net/http Routing", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "14_json_apis_und_middleware", "title": "Go 14: REST JSON APIs & Chained Middleware", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "15_unit_testing_und_benchmarks", "title": "Go 15: Automatisiertes Testing & Benchmarks", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" },
+        { "folder": "16_master_abschlussprojekt_microservice", "title": "Master 16: High-Concurrency Microservice API", "taskFile": "aufgabe.go", "testFile": "test_aufgabe.go" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 14: ACID Transaktionen &amp; Locking</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Performance, Transaktionen &amp; Master</div>
+          <h1>SQL 14: ACID Transaktionen, COMMIT, ROLLBACK &amp; Savepoints</h1>
+          <p>Garantierte Datenintegrität in geschäftskritischen Systemen: Lerne die 4 ACID-Säulen, sichere Überweisungen mit <code>BEGIN TRANSACTION</code>, Fehlerbehandlung mit <code>ROLLBACK</code> und feingranulare <code>SAVEPOINT</code>s.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: DIE 4 ACID SÄULEN -->
+        <section class="card">
+          <h2>🛡️ 1. Die 4 Säulen des ACID-Prinzips</h2>
+          <p>
+            Eine <strong>Transaktion</strong> ist eine logische Arbeitseinheit aus mehreren SQL-Befehlen, die als unteilbares Ganzes ausgeführt werden muss:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--primary); margin: 0 0 6px 0;">⚛️ A &ndash; Atomicity (Atomarität)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Alles oder nichts: Schlägt ein Teilschritt fehl, wird die gesamte Transaktion rückgängig gemacht.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--emerald); margin: 0 0 6px 0;">⚖️ C &ndash; Consistency (Konsistenz)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Die Datenbank wechselt nur von einem gültigen Zustand in den nächsten (z.B. CHECK-Constraints).</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--purple); margin: 0 0 6px 0;">🔒 I &ndash; Isolation (Isolation)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Gleichzeitige Transaktionen stören sich nicht gegenseitig (keine unvollständigen Zwischenstände lesbar).</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--amber); margin: 0 0 6px 0;">💾 D &ndash; Durability (Dauerhaftigkeit)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Nach einem erfolgreichen <code>COMMIT</code> sind Daten dauerhaft auf Festplatte / WAL persistiert.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: TRANSAKTIONS-STEUERUNG & SAVEPOINTS -->
+        <section class="card">
+          <h2>🏦 2. Transaktionssteuerung &amp; Savepoints</h2>
+          <pre><code>-- Eine sichere Banküberweisung:
+BEGIN TRANSACTION;
+
+-- 1. Geld von Konto A abziehen
+UPDATE konten SET saldo = saldo - 100 WHERE id = 1;
+
+-- 2. Geld auf Konto B gutschreiben
+UPDATE konten SET saldo = saldo + 100 WHERE id = 2;
+
+-- 3. Transaktions-Log schreiben
+INSERT INTO transfer_logs (von_id, an_id, betrag) VALUES (1, 2, 100);
+
+-- Alles erfolgreich? -> Dauerhaft festschreiben!
+COMMIT;</code></pre>
+
+          <div style="margin-top: 18px;">
+            <h3>📍 Teilschritte sichern mit SAVEPOINT</h3>
+            <pre><code>BEGIN TRANSACTION;
+INSERT INTO bestellungen (id, status) VALUES (1, 'offen');
+
+SAVEPOINT lager_reserviert;
+-- Versuche optionale Zusatz-Aktion:
+UPDATE lager SET bestand = bestand - 5 WHERE artikel_id = 99;
+
+-- Bei Problem mit Zusatz-Aktion nur zum Savepoint zurückspringen:
+ROLLBACK TO SAVEPOINT lager_reserviert;
+
+-- Haupt-Bestellung trotzdem abschließen:
+COMMIT;</code></pre>
+          </div>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Der Geldautomat</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🏧 Der ATM-Auszahlungs-Vergleich</div>
+            <p>Stell dir vor, der Geldautomat bucht 200 € von deinem Girokonto ab, aber genau im Moment der Geldschein-Ausgabe fällt der Strom aus!</p>
+            <p><strong>Ohne ACID:</strong> Dein Kontostand ist um 200 € ärmer, aber du hast kein Bargeld.</p>
+            <p><strong>Mit ACID (Rollback):</strong> Die Datenbank erkennt den Ausfall, bricht die unvollständige Transaktion ab und setzt den Kontostand automatisch auf den Ursprungswert zurück.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Transaktions-Kommandos</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>BEGIN TRANSACTION;</code></td>
+                  <td style="padding: 10px;">Startet eine atomare Transaktion (Autocommit aus)</td>
+                  <td style="padding: 10px;"><code>BEGIN TRANSACTION;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>COMMIT;</code></td>
+                  <td style="padding: 10px;">Schreibt alle Änderungen dauerhaft fest</td>
+                  <td style="padding: 10px;"><code>COMMIT;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ROLLBACK;</code></td>
+                  <td style="padding: 10px;">Verwirft alle unvollständigen Änderungen der Transaktion</td>
+                  <td style="padding: 10px;"><code>ROLLBACK;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SAVEPOINT &lt;name&gt;;</code></td>
+                  <td style="padding: 10px;">Erstellt einen Zwischenspeicherpunkt innerhalb der Transaktion</td>
+                  <td style="padding: 10px;"><code>SAVEPOINT vor_bonus;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ROLLBACK TO &lt;name&gt;;</code></td>
+                  <td style="padding: 10px;">Setzt Änderungen gezielt nur bis zum Savepoint zurück</td>
+                  <td style="padding: 10px;"><code>ROLLBACK TO vor_bonus;</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Erfolgreiche Banküberweisung mit COMMIT):</strong> Überweise 300.00 € von Konto 1 auf Konto 2, dokumentiere den Vorgang in <code>transaktions_log</code> und committe die Transaktion.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Transaktionsabbruch mit ROLLBACK):</strong> Simuliere einen Transaktionsversuch (Abbuchung von 5.000 € von Konto 3), der wegen unzureichender Deckung vollständig mit <code>ROLLBACK</code> abgebrochen wird.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Partielles Rollback mit SAVEPOINT):</strong> Reserviere 10 Einheiten eines Artikels, erstelle einen <code>SAVEPOINT</code>, versuche eine unzulässige Buchung, führe ein <code>ROLLBACK TO SAVEPOINT</code> aus und committe den validen Hauptschritt.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Konsistenz- &amp; Bilanzprüfung):</strong> Schreibe eine Prüf-Abfrage, die die Gesamtsumme aller Kontostände (Bilanzsumme) und die Anzahl erfolgreicher Transfers ausgibt.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_4_performance_und_master&chapter=14_transaktionen_acid_und_locking" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

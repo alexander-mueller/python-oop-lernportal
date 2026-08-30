@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barrierefreies Portal | A11y &amp; ARIA</title>
+</head>
+<body>
+
+  <!-- Skip-Link für Tastaturnutzer -->
+  <a href="#main-content" class="skip-link">Direkt zum Hauptinhalt springen</a>
+
+  <header>
+    <h1>Barrierefreies Entwicklerportal</h1>
+    <!-- Modal / Dialog Schließen Button -->
+    <button type="button" aria-label="Dialog schließen" class="close-btn">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </header>
+
+  <main id="main-content">
+    <section>
+      <h2>Häufig gestellte Fragen (FAQ)</h2>
+      <!-- Aufklappbares Accordion -->
+      <button type="button" aria-expanded="false" aria-controls="faq-details">
+        Wie teste ich Barrierefreiheit mit der Tastatur?
+      </button>
+      <div id="faq-details" hidden>
+        <p>Nutze die Tab-Taste zur Vorwärtsnavigation, Shift+Tab zur Rückwärtsnavigation und Enter/Space zur Aktivierung.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sicherheit &amp; Konto</h2>
+      <!-- Input mit verknüpftem Hilfetext -->
+      <div>
+        <label for="pass">Passwort eingeben:</label>
+        <input type="password" id="pass" name="pass" aria-describedby="pass-help" required>
+        <p id="pass-help">Das Passwort muss mindestens 8 Zeichen, eine Zahl und ein Sonderzeichen enthalten.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Systemstatus</h2>
+      <!-- Dynamischer Live-Status -->
+      <div role="status" aria-live="polite">
+        Alle Dienste laufen einwandfrei. Letztes Update: soeben.
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

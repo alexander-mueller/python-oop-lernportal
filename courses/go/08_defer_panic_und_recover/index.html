@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 08: Ressourcensicherheit mit defer &amp; Recover</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ Go Stabilität &amp; Ressourcen</div>
+          <h1>Go 08: Ressourcensicherheit mit <code>defer</code>, <code>panic</code> &amp; <code>recover</code></h1>
+          <p>Garantiere saubere Ressourcenbereinigung mit <code>defer</code> (LIFO), verstehe fatale Ausnahmezustände mit <code>panic</code> und fange Laufzeit-Panics elegant mit <code>recover()</code> ab.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DEFER & LIFO -->
+        <section class="card">
+          <h2>🔒 1. Verzögerte Ausführung mit <code>defer</code></h2>
+          <p>Eine mit <code>defer</code> versehene Anweisung wird garantiert ausgeführt, sobald die umgebende Funktion zurückkehrt (egal ob durch <code>return</code> oder <code>panic</code>):</p>
+          
+          <pre><code>file, err := os.Open("logfile.txt")
+if err != nil {
+    return err
+}
+defer file.Close() // Wird IMMER beim Verlassen der Funktion ausgeführt!
+
+// Mehrere defers werden nach dem LIFO-Prinzip (Stack) ausgeführt:
+defer fmt.Println("1. Erster Defer")
+defer fmt.Println("2. Zweiter Defer")
+defer fmt.Println("3. Dritter Defer")
+// Ausgabe beim Return: 3 -> 2 -> 1 (Last-In, First-Out)</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Betreten und Verlassen des Reinraums</div>
+            <p>Wenn du einen Reinraum betrittst, ziehst du Überschuhe an, dann einen Kittel, dann Handschuhe. Mit <code>defer</code> klebst du an jede Handlung sofort einen Erinnerungszettel: "Beim Rausgehen ablegen". Beim Verlassen ziehst du in exakt umgekehrter Reihenfolge (LIFO) zuerst die Handschuhe, dann den Kittel und zuletzt die Überschuhe aus – garantiert rückstandsfrei!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: PANIC & RECOVER -->
+        <section class="card">
+          <h2>💥 2. <code>panic</code> vs. <code>recover()</code></h2>
+          <p><code>panic</code> signalisiert einen unrettbaren, fatalen Fehler (z.B. Nil-Pointer Dereference oder Out-of-Bounds). Mit <code>recover()</code> innerhalb einer defer-Funktion kann ein solcher Panic abgefangen werden:</p>
+
+          <pre><code>func SafeWorker() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("CRASH VERHINDERT! Panic-Grund:", r)
+        }
+    }()
+
+    // Kritischer Code, der einen Panic auslösen könnte:
+    var ptr *int
+    *ptr = 42 // Würde normalerweise den Server crashen
+}</code></pre>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>ProtokollierteOperation(name string, logEntries *[]string) string</code> mit <code>defer</code> LIFO Logging implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>RessourcenManager</code> mit <code>Acquire</code> und <code>Release</code> über <code>defer</code> verwalten.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>KritischeBerechnung(teiler int) int</code> mit <code>panic</code> bei <code>teiler == 0</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>SichereAusfuehrung(fn func()) (recoveredErr any, ok bool)</code> mit <code>defer</code> und <code>recover()</code> absichern.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Go Pro-Tipp: Panic nicht für gewöhnlichen Kontrollfluss nutzen</div>
+            <p>Verwende <code>panic</code> niemals als Ersatz für reguläre Fehler. Nutze immer <code>error</code> für erwartbare Probleme und reserviere <code>panic</code> für echte Programmierfehler oder unrettbare Systeminkonsistenzen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_2_structs_interfaces&chapter=08_defer_panic_und_recover" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../../../index.html" class="btn btn-secondary">Zurück zum Dashboard &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 03: Kontrollfluss, for-Loops &amp; switch</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Go Kontrollfluss</div>
+          <h1>Go 03: Kontrollfluss, Schleifen &amp; Verzweigungen</h1>
+          <p>Erlerne die kompromisslos minimalistische Kontrollfluss-Philosophie von Go: Die universelle <code>for</code>-Schleife, <code>range</code>-Iteratoren, <code>if</code> mit Initialisierung und typensichere <code>switch</code>-Konstrukte.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DIE EINE SCHLEIFE -->
+        <section class="card">
+          <h2>🔄 1. Die einzige Schleife in Go: <code>for</code></h2>
+          <p>Go verzichtet bewusst auf <code>while</code> und <code>do-while</code>. Das Schlüsselwort <code>for</code> deckt alle 4 Schleifenformen ab:</p>
+          
+          <pre><code>// 1. Klassischer 3-Komponenten-Loop:
+for i := 0; i < 5; i++ {
+    fmt.Println("Index:", i)
+}
+
+// 2. While-Äquivalent (Bedingungsschleife):
+aktiveVerbindungen := 10
+for aktiveVerbindungen > 0 {
+    aktiveVerbindungen--
+}
+
+// 3. Endlosschleife (z.B. Event-Loop / Polling):
+for {
+    // break oder return zum Verlassen
+    break
+}
+
+// 4. Iteration über Slices & Maps mit range:
+cluster := []string{"node-a", "node-b"}
+for index, node := range cluster {
+    fmt.Printf("[%d] -> %s\n", index, node)
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Schweizer Taschenmesser</div>
+            <p>Statt 5 verschiedenen Spezialzangen für jede Schraube gibt dir Go ein einziges, perfekt kalibriertes Werkzeug: <code>for</code>. Egal ob du zählst, auf ein Signal wartest oder eine Map durchläufst – das mentale Modell bleibt immer identisch und fehlerfrei.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: IF MIT INITIALISIERUNG -->
+        <section class="card">
+          <h2>🛡️ 2. <code>if</code> mit Initialisierungs-Statement (Scope-Einschränkung)</h2>
+          <p>Go erlaubt es, direkt vor der Bedingung eine Variable zu deklarieren. Deren Gültigkeitsbereich (Scope) ist strikt auf den <code>if/else</code>-Block beschränkt:</p>
+
+          <pre><code>// Variable 'err' existiert nur innerhalb von if und else!
+if err := executeTask(); err != nil {
+    fmt.Println("Fehler aufgetreten:", err)
+    return
+}
+// Außerhalb ist 'err' nicht mehr existent – kein Scope-Pollution!</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: SWITCH -->
+        <section class="card">
+          <h2>🔀 3. Leistungsfähiges <code>switch</code> ohne Break-Falle</h2>
+          <p>In Go bricht jeder <code>case</code> automatisch ab – kein gefürchteter Fallthrough wie in C oder Java! Außerdem können Bedingungen direkt ausgewertet werden:</p>
+
+          <pre><code>status := 404
+
+switch status {
+case 200, 201:
+    fmt.Println("Erfolg")
+case 400, 401, 404:
+    fmt.Println("Client-Fehler")
+case 500, 502:
+    fmt.Println("Server-Fehler")
+default:
+    fmt.Println("Unbekannter Statuscode")
+}
+
+// Tagless switch (Ersatz für lange if-else Ketten):
+switch {
+case alter < 18:
+    fmt.Println("Minderjährig")
+case alter >= 67:
+    fmt.Println("Ruhestand")
+default:
+    fmt.Println("Erwerbstätig")
+}</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>SummiereBereich(start, ende int) int</code> mit klassischer <code>for</code>-Schleife umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>BerechneFakultaet(n int) (int, bool)</code> mit While-artiger <code>for</code>-Schleife implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FindeMaxUndMin(werte []int) (int, int, bool)</code> mit <code>for ... range</code> iterieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>HTTPStatusKategorie(statusCode int) string</code> mit <code>switch</code> kategorisieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_1_go_basics&chapter=03_kontrollfluss_und_schleifen" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_funktionen_und_multiple_returns/index.html" class="btn btn-secondary">Weiter zu Go 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

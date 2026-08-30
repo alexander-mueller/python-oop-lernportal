@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 14: REST JSON APIs &amp; Middleware-Chaining</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Cloud Microservices &amp; Web</div>
+          <h1>Go 14: REST JSON APIs &amp; Middleware-Pipelines</h1>
+          <p>Entwickle professionelle RESTful APIs: Beherrsche Struct-Tags, Streaming-JSON mit <code>json.NewDecoder</code> und modulare Middleware-Pipelines (Auth, Recovery &amp; Logging).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: JSON STRUCT TAGS & STREAMING -->
+        <section class="card">
+          <h2>📦 1. JSON Encoding &amp; Decoding in Go</h2>
+          <p>
+            Über <strong>Struct-Tags</strong> steuerst du exakt, wie Go-Structs in JSON-Felder übersetzt werden. Für HTTP-APIs ist <code>json.NewDecoder(r.Body).Decode(&amp;payload)</code> besonders speichereffizient:
+          </p>
+
+          <pre><code>type Product struct {
+    ID    int     `json:"id"`
+    Title string  `json:"title"`
+    Price float64 `json:"price,omitempty"` // omitempty: lässt Feld bei 0/leer weg
+    SKU   string  `json:"-"`               // '-': wird niemals in JSON exportiert
+}
+
+// 🎯 JSON-Response senden:
+func GetProductHandler(w http.ResponseWriter, r *http.Request) {
+    p := Product{ID: 1, Title: "Cloud Server Pro", Price: 49.99}
+
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    json.NewEncoder(w).Encode(p)
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: MIDDLEWARE PIPELINE -->
+        <section class="card">
+          <h2>🛡️ 2. Das Middleware-Pattern (Onion Architecture)</h2>
+          <p>
+            Eine Middleware ist ein Decorator-Wrapper um einen <code>http.Handler</code>. Sie kann Vor- und Nachbereitungen ausführen (z.B. Authentifizierung, Performance-Messung oder Panic-Recovery):
+          </p>
+
+          <!-- Middleware Pipeline Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Incoming HTTP Request]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            [1. Recovery Middleware] ─── (Fängt Panics ab und liefert 500)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            [2. Auth Middleware] &nbsp;&nbsp;&nbsp;&nbsp;─── (Prüft Header X-API-Key oder 401)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            [3. Core Business Handler] ── (Erstellt JSON Response: 200 OK)
+          </div>
+
+          <pre><code>// Standard Middleware-Signatur:
+func AuthMiddleware(secretKey string) func(http.Handler) http.Handler {
+    return func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            apiKey := r.Header.Get("X-API-Key")
+            if apiKey != secretKey {
+                http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
+                return
+            }
+            // Weiterreichen an den nächsten Handler
+            next.ServeHTTP(w, r)
+        })
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Die Sicherheits-Schleuse im Rechenzentrum</div>
+            <p>
+              Stell dir einen <strong>Besuch im Hochsicherheits-Rechenzentrum</strong> vor:
+              Zuerst passierst du die Sicherheitsschleuse (Auth-Middleware) – ohne gültigen Ausweis wirst du abgewiesen. Dahinter registriert ein Sicherheitsteam deinen Zutritt im Logbuch (Logging-Middleware). Erst wenn alle Schleusen passiert sind, betrittst du den Serverraum (Business-Handler).
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: JSON &amp; Middleware Best Practices</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Aufgabe</th>
+                  <th style="padding: 10px;">Idiomatischer Go-Code</th>
+                  <th style="padding: 10px;">Vorteil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Header setzen</strong></td>
+                  <td style="padding: 10px;"><code>w.Header().Set("Content-Type", "application/json")</code></td>
+                  <td style="padding: 10px;">Muss <em>vor</em> <code>WriteHeader</code> aufgerufen werden!</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Streaming Decode</strong></td>
+                  <td style="padding: 10px;"><code>json.NewDecoder(r.Body).Decode(&amp;data)</code></td>
+                  <td style="padding: 10px;">Liest Request-Body direkt ohne extra Buffer-Kopie</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Panic Recovery</strong></td>
+                  <td style="padding: 10px;"><code>defer func() { if err := recover(); err != nil ... }()</code></td>
+                  <td style="padding: 10px;">Verhindert, dass eine Panic den gesamten Server crasht</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Middleware-Chain</strong></td>
+                  <td style="padding: 10px;"><code>ApplyMiddleware(handler, mw1, mw2)</code></td>
+                  <td style="padding: 10px;">Modulare, wiederverwendbare Filter-Pipeline</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Structs <code>Device</code> und <code>APIResponse</code> mit JSON-Tags definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>GetDevicesHandler</code> und <code>CreateDeviceHandler</code> für JSON-REST bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>AuthMiddleware(secretKey)</code> zur Header-Validierung (<code>X-API-Key</code>) implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>RecoveryMiddleware</code> mit <code>recover()</code> und <code>ApplyMiddleware(h, mws...)</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Cloud Security Tipp: JSON Injection &amp; Body Limits</div>
+            <p>In Produktions-APIs solltest du die Größe des Request-Bodys mit <code>http.MaxBytesReader(w, r.Body, 1048576)</code> (1 MB) begrenzen, um Denial-of-Service Angriffe durch riesige Payloads zu verhindern.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_4_microservices_master&chapter=14_json_apis_und_middleware" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_http_server_und_routing/index.html" class="btn btn-secondary">&larr; Zurück zu Go 13</a>
+            <a href="../15_unit_testing_und_benchmarks/index.html" class="btn btn-secondary">Weiter zu Go 15: Unit Testing &amp; Benchmarks &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

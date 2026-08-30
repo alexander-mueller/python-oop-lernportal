@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 07: Variablen &amp; Farbwelten</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🎨 Lehrpfad 2: CSS3 Styling</div>
+          <h1>CSS 07: Custom Properties (Variablen) &amp; Farbräume</h1>
+          <p>Lerne die Macht moderner CSS-Variablen (<code>:root { --primary: ... }</code>), dynamisches Scoping und Farbsysteme von klassischem HEX über HSL bis zum wahrnehmungsbasierten OKLCH-Farbraum.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: CSS CUSTOM PROPERTIES -->
+        <section class="card">
+          <h2>💡 1. CSS Custom Properties (Variablen)</h2>
+          <p>CSS-Variablen werden mit zwei führenden Bindestrichen (<code>--name</code>) deklariert und typischerweise im globalen Pseudoelement <code>:root</code> registriert. Mit der Funktion <code>var(--name, fallback)</code> greifst du darauf zu:</p>
+          
+          <pre><code>:root {
+  /* Globale Design Tokens: */
+  --primary-color: #3b82f6;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --radius-md: 12px;
+  --spacing-lg: 24px;
+}
+
+.card {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  border: 2px solid var(--primary-color);
+}
+
+/* Lokale Überschreibung (Theming): */
+.card-dark {
+  --bg-card: #0f172a;
+  --text-main: #f8fafc;
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: FARBMODELLE -->
+        <section class="card">
+          <h2>🎨 2. Farbmodelle im Vergleich (HEX, RGB, HSL, OKLCH)</h2>
+          <p>CSS3 und CSS Color 4 bieten unterschiedliche Wege zur Farbdefinition:</p>
+
+          <div style="overflow-x: auto; margin: 15px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Modell</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Besonderheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>HEX</strong></td>
+                  <td style="padding: 10px;"><code>#2563eb</code> (bzw. <code>#2563eb80</code>)</td>
+                  <td style="padding: 10px;">Kompakt, klassischer Standard</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>RGB / Alpha</strong></td>
+                  <td style="padding: 10px;"><code>rgb(37 99 235 / 0.8)</code></td>
+                  <td style="padding: 10px;">Rot, Grün, Blau + Transparenz</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>HSL</strong></td>
+                  <td style="padding: 10px;"><code>hsl(217deg 91% 60%)</code></td>
+                  <td style="padding: 10px;">Hue (Farbton), Saturation (Sättigung), Lightness (Helligkeit)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>OKLCH</strong></td>
+                  <td style="padding: 10px;"><code>oklch(0.65 0.22 255)</code></td>
+                  <td style="padding: 10px;"><strong>Modernster Farbraum:</strong> Wahrnehmungsgleichförmig &amp; leuchtstark auf P3-Displays!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Die Mischpalette &amp; Farbrezeptur</div>
+            <p><strong>Ohne Variablen:</strong> Du musstest eine Farbe an 80 verschiedenen Stellen im Code ändern, wenn das Logo eine neue Nuance bekam.</p>
+            <p><strong>Mit CSS-Variablen:</strong> Du änderst einfach <code>--primary-color</code> an einer einzigen Stelle im <code>:root</code>, und deine gesamte Web-App wechselt synchron das Design!</p>
+          </div>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Im <code>:root</code>-Selektor Design-Token definieren (<code>--primary-color</code>, <code>--bg-page</code>, <code>--bg-card</code>, <code>--text-color</code>, <code>--radius</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Den <code>body</code> und <code>.card</code> mit <code>var(...)</code> unter Verwendung der definierten Variablen stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Verschiedene Farbmodelle verwenden: Mindestens ein HEX-Wert, ein HSL- oder RGBA-Wert und ein modernes <code>oklch(...)</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Einen linearen Farbverlauf mit <code>linear-gradient(...)</code> auf <code>.gradient-header</code> anwenden.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Eine Theme-Klasse <code>.dark-theme</code> erstellen, die Variablen lokal überschreibt.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_2_css_styling&chapter=07_css_variablen_und_farbwelten" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_box_modell_und_abstaende/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 06</a>
+            <a href="../08_typografie_und_webfonts/index.html" class="btn btn-secondary">Weiter zu CSS 08 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

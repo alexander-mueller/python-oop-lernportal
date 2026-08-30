@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 10: CSS Grid 2D-Matrix &amp; Template Areas</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .grid-preview-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      background: #0f172a;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin: 16px 0;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .grid-preview-cell {
+      background: #3b82f6;
+      color: white;
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      font-weight: 700;
+    }
+    .grid-preview-span2 {
+      grid-column: span 2;
+      background: #8b5cf6;
+    }
+    .grid-preview-span3 {
+      grid-column: span 3;
+      background: #10b981;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📱 Lehrpfad 3: Responsive Layouts &amp; CSS Grid</div>
+          <h1>CSS 10: CSS Grid 2D-Matrix &amp; Template Areas</h1>
+          <p>Erschaffe zweidimensionale Matrix-Layouts, benannte Grid-Bereiche (Template Areas) und responsive Kartengitter ohne Media Queries.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. GRID MATRIX GRUNDLAGEN -->
+        <section class="card">
+          <h2>📐 1. Die 2D-Matrix: Spalten, Zeilen &amp; fr-Units</h2>
+          <p>Mit <code>display: grid</code> definierst du Spalten (Columns) und Zeilen (Rows) gleichzeitig. Die Einheit <code>fr</code> (Fractional Unit) teilt den freien Platz intelligent auf:</p>
+
+          <div class="grid-preview-matrix">
+            <div class="grid-preview-cell grid-preview-span3">Header (grid-column: span 3)</div>
+            <div class="grid-preview-cell">Sidebar (1fr)</div>
+            <div class="grid-preview-cell grid-preview-span2">Main Content (span 2)</div>
+            <div class="grid-preview-cell grid-preview-span3" style="background: #06b6d4;">Footer (grid-column: span 3)</div>
+          </div>
+
+          <pre><code>.grid-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr; /* Sidebar fest, Main flexibel */
+  grid-template-rows: 60px 1fr 50px;
+  gap: 16px;
+}</code></pre>
+        </section>
+
+        <!-- 2. AUTO-FIT & MINMAX -->
+        <section class="card">
+          <h2>✨ 2. Responsive Grids ohne Media Queries</h2>
+          <p>Mit der Kombination aus <code>repeat()</code>, <code>auto-fit</code> und <code>minmax()</code> baut sich dein Layout vollautomatisch für Mobilgeräte, Tablets und Widescreens um:</p>
+
+          <pre><code>.responsive-cards {
+  display: grid;
+  /* Mindestens 250px breit, dehnt sich bis 1fr aus: */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">♟️ Didaktische Analogie: Das modulare Schachbrett</div>
+            <p>Flexbox ist wie eine Kette von Dominosteinen in einer Reihe. <strong>CSS Grid</strong> ist ein Schachbrett mit Zeilen und Spalten: Du kannst Figuren exakt auf Planquadrate setzen oder Türme über mehrere Felder spannen lassen.</p>
+          </div>
+        </section>
+
+        <!-- 3. TEMPLATE AREAS -->
+        <section class="card">
+          <h2>🗺️ 3. Benannte Bereiche: `grid-template-areas`</h2>
+          <p>Skizziere komplexe App-Dashboards direkt im CSS-Code:</p>
+
+          <pre><code>.dashboard {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  gap: 20px;
+}
+
+.dash-header  { grid-area: header; }
+.dash-sidebar { grid-area: sidebar; }
+.dash-main    { grid-area: main; }
+.dash-footer  { grid-area: footer; }</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>.dashboard-layout</code> als <code>display: grid</code> mit <code>grid-template-columns: 250px 1fr</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>grid-template-areas</code> ("header header", "sidebar main", "footer footer") definieren und Bereiche mit <code>grid-area</code> zuweisen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>.metrics-grid</code> mit <code>repeat(auto-fit, minmax(200px, 1fr))</code> und <code>gap: 16px</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>.metric-card--featured</code> mit <code>grid-column: span 2</code> erweitern.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_3_layouts_and_responsive&chapter=10_css_grid_und_areas" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_flexbox_achsen_und_alignment/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 09</a>
+            <a href="../11_media_queries_und_mobile_first/index.html" class="btn btn-secondary">Weiter zu CSS 11 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

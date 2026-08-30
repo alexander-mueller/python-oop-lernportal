@@ -4,15 +4,54 @@
   "language": "sql",
   "icon": "🗄️",
   "runner": "sql",
-  "description": "Von relationalen Tabellen über SELECT, WHERE, JOINs bis hin zu Aggregationen und Gruppierungen.",
+  "description": "Vom ersten SELECT über relationale Joins, Normalisierung (1NF-3NF) bis zu CTEs, Window Functions (OVER) und dem Analytics Data Warehouse Master.",
   "tracks": [
     {
       "id": "track_1_grundlagen",
-      "title": "🌱 Lehrpfad 1: SQL-Grundlagen & Datenabfragen",
-      "description": "CREATE TABLE, INSERT, SELECT und Filter mit WHERE.",
+      "title": "🌱 Lehrpfad 1: SQL-Grundlagen & CRUD-Operationen",
+      "description": "Tabellen anlegen, Datentypen, Constraints, Filterung mit WHERE, Daten einfügen, aktualisieren und löschen.",
       "certificateKey": "sql_grundlagen",
       "chapters": [
-        { "folder": "01_tabellen_und_select", "title": "SQL 01: Tabellen anlegen & Daten abfragen", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
+        { "folder": "01_tabellen_und_select", "title": "SQL 01: Tabellen anlegen & SELECT", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "02_filterung_und_logische_operatoren", "title": "SQL 02: Filterung mit WHERE, LIKE & BETWEEN", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "03_daten_aktualisieren_und_loeschen", "title": "SQL 03: UPDATE, DELETE & ALTER TABLE", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "04_datentypen_und_constraints", "title": "SQL 04: Datentypen & Constraints (CHECK/UNIQUE)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
+      ]
+    },
+    {
+      "id": "track_2_joins_und_design",
+      "title": "🏗️ Lehrpfad 2: Relationale Joins & Datenbank-Design",
+      "description": "Fremdschlüssel, Relationen (1:1, 1:n, n:m), INNER & OUTER JOINs, Datenbank-Normalisierung (1NF bis 3NF) und Junction Tables.",
+      "certificateKey": "sql_joins",
+      "chapters": [
+        { "folder": "05_foreign_keys_und_relationen", "title": "SQL 05: Foreign Keys & Relationen (1:n)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "06_inner_und_outer_joins", "title": "SQL 06: INNER JOIN & LEFT/RIGHT JOIN", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "07_datenbank_normalisierung_1nf_bis_3nf", "title": "SQL 07: Datenbank-Normalisierung (1NF–3NF)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "08_m_zu_n_verknuepfungstabellen", "title": "SQL 08: n:m Beziehungen & Junction Tables", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
+      ]
+    },
+    {
+      "id": "track_3_aggregation_und_analytics",
+      "title": "⚡ Lehrpfad 3: Aggregationen, CTEs & Window Functions",
+      "description": "GROUP BY, HAVING, Aggregate, Subqueries, Common Table Expressions (WITH ...) und moderne Window Functions (ROW_NUMBER, OVER).",
+      "certificateKey": "sql_analytics",
+      "chapters": [
+        { "folder": "09_aggregate_und_group_by", "title": "SQL 09: Aggregationen (COUNT/SUM) & GROUP BY", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "10_subqueries_und_mengenoperationen", "title": "SQL 10: Subqueries & UNION / INTERSECT", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "11_common_table_expressions_cte", "title": "SQL 11: Common Table Expressions (WITH CTE)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "12_window_functions_over_partition", "title": "SQL 12: Window Functions (ROW_NUMBER, OVER)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
+      ]
+    },
+    {
+      "id": "track_4_performance_und_master",
+      "title": "💎 Lehrpfad 4: Performance, Transaktionen & Analytics Master",
+      "description": "B-Tree Indizes, EXPLAIN Query Plans, ACID Transaktionen (COMMIT/ROLLBACK), Views und E-Commerce Data Warehouse Master.",
+      "certificateKey": "sql_master",
+      "chapters": [
+        { "folder": "13_indizes_und_query_optimierung", "title": "SQL 13: B-Tree Indizes & EXPLAIN QUERY PLAN", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "14_transaktionen_acid_und_locking", "title": "SQL 14: ACID Transaktionen (BEGIN/COMMIT)", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "15_views_und_gespeicherte_logik", "title": "SQL 15: Virtuelle Views & Trigger", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" },
+        { "folder": "16_master_abschlussprojekt_data_warehouse", "title": "Master 16: E-Commerce Analytics Data Warehouse", "taskFile": "aufgabe.sql", "testFile": "test_aufgabe.sql" }
       ]
     }
   ]

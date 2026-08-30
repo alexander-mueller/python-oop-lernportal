@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 10: Channels &amp; Datenfluss</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Concurrency &amp; Channels</div>
+          <h1>Go 10: Channels, Pufferung &amp; Daten-Pipelines</h1>
+          <p>„Do not communicate by sharing memory; instead, share memory by communicating.“ – Beherrsche gepufferte und ungepufferte Channels für typsicheren Nachrichtenaustausch.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: UNBUFFERED VS. BUFFERED CHANNELS -->
+        <section class="card">
+          <h2>📦 1. Unbuffered vs. Buffered Channels</h2>
+          <p>
+            Channels sind typsichere Kommunikationskanäle zwischen Goroutines. Sie garantieren thread-sichere Übergaben ohne manuelle Mutex-Locks.
+          </p>
+
+          <!-- Concurrency-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Unbuffered: Synchrone Übergabe]<br>
+            Sender: [ch &lt;- val] ──(Blockiert bis Empfänger bereit)──&gt; [val := &lt;-ch] : Empfänger<br>
+            <br>
+            [Buffered: Asynchrone Warteschlange, Kapazität: 3]<br>
+            Sender: [ch &lt;- val] ──&gt; [ [Slot 1] [Slot 2] [Slot 3] ] ──&gt; [val := &lt;-ch] : Empfänger<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Blockiert erst wenn Puffer voll ist)
+          </div>
+
+          <pre><code>// 1. Unbuffered Channel (Kapazität 0): Synchroner Rendezvous-Punkt
+ch := make(chan int)
+
+// 2. Buffered Channel (Kapazität N): Asynchroner Ringpuffer
+bufferedCh := make(chan string, 5)
+
+// 3. Senden und Empfangen:
+bufferedCh &lt;- "Event 1"     // Schreibt in Puffer (nicht-blockierend solange Puffer &lt; 5)
+msg := &lt;-bufferedCh        // Liest aus Puffer ("Event 1")
+
+// 4. Prüfen ob Channel noch offen ist (Comma-OK Idiom):
+val, ok := &lt;-bufferedCh
+if !ok {
+    fmt.Println("Channel wurde geschlossen!")
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CHANNEL DIREKTIONEN & RANGE -->
+        <section class="card">
+          <h2>🔄 2. Channel-Direktionen &amp; Pipeline-Pattern</h2>
+          <p>
+            In Funktionssignaturen schränken wir Kanäle auf <strong>Send-Only</strong> (<code>chan&lt;- T</code>) oder <strong>Receive-Only</strong> (<code>&lt;-chan T</code>) ein. Das verhindert unbeabsichtigtes Schließen oder Lesen zur Compile-Zeit!
+          </p>
+
+          <pre><code>// Producer darf nur in den Channel schreiben und ihn schließen
+func Produce(out chan&lt;- int) {
+    for i := 1; i &lt;= 3; i++ {
+        out &lt;- i * 10
+    }
+    close(out) // ⚠️ WICHTIG: Nur der SENDER schließt den Channel!
+}
+
+// Consumer darf nur aus dem Channel lesen
+func Consume(in &lt;-chan int) {
+    // Liest automatisch bis close(in) ausgeführt wird:
+    for val := range in {
+        fmt.Println("Empfangen:", val)
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏭 Didaktische Analogie: Das Montage-Förderband</div>
+            <p>
+              Stell dir ein <strong>Fließband in einer Fabrik</strong> vor:
+              Goroutine 1 (Producer) legt Bauteile auf das Band. Ein ungepuffertes Band stoppt sofort, wenn am anderen Ende niemand steht, um das Teil entgegenzunehmen. Ein gepuffertes Band (Kapazität 5) kann 5 Teile zwischenlagern. Sobald die Schicht vorbei ist, schaltet der Producer die Signallampe aus (<code>close(ch)</code>) und der Consumer weiß, wann die Arbeit getan ist.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Channel Operationen &amp; Panics</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operation</th>
+                  <th style="padding: 10px;">Offener Channel</th>
+                  <th style="padding: 10px;">Geschlossener Channel (closed)</th>
+                  <th style="padding: 10px;">Nil Channel (nil)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Senden (<code>ch &lt;- v</code>)</strong></td>
+                  <td style="padding: 10px; color: #166534;">Erfolgreich (blockiert wenn voll)</td>
+                  <td style="padding: 10px; color: #991b1b;">💥 <strong>PANIC</strong> (send on closed channel)</td>
+                  <td style="padding: 10px; color: #9a3412;">⏳ Blockiert für immer</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Empfangen (<code>v := &lt;-ch</code>)</strong></td>
+                  <td style="padding: 10px; color: #166534;">Liefert Wert (blockiert wenn leer)</td>
+                  <td style="padding: 10px; color: #1e40af;">Liefert Zero-Value &amp; <code>ok=false</code></td>
+                  <td style="padding: 10px; color: #9a3412;">⏳ Blockiert für immer</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Schließen (<code>close(ch)</code>)</strong></td>
+                  <td style="padding: 10px; color: #166534;">Erfolgreich</td>
+                  <td style="padding: 10px; color: #991b1b;">💥 <strong>PANIC</strong> (close of closed channel)</td>
+                  <td style="padding: 10px; color: #991b1b;">💥 <strong>PANIC</strong> (close of nil channel)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Struct <code>LogRecord</code> definieren (ID, Level, Message, Source).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>ProduceLogs(records []LogRecord) &lt;-chan LogRecord</code> als Generator-Goroutine umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FilterLogs(in &lt;-chan LogRecord, targetLevel string) &lt;-chan LogRecord</code> als Pipeline-Filter schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>CountLogsByLevel(in &lt;-chan LogRecord) map[string]int</code> als Consumer-Aggregator implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Go Pro-Tipp: Kanal-Eigentümerschaft (Channel Ownership)</div>
+            <p>Die Goroutine, die einen Channel erstellt und befüllt, ist der <strong>Owner</strong>. Nur der Owner sollte in den Channel schreiben und ihn mit <code>close()</code> schließen. Consumer sollten niemals fremde Channels schließen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_3_concurrency&chapter=10_channels_und_datenfluss" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_goroutines_und_waitgroups/index.html" class="btn btn-secondary">&larr; Zurück zu Go 09</a>
+            <a href="../11_select_und_timeouts/index.html" class="btn btn-secondary">Weiter zu Go 11: select &amp; Timeouts &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

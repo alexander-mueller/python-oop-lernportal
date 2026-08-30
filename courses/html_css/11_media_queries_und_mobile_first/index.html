@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 11: Media Queries &amp; Mobile-First Design</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .breakpoint-bar {
+      display: flex;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin: 16px 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      color: white;
+    }
+    .bp-mobile { background: #ef4444; flex: 2; padding: 12px 6px; }
+    .bp-tablet { background: #f59e0b; flex: 3; padding: 12px 6px; }
+    .bp-desktop { background: #10b981; flex: 4; padding: 12px 6px; }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📱 Lehrpfad 3: Responsive Layouts &amp; Media Queries</div>
+          <h1>CSS 11: Media Queries &amp; Mobile-First Design</h1>
+          <p>Entwickle robuste, responsive Benutzeroberflächen nach dem Mobile-First-Prinzip mit Media Queries und stufenloser clamp()-Typografie.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. MOBILE FIRST PRINZIP -->
+        <section class="card">
+          <h2>📱 1. Das Mobile-First Prinzip</h2>
+          <p>Anstatt ein Desktop-Layout mühsam für kleine Screens einzudampfen, beginnen wir mit der einfachsten, vertikalen Smartphone-Darstellung. Über <code>@media (min-width: ...)</code> fügen wir progressiv mehr Spalten und Platz hinzu:</p>
+
+          <div class="breakpoint-bar">
+            <div class="bp-mobile">📱 Mobile (&lt;768px)<br>Basis-CSS</div>
+            <div class="bp-tablet">📟 Tablet (≥768px)<br>min-width: 768px</div>
+            <div class="bp-desktop">💻 Desktop (≥1024px)<br>min-width: 1024px</div>
+          </div>
+
+          <pre><code>/* 📱 1. BASIS: Mobile First (1 Spalte, kompakte Paddings) */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 📟 2. TABLET: Ab 768px Breite nebeneinander */
+@media (min-width: 768px) {
+  .layout-container {
+    flex-direction: row;
+  }
+}
+
+/* 💻 3. DESKTOP: Ab 1024px Mehrspalten-Grid */
+@media (min-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}</code></pre>
+        </section>
+
+        <!-- 2. FLUID TYPOGRAPHY -->
+        <section class="card">
+          <h2>📐 2. Flüssige Typografie mit clamp()</h2>
+          <p>Mit <code>clamp(min, val, max)</code> skaliert Text stufenlos mit der Viewport-Breite (<code>vw</code>), ohne jemals unlesbar klein oder überdimensional groß zu werden:</p>
+
+          <pre><code>/* clamp(Untergrenze, Dynamischer Wert, Obergrenze) */
+h1.hero-title {
+  font-size: clamp(1.75rem, 4vw + 1rem, 3rem);
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🎈 Didaktische Analogie: Das elastische Gummiband</div>
+            <p>Ein fixer Pixelwert ist wie ein starres Holzlineal. <code>clamp()</code> ist ein elastisches Band mit zwei Anschlägen: Es dehnt sich geschmeidig mit dem Fenster, stoppt aber präzise am Minimal- und Maximalanschlag.</p>
+          </div>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>.hero-title</code> mit <code>clamp(1.75rem, 4vw + 1rem, 3rem)</code> für flüssige Skalierung stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Mobile-First Basis für <code>.responsive-layout</code> (<code>display: flex</code>, <code>flex-direction: column</code>, <code>gap: 16px</code>) anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Media-Query <code>@media (min-width: 768px)</code> für Tablet anlegen: <code>.responsive-layout</code> auf <code>flex-direction: row</code> umschalten.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Media-Query <code>@media (min-width: 1024px)</code> für Desktop anlegen: <code>.features-grid</code> auf 3 Spalten (<code>repeat(3, 1fr)</code>) schalten.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_3_layouts_and_responsive&chapter=11_media_queries_und_mobile_first" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_css_grid_und_areas/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 10</a>
+            <a href="../12_transitions_und_animationen/index.html" class="btn btn-secondary">Weiter zu CSS 12 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

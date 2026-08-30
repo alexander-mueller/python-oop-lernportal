@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 07: Idiomatisches Error-Handling (if err != nil)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ Go Fehlerarchitektur</div>
+          <h1>Go 07: Explizites Error-Handling &amp; Custom Errors</h1>
+          <p>Beherrsche Gos Philosophie der Fehlerbehandlung: Keine unsichtbaren Exceptions, sondern explizite Rückgabewerte, Sentinel Errors, Error-Wrapping mit <code>%w</code> und eigene Error-Structs.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: ERROR INTERFACE -->
+        <section class="card">
+          <h2>⚠️ 1. Fehler sind normale Werte (Values)</h2>
+          <p>In Go gibt es kein <code>try / catch</code>. Das eingebaute Interface <code>error</code> ist verblüffend einfach definiert:</p>
+          
+          <pre><code>type error interface {
+    Error() string
+}</code></pre>
+
+          <p>Jede Funktion, die fehlschlagen kann, gibt als letzten Wert ein <code>error</code> zurück. Der Aufrufer prüft diesen explizit:</p>
+          <pre><code>data, err := os.ReadFile("config.yaml")
+if err != nil {
+    // Fehlerbehandlung: Protokollieren, Wrappen oder Beenden
+    log.Fatalf("Konnte Konfiguration nicht laden: %v", err)
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der transparente Fluggast-Check-in</div>
+            <p>Ein Exception-System gleicht einem Rauchmelder, der das gesamte Gebäude evakuiert, wenn irgendwo ein Brötchen anbrennt. Gos <code>if err != nil</code> gleicht einem Boardingpass-Scanner am Gate: Jeder Passagier wird an jedem Kontrollpunkt einzeln und ruhig geprüft. Kein Passagier rutscht unbemerkt durch!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SENTINEL & WRAPPING -->
+        <section class="card">
+          <h2>🔗 2. Sentinel Errors &amp; Error Wrapping (<code>%w</code>)</h2>
+          <p>Vordefinierte Fehlerkonstanten heißen <strong>Sentinel Errors</strong> (z.B. <code>ErrNotFound</code>). Mit <code>fmt.Errorf("%w", err)</code> können Fehler um Kontext angereichert werden, ohne die Fehlerursache zu verlieren:</p>
+
+          <pre><code>var ErrAccountLocked = errors.New("benutzerkonto ist gesperrt")
+
+func Authenticate(user string) error {
+    if isLocked(user) {
+        return ErrAccountLocked
+    }
+    if err := verifyPassword(user); err != nil {
+        // Fehler mit '%w' wrappen:
+        return fmt.Errorf("auth fehler für %s: %w", user, err)
+    }
+    return nil
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: CUSTOM STRUCTS -->
+        <section class="card">
+          <h2>🛠️ 3. Eigene Error-Structs für strukturierte Daten</h2>
+          <p>Benötigt ein Fehler strukturierte Metadaten (wie HTTP-Statuscode oder Endpunkt), implementieren wir ein Custom Struct mit der <code>Error() string</code> Methode:</p>
+
+          <pre><code>type APIError struct {
+    StatusCode int
+    Endpoint   string
+    Message    string
+}
+
+func (e *APIError) Error() string {
+    return fmt.Sprintf("API-Fehler [%d] bei %s: %s", e.StatusCode, e.Endpoint, e.Message)
+}</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Sentinel Errors <code>ErrInvalidAmount</code> und <code>ErrInsufficientFunds</code> mit <code>errors.New</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Struct <code>BankAccount</code> mit Methoden <code>Deposit</code> und <code>Withdraw</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Custom Struct <code>APIError</code> mit <code>Error() string</code> Methode umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Funktion <code>ExecuteRequest(endpoint, token string) (string, error)</code> mit Error-Wrapping schreiben.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_2_structs_interfaces&chapter=07_explizites_error_handling" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../08_defer_panic_und_recover/index.html" class="btn btn-secondary">Weiter zu Go 08 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

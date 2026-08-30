@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 02: Slices, Dynamische Arrays &amp; Maps</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Go Datenstrukturen</div>
+          <h1>Go 02: Slices, Dynamische Arrays &amp; Assoziative Maps</h1>
+          <p>Verstehe die interne Datenstruktur von Slices (Pointer, Len, Cap), dynamisches Anhängen mit <code>append()</code>, Reslicing und Key-Value Speicherung in Maps.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: SLICES VS ARRAYS -->
+        <section class="card">
+          <h2>📦 1. Arrays fester Länge vs. Dynamische Slices</h2>
+          <p>In Go haben Arrays eine starre Größe, die fest zum Datentyp gehört (z.B. <code>[4]int</code>). In der Praxis arbeiten wir fast ausschließlich mit <strong>Slices</strong> (<code>[]int</code>), die wie dynamische Fenster über ein zugrundeliegendes Array gelegt werden:</p>
+          
+          <pre><code>// 1. Array mit fester Größe (Werttyp, wird bei Übergabe komplett kopiert)
+var festesArray [3]string = [3]string{"node1", "node2", "node3"}
+
+// 2. Slice-Header: Verweist auf Speicher (Pointer, Länge, Kapazität)
+dynamischesSlice := []string{"auth", "billing"}
+
+// 3. make() mit vorallokierter Kapazität zur Leistungsoptimierung:
+gepufferteDaten := make([]int, 0, 100) // len=0, cap=100
+
+// 4. append() fügt Elemente hinzu (verdoppelt Kapazität bei Bedarf):
+gepufferteDaten = append(gepufferteDaten, 42, 84, 126)</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Notizbuch vs. Der Notizblock</div>
+            <p>Ein <strong>Array</strong> ist ein gebundenes Buch mit fest 100 Seiten – ist es voll, kannst du keine Seite mehr einfügen. Ein <strong>Slice</strong> ist wie ein kleiner Buchstreifen, der genau auf 3 Seiten zeigt (<code>len=3</code>). Brauchst du mehr Platz, kopiert <code>append()</code> deine Notizen automatisch in ein doppelt so großes Notizbuch (<code>cap</code>-Verdopplung) im Hintergrund!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: RESLICING -->
+        <section class="card">
+          <h2>✂️ 2. Slicing &amp; Sub-Slices (Halboffene Intervalle)</h2>
+          <p>Slices lassen sich mit der Syntax <code>[start:ende]</code> beliebig zuschneiden (Start inklusive, Ende exklusive):</p>
+
+          <pre><code>cluster := []string{"node-0", "node-1", "node-2", "node-3", "node-4"}
+
+sub1 := cluster[1:4] // ["node-1", "node-2", "node-3"] (Länge 3)
+sub2 := cluster[:2]  // ["node-0", "node-1"]
+sub3 := cluster[3:]  // ["node-3", "node-4"]</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: MAPS & COMMA-OK -->
+        <section class="card">
+          <h2>🗺️ 3. Assoziative Maps &amp; das Comma-OK Idiom</h2>
+          <p>Maps sind hochperformante Hash-Tabellen zur Zuordnung von Schlüsseln zu Werten:</p>
+
+          <pre><code>// Map initialisieren
+ports := make(map[string]int)
+ports["http"] = 80
+ports["https"] = 443
+ports["ssh"] = 22
+
+// Sicheres Auslesen mit Comma-OK Idiom:
+val, exists := ports["postgres"]
+if !exists {
+    fmt.Println("Schlüssel existiert nicht!")
+}
+
+// Schlüssel löschen:
+delete(ports, "ssh")</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>FiltereGeradeZahlen(zahlen []int) []int</code> mit <code>make()</code> und <code>append()</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>ErweitereProtokolle(logs []string, neueEintraege ...string) []string</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>ZaehleWortHaeufigkeit(text string) map[string]int</code> mit <code>strings.Fields</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>SichereBenutzerAbfrage(users map[string]int, username string) (int, bool)</code> und <code>LoescheBenutzer(users map[string]int, username string)</code> implementieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_1_go_basics&chapter=02_slices_arrays_und_maps" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_kontrollfluss_und_schleifen/index.html" class="btn btn-secondary">Weiter zu Go 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

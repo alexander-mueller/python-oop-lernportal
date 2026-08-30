@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 09: Aggregationen &amp; GROUP BY</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Aggregationen, CTEs &amp; Window Functions</div>
+          <h1>SQL 09: Aggregationen &amp; GROUP BY</h1>
+          <p>Lerne Kennzahlen und Berichte aus relationalen Daten zu berechnen: Aggregatfunktionen (COUNT, SUM, AVG, MIN, MAX), Gruppierungen mit GROUP BY und Gruppenfilterung mit HAVING.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: AGGREGATFUNKTIONEN -->
+        <section class="card">
+          <h2>📊 1. Aggregatfunktionen in SQL</h2>
+          <p>
+            Aggregatfunktionen fassen mehrere Zeilen zu einem einzigen zusammenfassenden Wert zusammen.
+            Die fünf wichtigsten Standard-Aggregate sind:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <code style="font-weight: 700; color: var(--primary);">COUNT(*) / COUNT(spalte)</code>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">Zählt Zeilen bzw. Nicht-NULL-Werte.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <code style="font-weight: 700; color: var(--emerald);">SUM(spalte)</code>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">Berechnet die Gesamtsumme aller Werte.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <code style="font-weight: 700; color: var(--purple);">AVG(spalte)</code>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">Berechnet das arithmetische Mittel (Durchschnitt).</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <code style="font-weight: 700; color: var(--amber);">MIN(spalte) / MAX(spalte)</code>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">Findet den kleinsten bzw. größten Wert.</p>
+            </div>
+          </div>
+
+          <pre><code>-- Berechne KPI-Kennzahlen über die gesamte Tabelle
+SELECT 
+    COUNT(*) AS anzahl_bestellungen,
+    SUM(gesamtbetrag) AS gesamtumsatz,
+    ROUND(AVG(gesamtbetrag), 2) AS durchschnitts_warenkorb,
+    MIN(gesamtbetrag) AS kleinste_bestellung,
+    MAX(gesamtbetrag) AS groesste_bestellung
+FROM bestellungen
+WHERE status = 'abgeschlossen';</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: GROUP BY & HAVING -->
+        <section class="card">
+          <h2>🗂️ 2. Gruppierung mit GROUP BY &amp; Filterung mit HAVING</h2>
+          <p>
+            Mit <code>GROUP BY</code> teilen wir Datensätze in Kategorien oder Buckets ein. 
+            <strong>Wichtig:</strong> Wenn nach einer Spalte gruppiert wird, dürfen im <code>SELECT</code> nur gruppierte Spalten oder Aggregatfunktionen stehen!
+          </p>
+
+          <pre><code>-- Umsatz und Bestellanzahl pro Kunde ermitteln
+SELECT 
+    k.name AS kunden_name,
+    COUNT(b.id) AS bestell_anzahl,
+    SUM(b.gesamtbetrag) AS umsatz_gesamt
+FROM kunden k
+JOIN bestellungen b ON k.id = b.kunde_id
+WHERE b.status = 'abgeschlossen'         -- 1. WHERE filtert Rohdaten VOR der Gruppierung
+GROUP BY k.id, k.name                    -- 2. GROUP BY bildet Gruppen
+HAVING SUM(b.gesamtbetrag) >= 500        -- 3. HAVING filtert AGGREGATE NACH der Gruppierung
+ORDER BY umsatz_gesamt DESC;             -- 4. ORDER BY sortiert das Endergebnis</code></pre>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 18px;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #1e40af; margin: 0 0 6px 0;">🔍 WHERE-Klausel</h4>
+              <p style="font-size: 0.88rem; color: var(--text-body); margin: 0;">
+                Filtert <strong>einzelne Zeilen</strong>, bevor Aggregate gebildet werden. Kann <em>keine</em> Aggregatfunktionen wie <code>SUM()</code> oder <code>COUNT()</code> enthalten!
+              </p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin: 0 0 6px 0;">🎯 HAVING-Klausel</h4>
+              <p style="font-size: 0.88rem; color: var(--text-body); margin: 0;">
+                Filtert <strong>zusammengefasste Gruppen</strong> nach der Aggregation. Prüft Bedingungen wie <code>HAVING COUNT(*) > 5</code> oder <code>HAVING AVG(preis) < 100</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Die Rechnungsprüfungs-Zentrale</h2>
+          <div class="box box-analogie">
+            <div class="box-title">📦 Der Post-Sortier-Vergleich</div>
+            <p><strong>WHERE (Der Türsteher):</strong> Beschädigte Briefe (stornierte Bestellungen) werden sofort am Werkstor aussortiert.</p>
+            <p><strong>GROUP BY (Die Sortierfächer):</strong> Alle verbleibenden Rechnungen werden in Fächer nach Postleitzahl / Kunde abgelegt.</p>
+            <p><strong>Aggregat (Der Taschenrechner):</strong> Für jedes Fach wird die Summe und der Durchschnitt der Rechnungsbeträge ermittelt.</p>
+            <p><strong>HAVING (Der Chef-Filter):</strong> Nur Fächer, deren Gesamtumsatz über 10.000 € liegt, werden zur Sonderprüfung weitergereicht.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: SQL-Aggregationsklauseln</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax / Funktion</th>
+                  <th style="padding: 10px;">Zweck</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>COUNT(DISTINCT spalte)</code></td>
+                  <td style="padding: 10px;">Zählt eindeutige Werte (ohne Duplikate)</td>
+                  <td style="padding: 10px;"><code>COUNT(DISTINCT kunde_id)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SUM(spalte * menge)</code></td>
+                  <td style="padding: 10px;">Summiert berechnete Zeilenwerte</td>
+                  <td style="padding: 10px;"><code>SUM(anzahl * einzelpreis)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ROUND(AVG(spalte), 2)</code></td>
+                  <td style="padding: 10px;">Rundet den Durchschnitt auf 2 Nachkommastellen</td>
+                  <td style="padding: 10px;"><code>ROUND(AVG(gehalt), 2)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>strftime('%Y-%m', datum)</code></td>
+                  <td style="padding: 10px;">Datumsformatierung für Monats-Reporting in SQLite</td>
+                  <td style="padding: 10px;"><code>GROUP BY strftime('%Y-%m', datum)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Reporting-Queries:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Kategorie-Umsatz-Statistik):</strong> Aggregiere Produkte nach Kategorie mit Verkaufsanzahl (<code>SUM(menge)</code>), Gesamtumsatz (<code>SUM(menge * einzelpreis)</code>), Durchschnittspreis (<code>ROUND(AVG(einzelpreis), 2)</code>), Minimal- und Maximalpreis. Sortiere absteigend nach Gesamtumsatz.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Top-Kunden mit HAVING):</strong> Finde Kunden (<code>kunden.name</code>, <code>kunden.stadt</code>), die mindestens 2 abgeschlossene Bestellungen getätigt haben UND einen Gesamtumsatz <code>&gt;= 500.00</code> € erzielen (<code>HAVING COUNT(...) &gt;= 2 AND SUM(...) &gt;= 500</code>).
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Monatlicher Umsatz- &amp; KPI-Report):</strong> Gruppiere Bestellungen chronologisch nach Monat (<code>strftime('%Y-%m', bestell_datum) AS monat</code>) mit Bestellanzahl, Gesamtumsatz und durchschnittlichem Bestellwert.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Multi-Column GROUP BY Städte &amp; Kategorien):</strong> Gruppiere nach <code>stadt</code> und <code>kategorie_name</code> mit eindeutigen Bestellungen (<code>COUNT(DISTINCT bestellungen.id)</code>) und Umsatz. Filtere Gruppen mit <code>HAVING SUM(gesamtbetrag) &gt; 300</code>.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_3_aggregation_und_analytics&chapter=09_aggregate_und_group_by" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

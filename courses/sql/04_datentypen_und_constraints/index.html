@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 04: Datentypen &amp; Constraints</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🗄️ SQL Lehrpfad 1: Grundlagen</div>
+          <h1>SQL 04: Datentypen &amp; Constraints (CHECK/UNIQUE)</h1>
+          <p>Schütze die Datenintegrität deines Systems mit strikten Constraints: NOT NULL, UNIQUE, DEFAULT und CHECK-Bedingungen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: CONSTRAINTS -->
+        <section class="card">
+          <h2>💡 1. Warum Constraints (Integritätsbedingungen)?</h2>
+          <p>Ohne Einschränkungen könnte jede Anwendung fehlerhafte Daten wie negative Altersangaben, doppelte E-Mail-Adressen oder leere Pflichtfelder in die Datenbank schreiben. Constraints garantieren die Konsistenz direkt auf Datenbankebene!</p>
+
+          <pre><code>CREATE TABLE bank_kunden (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    kunden_nr TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    kunden_alter INTEGER NOT NULL CHECK (kunden_alter >= 18),
+    bonitaets_score INTEGER NOT NULL DEFAULT 500 CHECK (bonitaets_score BETWEEN 100 AND 1000),
+    status TEXT NOT NULL DEFAULT 'aktiv' CHECK (status IN ('aktiv', 'verifiziert', 'gesperrt')),
+    registriert_am TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CHECK & ENUM-EMULATION -->
+        <section class="card">
+          <h2>🛡️ 2. Die <code>CHECK</code>-Klausel &amp; Wertebereiche</h2>
+          <p>Mit <code>CHECK</code> kannst du beliebige boolesche Ausdrücke als Wächter für jede neu eingefügte oder geänderte Zeile definieren:</p>
+          <ul>
+            <li><strong>Wertebereich:</strong> <code>CHECK (kunden_alter &gt;= 18)</code></li>
+            <li><strong>Intervall:</strong> <code>CHECK (score BETWEEN 100 AND 1000)</code></li>
+            <li><strong>Erlaubte Wertemenge (Enum):</strong> <code>CHECK (status IN ('aktiv', 'inaktiv', 'gesperrt'))</code></li>
+            <li><strong>Kreditlimit / Saldo:</strong> <code>CHECK (saldo &gt;= -500.0)</code></li>
+          </ul>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚪 Didaktische Analogie: Die Türsteher der Datenbank</div>
+            <p>Jeder Constraint ist ein spezialisierter Türsteher: <code>NOT NULL</code> lässt niemanden ohne Ausweis hinein, <code>UNIQUE</code> verbannt Zwillings-Klone, <code>CHECK (kunden_alter &gt;= 18)</code> prüft den Jugendschutz und <code>DEFAULT</code> spendiert jedem Gast automatisch ein Begrüßungsgetränk, falls er keines bestellt hat!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: SQL Constraints</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Constraint</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>PRIMARY KEY</code></td>
+                  <td style="padding: 10px;"><code>id INTEGER PRIMARY KEY</code></td>
+                  <td style="padding: 10px;">Eindeutiger Identifikator für jede Zeile</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>NOT NULL</code></td>
+                  <td style="padding: 10px;"><code>name TEXT NOT NULL</code></td>
+                  <td style="padding: 10px;">Verbietet NULL / leere Werte</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>UNIQUE</code></td>
+                  <td style="padding: 10px;"><code>email TEXT UNIQUE</code></td>
+                  <td style="padding: 10px;">Verhindert doppelte Werte in der Spalte</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>DEFAULT</code></td>
+                  <td style="padding: 10px;"><code>saldo REAL DEFAULT 0.0</code></td>
+                  <td style="padding: 10px;">Automatische Belegung bei Fehlen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>CHECK</code></td>
+                  <td style="padding: 10px;"><code>CHECK (saldo &gt;= -500.0)</code></td>
+                  <td style="padding: 10px;">Validierungsregel für Werte</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Tabelle <code>bank_kunden</code> mit allen Constraints (<code>PRIMARY KEY</code>, <code>UNIQUE</code>, <code>NOT NULL</code>, <code>CHECK</code> für <code>kunden_alter &gt;= 18</code> und Bonitäts-Score 100-1000) anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Tabelle <code>bank_konten</code> mit <code>PRIMARY KEY (iban)</code>, <code>CHECK (saldo &gt;= -500.0)</code> und Kontotyp-Prüfung anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> 4 Testkunden mit unterschiedlichen Scores und Status einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> 4 Testkonten mit verschiedenen Salden einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Abfrage für verifizierte Kunden mit Bonitäts-Score &gt;= 600 schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> Abfrage für Konten mit negativem Saldo (Dispo-Nutzung <code>saldo &lt; 0.0</code>) formulieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_1_grundlagen&chapter=04_datentypen_und_constraints" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_daten_aktualisieren_und_loeschen/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 03</a>
+            <a href="../05_foreign_keys_und_relationen/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 2: SQL 05 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

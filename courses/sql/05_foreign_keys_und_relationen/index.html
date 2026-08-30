@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 05: Foreign Keys &amp; Relationen</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏗️ SQL Lehrpfad 2: Joins &amp; Design</div>
+          <h1>SQL 05: Foreign Keys &amp; Relationen (1:1 &amp; 1:n)</h1>
+          <p>Verbinde Tabellen über Fremdschlüssel und sichere die referenzielle Datenintegrität mit <code>ON DELETE CASCADE</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: ER-DIAGRAMM & BEZIEHUNGEN -->
+        <section class="card">
+          <h2>💡 1. Relationale Datenmodelle &amp; Kardinalitäten</h2>
+          <p>Fremdschlüssel (Foreign Keys) verweisen auf den Primärschlüssel einer anderen Tabelle und stellen sicher, dass keine "Waisen"-Daten entstehen:</p>
+
+          <div style="background: var(--bg-code); color: #e2e8f0; padding: 18px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.5; margin: 15px 0;">
+┌─────────────────────────┐         1:1          ┌─────────────────────────┐<br>
+│       kunden            │ ──────────────────── │     kunden_profile      │<br>
+├─────────────────────────┤                      ├─────────────────────────┤<br>
+│ PK  id (INTEGER)        │                      │ PK  id (INTEGER)        │<br>
+│     name (TEXT)         │                      │ FK  kunde_id (UNIQUE)   │──┐ (Zeigt auf kunden.id)<br>
+│     email (TEXT)        │                      │     lieferadresse (TEXT)│  │<br>
+└─────────────────────────┘                      └─────────────────────────┘  │<br>
+             │ 1                                                              │<br>
+             │                                                                │<br>
+             │ 1:n                                                            │<br>
+             ▼                                                                │<br>
+┌─────────────────────────┐                                                   │<br>
+│      bestellungen       │                                                   │<br>
+├─────────────────────────┤                                                   │<br>
+│ PK  id (INTEGER)        │                                                   │<br>
+│ FK  kunde_id (INTEGER)  │ ◄─────────────────────────────────────────────────┘<br>
+│     gesamtbetrag (REAL) │<br>
+│     status (TEXT)       │<br>
+└─────────────────────────┘
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: FOREIGN KEYS & CASCADE -->
+        <section class="card">
+          <h2>🔗 2. Fremdschlüssel-Syntax &amp; <code>ON DELETE CASCADE</code></h2>
+          <p>In SQLite muss die Fremdschlüsselprüfung explizit pro Verbindung eingeschaltet werden:</p>
+          <pre><code>PRAGMA foreign_keys = ON;
+
+CREATE TABLE bestellungen (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    kunde_id INTEGER NOT NULL,
+    gesamtbetrag REAL NOT NULL CHECK (gesamtbetrag >= 0.0),
+    status TEXT NOT NULL DEFAULT 'offen',
+    -- Fremdschlüssel-Definition mit Kaskadierung:
+    FOREIGN KEY (kunde_id) REFERENCES kunden(id) ON DELETE CASCADE
+);</code></pre>
+
+          <div class="box box-achtung">
+            <div class="box-title">🗑️ Der Domino-Effekt von ON DELETE CASCADE</div>
+            <p>Wird ein Datensatz in der Elterntabelle gelöscht (<code>DELETE FROM kunden WHERE id = 1;</code>), löscht das RDBMS wie bei einem Domino-Effekt automatisch alle zugehörigen Profil- und Bestelldatensätze mit. Das verhindert verwaiste Datensätze in deiner Datenbank!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Beziehungsarten &amp; Aktionen</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Beziehung</th>
+                  <th style="padding: 10px;">Realisierung in SQL</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>1:1</strong> (Eins-zu-Eins)</td>
+                  <td style="padding: 10px;"><code>kunde_id INTEGER UNIQUE REFERENCES ...</code></td>
+                  <td style="padding: 10px;">Jeder Kunde hat höchstens ein Profil</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>1:n</strong> (Eins-zu-Viele)</td>
+                  <td style="padding: 10px;"><code>kunde_id INTEGER REFERENCES ...</code></td>
+                  <td style="padding: 10px;">Ein Kunde kann beliebig viele Bestellungen besitzen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ON DELETE CASCADE</code></td>
+                  <td style="padding: 10px;"><code>FOREIGN KEY (...) REFERENCES ... ON DELETE CASCADE</code></td>
+                  <td style="padding: 10px;">Automatisches Mitlöschen abhängiger Kind-Zeilen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>ON DELETE RESTRICT</code></td>
+                  <td style="padding: 10px;"><code>FOREIGN KEY (...) REFERENCES ... ON DELETE RESTRICT</code></td>
+                  <td style="padding: 10px;">Verhindert das Löschen des Eltern-Eintrags</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>PRAGMA foreign_keys = ON;</code> ausführen und Elterntabelle <code>kunden</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> 1:1 Tabelle <code>kunden_profile</code> mit <code>UNIQUE</code> auf <code>kunde_id</code> und <code>ON DELETE CASCADE</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> 1:n Tabelle <code>bestellungen</code> mit Fremdschlüssel und <code>ON DELETE CASCADE</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> 3 Kunden, 3 Profile und 5 Bestellungen einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Kunde ID 1 löschen (<code>DELETE FROM kunden WHERE id = 1;</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> Verifizieren, dass keine verwaisten Profil- oder Bestelldatensätze für <code>kunde_id = 1</code> übrig sind.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_2_joins_und_design&chapter=05_foreign_keys_und_relationen" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_datentypen_und_constraints/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 04</a>
+            <a href="../06_inner_und_outer_joins/index.html" class="btn btn-secondary">Weiter zu SQL 06 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

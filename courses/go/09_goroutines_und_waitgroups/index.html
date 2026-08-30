@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 09: Goroutines &amp; sync.WaitGroup</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Concurrency &amp; Goroutines</div>
+          <h1>Go 09: Leichtgewichtige Goroutines &amp; sync.WaitGroup</h1>
+          <p>Lerne nebenläufige Ausführung in Go: Starte Tausende leichtgewichtige Goroutines mit <code>go</code> und synchronisiere sie deterministisch mit <code>sync.WaitGroup</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: GOROUTINES & DER GO RUNTIME SCHEDULER -->
+        <section class="card">
+          <h2>⚡ 1. Was sind Goroutines?</h2>
+          <p>
+            Eine <strong>Goroutine</strong> ist ein extrem leichtgewichtiger Ausführungsfaden, der von der Go-Runtime verwaltet wird (M:N-Multiplexing auf OS-Threads). Während ein nativer OS-Thread ca. 1&ndash;2 MB Stack-Speicher reserviert, startet eine Goroutine mit nur <strong>ca. 2 KB</strong> dynamischem Stack. Dadurch kann ein einzelnes Go-Programm problemlos 100.000+ Goroutines gleichzeitig ausführen!
+          </p>
+
+          <!-- Concurrency-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Main Goroutine] ───┬─── go Worker(1) ───&gt; [Worker 1 läuft asynchron] ──┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─── go Worker(2) ───&gt; [Worker 2 läuft asynchron] ──┼──&gt; wg.Wait() (Alle fertig!)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─── go Worker(3) ───&gt; [Worker 3 läuft asynchron] ──┘
+          </div>
+
+          <pre><code>package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func sayHello(id int) {
+    fmt.Printf("Worker %d meldet sich zum Dienst!\n", id)
+}
+
+func main() {
+    // 🎯 Goroutine starten mit Schlüsselwort 'go':
+    go sayHello(1)
+    go sayHello(2)
+
+    // ACHTUNG: Ohne Synchronisation beendet sich main(), bevor Goroutines laufen!
+    time.Sleep(10 * time.Millisecond) // Schlechter Stil – nutze sync.WaitGroup!
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SYNC.WAITGROUP -->
+        <section class="card">
+          <h2>🛡️ 2. Saubere Synchronisation mit <code>sync.WaitGroup</code></h2>
+          <p>
+            Verwende <strong>niemals</strong> <code>time.Sleep()</code> zum Warten auf Goroutines. Die Standardbibliothek bietet dafür <code>sync.WaitGroup</code> mit exakt drei Methoden:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">1. <code>wg.Add(n)</code></strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Erhöht den internen Zähler um die Anzahl geplanter Goroutines.</p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">2. <code>defer wg.Done()</code></strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Dekrementiert den Zähler um 1, sobald eine Goroutine fertig ist.</p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #7e22ce;">3. <code>wg.Wait()</code></strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Blockiert den Aufrufer (z.B. main), bis der Zähler exakt 0 erreicht.</p>
+            </div>
+          </div>
+
+          <pre><code>package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func worker(id int, wg *sync.WaitGroup) {
+    defer wg.Done() // Signalisiert Fertigstellung beim Verlassen der Funktion
+    fmt.Printf("Worker %d abgeschlossen\n", id)
+}
+
+func main() {
+    var wg sync.WaitGroup
+
+    for i := 1; i &lt;= 3; i++ {
+        wg.Add(1)
+        // ⚠️ WICHTIG: WaitGroup IMMER als Pointer (*sync.WaitGroup) übergeben!
+        go worker(i, &amp;wg)
+    }
+
+    wg.Wait() // Wartet deterministisch auf alle 3 Worker
+    fmt.Println("Alle Worker erfolgreich beendet!")
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Die Stempeluhr auf der Großbaustelle</div>
+            <p>
+              Stell dir <code>sync.WaitGroup</code> wie eine digitale <strong>Stempeluhr</strong> vor:
+              Vor Arbeitsbeginn bucht der Bauleiter 5 Handwerker ein (<code>wg.Add(5)</code>). Jeder Handwerker arbeitet eigenständig in seinem Raum. Sobald ein Handwerker fertig ist, stempelt er aus (<code>wg.Done()</code>). Der Bauleiter wartet am Ausgang (<code>wg.Wait()</code>) und schließt die Baustelle erst ab, wenn die Uhr genau 0 verbleibende Handwerker anzeigt.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Best Practices für Goroutines</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Regel / Pattern</th>
+                  <th style="padding: 10px;">Richtig (Idiomatisch)</th>
+                  <th style="padding: 10px;">Falsch (Anti-Pattern)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Pointer bei WaitGroup</strong></td>
+                  <td style="padding: 10px;"><code>func work(wg *sync.WaitGroup)</code></td>
+                  <td style="padding: 10px;"><code>func work(wg sync.WaitGroup)</code> <em>(Kopie führt zu Deadlock!)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Loop Variable Passing</strong></td>
+                  <td style="padding: 10px;"><code>go func(val int) { ... }(i)</code></td>
+                  <td style="padding: 10px;"><code>go func() { use(i) }()</code> <em>(Race in Go &lt; 1.22)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Done via defer</strong></td>
+                  <td style="padding: 10px;"><code>defer wg.Done()</code> ganz oben im Worker</td>
+                  <td style="padding: 10px;"><code>wg.Done()</code> am Ende (kann bei Panic übersprungen werden)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Add-Aufruf vor Goroutine</strong></td>
+                  <td style="padding: 10px;"><code>wg.Add(1)</code> vor dem <code>go</code>-Statement</td>
+                  <td style="padding: 10px;"><code>wg.Add(1)</code> innerhalb der Goroutine <em>(Race mit Wait)</em></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Struct <code>ServerMetric</code> definieren (ServerID, LatencyMs, Status, Timestamp).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>CheckServer(serverID string, wg *sync.WaitGroup, out chan&lt;- ServerMetric)</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>BatchHealthCheck(servers []string) []ServerMetric</code> mit <code>sync.WaitGroup</code> parallelisieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ParallelTaskRunner(tasks []func() string) []string</code> für generische nebenläufige Tasks bauen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Cloud-Architekt Tipp: Goroutine Leaks vermeiden</div>
+            <p>Jede gestartete Goroutine muss einen definierten Weg zur Beendigung haben. Eine Goroutine, die für immer auf einen unbedienten Channel oder ein Lock wartet, belegt dauerhaft Speicher (<em>Goroutine Leak</em>).</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_3_concurrency&chapter=09_goroutines_und_waitgroups" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_channels_und_datenfluss/index.html" class="btn btn-secondary">Weiter zu Go 10: Channels &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

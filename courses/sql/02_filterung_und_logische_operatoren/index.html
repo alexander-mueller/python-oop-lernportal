@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 02: Filterung mit WHERE, LIKE &amp; BETWEEN</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🗄️ SQL Lehrpfad 1: Grundlagen</div>
+          <h1>SQL 02: Filterung mit WHERE, LIKE &amp; BETWEEN</h1>
+          <p>Lerne die Kunst der präzisen Datenabfrage: Vergleichsoperatoren, boolesche Logik (AND/OR/NOT), Mustersuche und Nullwert-Prüfung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WHERE & VERGLEICHE -->
+        <section class="card">
+          <h2>💡 1. Die <code>WHERE</code>-Klausel &amp; Vergleichsoperatoren</h2>
+          <p>Mit der <code>WHERE</code>-Klausel werden nur die Zeilen aus einer Tabelle zurückgegeben, die eine definierte Bedingung erfüllen:</p>
+          <pre><code>SELECT spalte1, spalte2 
+FROM tabellen_name 
+WHERE bedingung;</code></pre>
+
+          <p>Häufige Vergleichsoperatoren:</p>
+          <div style="overflow-x: auto; margin-top: 10px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px; text-align: left;">Operator</th>
+                  <th style="padding: 8px 12px; text-align: left;">Bedeutung</th>
+                  <th style="padding: 8px 12px; text-align: left;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>=</code></td>
+                  <td style="padding: 8px 12px;">Gleichheit</td>
+                  <td style="padding: 8px 12px;"><code>WHERE kategorie = 'Elektronik'</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>!=</code> oder <code>&lt;&gt;</code></td>
+                  <td style="padding: 8px 12px;">Ungleichheit</td>
+                  <td style="padding: 8px 12px;"><code>WHERE status != 'inaktiv'</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td>
+                  <td style="padding: 8px 12px;">Größer / Kleiner (oder gleich)</td>
+                  <td style="padding: 8px 12px;"><code>WHERE preis &gt;= 99.99</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: LOGISCHE OPERATOREN, BETWEEN & IN -->
+        <section class="card">
+          <h2>🔀 2. Boolesche Logik (<code>AND</code>, <code>OR</code>, <code>NOT</code>), <code>BETWEEN</code> &amp; <code>IN</code></h2>
+          <p>Kombiniere mehrere Bedingungen logisch miteinander:</p>
+          <pre><code>-- AND: Beide Bedingungen müssen zutreffen
+SELECT * FROM shop_artikel WHERE kategorie = 'Elektronik' AND preis > 100.0;
+
+-- OR: Mindestens eine Bedingung muss wahr sein
+SELECT * FROM shop_artikel WHERE kategorie = 'Audio' OR kategorie = 'Zubehör';
+
+-- BETWEEN: Wertebereich inklusive Grenzwerte [min, max]
+SELECT * FROM shop_artikel WHERE preis BETWEEN 20.0 AND 150.0;
+
+-- IN: Prüft, ob der Wert in einer Liste von Möglichkeiten enthalten ist
+SELECT * FROM shop_artikel WHERE kategorie IN ('Audio', 'Zubehör', 'Gaming');</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Das Sieb im Fluss</div>
+            <p>Stell dir die <code>WHERE</code>-Klausel wie ein Sieb vor. Mit <code>AND</code> machst du die Maschen enger (weniger Zeilen passieren), während <code>OR</code> ein zweites Auffangbecken daneben stellt (mehr Zeilen kommen durch). <code>IN (...)</code> ist wie eine VIP-Gästeliste: Wer auf der Liste steht, darf rein!</p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: LIKE & IS NULL -->
+        <section class="card">
+          <h2>🔍 3. Textmustersuche mit <code>LIKE</code> &amp; Nullwerte (<code>IS NULL</code>)</h2>
+          <p>Mit <code>LIKE</code> suchst du nach Mustern in Textspalten unter Verwendung von Wildcards:</p>
+          <ul>
+            <li><code>%</code> : Beliebig viele Zeichen (0, 1 oder viele).</li>
+            <li><code>_</code> : Exakt 1 beliebiges Zeichen.</li>
+          </ul>
+
+          <pre><code>-- Beginnt mit 'Smart' (z.B. Smartphone, Smartwatch)
+SELECT * FROM shop_artikel WHERE titel LIKE 'Smart%';
+
+-- Enthält 'Pro' an beliebiger Stelle (z.B. Laptop Pro, AirPods Pro Max)
+SELECT * FROM shop_artikel WHERE titel LIKE '%Pro%';</code></pre>
+
+          <div class="box box-achtung">
+            <div class="box-title">⚠️ Die NULL-Falle: Niemals <code>= NULL</code> verwenden!</div>
+            <p><code>NULL</code> bedeutet in SQL "unbekannt" oder "nicht vorhanden". Da Unbekanntes mit nichts verglichen werden kann, liefert <code>spalte = NULL</code> immer <strong>UNKNOWN / FALSE</strong>. Verwende stattdessen zwingend:</p>
+            <p><code>WHERE rabatt_code IS NULL</code> bzw. <code>WHERE rabatt_code IS NOT NULL</code></p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: SQL Filter-Operatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>AND</code> / <code>OR</code></td>
+                  <td style="padding: 10px;"><code>WHERE a = 1 AND b = 2</code></td>
+                  <td style="padding: 10px;">Logische Verknüpfung von Bedingungen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>NOT</code></td>
+                  <td style="padding: 10px;"><code>WHERE NOT (kategorie = 'Möbel')</code></td>
+                  <td style="padding: 10px;">Negiert das Testergebnis</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>BETWEEN a AND b</code></td>
+                  <td style="padding: 10px;"><code>WHERE alter BETWEEN 18 AND 30</code></td>
+                  <td style="padding: 10px;">Inklusiver Wertebereichsvergleich</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>IN (w1, w2, ...)</code></td>
+                  <td style="padding: 10px;"><code>WHERE status IN ('neu', 'offen')</code></td>
+                  <td style="padding: 10px;">Mengenprüfung gegen Werteliste</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>LIKE '%str%'</code></td>
+                  <td style="padding: 10px;"><code>WHERE name LIKE '%GmbH'</code></td>
+                  <td style="padding: 10px;">Mustervergleich mit Wildcards</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>IS NULL</code> / <code>IS NOT NULL</code></td>
+                  <td style="padding: 10px;"><code>WHERE telefon IS NULL</code></td>
+                  <td style="padding: 10px;">Sichere Prüfung auf Nullwerte</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Tabelle <code>shop_artikel</code> anlegen und die vorbereiteten 8 Testdatensätze einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Abfrage mit <code>WHERE</code> &amp; <code>AND</code> für Kategorie <code>'Elektronik'</code> und <code>preis &gt; 100.0</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Abfrage mit <code>BETWEEN 20.0 AND 150.0</code> und <code>IN ('Zubehör', 'Audio')</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Abfrage mit <code>LIKE</code> nach Titeln mit <code>'Smart%'</code> OR <code>'%Pro%'</code> formulieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Abfrage mit <code>IS NULL</code> nach Artikeln ohne Rabattcode und mit <code>lagerbestand &gt; 0</code> verfassen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> Top 3 der teuersten Artikel mit <code>ist_verfuegbar = 1</code> ermitteln, die <strong>nicht</strong> aus <code>'Elektronik'</code> stammen (<code>ORDER BY preis DESC LIMIT 3</code>).</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_1_grundlagen&chapter=02_filterung_und_logische_operatoren" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_tabellen_und_select/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 01</a>
+            <a href="../03_daten_aktualisieren_und_loeschen/index.html" class="btn btn-secondary">Weiter zu SQL 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

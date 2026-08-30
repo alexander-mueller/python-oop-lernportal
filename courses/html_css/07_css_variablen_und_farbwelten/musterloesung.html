@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Variablen &amp; Farbräume</title>
+  <style>
+    /* 1. Globale Design Tokens */
+    :root {
+      --primary-color: #2563eb;
+      --accent-color: hsl(260deg 85% 60%);
+      --bg-page: oklch(0.97 0.01 240);
+      --bg-card: #ffffff;
+      --text-color: #0f172a;
+      --radius: 12px;
+      --spacing: 20px;
+    }
+
+    /* 2. var() Verknüpfungen */
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-color);
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      color: var(--text-color);
+      border-radius: var(--radius);
+      padding: var(--spacing);
+      margin: 20px auto;
+      max-width: 600px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* 4. Gradient Header */
+    .gradient-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: #ffffff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    /* 5. Theme-Klasse mit Variablen-Überschreibung */
+    .dark-theme {
+      --bg-card: #0f172a;
+      --text-color: #f8fafc;
+      --primary-color: oklch(0.7 0.2 250);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="gradient-header">
+    <h1>Design Tokens &amp; Color Systems</h1>
+    <p>Flexible Themes mit modernen CSS Custom Properties.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Standard Light Card</h2>
+      <p>Diese Karte nutzt globale Variablen aus dem :root-Scope.</p>
+      <button type="button" class="btn">Aktion</button>
+    </section>
+
+    <section class="card dark-theme">
+      <h2>Dark Theme Card</h2>
+      <p>Diese Karte überschreibt Variablen lokal mit dunklem Farbschema.</p>
+      <button type="button" class="btn">Aktion</button>
+    </section>
+  </main>
+
+</body>
+</html>

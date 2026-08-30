@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 05: Selektoren, Kaskade &amp; Spezifität</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🎨 Lehrpfad 2: CSS3 Styling</div>
+          <h1>CSS 05: Selektoren, Kaskade &amp; Spezifität</h1>
+          <p>Lerne die Anatomie moderner CSS-Selektoren, Kombinatoren, Pseudo-Klassen (<code>:hover</code>, <code>:nth-child</code>) und wie der Browser Spezifitätskonflikte in der Kaskade auflöst.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: SELEKTOREN & KOMBINATOREN -->
+        <section class="card">
+          <h2>💡 1. CSS-Selektoren &amp; Kombinatoren</h2>
+          <p>Selektoren bestimmen, welche HTML-Elemente durch Stylesheets formatiert werden:</p>
+          
+          <pre><code>/* 1. Typ-Selektor (Spezifität 0-0-1): */
+h2 { color: #1e293b; }
+
+/* 2. Klassen-Selektor (Spezifität 0-1-0): */
+.badge { background: #38bdf8; padding: 4px 8px; border-radius: 4px; }
+
+/* 3. ID-Selektor (Spezifität 1-0-0): */
+#hero-section { background: #0f172a; color: white; }
+
+/* 4. Kombinatoren: */
+ul > li { list-style: square; }      /* Kind-Kombinator (direkte Kinder) */
+article p { line-height: 1.6; }       /* Nachfahren-Kombinator */
+h2 + p { font-size: 1.1rem; }        /* Direkt nachfolgender Nachbar */
+a[target="_blank"] { color: #818cf8; } /* Attribut-Selektor */</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: PSEUDO-KLASSEN -->
+        <section class="card">
+          <h2>✨ 2. Pseudo-Klassen: Interaktion &amp; Struktur</h2>
+          <p>Mit Pseudo-Klassen stylst du Elemente basierend auf Benutzerinteraktion oder Position im DOM:</p>
+
+          <pre><code>/* Interaktion: */
+.btn:hover { background-color: #2563eb; transform: translateY(-2px); }
+.input-field:focus { outline: 2px solid #38bdf8; border-color: transparent; }
+
+/* Struktur & Positionierung: */
+li:first-child { font-weight: bold; }
+tr:nth-child(even) { background-color: #f8fafc; }  /* Zebra-Streifen */
+tr:nth-child(odd) { background-color: #ffffff; }</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: SPEZIFITÄTS-PYRAMIDE -->
+        <section class="card">
+          <h2>⚖️ 3. Die CSS-Spezifitäts-Pyramide (A-B-C)</h2>
+          <p>Wenn zwei CSS-Regeln dasselbe Element ansprechen, gewinnt die mit der höheren <strong>Spezifität</strong>:</p>
+
+          <div style="background: #0b0f19; padding: 16px; border-radius: 8px; font-family: monospace; color: #f8fafc; margin: 15px 0;">
+            <div style="color: #f43f5e;">Level 4: Inline-Styles (style="...") -> 1-0-0-0</div>
+            <div style="color: #fb923c;">Level 3: ID-Selektoren (#nav, #main) -> 0-1-0-0</div>
+            <div style="color: #facc15;">Level 2: Klassen, Attribute &amp; Pseudo-Klassen (.card, [type="text"], :hover) -> 0-0-1-0</div>
+            <div style="color: #4ade80;">Level 1: Element- &amp; Pseudo-Element-Selektoren (p, h1, div, ::before) -> 0-0-0-1</div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Der Behörden-Dienstgrad</div>
+            <p>Ein Typ-Selektor <code>p</code> ist der einfache Bürger. Eine Klasse <code>.wichtig</code> ist der Abteilungsleiter (überstimmt den Bürger). Eine ID <code>#chef-notiz</code> ist der Ministerpräsident (überstimmt Klassen und Typen).</p>
+            <p><strong>Goldene Regel:</strong> Verwende im modernen CSS fast ausschließlich Klassen (<code>.class</code>), um Spezifitätskriege und die Verwendung von <code>!important</code> zu vermeiden!</p>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Typ-Selektoren für <code>body</code> (Hintergrundfarbe, Schriftart) und <code>h1</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Klassen-Selektor <code>.card</code> mit Rahmen und abgerundeten Ecken sowie ID-Selektor <code>#featured-card</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Kind-Kombinator <code>ul > li</code> und Nachbar-Selektor <code>h2 + p</code> stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Attribut-Selektor <code>a[target="_blank"]</code> für externe Links definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Pseudo-Klassen <code>:hover</code> für Buttons und <code>:nth-child(even)</code> für gestreifte Tabellenzeilen/Listenelemente umsetzen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_2_css_styling&chapter=05_css_selektoren_und_kaskade" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_barrierefreiheit_und_aria/index.html" class="btn btn-secondary">&larr; Zurück zu HTML 04</a>
+            <a href="../06_box_modell_und_abstaende/index.html" class="btn btn-secondary">Weiter zu CSS 06 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

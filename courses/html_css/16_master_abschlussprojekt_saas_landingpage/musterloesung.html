@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musterlösung: Responsive SaaS Landingpage Master</title>
+  <style>
+    /* 🎯 TEILZIEL 1: Design-Tokens & Themes */
+    :root {
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --accent: #8b5cf6;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #090d16;
+      --bg-surface: #131b2e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* 🎯 TEILZIEL 2: Sticky Flexbox Navbar */
+    .navbar-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-body);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .nav-brand {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn--primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn--primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn--outline:hover {
+      background: var(--bg-surface);
+    }
+
+    /* 🎯 TEILZIEL 3: Hero Section & Glassmorphism Floating Card */
+    .hero-section {
+      padding: 80px 0 60px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 5vw + 1rem, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25);
+      animation: float 5s infinite ease-in-out;
+    }
+
+    /* 🎯 TEILZIEL 4: Responsive Feature Grid Matrix */
+    .features-section {
+      padding: 60px 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 28px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(79, 70, 229, 0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+
+    /* 🎯 TEILZIEL 5: BEM Pricing Matrix */
+    .pricing-section {
+      padding: 60px 0;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: center;
+    }
+
+    .pricing-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .pricing-card--popular {
+      border-color: var(--accent);
+      transform: scale(1.03);
+      box-shadow: 0 15px 30px -10px rgba(139, 92, 246, 0.3);
+    }
+
+    .pricing-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pricing-card__title {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .pricing-card__price {
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+
+    .pricing-card__features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 🎯 TEILZIEL 6: Responsive Media Queries (Mobile-First) */
+    @media (min-width: 768px) {
+      .hero-section {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    .footer-main {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Header -->
+  <div class="navbar-wrapper">
+    <div class="container">
+      <nav class="navbar">
+        <a href="#" class="nav-brand">⚡ NexusSaaS</a>
+        <ul class="nav-menu">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Preise</a></li>
+          <li><a href="#about">Über uns</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="btn btn--outline" style="padding: 8px 12px;">🌓 Theme</button>
+          <a href="#signup" class="btn btn--primary">Jetzt starten</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="container">
+    <section class="hero-section">
+      <div>
+        <h1 class="hero-title">Die All-in-One Plattform für Modern Web Apps</h1>
+        <p class="hero-subtitle">
+          Entwickle, teste und deploye responsive Benutzeroberflächen in Rekordzeit. Mit nativer CSS-Power und 0 kB JavaScript-Overhead.
+        </p>
+        <div class="hero-cta">
+          <a href="#start" class="btn btn--primary">Kostenlos testen &rarr;</a>
+          <a href="#demo" class="btn btn--outline">Live Demo ansehen</a>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent); margin-bottom: 8px;">LIVE METRICS</div>
+        <h3 style="font-size: 1.2rem; margin-bottom: 12px;">System Performance</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+          100% Lighthouse Score &bull; Sub-10ms Renderzeit
+        </p>
+        <div style="display: flex; gap: 8px;">
+          <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700;">Online</span>
+          <span style="background: rgba(99, 102, 241, 0.2); color: #6366f1; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700;">v2.4.0</span>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main class="container">
+    <!-- Features Grid -->
+    <section id="features" class="features-section">
+      <h2 style="font-size: 1.8rem; text-align: center; margin-bottom: 40px;">Warum Entwickler NexusSaaS lieben</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 style="margin-bottom: 8px;">Ultra Schnelle Ladezeiten</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Moderne CSS-Grid und Flexbox-Technologien ohne Kaskaden-Overhead.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🌓</div>
+          <h3 style="margin-bottom: 8px;">Natives Theme-System</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Dark Mode direkt mit CSS Custom Properties und System-Sync.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3 style="margin-bottom: 8px;">100% Mobile First</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Stufenlose clamp()-Typografie und dynamische Viewport-Anpassung.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+      <h2 style="font-size: 1.8rem; text-align: center; margin-bottom: 40px;">Transparente Preise für jedes Team</h2>
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Starter</h3>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 9999px;">Basis</span>
+          </div>
+          <div class="pricing-card__price">€ 0 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/ Mon</span></div>
+          <ul class="pricing-card__features">
+            <li>✓ Bis zu 3 Projekte</li>
+            <li>✓ Community Support</li>
+            <li>✓ Standard Analytics</li>
+          </ul>
+          <a href="#" class="btn btn--outline" style="margin-top: 10px;">Loslegen</a>
+        </article>
+
+        <article class="pricing-card pricing-card--popular">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Enterprise Pro</h3>
+            <span style="font-size: 0.75rem; background: var(--accent); color: white; padding: 4px 8px; border-radius: 9999px; font-weight: 700;">🔥 Bestseller</span>
+          </div>
+          <div class="pricing-card__price">€ 49 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">/ Mon</span></div>
+          <ul class="pricing-card__features">
+            <li>✓ Unbegrenzte Projekte</li>
+            <li>✓ 24/7 VIP Support</li>
+            <li>✓ Custom Domains &amp; Dark Mode</li>
+            <li>✓ 99.99% SLA Garantie</li>
+          </ul>
+          <a href="#" class="btn btn--primary" style="margin-top: 10px;">Jetzt starten</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container footer-main">
+    <div>&copy; 2026 NexusSaaS Inc. Alle Rechte vorbehalten.</div>
+    <div style="display: flex; gap: 16px;">
+      <a href="#" style="color: var(--text-muted); text-decoration: none;">Datenschutz</a>
+      <a href="#" style="color: var(--text-muted); text-decoration: none;">Impressum</a>
+      <a href="#" style="color: var(--text-muted); text-decoration: none;">Barrierefreiheit</a>
+    </div>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById("theme-toggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", () => {
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
+      });
+    }
+  </script>
+</body>
+</html>

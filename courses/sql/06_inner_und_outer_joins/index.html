@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 06: INNER JOIN &amp; OUTER JOINs</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏗️ SQL Lehrpfad 2: Joins &amp; Design</div>
+          <h1>SQL 06: INNER JOIN &amp; OUTER JOINs</h1>
+          <p>Lerne Tabellen über gemeinsame Schlüssel zu verbinden: INNER JOIN für Schnittmengen, LEFT JOIN für Vollständigkeit und Multi-Table JOINs.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: VENN DIAGRAMM / SCHEMA -->
+        <section class="card">
+          <h2>💡 1. Das Konzept relationaler JOINs</h2>
+          <p>Anstatt alle Daten in eine riesige, unübersichtliche Tabelle zu stopfen, trennen wir sie in spezialisierte Entitäten und verknüpfen sie bei Bedarf:</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 15px 0;">
+            <div style="background: var(--bg-subtle); padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+              <h3 style="margin-bottom: 6px; font-size: 1.05rem;">🔵 INNER JOIN (Schnittmenge)</h3>
+              <p style="font-size: 0.9rem; margin: 0;">Gibt nur Zeilen zurück, die in <strong>beiden</strong> Tabellen eine Übereinstimmung haben. Unzugeordnete Zeilen werden ignoriert.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
+              <h3 style="margin-bottom: 6px; font-size: 1.05rem;">🟢 LEFT JOIN (Alle links)</h3>
+              <p style="font-size: 0.9rem; margin: 0;">Behält <strong>alle</strong> Zeilen der linken Tabelle bei. Fehlt ein passender Partner in der rechten Tabelle, steht dort <code>NULL</code>.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: TABELLEN-ALIASE & SPRECHENDE SYNTAX -->
+        <section class="card">
+          <h2>🏷️ 2. Tabellen-Aliase &amp; Join-Syntax</h2>
+          <p>Mit kurzen Aliasen (z.B. <code>m</code> für <code>mitarbeiter</code>, <code>a</code> für <code>abteilungen</code>) bleibt dein SQL lesbar:</p>
+          <pre><code>-- INNER JOIN mit Tabellen-Aliasen:
+SELECT 
+    m.name AS mitarbeiter_name, 
+    m.rolle, 
+    a.name AS abteilung_name
+FROM mitarbeiter m
+INNER JOIN abteilungen a ON m.abteilung_id = a.id;
+
+-- LEFT JOIN mit Beibehaltung externer Berater:
+SELECT 
+    m.name AS mitarbeiter_name, 
+    m.gehalt, 
+    COALESCE(a.name, 'Keine Abteilung') AS abteilung
+FROM mitarbeiter m
+LEFT JOIN abteilungen a ON m.abteilung_id = a.id;</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🔍 Didaktische Analogie: Namensschilder auf einer Konferenz</div>
+            <p><strong>INNER JOIN:</strong> Nur Teilnehmer, die ein gültiges Firmen-Namensschild tragen, dürfen in den VIP-Raum.</p>
+            <p><strong>LEFT JOIN:</strong> JEDER Besucher darf hinein. Wer kein Firmenschild hat, bekommt auf der Gästeliste ein leeres Feld (<code>NULL</code>)!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Join-Muster</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Join-Typ</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Typischer Anwendungsfall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>INNER JOIN</code></td>
+                  <td style="padding: 10px;"><code>FROM t1 JOIN t2 ON t1.id = t2.f_id</code></td>
+                  <td style="padding: 10px;">Bestellungen mit Kundennamen abrufen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>LEFT JOIN</code></td>
+                  <td style="padding: 10px;"><code>FROM t1 LEFT JOIN t2 ON t1.id = t2.f_id</code></td>
+                  <td style="padding: 10px;">Alle Kunden anzeigen (auch ohne Bestellungen)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Anti-Join</code></td>
+                  <td style="padding: 10px;"><code>LEFT JOIN t2 ... WHERE t2.id IS NULL</code></td>
+                  <td style="padding: 10px;">Kunden finden, die noch nie bestellt haben</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Multi-Join</code></td>
+                  <td style="padding: 10px;"><code>FROM t1 JOIN t2 ON ... JOIN t3 ON ...</code></td>
+                  <td style="padding: 10px;">Mitarbeiter mit Abteilung und Standort verbinden</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Tabellen <code>standorte</code>, <code>abteilungen</code> und <code>mitarbeiter</code> anlegen und Beispieldaten einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>INNER JOIN</code> zwischen <code>mitarbeiter</code> und <code>abteilungen</code> formulieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>LEFT JOIN</code> schreiben, um alle Mitarbeiter (auch ohne Abteilung) anzuzeigen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Anti-Join erstellen: Finde alle Abteilungen, die noch keine Mitarbeiter haben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Multi-Table JOIN: Verbinde alle 3 Tabellen (Mitarbeiter, Abteilung, Stadt, Land).</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_2_joins_und_design&chapter=06_inner_und_outer_joins" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_foreign_keys_und_relationen/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 05</a>
+            <a href="../07_datenbank_normalisierung_1nf_bis_3nf/index.html" class="btn btn-secondary">Weiter zu SQL 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

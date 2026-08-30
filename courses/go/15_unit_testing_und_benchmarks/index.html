@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 15: Unit Testing, Table-Driven Tests &amp; Benchmarks</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Cloud Microservices &amp; Testing</div>
+          <h1>Go 15: Automatisiertes Testing, Table-Driven Tests &amp; Benchmarks</h1>
+          <p>Schreibe hochgradig wartbare und performante Go-Tests: Nutze das Table-Driven Test Pattern, Subtests mit <code>t.Run()</code> und exakte Micro-Benchmarks mit <code>b *testing.B</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: TABLE-DRIVEN TESTS -->
+        <section class="card">
+          <h2>📊 1. Das Table-Driven Testing Pattern</h2>
+          <p>
+            In Go ist das <strong>Table-Driven Test Pattern</strong> der unangefochtene Standard. Anstatt Dutzende fast identische Testfunktionen zu schreiben, definieren wir eine Tabelle (Slice von anonymen Structs) mit Testfällen:
+          </p>
+
+          <pre><code>package mypkg_test
+
+import "testing"
+
+func TestAdd(t *testing.T) {
+    // 🎯 Test-Tabelle definieren:
+    tests := []struct {
+        name     string
+        a, b     int
+        expected int
+    }{
+        {"Positive Zahlen", 2, 3, 5},
+        {"Negative Zahlen", -1, -5, -6},
+        {"Null-Addition", 0, 10, 10},
+    }
+
+    for _, tt := range tests {
+        // Subtests mit t.Run für isolierte Testberichte:
+        t.Run(tt.name, func(t *testing.T) {
+            actual := Add(tt.a, tt.b)
+            if actual != tt.expected {
+                t.Errorf("Add(%d, %d) = %d; erwartet %d", tt.a, tt.b, actual, tt.expected)
+            }
+        })
+    }
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: BENCHMARKS & MEMORY PROFILING -->
+        <section class="card">
+          <h2>⚡ 2. Performance-Messung mit Benchmarks</h2>
+          <p>
+            Go bringt ein natives Benchmark-Tooling mit. Eine Benchmark-Funktion hat die Signatur <code>func BenchmarkXxx(b *testing.B)</code>. Die Schleife <code>for i := 0; i &lt; b.N; i++</code> wird von Go so lange iteriert, bis eine statistisch signifikante Messung feststeht:
+          </p>
+
+          <pre><code>func BenchmarkFastJoin(b *testing.B) {
+    input := []string{"cloud", "native", "microservice", "golang", "api"}
+    
+    b.ReportAllocs() // Zeigt Speicherallokationen (B/op &amp; allocs/op)
+    b.ResetTimer()   // Ignoriert Setup-Zeit vor der Schleife
+
+    for i := 0; i &lt; b.N; i++ {
+        _ = FastJoin(input, "-")
+    }
+}</code></pre>
+
+          <div style="background: #0b0f19; color: #10b981; padding: 14px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; margin-top: 12px;">
+            $ go test -bench=. -benchmem<br>
+            BenchmarkFastJoin-8 &nbsp;&nbsp;18542100 &nbsp;&nbsp;&nbsp;62.4 ns/op &nbsp;&nbsp;&nbsp;48 B/op &nbsp;&nbsp;1 allocs/op<br>
+            PASS<br>
+            ok &nbsp;&nbsp;exercise/testing &nbsp;&nbsp;1.234s
+          </div>
+
+          <div class="box box-analogie" style="margin-top: 16px;">
+            <div class="box-title">🏢 Didaktische Analogie: Der TÜV-Prüfstand für Hochleistungsmotoren</div>
+            <p>
+              <strong>Table-Driven Tests</strong> sind die standardisierte Checkliste: Reifendruck, Bremsen, Scheinwerfer &ndash; jeder Testfall wird der Reihe nach abgehakt.<br>
+              <strong>Benchmarks (<code>b.N</code>)</strong> sind der Rollenprüfstand: Der Motor läuft auf Maximaldrehzahl, bis der Prüfcomputer exakt weiß, wie viel PS (ns/op) und wie viel Sprit (Bytes/op) verbraucht werden!
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Testing Flags &amp; Befehle</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                  <th style="padding: 10px;">Praxis-Nutzen</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>go test -v ./...</code></td>
+                  <td style="padding: 10px;">Ausführliche Testausgabe inkl. Einzelergebnisse</td>
+                  <td style="padding: 10px;">Standard im Entwickler-Alltag</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>go test -cover</code></td>
+                  <td style="padding: 10px;">Gibt Testabdeckung in Prozent aus (z.B. 92.4%)</td>
+                  <td style="padding: 10px;">CI/CD Quality Gate</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>go test -race ./...</code></td>
+                  <td style="padding: 10px;">Aktiviert Go Race Detector</td>
+                  <td style="padding: 10px;">Erkennt nebenläufige Datenkonflikte sofort</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>go test -bench=. -benchmem</code></td>
+                  <td style="padding: 10px;">Führt alle Benchmarks mit Memory-Profiling aus</td>
+                  <td style="padding: 10px;">Performance- und Allokationsoptimierung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Slugify(input string) (string, error)</code> für URL-Sanitization bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>ValidateEmail(email string) bool</code> nach Standardregeln validieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FastStringJoin(parts []string, sep string) string</code> mit <code>strings.Builder</code> optimieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Table-Driven Testfälle in <code>RunTableDrivenTests()</code> ausführen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Clean Code Tipp: Error-Prüfungen in Table-Tests</div>
+            <p>Verwende ein Flag <code>wantErr bool</code> in deiner Test-Struktur, um sowohl positive Gut-Fälle als auch negative Fehler-Fälle in einer einzigen, sauberen Testschleife abzudecken.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_4_microservices_master&chapter=15_unit_testing_und_benchmarks" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../14_json_apis_und_middleware/index.html" class="btn btn-secondary">&larr; Zurück zu Go 14</a>
+            <a href="../16_master_abschlussprojekt_microservice/index.html" class="btn btn-secondary">Weiter zum Master-Abschlussprojekt &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

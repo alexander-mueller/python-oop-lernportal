@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 07: Datenbank-Normalisierung (1NF–3NF)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏗️ SQL Lehrpfad 2: Joins &amp; Design</div>
+          <h1>SQL 07: Datenbank-Normalisierung (1NF bis 3NF)</h1>
+          <p>Verwandle redundante und fehleranfällige Tabellenstrukturen in ein sauberes, performantes und konsistentes 3NF-Datenbankschema.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DIE 3 NORMALFORMEN -->
+        <section class="card">
+          <h2>📐 1. Die drei Stufen der Normalisierung</h2>
+          <p>Die relationale Normalisierung verhindert Daten-Anomalien und Speicherverschwendung:</p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin: 15px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: 8px; border-left: 4px solid #ef4444;">
+              <strong>1. Normalform (1NF) – Atomarität:</strong> Jede Zelle enthält genau einen atomaren Einzelwert (keine Aufzählungen/Listen). Jede Zeile besitzt einen Primärschlüssel.
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+              <strong>2. Normalform (2NF) – Volle funktionale Abhängigkeit:</strong> 1NF erfüllt + jedes Nicht-Schlüssel-Attribut hängt voll vom gesamten Primärschlüssel ab (keine Teilabhängigkeiten).
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: 8px; border-left: 4px solid #10b981;">
+              <strong>3. Normalform (3NF) – Keine transitiven Abhängigkeiten:</strong> 2NF erfüllt + kein Nicht-Schlüssel-Attribut hängt von einem anderen Nicht-Schlüssel-Attribut ab (z.B. PLZ &rarr; Ort).
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SCHEMA VERGLEICH -->
+        <section class="card">
+          <h2>🏛️ 2. Das saubere 3NF-Zielschema</h2>
+          <p>Vom unübersichtlichen Monolithen zu fünf präzisen, miteinander verknüpften Entitäten:</p>
+
+          <div style="background: var(--bg-code); color: #e2e8f0; padding: 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 15px 0; overflow-x: auto;">
+┌──────────────┐         ┌───────────────────┐         ┌─────────────────────────┐
+│     orte     │ ◄────── │      kunden       │ ◄────── │        auftraege        │
+├──────────────┤   PLZ   ├───────────────────┤ KundeID ├─────────────────────────┤
+│ PK  plz      │         │ PK  id            │         │ PK  id                  │
+│     stadt    │         │     name, email   │         │ FK  kunde_id            │
+└──────────────┘         │ FK  plz           │         │     auftragsdatum       │
+                         └───────────────────┘         └─────────────────────────┘
+                                                                    │ AuftragID
+                                                                    ▼
+┌──────────────┐                                       ┌─────────────────────────┐
+│   artikel    │ ◄──────────────────────────────────── │    auftragspositionen   │
+├──────────────┤               ArtikelID               ├─────────────────────────┤
+│ PK  id       │                                       │ PK,FK  auftrag_id       │
+│  bezeichnung │                                       │ PK,FK  artikel_id       │
+│  einzelpreis │                                       │        menge            │
+└──────────────┘                                       └─────────────────────────┘
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">📦 Didaktische Analogie: Der Baukasten statt Betonblock</div>
+            <p>Ein unnormalisierter Datensatz ist wie ein massiver Betonblock: Möchte ein Kunde umziehen, musst du seinen Wohnort in 50 alten Bestellungen einzeln ändern (Änderungsanomalie). In 3NF änderst du den Ort an genau EINER einzigen Stelle (<code>orte</code>) – fertig!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Normalformen-Checkliste</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Stufe</th>
+                  <th style="padding: 10px;">Hauptkriterium</th>
+                  <th style="padding: 10px;">Gelöste Anomalie</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>1NF</strong></td>
+                  <td style="padding: 10px;">Atomare Werte, PK vorhanden</td>
+                  <td style="padding: 10px;">Verhindert unstrukturierte Listen in Textfeldern</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>2NF</strong></td>
+                  <td style="padding: 10px;">Keine Teil-Abhängigkeiten von Teil-PKs</td>
+                  <td style="padding: 10px;">Trennung von Artikelstammdaten und Auftragspositionen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>3NF</strong></td>
+                  <td style="padding: 10px;">Keine transitiven Abhängigkeiten</td>
+                  <td style="padding: 10px;">Keine Redundanz bei Adress- &amp; Ortsangaben</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Stammdatentabellen <code>orte</code> (PLZ, Stadt) und <code>artikel</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Tabelle <code>kunden</code> mit Fremdschlüssel auf <code>orte(plz)</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Tabellen <code>auftraege</code> und <code>auftragspositionen</code> (mit zusammengesetztem Primärschlüssel) erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Normalisierte Testdaten für alle 5 Tabellen einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Multi-Table Report-Abfrage mit berechnetem Positionswert (<code>menge * einzelpreis</code>) verfassen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_2_joins_und_design&chapter=07_datenbank_normalisierung_1nf_bis_3nf" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_inner_und_outer_joins/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 06</a>
+            <a href="../08_m_zu_n_verknuepfungstabellen/index.html" class="btn btn-secondary">Weiter zu SQL 08 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

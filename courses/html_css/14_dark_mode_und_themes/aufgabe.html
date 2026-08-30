@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Übung: Dark Mode &amp; Themes</title>
+  <style>
+    /* ==========================================================
+ * 🎯 TEILZIEL 1: CSS Variablen auf :root (Light Theme)
+       - --bg-body: #f8fafc
+       - --bg-surface: #ffffff
+       - --text-main: #0f172a
+       - --text-muted: #64748b
+       - --border-color: #e2e8f0
+       - --primary: #4f46e5
+       ========================================================== */
+    :root {
+      /* TODO 1: CSS Custom Properties für Light Theme */
+      /* --bg-body: ...; */
+      /* --bg-surface: ...; */
+      /* --text-main: ...; */
+      /* --text-muted: ...; */
+      /* --border-color: ...; */
+      /* --primary: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 2: Dark Theme Override über [data-theme="dark"]
+       - --bg-body: #0f172a
+       - --bg-surface: #1e293b
+       - --text-main: #f8fafc
+       - --text-muted: #94a3b8
+       - --border-color: #334155
+       - --primary: #6366f1
+       ========================================================== */
+    [data-theme="dark"] {
+      /* TODO 2: CSS Variablen für Dark Mode überschreiben */
+      /* --bg-body: ...; */
+      /* --bg-surface: ...; */
+      /* --text-main: ...; */
+      /* --text-muted: ...; */
+      /* --border-color: ...; */
+      /* --primary: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 3: Systempräferenz prefers-color-scheme
+       - @media (prefers-color-scheme: dark)
+       ========================================================== */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        /* TODO 3: Dark Mode Variablen bei Systempräferenz */
+        /* --bg-body: #0f172a; */
+        /* --bg-surface: #1e293b; */
+        /* --text-main: #f8fafc; */
+        /* --text-muted: #94a3b8; */
+        /* --border-color: #334155; */
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 4: Variablen in Komponenten anwenden
+       - body mit background-color: var(--bg-body) und color: var(--text-main)
+       - .theme-card mit background-color: var(--bg-surface) und border: 1px solid var(--border-color)
+       ========================================================== */
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      padding: 30px;
+      
+      /* TODO 4a: Variablen auf body anwenden & Transition setzen */
+      /* background-color: var(--bg-body); */
+      /* color: var(--text-main); */
+      /* transition: background-color 0.3s ease, color 0.3s ease; */
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .btn-toggle {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .theme-card {
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      
+      /* TODO 4b: Variablen auf .theme-card anwenden */
+      /* background-color: var(--bg-surface); */
+      /* border: 1px solid var(--border-color); */
+      /* transition: background-color 0.3s ease, border-color 0.3s ease; */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header-bar">
+      <div>
+        <h1 style="font-size: 1.8rem;">🌓 Theme Studio</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Dynamischer Dark/Light Mode mit CSS Custom Properties.</p>
+      </div>
+      <button id="theme-toggle" class="btn-toggle">🌙 Modus wechseln</button>
+    </header>
+
+    <main>
+      <div class="theme-card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 8px;">Design Token Architektur</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+          Farbwerte werden zentral definiert. Komponenten referenzieren lediglich Variablen-Namen.
+        </p>
+        <button class="btn-toggle" style="font-size: 0.85rem; padding: 6px 12px;">Aktion ausführen</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* ==========================================================
+ * 🎯 TEILZIEL 5: Theme-Toggle Logik mit JavaScript
+       - Beim Klick auf #theme-toggle:
+         Prüfe ob document.documentElement data-theme="dark" hat.
+         Falls ja -> setze data-theme="light"
+         Falls nein -> setze data-theme="dark"
+       ========================================================== */
+    const toggleBtn = document.getElementById("theme-toggle");
+    
+    function toggleTheme() {
+      // TODO 5: Logik hier implementieren
+      const current = document.documentElement.getAttribute("data-theme");
+      const nextTheme = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      toggleBtn.textContent = nextTheme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", toggleTheme);
+    }
+  </script>
+</body>
+</html>

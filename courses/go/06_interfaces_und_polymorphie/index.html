@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 06: Interfaces, Duck Typing &amp; Polymorphie</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏗️ Go Interfaces &amp; Polymorphie</div>
+          <h1>Go 06: Interfaces, Duck Typing &amp; Type Assertions</h1>
+          <p>Entdecke die Genialität von Go-Interfaces: Implizite Erfüllung (Structural Subtyping / Duck Typing), lose Kopplung, Type Assertions und Type Switches mit <code>any</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: IMPLIZITE INTERFACES -->
+        <section class="card">
+          <h2>🦆 1. Implizite Implementierung (Duck Typing)</h2>
+          <p>In Go gibt es kein <code>implements</code>-Schlüsselwort. Ein Struct erfüllt ein Interface <em>automatisch</em>, sobald es alle geforderten Methoden mit exakter Signatur besitzt:</p>
+          
+          <pre><code>// 1. Interface definieren (Methoden-Set)
+type Greeter interface {
+    Greet(name string) string
+}
+
+// 2. Beliebiges Struct
+type GermanBot struct{}
+
+// 3. Methode implementieren -> Erfüllt Greeter implizit!
+func (g GermanBot) Greet(name string) string {
+    return "Guten Tag, " + name + "!"
+}
+
+// 4. Polymorphe Funktion
+func RunGreeter(g Greeter, user string) {
+    fmt.Println(g.Greet(user))
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der EU-Steckdosenstandard</div>
+            <p>Ein Interface ist wie eine Steckdose in der Wand: Es definiert lediglich die Form der Löcher (die Funktionssignaturen). Ob du einen Föhn, ein MacBook-Ladekabel oder eine Kaffeemaschine einsteckst, ist der Steckdose egal – solange der Stecker passt, fließt Strom!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: TYPE ASSERTION & SWITCH -->
+        <section class="card">
+          <h2>🔍 2. Type Assertions &amp; Type Switches</h2>
+          <p>Wenn du mit einem Interface arbeitest, kannst du den konkreten darunterliegenden Typ mit Type Assertions prüfen:</p>
+
+          <pre><code>// 1. Sichere Type Assertion mit Comma-OK:
+var x any = "Hallo Go"
+str, ok := x.(string)
+if ok {
+    fmt.Println("Länge des Strings:", len(str))
+}
+
+// 2. Type Switch:
+func Describe(val any) string {
+    switch v := val.(type) {
+    case int:
+        return fmt.Sprintf("Ganzzahl: %d", v*2)
+    case string:
+        return fmt.Sprintf("String: %s (Länge: %d)", v, len(v))
+    case bool:
+        return fmt.Sprintf("Boolean: %t", v)
+    default:
+        return "Unbekannter Typ"
+    }
+}</code></pre>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Interface <code>Storage</code> mit Methoden <code>Save</code>, <code>Get</code> und <code>Count</code> deklarieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Struct <code>MemoryStorage</code> erstellen, das <code>Storage</code> implizit implementiert.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Polymorphe Funktion <code>SyncData(source, target Storage, keys []string) (int, error)</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Funktion <code>TypPruefung(val any) string</code> mit einem Go Type-Switch umsetzen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Go Pro-Tipp: Kleine Interfaces bevorzugen</div>
+            <p>Die Go-Standardbibliothek brilliert durch winzige Interfaces wie <code>io.Reader</code> (1 Methode) oder <code>fmt.Stringer</code> (1 Methode). Halte Interfaces so klein und präzise wie möglich!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_2_structs_interfaces&chapter=06_interfaces_und_polymorphie" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../07_explizites_error_handling/index.html" class="btn btn-secondary">Weiter zu Go 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

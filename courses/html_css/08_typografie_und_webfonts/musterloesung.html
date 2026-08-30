@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Typografie &amp; Webfonts</title>
+  <style>
+    /* 1. Google Font Import */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+    /* 2. Font-Family & Global Defaults */
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .article-container {
+      max-width: 680px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 5. Category Eyebrow Tag */
+    .category-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    /* 3. Harmonische Type-Scale in rem */
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #0f172a;
+      margin-top: 4px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #1e293b;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    /* 4. Lesbarkeit & Zeilenabstand */
+    p {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <article class="article-container">
+    <span class="category-tag">Design System Magazin</span>
+    <h1>Die Kunst der modernen Web-Typografie</h1>
+    
+    <h2>1. Harmonische Verhältnisse &amp; Lesbarkeit</h2>
+    <p>Gute Typografie ist unsichtbar: Sie lenkt nicht ab, sondern führt das Auge des Lesers mühelos durch den Textfluss. Durch gezielten Einsatz von Type-Scales, Zeilenabständen und feinen Kontrasten entsteht ein professioneller Eindruck.</p>
+
+    <h2>2. Webfonts im Performance-Fokus</h2>
+    <p>Moderne Webfonts bieten exzellente Unterstützung für variable Schriftschnitte (Variable Fonts) und modernste Schriftsysteme.</p>
+  </article>
+
+</body>
+</html>

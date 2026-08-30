@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Box-Modell &amp; Abstände</title>
+  <style>
+    /* 1. Universeller Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+      padding: 40px 20px;
+    }
+
+    /* 2. Container & Zentrierung */
+    .card-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* 3. Card-Box mit Padding & Border */
+    .profile-card {
+      background-color: #ffffff;
+      padding: 24px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 4. Vertikale Abstände */
+    .profile-card h2 {
+      margin-bottom: 12px;
+      color: #0f172a;
+    }
+
+    .profile-card p {
+      margin-bottom: 20px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    /* 5. Inline-Block Badges mit Margins */
+    .skills {
+      margin-top: 10px;
+    }
+
+    .skill-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    <div class="profile-card">
+      <h2>Sarah Schneider</h2>
+      <p>Senior Frontend &amp; UI-Architektin mit Leidenschaft für barrierefreie Web-Erlebnisse.</p>
+      
+      <div class="skills">
+        <span class="skill-badge">HTML5</span>
+        <span class="skill-badge">CSS3</span>
+        <span class="skill-badge">UI/UX</span>
+        <span class="skill-badge">Accessibility</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

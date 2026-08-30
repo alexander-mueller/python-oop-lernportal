@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 16: High-Concurrency URL Shortener &amp; Analytics Microservice</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏆 Master-Abschlussprojekt</div>
+          <h1>Master 16: High-Concurrency URL Shortener &amp; Analytics API</h1>
+          <p>Das ultimative Meisterstück: Vereine Goroutines, Channel-Workerpools, sync.RWMutex, net/http REST-Routing und Middleware zu einem produktionsreifen Cloud-Microservice.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieses Master-Projekts:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. INTRO & ARCHITEKTUR -->
+        <section class="card">
+          <h2>🏛️ 1. Die Microservice-Architektur im Überblick</h2>
+          <p>
+            In diesem Master-Abschlussprojekt entwickelst du einen hochgradig nebenläufigen <strong>URL Shortener &amp; Realtime Analytics Microservice</strong>. Bei zehntausenden Aufrufen pro Sekunde darf die Weiterleitung nicht durch langsame Datenbank-Schreibzugriffe blockieren &ndash; Klick-Events werden asynchron über gepufferte Go-Channels an einen <strong>Goroutine-Worker-Pool</strong> delegiert!
+          </p>
+
+          <!-- Microservice Concurrency Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 20px; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; margin: 18px 0; border: 1px solid var(--border-color);">
+            [Client HTTP Request: GET /r/{code}]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            [1. Resolve Handler] ──(Schneller sync.RWMutex Read)──&gt; Liefert Redirect sofort in &lt;1ms!<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─► [Asynchrones ClickEvent] ──&gt; [ Buffered Event Queue: chan ClickEvent ]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌───────────────┼───────────────┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Worker Goroutine 1] [Worker Goroutine 2] [Worker Goroutine 3]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└───────────────┬───────────────┘<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Analytics Aggregation &amp; Storage]
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 15px;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534;">🚀 1. Non-Blocking I/O</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Sub-Millisekunden Redirects durch Entkopplung von Klick-Verarbeitung und HTTP-Response.</p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <h4 style="color: #1e40af;">🛡️ 2. Thread-Safe Storage</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Parallele Lesezugriffe mit <code>sync.RWMutex</code> und atomare Zähler mit <code>sync/atomic</code>.</p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <h4 style="color: #7e22ce;">⚡ 3. Worker-Pool &amp; WaitGroup</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Kontrollierte Parallelität ohne Thread-Exhaustion und deterministischer Graceful Shutdown.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. API ENDPUNKTE SPEZIFIKATION -->
+        <section class="card">
+          <h2>📡 2. REST-API Endpunkte</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Methode</th>
+                  <th style="padding: 10px;">Endpoint</th>
+                  <th style="padding: 10px;">Payload / Query</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>POST</code></td>
+                  <td style="padding: 10px;"><code>/api/shorten</code></td>
+                  <td style="padding: 10px;"><code>{"url": "https://..."}</code></td>
+                  <td style="padding: 10px;">Kürzt eine URL und liefert den <code>short_code</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>GET</code></td>
+                  <td style="padding: 10px;"><code>/r/{short_code}</code></td>
+                  <td style="padding: 10px;">-</td>
+                  <td style="padding: 10px;">Löst Kurz-URL auf &amp; reiht Klick-Event asynchron ein</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>GET</code></td>
+                  <td style="padding: 10px;"><code>/api/stats/{short_code}</code></td>
+                  <td style="padding: 10px;">-</td>
+                  <td style="padding: 10px;">Liefert Klick-Statistiken und Unique IPs als JSON</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>GET</code></td>
+                  <td style="padding: 10px;"><code>/api/metrics</code></td>
+                  <td style="padding: 10px;">-</td>
+                  <td style="padding: 10px;">Liefert System-Metriken (Total URLs, Processed Events)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Structs <code>URLRecord</code>, <code>ClickEvent</code> und <code>AnalyticsStats</code> mit JSON-Tags definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>StartWorkerPool(workerCount)</code> und <code>StopWorkerPool()</code> mit <code>sync.WaitGroup</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>ShortenURL(rawURL)</code> mit Validierung und Kurzcode-Generierung umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ResolveURL(shortCode, ip, userAgent)</code> mit nicht-blockierendem Channel-Dispatch implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>GetStats(shortCode)</code> zur Aggregation von Klicks und Unique IPs schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> HTTP REST Handler &amp; Router in <code>SetupMicroserviceRouter()</code> verdrahten.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_4_microservices_master&chapter=16_master_abschlussprojekt_microservice" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../15_unit_testing_und_benchmarks/index.html" class="btn btn-secondary">&larr; Zurück zu Go 15</a>
+            <a href="../../../index.html" class="btn" style="background: var(--success); color: white;">🏆 Go-Kurs abschließen &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

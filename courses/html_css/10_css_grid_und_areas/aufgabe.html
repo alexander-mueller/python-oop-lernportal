@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Übung: CSS Grid Matrix &amp; Areas</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 1: Dashboard 2D-Grid Layout
+       - Mache .dashboard-layout zum Grid-Container (display: grid)
+       - Definiere 2 Spalten: 240px feste Sidebar und 1fr flexibler Content (grid-template-columns: 240px 1fr)
+       - Setze den Abstand zwischen den Grid-Zellen auf 20px (gap)
+       ========================================================== */
+    .dashboard-layout {
+      min-height: 90vh;
+      
+      /* TODO 1: Grid Eigenschaften hier einfügen */
+      /* display: ...; */
+      /* grid-template-columns: ...; */
+      /* gap: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 2: Benannte Grid-Template-Areas
+       - Definiere in .dashboard-layout die Bereiche:
+           "header  header"
+           "sidebar main"
+           "footer  footer"
+       - Weise den Klassen (.dash-header, .dash-sidebar, .dash-main, .dash-footer)
+         ihre jeweiligen grid-area Namen zu!
+       ========================================================== */
+    .dashboard-layout {
+      /* TODO 2a: grid-template-areas hier definieren */
+      /* grid-template-areas:
+           "header  header"
+           "sidebar main"
+           "footer  footer"; */
+    }
+
+    .dash-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      /* TODO 2b: grid-area zuweisen */
+      /* grid-area: ...; */
+    }
+
+    .dash-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+
+      /* TODO 2c: grid-area zuweisen */
+      /* grid-area: ...; */
+    }
+
+    .dash-main {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+
+      /* TODO 2d: grid-area zuweisen */
+      /* grid-area: ...; */
+    }
+
+    .dash-footer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+
+      /* TODO 2e: grid-area zuweisen */
+      /* grid-area: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 3: Responsive Metrics-Grid mit auto-fit & minmax
+       - Mache .metrics-grid zum Grid-Container (display: grid)
+       - Nutze repeat(auto-fit, minmax(200px, 1fr)) für Spalten
+       - Setze den Abstand auf 16px (gap)
+       ========================================================== */
+    .metrics-grid {
+      margin-top: 20px;
+
+      /* TODO 3: Grid Eigenschaften hier einfügen */
+      /* display: ...; */
+      /* grid-template-columns: ...; */
+      /* gap: ...; */
+    }
+
+    .metric-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin: 8px 0;
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 4: Zellen-Überspannung mit grid-column
+       - Lasse .metric-card--featured zwei Spalten überspannen (grid-column: span 2)
+       ========================================================== */
+    .metric-card--featured {
+      background: linear-gradient(135deg, #1e1b4b 0%, #1e293b 100%);
+      border-color: #6366f1;
+
+      /* TODO 4: Spaltenüberspannung hier einfügen */
+      /* grid-column: ...; */
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nav-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: block;
+      transition: background 0.2s;
+    }
+
+    .nav-list a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Header -->
+    <header class="dash-header">
+      <h2 style="font-size: 1.2rem; color: #38bdf8;">📊 Analytics Hub</h2>
+      <div style="font-size: 0.9rem; color: var(--text-muted);">Nutzer: Admin</div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <h3 style="font-size: 0.9rem; margin-bottom: 14px; text-transform: uppercase; color: var(--text-muted);">Menü</h3>
+      <ul class="nav-list">
+        <li><a href="#">📈 Übersicht</a></li>
+        <li><a href="#">👥 Kunden</a></li>
+        <li><a href="#">⚙️ Einstellungen</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="dash-main">
+      <h2>Übersicht Kennzahlen</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Echtzeit-Metriken deines SaaS-Produkts:</p>
+
+      <div class="metrics-grid">
+        <div class="metric-card metric-card--featured">
+          <div class="metric-label">⭐ Gesamtumsatz (MRR) - Highlight</div>
+          <div class="metric-val" style="color: #4ade80;">€ 48.250</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">+18.4% im Vergleich zum Vormonat</p>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Aktive Abonnenten</div>
+          <div class="metric-val">1.420</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">+42 heute</p>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Server Uptime</div>
+          <div class="metric-val">99.98%</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Status: Optimal</p>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Support Tickets</div>
+          <div class="metric-val">3</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Alle zugewiesen</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dash-footer">
+      &copy; 2026 Analytics Hub. Powered by CSS Grid.
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 13: Indizes &amp; Query-Optimierung</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Performance, Transaktionen &amp; Master</div>
+          <h1>SQL 13: B-Tree Indizes &amp; Query-Optimierung</h1>
+          <p>Optimiere Datenbank-Performance von O(N) auf O(log N): B-Tree Indizes, zusammengesetzte (Composite) Indizes, Partial Indizes und Abfrageplan-Analyse mit <code>EXPLAIN QUERY PLAN</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: B-TREE INDIZES -->
+        <section class="card">
+          <h2>⚡ 1. Wie Indizes Abfragen beschleunigen</h2>
+          <p>
+            Ohne Index muss die Datenbank bei jedem <code>WHERE</code>-Filter jede einzelne Zeile auf der Festplatte lesen (<strong>Full Table Scan: O(N)</strong>).
+            Ein <strong>B-Tree Index</strong> ist ein balancierter Baum sortierter Zeiger, der die Suche auf <strong>O(log N)</strong> Lesezugriffe reduziert:
+          </p>
+
+          <pre><code>-- 🎯 1. Standard B-Tree Index:
+CREATE INDEX idx_kunden_stadt ON kunden(stadt);
+
+-- 🎯 2. Zusammengesetzter (Composite) Index:
+CREATE INDEX idx_artikel_kat_preis ON artikel(kategorie_id, preis DESC);
+
+-- 🎯 3. Partieller Index (Speichereffizient nur für Teilmengen):
+CREATE INDEX idx_kunden_aktive ON kunden(registriert_am) WHERE status = 'aktiv';</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: EXPLAIN QUERY PLAN & SARGABILITY -->
+        <section class="card">
+          <h2>🔍 2. Abfragepläne analysieren &amp; SARGability</h2>
+          <p>
+            Mit <code>EXPLAIN QUERY PLAN</code> zeigt die Datenbank-Engine ihre interne Ausführungsstrategie:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #991b1b; margin: 0 0 6px 0;">🛑 SCAN TABLE (Langsam!)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">
+                Sequentieller Full Table Scan aller Zeilen. Tritt auf bei fehlenden Indizes oder Non-SARGable Abfragen wie <code>WHERE strftime('%Y', datum) = '2024'</code>.
+              </p>
+            </div>
+
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin: 0 0 6px 0;">⚡ SEARCH TABLE USING INDEX (Schnell!)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">
+                Gezielter binärer B-Tree Einstieg. Bei SARGable Range Queries: <code>WHERE datum >= '2024-01-01' AND datum &lt; '2025-01-01'</code>.
+              </p>
+            </div>
+          </div>
+
+          <pre><code>-- Abfrageplan inspizieren:
+EXPLAIN QUERY PLAN 
+SELECT id, name, preis 
+FROM artikel 
+WHERE kategorie_id = 1 AND preis > 500;</code></pre>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Das Buchregister</h2>
+          <div class="box box-analogie">
+            <div class="box-title">📖 Der Sachbuch-Index</div>
+            <p><strong>Table Scan:</strong> Du suchst im 1.000-seitigen SQL-Wälzer das Wort <em>"Window Function"</em>, indem du jede Seite von 1 bis 1.000 Zeile für Zeile durchliest.</p>
+            <p><strong>B-Tree Index:</strong> Du schlägst hinten das alphabetische Register (Index) bei <strong>"W"</strong> auf und findest direkt: <em>"Seite 412"</em>.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Indexierung &amp; Performance</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Konzept</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Vorteil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>UNIQUE INDEX</code></td>
+                  <td style="padding: 10px;"><code>CREATE UNIQUE INDEX idx_u ON tab(col)</code></td>
+                  <td style="padding: 10px;">Erzwingt Eindeutigkeit &amp; beschleunigt <code>WHERE col = ...</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Composite Index</code></td>
+                  <td style="padding: 10px;"><code>CREATE INDEX idx_c ON tab(a, b)</code></td>
+                  <td style="padding: 10px;">Beschleunigt Filter auf (a) und auf (a, b)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Partial Index</code></td>
+                  <td style="padding: 10px;"><code>CREATE INDEX idx_p ON tab(col) WHERE cond</code></td>
+                  <td style="padding: 10px;">Spart bis zu 90% RAM &amp; Disk-Speicher</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>EXPLAIN QUERY PLAN</code></td>
+                  <td style="padding: 10px;"><code>EXPLAIN QUERY PLAN SELECT ...</code></td>
+                  <td style="padding: 10px;">Prüft, ob der Query Optimizer Indizes verwendet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Unique &amp; Composite Indizes):</strong> Erstelle einen <code>CREATE UNIQUE INDEX</code> auf <code>kunden(email)</code> und einen Composite Index auf <code>artikel(kategorie_id, preis DESC)</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Partieller Index):</strong> Erstelle einen Partial Index <code>idx_aktive_kunden_stadt</code> auf <code>kunden(stadt) WHERE status = 'aktiv'</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Query Plan Verifikation):</strong> Führe <code>EXPLAIN QUERY PLAN</code> für eine Kunden-E-Mail Suche und eine Artikel-Kategoriensuche aus.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (SARGable Query Refactoring):</strong> Schreibe eine ineffiziente Abfrage mit Datumsfunktion (<code>WHERE strftime('%Y', datum) = '2024'</code>) in eine sargable Range-Query (<code>WHERE datum &gt;= '2024-01-01' AND datum &lt; '2025-01-01'</code>) um.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_4_performance_und_master&chapter=13_indizes_und_query_optimierung" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

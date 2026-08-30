@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 10: Subqueries &amp; Mengenoperationen</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Aggregationen, CTEs &amp; Window Functions</div>
+          <h1>SQL 10: Subqueries &amp; Mengenoperationen</h1>
+          <p>Meistere verschachtelte Abfragen und mengentheoretische Verknüpfungen: Skalare und korrelierte Unterabfragen, <code>EXISTS</code>, <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code> und <code>EXCEPT</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: SUBQUERIES -->
+        <section class="card">
+          <h2>🔍 1. Subqueries (Unterabfragen)</h2>
+          <p>
+            Eine <strong>Subquery</strong> ist ein in runden Klammern eingebettetes <code>SELECT</code>. Man unterscheidet zwischen:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--primary); margin: 0 0 6px 0;">📐 Skalare Subquery</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0 0 8px 0;">Liefert exakt <strong>einen einzelnen Wert</strong> (1 Zeile, 1 Spalte), z.B. einen Durchschnitt:</p>
+              <pre style="margin: 0; padding: 10px; font-size: 0.8rem;"><code>SELECT name, preis 
+FROM produkte 
+WHERE preis > (SELECT AVG(preis) FROM produkte);</code></pre>
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--purple); margin: 0 0 6px 0;">🔗 Korrelierte Subquery</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0 0 8px 0;">Referenziert Spalten der <strong>äußeren Abfrage</strong> und wird für jede äußere Zeile evaluiert:</p>
+              <pre style="margin: 0; padding: 10px; font-size: 0.8rem;"><code>SELECT k.name FROM kunden k
+WHERE EXISTS (
+    SELECT 1 FROM bestellungen b 
+    WHERE b.kunde_id = k.id
+);</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: MENGENOPERATIONEN -->
+        <section class="card">
+          <h2>🔀 2. Mengenoperationen (Set Operations)</h2>
+          <p>
+            Mengenoperatoren kombinieren die Zeilen zweier oder mehrerer <code>SELECT</code>-Abfragen. Voraussetzung: Beide Abfragen müssen die gleiche Spaltenanzahl und kompatible Datentypen besitzen!
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <code style="font-weight: 700; color: #166534;">UNION</code>
+              <p style="font-size: 0.85rem; margin: 4px 0 0 0; color: var(--text-body);">Vereinigung aller Zeilen <strong>ohne Duplikate</strong>.</p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #059669; padding: 12px; border-radius: var(--radius-sm);">
+              <code style="font-weight: 700; color: #064e3b;">UNION ALL</code>
+              <p style="font-size: 0.85rem; margin: 4px 0 0 0; color: var(--text-body);">Vereinigung aller Zeilen <strong>inklusive Duplikate</strong> (deutlich schneller!).</p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <code style="font-weight: 700; color: #1e40af;">INTERSECT</code>
+              <p style="font-size: 0.85rem; margin: 4px 0 0 0; color: var(--text-body);">Schnittmenge: Nur Zeilen, die in <strong>beiden</strong> Abfragen vorkommen.</p>
+            </div>
+            <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px; border-radius: var(--radius-sm);">
+              <code style="font-weight: 700; color: #991b1b;">EXCEPT</code>
+              <p style="font-size: 0.85rem; margin: 4px 0 0 0; color: var(--text-body);">Differenz: Zeilen der ersten Abfrage <strong>abzüglich</strong> der zweiten.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2> Venn-Diagramme &amp; Kunden-Matching</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🛒 Der Omnichannel-Kunden-Vergleich</div>
+            <p><strong>Menge A:</strong> Kunden, die im Online-Shop gekauft haben.</p>
+            <p><strong>Menge B:</strong> Kunden, die im Ladengeschäft (Filiale) gekauft haben.</p>
+            <p><strong>UNION:</strong> Alle Kunden, die jemals irgendwo eingekauft haben.</p>
+            <p><strong>INTERSECT:</strong> Treue Omnichannel-Kunden (kaufen online UND in der Filiale).</p>
+            <p><strong>EXCEPT:</strong> Reine Online-Kunden (Kauf online, aber noch NIE in der Filiale).</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Subqueries &amp; Mengenoperatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator / Konstrukt</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>WHERE spalte IN (SELECT ...)</code></td>
+                  <td style="padding: 10px;">Prüft, ob Wert in einer Subquery-Ergebnisliste vorkommt</td>
+                  <td style="padding: 10px;"><code>WHERE kat_id IN (SELECT id FROM top_kats)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>WHERE EXISTS (SELECT 1 ...)</code></td>
+                  <td style="padding: 10px;">Gibt true zurück, sobald mindestens 1 Zeile matcht (Short-Circuit)</td>
+                  <td style="padding: 10px;"><code>WHERE EXISTS (SELECT 1 FROM orders WHERE ...)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SELECT ... UNION ALL SELECT ...</code></td>
+                  <td style="padding: 10px;">Stapelt zwei Ergebnistabellen untereinander ohne Deduplizierung</td>
+                  <td style="padding: 10px;"><code>SELECT 'A' UNION ALL SELECT 'B'</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SELECT ... EXCEPT SELECT ...</code></td>
+                  <td style="padding: 10px;">Entfernt alle Treffer der zweiten Tabelle aus der ersten</td>
+                  <td style="padding: 10px;"><code>SELECT id FROM all_users EXCEPT SELECT id FROM banned</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Skalare Subquery &amp; Preisabweichung):</strong> Finde Produkte, deren Preis über dem Gesamtdurchschnitt liegt (<code>WHERE preis &gt; (SELECT AVG(preis)...)</code>) und berechne die Differenz zum Mittelwert als Spalte <code>preis_differenz</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Korrelierte Subquery mit NOT EXISTS):</strong> Finde Kunden, die mindestens eine Online-Bestellung getätigt haben (<code>EXISTS</code>), aber bisher noch <em>keine</em> Retoure eingereicht haben (<code>NOT EXISTS</code>).
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Multi-Channel Konsolidierung mit UNION ALL &amp; UNION):</strong> Erstelle eine harmonisierte Transaktionsliste aller Online- und Filialumsätze mit Quellen-Tag (<code>'Online'</code> / <code>'Filiale'</code>).
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Kundenanalyse mit INTERSECT &amp; EXCEPT):</strong> Ermittle mit <code>INTERSECT</code> alle Kunden, die sowohl online als auch im Laden gekauft haben (Omnichannel), und mit <code>EXCEPT</code> reine Online-Shopper.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_3_aggregation_und_analytics&chapter=10_subqueries_und_mengenoperationen" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

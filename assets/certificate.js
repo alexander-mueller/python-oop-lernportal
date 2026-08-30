@@ -86,12 +86,56 @@
       moduleDesc = "Vollständiger Abschluss des PowerShell Curriculums (16 Module, Modul-Manifeste .psd1, Pester v5 Testing & Cloud Ops Engine)";
       trackKey = "ps_master";
     } else if (lehrpfadNummer === "sql_grundlagen") {
-      titel = "SQL & Relationale Datenbanken";
-      moduleDesc = "CREATE TABLE, Primary Keys, INSERT, SELECT, Filter mit WHERE und SQLite WebAssembly Abfragen";
+      titel = "SQL Grundlagen & Relationale CRUD-Operationen";
+      moduleDesc = "4 Module: CREATE TABLE, Primary Keys, Datentypen, Constraints, INSERT, SELECT, UPDATE & DELETE";
       trackKey = "sql_grundlagen";
+    } else if (lehrpfadNummer === "sql_joins") {
+      titel = "Relationale Joins & Datenbank-Design";
+      moduleDesc = "4 Module: Foreign Keys, INNER/LEFT/RIGHT/FULL JOINs, Normalisierung (1NF bis 3NF) & n:m Junction Tables";
+      trackKey = "sql_joins";
+    } else if (lehrpfadNummer === "sql_analytics") {
+      titel = "SQL Analytics, CTEs & Window Functions";
+      moduleDesc = "4 Module: GROUP BY, HAVING, Subqueries, Common Table Expressions (WITH ...) & Window Functions (ROW_NUMBER, OVER)";
+      trackKey = "sql_analytics";
+    } else if (lehrpfadNummer === "sql_master") {
+      titel = "Master of SQL, Data Analytics & Database Engineering";
+      moduleDesc = "Vollständiger Abschluss des SQL Curriculums (16 Module, B-Tree Indizes, ACID Transaktionen, Views & Data Warehouse Master)";
+      trackKey = "sql_master";
+    } else if (lehrpfadNummer === "html_grundlagen") {
+      titel = "Semantisches HTML5 & Barrierefreie Web-Struktur";
+      moduleDesc = "4 Module: HTML5 Semantik, Dokumentstruktur, Formulare, Validierung & Accessibility (A11y/ARIA)";
+      trackKey = "html_grundlagen";
+    } else if (lehrpfadNummer === "css_styling") {
+      titel = "Modern CSS3 Styling & Box Model Engineering";
+      moduleDesc = "4 Module: Spezifität, Kaskade, CSS Box Model, Custom Properties (CSS-Variablen) & Responsive Typografie";
+      trackKey = "css_styling";
+    } else if (lehrpfadNummer === "css_responsive") {
+      titel = "Modern CSS Layouts: Flexbox, Grid & Animationen";
+      moduleDesc = "4 Module: Flexbox 1D-Layouts, CSS Grid 2D-Matrix, Media Queries (@media) & Keyframe-Animationen";
+      trackKey = "css_responsive";
+    } else if (lehrpfadNummer === "html_css_master") {
+      titel = "Master of Modern HTML5, CSS3 & Responsive UI Design";
+      moduleDesc = "Vollständiger Abschluss des HTML/CSS Curriculums (16 Module, BEM, Dark/Light Themes & SaaS Landingpage Master)";
+      trackKey = "html_css_master";
+    } else if (lehrpfadNummer === "go_grundlagen") {
+      titel = "Go Syntax, Typensystem & Kontrollfluss";
+      moduleDesc = "4 Module: Variablen, Datentypen, Slices, Maps, Arrays, Schleifen und Verzweigungen";
+      trackKey = "go_grundlagen";
+    } else if (lehrpfadNummer === "go_oop") {
+      titel = "Idiomatisches Go: Structs, Interfaces & Error Handling";
+      moduleDesc = "4 Module: Structs, Pointer-Receiver-Methoden, Interfaces (Duck Typing) & Explizites Error-Handling (if err != nil)";
+      trackKey = "go_oop";
+    } else if (lehrpfadNummer === "go_concurrency") {
+      titel = "Go Concurrency: Goroutines, Channels & Synchronisation";
+      moduleDesc = "4 Module: Goroutines (go worker), Buffered Channels, select-Multiplexing, sync.WaitGroup & Mutexes";
+      trackKey = "go_concurrency";
+    } else if (lehrpfadNummer === "go_master") {
+      titel = "Master of Go (Golang) Cloud Microservices & Systems Engineering";
+      moduleDesc = "Vollständiger Abschluss des Go Curriculums (16 Module, net/http REST APIs, Middleware, Testing & Cloud API Master)";
+      trackKey = "go_master";
     } else if (lehrpfadNummer === "master") {
       titel = "Grandmaster of Software & Cloud Engineering (Polyglot)";
-      moduleDesc = "Vollständiger Abschluss aller plattformweiten Curricula (Python, JavaScript, TypeScript, Linux Bash, PowerShell & SQL)";
+      moduleDesc = "Vollständiger Abschluss aller plattformweiten Curricula (Python, JavaScript/TS, Linux Bash, PowerShell, SQL, HTML/CSS & Go)";
       trackKey = "master";
     }
 

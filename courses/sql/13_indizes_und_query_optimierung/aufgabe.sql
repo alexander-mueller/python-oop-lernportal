@@ -1,0 +1,88 @@
+-- ============================================================================
+-- 🗄️ SQL 13: B-TREE INDIZES & QUERY-OPTIMIERUNG (EXPLAIN QUERY PLAN) 🗄️
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 1. TABELLEN-SCHEMA & TESTDATEN
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS kunden (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    stadt TEXT NOT NULL,
+    status TEXT NOT NULL,
+    registriert_am TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS artikel (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    kategorie_id INTEGER NOT NULL,
+    preis REAL NOT NULL,
+    verfuegbar INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS server_logs (
+    id INTEGER PRIMARY KEY,
+    ip TEXT NOT NULL,
+    pfad TEXT NOT NULL,
+    status_code INTEGER NOT NULL,
+    zeitstempel TEXT NOT NULL
+);
+
+-- Testdaten
+INSERT INTO kunden (id, name, email, stadt, status, registriert_am) VALUES
+    (1, 'Max Mustermann', 'max@example.com', 'Berlin', 'aktiv', '2023-01-10'),
+    (2, 'Sarah Connor', 'sarah@example.com', 'Hamburg', 'aktiv', '2023-05-14'),
+    (3, 'Tim Berg', 'tim@example.com', 'München', 'inaktiv', '2023-08-20'),
+    (4, 'Julia Sommer', 'julia@example.com', 'Berlin', 'aktiv', '2024-02-05'),
+    (5, 'Felix Wolf', 'felix@example.com', 'Köln', 'gesperrt', '2024-03-18');
+
+INSERT INTO artikel (id, name, kategorie_id, preis, verfuegbar) VALUES
+    (1, 'High-End Gaming PC', 1, 2499.00, 1),
+    (2, 'Office Laptop 14', 1, 799.00, 1),
+    (3, 'Budget Notebook', 1, 399.00, 1),
+    (4, 'Ergonomische Tastatur', 2, 149.00, 1),
+    (5, 'Mechanische Tastatur', 2, 89.00, 1),
+    (6, 'Standard Maus', 2, 19.00, 1);
+
+INSERT INTO server_logs (id, ip, pfad, status_code, zeitstempel) VALUES
+    (1, '192.168.1.1', '/api/v1/users', 200, '2024-01-15 10:00:00'),
+    (2, '192.168.1.2', '/api/v1/login', 401, '2024-01-15 10:05:00'),
+    (3, '192.168.1.3', '/api/v1/checkout', 500, '2024-02-01 14:20:00'),
+    (4, '192.168.1.1', '/api/v1/products', 200, '2024-02-15 11:30:00'),
+    (5, '192.168.1.4', '/api/v1/orders', 200, '2024-03-01 09:15:00');
+
+
+-- ============================================================================
+-- 🎯 AUFGABEN
+-- ============================================================================
+
+-- 🎯 TODO 1: Unique & Composite Indizes erstellen
+-- a) Erstelle einen UNIQUE INDEX namens `idx_kunden_email_unique` auf der Spalte `email` der Tabelle `kunden`.
+-- b) Erstelle einen zusammengesetzten (Composite) Index namens `idx_artikel_kat_preis` auf `artikel(kategorie_id, preis DESC)`.
+-- TODO: CREATE UNIQUE INDEX ...
+-- TODO: CREATE INDEX ...
+
+
+-- 🎯 TODO 2: Partieller Index (Partial Index)
+-- Erstelle einen partiellen Index namens `idx_aktive_kunden_stadt` auf `kunden(stadt)`,
+-- der NUR aktive Kunden indiziert (WHERE status = 'aktiv').
+-- TODO: CREATE INDEX ... WHERE ...
+
+
+-- 🎯 TODO 3: Index für Server-Logs & SARGable Range Filter
+-- a) Erstelle einen Index `idx_server_logs_zeitstempel` auf `server_logs(zeitstempel)`.
+-- b) Schreibe eine SARGable Abfrage, die alle Logs aus dem Jahr 2024 (vom 01.01.2024 bis vor 01.01.2025)
+--    filtert, ohne Datumsfunktionen auf der Spalte zeitstempel zu nutzen!
+-- TODO: CREATE INDEX ...
+-- TODO: SARGable SELECT Query
+
+
+-- 🎯 TODO 4: Query-Plan Analyse mit EXPLAIN QUERY PLAN
+-- Analysiere den Ausführungsplan für:
+-- a) Die Suche nach einem Kunden per E-Mail:
+--    EXPLAIN QUERY PLAN SELECT * FROM kunden WHERE email = 'sarah@example.com';
+-- b) Die Artikelsuche nach Kategorie und Preis:
+--    EXPLAIN QUERY PLAN SELECT * FROM artikel WHERE kategorie_id = 1 AND preis > 500;
+-- TODO: EXPLAIN QUERY PLAN Abfragen schreiben

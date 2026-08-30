@@ -23,12 +23,14 @@
       <div class="sidebar-quick-nav">
         <div style="padding: 0 4px 10px 4px;">
           <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px;">Aktiver Sprachkurs:</label>
-          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="window.location.href = this.value === 'python' ? 'index.html' : 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : (this.value === 'bash' ? 'navigation_dateien_und_globbing' : (this.value === 'powershell' ? 'powershell_konsole_und_cmdlet_architektur' : 'tabellen_und_select')))">
+          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="window.location.href = this.value === 'python' ? 'index.html' : 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : (this.value === 'bash' ? 'navigation_dateien_und_globbing' : (this.value === 'powershell' ? 'powershell_konsole_und_cmdlet_architektur' : (this.value === 'html_css' ? 'semantisches_html_und_struktur' : (this.value === 'go' ? 'syntax_variablen_und_typen' : 'tabellen_und_select')))))">
             <option value="python" selected>🐍 Python 3 (33 Module)</option>
             <option value="javascript">🌐 JavaScript &amp; TypeScript (16 Module)</option>
             <option value="bash">🐧 Linux Bash &amp; Cloud DevOps (16 Module)</option>
             <option value="powershell">🔷 PowerShell 7+ Core (16 Module)</option>
-            <option value="sql">🗄️ SQL &amp; SQLite (Demo)</option>
+            <option value="sql">🗄️ SQL &amp; Data Analytics (16 Module)</option>
+            <option value="html_css">🎨 HTML5 &amp; Modern CSS3 (16 Module)</option>
+            <option value="go">⚡ Go Cloud Microservices (16 Module)</option>
           </select>
         </div>
         <a href="./index.html" class="sidebar-link">🏠 Startseite</a>
@@ -1077,6 +1079,8 @@ print(mein_auto.hupen())
   <script src="assets/runners/sql_runner.js"></script>
   <script src="assets/runners/shell_runner.js"></script>
   <script src="assets/runners/powershell_runner.js"></script>
+  <script src="assets/runners/html_css_runner.js"></script>
+  <script src="assets/runners/go_runner.js"></script>
   <script src="assets/runner.js"></script>
   <script src="assets/ui_enhancements.js"></script>
   <script src="assets/app_auth.js"></script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Variablen &amp; Farbräume</title>
+  <style>
+    /* 🎯 TEILZIEL 1: Definiere im :root-Selektor CSS Custom Properties (--primary-color, --bg-page, --bg-card, --text-color, --radius) */
+    :root {
+
+    }
+
+    /* 🎯 TEILZIEL 2: Binde die Variablen mit var(...) in body (background-color, color) und .card (background-color, border-radius) ein */
+
+
+    /* 🎯 TEILZIEL 3: Verwende verschiedene Farbmodelle (mindestens ein HEX-Wert z.B. #2563eb, ein HSL- oder RGBA-Wert und ein oklch(...) Wert) */
+
+
+    /* 🎯 TEILZIEL 4: Gestalte .gradient-header mit einem linearen Verlauf (linear-gradient) */
+
+
+    /* 🎯 TEILZIEL 5: Erstelle eine .dark-theme Klasse, die Variablen (--bg-page, --bg-card, --text-color) überschreibt */
+
+
+  </style>
+</head>
+<body>
+
+  <header class="gradient-header">
+    <h1>Design Tokens &amp; Color Systems</h1>
+    <p>Flexible Themes mit modernen CSS Custom Properties.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Standard Light Card</h2>
+      <p>Diese Karte nutzt globale Variablen aus dem :root-Scope.</p>
+      <button type="button" class="btn">Aktion</button>
+    </section>
+
+    <section class="card dark-theme">
+      <h2>Dark Theme Card</h2>
+      <p>Diese Karte überschreibt Variablen lokal mit dunklem Farbschema.</p>
+      <button type="button" class="btn">Aktion</button>
+    </section>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "id": "html_css",
+  "title": "HTML5, Modern CSS3 & Responsive UI",
+  "language": "html_css",
+  "icon": "🎨",
+  "runner": "html_css",
+  "description": "Vom semantischen HTML5-Dokument über modernes CSS3 Box Model, Flexbox, CSS Grid Matrix bis zu Themes (Dark Mode) & SaaS Portfolio Master.",
+  "tracks": [
+    {
+      "id": "track_1_html_basics",
+      "title": "🌱 Lehrpfad 1: Semantisches HTML5 & Barrierefreiheit",
+      "description": "Dokumentenstruktur, semantische Tags (header/main/footer/article), interaktive Formulare, Validierung & Accessibility (A11y/ARIA).",
+      "certificateKey": "html_grundlagen",
+      "chapters": [
+        { "folder": "01_semantisches_html_und_struktur", "title": "HTML 01: Semantik & Dokumentenstruktur", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "02_texte_listen_und_medien", "title": "HTML 02: Texte, Listen, Bilder & Videos", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "03_formulare_und_validierung", "title": "HTML 03: Formulare & HTML5-Validierung", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "04_barrierefreiheit_und_aria", "title": "HTML 04: Accessibility (A11y) & ARIA-Attribute", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" }
+      ]
+    },
+    {
+      "id": "track_2_css_styling",
+      "title": "🎨 Lehrpfad 2: Modern CSS3 Styling & Box Model",
+      "description": "CSS-Selektoren, Kaskade, Spezifität, Box-Modell (Margin/Padding/Border), Custom Properties (CSS-Variablen) und Typografie.",
+      "certificateKey": "css_styling",
+      "chapters": [
+        { "folder": "05_css_selektoren_und_kaskade", "title": "CSS 05: Selektoren, Kaskade & Spezifität", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "06_box_modell_und_abstaende", "title": "CSS 06: Box-Modell, Padding, Margin & Border", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "07_css_variablen_und_farbwelten", "title": "CSS 07: CSS Custom Properties & Farbsysteme", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "08_typografie_und_webfonts", "title": "CSS 08: Web-Typografie, Schriftarten & Text-Effekte", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" }
+      ]
+    },
+    {
+      "id": "track_3_layouts_and_responsive",
+      "title": "📱 Lehrpfad 3: Responsive Layouts: Flexbox & Grid",
+      "description": "Flexbox 1D-Layouts, CSS Grid 2D-Matrix, Media Queries (@media) für Mobile-First Design, Keyframe-Animationen & Transitions.",
+      "certificateKey": "css_responsive",
+      "chapters": [
+        { "folder": "09_flexbox_achsen_und_alignment", "title": "CSS 09: Flexbox Achsen, Justify & Align", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "10_css_grid_und_areas", "title": "CSS 10: CSS Grid 2D-Matrix & Template Areas", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "11_media_queries_und_mobile_first", "title": "CSS 11: Media Queries & Mobile-First Design", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "12_transitions_und_animationen", "title": "CSS 12: Transitions, Transforms & Keyframes", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" }
+      ]
+    },
+    {
+      "id": "track_4_modern_ui_and_master",
+      "title": "💎 Lehrpfad 4: CSS-Architektur, Themes & UI Master",
+      "description": "BEM-Methodik, Dark/Light Themes (prefers-color-scheme), moderne UI-Komponenten (Glassmorphism/Cards) & SaaS Landingpage Master.",
+      "certificateKey": "html_css_master",
+      "chapters": [
+        { "folder": "13_bem_methodik_und_modularitaet", "title": "CSS 13: BEM-Methodik & Modulare CSS-Architektur", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "14_dark_mode_und_themes", "title": "CSS 14: Dark/Light Mode & System-Themes", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "15_moderne_ui_komponenten", "title": "CSS 15: Moderne UI-Komponenten & Glassmorphism", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" },
+        { "folder": "16_master_abschlussprojekt_saas_landingpage", "title": "Master 16: Responsive SaaS Landingpage & Portfolio", "taskFile": "aufgabe.html", "testFile": "test_aufgabe.js" }
+      ]
+    }
+  ]
+}

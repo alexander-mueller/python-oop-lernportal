@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 04: Barrierefreiheit &amp; ARIA</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌱 Lehrpfad 1: Semantisches HTML5</div>
+          <h1>HTML 04: Barrierefreiheit (A11y) &amp; WAI-ARIA</h1>
+          <p>Lerne die Grundlagen digitaler Barrierefreiheit nach WCAG 2.2: Screenreader-Kompatibilität, Skip-Links, Tastatur-Fokus und ARIA-Attribute für moderne Webanwendungen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WCAG & A11Y PRINZIPIEN -->
+        <section class="card">
+          <h2>💡 1. Warum Web Accessibility (A11y) unverzichtbar ist</h2>
+          <p>Über 15 % der Weltbevölkerung leben mit einer Behinderung (Seheinschränkungen, motorische Einschränkungen, neurodiverse Wahrnehmung). Die <strong>WCAG-Leitlinien (POUR)</strong> fordern:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 15px 0;">
+            <div style="background: var(--bg-subtle); padding: 12px; border-radius: 8px; border-left: 4px solid #38bdf8;">
+              <strong>1. Wahrnehmbar (Perceivable):</strong> Kontraste, Alternativtexte, Screenreader-Support.
+            </div>
+            <div style="background: var(--bg-subtle); padding: 12px; border-radius: 8px; border-left: 4px solid #4ade80;">
+              <strong>2. Bedienbar (Operable):</strong> 100% tastaturbedienbar ohne Mauszwang.
+            </div>
+            <div style="background: var(--bg-subtle); padding: 12px; border-radius: 8px; border-left: 4px solid #facc15;">
+              <strong>3. Verständlich (Understandable):</strong> Klare Sprache, eindeutige Fehlermeldungen.
+            </div>
+            <div style="background: var(--bg-subtle); padding: 12px; border-radius: 8px; border-left: 4px solid #f472b6;">
+              <strong>4. Robust (Robust):</strong> Valides HTML, das mit Screenreadern harmoniert.
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SKIP-LINKS & SEMANTISCHE BUTTONS -->
+        <section class="card">
+          <h2>⌨️ 2. Skip-Links &amp; Das "Kein Div als Button"-Gesetz</h2>
+          <p>Tastatur-Nutzer wollen nicht bei jedem Seitenwechsel durch 30 Navigationslinks tabben müssen. Ein <strong>Skip-Link</strong> springt direkt zum Hauptinhalt:</p>
+
+          <pre><code>&lt;!-- Skip-Link als erstes Kind im &lt;body&gt;: --&gt;
+&lt;a href="#main-content" class="skip-link"&gt;Direkt zum Hauptinhalt springen&lt;/a&gt;
+
+&lt;!-- ❌ FALSCH: Unzugänglich für Tastatur & Screenreader --&gt;
+&lt;div class="btn" onclick="openMenu()"&gt;Menü&lt;/div&gt;
+
+&lt;!-- ✅ RICHTIG: Nativ fokussierbar und per Enter/Space bedienbar --&gt;
+&lt;button type="button" aria-expanded="false" aria-controls="mobile-menu"&gt;Menü öffnen&lt;/button&gt;</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: WAI-ARIA ATTRIBUTE -->
+        <section class="card">
+          <h2>🛡️ 3. ARIA-Attribute: Rollen &amp; Dynamische Zustände</h2>
+          <p>Wenn Standard-HTML an seine Grenzen stößt (z.B. bei komplexen Accordions, Modals oder Live-Benachrichtigungen), hilft <strong>WAI-ARIA</strong>:</p>
+
+          <pre><code>&lt;!-- 1. aria-label für Icon-Buttons ohne sichtbaren Text: --&gt;
+&lt;button type="button" aria-label="Suchleiste öffnen"&gt;
+  &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- 2. aria-expanded für aufklappbare Bereiche: --&gt;
+&lt;button aria-expanded="false" aria-controls="faq-answer-1"&gt;Was ist A11y?&lt;/button&gt;
+&lt;div id="faq-answer-1" hidden&gt;A11y steht für Accessibility...&lt;/div&gt;
+
+&lt;!-- 3. aria-live für dynamische Erfolgsmeldungen: --&gt;
+&lt;div role="status" aria-live="polite" class="alert-box"&gt;
+  Profil erfolgreich gespeichert!
+&lt;/div&gt;</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Die rollstuhlgerechte Rampe &amp; Akustik-Ampel</div>
+            <p><strong>ARIA &amp; Semantik</strong> sind wie die Sprachansage in der U-Bahn und die Bodenleitrillen für Blindenstöcke. Für sehende Menschen unauffällig, für Menschen mit Einschränkungen der einzige Weg zur selbstständigen Nutzung!</p>
+            <p><strong>Die goldene ARIA-Regel:</strong> <em>"No ARIA is better than bad ARIA."</em> Verwende immer erst natives HTML (z.B. <code>&lt;button&gt;</code> statt <code>&lt;div role="button"&gt;</code>)!</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Wichtige ARIA-Attribute</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Attribut / Rolle</th>
+                  <th style="padding: 10px;">Einsatzort</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>aria-label="..."</code></td>
+                  <td style="padding: 10px;">Buttons, Links, Icons</td>
+                  <td style="padding: 10px;">Überschreibt/definiert den vorgelesenen Namen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>aria-expanded="true|false"</code></td>
+                  <td style="padding: 10px;">Accordion-Header, Dropdown-Toggle</td>
+                  <td style="padding: 10px;">Informiert, ob Unterbereich geöffnet ist</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>aria-hidden="true"</code></td>
+                  <td style="padding: 10px;">Dekorative Icons, Emojis</td>
+                  <td style="padding: 10px;">Screenreader ignorieren das Element komplett</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>aria-describedby="id"</code></td>
+                  <td style="padding: 10px;">Formular-Felder mit Hilfetext</td>
+                  <td style="padding: 10px;">Verknüpft Zusatzhinweise oder Fehlermeldungen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>role="status" aria-live="polite"</code></td>
+                  <td style="padding: 10px;">Toasts, Feedback-Banner</td>
+                  <td style="padding: 10px;">Wird bei Textänderung sofort laut vorgelesen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Einen Skip-Link <code>&lt;a href="#main-content"&gt;</code> als allererstes Element im <code>&lt;body&gt;</code> und das Ziel <code>&lt;main id="main-content"&gt;</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Einen Icon-Button mit <code>&lt;button type="button" aria-label="Schließen"&gt;</code> und rein dekorativem Icon (<code>aria-hidden="true"</code>) erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Ein aufklappbares FAQ-Accordion mit <code>aria-expanded="false"</code> und <code>aria-controls="faq-content"</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Ein Eingabefeld mit Hilfe-Text über <code>aria-describedby="hilfe-id"</code> verknüpfen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Einen dynamischen Live-Statusbereich mit <code>role="status"</code> und <code>aria-live="polite"</code> einrichten.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_1_html_basics&chapter=04_barrierefreiheit_und_aria" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_formulare_und_validierung/index.html" class="btn btn-secondary">&larr; Zurück zu HTML 03</a>
+            <a href="../05_css_selektoren_und_kaskade/index.html" class="btn btn-secondary">Weiter zu CSS 05 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musterlösung: Media Queries &amp; Mobile First</title>
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* 🎯 TEILZIEL 1: Flüssige Typografie mit clamp() */
+    .hero-title {
+      font-size: clamp(1.75rem, 4vw + 1rem, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    /* 🎯 TEILZIEL 2: Mobile-First Basis-Layout (< 768px) */
+    .responsive-layout {
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-content, .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* Mobile: 1 Spalte */
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: border-color 0.2s ease;
+    }
+
+    .feature-item:hover {
+      border-color: var(--primary);
+    }
+
+    /* 🎯 TEILZIEL 3: Media Query für Tablet (ab 768px) */
+    @media (min-width: 768px) {
+      body {
+        padding: 32px;
+      }
+      .responsive-layout {
+        flex-direction: row;
+        gap: 24px;
+      }
+      .hero-content, .hero-card {
+        flex: 1;
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* 🎯 TEILZIEL 4: Media Query für Desktop (ab 1024px) */
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="hero-title">🚀 Responsive Design für alle Screens</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 650px;">
+        Von kompakten Mobile-Views bis hin zu hochauflösenden Desktop-Displays: CSS Media Queries passen das Layout dynamisch an.
+      </p>
+    </header>
+
+    <main>
+      <section class="responsive-layout">
+        <div class="hero-content">
+          <h2 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--accent);">Mobile-First Ansatz</h2>
+          <p style="color: var(--text-muted);">
+            Durch den Verzicht auf überflüssige Overrides lädt die Seite auf Smartphones blitzschnell und skaliert sauber nach oben.
+          </p>
+        </div>
+
+        <div class="hero-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 8px;">📱 Aktuelle Viewport-Infos</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Ziehe dein Browserfenster breiter oder schmaler, um den responsiven Umbruch live zu beobachten!
+          </p>
+        </div>
+      </section>
+
+      <section class="features-grid">
+        <div class="feature-item">
+          <h4 style="color: var(--primary);">⚡ Schnelle Ladezeiten</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Schlankes Basis-CSS für Mobilgeräte.</p>
+        </div>
+        <div class="feature-item">
+          <h4 style="color: var(--primary);">📐 Flüssige Skalierung</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Typografie wächst harmonisch per clamp().</p>
+        </div>
+        <div class="feature-item">
+          <h4 style="color: var(--primary);">💎 100% Barrierefrei</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Optimale Lesbarkeit bei jedem Zoomfaktor.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

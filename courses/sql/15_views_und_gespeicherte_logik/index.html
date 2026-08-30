@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 15: Virtuelle Views &amp; Trigger</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Performance, Transaktionen &amp; Master</div>
+          <h1>SQL 15: Virtuelle Views &amp; Datenbank-Trigger</h1>
+          <p>Kapsle komplexe Abfragen in saubere virtuelle Sichten (<code>CREATE VIEW</code>) und automatisiere Geschäftslogik, Audit-Logging und Lagerbestandskorrekturen mit Datenbank-Triggern (<code>CREATE TRIGGER</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: VIRTUELLE VIEWS -->
+        <section class="card">
+          <h2>👁️ 1. Virtuelle Tabellen mit CREATE VIEW</h2>
+          <p>
+            Ein <strong>View</strong> ist eine gespeicherte <code>SELECT</code>-Abfrage, die sich nach außen wie eine echte Tabelle verhält.
+            Er speichert keine doppelten Daten auf der Festplatte, sondern führt die zugrundeliegende Abfrage dynamisch bei jedem Zugriff aus:
+          </p>
+
+          <pre><code>-- 🎯 Komplexe 4-Tabellen Joins in einem wiederverwendbaren View kapseln:
+CREATE VIEW IF NOT EXISTS v_kunden_cockpit AS
+SELECT 
+    k.id AS kunde_id,
+    k.name,
+    k.email,
+    COUNT(b.id) AS anzahl_bestellungen,
+    COALESCE(SUM(b.gesamtbetrag), 0.0) AS umsatz_gesamt
+FROM kunden k
+LEFT JOIN bestellungen b ON k.id = b.kunde_id
+GROUP BY k.id, k.name, k.email;
+
+-- Abfrage wie auf eine normale Tabelle:
+SELECT * FROM v_kunden_cockpit WHERE umsatz_gesamt > 500;</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DATABASE TRIGGERS -->
+        <section class="card">
+          <h2>⚡ 2. Datenbank-Trigger: Reaktive Event-Logik</h2>
+          <p>
+            Ein <strong>Trigger</strong> wird automatisch von der Datenbank-Engine ausgeführt, sobald ein DML-Ereignis (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>) auf einer Tabelle eintritt.
+            Über die Pseudo-Datensätze <code>NEW</code> und <code>OLD</code> greifst du auf die geänderten Werte zu:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--primary); margin: 0 0 6px 0;">✨ NEW (Neue Daten)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Verfügbar bei <code>INSERT</code> und <code>UPDATE</code>. Enthält die neu geschriebenen Spaltenwerte (z.B. <code>NEW.menge</code>).</p>
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--amber); margin: 0 0 6px 0;">📜 OLD (Alte Daten)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">Verfügbar bei <code>UPDATE</code> und <code>DELETE</code>. Enthält die Werte vor der Änderung (z.B. <code>OLD.preis</code>).</p>
+            </div>
+          </div>
+
+          <pre><code>-- 🎯 Automatisches Audit-Log bei Preisänderungen:
+CREATE TRIGGER trg_preis_audit
+AFTER UPDATE OF preis ON produkte
+FOR EACH ROW
+BEGIN
+    INSERT INTO preis_historie (produkt_id, alter_preis, neuer_preis, datum)
+    VALUES (OLD.id, OLD.preis, NEW.preis, datetime('now'));
+END;</code></pre>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Der Fotoabzug &amp; der Rauchmelder</h2>
+          <div class="box box-analogie">
+            <div class="box-title">📸 View &amp; Trigger im Vergleich</div>
+            <p><strong>View (Das Fernglas):</strong> Du schaust durch das Fernglas (<code>SELECT * FROM v_report</code>) und siehst immer in Echtzeit die aktuelle Landschaft, ohne dass die Landschaft dupliziert werden muss.</p>
+            <p><strong>Trigger (Der Bewegungsmelder):</strong> Sobald jemand durch die Tür geht (<code>INSERT INTO bestellung</code>), schaltet der Bewegungsmelder automatisch das Licht an und schließt die Lagertür (<code>UPDATE lager SET bestand = ...</code>), ohne dass der Besucher daran denken muss.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Views &amp; Trigger Syntax</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Objekt</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Einsatzzweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>CREATE VIEW</code></td>
+                  <td style="padding: 10px;"><code>CREATE VIEW v_name AS SELECT ...</code></td>
+                  <td style="padding: 10px;">Abstraktion, Reporting-Pipelines, Daten-Maskierung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>DROP VIEW</code></td>
+                  <td style="padding: 10px;"><code>DROP VIEW IF EXISTS v_name;</code></td>
+                  <td style="padding: 10px;">Sicheres Löschen veralteter Views</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>AFTER INSERT TRIGGER</code></td>
+                  <td style="padding: 10px;"><code>CREATE TRIGGER t AFTER INSERT ON tab BEGIN ... END;</code></td>
+                  <td style="padding: 10px;">Automatische Lager-Updates, Benachrichtigungen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>AFTER UPDATE TRIGGER</code></td>
+                  <td style="padding: 10px;"><code>CREATE TRIGGER t AFTER UPDATE OF col ON tab BEGIN ... END;</code></td>
+                  <td style="padding: 10px;">Revisionssichere Historisierung &amp; Compliance-Logs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (View <code>v_kunden_bestell_cockpit</code>):</strong> Erstelle einen View, der Kunden-ID, Name, E-Mail, Bestellanzahl, Gesamtumsatz und das Datum der letzten Bestellung aggregiert (sensible Daten wie Passwort-Hashes werden ausgeblendet).
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (View <code>v_top_seller_uebersicht</code>):</strong> Erstelle einen View, der für jeden Artikel die verkaufte Gesamtstückzahl und den erzielten Gesamtumsatz über alle Bestellungen berechnet.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Trigger: Automatische Lagerbestands-Reduzierung):</strong> Erstelle einen Trigger <code>trg_lagerbestand_reduzieren</code>: Bei jedem <code>AFTER INSERT ON bestellpositionen</code> soll der <code>lagerbestand</code> in der Tabelle <code>produkte</code> automatisch um <code>NEW.menge</code> verringert werden.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Trigger: Revisionssichere Preisänderungs-Historie):</strong> Erstelle einen Trigger <code>trg_preis_historie_audit</code>: Bei jedem <code>AFTER UPDATE OF preis ON produkte</code> soll ein Eintrag in <code>audit_preis_historie</code> mit <code>OLD.preis</code>, <code>NEW.preis</code> und Timestamp geschrieben werden.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_4_performance_und_master&chapter=15_views_und_gespeicherte_logik" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 12: Window Functions &amp; Analytics</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Aggregationen, CTEs &amp; Window Functions</div>
+          <h1>SQL 12: Window Functions (OVER, PARTITION BY, RANK, LAG)</h1>
+          <p>Moderne SQL-Analytik ohne Zeilenreduktion: Berechne Rangfolgen (<code>ROW_NUMBER</code>, <code>RANK</code>, <code>DENSE_RANK</code>), Zeitreihen-Deltas mit <code>LAG</code>/<code>LEAD</code> und fortlaufende Summen (Running Totals).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: WINDOW FUNCTIONS -->
+        <section class="card">
+          <h2>🪟 1. Das Geheimnis der Window Functions: Keine Zeilenreduktion!</h2>
+          <p>
+            Ein normales <code>GROUP BY</code> fasst Datensätze zusammen und reduziert Zeilen. 
+            Eine <strong>Window Function</strong> dagegen berechnet Aggregationen oder Ränge über ein definiertes "Fenster" von Zeilen, <strong>erhält aber jede einzelne Detailzeile!</strong>
+          </p>
+
+          <pre><code>-- Die magische OVER-Klausel:
+FUNCTION(...) OVER (
+    PARTITION BY abteilung           -- 1. Fenster aufteilen (wie GROUP BY)
+    ORDER BY gehalt DESC             -- 2. Innerhalb des Fensters sortieren
+    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW -- 3. Fenster-Rahmen (optional)
+)</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: RANKING & LAG/LEAD -->
+        <section class="card">
+          <h2>🏆 2. Ranking- &amp; Offset-Funktionen</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--primary); margin: 0 0 6px 0;">🔢 Ranking-Funktionen im Vergleich</h4>
+              <ul style="font-size: 0.85rem; padding-left: 18px; color: var(--text-body); line-height: 1.6;">
+                <li><code>ROW_NUMBER()</code>: Strikte Durchnummerierung (1, 2, 3, 4)</li>
+                <li><code>RANK()</code>: Bei Gleichstand gleicher Rang mit Lücke (1, 2, 2, 4)</li>
+                <li><code>DENSE_RANK()</code>: Bei Gleichstand gleicher Rang ohne Lücke (1, 2, 2, 3)</li>
+              </ul>
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--emerald); margin: 0 0 6px 0;">⏪ LAG &amp; LEAD (Zeitreisen in SQL)</h4>
+              <ul style="font-size: 0.85rem; padding-left: 18px; color: var(--text-body); line-height: 1.6;">
+                <li><code>LAG(spalte, 1, 0)</code>: Wert der vorherigen Zeile (z.B. Vormonat)</li>
+                <li><code>LEAD(spalte, 1, 0)</code>: Wert der nächsten Zeile (Folgemag)</li>
+                <li>Ermöglicht Wachstumsberechnungen (MoM / YoY) ohne Self-Joins!</li>
+              </ul>
+            </div>
+          </div>
+
+          <pre><code>-- Berechne Monat-zu-Monat Umsatzwachstum (MoM Growth)
+SELECT 
+    monat,
+    umsatz,
+    LAG(umsatz, 1, 0) OVER (ORDER BY monat) AS vormonat_umsatz,
+    umsatz - LAG(umsatz, 1, 0) OVER (ORDER BY monat) AS delta_absolut,
+    ROUND((umsatz - LAG(umsatz, 1, umsatz) OVER (ORDER BY monat)) * 100.0 / LAG(umsatz, 1, umsatz) OVER (ORDER BY monat), 2) AS wachstum_prozent
+FROM monats_umsatz;</code></pre>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Das gleitende Fenster</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🏃‍♂️ Der Marathon-Lauf-Vergleich</div>
+            <p><strong>GROUP BY:</strong> Du siehst am Ende des Rennens nur die Durchschnittszeit je Altersklasse (1 Zeile pro Gruppe).</p>
+            <p><strong>Window Function:</strong> Jeder Läufer läuft über die Ziellinie (jede Zeile bleibt erhalten), und auf der Anzeigetafel steht: <em>"Du bist aktuell auf Platz 3 deiner Altersklasse und dein Rückstand auf den Läufer vor dir (<code>LAG</code>) beträgt 14 Sekunden."</em></p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Window Functions &amp; Frames</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Funktion</th>
+                  <th style="padding: 10px;">Zweck</th>
+                  <th style="padding: 10px;">Typisches Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ROW_NUMBER() OVER (PARTITION BY k ORDER BY v DESC)</code></td>
+                  <td style="padding: 10px;">Eindeutige Zeilennummer je Gruppe</td>
+                  <td style="padding: 10px;">Top-N Produkte je Kategorie ermitteln</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SUM(x) OVER (PARTITION BY k ORDER BY t)</code></td>
+                  <td style="padding: 10px;">Fortlaufende kumulierte Summe (Running Total)</td>
+                  <td style="padding: 10px;">Kumulierter Kundenumsatz über Zeit</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>AVG(x) OVER (ORDER BY t ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)</code></td>
+                  <td style="padding: 10px;">3-Perioden gleitender Durchschnitt (Moving Average)</td>
+                  <td style="padding: 10px;">Glätten von täglichen Aktien- oder Umsatzschwankungen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>LAG(x, 1) OVER (ORDER BY t)</code></td>
+                  <td style="padding: 10px;">Zugriff auf vorherigen Zeilenwert</td>
+                  <td style="padding: 10px;">Berechnung von Wachstumsraten und Deltas</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Ranking-Vergleich):</strong> Erstelle eine Rangliste aller Produkte innerhalb jeder Kategorie mit <code>ROW_NUMBER()</code>, <code>RANK()</code> und <code>DENSE_RANK()</code> sortiert nach Preis absteigend.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Time-Series Analyse mit LAG):</strong> Berechne für jeden Tag den Umsatz des Vortages mit <code>LAG(umsatz, 1, 0)</code>, das absolute Delta und die prozentuale Wachstumsrate.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Running Total / Kumulierte Summe):</strong> Berechne für jeden Kunden den fortlaufenden Allzeit-Gesamtumsatz über die Transaktionen mit <code>SUM(betrag) OVER (PARTITION BY kunde_id ORDER BY datum)</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Gleitender 3-Tage Durchschnitt):</strong> Berechne den 3-Tage gleitenden Durchschnitt (Moving Average) über die Gesamtumsätze mit <code>AVG(umsatz) OVER (ORDER BY datum ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)</code>.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_3_aggregation_und_analytics&chapter=12_window_functions_over_partition" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

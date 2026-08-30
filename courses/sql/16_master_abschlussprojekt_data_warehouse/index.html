@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 16: E-Commerce Analytics Data Warehouse</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Performance, Transaktionen &amp; Master</div>
+          <h1>Master 16: E-Commerce Analytics Data Warehouse</h1>
+          <p>Das große Finale: Baue ein vollständiges Data Warehouse mit dimensionalem Sternschema (Star Schema), automatisierten SQL-ETL-Pipelines, Kohortenanalysen (Cohort Retention Matrix) und RFM-Kundensegmentierung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieses Masterprojekts:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: STAR SCHEMA & DATA WAREHOUSING -->
+        <section class="card">
+          <h2>⭐ 1. Dimensionale Modellierung (Star Schema)</h2>
+          <p>
+            Im Gegensatz zu operativen Transaktionsdatenbanken (OLTP / 3NF) werden Daten im <strong>Data Warehouse (OLAP)</strong> in ein lesebeschleunigtes Sternschema strukturiert:
+          </p>
+
+          <div style="background: #0f172a; color: #f8fafc; padding: 20px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.85rem; line-height: 1.6; margin: 16px 0;">
+            <div style="color: #38bdf8; font-weight: bold;">[dim_customers] ──────┐</div>
+            <div style="color: #38bdf8; font-weight: bold;">[dim_products]  ──────┼──▶ [ fact_orders / fact_order_items ] ◀── [dim_channels]</div>
+            <div style="color: #38bdf8; font-weight: bold;">[dim_dates]     ──────┘</div>
+          </div>
+
+          <p>
+            <strong>Faktentabellen</strong> enthalten messbare Metriken (Umsatz, Menge, Rabatt). 
+            <strong>Dimensionstabellen</strong> enthalten beschreibende Attribute (Kundenregion, Produktkategorie, Kalenderattribute).
+          </p>
+        </section>
+
+        <!-- 2. THEORIE: KOHORTEN- & RFM-ANALYSE -->
+        <section class="card">
+          <h2>📈 2. Advanced Analytics: Kohorten- &amp; RFM-Segmentierung</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--primary); margin: 0 0 6px 0;">👥 Kohortenanalyse (Retention Rate)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">
+                Gruppiert Kunden nach ihrem Akquisitionsmonat (z.B. Januar 2024). Verfolgt, wie viel Prozent dieser Kohorte in den Folgemonaten (Monat +1, +2, +3) erneut kaufen.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <h4 style="color: var(--emerald); margin: 0 0 6px 0;">💎 RFM-Segmentierung (NTILE Window)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-body); margin: 0;">
+                Teilt Kunden via <code>NTILE(4)</code> nach <strong>Recency</strong> (Aktualität), <strong>Frequency</strong> (Häufigkeit) und <strong>Monetary</strong> (Umsatz) in Segmente wie <em>Champions</em> oder <em>At-Risk</em> ein.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Der Tower des Großkonzerns</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Der Kontrollzentrum-Vergleich</div>
+            <p><strong>OLTP (Die Kassen im Supermarkt):</strong> Erfasst im Sekundentakt einzelne Belege. Für strategische Berichte viel zu langsam.</p>
+            <p><strong>Data Warehouse (Die Chefetage):</strong> Bereitet alle weltweiten Daten im Sternschema auf. Ein Blick auf das BI-Dashboard genügt, um zu sehen: <em>"Die Januar-Kohorte hat eine Retention Rate von 65% und unsere Champions generieren 70% des Gesamtgewinns."</em></p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Enterprise Data Warehouse SQL</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Analytik-Muster</th>
+                  <th style="padding: 10px;">SQL-Architektur</th>
+                  <th style="padding: 10px;">Business Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Sternschema DDL</td>
+                  <td style="padding: 10px;"><code>fact_orders</code> + <code>dim_customers</code></td>
+                  <td style="padding: 10px;">Optimale Abfragegeschwindigkeit &amp; Skalierbarkeit</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Kohorten-Retention</td>
+                  <td style="padding: 10px;">CTE + <code>MIN(datum)</code> + Monat-Offset</td>
+                  <td style="padding: 10px;">Erkennung von Kundenbindung &amp; Churn-Trends</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">RFM-Segmentierung</td>
+                  <td style="padding: 10px;"><code>NTILE(4) OVER (ORDER BY ...)</code></td>
+                  <td style="padding: 10px;">Zielgerichtetes VIP-Marketing &amp; Reaktivierung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Executive Dashboard</td>
+                  <td style="padding: 10px;"><code>CREATE VIEW v_kpi_dashboard AS ...</code></td>
+                  <td style="padding: 10px;">Echtzeit-Cockpit für C-Level Entscheidungen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste im Masterprojekt</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Master-Bausteine:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Sternschema DDL &amp; Dimensions-ETL):</strong> Erstelle die Tabellen <code>dim_customers</code>, <code>dim_products</code>, <code>dim_dates</code> und die Faktentabelle <code>fact_orders</code> inklusive Indizes und Fremdschlüssel.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Kohortenanalyse &amp; Retention Matrix):</strong> Berechne mit CTEs für jede Akquisitions-Kohorte die Anzahl aktiver Kunden und die <code>retention_rate_pct</code> in den Folgemonaten.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (RFM-Kundensegmentierung mit NTILE):</strong> Teile Kunden anhand von Recency, Frequency und Monetary Value in Quartile ein und weise Segmente ('Champions', 'Loyal Customers', 'At Risk', 'Lost') zu.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Executive BI Cockpit View):</strong> Erstelle den View <code>v_executive_kpi_dashboard</code> mit Monatsumsatz, Bestellungen, AOV, MoM-Wachstum (<code>LAG</code>) und kumuliertem Allzeitumsatz (<code>SUM() OVER</code>).
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_4_performance_und_master&chapter=16_master_abschlussprojekt_data_warehouse" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

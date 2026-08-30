@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 02: Texte, Listen, Bilder &amp; Videos</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌱 Lehrpfad 1: Semantisches HTML5</div>
+          <h1>HTML 02: Texte, Listen, Bilder &amp; Multimedia</h1>
+          <p>Lerne die korrekte Überschriften-Hierarchie, ungeordnete und nummerierte Listen sowie die barrierefreie Einbindung von Bildern und Audio/Video-Playern.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: TEXT-HIERARCHIE -->
+        <section class="card">
+          <h2>💡 1. Überschriften &amp; Textauszeichnung</h2>
+          <p>HTML-Überschriften (<code>&lt;h1&gt;</code> bis <code>&lt;h6&gt;</code>) bilden den Inhaltsbaum (Outline) deiner Seite. Überspringe niemals Überschriften-Ebenen (z.B. nicht von <code>&lt;h1&gt;</code> direkt zu <code>&lt;h3&gt;</code>):</p>
+          
+          <pre><code>&lt;h1&gt;Hauptthema der Seite (Nur 1x pro Dokument)&lt;/h1&gt;
+&lt;p&gt;Ein Absatz mit &lt;strong&gt;wichtiger Bedeutung&lt;/strong&gt; und &lt;em&gt;Betonung&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Kapitel 1: Grundlagen&lt;/h2&gt;
+&lt;h3&gt;1.1 Detailaspekt&lt;/h3&gt;
+&lt;blockquote cite="https://w3.org"&gt;
+  Semantisches HTML macht das Web für jeden Menschen zugänglich.
+&lt;/blockquote&gt;</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: LISTEN -->
+        <section class="card">
+          <h2>📋 2. Ungeordnete (<code>&lt;ul&gt;</code>) &amp; Geordnete (<code>&lt;ol&gt;</code>) Listen</h2>
+          <p>Nutze <code>&lt;ul&gt;</code> (Aufzählungspunkte / Bullets), wenn die Reihenfolge beliebig ist (z.B. Features, Zutaten). Nutze <code>&lt;ol&gt;</code> (Nummerierung), wenn die Reihenfolge verbindlich ist (z.B. Rezeptschritte, Installationsanleitung):</p>
+
+          <pre><code>&lt;!-- Ungeordnete Liste: --&gt;
+&lt;ul&gt;
+  &lt;li&gt;HTML5 Semantik&lt;/li&gt;
+  &lt;li&gt;Modernes CSS3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Geordnete Liste: --&gt;
+&lt;ol&gt;
+  &lt;li&gt;Repository klonen&lt;/li&gt;
+  &lt;li&gt;Abhängigkeiten installieren&lt;/li&gt;
+  &lt;li&gt;Dev-Server starten&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: BILDER & MULTIMEDIA -->
+        <section class="card">
+          <h2>🖼️ 3. Bilder &amp; Video-Player mit HTML5</h2>
+          <p>Bilder benötigen immer ein beschreibendes <code>alt</code>-Attribut. Für Video und Audio liefert HTML5 native Steuerelemente ohne Drittanbieter-Plugins:</p>
+
+          <pre><code>&lt;!-- Responsives Bild mit Alt-Text: --&gt;
+&lt;figure&gt;
+  &lt;img src="https://via.placeholder.com/800x450" alt="Moderner Arbeitsplatz mit Laptop und Dual-Monitor" width="800" height="500" loading="lazy"&gt;
+  &lt;figcaption&gt;Abbildung 1: Ein typischer Entwickler-Workspace&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- HTML5 Video-Player: --&gt;
+&lt;video controls width="640"&gt;
+  &lt;source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"&gt;
+  &lt;source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/webm"&gt;
+  Dein Browser unterstützt das Video-Tag leider nicht.
+&lt;/video&gt;</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Das gedruckte Magazin</div>
+            <p><strong>Bilder ohne <code>alt</code>-Text</strong> sind wie Fotos in einer Zeitung, die für blinde Leser komplett geschwärzt wurden. Das <code>alt</code>-Attribut ist die unsichtbare Bildunterschrift, die der Screenreader vorliest.</p>
+            <p><strong>Die Überschriften <code>&lt;h1&gt;..&lt;h6&gt;</code></strong> entsprechen der Titelzeile, den Kapitelüberschriften und den Zwischenüberschriften im Inhaltsverzeichnis.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Texte &amp; Medien-Tags</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Tag</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Wichtige Attribute</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;h1&gt;..&lt;h6&gt;</code></td>
+                  <td style="padding: 10px;">Überschriftenebenen (1 = höchste, 6 = tiefste)</td>
+                  <td style="padding: 10px;">Keine Levels überspringen!</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;strong&gt; / &lt;em&gt;</code></td>
+                  <td style="padding: 10px;">Starke Wichtigkeit / Akzentuierte Betonung</td>
+                  <td style="padding: 10px;">Semantisch (nicht bloß optisch fett/kursiv)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;ul&gt; / &lt;ol&gt; &gt; &lt;li&gt;</code></td>
+                  <td style="padding: 10px;">Ungeordnete (Bullet) / Geordnete (Nummerierte) Liste</td>
+                  <td style="padding: 10px;">Direkte Kinder müssen <code>&lt;li&gt;</code> sein</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;img&gt;</code></td>
+                  <td style="padding: 10px;">Grafik / Bild einbetten</td>
+                  <td style="padding: 10px;"><code>src</code>, <code>alt</code> (Pflicht!), <code>loading="lazy"</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>&lt;video&gt; / &lt;audio&gt;</code></td>
+                  <td style="padding: 10px;">Multimedia-Player</td>
+                  <td style="padding: 10px;"><code>controls</code>, <code>&lt;source src="https://via.placeholder.com/300" type="..."&gt;</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Saubere Überschriften-Hierarchie (<code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>) und formatierte Textabsätze mit <code>&lt;strong&gt;</code> und <code>&lt;em&gt;</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Eine ungeordnete Liste (<code>&lt;ul&gt;</code>) mit mindestens 3 Listeneinträgen (<code>&lt;li&gt;</code>) für Kernfeatures erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Eine geordnete Liste (<code>&lt;ol&gt;</code>) mit mindestens 3 nummerierten Schritten (<code>&lt;li&gt;</code>) für eine Anleitung aufbauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Ein Bild (<code>&lt;img&gt;</code>) mit <code>src</code> und aussagekräftigem <code>alt</code>-Attribut einbinden (optional in <code>&lt;figure&gt;</code> mit <code>&lt;figcaption&gt;</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Einen HTML5-Videoplayer (<code>&lt;video controls&gt;</code>) mit mindestens einem <code>&lt;source&gt;</code>-Tag und Fallback-Text einbetten.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_1_html_basics&chapter=02_texte_listen_und_medien" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_semantisches_html_und_struktur/index.html" class="btn btn-secondary">&larr; Zurück zu HTML 01</a>
+            <a href="../03_formulare_und_validierung/index.html" class="btn btn-secondary">Weiter zu HTML 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

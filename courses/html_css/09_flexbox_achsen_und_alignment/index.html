@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 09: Flexbox Achsen, Justify &amp; Align</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .flex-demo-box {
+      background: var(--bg-subtle);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .axis-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 16px 0;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .axis-arrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+    .axis-items {
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+    }
+    .axis-item {
+      background: #4f46e5;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📱 Lehrpfad 3: Responsive Layouts &amp; Flexbox</div>
+          <h1>CSS 09: Flexbox Achsen, Justify &amp; Align</h1>
+          <p>Meistere 1D-Layouts mit CSS Flexbox: Haupt- und Querachsen steuern, Elemente präzise ausrichten und dynamische Kartensysteme bauen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. ACHSENSYSTEM -->
+        <section class="card">
+          <h2>🧭 1. Das Achsensystem von Flexbox</h2>
+          <p>Sobald ein Element <code>display: flex</code> erhält, wird es zum <strong>Flex-Container</strong>. Alle direkten Kindelemente werden zu <strong>Flex-Items</strong>. Flexbox arbeitet entlang zweier Achsen:</p>
+          
+          <div class="axis-diagram">
+            <div class="axis-arrow">
+              <span>➡ Hauptachse (Main Axis: flex-direction: row)</span>
+            </div>
+            <div class="axis-items">
+              <div class="axis-item">Item 1</div>
+              <div class="axis-item">Item 2</div>
+              <div class="axis-item">Item 3</div>
+            </div>
+            <div class="axis-arrow" style="color: #a855f7;">
+              <span>⬇ Querachse (Cross Axis: senkrecht zur Hauptachse)</span>
+            </div>
+          </div>
+
+          <pre><code>.flex-container {
+  display: flex;
+  flex-direction: row; /* row (Standard), column, row-reverse, column-reverse */
+}</code></pre>
+        </section>
+
+        <!-- 2. AUSRICHTUNG -->
+        <section class="card">
+          <h2>🎯 2. Ausrichtung: justify-content vs. align-items</h2>
+          <p>Die beiden wichtigsten Eigenschaften zur Positionierung der Items:</p>
+          
+          <div style="overflow-x: auto; margin-bottom: 16px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Eigenschaft</th>
+                  <th style="padding: 10px;">Achse</th>
+                  <th style="padding: 10px;">Wichtige Werte</th>
+                  <th style="padding: 10px;">Verwendungszweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>justify-content</code></td>
+                  <td style="padding: 10px;"><strong>Hauptachse</strong> (X bei row)</td>
+                  <td style="padding: 10px;"><code>flex-start, center, flex-end, space-between, space-around, space-evenly</code></td>
+                  <td style="padding: 10px;">Verteilung des freien horizontalen Platzes</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>align-items</code></td>
+                  <td style="padding: 10px;"><strong>Querachse</strong> (Y bei row)</td>
+                  <td style="padding: 10px;"><code>stretch, center, flex-start, flex-end, baseline</code></td>
+                  <td style="padding: 10px;">Vertikale Zentrierung und Höhenanpassung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pre><code>/* 🌐 Perfekte Navigationsleiste: */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Logo links, Links/Button rechts */
+  align-items: center;            /* Vertikal mittig */
+  gap: 20px;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚗 Didaktische Analogie: Der Zug auf Schienen</div>
+            <p>Die <strong>Hauptachse</strong> ist die Zugstrecke: Mit <code>justify-content</code> schiebst du die Waggons nach vorne, in die Mitte oder verteilst Lücken zwischen ihnen. Die <strong>Querachse</strong> ist die Waggon-Breite: Mit <code>align-items</code> zentrierst du die Fahrgäste auf ihren Sitzen.</p>
+          </div>
+        </section>
+
+        <!-- 3. WRAP & SIZING -->
+        <section class="card">
+          <h2>📦 3. Flex-Wrap, Gap &amp; Item-Sizing</h2>
+          <p>Für mehrzeilige Kartengitter kombinieren wir <code>flex-wrap: wrap</code> mit der <code>flex</code>-Kurzschreibweise:</p>
+
+          <pre><code>.card-grid {
+  display: flex;
+  flex-wrap: wrap; /* Erlaubt Umbruch in nächste Zeile */
+  gap: 24px;       /* Moderner Zeilen- und Spaltenabstand */
+}
+
+.card {
+  /* flex: flex-grow | flex-shrink | flex-basis */
+  flex: 1 1 280px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card__badge {
+  align-self: flex-start; /* Individuelle Ausrichtung auf Querachse */
+}</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>.navbar</code> als Flex-Container mit <code>justify-content: space-between</code> und <code>align-items: center</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>.nav-links</code> als horizontale Liste mit <code>display: flex</code>, <code>gap: 20px</code> und <code>list-style: none</code> stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>.card-container</code> mit <code>display: flex</code>, <code>flex-wrap: wrap</code> und <code>gap: 24px</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>.flex-card</code> mit <code>flex: 1 1 280px</code>, <code>flex-direction: column</code> und <code>justify-content: space-between</code> ausstatten.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>.card__badge</code> mit <code>align-self: flex-start</code> positionieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für absolute Zentrierung</div>
+            <p>Ein Element exakt in der Mitte eines Containers zu platzieren erfordert mit Flexbox nur zwei Zeilen: <code>display: flex; justify-content: center; align-items: center;</code>.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_3_layouts_and_responsive&chapter=09_flexbox_achsen_und_alignment" class="btn" style="background: #4f46e5; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_css_grid_und_areas/index.html" class="btn btn-secondary">Weiter zu CSS 10: CSS Grid &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

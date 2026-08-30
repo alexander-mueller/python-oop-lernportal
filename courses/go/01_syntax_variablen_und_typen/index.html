@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 01: Go Syntax, Variablen &amp; Typensystem</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Go Cloud Microservices &amp; Systems</div>
+          <h1>Go 01: Syntax, Variablen, Basistypen &amp; Type Conversion</h1>
+          <p>Tauche ein in das statische Typensystem von Go: Deklaration mit <code>var</code> vs. <code>:=</code>, Zero Values, Konstanten mit <code>iota</code> und explizite Typkonvertierung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: VARIABLEN & TYPENSYSTEM -->
+        <section class="card">
+          <h2>💡 1. Variablen und Typisierung in Go</h2>
+          <p>Go ist eine statisch typisierte, kompilierte Sprache mit kompromissloser Typsicherheit. Es gibt zwei primäre Wege, Variablen zu definieren:</p>
+          
+          <pre><code>package main
+
+import "fmt"
+
+func main() {
+    // 1. Ausführliche Deklaration mit 'var' (Standardwert = Zero Value)
+    var serverName string = "api-gateway"
+    var port int = 8080
+    var isRunning bool = true
+
+    // 2. Kurzschreibweise ':=' mit Type Inference (nur innerhalb von Funktionen)
+    requestCount := 1050          // Typ automatisch int
+    latencyMs := 12.45            // Typ automatisch float64
+
+    fmt.Printf("Server %s an Port %d (Aktiv: %t) | Anfragen: %d (%.2fms)\n",
+        serverName, port, isRunning, requestCount, latencyMs)
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Passgenaue Frachtbehälter</div>
+            <p>In dynamischen Sprachen wie Python oder JavaScript gleicht eine Variable einer flexiblen Plastiktüte: Man kann eine Zahl hineinwerfen und sie später durch einen Text ersetzen. In <strong>Go</strong> ist jede Variable ein lasergeschnittener Stahlcontainer: Ein <code>int</code>-Container fasst ausschließlich Ganzzahlen. Das verhindert fatale Laufzeitabstürze in Cloud-Systemen bereits beim Kompilieren!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: ZERO VALUES & TYPKONVERTIERUNG -->
+        <section class="card">
+          <h2>📐 2. Zero Values &amp; Explizite Type Conversion</h2>
+          <p>In Go gibt es kein uninitialisiertes <code>undefined</code>. Variablen ohne Initialwert erhalten verlässlich ihren <strong>Zero Value</strong>:</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px;">Go Datentyp</th>
+                  <th style="padding: 8px 12px;">Zero Value (Standardwert)</th>
+                  <th style="padding: 8px 12px;">Speichergröße / Besonderheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>int / int64</code></td>
+                  <td style="padding: 8px 12px;"><code>0</code></td>
+                  <td style="padding: 8px 12px;">Ganzzahl (Plattformabhängig 32/64 Bit)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>float64</code></td>
+                  <td style="padding: 8px 12px;"><code>0.0</code></td>
+                  <td style="padding: 8px 12px;">64-Bit IEEE-754 Fließkommazahl (Standard für Rechnungen)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>string</code></td>
+                  <td style="padding: 8px 12px;"><code>""</code> (Leerer String)</td>
+                  <td style="padding: 8px 12px;">UTF-8 codiert, unveränderlich (Immutable)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>bool</code></td>
+                  <td style="padding: 8px 12px;"><code>false</code></td>
+                  <td style="padding: 8px 12px;">Wahrheitswert (<code>true</code> oder <code>false</code>)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 12px;"><code>Pointers / Slices / Maps</code></td>
+                  <td style="padding: 8px 12px;"><code>nil</code></td>
+                  <td style="padding: 8px 12px;">Null-Referenz / Uninitialisierter Zustand</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Keine implizite Typumwandlung (Type Casting)!</h3>
+          <p>Go führt niemals automatische Typumwandlungen durch. Jeder Übergang zwischen Typen muss explizit formuliert werden:</p>
+          <pre><code>summe := 150        // int
+anzahl := 4         // int
+
+// FEHLER in Go: durchschnitt := summe / anzahl (Ergibt 37, da Ganzzahldivision!)
+// RICHTIG:
+durchschnitt := float64(summe) / float64(anzahl) // Ergibt 37.5 (float64)</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: KONSTANTEN & IOTA -->
+        <section class="card">
+          <h2>🔒 3. Konstanten (<code>const</code>) &amp; der <code>iota</code> Zähler</h2>
+          <p>Konstanten werden mit <code>const</code> deklariert und müssen zur Compile-Zeit feststehen. Mit <code>iota</code> bietet Go einen eleganten Enumerator:</p>
+
+          <pre><code>const (
+    StatusStopped  = iota // 0
+    StatusStarting        // 1
+    StatusRunning         // 2
+    StatusError           // 3
+)</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>GetServerConfig() (string, int, int, bool)</code> implementieren mit Variablen <code>host</code>, <code>port</code>, <code>maxClients</code>, <code>tlsEnabled</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>BerechneDurchschnitt(summe int, anzahl int) float64</code> mit explizitem Type Cast <code>float64(...)</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FormatiereServerStatus(name string, port int, online bool) string</code> mit <code>fmt.Sprintf</code> formatieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>iota</code> Konstanten für <code>StatusStopped</code>, <code>StatusStarting</code>, <code>StatusRunning</code> definieren und <code>GetStatusName(status int) string</code> umsetzen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Go Pro-Tipp: Unbenutzte Variablen verhindern</div>
+            <p>Der Go-Compiler verbietet ungenutzte Variablen rigoros mit dem Fehler <code>declared and not used</code>. Verwende den Blank Identifier <code>_</code>, falls du einen Rückgabewert bewusst ignorieren möchtest!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_1_go_basics&chapter=01_syntax_variablen_und_typen" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_slices_arrays_und_maps/index.html" class="btn btn-secondary">Weiter zu Go 02 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

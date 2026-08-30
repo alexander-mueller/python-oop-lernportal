@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 13: BEM-Methodik &amp; Modulare CSS-Architektur</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .bem-anatomy {
+      background: #0f172a;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      margin: 16px 0;
+      color: #e2e8f0;
+    }
+    .bem-b { color: #38bdf8; font-weight: 700; }
+    .bem-e { color: #4ade80; font-weight: 700; }
+    .bem-m { color: #f472b6; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: CSS-Architektur &amp; UI Master</div>
+          <h1>CSS 13: BEM-Methodik &amp; Modulare CSS-Architektur</h1>
+          <p>Schreibe wartbaren, skalierbaren CSS-Code auf Enterprise-Niveau: Block, Element und Modifier ohne Spezifitätskriege.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. BEM ANATOMIE -->
+        <section class="card">
+          <h2>🧱 1. Die BEM-Anatomie im Überblick</h2>
+          <p>BEM strukturiert Klassennamen nach einem eindeutigen Muster:</p>
+
+          <div class="bem-anatomy">
+            .<span class="bem-b">block</span>__<span class="bem-e">element</span>--<span class="bem-m">modifier</span><br><br>
+            Beispiel:<br>
+            .<span class="bem-b">pricing-card</span><br>
+            .<span class="bem-b">pricing-card</span>__<span class="bem-e">header</span><br>
+            .<span class="bem-b">pricing-card</span>__<span class="bem-e">title</span><br>
+            .<span class="bem-b">pricing-card</span>--<span class="bem-m">popular</span>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Komponente</th>
+                  <th style="padding: 10px;">Trennzeichen</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong style="color: #38bdf8;">Block</strong></td>
+                  <td style="padding: 10px;">-</td>
+                  <td style="padding: 10px;">Eigenständige UI-Komponente</td>
+                  <td style="padding: 10px;"><code>.card</code>, <code>.btn</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong style="color: #4ade80;">Element</strong></td>
+                  <td style="padding: 10px;"><code>__</code> (2 Unterstriche)</td>
+                  <td style="padding: 10px;">Kind-Teil des Blocks</td>
+                  <td style="padding: 10px;"><code>.card__title</code>, <code>.card__body</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong style="color: #f472b6;">Modifier</strong></td>
+                  <td style="padding: 10px;"><code>--</code> (2 Bindestriche)</td>
+                  <td style="padding: 10px;">Variante oder Zustand</td>
+                  <td style="padding: 10px;"><code>.card--popular</code>, <code>.btn--primary</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 2. ANTI-PATTERN VERMEIDUNG -->
+        <section class="card">
+          <h2>🚫 2. Keine verschachtelten Selektorketten!</h2>
+          <p>Der größte Vorteil von BEM: Jede Regel hat eine Spezifität von exakt <strong>(0, 1, 0)</strong>. Nie wieder <code>!important</code>!</p>
+
+          <pre><code>/* ❌ SCHLECHTES CSS (Spezifitätsfalle): */
+.main-wrapper div.content-area > div.card .header h3.title { ... }
+
+/* ✅ SAUBERES BEM (Flach, performant und überall wiederverwendbar): */
+.pricing-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">📦 Didaktische Analogie: Das modulare Küchenset</div>
+            <p>Ein <strong>Block</strong> ist der Mixer. Ein <strong>Element</strong> ist der Rührstab (ohne Mixer nutzlos). Ein <strong>Modifier</strong> ist der Turbo-Schalter am Mixer (eine Funktionsvariante). Jeder Teil hat sein klares Etikett, sodass nichts verwechselt wird.</p>
+          </div>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Den Block <code>.pricing-card</code> und seine Elemente (<code>.pricing-card__header</code>, <code>.pricing-card__title</code>, etc.) stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Block-Modifier <code>.pricing-card--popular</code> mit Akzentrand und Skalierung umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Button-Block <code>.btn</code> und Varianten <code>.btn--primary</code> und <code>.btn--outline</code> stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Badge-Element <code>.pricing-card__badge</code> und Modifier <code>.pricing-card__badge--highlight</code> erstellen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_4_modern_ui_and_master&chapter=13_bem_methodik_und_modularitaet" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_transitions_und_animationen/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 12</a>
+            <a href="../14_dark_mode_und_themes/index.html" class="btn btn-secondary">Weiter zu CSS 14 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

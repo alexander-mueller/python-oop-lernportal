@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Übung: Transitions &amp; Keyframe-Animationen</title>
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --emerald: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 1: Sanfte Transition für .interactive-card
+       - Definiere eine Transition für transform und box-shadow:
+         transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease
+       ========================================================== */
+    .interactive-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      position: relative;
+
+      /* TODO 1: Transition hier einfügen */
+      /* transition: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 2: Hover-Lift Zustand für .interactive-card:hover
+       - Setze transform auf: translateY(-8px) scale(1.02)
+       - Setze einen Schatten: box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3)
+       - Passe die border-color an: border-color: var(--primary)
+       ========================================================== */
+    .interactive-card:hover {
+      /* TODO 2: Hover-Transformation & Schatten hier einfügen */
+      /* transform: ...; */
+      /* box-shadow: ...; */
+      /* border-color: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 3: Keyframe Animation @keyframes pulse
+       - 0%, 100%: transform: scale(1); opacity: 1;
+       - 50%: transform: scale(1.2); opacity: 0.6;
+       - Binde die Animation an .live-dot an:
+         animation: pulse 2s infinite ease-in-out
+       ========================================================== */
+    /* TODO 3a: @keyframes pulse { ... } */
+
+
+    .live-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: var(--emerald);
+      border-radius: 50%;
+      margin-right: 8px;
+
+      /* TODO 3b: animation hier anbinden */
+      /* animation: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 4: Keyframe Animation @keyframes float
+       - 0%, 100%: transform: translateY(0);
+       - 50%: transform: translateY(-10px);
+       - Binde die Animation an .floating-badge an:
+         animation: float 4s infinite ease-in-out
+       ========================================================== */
+    /* TODO 4a: @keyframes float { ... } */
+
+
+    .floating-badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid var(--primary);
+      color: #c4b5fd;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+
+      /* TODO 4b: animation hier anbinden */
+      /* animation: ...; */
+    }
+
+    /* ==========================================================
+ * 🎯 TEILZIEL 5: Barrierefreiheit mit prefers-reduced-motion
+       - Erstelle @media (prefers-reduced-motion: reduce)
+       - Deaktiviere alle Animationen / setze durations auf 0.01ms
+       ========================================================== */
+    /* TODO 5: @media (prefers-reduced-motion: reduce) { ... } */
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="floating-badge">✨ CSS Keyframe Magic</span>
+      <h1 style="font-size: 2rem; margin-bottom: 8px;">Micro-Interactions &amp; Motion Design</h1>
+      <p style="color: var(--text-muted);">
+        Erlebe flüssige 60-FPS Animationen und Hover-Zustände mit nativer CSS-Power.
+      </p>
+    </header>
+
+    <main>
+      <div class="card-grid">
+        <article class="interactive-card">
+          <div style="font-size: 0.85rem; margin-bottom: 12px; color: var(--emerald); font-weight: 600;">
+            <span class="live-dot"></span> SYSTEM ONLINE
+          </div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Production Cluster</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Bewege die Maus über die Karte, um den sanften Lift-Effekt zu spüren.
+          </p>
+        </article>
+
+        <article class="interactive-card">
+          <div style="font-size: 0.85rem; margin-bottom: 12px; color: var(--emerald); font-weight: 600;">
+            <span class="live-dot"></span> 99.99% UPTIME
+          </div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Edge Network</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Hardwarebeschleunigte Transforms garantieren ruckelfreies Rendern.
+          </p>
+        </article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

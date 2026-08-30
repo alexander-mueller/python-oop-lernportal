@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 13: HTTP Web Server &amp; Routing</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Cloud Microservices &amp; Web</div>
+          <h1>Go 13: Webserver &amp; Routing mit <code>net/http</code></h1>
+          <p>Erstelle produktionsreife Webserver ohne externe Frameworks: Nutze Gos mächtige Standardbibliothek <code>net/http</code>, ServeMux-Routing, Query-Parameter und HTTP-Statuscodes.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.go" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.go (Startercode)</a>
+            <a href="test_aufgabe.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.go (Tests)</a>
+            <a href="musterloesung.go" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.go (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: NET/HTTP & HANDLER -->
+        <section class="card">
+          <h2>🌐 1. Der Go HTTP-Server: Standardbibliothek pur</h2>
+          <p>
+            Im Gegensatz zu vielen anderen Sprachen benötigt Go für performante Web-APIs keine externen Frameworks. Jeder eingehende Request wird von der Go-Runtime automatisch in einer eigenen, leichtgewichtigen <strong>Goroutine</strong> verarbeitet!
+          </p>
+
+          <!-- HTTP-Architektur-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Browser / Client] ─── HTTP GET /api/v1/health ───&gt; [net/http Server :8080]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ServeMux Router]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /health ──&gt; go HealthHandler()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── /echo &nbsp;&nbsp;──&gt; go EchoHandler()
+          </div>
+
+          <pre><code>package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+// Handler-Funktion: Signatur muss immer (http.ResponseWriter, *http.Request) sein!
+func HelloHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodGet {
+        http.Error(w, "Methode nicht erlaubt", http.StatusMethodNotAllowed)
+        return
+    }
+
+    w.WriteHeader(http.StatusOK)
+    fmt.Fprintln(w, "Hallo aus dem Go Webserver!")
+}
+
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/hello", HelloHandler)
+
+    fmt.Println("Server läuft auf http://localhost:8080")
+    http.ListenAndServe(":8080", mux)
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: QUERY-PARAMS & PFADE -->
+        <section class="card">
+          <h2>🔍 2. Query-Parameter &amp; URL-Pfade auslesen</h2>
+          <p>
+            Über das <code>*http.Request</code>-Objekt greifst du auf Query-Strings (<code>?search=golang&amp;page=2</code>), HTTP-Header und URL-Pfade zu:
+          </p>
+
+          <pre><code>func SearchHandler(w http.ResponseWriter, r *http.Request) {
+    // 1. Query-Parameter parsen (?query=...):
+    searchQuery := r.URL.Query().Get("query")
+    if searchQuery == "" {
+        http.Error(w, "Parameter 'query' fehlt", http.StatusBadRequest)
+        return
+    }
+
+    // 2. Pfad-Präfixe analysieren:
+    path := r.URL.Path // z.B. "/search"
+
+    fmt.Fprintf(w, "Suchergebnis für: %s (Pfad: %s)", searchQuery, path)
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Die Poststelle im Großkonzern</div>
+            <p>
+              Stell dir <code>net/http</code> wie eine <strong>moderne Poststelle</strong> vor:
+              Der <code>*http.Request</code> ist der Briefumschlag mit Absender, Zieladresse (URL) und Stempeln (Headern). Der <code>http.ResponseWriter</code> ist das leere Antwortformular, in das du den Statuscode stempelst (<code>WriteHeader</code>) und den Antwortbrief schreibst. Der <code>ServeMux</code> ist die Sortieranlage, die den Brief an die zuständige Fachabteilung (Handler) weiterleitet.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Wichtige HTTP-Statuscodes &amp; Methoden</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Go Konstante</th>
+                  <th style="padding: 10px;">Code</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>http.StatusOK</code></td>
+                  <td style="padding: 10px;"><code>200</code></td>
+                  <td style="padding: 10px;">Anfrage erfolgreich verarbeitet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>http.StatusCreated</code></td>
+                  <td style="padding: 10px;"><code>201</code></td>
+                  <td style="padding: 10px;">Neue Ressource erfolgreich erstellt</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>http.StatusBadRequest</code></td>
+                  <td style="padding: 10px;"><code>400</code></td>
+                  <td style="padding: 10px;">Ungültige Eingabeparameter oder fehlerhaftes Format</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>http.StatusNotFound</code></td>
+                  <td style="padding: 10px;"><code>404</code></td>
+                  <td style="padding: 10px;">Ressource existiert nicht</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>http.StatusMethodNotAllowed</code></td>
+                  <td style="padding: 10px;"><code>405</code></td>
+                  <td style="padding: 10px;">HTTP-Methode (z.B. POST statt GET) für Endpoint nicht erlaubt</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>HealthHandler(w, r)</code> für GET <code>/health</code> umsetzen (nur GET, sonst 405).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>EchoHandler(w, r)</code> für GET <code>/echo?msg=...</code> mit Validierung erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>UserProfileHandler(w, r)</code> für Pfad <code>/users/{username}</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>SetupAPIRouter() *http.ServeMux</code> zur Registrierung aller Endpunkte bauen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Unittesting von HTTP-Handlern</div>
+            <p>Mit dem Paket <code>net/http/httptest</code> kannst du HTTP-Handler isoliert im Speicher ohne offenen Netzwerkport testen: <code>rec := httptest.NewRecorder()</code> simuliert den ResponseWriter!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_4_microservices_master&chapter=13_http_server_und_routing" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_mutex_und_thread_safety/index.html" class="btn btn-secondary">&larr; Zurück zu Go 12</a>
+            <a href="../14_json_apis_und_middleware/index.html" class="btn btn-secondary">Weiter zu Go 14: JSON APIs &amp; Middleware &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

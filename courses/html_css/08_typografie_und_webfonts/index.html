@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 08: Typografie &amp; Webfonts</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🎨 Lehrpfad 2: CSS3 Styling</div>
+          <h1>CSS 08: Web-Typografie, Schriftarten &amp; Text-Effekte</h1>
+          <p>Lerne die Kunst der digitalen Typografie: Webfont-Einbindung via Google Fonts (<code>@import</code>), Font-Stacks, harmonische Type-Scales (<code>rem</code>), optimale Zeilenabstände (<code>line-height</code>) und Text-Transformationen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WEBFONTS & FONT-STACKS -->
+        <section class="card">
+          <h2>💡 1. Webfonts &amp; Robuste Font-Stacks</h2>
+          <p>Schriftarten transportieren Markenidentität und Lesbarkeit. Externe Webfonts bindest du per <code>@import</code> oder <code>&lt;link&gt;</code> ein. Dahinter steht immer ein robuster Fallback-Font-Stack:</p>
+          
+          <pre><code>/* 1. Google Font Import: */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+/* 2. Robuster Font-Stack mit System-Fallbacks: */
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: TYPE SCALE & ZEILENABSTÄNDE -->
+        <section class="card">
+          <h2>📐 2. Type-Scales (<code>rem</code>), <code>line-height</code> &amp; Lesbarkeit</h2>
+          <p>Nutze relative Einheiten (<code>rem</code>) anstelle starrer Pixel. Dadurch respektiert deine Webseite die Schriftgrößen-Einstellungen im Betriebssystem des Nutzers:</p>
+
+          <pre><code>/* Harmonische Type-Scale (Basis: 1rem = 16px): */
+h1 { font-size: 2.25rem; font-weight: 700; line-height: 1.2; } /* 36px */
+h2 { font-size: 1.5rem;  font-weight: 600; line-height: 1.3; } /* 24px */
+p  { font-size: 1rem;    font-weight: 400; line-height: 1.65; } /* 16px, Lesefreundlich! */
+
+/* Optimale Spationierung für Eyebrow-Header: */
+.category-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Das typografische Orchester</div>
+            <p><strong>Die Type-Scale</strong> ist wie eine Tonleiter in der Musik: Wenn Überschriften und Fließtexte in harmonischen mathematischen Verhältnissen zueinander stehen, wirkt das Gesamtbild automatisch ruhig, professionell und hochwertig.</p>
+            <p><strong>Zeilenabstand (<code>line-height: 1.6</code>):</strong> Zu enge Zeilen lassen das Auge beim Zeilensprung ermüden; zu weite Zeilen zerreißen den Lesefluss.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Typografie-Eigenschaften</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Eigenschaft</th>
+                  <th style="padding: 10px;">Beispielwerte</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>font-family</code></td>
+                  <td style="padding: 10px;"><code>'Inter', sans-serif</code></td>
+                  <td style="padding: 10px;">Schriftart und Fallback-Reihenfolge</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>font-size</code></td>
+                  <td style="padding: 10px;"><code>1.25rem</code>, <code>20px</code></td>
+                  <td style="padding: 10px;">Schriftgröße (bevorzuge <code>rem</code>!)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>font-weight</code></td>
+                  <td style="padding: 10px;"><code>400</code> (Normal), <code>700</code> (Bold)</td>
+                  <td style="padding: 10px;">Schriftschnitt / Strichstärke</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>line-height</code></td>
+                  <td style="padding: 10px;"><code>1.5</code>, <code>1.65</code> (ohne Einheit)</td>
+                  <td style="padding: 10px;">Zeilenabstand relativ zur Schriftgröße</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>letter-spacing</code></td>
+                  <td style="padding: 10px;"><code>0.05em</code>, <code>1px</code></td>
+                  <td style="padding: 10px;">Zeichenabstand / Laufweite</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>text-transform</code></td>
+                  <td style="padding: 10px;"><code>uppercase</code>, <code>capitalize</code></td>
+                  <td style="padding: 10px;">Groß-/Kleinschreibung formatieren</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Externe Google Fonts via <code>@import url(...)</code> im <code>&lt;style&gt;</code>-Block einbinden.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>font-family</code> mit Font-Stack und System-Fallback auf <code>body</code> anwenden.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Harmonische Type-Scale für <code>h1</code> (z.B. <code>2.25rem</code>), <code>h2</code> (z.B. <code>1.5rem</code>) und <code>p</code> (<code>1rem</code>) festlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Lesefreundlichen Zeilenabstand <code>line-height: 1.6</code> (oder höher) auf Absätze setzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Kategorie-Label <code>.category-tag</code> mit <code>text-transform: uppercase</code>, <code>letter-spacing</code> und <code>font-weight: 700</code> formatieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_2_css_styling&chapter=08_typografie_und_webfonts" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../07_css_variablen_und_farbwelten/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 07</a>
+            <a href="../../../index.html#zertifikate" class="btn btn-secondary">Zertifikat &amp; Dashboard &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

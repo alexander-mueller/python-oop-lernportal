@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 04: Funktionen &amp; Mehrfache Rückgabewerte</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Go Funktionen</div>
+          <h1>Go 04: Funktionen, Multiple Returns &amp; Variadische Parameter</h1>
+          <p>Erkunde First-Class Functions in Go: Mehrfache Rückgabewerte als Error-Standard, benannte Rückgabewerte, variadische Parameter (<code>...</code>) und Closures.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: MULTIPLE RETURNS -->
+        <section class="card">
+          <h2>🎯 1. Mehrfache Rückgabewerte (Multiple Return Values)</h2>
+          <p>In Go können Funktionen mehrere Werte zurückgeben. Das ist die fundamentale Grundlage für das Go-Fehlerbehandlungsmodell:</p>
+          
+          <pre><code>import "errors"
+
+func SichereDivision(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("Division durch Null nicht erlaubt")
+    }
+    return a / b, nil
+}
+
+// Aufruf mit Entpacken:
+ergebnis, err := SichereDivision(10, 2)
+if err != nil {
+    fmt.Println("Fehler:", err)
+    return
+}
+fmt.Println("Ergebnis:", ergebnis)</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der Paketbote mit Quittung</div>
+            <p>In vielen Sprachen wirft eine Funktion im Fehlerfall ein Paket über den Zaun (Exception), und du musst hoffen, dass jemand einen Fanghandschuh (Try-Catch) anhat. In <strong>Go</strong> übergibt dir der Bote immer zwei Dinge direkt in die Hand: Das Paket (Ergebnis) und die unterschriebene Quittung (Error). Ist die Quittung <code>nil</code>, ist alles perfekt!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: BENANNTE RETURNS & VARIADISCH -->
+        <section class="card">
+          <h2>📋 2. Benannte Rückgabewerte &amp; Variadische Parameter</h2>
+          <p>Rückgabewerte können im Funktionskopf benannt werden. Sie werden wie lokale Variablen initialisiert:</p>
+
+          <pre><code>// Benannte Rückgabewerte dokumentieren den Zweck sofort:
+func BerechneStatistik(werte []int) (min int, max int, summe int, schnitt float64) {
+    if len(werte) == 0 {
+        return 0, 0, 0, 0.0
+    }
+    // min, max, summe werden berechnet...
+    return min, max, summe, schnitt
+}
+
+// Variadische Funktion: Akzeptiert beliebig viele Argumente
+func LoggeEreignisse(level string, nachrichten ...string) {
+    for _, msg := range nachrichten {
+        fmt.Printf("[%s] %s\n", level, msg)
+    }
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: CLOSURES -->
+        <section class="card">
+          <h2>🔒 3. Anonyme Funktionen &amp; Closures</h2>
+          <p>Funktionen sind in Go Werte (First-Class Citizens). Sie können Variablen aus ihrem äußeren Gültigkeitsbereich einschließen (Closure):</p>
+
+          <pre><code>func ErstelleZaehler(start int) func() int {
+    zaehler := start
+    return func() int {
+        zaehler++
+        return zaehler
+    }
+}
+
+c1 := ErstelleZaehler(10)
+fmt.Println(c1()) // 11
+fmt.Println(c1()) // 12</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>SichereDivision(a, b float64) (float64, error)</code> mit <code>errors.New</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>BerechneStatistik(werte []int) (min int, max int, summe int, schnitt float64)</code> mit benannten Returns schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>VariadischesSummieren(prefix string, zahlen ...int) string</code> formatieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ErstelleZaehler(start int) func() int</code> als Closure implementieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_1_go_basics&chapter=04_funktionen_und_multiple_returns" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_structs_und_methoden/index.html" class="btn btn-secondary">Weiter zu Go 05 (Lehrpfad 2) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

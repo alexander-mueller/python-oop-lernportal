@@ -334,6 +334,8 @@
   <script src="assets/runners/sql_runner.js"></script>
   <script src="assets/runners/shell_runner.js"></script>
   <script src="assets/runners/powershell_runner.js"></script>
+  <script src="assets/runners/html_css_runner.js"></script>
+  <script src="assets/runners/go_runner.js"></script>
   <script src="assets/monaco_ide.js"></script>
 
   <script>
@@ -446,7 +448,7 @@
         }
 
         // 2. Subgoals (Exakte Regex ohne Duplikate)
-        const subgoals = aufgabeCode.match(/^(?:#|\/\/|\s*\*)\s*🎯\s*TEILZIEL\s*\d+[^:\n]*:\s*(.+)$/gm) || [];
+        const subgoals = aufgabeCode.match(/^(?:#|\/\/|\s*\*|<!--)\s*🎯\s*TEILZIEL\s*\d+[^:\n]*:\s*(.+)$/gm) || [];
         const subContainer = document.getElementById("subgoals-list-container");
         const savedSubgoals = JSON.parse(localStorage.getItem(`subgoals_${chapterId}`) || "{}");
 
@@ -454,7 +456,7 @@
           subContainer.innerHTML = subgoals.map((s, idx) => `
             <div class="task-item" style="margin-bottom: 8px;">
               <input type="checkbox" class="task-checkbox" id="sub_check_${idx}" ${savedSubgoals[idx] ? 'checked' : ''}>
-              <label class="task-label" for="sub_check_${idx}"><strong>${s.replace(/^(?:#|\/\/|\s*\*)\s*/, '')}</strong></label>
+              <label class="task-label" for="sub_check_${idx}"><strong>${s.replace(/^(?:#|\/\/|\s*\*|<!--)\s*/, '').replace(/\s*-->\s*$/, '')}</strong></label>
             </div>
           `).join("");
 

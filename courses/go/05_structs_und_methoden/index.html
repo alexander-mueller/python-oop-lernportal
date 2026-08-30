@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go 05: Structs, Instanziierung &amp; Pointer-Methoden</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏗️ Go Idiomatik &amp; OOP-Konzepte</div>
+          <h1>Go 05: Structs, Methoden &amp; Value- vs. Pointer-Receiver</h1>
+          <p>Objektorientierung in Go ohne Klassen: Strukturierte Datentypen, Konstruktor-Pattern (<code>New...</code>), Receiver-Semantik und Komposition durch Struct Embedding.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: STRUCTS & KONSTRUKTOR -->
+        <section class="card">
+          <h2>📐 1. Eigene Datentypen mit <code>struct</code></h2>
+          <p>Go kennt keine Klassen oder Vererbungshierarchien. Daten werden in <strong>Structs</strong> gekapselt. Konstruktoren werden idiomatischerweise als Factory-Funktionen mit Präfix <code>New</code> implementiert:</p>
+          
+          <pre><code>type User struct {
+    ID       int
+    Username string
+    Email    string
+    Active   bool
+}
+
+// Konstruktor-Funktion: Gibt Zeiger auf neuen User zurück
+func NewUser(id int, username, email string) *User {
+    return &amp;User{
+        ID:       id,
+        Username: username,
+        Email:    email,
+        Active:   true, // Standardmäßig aktiv
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Bauplan vs. Ausweisdokument</div>
+            <p>Ein Struct ist wie das Antragsformular für einen Firmenausweis: Es legt fest, welche Felder existieren. Der <strong>Konstruktor <code>NewUser</code></strong> ist das Bürgerbüro, das das Formular ausfüllt, standardmäßig abstempelt (<code>Active: true</code>) und dir die laminierte Karte (den Pointer <code>*User</code>) überreicht.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: VALUE VS POINTER RECEIVER -->
+        <section class="card">
+          <h2>🎯 2. Value-Receiver vs. Pointer-Receiver</h2>
+          <p>Methoden werden an Typen gebunden. Die Wahl des Receivers entscheidet darüber, ob auf einer Kopie gearbeitet wird oder der ursprüngliche Speicher mutiert werden kann:</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px;">Receiver-Typ</th>
+                  <th style="padding: 8px 12px;">Syntax</th>
+                  <th style="padding: 8px 12px;">Verhalten &amp; Wann nutzen?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Value-Receiver</strong></td>
+                  <td style="padding: 8px 12px;"><code>func (u User) Info() string</code></td>
+                  <td style="padding: 8px 12px;">Erzeugt eine <strong>Kopie</strong>. Kann Originaldaten nicht verändern. Ideal für reine Lese-Operationen bei kleinen Structs.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 12px;"><strong>Pointer-Receiver</strong></td>
+                  <td style="padding: 8px 12px;"><code>func (u *User) SetEmail(e string)</code></td>
+                  <td style="padding: 8px 12px;">Arbeitet auf der <strong>Speicheradresse</strong>. Kann Felder mutieren und vermeidet Kopieraufwand bei großen Structs.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pre><code>// 1. Value-Receiver (Read-Only Kopie):
+func (u User) Info() string {
+    return fmt.Sprintf("User #%d: %s <%s>", u.ID, u.Username, u.Email)
+}
+
+// 2. Pointer-Receiver (Mutiert den Original-Zustand):
+func (u *User) Deactivate() {
+    u.Active = false
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: STRUCT EMBEDDING -->
+        <section class="card">
+          <h2>🧩 3. Komposition statt Vererbung: Struct Embedding</h2>
+          <p>In Go erweitern wir Typen durch <strong>Embedding</strong> (anonyme Einbettung). Felder und Methoden des eingebetteten Typs werden automatisch nach oben durchgereicht (Promoted Fields/Methods):</p>
+
+          <pre><code>type AdminUser struct {
+    User          // Eingebettetes Struct (Anonymous Field)
+    Role   string
+    Level  int
+}
+
+admin := &amp;AdminUser{
+    User:  *NewUser(1, "root", "admin@cloud.local"),
+    Role:  "SuperAdmin",
+    Level: 10,
+}
+
+// Direkter Zugriff auf User-Felder und Methoden:
+fmt.Println(admin.Username) // Direkter Zugriff dank Promotion
+fmt.Println(admin.Info())   // Ruft User.Info() auf</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.go</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Struct <code>User</code> und Konstruktor <code>NewUser(id int, username, email string) *User</code> anlegen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Value-Receiver Methode <code>(u User) Info() string</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Pointer-Receiver Methoden <code>(u *User) Deactivate()</code> und <code>(u *User) UpdateEmail(newEmail string)</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Struct <code>AdminUser</code> mit eingebettetem <code>User</code> und Methode <code>(a *AdminUser) Permissions() []string</code> definieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=go&track=track_2_structs_interfaces&chapter=05_structs_und_methoden" class="btn" style="background: #00add8; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_interfaces_und_polymorphie/index.html" class="btn btn-secondary">Weiter zu Go 06 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

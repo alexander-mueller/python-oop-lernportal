@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 11: Common Table Expressions (CTE)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Aggregationen, CTEs &amp; Window Functions</div>
+          <h1>SQL 11: Common Table Expressions (WITH CTE)</h1>
+          <p>Schreibe modulare, lesbare und wartbare SQL-Pipelines mit <code>WITH cte AS (...)</code>, verkette mehrstufige Transformationen und meistere rekursive CTEs für Baumstrukturen und Hierarchien.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Dateien -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.sql" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.sql (Startercode)</a>
+            <a href="test_aufgabe.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.sql (Testsuite)</a>
+            <a href="musterloesung.sql" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.sql (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: WAS SIND CTES? -->
+        <section class="card">
+          <h2>🧱 1. Was sind Common Table Expressions (CTEs)?</h2>
+          <p>
+            Eine <strong>CTE (Common Table Expression)</strong> definiert ein temporäres, benanntes Zwischenergebnis mit dem Schlüsselwort <code>WITH</code>.
+            Sie ersetzt unübersichtlich tief verschachtelte Subqueries durch eine saubere, lineare Schritt-für-Schritt-Pipeline:
+          </p>
+
+          <pre><code>-- Modulare Umsatzberechnung mit WITH CTE
+WITH kunden_umsatz AS (
+    SELECT 
+        kunde_id,
+        COUNT(id) AS anzahl_orders,
+        SUM(gesamtbetrag) AS umsatz_summe
+    FROM bestellungen
+    WHERE status = 'abgeschlossen'
+    GROUP BY kunde_id
+)
+SELECT 
+    k.name,
+    ku.anzahl_orders,
+    ku.umsatz_summe
+FROM kunden k
+JOIN kunden_umsatz ku ON k.id = ku.kunde_id
+WHERE ku.umsatz_summe > 1000
+ORDER BY ku.umsatz_summe DESC;</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CHAINED & REKURSIVE CTES -->
+        <section class="card">
+          <h2>⛓️ 2. Gekettete (Chained) &amp; Rekursive CTEs</h2>
+          <p>
+            Du kannst mehrere CTEs mit Kommas aneinanderhängen (Pipelines), wobei spätere CTEs auf frühere zugreifen dürfen:
+          </p>
+
+          <pre><code>WITH 
+monats_daten AS (
+    SELECT strftime('%Y-%m', datum) AS monat, SUM(betrag) AS umsatz FROM sales GROUP BY monat
+),
+benchmark AS (
+    SELECT AVG(umsatz) AS avg_umsatz FROM monats_daten
+)
+SELECT m.monat, m.umsatz, b.avg_umsatz, (m.umsatz - b.avg_umsatz) AS diff
+FROM monats_daten m, benchmark b;</code></pre>
+
+          <div style="margin-top: 20px;">
+            <h3>🌳 Rekursive CTEs (Hierarchien &amp; Graphen)</h3>
+            <p>Rekursive CTEs bestehen aus einem <strong>Anker-Select</strong>, einem <code>UNION ALL</code> und einem <strong>Rekursions-Schritt</strong>:</p>
+            
+            <pre><code>WITH RECURSIVE organigramm AS (
+    -- 1. ANKER-MEMBER (Root / CEO: vorgesetzter_id IS NULL)
+    SELECT id, name, vorgesetzter_id, 1 AS ebene, name AS pfad
+    FROM mitarbeiter WHERE vorgesetzter_id IS NULL
+    
+    UNION ALL
+    
+    -- 2. REKURSIONS-MEMBER (Kind-Knoten rekursiv joinen)
+    SELECT m.id, m.name, m.vorgesetzter_id, o.ebene + 1, o.pfad || ' -> ' || m.name
+    FROM mitarbeiter m
+    JOIN organigramm o ON m.vorgesetzter_id = o.id
+)
+SELECT * FROM organigramm ORDER BY ebene, name;</code></pre>
+          </div>
+        </section>
+
+        <!-- 3. DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 3. Didaktische Analogie: Das modulare Fließband</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🚗 Der Montage-Vergleich</div>
+            <p><strong>Subquery (Spaghetti-Schachtelung):</strong> Du versuchst, Motor, Getriebe, Lackierung und Räder in einer einzigen unübersichtlichen 50-Zeilen-Klammer zusammenzustecken.</p>
+            <p><strong>CTEs (Modulare Montagestationen):</strong> 
+              Station 1 (<code>WITH motor AS ...</code>) baut den Motor.
+              Station 2 (<code>karosserie AS ...</code>) nutzt Station 1.
+              Haupt-SELECT montiert das fertige Fahrzeug.
+            </p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: CTE-Syntax &amp; Muster</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Pattern</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Einsatzgebiet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Einfache CTE</td>
+                  <td style="padding: 10px;"><code>WITH name AS (SELECT ...) SELECT ...</code></td>
+                  <td style="padding: 10px;">Lesbarkeit, DRY-Prinzip, Vorberechnung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Gekettete CTEs</td>
+                  <td style="padding: 10px;"><code>WITH a AS (...), b AS (SELECT FROM a) SELECT ...</code></td>
+                  <td style="padding: 10px;">Mehrstufige Data Pipelines &amp; Benchmarks</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Datumsgenerator (Rekursiv)</td>
+                  <td style="padding: 10px;"><code>WITH RECURSIVE t(d) AS (SELECT '2024-01-01' UNION ALL SELECT date(d, '+1 day') FROM t WHERE d &lt; '2024-01-10')</code></td>
+                  <td style="padding: 10px;">Lückenlose Kalendertabellen ohne Lücken im Reporting</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Organigramm / Baum</td>
+                  <td style="padding: 10px;"><code>WITH RECURSIVE tree AS (Anchor UNION ALL Recursive JOIN tree)</code></td>
+                  <td style="padding: 10px;">Kategoriebäume, Stücklisten, Manager-Stammbäume</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <p>Öffne die Datei <code><a href="aufgabe.sql" style="color: inherit; text-decoration: underline;">aufgabe.sql</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1 (Einfache CTE &amp; Kunden-Segmentierung):</strong> Berechne in einer CTE <code>kunden_stats</code> den Gesamtumsatz und die Bestellanzahl je Kunde. Weise im Haupt-SELECT via <code>CASE WHEN</code> Kundensegmente ('VIP', 'Regulär', 'Neukunde') zu.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2 (Chained CTEs Finanz-Benchmark):</strong> Baue eine 2-stufige CTE-Pipeline (<code>monats_performance</code> &rarr; <code>gesamt_benchmark</code>), um Monate zu filtern, deren Nettogewinn über dem Jahresdurchschnitt liegt.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3 (Rekursiver Datums-Generator):</strong> Erzeuge mit <code>WITH RECURSIVE kalender(datum)</code> eine lückenlose Reihe von Kalendertagen vom <code>2024-03-01</code> bis zum <code>2024-03-07</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4 (Rekursive Organisations-Hierarchie):</strong> Erstelle ein Organigramm mit <code>WITH RECURSIVE</code>, das für jeden Mitarbeiter die Hierarchie-Ebene (<code>ebene</code>) und den vollständigen Management-Pfad (<code>pfad</code>) ermittelt.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=sql&track=track_3_aggregation_und_analytics&chapter=11_common_table_expressions_cte" class="btn" style="background: var(--primary); color: #fff; font-weight: 700; padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+              💻 In Web-IDE öffnen &amp; lösen &rarr;
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

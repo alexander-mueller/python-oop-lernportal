@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootcamp-Anmeldung | Formular &amp; Validierung</title>
+</head>
+<body>
+
+  <h1>Tech-Bootcamp Bewerbungsformular</h1>
+
+  <form action="/api/bewerbung" method="POST">
+    <!-- Persönliche Daten -->
+    <fieldset>
+      <legend>Persönliche Daten</legend>
+
+      <div>
+        <label for="name">Vollständiger Name:</label>
+        <input type="text" id="name" name="name" required minlength="2" placeholder="Max Mustermann">
+      </div>
+
+      <div>
+        <label for="email">E-Mail-Adresse:</label>
+        <input type="email" id="email" name="email" required placeholder="max@example.com">
+      </div>
+
+      <div>
+        <label for="password">Passwort festlegen:</label>
+        <input type="password" id="password" name="password" minlength="8" required placeholder="Mindestens 8 Zeichen">
+      </div>
+
+      <div>
+        <label for="experience">Erfahrung in Jahren:</label>
+        <input type="number" id="experience" name="experience" min="0" max="40" value="0">
+      </div>
+    </fieldset>
+
+    <!-- Kursdetails & Motivation -->
+    <fieldset>
+      <legend>Kursauswahl &amp; Motivation</legend>
+
+      <div>
+        <label for="track">Wähle deinen Lehrpfad:</label>
+        <select id="track" name="track" required>
+          <option value="">-- Bitte wählen --</option>
+          <option value="frontend">Frontend Web Development (HTML/CSS/JS)</option>
+          <option value="fullstack">Fullstack Python &amp; Data Engineering</option>
+          <option value="devops">DevOps &amp; Cloud Automation</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="motivation">Dein Motivationsschreiben:</label>
+        <textarea id="motivation" name="motivation" rows="4" placeholder="Warum möchtest du am Bootcamp teilnehmen?"></textarea>
+      </div>
+    </fieldset>
+
+    <!-- Bestätigung & Absenden -->
+    <div>
+      <input type="checkbox" id="agb" name="agb" required>
+      <label for="agb">Ich akzeptiere die Teilnahmebedingungen und AGB.</label>
+    </div>
+
+    <div>
+      <button type="submit">Bewerbung absenden</button>
+    </div>
+  </form>
+
+</body>
+</html>

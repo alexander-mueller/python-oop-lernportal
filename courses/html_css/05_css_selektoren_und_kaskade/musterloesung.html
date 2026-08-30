@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Selektoren &amp; Kaskade</title>
+  <style>
+    /* 1. Typ-Selektoren */
+    body {
+      background-color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #334155;
+    }
+
+    h1 {
+      color: #1e293b;
+    }
+
+    /* 2. Klassen- & ID-Selektoren */
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+    }
+
+    #featured-card {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+
+    /* 3. Kombinatoren */
+    ul > li {
+      padding: 6px 10px;
+      margin: 4px 0;
+    }
+
+    h2 + p {
+      font-size: 1.05rem;
+      color: #475569;
+    }
+
+    /* 4. Attribut-Selektor */
+    a[target="_blank"] {
+      color: #2563eb;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* 5. Pseudo-Klassen */
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #3b82f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    li:nth-child(even) {
+      background-color: #f1f5f9;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Frontend Design System</h1>
+
+  <section class="card" id="featured-card">
+    <h2>Empfohlener Kurs</h2>
+    <p>Modernes CSS3 von den Grundlagen bis zur Kaskadenbeherrschung.</p>
+    <a href="https://w3.org" target="_blank" class="btn">Mehr erfahren</a>
+  </section>
+
+  <section class="card">
+    <h2>Lehrplan Übersicht</h2>
+    <ul>
+      <li>HTML5 Grundlagen</li>
+      <li>CSS3 Selektoren</li>
+      <li>Box-Modell &amp; Abstände</li>
+      <li>CSS Variablen</li>
+    </ul>
+    <button type="button" class="btn">Jetzt starten</button>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 03: UPDATE, DELETE &amp; ALTER TABLE</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🗄️ SQL Lehrpfad 1: Grundlagen</div>
+          <h1>SQL 03: Daten aktualisieren, löschen &amp; ALTER TABLE</h1>
+          <p>Lerne Datenmodifikationen mit <code>UPDATE</code>, gezieltes Bereinigen mit <code>DELETE</code> und Schema-Migrationen mit <code>ALTER TABLE</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: UPDATE -->
+        <section class="card">
+          <h2>💡 1. Datensätze modifizieren mit <code>UPDATE</code></h2>
+          <p>Mit dem <code>UPDATE</code>-Befehl veränderst du bestehende Zeilen in einer Tabelle:</p>
+          <pre><code>UPDATE tabellen_name
+SET spalte1 = neuer_wert1,
+    spalte2 = neuer_wert2
+WHERE bedingung;</code></pre>
+
+          <p>Du kannst in <code>SET</code> auch bestehende Werte mathematisch manipulieren:</p>
+          <pre><code>-- 10% Gehaltserhöhung für alle Entwickler:
+UPDATE mitarbeiter 
+SET gehalt = gehalt * 1.10 
+WHERE abteilung = 'IT';</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DELETE & SICHERHEIT -->
+        <section class="card">
+          <h2>🗑️ 2. Datensätze entfernen mit <code>DELETE</code></h2>
+          <p>Mit <code>DELETE FROM</code> entfernst du gezielt nicht mehr benötigte Datensätze:</p>
+          <pre><code>DELETE FROM mitarbeiter 
+WHERE status = 'inaktiv' AND gehalt < 35000;</code></pre>
+
+          <div class="box box-achtung">
+            <div class="box-title">🚨 Der Albtraum jedes Datenbank-Admins: Fehlende WHERE-Klausel!</div>
+            <p>Wenn du das <code>WHERE</code> vergisst, führt die Datenbank den Befehl gnadenlos für <strong>jede einzelne Zeile</strong> der Tabelle aus:</p>
+            <p><code>DELETE FROM mitarbeiter; -- 💥 LÖSCHT DIE GESAMTE TABELLE!</code></p>
+            <p><strong>Goldene Regel:</strong> Teste dein Kriterium immer zuerst mit einem <code>SELECT * FROM tabelle WHERE ...</code>, bevor du es in ein <code>UPDATE</code> oder <code>DELETE</code> umwandelst!</p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: ALTER TABLE -->
+        <section class="card">
+          <h2>🏗️ 3. Tabellenschema erweitern mit <code>ALTER TABLE</code></h2>
+          <p>Wenn sich Anforderungen im laufenden Betrieb ändern, kannst du Tabellen nachträglich anpassen:</p>
+          <pre><code>-- 1. Neue Spalte mit Standardwert hinzufügen:
+ALTER TABLE mitarbeiter ADD COLUMN bonus REAL DEFAULT 0.0;
+
+-- 2. Spalte umbenennen (SQLite 3.25+):
+ALTER TABLE mitarbeiter RENAME COLUMN gehalt TO monatsgehalt;
+
+-- 3. Tabelle umbenennen:
+ALTER TABLE mitarbeiter RENAME TO angestellte;</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Umbau im laufenden Betrieb</div>
+            <p><code>UPDATE</code> ist wie das Streichen der Wände in einem bestehenden Büro (Inhalt ändert sich). <code>ALTER TABLE</code> ist der Ausbau eines weiteren Stockwerks oder das Einsetzen neuer Trennwände (die Baupläne/Struktur ändern sich)!</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Modifikation &amp; Schema</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl</th>
+                  <th style="padding: 10px;">Beispiel-Syntax</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>UPDATE ... SET</code></td>
+                  <td style="padding: 10px;"><code>UPDATE kunden SET status = 'vip' WHERE umsatz > 1000;</code></td>
+                  <td style="padding: 10px;">Ändert Spaltenwerte bestehender Zeilen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>DELETE FROM</code></td>
+                  <td style="padding: 10px;"><code>DELETE FROM warenkorb WHERE menge = 0;</code></td>
+                  <td style="padding: 10px;">Löscht Zeilen, die der Bedingung entsprechen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ALTER ... ADD</code></td>
+                  <td style="padding: 10px;"><code>ALTER TABLE kunden ADD COLUMN geburtstag TEXT;</code></td>
+                  <td style="padding: 10px;">Fügt eine neue Spalte hinzu</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ALTER ... RENAME</code></td>
+                  <td style="padding: 10px;"><code>ALTER TABLE kunden RENAME TO shop_kunden;</code></td>
+                  <td style="padding: 10px;">Benennt eine Tabelle um</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sql</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Tabelle <code>mitarbeiter</code> anlegen und die 5 vorgegebenen Testdatensätze einfügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Mitarbeiter <code>id = 2</code> auf <code>abteilung = 'Management'</code> und <code>status = 'aktiv'</code> aktualisieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> 10% Gehaltserhöhung (<code>gehalt = gehalt * 1.10</code>) für alle aktiven Mitarbeiter der <code>'IT'</code> durchführen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Mit <code>ALTER TABLE</code> eine Spalte <code>bonus REAL DEFAULT 0.0</code> hinzufügen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Allen Mitarbeitern mit <code>gehalt &gt;= 60000</code> einen <code>bonus</code> von <code>1500.0</code> zuweisen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> Alle Mitarbeiter löschen, deren Status <code>'inaktiv'</code> ist UND deren Gehalt unter <code>35000</code> liegt.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=sql&track=track_1_grundlagen&chapter=03_daten_aktualisieren_und_loeschen" class="btn" style="background: #3b82f6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_filterung_und_logische_operatoren/index.html" class="btn btn-secondary">&larr; Zurück zu SQL 02</a>
+            <a href="../04_datentypen_und_constraints/index.html" class="btn btn-secondary">Weiter zu SQL 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

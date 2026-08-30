@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musterlösung: Moderne UI-Komponenten &amp; Glassmorphism</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #0b0f19;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 20%, #4338ca 0%, #0b0f19 70%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* 🎯 TEILZIEL 1: Glassmorphism Card (.glass-card) */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      padding: 30px;
+      margin-bottom: 28px;
+    }
+
+    /* 🎯 TEILZIEL 2: Natives HTML5 <dialog> & ::backdrop */
+    dialog {
+      background: #1e293b;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 28px;
+      max-width: 450px;
+      margin: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    dialog::backdrop {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    /* 🎯 TEILZIEL 3: Pure CSS Tooltip mit [data-tooltip] */
+    [data-tooltip] {
+      position: relative;
+      cursor: help;
+    }
+
+    [data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    [data-tooltip]:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* 🎯 TEILZIEL 4: Badge-System (.badge, .badge--success, .badge--purple) */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge--success {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid #10b981;
+    }
+
+    .badge--purple {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      border: 1px solid #8b5cf6;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="margin-bottom: 24px;">
+      <span class="badge badge--purple">Modern UI Lab</span>
+      <h1 style="font-size: 2rem; margin-top: 8px;">Glassmorphism &amp; Modale Komponenten</h1>
+    </header>
+
+    <main>
+      <!-- Glassmorphism Card -->
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h2 style="font-size: 1.3rem;">Glassmorphism Dashboard</h2>
+          <span class="badge badge--success">Live Preview</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+          Halbtransparenz und <span data-tooltip="Weichzeichnen von Elementen im Hintergrund" style="text-decoration: underline dotted #818cf8; color: #818cf8;">backdrop-filter</span> erzeugen edle Schärfentiefe.
+        </p>
+        <button id="open-modal-btn" class="btn">Modalen Dialog öffnen</button>
+      </div>
+
+      <!-- Native Dialog Modal -->
+      <dialog id="demo-modal">
+        <h3 style="font-size: 1.2rem; margin-bottom: 8px;">✨ Natives HTML5 Modal</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+          Dieser Dialog nutzt das Standard-HTML5 &lt;dialog&gt;-Element mit echtem Tastatur-Fokus und ESC-Schließfunktion.
+        </p>
+        <button id="close-modal-btn" class="btn" style="background: #e11d48;">Schließen</button>
+      </dialog>
+    </main>
+  </div>
+
+  <script>
+    const modal = document.getElementById("demo-modal");
+    const openBtn = document.getElementById("open-modal-btn");
+    const closeBtn = document.getElementById("close-modal-btn");
+
+    if (openBtn && modal) {
+      openBtn.addEventListener("click", () => modal.showModal());
+    }
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", () => modal.close());
+    }
+  </script>
+</body>
+</html>

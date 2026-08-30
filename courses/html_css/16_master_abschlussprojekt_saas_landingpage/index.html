@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 16: Responsive SaaS Landingpage &amp; Portfolio</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .project-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .feature-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .feature-check-item {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="project-hero-badge">🏆 Master Abschluss-Projekt</div>
+          <h1>Master 16: Responsive SaaS Landingpage &amp; Portfolio</h1>
+          <p>Das große Finale: Baue eine 100% responsive, barrierefreie SaaS-Landingpage mit modernem Flexbox/Grid-Layout, Glassmorphism, Dark Mode und flüssigen Animationen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. PROJEKTÜBERSICHT -->
+        <section class="card">
+          <h2>🌟 1. Die Architektur der SaaS-Landingpage</h2>
+          <p>In diesem Projekt führst du alle Best Practices aus den 4 Lehrpfaden zusammen:</p>
+
+          <div class="feature-check-grid">
+            <div class="feature-check-item">
+              <h4 style="color: #4f46e5; margin-bottom: 6px;">🎨 CSS Variables &amp; Themes</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Dynamischer Dark/Light Mode mit prefers-color-scheme und Toggle-Button.</p>
+            </div>
+            <div class="feature-check-item">
+              <h4 style="color: #059669; margin-bottom: 6px;">📐 Flexbox &amp; Grid Matrix</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Sticky Navbar, Auto-Fit Feature Cards und responsive Pricing Matrix.</p>
+            </div>
+            <div class="feature-check-item">
+              <h4 style="color: #7c3aed; margin-bottom: 6px;">🔮 Glassmorphism &amp; Motion</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Frosted-Glass Hero Preview mit sanfter Floating Keyframe-Animation.</p>
+            </div>
+            <div class="feature-check-item">
+              <h4 style="color: #d97706; margin-bottom: 6px;">📱 Mobile-First &amp; BEM</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Strikte BEM-Klassennamen und stufenlose clamp()-Typografie.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.html</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Design-Tokens (CSS Custom Properties) für Light und Dark Mode auf <code>:root</code> und <code>[data-theme="dark"]</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Sticky <code>.navbar</code> mit Flexbox, Ausrichtung und Theme-Toggle stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>.hero-section</code> mit flüssiger <code>clamp()</code>-Schrift und schwebender <code>.glass-card</code> aufbauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>.features-grid</code> mit <code>display: grid</code> und <code>repeat(auto-fit, minmax(280px, 1fr))</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> BEM <code>.pricing-card</code> Komponenten und <code>.pricing-card--popular</code> Modifier stylen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> Media Queries für saubere Mobile-First Responsivität sicherstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">🏆 Zertifikats-Abschluss</div>
+            <p>Nach erfolgreichem Bestehen aller Tests in diesem Meistermodul wird dein offizielles <strong>HTML5 &amp; Modern CSS3 Master Zertifikat</strong> freigeschaltet!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=html_css&track=track_4_modern_ui_and_master&chapter=16_master_abschlussprojekt_saas_landingpage" class="btn" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: #fff; font-weight: 700;">💻 Meister-IDE öffnen &rarr;</a>
+            <a href="../15_moderne_ui_komponenten/index.html" class="btn btn-secondary">&larr; Zurück zu CSS 15</a>
+            <a href="../../../index.html#zertifikate" class="btn btn-secondary">🎓 Zu den Zertifikaten</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

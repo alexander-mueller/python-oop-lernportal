@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musterlösung: Flexbox Achsen &amp; Alignment</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #06b6d4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* 🎯 TEILZIEL 1: Navigationsleiste als Flex-Container */
+    .navbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    /* 🎯 TEILZIEL 2: Horizontale Navigations-Links */
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* 🎯 TEILZIEL 3: Card Container für responsive Karten */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    /* 🎯 TEILZIEL 4: Flex-Card Sizing & Spaltenlayout */
+    .flex-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      flex: 1 1 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .flex-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    /* 🎯 TEILZIEL 5: Badge-Ausrichtung mit align-self */
+    .card__badge {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+
+    .card__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card__desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .card__footer {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Navigationsleiste -->
+    <header>
+      <nav class="navbar">
+        <a href="#" class="nav-brand">⚡ FlexFlow</a>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Preise</a></li>
+          <li><a href="#docs">Dokumentation</a></li>
+        </ul>
+        <button class="btn">Kostenlos starten</button>
+      </nav>
+    </header>
+
+    <!-- Kartengitter -->
+    <main>
+      <section class="card-container">
+        <article class="flex-card">
+          <div class="card__content">
+            <span class="card__badge">1D-Layout</span>
+            <h3 class="card__title">Flex Direction &amp; Achsen</h3>
+            <p class="card__desc">Steuere den Fluss der Elemente flexibel entlang der horizontalen Hauptachse oder vertikalen Querachse.</p>
+          </div>
+          <div class="card__footer">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Lernzeit: 15 Min</span>
+            <button class="btn" style="padding: 4px 12px; font-size: 0.8rem;">Modul starten</button>
+          </div>
+        </article>
+
+        <article class="flex-card">
+          <div class="card__content">
+            <span class="card__badge">Alignment</span>
+            <h3 class="card__title">Justify &amp; Align</h3>
+            <p class="card__desc">Verteile Zwischenräume und zentriere Boxen pixelgenau mit modernem CSS Box Alignment.</p>
+          </div>
+          <div class="card__footer">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Lernzeit: 20 Min</span>
+            <button class="btn" style="padding: 4px 12px; font-size: 0.8rem;">Modul starten</button>
+          </div>
+        </article>
+
+        <article class="flex-card">
+          <div class="card__content">
+            <span class="card__badge">Responsivität</span>
+            <h3 class="card__title">Flex Wrap &amp; Sizing</h3>
+            <p class="card__desc">Erlaube fließendes Umbrechen und dynamisches Wachsen und Schrumpfen bei verschiedenen Bildschirmgrößen.</p>
+          </div>
+          <div class="card__footer">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Lernzeit: 25 Min</span>
+            <button class="btn" style="padding: 4px 12px; font-size: 0.8rem;">Modul starten</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
