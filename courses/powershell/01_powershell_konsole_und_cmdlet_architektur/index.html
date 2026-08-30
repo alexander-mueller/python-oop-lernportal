@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 01: PowerShell Konsole &amp; Cmdlet-Architektur</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔷 PowerShell 7+ Essentials</div>
+          <h1>PS 01: Cmdlet-Architektur &amp; Verb-Noun Syntax</h1>
+          <p>Lerne die Anatomie moderner PowerShell Cmdlets, das Verb-Noun Paradigma, Approved Verbs und Cmdlet-Discovery mit <code>Get-Command</code> und <code>Get-Help</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: VERB-NOUN SYNTAX -->
+        <section class="card">
+          <h2>💡 1. Das Verb-Noun Prinzip &amp; PowerShell 7+ Core</h2>
+          <p>PowerShell unterscheidet sich fundamental von klassischen Unix-Shells oder der Windows Eingabeaufforderung. Befehle heißen <strong>Cmdlets</strong> (ausgesprochen: <em>Command-lets</em>) und folgen strikt der <strong>Verb-Noun Syntax</strong> (<code>Verb-Substantiv</code> in Einzahl):</p>
+          
+          <pre><code># Standard Verb-Noun Syntax:
+Get-Process          # Verb: Get (Holen), Noun: Process (Einzahl!)
+Stop-Service         # Verb: Stop, Noun: Service
+New-Item             # Verb: New, Noun: Item
+Set-Content          # Verb: Set, Noun: Content
+Test-Path            # Verb: Test, Noun: Path</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Sprache der Befehle</div>
+            <p>Stell dir PowerShell wie eine standardisierte Grammatik vor: Das <strong>Verb</strong> beschreibt immer die <em>Aktion</em> (Was soll getan werden?), das <strong>Noun</strong> beschreibt das <em>Zielobjekt</em> (Worauf wird die Aktion angewendet?). Da das Noun immer im Singular steht, musst du dir nie merken, ob ein Befehl <code>Get-Processes</code> oder <code>Get-Process</code> heißt – es ist immer <strong>Singular</strong>!</p>
+          </div>
+        </section>
+
+        <!-- 2. APPROVED VERBS -->
+        <section class="card">
+          <h2>🛡️ 2. Microsoft Approved Verbs (Genehmigte Verben)</h2>
+          <p>Microsoft definiert feste Verb-Kategorien zur Wahrung von Konsistenz über alle Module hinweg. Mit <code>Get-Verb</code> kannst du alle standardisierten Verben abrufen:</p>
+
+          <div style="overflow-x: auto; margin: 15px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Gruppe</th>
+                  <th style="padding: 10px;">Verben</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Common</strong></td>
+                  <td style="padding: 10px;"><code>Get</code>, <code>Set</code>, <code>New</code>, <code>Remove</code></td>
+                  <td style="padding: 10px;">Standard CRUD-Operationen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Data</strong></td>
+                  <td style="padding: 10px;"><code>Select</code>, <code>Group</code>, <code>Import</code>, <code>Export</code>, <code>Convert</code></td>
+                  <td style="padding: 10px;">Datenverarbeitung und -transformation</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Lifecycle</strong></td>
+                  <td style="padding: 10px;"><code>Start</code>, <code>Stop</code>, <code>Restart</code>, <code>Suspend</code>, <code>Resume</code></td>
+                  <td style="padding: 10px;">Zustandsänderungen von Diensten / Prozessen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Diagnostic</strong></td>
+                  <td style="padding: 10px;"><code>Test</code>, <code>Debug</code>, <code>Measure</code>, <code>Trace</code></td>
+                  <td style="padding: 10px;">Überprüfung und Diagnose</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. PARAMETER & ENTDECKUNG -->
+        <section class="card">
+          <h2>🔍 3. Cmdlet-Discovery &amp; Parameter-Arten</h2>
+          <p>PowerShell bietet eine unübertroffene Selbst-Dokumentation (Self-Discovery) direkt in der Konsole:</p>
+
+          <pre><code># 1. Befehle finden nach Verb oder Noun:
+Get-Command -Noun Service
+Get-Command -Verb Get -Module Microsoft.PowerShell.Management
+
+# 2. Hilfe und Beispiele abrufen:
+Get-Help Get-Process -Examples
+Get-Help Get-Service -Detailed
+
+# 3. Parameter-Typen:
+# - Benannter Parameter:  Get-Process -Name "pwsh"
+# - Positionaler Parameter: Get-Process "pwsh"
+# - Switch Parameter:     Get-ChildItem -Recurse</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Cmdlet-Architektur</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Cmdlet / Konzept</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Get-Command</code></td>
+                  <td style="padding: 10px;"><code>Get-Command *-Item*</code></td>
+                  <td style="padding: 10px;">Durchsucht alle installierten Module nach Cmdlets, Aliasen &amp; Funktionen.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Get-Help</code></td>
+                  <td style="padding: 10px;"><code>Get-Help Select-Object -Online</code></td>
+                  <td style="padding: 10px;">Zeigt Parameter, Syntax, Beschreibungen und Best-Practice Beispiele an.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Get-Verb</code></td>
+                  <td style="padding: 10px;"><code>Get-Verb | Where-Object Group -eq 'Data'</code></td>
+                  <td style="padding: 10px;">Listet alle offiziell von Microsoft zugelassenen Verben auf.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Switch Parameter</code></td>
+                  <td style="padding: 10px;"><code>Get-ChildItem -Force</code></td>
+                  <td style="padding: 10px;">Boolescher Schalter ohne Argument (<code>-Force:$true</code>).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Get-FormattedCommandInfo</code>: Nimmt einen Cmdlet-Namen (z.B. <code>"Get-Process"</code>) und liefert ein Hashtable mit <code>Verb</code>, <code>Noun</code> und <code>IsValidVerb</code> zurück.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Format-CmdletName</code>: Baut aus separaten <code>$Verb</code> und <code>$Noun</code> Strings den normierten Cmdlet-Namen <code>Verb-Noun</code> (im TitleCase) zusammen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Test-ApprovedVerb</code>: Prüft, ob ein übergebenes Verb in der Liste genehmigter PowerShell-Verben (Get, Set, New, Remove, Start, Stop, Restart, Test, Find, Invoke) enthalten ist.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Get-CommandSummary</code>: Erzeugt eine formatierte Statuszeile <code>"Cmdlet: &lt;Verb-Noun&gt; | Kategorie: &lt;Category&gt;"</code>.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Didaktischer Tipp</div>
+            <p>Nutze den String-Operator <code>-split '-'</code> zum Zerlegen von Cmdlet-Namen und den <code>-contains</code> bzw. <code>-in</code> Operator zur Überprüfung genehmigter Verben!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_1_ps7_essentials&chapter=01_powershell_konsole_und_cmdlet_architektur" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_die_objekt_pipeline_und_get_member/index.html" class="btn btn-secondary">Weiter zu PS 02 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

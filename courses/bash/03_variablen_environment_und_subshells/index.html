@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 03: Variablen, Environment &amp; Subshells</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🐧 Linux Bash &amp; Cloud DevOps</div>
+          <h1>Bash 03: Variablen, Environment &amp; Subshells</h1>
+          <p>Verstehe Prozess-Umgebungen, vererbe Variablen mit <code>export</code>, nutze Command Substitution und meistere native String-Parameter-Expansion.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: VARIABLEN & EXPORT -->
+        <section class="card">
+          <h2>🔐 1. Variablen, Vererbung &amp; <code>export</code></h2>
+          <p>Variablen in der Shell werden ohne Leerzeichen um das Gleichheitszeichen herum zugewiesen. Mit <code>export</code> wandern sie in die Prozesstabelle aller Subprozesse:</p>
+          
+          <pre><code># ⚠️ Keine Leerzeichen bei der Zuweisung!
+SERVICE="auth-api"          # Lokal: Nur in dieser Shell verfügbar
+export PORT=8080            # Global: An alle Kind-Prozesse (z.B. node, python, skripte) vererbt
+
+# Die wichtigste Variable: $PATH
+echo $PATH                  # /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin
+export PATH="/opt/tools/bin:$PATH"  # Suchpfad für eigene DevOps-Skripte erweitern</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: EXPANSION & SUBSTITUTION -->
+        <section class="card">
+          <h2>⚙️ 2. Parameter Expansion &amp; Command Substitution</h2>
+          <p>Moderne Shell-Programmierung vermeidet langsame externe Tool-Aufrufe, wo immer Bash es nativ lösen kann:</p>
+
+          <pre><code># 🎯 1. Command Substitution $(...):
+HOST=$(hostname)
+UPTIME=$(uptime -p)
+
+# 🎯 2. Parameter Expansion (Strings zerlegen & Fallbacks):
+DATEI="/var/log/nginx/access.log"
+echo ${DATEI%/*}      # /var/log/nginx  (Suffix ab letztem '/' abschneiden)
+echo ${DATEI##*/}     # access.log      (Präfix bis zum letzten '/' abschneiden)
+echo ${DATEI##*.}     # log             (Dateiendung)
+
+# 🎯 3. Default-Werte:
+PORT=${CUSTOM_PORT:-8080}   # Nutzt 8080, falls CUSTOM_PORT nicht gesetzt ist
+
+# 🎯 4. Shell-Arithmetik $(( ... )):
+FREE_RAM=$(( TOTAL_RAM - USED_RAM ))</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🧬 Didaktische Analogie: Vererbung in der Prozesstabelle</div>
+            <p><strong>Lokale Variable vs. <code>export</code>:</strong> Eine lokale Variable ist wie ein Notizzettel in deiner Jackentasche – nur du kannst ihn lesen. Wenn du mit <code>export</code> arbeitest, machst du den Zettel zu einer DNA-Eigenschaft, die jedes Kind (jeder Subprozess) bei der Geburt automatisch mitbekommt!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Parameter-Expansion &amp; Arithmetik</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Ergebnis / Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$(cmd)</code></td>
+                  <td style="padding: 10px;"><code>USER=$(whoami)</code></td>
+                  <td style="padding: 10px;">Fängt Standardausgabe des Befehls ein</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${var:-fallback}</code></td>
+                  <td style="padding: 10px;"><code>${CLUSTER:-"prod"}</code></td>
+                  <td style="padding: 10px;">Nutzt Fallback, falls <code>$CLUSTER</code> leer/ungesetzt</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${var##*/}</code></td>
+                  <td style="padding: 10px;"><code>${P##*/}</code></td>
+                  <td style="padding: 10px;">Entfernt längstes Präfix bis <code>/</code> (Basename)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${var%/*}</code></td>
+                  <td style="padding: 10px;"><code>${P%/*}</code></td>
+                  <td style="padding: 10px;">Entfernt kürzestes Suffix ab <code>/</code> (Dirname)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${var%.*}</code></td>
+                  <td style="padding: 10px;"><code>${file%.*}</code></td>
+                  <td style="padding: 10px;">Entfernt Dateiendung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${#var}</code></td>
+                  <td style="padding: 10px;"><code>${#str}</code></td>
+                  <td style="padding: 10px;">Länge des Strings in Anzahl Zeichen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>$((a + b))</code></td>
+                  <td style="padding: 10px;"><code>$(( (a * 100) / b ))</code></td>
+                  <td style="padding: 10px;">Native Ganzzahl-Arithmetik</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>setze_umgebungsvariable(name, wert)</code> mit <code>export</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>generiere_system_kennung()</code> mit <code>$(whoami)</code>, <code>$(hostname)</code> und <code>$(date)</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>zerlege_dateipfad(pfad)</code> mit nativer Parameter Expansion umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ermittle_konfigurationswert(wert, fallback)</code> mit <code>${var:-fallback}</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>berechne_disk_quota(total, used)</code> mit <code>$(( ... ))</code> berechnen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Performance-Tipp: Subprozesse einsparen</div>
+            <p>Vermeide <code>basename "$FILE"</code> und <code>dirname "$FILE"</code> in Schleifen über Millionen Dateien! Native Parameter Expansion wie <code>${FILE##*/}</code> läuft in Nanosekunden direkt im Bash-C-Core ohne Prozess-Forking.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_1_terminal_grundlagen&chapter=03_variablen_environment_und_subshells" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_streams_pipes_und_redirection/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 02</a>
+            <a href="../04_dateirechte_prozesskontrolle_und_jobs/index.html" class="btn btn-secondary">Weiter zu Bash 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

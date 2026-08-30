@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 04: Dateirechte &amp; Prozesskontrolle</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🐧 Linux Bash &amp; Cloud DevOps</div>
+          <h1>Bash 04: Dateirechte (chmod), Signale &amp; Job Control</h1>
+          <p>Schütze Serverdateien mit präzisen Berechtigungen (600/755), verwalte Hintergrund-Jobs und meistere Signal-Handling für resiliente Daemons.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: CHMOD & DATEIRECHTE -->
+        <section class="card">
+          <h2>🔐 1. Das Unix-Rechtemodell (Oktal &amp; Symbolisch)</h2>
+          <p>Unix unterscheidet drei Rollen (Owner, Group, Others) mit drei Grundrechten (Read=4, Write=2, Execute=1):</p>
+          
+          <pre><code># 🎯 Oktale Rechtezuweisung:
+chmod 755 deploy.sh        # rwxr-xr-x: Jeder darf ausführen, nur Owner darf schreiben
+chmod 644 config.yaml      # rw-r--r--: Standard für Webserver-Assets
+chmod 600 id_ed25519       # rw-------: Streng geheim (SSH Private Key)
+
+# 🎯 Symbolische Anpassung:
+chmod u+x script.sh        # Fügt Execute-Recht für den User hinzu
+chmod g-w shared.doc       # Entzieht Schreibrecht für die Gruppe</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: PROZESSE & SIGNALE -->
+        <section class="card">
+          <h2>⚡ 2. Prozess-Signale &amp; Asynchrone Job Control</h2>
+          <p>Im Serverbetrieb laufen Hintergrunddienste asynchron. Über Signale kommuniziert der Administrator direkt mit dem Kernel:</p>
+
+          <pre><code># 🎯 1. Job im Hintergrund starten (&):
+./data_importer.sh > import.log 2>&1 &
+PID=$!                     # Fängt die Prozess-ID des Hintergrundjobs ab
+
+# 🎯 2. Prozess-Existenz ohne Unterbrechung prüfen:
+if kill -0 "$PID" 2>/dev/null; then
+  echo "Prozess läuft noch..."
+fi
+
+# 🎯 3. Graceful Shutdown mit Fallback:
+kill -15 "$PID"            # SIGTERM: Sauberes Beenden anfordern
+sleep 1
+if kill -0 "$PID" 2>/dev/null; then
+  kill -9 "$PID"           # SIGKILL: Notaus-Schalter (kann nicht ignoriert werden)
+fi</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚪 Didaktische Analogie: Hausordnung &amp; Notaus-Schalter</div>
+            <p><strong>Dateirechte (<code>chmod 600</code>):</strong> Das ist dein persönliches Bankschließfach. Nur du hast den Schlüssel (6=Read/Write), niemand sonst darf auch nur hineinsehen (0=No Access).</p>
+            <p><strong>SIGTERM vs. SIGKILL:</strong> <code>kill -15</code> ist das Klopfen an der Tür mit der Bitte, das Gebäude geordnet zu verlassen. <code>kill -9</code> ist die Feuerwehr, die sofort die Sicherungen herausdreht und das Wasser abstellt!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Rechte &amp; Signale</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl</th>
+                  <th style="padding: 10px;">Syntax / Signal</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>chmod 600</code></td>
+                  <td style="padding: 10px;"><code>rw-------</code></td>
+                  <td style="padding: 10px;">Schutz für Private Keys &amp; Secrets</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>chmod 755</code></td>
+                  <td style="padding: 10px;"><code>rwxr-xr-x</code></td>
+                  <td style="padding: 10px;">Standard für ausführbare Skripte</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&amp;</code></td>
+                  <td style="padding: 10px;"><code>cmd &amp;</code></td>
+                  <td style="padding: 10px;">Startet Befehl asynchron im Hintergrund</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$!</code></td>
+                  <td style="padding: 10px;"><code>PID=$!</code></td>
+                  <td style="padding: 10px;">PID des zuletzt im Hintergrund gestarteten Prozesses</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>kill -0</code></td>
+                  <td style="padding: 10px;"><code>kill -0 $PID</code></td>
+                  <td style="padding: 10px;">Testet Prozess-Existenz (kein Abbruch)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>SIGTERM (15)</code></td>
+                  <td style="padding: 10px;"><code>kill -15 $PID</code></td>
+                  <td style="padding: 10px;">Geordnetes Beenden mit Ressourcen-Cleanup</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>SIGKILL (9)</code></td>
+                  <td style="padding: 10px;"><code>kill -9 $PID</code></td>
+                  <td style="padding: 10px;">Sofortiger harter Kernel-Abbruch</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>setze_sichere_rechte(datei, typ)</code> mit <code>chmod</code> (600, 755, 644) bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>lese_oktal_rechte(datei)</code> per <code>stat -c "%a"</code> auslesen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>starte_hintergrund_prozess(sek)</code> mit <code>&amp;</code> und <code>$!</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ist_prozess_am_leben(pid)</code> mit <code>kill -0</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>stoppe_prozess_mit_fallback(pid)</code> (SIGTERM -> SIGKILL) fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 DevOps Pro-Tipp: SSH Private Key Permissions</div>
+            <p>OpenSSH verweigert strikt die Verbindung, wenn deine Private Keys nicht auf <code>chmod 600</code> stehen (<em>"UNPROTECTED PRIVATE KEY FILE!"</em>). Automatisiere diese Prüfung in deinen CI/CD-Pipelines!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_1_terminal_grundlagen&chapter=04_dateirechte_prozesskontrolle_und_jobs" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_variablen_environment_und_subshells/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 03</a>
+            <a href="../05_kontrollfluss_und_testoperatoren/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 2: Bash 05 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

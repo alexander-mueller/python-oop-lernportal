@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 16: Multi-Threaded Cloud Ops Engine</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏆 Master-Abschlussprojekt</div>
+          <h1>Master 16: Multi-Threaded Cloud Ops Engine</h1>
+          <p>Das große Finale: Baue eine produktionsreife, parallele Cloud-Auditing-Engine mit Pester-Tests, JSON-Berichten &amp; Webhook-Alerts.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Intro -->
+        <section class="card">
+          <h2>1. 🏆 Dein Meisterstück: Die Cloud Ops Engine</h2>
+          <p>
+            Herzlichen Glückwunsch! Du hast alle Etappen von den Grundlagen der PowerShell-Pipeline bis zur fortgeschrittenen Parallelisierung und Pester-Testautomatisierung gemeistert.
+          </p>
+          <p>
+            In diesem <strong>Master-Abschlussprojekt</strong> vereinst du sämtliche Disziplinen zu einer hochperformanten, mandantenfähigen <strong>Cloud Operations Engine</strong>:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin-bottom: 6px;">⚡ 1. Multithreading</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Parallele Überwachung hunderter Server mit <code>ForEach-Object -Parallel -ThrottleLimit</code> und <code>$using:</code>.
+              </p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #1e40af; margin-bottom: 6px;">🛡️ 2. Integrität &amp; Security</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Verlustfreie JSON-Berichte mit <code>-Depth 10</code> und kryptografischem SHA256-Integritätsnachweis.
+              </p>
+            </div>
+            <div style="background: #f5f3ff; border-left: 4px solid #8b5cf6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #5b21b6; margin-bottom: 6px;">🌐 3. REST-Webhooks</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Echtzeit-Alerting an Slack/Teams bei Unterschreitung des berechneten Compliance-Scores.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Architektur -->
+        <section class="card">
+          <h2>2. 🏛️ Die Architektur der Engine</h2>
+          <div style="background: #0f172a; color: #f8fafc; padding: 20px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; line-height: 1.6;">
+            <div>[Node Registry] ──▶ [ az-node-01, aws-ec2-02, linux-host-03 ]</div>
+            <div style="margin: 8px 0; color: #38bdf8;">        │ (Parallel Runner: ThrottleLimit = 4)</div>
+            <div style="margin-left: 20px;">
+              ├── [Worker Thread 1] ──▶ Ping, CPU, Memory ──▶ Healthy<br>
+              ├── [Worker Thread 2] ──▶ Ping, CPU, Memory ──▶ Warning<br>
+              └── [Worker Thread 3] ──▶ Ping, CPU, Memory ──▶ Critical
+            </div>
+            <div style="margin: 8px 0; color: #fbbf24;">        │ (Report Aggregator)</div>
+            <div>[Master Report] ──▶ ComplianceScore %, Findings, Timestamp</div>
+            <div style="margin: 8px 0; color: #4ade80;">        ├────▶ [Export-Json]: audit.json + SHA-256 Checksum</div>
+            <div style="color: #f87171;">        └────▶ [Webhook Alert]: Dispatch to Slack/Teams/Discord</div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>3. 🎯 Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und implementiere die 5 Kernfunktionen:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>New-CloudOpsNode</code> &ndash; Node Factory für Server und Cloud-Ressourcen mit individuellen Schwellenwerten.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Invoke-NodeAuditParallel</code> &ndash; Paralleles Auditing mit <code>ForEach-Object -Parallel</code>, Drosselung und Status-Klassifizierung.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>New-CloudOpsReport</code> &ndash; Aggregation aller Knoten und Berechnung des <code>ComplianceScore</code> in %.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Export-CloudOpsJsonReport</code> &ndash; JSON-Export (<code>-Depth 10</code>) mit SHA256-Integritätsprüfsumme.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5">
+              <strong>TODO 5:</strong> <code>Send-CloudOpsAlertWebhook</code> &ndash; Formatieren und Versenden von Alert-Payloads an Webhook-Endpunkte.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_4_enterprise_und_cloud_master&chapter=16_master_abschlussprojekt_cloud_ops_engine" class="btn" style="background: #4f46e5; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../15_cloud_und_cross_platform_automatisierung/index.html" class="btn btn-secondary">&larr; Zurück zu PS 15</a>
+          <a href="../../../index.html" class="btn" style="background: var(--success); color: white;">🏆 Kurs erfolgreich abgeschlossen &ndash; Zum Dashboard &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

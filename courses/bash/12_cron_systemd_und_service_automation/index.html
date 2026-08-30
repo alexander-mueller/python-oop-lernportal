@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 12: Cronjobs, Systemd &amp; Logrotation</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: High-Performance &amp; Parallelisierung</div>
+          <h1>Bash 12: Cronjobs, Systemd &amp; Logrotation</h1>
+          <p>Meistere Linux Service-Automation: Baue unzerstörbare Hintergrunddienste mit Systemd Services &amp; Timern, Cron-Jobs und sicherer Logrotation.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: SYSTEMD SERVICES -->
+        <section class="card">
+          <h2>⚙️ 1. Enterprise Service Management mit Systemd</h2>
+          <p>Systemd sorgt dafür, dass deine Hintergrunddienste nach Systemabstürzen, Reboots oder OOM-Kills automatisch neu gestartet werden:</p>
+
+          <pre><code># 🎯 Typische Unit-Struktur (/etc/systemd/system/api-worker.service):
+[Unit]
+Description=High-Throughput API Worker
+After=network.target
+
+[Service]
+Type=simple
+User=devops
+ExecStart=/usr/local/bin/worker.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CRON VS TIMER -->
+        <section class="card">
+          <h2>⏱️ 2. Zeitsteuerung: Cron vs. Systemd Timers</h2>
+          <p>Während Cronjobs einfach einzurichten sind, bieten Systemd Timers echte Abhängigkeitsprüfung, detailliertes Logging via <code>journalctl</code> und Nachhol-Funktionen (<code>Persistent=true</code>) bei Server-Downtimes:</p>
+
+          <div class="box box-analogie">
+            <div class="box-title">⏰ Didaktische Analogie: Wecker vs. Smarter Kalender-Assistent</div>
+            <p><strong>Cron</strong> ist wie ein mechanischer Wecker auf dem Nachttisch: Wenn der Strom ausfällt (Server Offline), klingelt er einfach nicht und holt nichts nach.<br>
+            <strong>Systemd Timer</strong> ist wie ein intelligenter Kalender-Assistent: Er registriert verpasste Termine während der Downtime und führt den Job sofort nach dem Systemstart aus!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Services, Timers &amp; Logs</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Komponente</th>
+                  <th style="padding: 10px;">Syntax / Datei</th>
+                  <th style="padding: 10px;">Funktion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>crontab -e</code></td>
+                  <td style="padding: 10px;"><code>*/5 * * * * cmd &gt;&gt; log 2&gt;&amp;1</code></td>
+                  <td style="padding: 10px;">Periodische Ausführung via Vixie-Cron</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>systemctl daemon-reload</code></td>
+                  <td style="padding: 10px;">CLI-Befehl</td>
+                  <td style="padding: 10px;">Lädt geänderte Unit-Dateien in Systemd neu</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>systemctl enable --now</code></td>
+                  <td style="padding: 10px;"><code>systemctl enable --now app.service</code></td>
+                  <td style="padding: 10px;">Aktiviert Autostart und startet Dienst sofort</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>journalctl -u app -f</code></td>
+                  <td style="padding: 10px;">CLI-Befehl</td>
+                  <td style="padding: 10px;">Live-Stream der Logs einer Systemd Unit</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>logrotate</code></td>
+                  <td style="padding: 10px;"><code>/etc/logrotate.d/app</code></td>
+                  <td style="padding: 10px;">Automatische Log-Archivierung und gzip-Komprimierung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>generate_cron_entry(schedule, script_path, log_path)</code> formatieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>generate_systemd_service(description, exec_start, user, restart)</code> im INI-Format generieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>generate_systemd_timer(description, on_calendar, service_unit)</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>generate_logrotate_config(log_path, frequency, rotate_count, compress_flag)</code> erzeugen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_3_parallelisierung_und_netzwerk&chapter=12_cron_systemd_und_service_automation" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_netzwerk_ssh_und_curl_pipelines/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 11</a>
+            <a href="../13_docker_und_container_scripting/index.html" class="btn btn-secondary">Weiter zu Bash 13 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

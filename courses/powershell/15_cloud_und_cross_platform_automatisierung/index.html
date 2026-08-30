@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 15: Cross-Platform Cloud Automation</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Enterprise Modules &amp; Cloud Master</div>
+          <h1>PS 15: Cross-Platform Cloud Automation</h1>
+          <p>Steuere Multi-Cloud-Infrastrukturen in Azure &amp; AWS plattformübergreifend auf Linux, Docker und macOS mit PowerShell 7+.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Multi-Cloud &amp; Cross-Platform DevOps</h2>
+          <p>
+            PowerShell 7+ läuft nativ auf Linux und im Docker-Container. Es verbindet APIs von Azure (<code>Az</code>-Modul), AWS und On-Premises zu einem einheitlichen Automatisierungs-Workflow:
+          </p>
+
+          <pre><code># Plattform-Erkennung
+if ($IsLinux) {
+    Write-Host "Ausführung im Linux-Container: $($PSVersionTable.OS)"
+}
+
+# AWS CLI JSON-Pipeline
+$vms = (aws ec2 describe-instances | ConvertFrom-Json).Reservations.Instances</code></pre>
+        </section>
+
+        <!-- 2. Multi-Cloud Architektur -->
+        <section class="card">
+          <h2>🏛️ 2. Die hybride Cloud-Architektur</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #1e40af; margin-bottom: 6px;">☁️ Microsoft Azure</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Native .NET-Objekte über das <code>Az</code>-Modul (Resource Groups, VMs, VNETs, Managed Disks).
+              </p>
+            </div>
+            <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #b45309; margin-bottom: 6px;">🟧 Amazon Web Services (AWS)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Kombination aus <code>AWS CLI</code> JSON-Pipelines und <code>AWS.Tools</code> für S3, EC2 und Lambda.
+              </p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin-bottom: 6px;">🐧 Linux &amp; Docker</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Headless CI/CD Runner in GitLab CI, GitHub Actions und Kubernetes Pods.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und löse die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>Get-PlatformDiagnostics</code> &ndash; Plattform-Erkennung (Linux/Win/macOS), Pfad-Separator und CoreCLR.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>New-IdempotentResourceConfig</code> &ndash; Erzeugen einer Cloud-Spezifikation mit Standard-Governance-Tags.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Convert-AwsCliOutputToPsObject</code> &ndash; Normalisieren von AWS EC2 und S3 JSON-Ausgaben in PowerShell-Objekte.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Audit-CloudResourceCompliance</code> &ndash; Automatisches Compliance-Audit für Pflicht-Tags und Regionen.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_4_enterprise_und_cloud_master&chapter=15_cloud_und_cross_platform_automatisierung" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../14_pester_automatisierte_unit_tests/index.html" class="btn btn-secondary">&larr; Zurück zu PS 14</a>
+          <a href="../16_master_abschlussprojekt_cloud_ops_engine/index.html" class="btn" style="background: var(--success); color: white;">Weiter zum Master-Projekt: PS 16 🏆 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

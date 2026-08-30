@@ -1,0 +1,58 @@
+{
+  "id": "bash",
+  "title": "Linux Bash, Shell Scripting & Cloud DevOps",
+  "language": "bash",
+  "icon": "🐧",
+  "runner": "bash",
+  "description": "Vom Terminal-Einsteiger über professionelle Shell-Skripte, Text-Mining (jq/awk), Parallelisierung (xargs/parallel) bis zu Docker & BATS Unittests.",
+  "tracks": [
+    {
+      "id": "track_1_terminal_grundlagen",
+      "title": "🌱 Lehrpfad 1: Linux Terminal Mastery & Core Unix Tools",
+      "description": "Navigation, Globbing, I/O Streams, Redirection, Umgebungsvariablen, Dateirechte und Prozesskontrolle.",
+      "certificateKey": "bash_grundlagen",
+      "chapters": [
+        { "folder": "01_navigation_dateien_und_globbing", "title": "Bash 01: Terminal-Navigation & Globbing", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "02_streams_pipes_und_redirection", "title": "Bash 02: I/O Streams, Pipes & Redirection", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "03_variablen_environment_und_subshells", "title": "Bash 03: Variablen, Environment & Subshells", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "04_dateirechte_prozesskontrolle_und_jobs", "title": "Bash 04: Dateirechte (chmod) & Job Control", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" }
+      ]
+    },
+    {
+      "id": "track_2_skripting_und_textmining",
+      "title": "⚡ Lehrpfad 2: Professionelles Bash-Scripting & Text-Mining",
+      "description": "Kontrollfluss, Regex-Matching, Schleifen, Assoziative Arrays, grep, sed, awk, jq und Strict Mode (set -euo pipefail).",
+      "certificateKey": "bash_scripting",
+      "chapters": [
+        { "folder": "05_kontrollfluss_und_testoperatoren", "title": "Bash 05: Kontrollfluss & Test-Operatoren", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "06_schleifen_arrays_und_assoziative_maps", "title": "Bash 06: Schleifen & Assoziative Arrays", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "07_text_mining_grep_sed_awk_und_jq", "title": "Bash 07: Text-Mining mit grep, sed, awk & jq", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "08_robuste_skripte_und_debugging", "title": "Bash 08: Robuste Skripte (set -euo pipefail)", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" }
+      ]
+    },
+    {
+      "id": "track_3_parallelisierung_und_netzwerk",
+      "title": "🚀 Lehrpfad 3: High-Performance, Parallelisierung & Netzwerke",
+      "description": "Multiprocessing mit xargs -P und GNU parallel, Prozess-Substitution, REST-Pipelines mit curl und Systemd Automation.",
+      "certificateKey": "bash_performance",
+      "chapters": [
+        { "folder": "09_parallelisierung_mit_xargs_und_parallel", "title": "Bash 09: Parallelisierung mit xargs & parallel", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "10_prozess_substitution_und_coproc", "title": "Bash 10: Prozess-Substitution & Co-Prozesse", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "11_netzwerk_ssh_und_curl_pipelines", "title": "Bash 11: Remote SSH & REST-Pipelines (curl)", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "12_cron_systemd_und_service_automation", "title": "Bash 12: Cronjobs, Systemd & Logrotation", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" }
+      ]
+    },
+    {
+      "id": "track_4_cloud_devops_und_master",
+      "title": "💎 Lehrpfad 4: Cloud DevOps, BATS Testing & Masterprojekt",
+      "description": "Docker Container Scripting, CI/CD Pipelines, BATS Unittesting und Master DevOps Monitoring Suite.",
+      "certificateKey": "bash_master",
+      "chapters": [
+        { "folder": "13_docker_und_container_scripting", "title": "Bash 13: Docker & Container Lifecycle Scripting", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "14_ci_cd_und_github_actions_shell", "title": "Bash 14: CI/CD Workflows & GitHub Actions", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "15_bats_automatisiertes_unit_testing", "title": "Bash 15: BATS Automatisiertes Unit-Testing", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" },
+        { "folder": "16_master_abschlussprojekt_devops_suite", "title": "Master 16: DevOps Multi-Server Automation Suite", "taskFile": "aufgabe.sh", "testFile": "test_aufgabe.sh" }
+      ]
+    }
+  ]
+}

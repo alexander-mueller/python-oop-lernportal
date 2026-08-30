@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 08: Robuste Skripte (set -euo pipefail)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 2: Scripting &amp; Text-Mining</div>
+          <h1>Bash 08: Robuste Skripte, Strict Mode &amp; Debugging</h1>
+          <p>Härte deine Shell-Skripte für den 24/7-Serverbetrieb mit <code>set -euo pipefail</code>, automatischen Cleanup-Traps und Concurrency-Locks mit <code>flock</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: STRICT MODE -->
+        <section class="card">
+          <h2>🛡️ 1. Der Bash Strict Mode (<code>set -euo pipefail</code>)</h2>
+          <p>In Produktions-Umgebungen ist "Stiller Weiterlauf bei Fehlern" die häufigste Ursache für Datenverlust. Der Strict Mode stoppt das Skript deterministisch beim ersten Fehler:</p>
+          
+          <pre><code>#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# 1. set -e (errexit): Bricht bei unhandled Exit-Codes != 0 sofort ab
+# 2. set -u (nounset): Behandelt Zugriffe auf ungesetzte Variablen als Fatal Error
+# 3. set -o pipefail: Ein Fehler in foo | bar | baz lässt die gesamte Pipeline scheitern
+
+# Erlaubte Fehler sauber abfangen:
+optional_cleanup || true</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: TRAPS & LOCKS -->
+        <section class="card">
+          <h2>🧹 2. Signal-Traps, Cleanup &amp; File Locks (<code>flock</code>)</h2>
+          <p>Hinterlasse niemals Datenmüll im Dateisystem und verhindere Race Conditions bei parallel laufenden Cronjobs:</p>
+
+          <pre><code># 🎯 1. EXIT Trap – Garantiertes Aufräumen:
+WORK_DIR=$(mktemp -d)
+trap 'rm -rf "$WORK_DIR"' EXIT
+
+# 🎯 2. Exklusives Locking gegen Doppel-Ausführung:
+exec 200>/var/lock/backup.lock
+flock -n 200 || { echo "Job läuft bereits!" >&2; exit 1; }
+
+# 🎯 3. Trace-Debugging im laufenden Betrieb:
+set -x  # Zeigt jeden ausgeführten Befehl mit '+' an
+grep "root" /etc/passwd
+set +x  # Schaltet Tracing wieder aus</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🛟 Didaktische Analogie: Sicherheitsnetz &amp; Hotelschlüssel</div>
+            <p><strong><code>set -euo pipefail</code>:</strong> Das Notbremssystem im Hochgeschwindigkeitszug. Sobald eine Variable wackelt oder ein Zwischenhalt entgleist, stoppt der Zug sofort, statt ungebremst in den Abgrund zu rasen.</p>
+            <p><strong><code>flock</code>:</strong> Das "Besetzt"-Schild am Hotelzimmer. Kein zweiter Gast kann eintreten, solange die Tür verriegelt ist!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Defensive Bash</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Option</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Schutzwirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>set -e</code></td>
+                  <td style="padding: 10px;"><code>set -o errexit</code></td>
+                  <td style="padding: 10px;">Sofortiger Abbruch bei Befehlsfehlern</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>set -u</code></td>
+                  <td style="padding: 10px;"><code>set -o nounset</code></td>
+                  <td style="padding: 10px;">Verhindert Ausführung mit leeren/ungesetzten Variablen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>set -o pipefail</code></td>
+                  <td style="padding: 10px;"><code>cmd1 | cmd2</code></td>
+                  <td style="padding: 10px;">Gibt Fehlercode zurück, falls irgendein Glied der Pipe fehlschlägt</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>trap '...' EXIT</code></td>
+                  <td style="padding: 10px;"><code>trap cleanup EXIT</code></td>
+                  <td style="padding: 10px;">Führt Aufräumcode bei normalem und abnormalem Beenden aus</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>flock -n &lt;file&gt;</code></td>
+                  <td style="padding: 10px;"><code>flock -n /tmp/job.lock cmd</code></td>
+                  <td style="padding: 10px;">Non-blocking Concurrency Lock gegen parallele Runs</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>set -x / set +x</code></td>
+                  <td style="padding: 10px;"><code>set -x; ...; set +x</code></td>
+                  <td style="padding: 10px;">Aktiviert / Deaktiviert interaktiven Befehls-Trace</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>aktiviere_strict_mode()</code> mit <code>set -euo pipefail</code> aktivieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>devops_logger(level, meldung)</code> mit Zeitstempel und Stream-Trennung bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>erstelle_temp_verzeichnis_mit_cleanup()</code> mit <code>mktemp</code> und <code>trap</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>fuehre_exklusiv_mit_lock_aus(lock, cmd)</code> mit <code>flock -n</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>debug_trace_ausfuehren(cmd)</code> mit <code>set -x</code> und <code>set +x</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 DevOps Pro-Tipp: Unbeabsichtigte rm-Katastrophen verhindern</div>
+            <p>Ohne <code>set -u</code> führt ein unbedachter Aufruf wie <code>rm -rf /var/app/$ENV_NAME/cache</code> bei leerer Variable zu <code>rm -rf /var/app//cache</code>. Mit <code>set -u</code> bricht die Shell sofort vor dem Löschbefehl ab!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_2_skripting_und_textmining&chapter=08_robuste_skripte_und_debugging" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../07_text_mining_grep_sed_awk_und_jq/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 07</a>
+            <a href="../../../index.html#zertifikate" class="btn btn-secondary">🎓 Zur Kursübersicht &amp; Zertifikate &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

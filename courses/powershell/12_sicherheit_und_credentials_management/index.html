@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 12: Sicherheit &amp; Secrets Management</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Parallelisierung &amp; REST-APIs</div>
+          <h1>PS 12: Sicherheit, Execution Policies &amp; Secrets</h1>
+          <p>Schütze Enterprise-Infrastrukturen mit <code>[SecureString]</code>, <code>[PSCredential]</code> und modernem <code>SecretManagement</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Sicheres Credential-Management</h2>
+          <p>
+            Passwörter und API-Keys dürfen unter keinen Umständen als Klartext in Skripten oder Git-Repositories gespeichert werden:
+          </p>
+
+          <pre><code># Sicheres PSCredential erzeugen:
+$secPassword = ConvertTo-SecureString "Pass123!" -AsPlainText -Force
+$credential  = [PSCredential]::new("adminUser", $secPassword)
+
+# Zugriff auf geschützten Wert:
+$plain = $credential.GetNetworkCredential().Password</code></pre>
+        </section>
+
+        <!-- 2. Sicherheits-Checkliste -->
+        <section class="card">
+          <h2>🛡️ 2. Die 3 Säulen der PowerShell-Sicherheit</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #0284c7; margin-bottom: 6px;">1. Execution Policy</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Verhindert versehentliches Ausführen ungetesteter Skripte aus dem Web (<code>RemoteSigned</code> / <code>AllSigned</code>).
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #10b981; margin-bottom: 6px;">2. Constrained Language</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Schränkt .NET-Reflexion und direkte Speicherzugriffe in unprivilegierten Sitzungen (z.B. JEA) strikt ein.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #8b5cf6; margin-bottom: 6px;">3. Secret Vaults</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Zentrale, verschlüsselte Tresore für Passwörter via <code>Microsoft.PowerShell.SecretManagement</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und löse die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>New-SecureCredentials</code> &ndash; Erzeugen von <code>[PSCredential]</code> mit <code>[SecureString]</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Protect-SensitiveString</code> &ndash; Verschlüsselung und Entschlüsselung sensibler Tokens.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Get-SecurityAuditReport</code> &ndash; Sicherheits-Auditing von ExecutionPolicy, LanguageMode und Score.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Invoke-SecretVaultSimulation</code> &ndash; Implementierung eines Secret Stores (Set, Get, Remove, List).
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_3_parallelisierung_und_rest&chapter=12_sicherheit_und_credentials_management" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../11_dateisystem_registry_und_psprovider/index.html" class="btn btn-secondary">&larr; Zurück zu PS 11</a>
+          <a href="../13_modul_entwicklung_und_manifeste/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu Lehrpfad 4: PS 13 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

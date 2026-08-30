@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 02: Die Objekt-Pipeline &amp; Get-Member</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔷 PowerShell 7+ Essentials</div>
+          <h1>PS 02: Die Objekt-Pipeline &amp; Get-Member</h1>
+          <p>Verstehe den fundamentalen Unterschied zwischen Unix-Text-Streams und der modernen .NET-Objekt-Pipeline in PowerShell.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: TEXT VS OBJEKTE -->
+        <section class="card">
+          <h2>💡 1. Das .NET-Objekt-Paradigma: Schluss mit Text-Parsing</h2>
+          <p>In klassischen Shells (Bash, CMD) transportiert die Pipeline (<code>|</code>) unstrukturierten Text. Um Informationen herauszufiltern, muss man <code>grep</code>, <code>awk</code> oder <code>sed</code> einsetzen.</p>
+          <p>PowerShell revolutioniert dies: <strong>In der PowerShell-Pipeline fließen echte .NET-Objekte!</strong> Jedes Objekt besitzt strukturierte <strong>Eigenschaften (Properties)</strong> und ausführbare <strong>Methoden (Methods)</strong>.</p>
+          
+          <pre><code># Bash (Textfluss - fehleranfällig):
+# ps aux | grep nginx | awk '{print $2}'
+
+# PowerShell (Objektfluss - typensicher &amp; strukturiert):
+Get-Process -Name "nginx" | Select-Object -Property Id, CPU, WorkingSet64</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏭 Didaktische Analogie: Fließband mit Werkstücken statt Papierstreifen</div>
+            <p>Stell dir ein Industrie-Fließband vor: Auf einem Unix-Fließband liegt ein langer, bedruckter Papierstreifen, aus dem du mit der Schere Wörter herausschneiden musst. Auf dem PowerShell-Fließband fährt ein <strong>präzises Bauteil mit Typenschild, Drehknöpfen (Methoden) und Messuhren (Eigenschaften)</strong>. Du kannst direkt jeden Messwert ablesen, ohne den Text parsen zu müssen!</p>
+          </div>
+        </section>
+
+        <!-- 2. GET-MEMBER -->
+        <section class="card">
+          <h2>🔬 2. Der Röntgenblick: <code>Get-Member</code> (Alias: <code>gm</code>)</h2>
+          <p>Mit dem Cmdlet <code>Get-Member</code> kannst du jedes Objekt zur Laufzeit inspizieren, um herauszufinden, welcher .NET-Klasse es angehört und welche Fähigkeiten es besitzt:</p>
+
+          <pre><code># Untersuche das Prozess-Objekt:
+Get-Process | Get-Member
+
+# Nur Eigenschaften (Properties) anzeigen:
+Get-Process | Get-Member -MemberType Property
+
+# Nur Methoden anzeigen:
+Get-Date | Get-Member -MemberType Method</code></pre>
+        </section>
+
+        <!-- 3. .NET METHODEN & STATISCHE KLASSEN -->
+        <section class="card">
+          <h2>⚙️ 3. .NET-Methoden &amp; Statische Klassen</h2>
+          <p>Da alles auf dem modernen <strong>.NET Core Runtime</strong> basiert, kannst du direkt Methoden auf Objekten aufrufen oder statische .NET-Klassen nutzen:</p>
+
+          <pre><code># Instanz-Methoden (auf einem Objekt):
+$text = "   PowerShell 7 Core   "
+$sauber = $text.Trim().ToUpper().Replace(" ", "_") # "POWERSHELL_7_CORE"
+
+# Statische Methoden über doppelte Doppelpunkte [Klasse]::Methode():
+[Math]::Round(123.4567, 2)     # 123.46
+[DateTime]::UtcNow              # Aktuelle UTC-Zeit
+[System.IO.Path]::GetExtension("config.json") # ".json"
+
+# Integrierte PowerShell Byte-Multiplikatoren:
+# 1KB, 1MB, 1GB, 1TB, 1PB
+$memoryMB = [Math]::Round(104857600 / 1MB, 2) # 100 MB</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Objekt-Inspektion &amp; Pipeline</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Syntax</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Get-Member</code></td>
+                  <td style="padding: 10px;"><code>$var | Get-Member</code></td>
+                  <td style="padding: 10px;">Zeigt Typ, Properties und Methoden an.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.GetType()</code></td>
+                  <td style="padding: 10px;"><code>$var.GetType().FullName</code></td>
+                  <td style="padding: 10px;">Liefert den exakten .NET Typnamen.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.PSObject.Properties</code></td>
+                  <td style="padding: 10px;"><code>$obj.PSObject.Properties.Name</code></td>
+                  <td style="padding: 10px;">Metadaten-Zugriff auf alle Objekteigenschaften.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>[Math]::Round()</code></td>
+                  <td style="padding: 10px;"><code>[Math]::Round($bytes / 1MB, 2)</code></td>
+                  <td style="padding: 10px;">Statische Rundungsmethode der .NET Math-Klasse.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Member-Enumeration</code></td>
+                  <td style="padding: 10px;"><code>(Get-Process).Name</code></td>
+                  <td style="padding: 10px;">Direktes Auslesen einer Eigenschaft über eine ganze Collection.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Get-ObjectPropertyNames</code>: Extrahiere alle Eigenschaftsnamen eines Objekts als String-Array mittels <code>.PSObject.Properties.Name</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Invoke-StringSanitization</code>: Bereinige einen Eingabestring mit .NET-Methoden (Trim, ToUpper, Leerzeichen durch '-' ersetzen).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Get-ProcessMemoryInMB</code>: Berechne Megabyte aus Bytes unter Nutzung des <code>1MB</code> Multiplikators und <code>[Math]::Round(..., 2)</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Get-DotNetTypeInfo</code>: Liefere ein Hashtable mit <code>TypeName</code>, <code>IsValueType</code> und <code>BaseType</code> über <code>$Object.GetType()</code>.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_1_ps7_essentials&chapter=02_die_objekt_pipeline_und_get_member" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_powershell_konsole_und_cmdlet_architektur/index.html" class="btn btn-secondary">&larr; Zurück zu PS 01</a>
+            <a href="../03_filterung_sortierung_und_projektion/index.html" class="btn btn-secondary">Weiter zu PS 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

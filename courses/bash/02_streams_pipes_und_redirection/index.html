@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 02: I/O Streams, Pipes &amp; Redirection</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🐧 Linux Bash &amp; Cloud DevOps</div>
+          <h1>Bash 02: I/O Streams, Pipes &amp; Redirection</h1>
+          <p>Lerne die drei Unix-Standard-Streams kennen, trenne stdout von stderr, lenke Datenflüsse um und baue robuste Pipelines mit <code>tee</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DIE 3 STREAMS -->
+        <section class="card">
+          <h2>🔀 1. Die drei Unix-Datenströme (File Descriptors)</h2>
+          <p>Jeder Prozess unter Linux startet automatisch mit drei offenen Dateideskriptoren (FDs):</p>
+          
+          <pre><code>FD 0: stdin  (Standard-Eingabe)  <-- Tastatur oder Pipe
+FD 1: stdout (Standard-Ausgabe)  --> Terminal-Display
+FD 2: stderr (Standard-Fehler)   --> Terminal-Display (getrennter Kanal!)
+
+# Stream-Umleitungen in der Praxis:
+./backup.sh > backup.log           # Leitet nur stdout (FD 1) um
+./backup.sh 2> errors.log          # Leitet nur Fehlermeldungen (FD 2) um
+./backup.sh > all.log 2>&1         # Leitet stdout und stderr in die gleiche Datei
+./backup.sh 2> /dev/null           # Schmeißt alle Fehler ins digitale Nirwana</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: PIPES & TEE -->
+        <section class="card">
+          <h2>🌊 2. Unix-Pipelines, <code>tee</code> &amp; Here-Docs</h2>
+          <p>Die Unix-Philosophie lautet: <em>"Schreibe Programme, die genau eine Sache gut machen, und kombiniere sie über Streams."</em></p>
+
+          <pre><code># 🎯 1. Datenstrom verketten mit Pipe (|):
+cat /var/log/nginx/access.log | grep "404" | cut -d' ' -f1 | sort | uniq -c
+
+# 🎯 2. Datenstrom abzweigen mit 'tee':
+echo "Deployment gestartet" | tee -a deployment.log
+
+# 🎯 3. Mehrzeilige Konfigurationen mit Here-Docs (<<EOF):
+cat <<EOF > /etc/docker/daemon.json
+{
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "10m" }
+}
+EOF</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚰 Didaktische Analogie: Das Wasserleitungssystem</div>
+            <p><strong>Die Rohre (<code>|</code>):</strong> Ein Rohr verbindet den Ausfluss des einen Beckens direkt mit dem Einlauf des nächsten Filters.</p>
+            <p><strong>Das T-Stück (<code>tee</code>):</strong> Wie ein Installateur-T-Stück zweigt <code>tee</code> das fließende Wasser gleichzeitig in eine Vorratsflasche (Datei) ab, während der Hauptstrahl ungebremst weiter durch den Garten (stdout) fließt!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Stream-Operatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung &amp; Verhalten</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&gt; datei</code></td>
+                  <td style="padding: 10px;"><code>echo "test" &gt; out.txt</code></td>
+                  <td style="padding: 10px;">Leitet <code>stdout</code> um und <strong>überschreibt</strong> die Datei</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&gt;&gt; datei</code></td>
+                  <td style="padding: 10px;"><code>echo "new line" &gt;&gt; out.txt</code></td>
+                  <td style="padding: 10px;">Leitet <code>stdout</code> um und <strong>hängt an</strong></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>2&gt; datei</code></td>
+                  <td style="padding: 10px;"><code>cmd 2&gt; error.log</code></td>
+                  <td style="padding: 10px;">Leitet nur <code>stderr</code> in die Datei um</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>2&gt;&amp;1</code></td>
+                  <td style="padding: 10px;"><code>cmd &gt; out.log 2&gt;&amp;1</code></td>
+                  <td style="padding: 10px;">Dupliziert <code>stderr</code> auf <code>stdout</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>|</code> (Pipe)</td>
+                  <td style="padding: 10px;"><code>cat log | grep ERR</code></td>
+                  <td style="padding: 10px;">Verbindet <code>stdout</code> von Links mit <code>stdin</code> von Rechts</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>tee datei</code></td>
+                  <td style="padding: 10px;"><code>cmd | tee -a run.log</code></td>
+                  <td style="padding: 10px;">Schreibt in Datei und leitet weiter auf <code>stdout</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>&lt;&lt;EOF</code></td>
+                  <td style="padding: 10px;"><code>cat &lt;&lt;EOF ... EOF</code></td>
+                  <td style="padding: 10px;">Here-Document für saubere mehrzeilige Textblöcke</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>erstelle_system_bericht(ziel, srv, os)</code> mit Here-Doc (<code>&lt;&lt;EOF</code>) und <code>&gt;</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>haenge_status_an(ziel, meldung)</code> mit <code>&gt;&gt;</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>trenne_befehls_ausgabe(cmd, out, err)</code> mit <code>1&gt;</code> und <code>2&gt;</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>unterdruecke_fehler(cmd)</code> mit <code>2&gt; /dev/null</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>pipe_und_tee_pipeline(text, tee_file)</code> mit Filterung, <code>tee</code> und Sortierung realisieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 DevOps Pro-Tipp: Cronjob-Ausgaben bündeln</div>
+            <p>In Produktions-Cronjobs solltest du stets <code>0 2 * * * /opt/backup.sh >> /var/log/backup.log 2>&1</code> verwenden. So gehen dir weder Statusmeldungen noch kritische Fehlerursachen im Logfile verloren!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_1_terminal_grundlagen&chapter=02_streams_pipes_und_redirection" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_navigation_dateien_und_globbing/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 01</a>
+            <a href="../03_variablen_environment_und_subshells/index.html" class="btn btn-secondary">Weiter zu Bash 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 10: REST-APIs &amp; JSON-Pipelines</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Parallelisierung &amp; REST-APIs</div>
+          <h1>PS 10: REST-APIs &amp; JSON-Pipelines</h1>
+          <p>Mastere Web-APIs mit <code>Invoke-RestMethod</code>, verhindere JSON-Datenverlust mit <code>-Depth</code> und verarbeite CSV &amp; XML wie ein DevOps-Profi.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. REST-APIs &amp; JSON-Pipelines</h2>
+          <p>
+            PowerShell ist von Haus aus objektorientiert. Bei Aufruf von <code>Invoke-RestMethod</code> wird die empfangene JSON-Nutzlast automatisch in navigierbare .NET-Objekte umgewandelt.
+          </p>
+
+          <pre><code># REST-API Abfrage mit Bearer-Token
+$headers = @{
+    Authorization = "Bearer $apiSecret"
+}
+$nodes = Invoke-RestMethod -Uri "https://api.cloud.corp/v1/nodes" -Headers $headers -Method GET
+
+# JSON Export ohne Datenverlust:
+$jsonConfig = $nodes | ConvertTo-Json -Depth 10</code></pre>
+
+          <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px; border-radius: var(--radius-sm); margin-top: 15px;">
+            <h4 style="color: #b45309; margin: 0 0 6px 0;">⚠️ Achtung: Der -Depth Parameter!</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+              Standardmäßig schneidet <code>ConvertTo-Json</code> Objekte ab der 2. Ebene ab. Gib bei verschachtelten Objekten immer explizit <code>-Depth 10</code> (oder höher) an!
+            </p>
+          </div>
+        </section>
+
+        <!-- 2. Datenformate im Vergleich -->
+        <section class="card">
+          <h2>🏛️ 2. Datenformate im DevOps-Alltag</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #0284c7; margin-bottom: 6px;">🌐 JSON</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>ConvertFrom-Json</code> / <code>ConvertTo-Json</code><br>
+                Ideal für Cloud-APIs, Microservices und moderne Webhooks.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #10b981; margin-bottom: 6px;">📊 CSV</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>Import-Csv</code> / <code>Export-Csv -NoTypeInformation</code><br>
+                Perfekt für Auditing-Tabellen, Excel-Reports und Massendaten.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #8b5cf6; margin-bottom: 6px;">📑 XML</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>[xml]$doc = Get-Content</code><br>
+                Für Legacy-Konfigurationen, Gruppenrichtlinien und SOAP-Dienste.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und löse die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>Get-RestApiData</code> &ndash; Dynamischer REST-Client mit Bearer-Token und <code>Invoke-RestMethod</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Convert-JsonToCsvReport</code> &ndash; Wandelt JSON in sauberes CSV ohne <code>#TYPE</code>-Kopfzeile um.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Format-DeepNestedConfig</code> &ndash; Verlustfreie JSON-Serialisierung mit <code>-Depth</code> und Validierung.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Parse-XmlServerManifest</code> &ndash; XML-Manifest parsen und in typisierte <code>PSCustomObjects</code> überführen.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_3_parallelisierung_und_rest&chapter=10_json_csv_xml_und_rest_apis" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../09_multithreading_mit_foreach_object_parallel/index.html" class="btn btn-secondary">&larr; Zurück zu PS 09</a>
+          <a href="../11_dateisystem_registry_und_psprovider/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu PS 11 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

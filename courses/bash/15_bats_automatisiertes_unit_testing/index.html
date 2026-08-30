@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 15: BATS Automatisiertes Unit-Testing</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Cloud DevOps, BATS &amp; Masterprojekt</div>
+          <h1>Bash 15: BATS Automatisiertes Unit-Testing</h1>
+          <p>Schreibe professionelle Shell-Unittests mit BATS (Bash Automated Testing System): Assertions, Mocks via PATH-Isolation und TAP-Parsing.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: BATS STRUKTUR -->
+        <section class="card">
+          <h2>🧪 1. Das BATS Framework (@test, run, assertions)</h2>
+          <p>BATS erlaubt sauberes Test-Driven Development (TDD) für Shell-Skripte mit automatischer Isolation von Testfällen:</p>
+
+          <pre><code>#!/usr/bin/env bats
+
+setup() {
+    export TEST_CONFIG="/tmp/app_test.conf"
+    echo "PORT=8080" &gt; "$TEST_CONFIG"
+}
+
+teardown() {
+    rm -f "$TEST_CONFIG"
+}
+
+@test "App startet mit gültiger Konfiguration" {
+    run ./app.sh --config "$TEST_CONFIG"
+    [ "$status" -eq 0 ]
+    [ "${lines[0]}" = "Server listening on 8080" ]
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: MOCKING -->
+        <section class="card">
+          <h2>🎭 2. Mocking &amp; Sandbox-Isolation über PATH</h2>
+          <p>Weil Unittests keine echten Server oder Cloud-APIs anrufen sollen, fangen wir Binaries wie <code>docker</code> oder <code>systemctl</code> per PATH-Priorisierung ab:</p>
+
+          <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            PATH = "/tmp/mock_bin : /usr/local/bin : /usr/bin : /bin"<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──&gt; [1. Treffer: /tmp/mock_bin/docker] ──▶ Sofortige Simulation (healthy / 0ms)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&gt; [2. Ignoriert: /usr/bin/docker]
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🎬 Didaktische Analogie: Das Film-Stunt-Double</div>
+            <p>Ein <strong>Mock</strong> ist wie ein Stunt-Double am Filmset: Statt den echten Hauptdarsteller (teure Cloud-API oder Produktions-Datenbank) in gefährliche Szenen zu schicken, springt ein kostengünstiger Dummy ein, der genau die erwartete Reaktion liefert.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: BATS Assertions &amp; Runner</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">BATS Konstrukt</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>@test "name" { ... }</code></td>
+                  <td style="padding: 10px;">Definiert einen isolierten Testfall</td>
+                  <td style="padding: 10px;"><code>@test "Exit code is 0" { ... }</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>run &lt;command&gt;</code></td>
+                  <td style="padding: 10px;">Führt Befehl aus &amp; erfasst Status/Output</td>
+                  <td style="padding: 10px;"><code>run ./script.sh</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$status</code></td>
+                  <td style="padding: 10px;">Exit-Code des letzten <code>run</code></td>
+                  <td style="padding: 10px;"><code>[ "$status" -eq 0 ]</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$output</code></td>
+                  <td style="padding: 10px;">Gesamte Textausgabe von stdout &amp; stderr</td>
+                  <td style="padding: 10px;"><code>[[ "$output" =~ "Success" ]]</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${lines[0]}</code></td>
+                  <td style="padding: 10px;">Erste Zeile des Ausgabestroms</td>
+                  <td style="padding: 10px;"><code>[ "${lines[0]}" = "OK" ]</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>generate_bats_test_file(test_name, target_cmd, expected_exit, expected_text)</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>create_executable_mock(mock_dir, cmd_name, exit_code, output_text)</code> mit Rechten (chmod +x) erzeugen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>parse_tap_test_summary(tap_stream)</code> für TAP-13 Protokolle parsen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>run_sandboxed_test_runner(test_cmd, mock_dir)</code> mit PATH-Isolation ausführen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_4_cloud_devops_und_master&chapter=15_bats_automatisiertes_unit_testing" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../14_ci_cd_und_github_actions_shell/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 14</a>
+            <a href="../16_master_abschlussprojekt_devops_suite/index.html" class="btn btn-secondary">Weiter zum Masterprojekt (Bash 16) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

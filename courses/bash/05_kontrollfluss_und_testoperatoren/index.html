@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 05: Kontrollfluss &amp; Test-Operatoren</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 2: Scripting &amp; Text-Mining</div>
+          <h1>Bash 05: Kontrollfluss, Test-Operatoren &amp; Regex-Matching</h1>
+          <p>Treffe präzise Entscheidungen mit doppelten Klammern <code>[[ ... ]]</code>, validiere IP-Adressen mit regulären Ausdrücken und steuere Abläufe mit <code>case</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: TEST-OPERATOREN -->
+        <section class="card">
+          <h2>🎯 1. Moderne Test-Konstrukte (<code>[[ ... ]]</code> vs. <code>(( ... ))</code>)</h2>
+          <p>Verwende für Strings und Dateiprüfungen stets <code>[[ ... ]]</code> und für reine Zahlenvergleiche die arithmetische Umgebung <code>(( ... ))</code>:</p>
+          
+          <pre><code># Dateiprüfungen:
+if [[ -f "/etc/nginx/nginx.conf" && -r "/etc/nginx/nginx.conf" ]]; then
+  echo "Konfiguration existiert und ist lesbar."
+fi
+
+# String-Prüfungen:
+if [[ -z "$API_KEY" ]]; then
+  echo "FEHLER: Kein API_KEY gesetzt!" >&2
+  exit 1
+fi
+
+# Arithmetische Zahlenvergleiche:
+if (( CPU_USAGE >= 90 || RAM_USAGE >= 90 )); then
+  echo "ALARM: Server-Ressourcen kritisch!"
+fi</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: REGEX & CASE -->
+        <section class="card">
+          <h2>🧩 2. Regex-Matching (<code>=~</code>) &amp; <code>case</code>-Verzweigung</h2>
+          <p>Mit dem Bash-Operator <code>=~</code> kannst du Strings direkt gegen reguläre Ausdrücke prüfen und Treffergruppen aus <code>BASH_REMATCH</code> extrahieren:</p>
+
+          <pre><code># 🎯 1. Regex-Matching & Subgruppen:
+IP="10.0.4.1"
+if [[ $IP =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+  echo "Erstes Oktett: ${BASH_REMATCH[1]}"
+fi
+
+# 🎯 2. Übersichtliche Befehls-Dispatcher mit case:
+case "$ACTION" in
+  start|boot)
+    systemctl start "$SERVICE" ;;
+  stop|down)
+    systemctl stop "$SERVICE" ;;
+  restart|reload)
+    systemctl restart "$SERVICE" ;;
+  *)
+    echo "Ungültige Option: $ACTION" >&2
+    exit 2 ;;
+esac</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Zollkontrolle am Server-Gateway</div>
+            <p><strong>Die Testoperatoren:</strong> <code>[[ -f ]]</code> und <code>[[ -x ]]</code> sind wie der Sicherheitsdienst am Flughafentor – sie prüfen Pass (Existenz) und Visum (Ausführungsrecht). <code>=~</code> ist der biometrische Scanner, der das genaue Muster der Ausweisnummer abgleicht!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Testoperatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-f / -d / -e</code></td>
+                  <td style="padding: 10px;"><code>[[ -f "$path" ]]</code></td>
+                  <td style="padding: 10px;">Reguläre Datei / Verzeichnis / Existiert</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-x / -r / -w</code></td>
+                  <td style="padding: 10px;"><code>[[ -x "$script" ]]</code></td>
+                  <td style="padding: 10px;">Ausführbar / Lesbar / Schreibbar</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-z / -n</code></td>
+                  <td style="padding: 10px;"><code>[[ -z "$str" ]]</code></td>
+                  <td style="padding: 10px;">String ist leer (Länge 0) / String nicht leer</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>=~</code></td>
+                  <td style="padding: 10px;"><code>[[ "$val" =~ ^[0-9]+$ ]]</code></td>
+                  <td style="padding: 10px;">Regulärer Ausdruck (Speichert Gruppen in <code>BASH_REMATCH</code>)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>(( a &gt;= b ))</code></td>
+                  <td style="padding: 10px;"><code>(( cpu &gt;= 90 ))</code></td>
+                  <td style="padding: 10px;">Schneller C-Style Zahlenvergleich</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>$?</code></td>
+                  <td style="padding: 10px;"><code>if [[ $? -eq 0 ]]; then</code></td>
+                  <td style="padding: 10px;">Exit-Code des unmittelbar zuvor ausgeführten Befehls</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>analysiere_pfad_status(pfad)</code> mit <code>[[ ... ]]</code> (-d, -f, -x) umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>validiere_ipv4_format(ip)</code> mit Regex <code>=~</code> und Oktettbereich 0-255 bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>bewerte_server_metrik(cpu, ram)</code> mit CRITICAL, WARNING und OK bewerten.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>service_dispatcher(aktion, service_name)</code> mit <code>case ... in</code> realisieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>fuehre_sicher_aus(befehl)</code> mit Exit-Code Abfrage (<code>$?</code>) implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Defensive Bash: Keine einfachen Klammern [ ... ]</div>
+            <p>Vermeide das alte POSIX <code>[ "$a" = "$b" ]</code>, da nicht gesetzte Variablen zu Syntax-Fehlern (<em>unary operator expected</em>) führen. In <code>[[ ... ]]</code> ist Bash robuster gegen leere Variablen.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_2_skripting_und_textmining&chapter=05_kontrollfluss_und_testoperatoren" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_dateirechte_prozesskontrolle_und_jobs/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 04</a>
+            <a href="../06_schleifen_arrays_und_assoziative_maps/index.html" class="btn btn-secondary">Weiter zu Bash 06 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

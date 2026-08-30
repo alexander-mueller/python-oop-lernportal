@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 09: Multithreading mit ForEach-Object -Parallel</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Parallelisierung &amp; REST-APIs</div>
+          <h1>PS 09: Multithreading mit ForEach-Object -Parallel</h1>
+          <p>Entfessle moderne PowerShell 7+ Concurrency mit <code>ForEach-Object -Parallel</code>, Thread-Scoping <code>$using:</code> und <code>Start-ThreadJob</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Moderne Parallelisierung in PowerShell 7+</h2>
+          <p>
+            Verabschiede dich von langsamen, ressourcenfressenden Prozessen! In PowerShell 7 werden parallele Pipelines direkt in extrem schnellen .NET-Runspaces (Threads) ausgeführt.
+          </p>
+
+          <pre><code># Parallele Ausführung über 8 Threads
+$servers = @("srv-app01", "srv-app02", "srv-db01", "srv-web01")
+$maxTimeout = 2000
+
+$results = $servers | ForEach-Object -Parallel {
+    # ⚠️ WICHTIG: Variablen aus dem Eltern-Scope müssen mit $using: angesprochen werden!
+    $timeout = $using:maxTimeout
+    $server  = $_
+
+    [PSCustomObject]@{
+        Host   = $server
+        Status = "Online"
+    }
+} -ThrottleLimit 8</code></pre>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 18px;">
+            <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #991b1b; margin: 0 0 6px 0;">🛑 Früher (Windows PS 5.1): Start-Job</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Erzeugte für jeden Task einen vollständigen <code>powershell.exe</code>-Prozess (~30-50 MB RAM je Job &amp; hohe Startup-Latenz).
+              </p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #166534; margin: 0 0 6px 0;">⚡ Heute (PS 7+): ForEach-Object -Parallel</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+                Führt Tasks in leichtgewichtigen Runspace-Threads innerhalb des Hauptprozesses aus. Bis zu <strong>100x schneller</strong> bei minimalem RAM-Bedarf.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Architektur & Visualisierung -->
+        <section class="card">
+          <h2>🏛️ 2. Architektur: Thread-Drosselung (-ThrottleLimit)</h2>
+          <p>
+            Ohne <code>-ThrottleLimit</code> würden bei 1.000 Servern 1.000 Threads auf einmal starten und das System überlasten. Mit <code>-ThrottleLimit 5</code> werden immer genau 5 Worker parallel bedient:
+          </p>
+
+          <div style="background: #0f172a; color: #f8fafc; padding: 20px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; line-height: 1.6;">
+            <div>[Pipeline Input Queue] ──▶ [ srv01, srv02, srv03, srv04, srv05, ... srv100 ]</div>
+            <div style="margin: 10px 0; color: #38bdf8;">           │  (ThrottleLimit = 4 Worker Threads)</div>
+            <div style="margin-left: 20px;">
+              ├── [Thread 1]: srv01 ──▶ [Process] ──▶ [Result 1]<br>
+              ├── [Thread 2]: srv02 ──▶ [Process] ──▶ [Result 2]<br>
+              ├── [Thread 3]: srv03 ──▶ [Process] ──▶ [Result 3]<br>
+              └── [Thread 4]: srv04 ──▶ [Process] ──▶ [Result 4]
+            </div>
+            <div style="margin-top: 10px; color: #4ade80;">[Aggregated Output Stream] ◀── Thread-Safe PSCustomObject Collection</div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und löse die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>Invoke-ParallelPing</code> &ndash; Multi-Host Ping mit <code>ForEach-Object -Parallel</code>, <code>-ThrottleLimit</code> und <code>$using:TimeoutMs</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Start-AsyncServerTask</code> &ndash; Starten eines asynchronen Thread-Jobs mit <code>Start-ThreadJob</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Wait-AndCollectThreadJobs</code> &ndash; Warten mit <code>Wait-Job -Timeout</code>, Abrufen mit <code>Receive-Job</code> und sauberes Aufräumen mit <code>Remove-Job -Force</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Invoke-ThrottledBatchProcessing</code> &ndash; Zeitmessung mit <code>Stopwatch</code>, Drosselung und Metriken-Aggregation.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_3_parallelisierung_und_rest&chapter=09_multithreading_mit_foreach_object_parallel" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../08_robustes_error_handling_und_try_catch/index.html" class="btn btn-secondary">&larr; Zurück zu PS 08</a>
+          <a href="../10_json_csv_xml_und_rest_apis/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu PS 10 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

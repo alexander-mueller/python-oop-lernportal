@@ -1,0 +1,58 @@
+{
+  "id": "powershell",
+  "title": "Modern PowerShell 7+ Core & Cloud Automation",
+  "language": "powershell",
+  "icon": "🔷",
+  "runner": "powershell",
+  "description": "Vom Cmdlet-Einsteiger über .NET-Objekt-Pipelines, Multithreading (ForEach-Object -Parallel), REST-APIs bis zu Pester v5 Unittests & Cloud Engineering.",
+  "tracks": [
+    {
+      "id": "track_1_ps7_essentials",
+      "title": "🌱 Lehrpfad 1: PowerShell 7+ Essentials & Objekt-Pipeline",
+      "description": "Verb-Noun Cmdlets, die .NET-Objekt-Pipeline, Where-Object Filterung, Select-Object Projektion und PSCustomObjects.",
+      "certificateKey": "ps_grundlagen",
+      "chapters": [
+        { "folder": "01_powershell_konsole_und_cmdlet_architektur", "title": "PS 01: Cmdlet-Architektur & Verb-Noun Syntax", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "02_die_objekt_pipeline_und_get_member", "title": "PS 02: Die Objekt-Pipeline & Get-Member", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "03_filterung_sortierung_und_projektion", "title": "PS 03: Where-Object, Select & Calculated Properties", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "04_variablen_datentypen_und_pscustomobject", "title": "PS 04: Typisierung, Hashtables & PSCustomObject", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" }
+      ]
+    },
+    {
+      "id": "track_2_skripting_und_errorhandling",
+      "title": "⚡ Lehrpfad 2: Skripting, Kontrollfluss & Error-Handling",
+      "description": "Moderne Operatoren (Ternary, Null-Coalescing), Schleifen, erweiterte Cmdlet-Funktionen mit [CmdletBinding()] und Try/Catch.",
+      "certificateKey": "ps_scripting",
+      "chapters": [
+        { "folder": "05_kontrollfluss_und_moderne_operatoren", "title": "PS 05: Kontrollfluss & Moderne PS7 Operatoren", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "06_schleifen_und_pipeline_durchlaeufe", "title": "PS 06: Schleifen (foreach, while & Pipeline)", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "07_erweiterte_funktionen_und_parameter", "title": "PS 07: Eigene Cmdlets [CmdletBinding()] & Validierung", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "08_robustes_error_handling_und_try_catch", "title": "PS 08: Robustes Error-Handling (Try/Catch/Finally)", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" }
+      ]
+    },
+    {
+      "id": "track_3_parallelisierung_und_rest",
+      "title": "🚀 Lehrpfad 3: Parallelisierung, REST-APIs & Datenformate",
+      "description": "Multithreading mit ForEach-Object -Parallel, Start-ThreadJob, REST-APIs mit Invoke-RestMethod, PSDrives und SecretManagement.",
+      "certificateKey": "ps_performance",
+      "chapters": [
+        { "folder": "09_multithreading_mit_foreach_object_parallel", "title": "PS 09: Multithreading mit ForEach-Object -Parallel", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "10_json_csv_xml_und_rest_apis", "title": "PS 10: REST-APIs & JSON-Pipelines (Invoke-RestMethod)", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "11_dateisystem_registry_und_psprovider", "title": "PS 11: Dateisystem, PSDrives (Env/Cert) & Hashes", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "12_sicherheit_und_credentials_management", "title": "PS 12: Sicherheit, Execution Policies & Secrets", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" }
+      ]
+    },
+    {
+      "id": "track_4_enterprise_und_cloud_master",
+      "title": "💎 Lehrpfad 4: Enterprise Modules, Pester Testing & Masterprojekt",
+      "description": "Modul-Entwicklung (.psm1/.psd1), Pester v5 Unittests, Cloud-Automatisierung und Cloud Ops Masterprojekt.",
+      "certificateKey": "ps_master",
+      "chapters": [
+        { "folder": "13_modul_entwicklung_und_manifeste", "title": "PS 13: Enterprise Module & Manifeste (.psd1)", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "14_pester_automatisierte_unit_tests", "title": "PS 14: Pester v5 Automatisiertes Testing & Mocking", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "15_cloud_und_cross_platform_automatisierung", "title": "PS 15: Cross-Platform Cloud Automation (Az & AWS)", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" },
+        { "folder": "16_master_abschlussprojekt_cloud_ops_engine", "title": "Master 16: Multi-Threaded Cloud & Server Ops Engine", "taskFile": "aufgabe.ps1", "testFile": "test_aufgabe.ps1" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 03: Filterung, Sortierung &amp; Projektion</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔷 PowerShell 7+ Essentials</div>
+          <h1>PS 03: Where-Object, Select &amp; Calculated Properties</h1>
+          <p>Meistere die zentralen Cmdlets zur Datenmanipulation: Filtern mit <code>Where-Object</code>, Projizieren mit <code>Select-Object</code>, Berechnete Eigenschaften und Sortierung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. WHERE-OBJECT -->
+        <section class="card">
+          <h2>🎯 1. Filtern mit <code>Where-Object</code> (Alias: <code>?</code>)</h2>
+          <p>Mit <code>Where-Object</code> filterst du Objekte im Datenstrom. In der Scriptblock-Syntax steht <code>$_</code> (oder <code>$PSItem</code>) für das aktuell durchfließende Objekt:</p>
+          
+          <pre><code># Scriptblock-Syntax (Standard &amp; flexibel):
+Get-Service | Where-Object { $_.Status -eq 'Running' -and $_.StartType -eq 'Automatic' }
+
+# Kurzform mit Alias '?':
+Get-Process | ? { $_.CPU -gt 50 }
+
+# Vereinfachte Syntax (seit PS 3.0):
+Get-Service | Where-Object Status -EQ 'Running'</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🔍 Didaktische Analogie: Das Zoll-Sieb in der Pipeline</div>
+            <p><code>Where-Object</code> ist der Zollbeamte an deiner Pipeline: Jedes Objekt, das den Testblock <code>{ ... }</code> durchläuft und <code>$true</code> ergibt, darf passieren. Alle anderen Objekte werden verworfen – die nachfolgenden Cmdlets sehen sie gar nicht mehr!</p>
+          </div>
+        </section>
+
+        <!-- 2. SELECT-OBJECT & CALCULATED PROPERTIES -->
+        <section class="card">
+          <h2>📐 2. Projektion &amp; Calculated Properties (Berechnete Eigenschaften)</h2>
+          <p>Mit <code>Select-Object</code> wählst du gezielt Eigenschaften aus, reduzierst Datenmengen und erstellst mit <strong>Calculated Properties</strong> dynamische, neu berechnete Felder:</p>
+
+          <pre><code># Eigenschaften auswählen und erste 5 nehmen:
+Get-Process | Select-Object -Property Name, Id -First 5
+
+# Calculated Property Syntax: @{ Name = 'Titel'; Expression = { $_.Rechnung } }
+Get-Process | Select-Object -Property Name, Id, @{
+    Name       = 'WorkingSetMB'
+    Expression = { [Math]::Round($_.WorkingSet64 / 1MB, 2) }
+}
+
+# Werte extrahieren (als reiner String / Array ohne Objekt-Hülle):
+Get-Service | Select-Object -ExpandProperty Name</code></pre>
+        </section>
+
+        <!-- 3. SORT & GROUP -->
+        <section class="card">
+          <h2>📊 3. <code>Sort-Object</code> &amp; <code>Group-Object</code></h2>
+          <p>Sortiere und aggregiere Datenmengen mit Leichtigkeit:</p>
+
+          <pre><code># Mehrstufige Sortierung (z.B. Gehalt absteigend, Name aufsteigend):
+$Mitarbeiter | Sort-Object -Property @{ Expression = "Gehalt"; Descending = $true }, "Nachname"
+
+# Gruppierung &amp; Zählung:
+Get-Service | Group-Object -Property Status | Select-Object Name, Count</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Pipeline-Verarbeitung</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Cmdlet</th>
+                  <th style="padding: 10px;">Alias</th>
+                  <th style="padding: 10px;">Wichtige Parameter</th>
+                  <th style="padding: 10px;">Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Where-Object</code></td>
+                  <td style="padding: 10px;"><code>?</code>, <code>where</code></td>
+                  <td style="padding: 10px;"><code>-FilterScript { ... }</code></td>
+                  <td style="padding: 10px;">Filtert Objekte nach Bedingungen.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Select-Object</code></td>
+                  <td style="padding: 10px;"><code>select</code></td>
+                  <td style="padding: 10px;"><code>-Property</code>, <code>-First</code>, <code>-Unique</code>, <code>-ExpandProperty</code></td>
+                  <td style="padding: 10px;">Projiziert Felder und erzeugt neue Objekte.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Sort-Object</code></td>
+                  <td style="padding: 10px;"><code>sort</code></td>
+                  <td style="padding: 10px;"><code>-Property</code>, <code>-Descending</code>, <code>-CaseSensitive</code></td>
+                  <td style="padding: 10px;">Sortiert Objekte nach einem oder mehreren Feldern.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Group-Object</code></td>
+                  <td style="padding: 10px;"><code>group</code></td>
+                  <td style="padding: 10px;"><code>-Property</code>, <code>-AsHashTable</code>, <code>-NoElement</code></td>
+                  <td style="padding: 10px;">Gruppiert Datenmengen und ermittelt Häufigkeiten.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Filter-ActiveServices</code>: Filtere Services nach <code>Status -eq 'Running'</code> mit <code>Where-Object</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Select-ProcessSummary</code>: Projiziere <code>Id</code>, <code>Name</code> und die Calculated Property <code>MemoryMB</code> mit <code>Select-Object</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Sort-EmployeeList</code>: Sortiere Mitarbeiter primär absteigend nach <code>Salary</code> und sekundär aufsteigend nach <code>LastName</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Group-LogEntriesBySeverity</code>: Gruppiere Log-Einträge nach <code>Severity</code> und gib ein Hashtable mit Zählerständen zurück.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_1_ps7_essentials&chapter=03_filterung_sortierung_und_projektion" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_die_objekt_pipeline_und_get_member/index.html" class="btn btn-secondary">&larr; Zurück zu PS 02</a>
+            <a href="../04_variablen_datentypen_und_pscustomobject/index.html" class="btn btn-secondary">Weiter zu PS 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

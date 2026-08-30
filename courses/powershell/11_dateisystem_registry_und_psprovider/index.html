@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 11: Dateisystem, PSDrives &amp; PSProvider</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: Parallelisierung &amp; REST-APIs</div>
+          <h1>PS 11: Dateisystem, PSDrives &amp; Hashes</h1>
+          <p>Nutze PSProvider als universelle Adapter für <code>Env:</code>, <code>Cert:</code> und Dateisysteme &ndash; inklusive kryptografischer SHA256-Integritätsprüfung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Das PSProvider-Architekturmodell</h2>
+          <p>
+            Anstatt für jede Datenquelle eigene Spezial-Tools zu schreiben, stellt PowerShell heterogene Speicherorte als einheitliche virtuell gemountete <strong>PSDrives</strong> bereit:
+          </p>
+
+          <pre><code># Virtuelle Laufwerke auflisten
+Get-PSDrive
+
+# Umgebungsvariablen wie Dateien durchsuchen:
+Get-ChildItem Env: | Where-Object Name -like "*PATH*"
+
+# Temporäres PSDrive mounten:
+New-PSDrive -Name "LogStore" -PSProvider FileSystem -Root "/var/log"</code></pre>
+        </section>
+
+        <!-- 2. Hash-Prüfung & Integrität -->
+        <section class="card">
+          <h2>🛡️ 2. Kryptografische Hash-Prüfung (Get-FileHash)</h2>
+          <p>
+            In sicheren Cloud-Umgebungen schützt <code>Get-FileHash</code> vor Supply-Chain-Angriffen und fehlerhaften Downloads:
+          </p>
+
+          <div style="background: #0f172a; color: #f8fafc; padding: 18px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; line-height: 1.5;">
+            <div>Original-Artefakt ──▶ [ SHA-256 Engine ] ──▶ E3B0C44298FC1C149AFBF4C8996FB92427AE41E4...</div>
+            <div style="color: #38bdf8; margin: 8px 0;">                          vs. (Bit-genauer Abgleich)</div>
+            <div>Download-Artefakt ──▶ [ SHA-256 Engine ] ──▶ E3B0C44298FC1C149AFBF4C8996FB92427AE41E4...</div>
+            <div style="color: #4ade80; margin-top: 8px;">✅ Status: MATCH &ndash; Datei ist 100% unverändert und integer!</div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und implementiere die 4 Funktionen:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>Get-EnvironmentReport</code> &ndash; Auslesen und Filtern von Umgebungsvariablen über <code>Env:</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Get-DirectoryFileInventory</code> &ndash; Rekursives Dateiinventar mit Größe (KB) und SHA256-Hash.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Test-FileIntegrity</code> &ndash; Vergleich berechneter vs. erwarteter Hashes zur Manipulationserkennung.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>New-TemporaryMountDrive</code> &ndash; Temporäres Mounten mit <code>New-PSDrive</code> und unfehlbarem Cleanup (Try/Finally).
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_3_parallelisierung_und_rest&chapter=11_dateisystem_registry_und_psprovider" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../10_json_csv_xml_und_rest_apis/index.html" class="btn btn-secondary">&larr; Zurück zu PS 10</a>
+          <a href="../12_sicherheit_und_credentials_management/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu PS 12 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

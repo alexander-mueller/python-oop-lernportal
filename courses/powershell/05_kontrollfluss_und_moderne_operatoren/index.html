@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 05: Kontrollfluss &amp; Moderne Operatoren</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Skripting &amp; Error-Handling</div>
+          <h1>PS 05: Kontrollfluss &amp; Moderne PS7 Operatoren</h1>
+          <p>Meistere klassische Verzweigungen, mächtige <code>switch -Regex</code> Matches und die modernen PowerShell 7+ Operatoren (Ternary <code>?:</code>, Null-Coalescing <code>??</code>, Pipeline-Chaining <code>&amp;&amp; / ||</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: IF / ELSE & VERGLEICHSOPERATOREN -->
+        <section class="card">
+          <h2>💡 1. Vergleichsoperatoren &amp; <code>if/else</code></h2>
+          <p>PowerShell verwendet keine Symbole wie <code>==</code> oder <code>!=</code>, sondern textuelle Vergleichsoperatoren:</p>
+          
+          <pre><code># Vergleichsoperatoren in PowerShell:
+# -eq (Gleich)       -ne (Ungleich)
+# -gt (Größer)       -lt (Kleiner)
+# -ge (Größer-Gleich) -le (Kleiner-Gleich)
+# -like (Wildcards *) -match (Reguläre Ausdrücke)
+# -in / -contains    -and / -or / -not
+
+$port = 8080
+if ($port -ge 1024 -and $port -le 49151) {
+    "Gültiger User-Port"
+} elseif ($port -lt 1024) {
+    "Privilegierter System-Port"
+} else {
+    "Dynamischer / Privater Port"
+}</code></pre>
+        </section>
+
+        <!-- 2. PS7 MODERNE OPERATOREN -->
+        <section class="card">
+          <h2>🚀 2. Exklusive PowerShell 7+ Operatoren</h2>
+          <p>PowerShell 7 führt elegante Sprach-Features ein, die Skripte drastisch verkürzen und lesbarer machen:</p>
+
+          <pre><code># 1. Ternärer Operator (Bedingung ? Wahr-Wert : Falsch-Wert):
+$statusText = $serviceIsRunning ? "ONLINE" : "OFFLINE"
+
+# 2. Null-Coalescing Operator (??):
+# Liefert den linken Wert, oder den rechten, falls links $null ist:
+$timeout = $customTimeout ?? 30
+
+# 3. Null-Conditional Assignment (??=):
+$configPath ??= "/etc/defaults.conf" # Weist nur zu, wenn $configPath $null ist
+
+# 4. Pipeline-Chaining (&& und ||):
+# && führt den nächsten Befehl nur bei Erfolg aus ($? -eq $true)
+# || führt den nächsten Befehl nur bei Misserfolg aus ($? -eq $false)
+Test-Connection "1.1.1.1" -Count 1 && Write-Host "Online" || Write-Host "Offline"</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">⚡ Didaktische Analogie: Der Null-Coalescing Sicherheitsgurt</div>
+            <p>Der <code>??</code> Operator ist wie ein Rettungsanker in einer Kaskade: Suchst du eine Konfiguration, prüfst du zuerst Benutzereinstellungen, dann Systemvariablen und greifst erst im Notfall auf den Standard-Fallback zu: <code>$user ?? $system ?? "Default"</code>. Sauber, kurz und null-safe!</p>
+          </div>
+        </section>
+
+        <!-- 3. SWITCH MIT REGEX -->
+        <section class="card">
+          <h2>🔀 3. Das Super-Werkzeug: <code>switch -Regex</code></h2>
+          <p>Die <code>switch</code>-Anweisung in PowerShell ist weitaus mächtiger als in anderen Sprachen. Mit dem Schalter <code>-Regex</code> kannst du komplexe Muster mit automatischer Match-Gruppe abgleichen:</p>
+
+          <pre><code>$logLine = "ERR-404: Not Found"
+
+switch -Regex ($logLine) {
+    "^ERR-(\d+)" {
+        $errorCode = $Matches[1]
+        "Fehlercode erkannt: $errorCode"
+        break
+    }
+    "^WARN" {
+        "Warnung erkannt"
+        break
+    }
+    default {
+        "Unbekanntes Protokoll-Format"
+    }
+}</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Moderne Operatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator / Feature</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Verhalten</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Ternary</code></td>
+                  <td style="padding: 10px;"><code>$a ? $b : $c</code></td>
+                  <td style="padding: 10px;">Kompaktes Inline-if-else.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Null-Coalescing</code></td>
+                  <td style="padding: 10px;"><code>$val ?? "Default"</code></td>
+                  <td style="padding: 10px;">Fallback bei <code>$null</code>.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Pipeline-AND</code></td>
+                  <td style="padding: 10px;"><code>Cmd1 &amp;&amp; Cmd2</code></td>
+                  <td style="padding: 10px;">Cmd2 wird nur bei Erfolg von Cmd1 ausgeführt.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Pipeline-OR</code></td>
+                  <td style="padding: 10px;"><code>Cmd1 || Cmd2</code></td>
+                  <td style="padding: 10px;">Cmd2 wird nur bei Fehler in Cmd1 ausgeführt.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>switch -Regex</code></td>
+                  <td style="padding: 10px;"><code>switch -Regex ($str) { ... }</code></td>
+                  <td style="padding: 10px;">Mustererkennung mit Regex &amp; automatischer <code>$Matches</code> Variable.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Get-AccessDecision</code>: Rolle &amp; Status bewerten mit PS7 Ternary Operator <code>?:</code> oder <code>switch</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Get-ConfigWithFallback</code>: 3-Stufen Konfigurations-Kaskade mit Null-Coalescing <code>??</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Classify-LogMessage</code>: Log-Nachrichten mit <code>switch -Regex</code> in Fehlerklassen einteilen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Test-NetworkPort</code>: Prüfung auf gültigen Registered/User Port (1024 - 49151) mit logischen Operatoren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_2_skripting_und_errorhandling&chapter=05_kontrollfluss_und_moderne_operatoren" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_variablen_datentypen_und_pscustomobject/index.html" class="btn btn-secondary">&larr; Zurück zu PS 04</a>
+            <a href="../06_schleifen_und_pipeline_durchlaeufe/index.html" class="btn btn-secondary">Weiter zu PS 06 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

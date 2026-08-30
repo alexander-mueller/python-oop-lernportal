@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 14: CI/CD Workflows &amp; GitHub Actions</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Cloud DevOps, BATS &amp; Masterprojekt</div>
+          <h1>Bash 14: CI/CD Workflows &amp; GitHub Actions</h1>
+          <p>Schreibe professionelle Shell-Skripte für CI/CD-Pipelines: Step-Outputs, Secret-Masking (Zero-Leakage), Step Summaries und Multi-OS Matrix-Support.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WORKFLOW COMMANDS -->
+        <section class="card">
+          <h2>🤖 1. GitHub Actions Workflow Commands &amp; Files</h2>
+          <p>CI/CD-Runner kommunizieren über spezielle Dateipfade und Logging-Präfixe:</p>
+
+          <pre><code># 🎯 Step-Outputs über $GITHUB_OUTPUT weitergeben:
+echo "commit_hash=$(git rev-parse --short HEAD)" &gt;&gt; "$GITHUB_OUTPUT"
+
+# 🔒 Secret Masking (Logs zensieren):
+echo "::add-mask::$SECRET_PASSWORD"
+
+# ⚠️ Warnungen und Fehler für das PR-Interface annotieren:
+echo "::warning file=app.sh,line=12::Deprecation notice"
+echo "::error file=config.json,line=5::Invalid JSON format"</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: MULTI-OS & MATRIX -->
+        <section class="card">
+          <h2>🌐 2. Multi-OS Matrix-Scripting</h2>
+          <p>Pipelines laufen auf Ubuntu, macOS oder Alpine Docker Containern. Robuste Skripte erkennen die Plattform dynamisch:</p>
+
+          <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            [Pipeline Runner: OS Check]<br>
+            &nbsp;&nbsp;├──&gt; Ubuntu / Debian &nbsp;──▶ apt-get install -y &lt;pkg&gt;<br>
+            &nbsp;&nbsp;├──&gt; Alpine Linux &nbsp;&nbsp;&nbsp;&nbsp;──▶ apk add --no-cache &lt;pkg&gt;<br>
+            &nbsp;&nbsp;├──&gt; RedHat / Fedora &nbsp;──▶ dnf install -y &lt;pkg&gt;<br>
+            &nbsp;&nbsp;└──&gt; macOS (Darwin) &nbsp;&nbsp;──▶ brew install &lt;pkg&gt;
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🎭 Didaktische Analogie: Der universelle Dolmetscher</div>
+            <p>In der Cloud weiß dein Skript nie genau, auf welcher virtuellen Maschine es landet. Ein gutes CI/CD-Skript ist wie ein <strong>Diplomat mit Weltgewandtheit</strong>: Es erkennt sofort den lokalen Dialekt (Paketmanager) und spricht die Sprache des jeweiligen Systems, ohne Fehlermeldungen zu werfen.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: CI/CD Shell-Kommandos</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Variable / Befehl</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$GITHUB_OUTPUT</code></td>
+                  <td style="padding: 10px;"><code>echo "key=val" &gt;&gt; "$GITHUB_OUTPUT"</code></td>
+                  <td style="padding: 10px;">Macht Variablen für Folge-Steps verfügbar</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>::add-mask::</code></td>
+                  <td style="padding: 10px;"><code>echo "::add-mask::$TOKEN"</code></td>
+                  <td style="padding: 10px;">Zensiert Token in den Pipeline-Logs (***)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$GITHUB_STEP_SUMMARY</code></td>
+                  <td style="padding: 10px;"><code>cat report.md &gt;&gt; "$GITHUB_STEP_SUMMARY"</code></td>
+                  <td style="padding: 10px;">Rendert Markdown auf der Workflow-Summary Seite</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$GITHUB_ENV</code></td>
+                  <td style="padding: 10px;"><code>echo "VAR=value" &gt;&gt; "$GITHUB_ENV"</code></td>
+                  <td style="padding: 10px;">Setzt persistente Environment-Variablen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>write_github_output(name, value, output_file)</code> mit Multiline-Support umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>mask_github_secret(secret)</code> für Log-Sicherheit implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>generate_step_summary_table(title, pairs_str, summary_file)</code> für Markdown-Tabellen erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>detect_os_and_package_install_cmd(pkg, os_type)</code> für Cross-Platform Support programmieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_4_cloud_devops_und_master&chapter=14_ci_cd_und_github_actions_shell" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_docker_und_container_scripting/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 13</a>
+            <a href="../15_bats_automatisiertes_unit_testing/index.html" class="btn btn-secondary">Weiter zu Bash 15 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

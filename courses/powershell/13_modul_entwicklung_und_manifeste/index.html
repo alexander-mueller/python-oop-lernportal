@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 13: Enterprise Module &amp; Manifeste (.psd1)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Enterprise Modules &amp; Cloud Master</div>
+          <h1>PS 13: Enterprise Module &amp; Manifeste (.psd1)</h1>
+          <p>Konstruiere professionelle, versionierte PowerShell-Module mit Public/Private-Architektur und dynamischen <code>.psm1</code>-Loadern.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Modul-Architektur in Großunternehmen</h2>
+          <p>
+            Ein sauberes Modul kapselt interne Komplexität und exportiert nur getestete, dokumentierte Cmdlets an den Endanwender:
+          </p>
+
+          <pre><code># Modul importieren und exportierte Befehle auflisten:
+Import-Module ./MyModule.psd1 -Force
+Get-Command -Module MyModule</code></pre>
+        </section>
+
+        <!-- 2. Architektur Diagramm -->
+        <section class="card">
+          <h2>🏛️ 2. Verzeichnislayout &amp; Datenfluss</h2>
+          <div style="background: #0f172a; color: #f8fafc; padding: 20px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.88rem; line-height: 1.6;">
+            <div style="color: #38bdf8;">MyEnterpriseModule/</div>
+            <div>├── 📁 <span style="color: #4ade80;">Public/</span>   ──▶ (Exportierte Cmdlets für User: z.B. Invoke-CloudAudit.ps1)</div>
+            <div>├── 📁 <span style="color: #f87171;">Private/</span>  ──▶ (Interne Hilfslogik: z.B. Format-Token.ps1)</div>
+            <div>├── 📁 <span>Tests/</span>    ──▶ (Pester v5 Unittests)</div>
+            <div>├── 📄 <span>MyEnterpriseModule.psm1</span> ──▶ (Dynamischer Loader mit Export-ModuleMember)</div>
+            <div>└── 📄 <span>MyEnterpriseModule.psd1</span> ──▶ (Manifest: GUID, Version 1.0.0, Metadaten)</div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und löse die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>New-ModuleStructure</code> &ndash; Erzeugen der Verzeichnisstruktur mit <code>Public/</code>, <code>Private/</code>, <code>Tests/</code> und Dateien.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Build-ModuleManifestContent</code> &ndash; Generieren eines validen <code>.psd1</code>-Manifests mit GUID und Versionsangabe.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Invoke-ModuleLoader</code> &ndash; Dynamisches Laden und gezieltes Exportieren von Public-Funktionen.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Test-ModuleCompliance</code> &ndash; Automatisierter Linter zur Einhaltung von Enterprise-Modul-Standards.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_4_enterprise_und_cloud_master&chapter=13_modul_entwicklung_und_manifeste" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../12_sicherheit_und_credentials_management/index.html" class="btn btn-secondary">&larr; Zurück zu PS 12</a>
+          <a href="../14_pester_automatisierte_unit_tests/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu PS 14 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

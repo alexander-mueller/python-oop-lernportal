@@ -53,13 +53,45 @@
       titel = "Master of Modern JavaScript & TypeScript Engineering";
       moduleDesc = "Vollständiger Abschluss des JS/TS Curriculums (16 Module, ES-Module, TypeScript Interfaces/Generics & MVC Task-App)";
       trackKey = "js_master";
+    } else if (lehrpfadNummer === "bash_grundlagen") {
+      titel = "Linux Terminal Mastery & Core Unix Tools";
+      moduleDesc = "4 Module: Navigation, Globbing, I/O Streams, Pipes & Redirection, Umgebungsvariablen, Dateirechte und Job Control";
+      trackKey = "bash_grundlagen";
+    } else if (lehrpfadNummer === "bash_scripting") {
+      titel = "Professionelles Bash-Scripting & Text-Mining";
+      moduleDesc = "4 Module: Kontrollfluss, Assoziative Arrays, grep, sed, awk, jq und Unofficial Strict Mode (set -euo pipefail)";
+      trackKey = "bash_scripting";
+    } else if (lehrpfadNummer === "bash_performance") {
+      titel = "High-Performance Bash, Parallelisierung & Netzwerke";
+      moduleDesc = "4 Module: Multithreading mit xargs -P & parallel, Prozess-Substitution, REST-Pipelines mit curl und Systemd Automation";
+      trackKey = "bash_performance";
+    } else if (lehrpfadNummer === "bash_master") {
+      titel = "Master of Linux Shell & Cloud DevOps Engineering";
+      moduleDesc = "Vollständiger Abschluss des Linux Bash Curriculums (16 Module, Docker Lifecycle, CI/CD Pipelines, BATS Testing & DevOps Suite)";
+      trackKey = "bash_master";
+    } else if (lehrpfadNummer === "ps_grundlagen") {
+      titel = "PowerShell 7+ Essentials & Objekt-Pipeline";
+      moduleDesc = "4 Module: Cmdlet-Architektur, .NET-Objekt-Pipeline, Where-Object Filterung, Select-Object Projektion und PSCustomObjects";
+      trackKey = "ps_grundlagen";
+    } else if (lehrpfadNummer === "ps_scripting") {
+      titel = "PowerShell Scripting, Kontrollfluss & Error-Handling";
+      moduleDesc = "4 Module: Moderne PS7 Operatoren (Ternary/Null-Coalescing), Schleifen, Cmdlets mit [CmdletBinding()] und Try/Catch";
+      trackKey = "ps_scripting";
+    } else if (lehrpfadNummer === "ps_performance") {
+      titel = "PowerShell Parallelisierung, REST-APIs & SecretManagement";
+      moduleDesc = "4 Module: ForEach-Object -Parallel, Start-ThreadJob, Invoke-RestMethod, JSON-Pipelines, PSDrives und SecretManagement";
+      trackKey = "ps_performance";
+    } else if (lehrpfadNummer === "ps_master") {
+      titel = "Master of Modern PowerShell & Cloud Automation";
+      moduleDesc = "Vollständiger Abschluss des PowerShell Curriculums (16 Module, Modul-Manifeste .psd1, Pester v5 Testing & Cloud Ops Engine)";
+      trackKey = "ps_master";
     } else if (lehrpfadNummer === "sql_grundlagen") {
       titel = "SQL & Relationale Datenbanken";
       moduleDesc = "CREATE TABLE, Primary Keys, INSERT, SELECT, Filter mit WHERE und SQLite WebAssembly Abfragen";
       trackKey = "sql_grundlagen";
     } else if (lehrpfadNummer === "master") {
-      titel = "Grandmaster of Software Engineering (Polyglot)";
-      moduleDesc = "Vollständiger Abschluss der plattformweiten Curricula (Python, JavaScript, TypeScript & SQL)";
+      titel = "Grandmaster of Software & Cloud Engineering (Polyglot)";
+      moduleDesc = "Vollständiger Abschluss aller plattformweiten Curricula (Python, JavaScript, TypeScript, Linux Bash, PowerShell & SQL)";
       trackKey = "master";
     }
 

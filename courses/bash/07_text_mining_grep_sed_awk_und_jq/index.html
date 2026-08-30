@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 07: Text-Mining mit grep, sed, awk &amp; jq</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 2: Scripting &amp; Text-Mining</div>
+          <h1>Bash 07: Text-Mining mit grep, sed, awk &amp; jq</h1>
+          <p>Durchleuchte Gigabytes an Logdaten mit <code>grep</code> &amp; <code>awk</code>, manipuliere Konfigurationen mit <code>sed</code> und parse REST-APIs mit <code>jq</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: GREP, SED, AWK -->
+        <section class="card">
+          <h2>🔍 1. Die klassischen Unix-Textwerkzeuge</h2>
+          <p>Große Logfiles und Systemberichte verarbeitest du direkt im Datenstrom ohne GUI:</p>
+          
+          <pre><code># 🎯 1. grep: Suchen mit Regex & Invertieren:
+grep -E -i "(error|fatal)" /var/log/syslog | grep -v "test"
+
+# 🎯 2. sed: Suchen & Ersetzen im Stream:
+sed -E 's/password="[^"]+"/password="***"/g' app.env
+
+# 🎯 3. awk: Spaltenbasierte Analyse & Berechnung:
+cat nginx.log | awk '{ sum += $NF; count++ } END { print "Avg Bytes:", sum/count }'</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: JQ FÜR JSON -->
+        <section class="card">
+          <h2>📦 2. JSON-Mining im Terminal mit <code>jq</code></h2>
+          <p>REST-APIs, Docker und Kubernetes kommunizieren über JSON. <code>jq</code> ist der Standard-Prozessor auf der Linux-Kommandozeile:</p>
+
+          <pre><code># 🎯 1. Array filtern mit select & Rohausgabe (-r):
+curl -s https://api.example.com/users | jq -r '.[] | select(.role == "admin") | .email'
+
+# 🎯 2. JSON in kommagetrennte Werte (CSV) umwandeln:
+cat pods.json | jq -r '.items[] | "\(.metadata.name),\(.status.phase)"'</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">⛏️ Didaktische Analogie: Das Bergwerk der Datenanalyse</div>
+            <p><strong><code>grep</code>:</strong> Dein Metalldetektor – er schlägt an, wenn eine Zeile das gesuchte Goldstück (Pattern) enthält.</p>
+            <p><strong><code>sed</code>:</strong> Dein Meißel – er schleift und poliert Zeichenketten in Form.</p>
+            <p><strong><code>awk</code>:</strong> Deine Buchhalter-Waage – wiegt Spalten ab und berechnet Summen und Schnitte.</p>
+            <p><strong><code>jq</code>:</strong> Der Röntgen-Präzisionslaser, der blitzschnell durch verschachtelte JSON-Kristallstrukturen schneidet!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Textwerkzeuge</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Tool</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Einsatzzweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>grep -E -i</code></td>
+                  <td style="padding: 10px;"><code>grep -E -i '(err|crit)' log</code></td>
+                  <td style="padding: 10px;">Case-insensitiver Extended-Regex-Filter</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>sed -E 's/a/b/g'</code></td>
+                  <td style="padding: 10px;"><code>sed -E 's/http:/https:/g'</code></td>
+                  <td style="padding: 10px;">Stream-Editor zum Ersetzen und Transformieren</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>awk '{ sum += $NF }'</code></td>
+                  <td style="padding: 10px;"><code>awk '{ print $1 }' file</code></td>
+                  <td style="padding: 10px;">Spaltenextraktion, Filter und Aggregation</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>jq -r '.[] | select(...)'</code></td>
+                  <td style="padding: 10px;"><code>jq -r '.[] | .hostname'</code></td>
+                  <td style="padding: 10px;">JSON-Parsing, Filterung &amp; CSV-Export</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>extrahiere_fehler_logs(log)</code> mit <code>grep -E -i</code> und <code>grep -v</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>maskiere_passwoerter_sed(cfg)</code> mit <code>sed -E</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>berechne_weblog_traffic_awk(logs)</code> mit <code>awk</code> aggregieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>filtere_aktive_benutzer_jq(json)</code> mit <code>jq -r</code> filtern.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>transformiere_server_json_zu_csv(json)</code> für CSV-Export implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 DevOps Pro-Tipp: jq Raw Output (-r)</div>
+            <p>Verwende beim Extrahieren von Strings für Umgebungsvariablen oder Shell-Skripte immer das Flag <code>-r</code> (raw output), damit <code>jq</code> keine störenden Anführungszeichen um den Text ausgibt!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_2_skripting_und_textmining&chapter=07_text_mining_grep_sed_awk_und_jq" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_schleifen_arrays_und_assoziative_maps/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 06</a>
+            <a href="../08_robuste_skripte_und_debugging/index.html" class="btn btn-secondary">Weiter zu Bash 08 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

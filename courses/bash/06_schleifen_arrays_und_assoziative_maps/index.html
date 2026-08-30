@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 06: Schleifen &amp; Assoziative Arrays</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 2: Scripting &amp; Text-Mining</div>
+          <h1>Bash 06: Schleifen, Arrays, Hashmaps &amp; getopts</h1>
+          <p>Verarbeite Datenmengen mit <code>while IFS= read -r</code>, nutze Assoziative Arrays (<code>declare -A</code>) als Key-Value-Speicher und baue CLI-Tools mit <code>getopts</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: SCHLEIFEN & ZEILENWEISES LESEN -->
+        <section class="card">
+          <h2>🔄 1. Schleifen &amp; Sicheres Stream-Reading</h2>
+          <p>Das korrekte Einlesen strukturierter Datenzeilen (z.B. CSV, Passwörter, Logfiles) ist eine fundamentale DevOps-Kompetenz:</p>
+          
+          <pre><code># 🎯 1. Sicheres zeilenweises Einlesen:
+while IFS= read -r line; do
+  echo "Verarbeite: $line"
+done < /etc/hosts
+
+# 🎯 2. CSV-Parsing direkt in der Shell:
+while IFS=',' read -r host ip status; do
+  echo "Server $host ($ip) ist $status"
+done < servers.csv</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: ARRAYS & ASSOZIATIVE MAPS -->
+        <section class="card">
+          <h2>🗂️ 2. Indizierte vs. Assoziative Arrays (<code>declare -A</code>)</h2>
+          <p>Seit Bash 4 kannst du echte Key-Value-Maps im Speicher halten:</p>
+
+          <pre><code># 🎯 1. Indiziertes Array:
+SERVICES=("nginx" "postgres" "redis")
+SERVICES+=("rabbitmq")
+echo "Erster Dienst: ${SERVICES[0]}"
+echo "Anzahl Dienste: ${#SERVICES[@]}"
+
+# 🎯 2. Assoziatives Array (Hashmap):
+declare -A PORT_MAP=(
+  ["http"]="80"
+  ["https"]="443"
+  ["ssh"]="22"
+)
+PORT_MAP["database"]="5432"
+
+echo "HTTPS-Port: ${PORT_MAP["https"]}"
+echo "Alle Keys:  ${!PORT_MAP[@]}"</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏷️ Didaktische Analogie: Schuhkartons vs. Adressbuch</div>
+            <p><strong>Indiziertes Array (<code>arr[0]</code>):</strong> Wie ein Stapel nummerierter Schuhkartons. Du findest Dinge nur über ihre Etagen-Nummer (0, 1, 2...).</p>
+            <p><strong>Assoziatives Array (<code>declare -A</code>):</strong> Dein Adressbuch. Du suchst nicht nach Seite 4, sondern schlägst direkt das Stichwort <code>"database"</code> auf und hast sofort die IP-Adresse zur Hand!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Arrays &amp; getopts</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konstrukt</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>declare -A map</code></td>
+                  <td style="padding: 10px;"><code>declare -A conf=([a]=1 [b]=2)</code></td>
+                  <td style="padding: 10px;">Deklariert assoziatives Array (Key-Value)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${!map[@]}</code></td>
+                  <td style="padding: 10px;"><code>for k in "${!map[@]}"; do</code></td>
+                  <td style="padding: 10px;">Iteriert über alle Keys der Map</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>${map[@]}</code></td>
+                  <td style="padding: 10px;"><code>echo "${map[@]}"</code></td>
+                  <td style="padding: 10px;">Liefert alle Werte (Values)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>while IFS= read -r</code></td>
+                  <td style="padding: 10px;"><code>while IFS= read -r l; do</code></td>
+                  <td style="padding: 10px;">Standard für zeilenweises Einlesen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>getopts "e:p:v" opt</code></td>
+                  <td style="padding: 10px;"><code>./script.sh -e prod -p 443 -v</code></td>
+                  <td style="padding: 10px;">POSIX-konformes Parsing von CLI-Optionen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>summiere_zahlen_array(zahlen...)</code> mit <code>for</code>-Schleife berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>lese_csv_zeilenweise(csv, spalte)</code> mit <code>while IFS=',' read</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>verwalte_server_hashmap(aktion, key, val)</code> mit <code>declare -A</code> bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>zaehle_element_haeufigkeit(items...)</code> als Counter-Map implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>parse_cli_flags("$@")</code> mit <code>getopts</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp: getopts &amp; OPTIND Reset</div>
+            <p>Wenn du <code>getopts</code> innerhalb von Funktionen aufrufst, setze zu Beginn immer <code>local OPTIND=1</code>, damit nachfolgende Funktionsaufrufe den Parsing-Index von vorne beginnen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_2_skripting_und_textmining&chapter=06_schleifen_arrays_und_assoziative_maps" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_kontrollfluss_und_testoperatoren/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 05</a>
+            <a href="../07_text_mining_grep_sed_awk_und_jq/index.html" class="btn btn-secondary">Weiter zu Bash 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

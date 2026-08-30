@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master 16: DevOps Multi-Server Automation Suite</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🏆 Master-Abschlussprojekt</div>
+          <h1>Master 16: DevOps Multi-Server Automation Suite</h1>
+          <p>Das große Finale: Baue eine produktionsreife Multi-Server Orchestrierungs- und Monitoring-Suite mit parallelem Health-Checking, Log-Mining und Webhook-Alarmierung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. ARCHITEKTUR -->
+        <section class="card">
+          <h2>🏗️ 1. Architektur der DevOps Suite</h2>
+          <p>Die Automation Suite bündelt alle Best Practices der modernen Linux-Administration in einer modularen und performanten Architektur:</p>
+
+          <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            [CLI: ./devops_suite.sh -c fleet.conf -p 8] <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌────────────────┴────────────────┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            [Parallel Health Check] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parallel Log-Mining]<br>
+            (Worker Pool &amp; wait) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(xargs -P &amp; grep)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└────────────────┬────────────────┘<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Webhook Alert &amp; HTML Dashboard]
+          </div>
+        </section>
+
+        <!-- 2. ANALOGIE -->
+        <section class="card">
+          <h2>🛰️ 2. Didaktische Analogie: Das Flight Control Center</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🚀 Die NASA der Server-Administration</div>
+            <p>Ein Einsteiger prüft Server einzeln von Hand (wie ein Fluglotse, der mit dem Fernglas nach Flugzeugen sucht). Deine <strong>Master DevOps Suite</strong> ist wie das automatisierte <strong>Mission Control Radar</strong>: Sie scannt hunderte Rechner in Sekundenbruchteilen, analysiert Gigabytes an Sensordaten parallel und feuert bei Anomalien vollautomatisch Alarme ab.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Feature-Matrix &amp; Bausteine</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Komponente</th>
+                  <th style="padding: 10px;">Technologie</th>
+                  <th style="padding: 10px;">Vorteil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">CLI Flag Parser</td>
+                  <td style="padding: 10px;"><code>while/case/shift</code></td>
+                  <td style="padding: 10px;">Robuste Parametrisierung &amp; Help-Flags</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Fleet Health Checks</td>
+                  <td style="padding: 10px;">Background Workers (<code>&amp;</code>, <code>wait</code>)</td>
+                  <td style="padding: 10px;">Drosselung &amp; 10x schnellere Ausführung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Log-Mining Engine</td>
+                  <td style="padding: 10px;"><code>xargs -P</code>, <code>grep -E</code>, <code>awk</code></td>
+                  <td style="padding: 10px;">Multi-Core Analyse ohne Memory-Bottlenecks</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Alerting</td>
+                  <td style="padding: 10px;"><code>curl -s -f -X POST</code> JSON Payloads</td>
+                  <td style="padding: 10px;">Echtzeit-Benachrichtigung in Slack/Discord</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>parse_devops_cli_args("$@")</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>parallel_server_health_check(servers_file, max_workers)</code> mit Throttling &amp; wait umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>analyze_server_logs_parallel(log_dir, pattern, max_threads)</code> mit xargs programmieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>build_webhook_payload(webhook_url, title, message, severity)</code> für POST Alerts erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>generate_devops_html_report(title, healthy, total, incidents, output_file)</code> erzeugen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_4_cloud_devops_und_master&chapter=16_master_abschlussprojekt_devops_suite" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../15_bats_automatisiertes_unit_testing/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 15</a>
+            <a href="../../../index.html" class="btn btn-secondary">🏠 Zurück zur Kursübersicht</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

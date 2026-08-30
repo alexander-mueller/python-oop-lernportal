@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 10: Prozess-Substitution &amp; Co-Prozesse</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: High-Performance &amp; Parallelisierung</div>
+          <h1>Bash 10: Prozess-Substitution &amp; Co-Prozesse</h1>
+          <p>Nutze Linux-IPC wie ein Meister: Prozess-Substitution &lt;(...), Stream-Fächerung &gt;(...), Named Pipes (mkfifo) und interaktive Co-Prozesse (coproc).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: PROZESS-SUBSTITUTION -->
+        <section class="card">
+          <h2>🔄 1. Virtuelle Streams mit &lt;(...) und &gt;(...)</h2>
+          <p>Prozess-Substitution verwandelt die Ausgabe eines Befehls in einen temporären Dateideskriptor (<code>/dev/fd/XX</code>). Dadurch können Befehle, die Dateien erwarten, direkt mit Streams arbeiten:</p>
+
+          <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            diff -u &nbsp;&lt;(cat remote_host_a.json) &nbsp;&lt;(cat remote_host_b.json)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/dev/fd/63] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/dev/fd/62]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─────────▶ [ diff ] ◀─────────┘
+          </div>
+
+          <pre><code># 🎯 Dateien ohne Zwischenspeichern vergleichen:
+diff -u &lt;(curl -s https://api.a.com/status) &lt;(curl -s https://api.b.com/status)
+
+# 🎯 Gleichzeitig in Datei und Filter-Pipe schreiben:
+echo "Incoming Request" | tee &gt;(logger -t "APP") &gt; access.log</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: COPROZESSE & PIPES -->
+        <section class="card">
+          <h2>🧵 2. Interaktive Co-Prozesse (coproc) &amp; Named Pipes (mkfifo)</h2>
+          <p>Wenn dein Skript mit einem Hintergrundprozess im Ping-Pong-Verfahren Daten austauschen muss, sind Co-Prozesse das mächtigste Werkzeug:</p>
+
+          <pre><code># 🤖 Co-Prozess im Hintergrund starten:
+coproc CALC {
+    while read -r expr; do
+        [ "$expr" = "QUIT" ] &amp;&amp; break
+        echo "$((expr))"
+    done
+}
+
+# 📤 Senden an coproc:
+echo "10 + 20" &gt;&amp;"${CALC[1]}"
+
+# 📥 Empfangen von coproc:
+read -r antwort &lt;&amp;"${CALC[0]}"
+echo "Ergebnis: $antwort" # 30</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">📻 Didaktische Analogie: Das Walkie-Talkie für Prozesse</div>
+            <p>Standard-Pipes (<code>|</code>) sind wie eine Einbahnstraße (Wasserrohr). Ein <strong>Co-Prozess</strong> ist wie ein <strong>Walkie-Talkie</strong> mit zwei Kanälen: Kanal 1 (<code>${NAME[1]}</code>) zum Sprechen/Senden und Kanal 0 (<code>${NAME[0]}</code>) zum Hören/Empfangen!</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: IPC &amp; Prozess-Substitution</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Typ</th>
+                  <th style="padding: 10px;">Einsatzzweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;(cmd)</code></td>
+                  <td style="padding: 10px;">Process Substitution (Read)</td>
+                  <td style="padding: 10px;">Befehlsausgabe als virtuelle Datei lesen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&gt;(cmd)</code></td>
+                  <td style="padding: 10px;">Process Substitution (Write)</td>
+                  <td style="padding: 10px;">Datenstrom an Befehlseingabe leiten</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>mkfifo /tmp/pipe</code></td>
+                  <td style="padding: 10px;">Named Pipe (FIFO)</td>
+                  <td style="padding: 10px;">Dateisystem-Puffer zwischen unabhängigen Skripten</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>coproc NAME { ... }</code></td>
+                  <td style="padding: 10px;">Co-Prozess</td>
+                  <td style="padding: 10px;">Bidirektionaler Hintergrund-Daemon in Bash</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&gt;&amp;"${NAME[1]}"</code></td>
+                  <td style="padding: 10px;">File Descriptor Write</td>
+                  <td style="padding: 10px;">In stdin des Co-Prozesses schreiben</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>compare_command_outputs(cmd1, cmd2)</code> mit <code>diff -u &lt;(...) &lt;(...)</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>stream_splitter_tee(input_text, raw_file, uppercase_file)</code> mit <code>tee &gt;(...)</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>named_pipe_transfer(fifo_path, message)</code> mit <code>mkfifo</code> &amp; synchronem Lesen implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>coproc_calculator_interactive(expr1, expr2)</code> für interaktiven Datenaustausch erstellen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_3_parallelisierung_und_netzwerk&chapter=10_prozess_substitution_und_coproc" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_parallelisierung_mit_xargs_und_parallel/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 09</a>
+            <a href="../11_netzwerk_ssh_und_curl_pipelines/index.html" class="btn btn-secondary">Weiter zu Bash 11 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

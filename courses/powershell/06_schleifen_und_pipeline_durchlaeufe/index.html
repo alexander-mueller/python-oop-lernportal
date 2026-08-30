@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 06: Schleifen &amp; Pipeline-Durchläufe</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Skripting &amp; Error-Handling</div>
+          <h1>PS 06: Schleifen (foreach, while &amp; Pipeline)</h1>
+          <p>Verstehe die Leistungsunterschiede zwischen Sprach-Schleifen (<code>foreach</code>) und Pipeline-Streaming (<code>ForEach-Object</code>) sowie <code>while</code>, <code>do..until</code> und Schleifensteuerung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. FOREACH STATEMENT VS FOREACH-OBJECT -->
+        <section class="card">
+          <h2>💡 1. <code>foreach</code> Statement vs. <code>ForEach-Object</code> Pipeline</h2>
+          <p>In PowerShell gibt es zwei Hauptarten, Sammlungen zu durchlaufen – jede mit klaren Stärken:</p>
+          
+          <div style="overflow-x: auto; margin: 15px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Merkmal</th>
+                  <th style="padding: 10px;"><code>foreach ($x in $liste)</code></th>
+                  <th style="padding: 10px;"><code>$liste | ForEach-Object { }</code></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Typ</strong></td>
+                  <td style="padding: 10px;">Sprach-Statement (Keyword)</td>
+                  <td style="padding: 10px;">Cmdlet (Pipeline-Streaming)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Speicherverbrauch</strong></td>
+                  <td style="padding: 10px;">Lädt gesamte Sammlung in den RAM</td>
+                  <td style="padding: 10px;">Niedrig: Streamt Objekt für Objekt (One-at-a-time)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Ausführungsgeschwindigkeit</strong></td>
+                  <td style="padding: 10px;">⚡ Extrem schnell für Daten im Speicher</td>
+                  <td style="padding: 10px;">Etwas langsamer durch Pipeline-Overhead</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Verwendung</strong></td>
+                  <td style="padding: 10px;">Lokale Arrays, komplexe Algorithmen</td>
+                  <td style="padding: 10px;">Große Datenströme (Dateien, APIs, Logs)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🔄 Didaktische Analogie: Badewanne vs. Wasserhahn</div>
+            <p><strong><code>foreach</code> (Sprach-Schleife):</strong> Füllt erst die gesamte Badewanne mit Daten, bevor du mit dem Baden beginnst. Braucht viel Platz, ist aber blitzschnell zugänglich.<br>
+            <strong><code>ForEach-Object</code> (Pipeline):</strong> Dreht den Wasserhahn auf und verarbeitet jeden einzelnen Tropfen, sobald er herausfließt. Perfekt für riesige Logdateien, die nicht in deinen RAM passen!</p>
+          </div>
+        </section>
+
+        <!-- 2. BEGIN, PROCESS, END -->
+        <section class="card">
+          <h2>⚙️ 2. Die drei Phasen von <code>ForEach-Object</code></h2>
+          <p>Das Cmdlet <code>ForEach-Object</code> unterstützt die drei klassischen PowerShell-Lifecycle-Blöcke:</p>
+
+          <pre><code>1..10 | ForEach-Object -Begin {
+    $sum = 0
+    Write-Host "Initialisierung..."
+} -Process {
+    $sum += $_
+} -End {
+    Write-Host "Gesamtsumme: $sum"
+}</code></pre>
+        </section>
+
+        <!-- 3. WHILE & DO-UNTIL -->
+        <section class="card">
+          <h2>🔁 3. Bedingte Schleifen: <code>while</code>, <code>do..while</code> &amp; <code>do..until</code></h2>
+          <p>Nutze <code>do..until</code> für Retry-Muster, die mindestens einmal ausgeführt werden und laufen, bis eine Bedingung <code>$true</code> wird:</p>
+
+          <pre><code># Retry-Schleife mit do..until:
+$versuche = 0
+$maxVersuche = 3
+$erfolgreich = $false
+
+do {
+    $versuche++
+    # Simuliere Aktion...
+} until ($erfolgreich -or $versuche -ge $maxVersuche)
+
+# Schleifensteuerung mit break und continue:
+foreach ($item in 1..10) {
+    if ($item % 2 -ne 0) { continue } # Überspringe Ungerade
+    if ($item -gt 6) { break }        # Beende bei > 6
+    Write-Host "Gerade Zahl: $item"
+}</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Schleifen-Konstrukte</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Schleife</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Besonderheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>foreach</code></td>
+                  <td style="padding: 10px;"><code>foreach ($x in $col) { }</code></td>
+                  <td style="padding: 10px;">Sehr schnell, speicherintensiv.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>ForEach-Object</code></td>
+                  <td style="padding: 10px;"><code>$col | ForEach-Object { }</code></td>
+                  <td style="padding: 10px;">Objekt-Streaming in der Pipeline.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>do..until</code></td>
+                  <td style="padding: 10px;"><code>do { } until ($cond)</code></td>
+                  <td style="padding: 10px;">Läuft bis Bedingung wahr wird (mind. 1 Durchlauf).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>while</code></td>
+                  <td style="padding: 10px;"><code>while ($cond) { }</code></td>
+                  <td style="padding: 10px;">Prüft Bedingung VOR dem ersten Durchlauf.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>break / continue</code></td>
+                  <td style="padding: 10px;"><code>break</code> / <code>continue</code></td>
+                  <td style="padding: 10px;">Sofortiger Abbruch bzw. Sprung zur nächsten Iteration.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Get-FilteredEvenSquares</code>: Quadrate aller geraden Zahlen mit <code>foreach</code> und <code>continue</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Invoke-StreamingPipelineMetrics</code>: Aggregation (Count, Summe, Schnitt) mit <code>ForEach-Object -Begin/-Process/-End</code>.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Invoke-RetryOperation</code>: Wiederholungslogik mit <code>do..until</code>-Schleife implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Find-FirstMatchingServer</code>: Ersten passenden Server mit <code>break</code> finden und zurückgeben.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_2_skripting_und_errorhandling&chapter=06_schleifen_und_pipeline_durchlaeufe" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_kontrollfluss_und_moderne_operatoren/index.html" class="btn btn-secondary">&larr; Zurück zu PS 05</a>
+            <a href="../07_erweiterte_funktionen_und_parameter/index.html" class="btn btn-secondary">Weiter zu PS 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

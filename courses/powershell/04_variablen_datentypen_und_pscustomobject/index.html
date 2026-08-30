@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 04: Variablen, Datentypen &amp; PSCustomObject</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔷 PowerShell 7+ Essentials</div>
+          <h1>PS 04: Typisierung, Hashtables &amp; PSCustomObject</h1>
+          <p>Erstelle eigene strukturierte Datenobjekte, meistere .NET-Datentypen, Arrays, Hashtables und das mächtige <code>[PSCustomObject]</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. DATENTYPEN & TYPISIERUNG -->
+        <section class="card">
+          <h2>💡 1. Strikte Typisierung &amp; Variablen in PowerShell</h2>
+          <p>PowerShell ist dynamisch typisiert, erlaubt aber jederzeit <strong>strikte Typ-Deklarationen</strong> zur Fehlervermeidung und Validierung:</p>
+          
+          <pre><code># Dynamische Variable:
+$name = "Server01"
+
+# Strikt typisierte Variablen:
+[int]$port = 8080
+[bool]$isProduction = $true
+[datetime]$erstelltAm = [DateTime]::UtcNow
+[double]$auslastung = 84.75
+[version]$toolVersion = "7.4.1"
+
+# Typ-Konvertierung (Casting):
+[int]"42"       # 42 (Integer)
+[bool]1         # True
+[bool]0         # False</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">📦 Didaktische Analogie: Typisierte Container</div>
+            <p>Eine typisierte Variable wie <code>[int]$zahl</code> ist wie eine präzise geformte Schablone. Versucht jemand, Text wie <code>"abc"</code> hineinzustecken, verweigert PowerShell sofort mit einer klaren Fehlermeldung den Dienst – noch bevor dein Skript im laufenden Betrieb Schaden anrichten kann!</p>
+          </div>
+        </section>
+
+        <!-- 2. ARRAYS & HASHTABLES -->
+        <section class="card">
+          <h2>📚 2. Arrays <code>@()</code> &amp; Hashtables <code>@{}</code></h2>
+          <p>Arrays speichern geordnete Listen, Hashtables speichern Schlüssel-Wert-Paare (Key-Value):</p>
+
+          <pre><code># 1. Array definieren &amp; erweitern:
+$serverListe = @("srv-app01", "srv-db01", "srv-web01")
+$serverListe += "srv-backup"  # Element anhängen
+
+# 2. Hashtable (Wörterbuch / Key-Value):
+$config = @{
+    Environment = "Production"
+    Port        = 443
+    SSL         = $true
+}
+
+# Zugriff auf Hashtable:
+$config["Port"]      # Indexer-Syntax -> 443
+$config.Environment  # Dot-Property-Syntax -> "Production"
+$config.Timeout = 30 # Neuen Schlüssel hinzufügen</code></pre>
+        </section>
+
+        <!-- 3. PSCUSTOMOBJECT -->
+        <section class="card">
+          <h2>🌟 3. Eigene strukturierte Objekte mit <code>[PSCustomObject]</code></h2>
+          <p>Das <code>[PSCustomObject]</code> ist das Herzstück für strukturierte Datenausgabe in PowerShell. Es garantiert Spalten-Reihenfolge und perfekte Pipeline-Kompatibilität:</p>
+
+          <pre><code># Modernes PSCustomObject (seit PS 3.0 Standard):
+$serverInfo = [PSCustomObject]@{
+    Hostname   = "srv-app01"
+    IPAddress  = "192.168.1.10"
+    CPUCount   = 8
+    IsActive   = $true
+    CreatedAt  = (Get-Date)
+}
+
+# Ausgabe formatiert tabellarisch oder als JSON:
+$serverInfo | Format-Table
+$serverInfo | ConvertTo-Json</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Datenstrukturen</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konstrukt</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Typischer Anwendungsfall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Array</code></td>
+                  <td style="padding: 10px;"><code>@("a", "b", "c")</code></td>
+                  <td style="padding: 10px;">Geordnete Auflistungen von Elementen.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Hashtable</code></td>
+                  <td style="padding: 10px;"><code>@{ Key = "Value" }</code></td>
+                  <td style="padding: 10px;">Konfigurationen, Lookup-Tabellen, Splatting.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>PSCustomObject</code></td>
+                  <td style="padding: 10px;"><code>[PSCustomObject]@{ ... }</code></td>
+                  <td style="padding: 10px;">Strukturierte Objekte zur Weitergabe in der Pipeline.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Typ-Annotation</code></td>
+                  <td style="padding: 10px;"><code>[int]$x = 10</code></td>
+                  <td style="padding: 10px;">Variablen-Typisierung &amp; Validierung.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.ps1</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>New-ServerInventoryObject</code>: Erstelle ein <code>[PSCustomObject]</code> mit typisierten Feldern (Hostname, IPAddress, CPUCount, IsActive, CreatedAt).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Convert-HashtableToCustomObject</code>: Wandle eine beliebige Hashtable in ein <code>[PSCustomObject]</code> um.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>Get-ArrayStatistics</code>: Berechne Summe, Durchschnitt (gerundet auf 2 Dezimalstellen), Minimum und Maximum für ein Zahlen-Array.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Merge-Hashtables</code>: Verschmilz zwei Hashtables mit Vorrang für die sekundäre Tabelle.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=powershell&track=track_1_ps7_essentials&chapter=04_variablen_datentypen_und_pscustomobject" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_filterung_sortierung_und_projektion/index.html" class="btn btn-secondary">&larr; Zurück zu PS 03</a>
+            <a href="../05_kontrollfluss_und_moderne_operatoren/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 2: PS 05 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

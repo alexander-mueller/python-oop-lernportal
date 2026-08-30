@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 09: Parallelisierung mit xargs &amp; parallel</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: High-Performance &amp; Parallelisierung</div>
+          <h1>Bash 09: Parallelisierung mit xargs &amp; parallel</h1>
+          <p>Lerne Multiprocessing im Terminal: Beschleunige I/O- und Rechenoperationen mit xargs -P, GNU parallel und nativem Background Worker Management.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: PARALLELE VERARBEITUNG -->
+        <section class="card">
+          <h2>⚡ 1. Multithreading &amp; Concurrency im Terminal</h2>
+          <p>Standard-Shell-Skripte laufen sequentiell in einem einzigen Prozess ab. Auf Multi-Core-CPUs (8, 16 oder 64 Kerne) verschenkt das enorme Rechenkapazität. Durch Parallelisierung teilen wir Arbeitslasten auf:</p>
+
+          <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            [Sequentiell] &nbsp;Task 1 ──&gt; Task 2 ──&gt; Task 3 ──&gt; Task 4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Gesamtzeit: 4x)<br>
+            [Parallel -P 4] ├──&gt; Worker 1: Task 1 ──┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──&gt; Worker 2: Task 2 ──┼──&gt; [wait] ──&gt; Fertig (Gesamtzeit: ~1x)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──&gt; Worker 3: Task 3 ──┤<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&gt; Worker 4: Task 4 ──┘
+          </div>
+
+          <pre><code># 🎯 1. xargs mit Parallelitäts-Flag -P (z.B. 4 parallele Prozesse):
+cat domains.txt | xargs -P 4 -I {} curl -s -I "https://{}"
+
+# 🎯 2. Native Bash Worker mit &amp; und wait:
+for file in *.log; do
+    analyze_log "$file" &amp;
+done
+wait  # Blockiert, bis ALLE Subshells im Hintergrund fertig sind</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DIDAKTISCHE ANALOGIE -->
+        <section class="card">
+          <h2>🏭 2. Didaktische Analogie: Die Supermarkt-Kassen</h2>
+          <div class="box box-analogie">
+            <div class="box-title">🛒 Der Supermarkt-Vergleich</div>
+            <p><strong>Sequentiell (Single-Threaded):</strong> 100 Kunden stehen an einer einzigen Kasse an. Kunde 1 zahlt, dann Kunde 2, usw. Die Schlange dauert 100 Minuten.</p>
+            <p><strong>Parallel (xargs -P 4 / Worker Pool):</strong> Der Filialleiter öffnet 4 Kassen gleichzeitig. 4 Kunden werden parallel bedient. Die Gesamtdauer sinkt auf 25 Minuten!</p>
+            <p><strong>Throttling:</strong> Wenn nicht unendlich Kassenpersonal da ist, begrenzt ein Pool (<code>MAX_WORKERS</code>) die Anzahl geöffneter Schalter, damit der Laden nicht im Chaos versinkt.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Parallelisierungs-Werkzeuge</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Syntax</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>xargs -P &lt;N&gt; -I {}</code></td>
+                  <td style="padding: 10px;">Führt Befehl für jedes Item mit max. N Threads aus</td>
+                  <td style="padding: 10px;"><code>cat urls.txt | xargs -P 8 -I {} curl -O {}</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>command &amp;</code></td>
+                  <td style="padding: 10px;">Startet Befehl/Subshell asynchron im Hintergrund</td>
+                  <td style="padding: 10px;"><code>backup_db &amp;</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>$!</code></td>
+                  <td style="padding: 10px;">PID des zuletzt im Hintergrund gestarteten Prozesses</td>
+                  <td style="padding: 10px;"><code>pids+=($!)</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>wait "${pids[@]}"</code></td>
+                  <td style="padding: 10px;">Wartet auf Beendigung aller gelisteten Prozess-IDs</td>
+                  <td style="padding: 10px;"><code>wait "${pids[@]}"</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>jobs -rp</code></td>
+                  <td style="padding: 10px;">Listet PIDs aller aktuell laufenden Hintergrundjobs</td>
+                  <td style="padding: 10px;"><code>[ $(jobs -rp | wc -l) -ge 4 ]</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>parallel_xargs_process(input_file, max_procs)</code> mit <code>xargs -P</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>background_workers_wait(task1, task2, ...)</code> mit Background-Jobs (<code>&amp;</code>), PID-Array und <code>wait</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>parallel_batch_calculator(numbers_file, max_procs)</code> für parallele Quadratberechnung und sortierte Ausgabe erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>throttle_concurrent_jobs(total_jobs, max_concurrent)</code> mit Job-Throttling Pool realisieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 DevOps Pro-Tipp: CPU-Kerne dynamisch ermitteln</div>
+            <p>Verwende <code>nproc</code> oder <code>$(grep -c ^processor /proc/cpuinfo)</code>, um die Thread-Anzahl automatisch an die Hardware des Servers anzupassen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_3_parallelisierung_und_netzwerk&chapter=09_parallelisierung_mit_xargs_und_parallel" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../08_robuste_skripte_und_debugging/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 08</a>
+            <a href="../10_prozess_substitution_und_coproc/index.html" class="btn btn-secondary">Weiter zu Bash 10 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

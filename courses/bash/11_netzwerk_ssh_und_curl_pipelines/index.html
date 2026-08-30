@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash 11: Remote SSH &amp; REST-Pipelines (curl)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Lehrpfad 3: High-Performance &amp; Parallelisierung</div>
+          <h1>Bash 11: Remote SSH &amp; REST-Pipelines (curl)</h1>
+          <p>Orchestriere Netzwerke: REST-API Automation mit curl, headless Batch-SSH-Pipelines und hocheffiziente Datensynchronisation mit rsync.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: REST-APIs MIT CURL -->
+        <section class="card">
+          <h2>🌐 1. Headless REST-APIs mit curl steuern</h2>
+          <p>Moderne DevOps-Workflows triggern Webhooks und steuern Cloud-APIs direkt aus Shell-Skripten:</p>
+
+          <pre><code># 🎯 Statuscode prüfen (Health Checks):
+http_status=$(curl -s -o /dev/null -w "%{http_code}" https://status.cloud.corp)
+echo "HTTP Status: $http_status"
+
+# 🎯 JSON POST Request mit Authentifizierung:
+curl -s -f -X POST "https://api.cloud.corp/v1/deploy" \
+  -H "Authorization: Bearer sec_token_123" \
+  -H "Content-Type: application/json" \
+  -d '{"service": "auth-api", "version": "v2.1"}'</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SSH & RSYNC -->
+        <section class="card">
+          <h2>🔐 2. SSH Batch Mode &amp; rsync Synchronisation</h2>
+          <p>Für unbeaufsichtigte CI/CD-Pipelines muss SSH so konfiguriert sein, dass es niemals bei unbekannten Keys oder Passwörtern hängen bleibt:</p>
+
+          <pre><code># 🚀 Remote-Skriptausführung ohne interaktive Prompts:
+ssh -p 22 -o BatchMode=yes -o StrictHostKeyChecking=no deploy@10.0.0.5 "bash -s" &lt; update.sh
+
+# 📦 Inkrementelle Synchronisation mit rsync:
+rsync -avz --delete --exclude="*.log" /var/app/ deploy@backup-server:/var/app/</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🛰️ Didaktische Analogie: Der intergalaktische Fernsteuerungs-Link</div>
+            <p><strong>curl:</strong> Die Sonde, die mit planetaren Relaisstationen (REST-APIs) spricht und Datenpakete austauscht.<br>
+            <strong>SSH "bash -s":</strong> Der Teleporter-Strahl, der deinen lokalen Code direkt im Gehirn des Ziel-Rechners ausführt, ohne dass dort vorher Dateien kopiert werden müssen!<br>
+            <strong>rsync:</strong> Die hocheffiziente Frachtkapsel, die nur die Bauteile überträgt, die sich seit dem letzten Flug verändert haben.</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Netzwerk &amp; Remote-Befehle</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Flag</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>curl -s -f</code></td>
+                  <td style="padding: 10px;">Silent &amp; Fail fast</td>
+                  <td style="padding: 10px;">Keine Progress-Bar, wirft Fehler bei HTTP 4xx/5xx</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-w "%{http_code}"</code></td>
+                  <td style="padding: 10px;">Write Out HTTP Code</td>
+                  <td style="padding: 10px;">Gibt ausschließlich den numerischen Statuscode aus</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-o BatchMode=yes</code></td>
+                  <td style="padding: 10px;">SSH Option</td>
+                  <td style="padding: 10px;">Verhindert Passwort-Eingabeaufforderungen im Terminal</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>rsync -avz</code></td>
+                  <td style="padding: 10px;">Archive, Verbose, Compress</td>
+                  <td style="padding: 10px;">Erhält Dateirechte, komprimiert während Transfer</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>rsync --delete</code></td>
+                  <td style="padding: 10px;">Mirror Deletion</td>
+                  <td style="padding: 10px;">Löscht gelöschte Quelldateien auch im Ziel</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>build_curl_post_command(endpoint, token, payload)</code> mit Auth-Header &amp; JSON-Body formatieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>get_http_status_code(url)</code> via <code>-s -o /dev/null -w "%{http_code}"</code> extrahieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>build_ssh_batch_command(user, host, script_file, port)</code> mit BatchMode erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>build_rsync_command(src, dest, exclude_pattern, delete_flag)</code> mit Optionen zusammenstellen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=bash&track=track_3_parallelisierung_und_netzwerk&chapter=11_netzwerk_ssh_und_curl_pipelines" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_prozess_substitution_und_coproc/index.html" class="btn btn-secondary">&larr; Zurück zu Bash 10</a>
+            <a href="../12_cron_systemd_und_service_automation/index.html" class="btn btn-secondary">Weiter zu Bash 12 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

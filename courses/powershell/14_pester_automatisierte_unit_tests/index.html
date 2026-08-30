@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS 14: Pester v5 Automatisiertes Testing &amp; Mocking</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Enterprise Modules &amp; Cloud Master</div>
+          <h1>PS 14: Pester v5 Automatisiertes Testing &amp; Mocking</h1>
+          <p>Schreibe professionelle BDD-Unittests mit dem modernen Pester v5 Framework, fluent Assertions und Cmdlet-Mocking.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.ps1" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.ps1 (Startercode)</a>
+            <a href="test_aufgabe.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.ps1 (Pester Tests)</a>
+            <a href="musterloesung.ps1" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.ps1 (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. Theorie & Praxis -->
+        <section class="card">
+          <h2>💡 1. Pester v5 Testing Framework</h2>
+          <p>
+            Pester v5 trennt Discovery- und Run-Phase strikt und ermöglicht testgetriebene Entwicklung (TDD) für Enterprise PowerShell Skripte:
+          </p>
+
+          <pre><code>Describe 'Get-ServerHealthStatus' {
+    It 'Sollte Operational melden, wenn Dienst läuft' {
+        Mock Get-Service { [PSCustomObject]@{ Status = 'Running' } }
+        Mock Test-Connection { $true }
+
+        $res = Get-ServerHealthStatus -ServerName 'srv-web01'
+        $res.IsHealthy | Should -BeTrue
+    }
+}</code></pre>
+        </section>
+
+        <!-- 2. Die 3 Säulen von Pester -->
+        <section class="card">
+          <h2>🏛️ 2. Die Kernkonzepte von Pester v5</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #0284c7; margin-bottom: 6px;">1. BDD Struktur</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>Describe</code>, <code>Context</code> und <code>It</code> für sprechende, lesbare Testfälle im Team.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #10b981; margin-bottom: 6px;">2. Fluent Should</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>Should -Be</code>, <code>Should -Throw</code>, <code>Should -HaveCount</code> für eindeutige Zusicherungen.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="color: #8b5cf6; margin-bottom: 6px;">3. Cmdlet Mocking</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                <code>Mock</code> &amp; <code>Should -Invoke</code> zum Testen gefährlicher Aktionen ohne Seiteneffekte auf Realsysteme.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Aufgaben & Checkliste -->
+        <section class="card">
+          <h2>🎯 3. Aufgaben &amp; Checkliste</h2>
+          <p>Öffne die Datei <code><a href="aufgabe.ps1" style="color: inherit; text-decoration: underline;">aufgabe.ps1</a></code> und implementiere die 4 Aufgaben:</p>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>Get-ServerHealthStatus</code> &ndash; Zustandsprüfung basierend auf Mocks für <code>Get-Service</code> und <code>Test-Connection</code>.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>Restart-FailedService</code> &ndash; Neustart-Logik mit Retries und Exception-Handling bei anhaltendem Ausfall.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>Test-PesterResultAnalyzer</code> &ndash; Auswerten von Pester-Testresultaten und Berechnen von CI/CD-Metriken.
+            </label>
+          </div>
+
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>Invoke-MockableApiAudit</code> &ndash; REST-API-Audit mit Statuscode und Payload-Validierung.
+            </label>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="../../../workspace.html?course=powershell&track=track_4_enterprise_und_cloud_master&chapter=14_pester_automatisierte_unit_tests" class="btn" style="background: #0284c7; color: #fff; font-weight: 700; padding: 10px 20px;">💻 In Web-IDE öffnen &amp; Pester Tests starten &rarr;</a>
+          </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav" style="display: flex; justify-content: space-between; margin-top: 30px;">
+          <a href="../13_modul_entwicklung_und_manifeste/index.html" class="btn btn-secondary">&larr; Zurück zu PS 13</a>
+          <a href="../15_cloud_und_cross_platform_automatisierung/index.html" class="btn" style="background: var(--primary); color: white;">Weiter zu PS 15 &rarr;</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
