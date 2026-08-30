@@ -38,16 +38,20 @@
       moduleDesc = "6 Master-Module: Reguläre Ausdrücke (re), Functional Programming (lambda, zip, map), Generatoren & itertools, Dataclasses & Type Hints, Relationale DBs mit SQLite, REST-APIs & JSON-Feeds";
       trackKey = "lehrpfad_4";
     } else if (lehrpfadNummer === "js_grundlagen") {
-      titel = "JavaScript ES6+ Grundlagen & DOM-Manipulation";
-      moduleDesc = "4 Module: Variablen (let/const), Arrow Functions, Arrays (map/filter/reduce), Objekte, Destructuring und DOM-Event-Driven Architecture";
+      titel = "JavaScript Grundlagen, Kontrollfluss & ES6";
+      moduleDesc = "5 Module: Variablen (let/const), Verzweigungen & Schleifen, Funktionen & Closures, Arrays/Sets/Maps und Objekte & Destructuring";
       trackKey = "js_grundlagen";
+    } else if (lehrpfadNummer === "js_oop") {
+      titel = "Moderne ES6+ Datenmodelle, OOP & Robustes Debugging";
+      moduleDesc = "3 Module: ES6-Klassen & Vererbung, Reguläre Ausdrücke (RegExp) & strukturierte Fehlerbehandlung mit Error-Klassen";
+      trackKey = "js_oop";
     } else if (lehrpfadNummer === "js_async") {
-      titel = "Asynchrones JavaScript & REST-APIs";
-      moduleDesc = "2 Module: Callbacks, Event Loop, Promises, Chaining, Promise.all, Async/Await und REST-APIs mit Fetch & JSON";
+      titel = "Web-APIs, DOM-Manipulation & Asynchrones JavaScript";
+      moduleDesc = "4 Module: DOM Event-Delegation, Web Storage API (LocalStorage), Promises/Chaining und Async/Await mit Fetch";
       trackKey = "js_async";
     } else if (lehrpfadNummer === "js_master") {
-      titel = "Master of Modern JavaScript & TypeScript Development";
-      moduleDesc = "Vollständiger Abschluss des JS/TS Curriculums (8 Module, TypeScript Type Safety, Interfaces, Generics & Task-App Masterprojekt)";
+      titel = "Master of Modern JavaScript & TypeScript Engineering";
+      moduleDesc = "Vollständiger Abschluss des JS/TS Curriculums (16 Module, ES-Module, TypeScript Interfaces/Generics & MVC Task-App)";
       trackKey = "js_master";
     } else if (lehrpfadNummer === "sql_grundlagen") {
       titel = "SQL & Relationale Datenbanken";

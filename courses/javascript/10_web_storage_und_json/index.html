@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 10: Web Storage &amp; JSON-Serialisierung</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💾 Clientseitige Persistenz &amp; JSON</div>
+          <h1>JS 10: Web Storage &amp; JSON-Serialisierung</h1>
+          <p>Lerne clientseitige Datenhaltung mit <code>localStorage</code>, <code>sessionStorage</code> und robuster JSON-Verarbeitung für Offline-First Web-Apps.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.js" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.js (Startercode)</a>
+            <a href="test_aufgabe.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.js (Tests)</a>
+            <a href="musterloesung.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.js (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: LOCALSTORAGE VS SESSIONSTORAGE -->
+        <section class="card">
+          <h2>1. 📦 localStorage vs. sessionStorage</h2>
+          <p>Moderne Browser stellen zwei Schlüssel-Wert-Speicher zur Verfügung, die rein clientseitig ohne Server-Datenbank arbeiten:</p>
+
+          <div style="overflow-x: auto; margin: 16px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Merkmal</th>
+                  <th style="padding: 10px;"><code>localStorage</code></th>
+                  <th style="padding: 10px;"><code>sessionStorage</code></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px; font-weight: 600;">Lebensdauer</td>
+                  <td style="padding: 10px;">Dauerhaft (überlebt Browser-Neustarts)</td>
+                  <td style="padding: 10px;">Nur für die Dauer des Browser-Tabs</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px; font-weight: 600;">Scope</td>
+                  <td style="padding: 10px;">Same-Origin (über alle Tabs derselben Domain)</td>
+                  <td style="padding: 10px;">Isoliert auf den einzelnen Tab</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px; font-weight: 600;">Speicherplatz</td>
+                  <td style="padding: 10px;">ca. 5–10 MB pro Origin</td>
+                  <td style="padding: 10px;">ca. 5 MB pro Tab</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px; font-weight: 600;">Typischer Einsatz</td>
+                  <td style="padding: 10px;">Theme (Dark Mode), Highscores, Entwürfe</td>
+                  <td style="padding: 10px;">Mehrschritt-Formulare, temporärer Tab-Status</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🔐 Didaktische Analogie: Das Schließfach &amp; das Reisetagebuch</div>
+            <p><strong>localStorage</strong> ist wie ein <strong>Bankschließfach</strong>: Was du dort ablegst, wartet auch nach Jahren treu auf dich. <strong>sessionStorage</strong> ist wie ein <strong>Reisetagebuch im Zugabteil</strong>: Sobald du den Zug verlässt (Tab schließen), verbleibt es im alten Zug und eine neue Fahrt beginnt mit leeren Blättern.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: METHODEN & JSON SERIALISIERUNG -->
+        <section class="card">
+          <h2>2. 🔄 JSON-Serialisierung komplexer Datenstrukturen</h2>
+          <p>Da Web Storage <strong>nur Strings</strong> akzeptiert, müssen Objekte und Arrays vor dem Speichern mit <code>JSON.stringify()</code> serialisiert und beim Laden mit <code>JSON.parse()</code> deserialisiert werden:</p>
+
+          <pre><code>// 🎯 1. Objekt serialisieren &amp; speichern:
+const benutzer = { id: 101, name: "Ada", skills: ["JS", "TS"], aktiv: true };
+localStorage.setItem("user_profile", JSON.stringify(benutzer));
+
+// 🎯 2. Laden &amp; Deserialisieren:
+const raw = localStorage.getItem("user_profile");
+if (raw) {
+  const geladenerBenutzer = JSON.parse(raw);
+  console.log(geladenerBenutzer.skills[0]); // "JS"
+}
+
+// 🎯 3. Einzelnen Schlüssel entfernen:
+localStorage.removeItem("user_profile");</code></pre>
+
+          <div class="box box-tipp">
+            <div class="box-title">💡 Warum kein direktes Speichern von Objekten?</div>
+            <p>Wenn du <code>localStorage.setItem("obj", { a: 1 })</code> ohne <code>JSON.stringify</code> aufrufst, ruft JavaScript automatisch <code>.toString()</code> auf. Im Storage landet dann der unbrauchbare String <code>"[object Object]"</code>!</p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: FEHLERBEHANDLUNG -->
+        <section class="card">
+          <h2>3. 🛡️ Robuste Fehlerbehandlung mit <code>try / catch</code></h2>
+          <p>Im professionellen Umfeld kann der Inhalt von Storage durch manuelle Benutzer-Eingaben oder veraltete Formate korrupt sein. Defektes JSON wirft beim Parsen einen <code>SyntaxError</code>:</p>
+
+          <pre><code>function ladeEinstellungenSicher(key, standardWert) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw !== null ? JSON.parse(raw) : standardWert;
+  } catch (err) {
+    console.warn(`Defektes JSON bei Schlüssel "${key}", nutze Standard-Fallback.`, err);
+    return standardWert;
+  }
+}</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Web Storage API</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl</th>
+                  <th style="padding: 10px;">Signatur</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>setItem</code></td>
+                  <td style="padding: 10px;"><code>storage.setItem(key, value)</code></td>
+                  <td style="padding: 10px;">Schreibt Schlüssel &amp; Wert (als String)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>getItem</code></td>
+                  <td style="padding: 10px;"><code>storage.getItem(key)</code></td>
+                  <td style="padding: 10px;">Liest Wert oder liefert <code>null</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>removeItem</code></td>
+                  <td style="padding: 10px;"><code>storage.removeItem(key)</code></td>
+                  <td style="padding: 10px;">Löscht den Schlüssel aus dem Speicher</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>clear</code></td>
+                  <td style="padding: 10px;"><code>storage.clear()</code></td>
+                  <td style="padding: 10px;">Leert den gesamten Speicher der Domain</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>JSON.stringify/parse</code></td>
+                  <td style="padding: 10px;"><code>JSON.stringify(obj) / JSON.parse(str)</code></td>
+                  <td style="padding: 10px;">Objekt-Serialisierung &amp; Deserialisierung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>speichereDaten(schluessel, daten, storageMock)</code> – Schlüssel validieren, <code>JSON.stringify</code> ausführen und Fehler abfangen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>ladeDaten(schluessel, standardWert, storageMock)</code> – <code>getItem</code> laden, <code>JSON.parse</code> im <code>try/catch</code> ausführen mit Fallback.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>loescheDaten(schluessel, storageMock)</code> – Eintrag sauber mit <code>removeItem</code> entfernen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>aktualisiereHighscore(spielerName, punkte, storageMock)</code> – Highscores laden, sortieren (absteigend), Top 10 begrenzen &amp; speichern.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_3_storage_und_typescript&chapter=10_web_storage_und_json" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_dom_und_events/index.html" class="btn btn-secondary">&larr; Zurück zu JS 09 (DOM &amp; Events)</a>
+            <a href="../11_callbacks_und_promises/index.html" class="btn btn-secondary">Weiter zu JS 11 (Callbacks &amp; Promises) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../../../assets/ui_enhancements.js"></script>
+</body>
+</html>

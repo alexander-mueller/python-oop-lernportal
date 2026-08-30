@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 08: Fehlerbehandlung &amp; Debugging</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .flow-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+    }
+    .flow-step {
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      text-align: center;
+      min-width: 260px;
+      box-shadow: var(--shadow-sm);
+    }
+    .flow-try {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: 2px solid #818cf8;
+    }
+    .flow-branch {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 600px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .flow-ok {
+      background: #dcfce7;
+      color: #166534;
+      border: 2px solid #4ade80;
+      flex: 1;
+    }
+    .flow-catch {
+      background: #ffe4e6;
+      color: #9f1239;
+      border: 2px solid #fb7185;
+      flex: 1;
+    }
+    .flow-finally {
+      background: #fef3c7;
+      color: #92400e;
+      border: 2px solid #fbbf24;
+    }
+    .flow-arrow {
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 Lehrpfad 2: Moderne Datenmodelle &amp; OOP</div>
+          <h1>JS 08: Fehlerbehandlung &amp; Debugging</h1>
+          <p>Schreibe robusten und defensiven JavaScript-Code mit try/catch/finally, benutzerdefinierten Fehler-Klassen und instanceof.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: TRY CATCH FINALLY -->
+        <section class="card">
+          <h2>🛑 1. Das <code>try...catch...finally</code> Kontrollmuster</h2>
+          <p>
+            Laufzeitfehler bringen ungesicherte Programme sofort zum Absturz. Mit <code>try...catch</code> fängst du Ausnahmen sicher ab und ermöglichst deiner Webanwendung eine kontrollierte Fehlerbehandlung:
+          </p>
+
+          <pre><code>try {
+  // 1. Code ausführen, der fehlschlagen könnte:
+  const daten = JSON.parse(roheEingabe);
+  verarbeite(daten);
+} catch (error) {
+  // 2. Wird nur ausgeführt, wenn im try-Block ein Fehler aufgetreten ist:
+  console.error("Fehler aufgetreten:", error.name, error.message);
+} finally {
+  // 3. Wird IMMER ausgeführt (z. B. für Aufräumarbeiten, Lade-Spinner stoppen):
+  schliesseLadeAnzeige();
+}</code></pre>
+
+          <!-- FLOWCHART -->
+          <h3 style="margin-top: 20px;">📊 Kontrollfluss-Diagramm</h3>
+          <div class="flow-diagram">
+            <div class="flow-step flow-try">1. <code>try { ... }</code> (Code ausführen)</div>
+            <div class="flow-arrow">&darr; Tritt Fehler auf?</div>
+            <div class="flow-branch">
+              <div class="flow-step flow-ok">✅ Nein: Normal weiter</div>
+              <div class="flow-step flow-catch">❌ Ja: <code>catch(err) { ... }</code></div>
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-step flow-finally">3. <code>finally { ... }</code> (Aufräumen – läuft immer!)</div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: THROW & EIGENE ERROR KLASSEN -->
+        <section class="card">
+          <h2>💣 2. Fehler werfen mit <code>throw</code> &amp; Eigene Error-Klassen</h2>
+          <p>
+            Mit dem <code>throw</code>-Befehl löst du gezielt Fehler aus. Statt generischer Strings wirft man in professionellem JavaScript immer Instanzen von <code>Error</code> (oder abgeleiteten Klassen):
+          </p>
+
+          <pre><code>// Basisklasse für alle Domänenfehler der App:
+class AnwendungsFehler extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "AnwendungsFehler";
+  }
+}
+
+// Spezifische Kindklasse mit Zusatzinformationen:
+class ValidierungsFehler extends AnwendungsFehler {
+  constructor(message, feld = null) {
+    super(message);
+    this.name = "ValidierungsFehler";
+    this.feld = feld; // Zusätzliche Metadaten für das UI-Highlighting
+  }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🪂 Didaktische Analogie: Die Notbremse &amp; der Auffang-Fallschirm</div>
+            <p>
+              Einen Fehler mit <code>throw new ValidierungsFehler()</code> zu werfen, ist wie das Ziehen der <strong>Sicherheits-Notbremse</strong> im fahrenden Zug: Der normale Ablauf stoppt sofort.
+              Der <code>catch</code>-Block ist der <strong>Auffang-Fallschirm</strong>, der den Sturz abfedert und dafür sorgt, dass die Passagiere (deine Web-App-Benutzer) sicher landen, statt ins Nichts abzustürzen.
+              Der <code>finally</code>-Block ist die <strong>Landestation</strong>, die in jedem Fall erreicht wird.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: INSTANCEOF & DIFFERENZIERUNG -->
+        <section class="card">
+          <h2>🎯 3. Fehlerarten gezielt unterscheiden mit <code>instanceof</code></h2>
+          <p>
+            Im <code>catch</code>-Block können unterschiedliche Fehlerarten auftreten. Mit dem <code>instanceof</code>-Operator kannst du gezielt auf Validierungsfehler anders reagieren als auf System- oder Netzwerkfehler:
+          </p>
+
+          <pre><code>try {
+  sendeZahlung(konto, 500);
+} catch (error) {
+  if (error instanceof GuthabenFehler) {
+    zeigeNutzerHinweis(`Nicht genügend Guthaben! Es fehlen ${error.betrag - error.saldo} €.`);
+  } else if (error instanceof ValidierungsFehler) {
+    markiereFormularFeldRot(error.feld, error.message);
+  } else {
+    // Unbekannter Systemfehler -> Erneut werfen oder an Monitoring-Service melden:
+    throw error;
+  }
+}</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Error Handling &amp; Debugging</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Befehl / Syntax</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Wirkung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>throw new Error(...)</code></td>
+                  <td style="padding: 10px;"><code>throw new Error("Ungültig!");</code></td>
+                  <td style="padding: 10px;">Löst Ausnahme aus und bricht aktuellen Stack ab</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>try { } catch(e) { }</code></td>
+                  <td style="padding: 10px;"><code>try { ... } catch (e) { ... }</code></td>
+                  <td style="padding: 10px;">Fängt Laufzeitfehler ab und verhindert Crash</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>finally { }</code></td>
+                  <td style="padding: 10px;"><code>finally { cleanup(); }</code></td>
+                  <td style="padding: 10px;">Wird garantiert ausgeführt (mit oder ohne Fehler)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>class X extends Error</code></td>
+                  <td style="padding: 10px;"><code>class MeinFehler extends Error { }</code></td>
+                  <td style="padding: 10px;">Eigene typisierte Fehlerklasse mit Stacktrace</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>err instanceof X</code></td>
+                  <td style="padding: 10px;"><code>if (e instanceof ValidierungsFehler)</code></td>
+                  <td style="padding: 10px;">Prüft die Fehlerklasse zur differenzierten Behandlung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> Fehlerhierarchie <code>AnwendungsFehler extends Error</code>, <code>ValidierungsFehler extends AnwendungsFehler</code> und <code>GuthabenFehler extends AnwendungsFehler</code> erstellen.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>sichereDivision(a, b)</code> mit Fehlerprüfungen für Nicht-Zahlen (<code>ValidierungsFehler</code>) und Division durch Null (<code>AnwendungsFehler</code>) schreiben.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>parseBenutzerJson(jsonString)</code> mit <code>try...catch</code> für Syntaxfehler und Pflichtfeldprüfung (<code>name</code>) umsetzen.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>pruefeTransaktion(kontoSaldo, abhebeBetrag)</code> mit <code>ValidierungsFehler</code> und <code>GuthabenFehler</code> absichern.
+            </label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 3</div>
+            <p>
+              In <code>parseBenutzerJson</code> kannst du <code>JSON.parse(jsonString)</code> in einem inneren <code>try...catch</code>-Block aufrufen. Fange den <code>SyntaxError</code> ab und wirf stattdessen einen <code>new ValidierungsFehler(..., "jsonString")</code>!
+            </p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_2_oop_und_daten&chapter=08_fehlerbehandlung_und_debugging" class="btn" style="background: #eab308; color: #000; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 6px;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../07_regex_und_textverarbeitung/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">&larr; Zurück zu JS 07</a>
+            <a href="../11_callbacks_und_promises/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">Weiter zu Lehrpfad 3 (Async) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 04: Arrays, Sets &amp; Maps</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 JavaScript Grundlagen</div>
+          <h1>JS 04: Arrays, Sets &amp; Maps</h1>
+          <p>Lerne funktionale Transformationen mit <code>.map()</code>, <code>.filter()</code>, <code>.reduce()</code> sowie einzigartige Sets und flexible Maps.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: ARRAY METHODEN -->
+        <section class="card">
+          <h2>💡 1. Moderne Array-Methoden (<code>map</code>, <code>filter</code>, <code>reduce</code>)</h2>
+          <p>Verarbeite Datenreihen deklarativ, lesbar und unveränderlich (ohne das Original-Array zu mutieren):</p>
+          
+          <pre><code>const preise = [10, 25, 40, 5];
+
+// 🎯 1. .map() - Jedes Element transformieren:
+const mitMwSt = preise.map(p =&gt; p * 1.19);
+
+// 🎯 2. .filter() - Elemente nach Kriterium filtern:
+const teuer = preise.filter(p =&gt; p &gt;= 20); // [25, 40]
+
+// 🎯 3. .reduce() - Aggregieren zu einem Gesamtwert:
+const gesamt = preise.reduce((sum, p) =&gt; sum + p, 0); // 80</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SETS -->
+        <section class="card">
+          <h2>🎟️ 2. Sets: Eindeutige Mengen ohne Duplikate</h2>
+          <p>Ein <code>Set</code> garantiert, dass jeder Wert nur genau einmal vorkommt. Ideal für Duplikatbereinigung und schnelle Existenzprüfungen:</p>
+
+          <pre><code>// 🎯 Set erstellen &amp; befüllen:
+const tags = new Set(["js", "web", "js", "frontend"]);
+console.log(tags.size); // 3 (da "js" nur 1x existiert)
+
+tags.add("backend");
+console.log(tags.has("web")); // true (O(1) schneller Lookup)
+
+// 🌟 Duplikate aus Array entfernen (Spread):
+const duplikate = [1, 2, 2, 3, 1, 4];
+const einzigartig = [...new Set(duplikate)]; // [1, 2, 3, 4]</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: MAPS -->
+        <section class="card">
+          <h2>📖 3. Maps: Flexible Schlüssel-Wert-Speicher</h2>
+          <p>Eine <code>Map</code> verknüpft Schlüssel mit Werten. Jeder Schlüssel kann einen beliebigen Typ haben (auch Strings, Zahlen oder Objekte):</p>
+
+          <pre><code>// 🎯 Map erstellen &amp; befüllen:
+const config = new Map();
+config.set("thema", "dark");
+config.set("benachrichtigungen", true);
+
+console.log(config.get("thema")); // "dark"
+console.log(config.has("sprache")); // false
+console.log(config.size); // 2
+
+// 🎯 Aus 2D-Array initialisieren:
+const lexikon = new Map([
+  ["de", "Guten Tag"],
+  ["en", "Hello"]
+]);</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🎭 Didaktische Analogie: Fotogalerie, VIP-Club &amp; Telefonbuch</div>
+            <p><strong>Array (Die Fotogalerie):</strong> Ein Fotoalbum mit festen Seiten-Nummern (Indizes 0, 1, 2...). Du kannst dasselbe Bild mehrfach einkleben und Filterfolien darüber legen.</p>
+            <p><strong>Set (Der VIP-Club):</strong> Die Gästeliste an der Tür: Ein Gast kann nicht zweimal auf der Liste stehen. Neue Duplikate werden sofort abgewiesen.</p>
+            <p><strong>Map (Das moderne Telefonbuch):</strong> Schnelles Nachschlagen: Du nennst den Namen (Key) und bekommst sofort die Nummer (Value) zurück.</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Array, Set &amp; Map</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Typ</th>
+                  <th style="padding: 10px;">Syntax / Methode</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Array</code></td>
+                  <td style="padding: 10px;"><code>arr.map(fn)</code></td>
+                  <td style="padding: 10px;">Erzeugt neues transformiertes Array</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Array</code></td>
+                  <td style="padding: 10px;"><code>arr.filter(fn)</code></td>
+                  <td style="padding: 10px;">Filtert Elemente nach Wahrheitsbedingung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Array</code></td>
+                  <td style="padding: 10px;"><code>arr.reduce(fn, start)</code></td>
+                  <td style="padding: 10px;">Aggregiert alle Werte zu einem Gesamtwert</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Set</code></td>
+                  <td style="padding: 10px;"><code>new Set(arr) / [...set]</code></td>
+                  <td style="padding: 10px;">Menge ohne Duplikate; Konvertierung zu Array</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Set</code></td>
+                  <td style="padding: 10px;"><code>set.has(val) / set.add(val)</code></td>
+                  <td style="padding: 10px;">Element prüfen / hinzufügen (Größe: <code>.size</code>)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Map</code></td>
+                  <td style="padding: 10px;"><code>map.set(k, v) / map.get(k)</code></td>
+                  <td style="padding: 10px;">Schlüssel-Wert-Paar setzen / abrufen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Map</code></td>
+                  <td style="padding: 10px;"><code>new Map(entries)</code></td>
+                  <td style="padding: 10px;">Initialisierung aus <code>[[k, v], ...]</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>verdoppeln(zahlen)</code> mit <code>.map()</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>filterGeradeZahlen(zahlen)</code> mit <code>.filter()</code> filtern.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>arraySumme(zahlen)</code> mit <code>.reduce()</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>entferneDuplikate(liste)</code> mit <code>new Set()</code> und Spread-Operator schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>erstelleWoerterbuch(paare)</code> mit <code>new Map(paare)</code> initialisieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> <code>zaehleHaeufigkeiten(woerter)</code> mit <code>Map</code>-Zähler aufbauen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 4 &amp; 6</div>
+            <p>Für <code>entferneDuplikate</code>: <code>return [...new Set(liste)];</code>. Für <code>zaehleHaeufigkeiten</code>: Iteriere mit <code>for (const w of woerter)</code> und setze <code>map.set(w, (map.get(w) || 0) + 1);</code>.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_1_grundlagen&chapter=04_arrays_sets_und_maps" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_funktionen_und_scope/index.html" class="btn btn-secondary">&larr; Zurück zu JS 03</a>
+            <a href="../05_objekte_und_destructuring/index.html" class="btn btn-secondary">Weiter zu JS 05 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TS 15: Fortgeschrittenes TypeScript &amp; Generics</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ TypeScript Advanced &amp; Generics</div>
+          <h1>TS 15: Fortgeschrittenes TypeScript &amp; Generics</h1>
+          <p>Beherrsche fortgeschrittene Typsystem-Konzepte: Generics <code>&lt;T&gt;</code>, Custom Type Guards, Enums und Utility Types (<code>Partial</code>, <code>Pick</code>, <code>Record</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.js" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.js (Startercode)</a>
+            <a href="test_aufgabe.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.js (Tests)</a>
+            <a href="musterloesung.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.js (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: GENERICS -->
+        <section class="card">
+          <h2>1. 🧬 Generics <code>&lt;T&gt;</code>: Flexible &amp; Typsichere Container</h2>
+          <p>Mit Generics erstellst du Datenstrukturen und Funktionen, die mit beliebigen Typen arbeiten, ohne die Typsicherheit zu verlieren:</p>
+
+          <div style="background: #0f172a; border: 1px solid #334155; border-radius: var(--radius-sm); padding: 16px; margin: 15px 0; color: #f8fafc; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">
+            <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">📊 Generic Interface: PaginiertesErgebnis&lt;T&gt;</div>
+            <div style="border-left: 2px solid #38bdf8; padding-left: 12px;">
+              <span style="color: #fbbf24;">interface PaginiertesErgebnis&lt;T&gt;</span> {<br>
+              &nbsp;&nbsp;items: <span style="color: #34d399;">T[]</span>;<br>
+              &nbsp;&nbsp;total: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;page: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;pageSize: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;totalPages: <span style="color: #a78bfa;">number</span>;<br>
+              &nbsp;&nbsp;hasNextPage: <span style="color: #f472b6;">boolean</span>;<br>
+              &nbsp;&nbsp;hasPrevPage: <span style="color: #f472b6;">boolean</span>;<br>
+              }
+            </div>
+          </div>
+
+          <pre><code>// 🎯 Verwendung mit verschiedenen Datentypen:
+const userPage: PaginiertesErgebnis&lt;User&gt; = erstellePaginiertesErgebnis(users, 100, 1, 10);
+const taskPage: PaginiertesErgebnis&lt;Task&gt; = erstellePaginiertesErgebnis(tasks, 45, 2, 10);</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: TYPE GUARDS -->
+        <section class="card">
+          <h2>2. 🔍 Type Guards &amp; Type Narrowing</h2>
+          <p>Ein <strong>Custom Type Guard</strong> (<code>obj is TargetType</code>) prüft zur Laufzeit Daten und versichert dem Compiler den genauen Typ:</p>
+
+          <pre><code>function istAdminBenutzer(obj: any): obj is AdminBenutzer {
+  return (
+    obj !== null &amp;&amp;
+    typeof obj === "object" &amp;&amp;
+    obj.rolle === "ADMIN" &amp;&amp;
+    Array.isArray(obj.berechtigungen) &amp;&amp;
+    obj.berechtigungen.length > 0
+  );
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🩻 Didaktische Analogie: Der Röntgenapparat &amp; der Maßanzug</div>
+            <p><strong>Type Guards</strong> sind wie der <strong>Flughafen-Röntgenapparat</strong>: Unbekannte Daten werden gründlich durchleuchtet, bevor sie in geschützte Bereiche gelassen werden. <strong>Utility Types</strong> sind wie der <strong>Präzisions-Maßanzug</strong>: Aus einem Basis-Schnittmuster schneidest du passgenau eine Weste (<code>Pick</code>) oder ein flexibles Übergangshemd (<code>Partial</code>).</p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET: UTILITY TYPES -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: TypeScript Utility Types</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Utility Type</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Wirkung &amp; Einsatzgebiet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Partial&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>Partial&lt;UserProfile&gt;</code></td>
+                  <td style="padding: 10px;">Alle Eigenschaften werden optional (<code>?</code>). Ideal für Updates.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Readonly&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>Readonly&lt;Config&gt;</code></td>
+                  <td style="padding: 10px;">Verhindert Überschreiben (Immutability).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Pick&lt;T, K&gt;</code></td>
+                  <td style="padding: 10px;"><code>Pick&lt;User, "id" | "email"&gt;</code></td>
+                  <td style="padding: 10px;">Wählt nur bestimmte Schlüssel aus <code>T</code> aus.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Omit&lt;T, K&gt;</code></td>
+                  <td style="padding: 10px;"><code>Omit&lt;User, "passwordHash"&gt;</code></td>
+                  <td style="padding: 10px;">Entfernt bestimmte Schlüssel aus <code>T</code>.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Record&lt;K, T&gt;</code></td>
+                  <td style="padding: 10px;"><code>Record&lt;string, number&gt;</code></td>
+                  <td style="padding: 10px;">Erstellt typisierte Key-Value Maps / Dictionaries.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 4. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>erstellePaginiertesErgebnis(items, total, page, pageSize)</code> – Generischen Container mit Metadaten (<code>totalPages</code>, <code>hasNextPage</code>, <code>hasPrevPage</code>) berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>istAdminBenutzer(benutzerObjekt)</code> – Custom Type Guard für ID, Username, Email, Admin-Rolle &amp; Berechtigungen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>aktualisiereBenutzerProfil(original, partiellesUpdate)</code> – Partielle Updates (<code>Partial&lt;T&gt;</code>) mit Validierung &amp; Immutability ausführen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>filtriereFelder(objekt, erlaubteSchluessel)</code> – Teilmenge von Objekteigenschaften (<code>Pick&lt;T, K&gt;</code>) extrahieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_4_architektur_und_master&chapter=15_typescript_fortgeschritten" class="btn" style="background: #3178c6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_es_module_und_architektur/index.html" class="btn btn-secondary">&larr; Zurück zu JS 13 (ES Module)</a>
+            <a href="../16_master_abschlussprojekt_web_app/index.html" class="btn btn-secondary">Weiter zum Master-Projekt &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../../../assets/ui_enhancements.js"></script>
+</body>
+</html>

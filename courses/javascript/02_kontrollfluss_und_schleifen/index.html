@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 02: Kontrollfluss &amp; Schleifen</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 JavaScript Grundlagen</div>
+          <h1>JS 02: Kontrollfluss, Verzweigungen &amp; Schleifen</h1>
+          <p>Lerne Entscheidungslogik mit <code>if/else</code>, <code>switch</code> und den mächtigen Schleifenkonstrukten in modernem JavaScript.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: IF / ELSE & STRIKTER VERGLEICH -->
+        <section class="card">
+          <h2>💡 1. Verzweigungen &amp; Strikter Vergleich (<code>===</code>)</h2>
+          <p>Bedingte Anweisungen steuern, welche Codeblöcke bei bestimmten Bedingungen ausgeführt werden. In modernem JavaScript verwenden wir ausnahmslos den <strong>strikten Vergleich <code>===</code></strong> (bzw. <code>!==</code>), um ungewollte Typumwandlungen zu verhindern:</p>
+          
+          <pre><code>const alter = 17;
+
+if (alter >= 18) {
+  console.log("Zugang gewährt: Volljährig");
+} else if (alter >= 13) {
+  console.log("Jugendschutz: Eingeschränkter Zugang");
+} else {
+  console.log("Kindersicherung aktiv");
+}
+
+// ⚠️ Strikter Vergleich:
+console.log(42 === "42"); // false (Number !== String)
+console.log(42 == "42");  // true  (Achtung: Gefährliche implizite Konvertierung!)</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SWITCH-CASE & TERNARY -->
+        <section class="card">
+          <h2>🔀 2. Switch-Case &amp; Ternärer Operator</h2>
+          <p>Wenn du eine Variable gegen viele konkrete Werte prüfen möchtest, sorgt <code>switch</code> für sauberen Code. Für schnelle Zuweisungen ist der ternäre Operator (<code>? :</code>) die beste Wahl:</p>
+
+          <pre><code>// 🎯 Switch-Case:
+const rolle = "admin";
+switch (rolle) {
+  case "admin":
+    console.log("Volle Administrationsrechte");
+    break; // Verhindert 'Fall-Through'
+  case "editor":
+    console.log("Inhalte bearbeiten");
+    break;
+  default:
+    console.log("Gastzugang (Nur Lesen)");
+}
+
+// 🎯 Ternärer Operator (Bedingung ? Wenn-Wahr : Wenn-Falsch):
+const hatRabatt = true;
+const endpreis = hatRabatt ? 80 : 100;</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: SCHLEIFEN & CONTROL -->
+        <section class="card">
+          <h2>🔄 3. Schleifen: <code>for</code>, <code>for...of</code>, <code>while</code></h2>
+          <p>Wiederhole Operationen präzise. Mit <code>break</code> brichst du eine Schleife vorzeitig ab, mit <code>continue</code> springst du sofort zum nächsten Durchlauf:</p>
+
+          <pre><code>// 1. Zählschleife:
+for (let i = 1; i <= 5; i++) {
+  if (i === 3) continue; // Überspringt die 3
+  console.log(i); // 1, 2, 4, 5
+}
+
+// 2. Iteration über Arrays (for...of):
+const zutaten = ["Mehl", "Zucker", "Eier"];
+for (const zutat of zutaten) {
+  console.log("Zutat:", zutat);
+}
+
+// 3. Bedingungsschleife:
+let countdown = 3;
+while (countdown > 0) {
+  console.log(countdown--);
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚦 Didaktische Analogie: Die Verkehrsampeln &amp; Kreisverkehre im Code</div>
+            <p><strong>Die Ampelkreuzung (<code>if</code>/<code>else</code>/<code>switch</code>):</strong> Je nachdem, welches Signal aufleuchtet, nimmt dein Datenstrom eine andere Abbiegung. <code>switch</code> ist der mehrspurige Kreisverkehr mit festen Ausfahrten.</p>
+            <p><strong>Der Kreisverkehr (<code>while</code>/<code>for</code>):</strong> Dein Code kreist so lange, wie die Bedingung wahr ist. Mit <code>continue</code> fährst du ohne Halt in die nächste Runde, mit <code>break</code> nimmst du sofort die nächste Ausfahrt ins Freie!</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Kontrollfluss &amp; Schleifen</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konstrukt</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Zweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>if / else if / else</code></td>
+                  <td style="padding: 10px;"><code>if (x &gt; 0) { ... }</code></td>
+                  <td style="padding: 10px;">Verzweigung nach Wahrheitswerten</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>switch(wert) { case ...: }</code></td>
+                  <td style="padding: 10px;"><code>case 1: return "Mo"; break;</code></td>
+                  <td style="padding: 10px;">Gezielte Prüfung auf diskrete Werte</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>bed ? a : b</code></td>
+                  <td style="padding: 10px;"><code>const s = a &gt;= 18 ? 'Erw' : 'Kind';</code></td>
+                  <td style="padding: 10px;">Kompakter ternärer Ausdruck</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>for (let i = 0; i &lt; n; i++)</code></td>
+                  <td style="padding: 10px;"><code>for (let i = 0; i &lt; 10; i++)</code></td>
+                  <td style="padding: 10px;">Zählschleife mit Index-Schritten</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>for (const x of array)</code></td>
+                  <td style="padding: 10px;"><code>for (const item of items)</code></td>
+                  <td style="padding: 10px;">Direkte Element-Iteration</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>while (bed) / do..while</code></td>
+                  <td style="padding: 10px;"><code>while (n &gt; 0) n--;</code></td>
+                  <td style="padding: 10px;">Bedingungsgesteuerte Schleifen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>break / continue</code></td>
+                  <td style="padding: 10px;"><code>if (i % 2 !== 0) continue;</code></td>
+                  <td style="padding: 10px;">Schleifenabbruch / Nächster Durchlauf</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>kategorisiereAlter(alter)</code> mit <code>if / else if</code> (Kind, Jugendlicher, Erwachsener, Senior) implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>wochentagName(tagNummer)</code> mit <code>switch-case</code> (1=Montag..7=Sonntag, sonst "Ungültig") schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>berechneRabattpreis(preis, istPremium, hatGutschein)</code> mit Rabattlogik (30%, 20%, 10%, 0%) umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>summeGeraderZahlen(start, ende)</code> mit <code>for</code>-Schleife und <code>continue</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>findeErstesVielfaches(zahlen, teiler)</code> mit <code>for...of</code> und <code>break</code> lösen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 4 &amp; 5</div>
+            <p>Für ungerade Zahlen kannst du <code>if (i % 2 !== 0) continue;</code> schreiben. Bei <code>findeErstesVielfaches</code> beende die Schleife mit <code>break</code>, sobald <code>zahl % teiler === 0</code> zutrifft!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_1_grundlagen&chapter=02_kontrollfluss_und_schleifen" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_erste_schritte_variablen/index.html" class="btn btn-secondary">&larr; Zurück zu JS 01</a>
+            <a href="../03_funktionen_und_scope/index.html" class="btn btn-secondary">Weiter zu JS 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

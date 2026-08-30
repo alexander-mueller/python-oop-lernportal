@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 03: Funktionen, Scope &amp; Closures</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 JavaScript Grundlagen</div>
+          <h1>JS 03: Funktionen, Scope &amp; Closures</h1>
+          <p>Meistere moderne Funktionsdeklarationen, Arrow Functions, Rest-Parameter, Gültigkeitsbereiche und Closures.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: FUNKTIONSARTEN & PARAMETER -->
+        <section class="card">
+          <h2>💡 1. Funktionsarten &amp; Moderne Parameter</h2>
+          <p>JavaScript bietet klassische Deklarationen, Funktionsausdrücke und moderne <strong>Arrow Functions</strong>. Mit <strong>Default-</strong> und <strong>Rest-Parametern</strong> schreibst du flexiblen Code:</p>
+          
+          <pre><code>// 🎯 1. Arrow Function mit implizitem Return:
+const verdopple = x =&gt; x * 2;
+
+// 🎯 2. Default-Parameter:
+function begruesse(name = "Gast") {
+  return `Willkommen, ${name}!`;
+}
+
+// 🎯 3. Rest-Parameter (...sammelt alle Argumente als Array):
+function summiere(...zahlen) {
+  return zahlen.reduce((sum, n) =&gt; sum + n, 0);
+}
+console.log(summiere(10, 20, 30)); // 60</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SCOPE & HOISTING -->
+        <section class="card">
+          <h2>🌍 2. Gültigkeitsbereiche (Scope Hierarchy)</h2>
+          <p>Variablen sind immer nur in ihrem deklarierten Bereich gültig. <code>let</code> und <code>const</code> erzeugen echte <strong>Block-Scopes</strong>:</p>
+
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; border: 1px solid var(--border-color);">
+            🌍 <strong>Global Scope</strong>: Überall im Skript verfügbar<br>
+            └── 📦 <strong>Function Scope</strong>: Nur innerhalb der Funktion sichtbar<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── 🔒 <strong>Block Scope</strong> (<code>{ let x = 1; }</code>): Nur innerhalb des <code>{ }</code>-Blocks
+          </div>
+
+          <pre><code>function scopeTest() {
+  const inside = "Ich lebe nur in der Funktion";
+  if (true) {
+    const block = "Ich lebe nur im if-Block";
+  }
+  // console.log(block); // ❌ ReferenceError: block is not defined
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: CLOSURES -->
+        <section class="card">
+          <h2>🔐 3. Closures: Funktionen mit Gedächtnis</h2>
+          <p>Eine <strong>Closure</strong> entsteht, wenn eine innere Funktion auf Variablen ihrer umgebenden Funktion zugreift – auch nachdem die äußere Funktion beendet ist:</p>
+
+          <pre><code>function erstelleZaehler(start = 0) {
+  let counter = start; // Kapselung (private Variable)
+
+  return function() {
+    counter++;
+    return counter;
+  };
+}
+
+const zaehlerA = erstelleZaehler(0);
+console.log(zaehlerA()); // 1
+console.log(zaehlerA()); // 2
+
+const zaehlerB = erstelleZaehler(100);
+console.log(zaehlerB()); // 101 (Komplett unabhängig von zaehlerA!)</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🔐 Didaktische Analogie: Der Tresor mit Geheimzahl</div>
+            <p>Die äußere Funktion ist der <strong>Tresorbauer</strong>: Sie konstruiert ein geschütztes Gehäuse (die privaten Variablen) und händigt dir lediglich einen <strong>Schlüsselanhänger</strong> (die zurückgegebene innere Funktion) aus.</p>
+            <p>Niemand kann von außen in den Tresor greifen – nur durch Drehen des Schlüssels (Funktionsaufruf) wird das interne Zahnrad weitergedreht. Jeder neue Aufruf der äußeren Funktion baut einen neuen, isolierten Tresor!</p>
+          </div>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Funktionen &amp; Scopes</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konzept</th>
+                  <th style="padding: 10px;">Syntax / Beispiel</th>
+                  <th style="padding: 10px;">Besonderheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Arrow Function</code></td>
+                  <td style="padding: 10px;"><code>const f = (x) =&gt; x * 2;</code></td>
+                  <td style="padding: 10px;">Kompakt, lexikalisches <code>this</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Default-Parameter</code></td>
+                  <td style="padding: 10px;"><code>function f(a = 10) { ... }</code></td>
+                  <td style="padding: 10px;">Greift bei fehlendem Argument / <code>undefined</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Rest-Parameter</code></td>
+                  <td style="padding: 10px;"><code>function f(...args) { ... }</code></td>
+                  <td style="padding: 10px;">Sammelt alle Parameter in ein Array</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Block Scope</code></td>
+                  <td style="padding: 10px;"><code>{ const x = 42; }</code></td>
+                  <td style="padding: 10px;">Gültigkeit beschränkt auf geschweifte Klammern</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Closure</code></td>
+                  <td style="padding: 10px;"><code>return () =&gt; ++counter;</code></td>
+                  <td style="padding: 10px;">Behält Zugriff auf Variablen des Erzeugungs-Scopes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>erstelleZaehler(startWert = 0)</code> als Closure bauen (inkrementiert bei jedem Aufruf).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>multiplizierer(faktor)</code> als Higher-Order Function implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>summiereAlles(...zahlen)</code> mit Rest-Parameter und Summenberechnung schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>erstellePraefixierer(praefix)</code> zur String-Präfixierung als Closure erstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 1 &amp; 4</div>
+            <p>Für <code>erstelleZaehler</code> deklariere <code>let zaehler = startWert;</code> in der äußeren Funktion und gib eine innere Funktion zurück, die <code>zaehler++</code> rechnet und den neuen Wert zurückliefert!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_1_grundlagen&chapter=03_funktionen_und_scope" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_kontrollfluss_und_schleifen/index.html" class="btn btn-secondary">&larr; Zurück zu JS 02</a>
+            <a href="../04_arrays_sets_und_maps/index.html" class="btn btn-secondary">Weiter zu JS 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

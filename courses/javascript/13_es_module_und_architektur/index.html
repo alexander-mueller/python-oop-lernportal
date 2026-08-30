@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 13: ES Module &amp; Architektur</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🧱 Software-Architektur &amp; ES6 Module</div>
+          <h1>JS 13: ES Module &amp; Architektur</h1>
+          <p>Lerne saubere Code-Strukturen mit ES6 Import/Export, Separation of Concerns und Dependency Injection für skalierbare Web-Anwendungen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Einheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.js" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.js (Startercode)</a>
+            <a href="test_aufgabe.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.js (Tests)</a>
+            <a href="musterloesung.js" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.js (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: ES MODULES -->
+        <section class="card">
+          <h2>1. 📦 ES6 Modules: Exportieren &amp; Importieren</h2>
+          <p>In modernem JavaScript teilst du komplexen Code in wiederverwendbare, isolierte Module auf:</p>
+
+          <pre><code>// 📁 utils/math.js (Named Exports)
+export const PI = 3.14159;
+export function addieren(a, b) { return a + b; }
+
+// 📁 models/Rechner.js (Default Export)
+export default class Rechner { ... }
+
+// 📁 app.js (Gezielter &amp; Default Import)
+import Rechner from "./models/Rechner.js";
+import { addieren, PI } from "./utils/math.js";
+import * as Formatters from "./utils/format.js";</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🧱 Didaktische Analogie: Modulare Legosteine &amp; Container</div>
+            <p>Monolithischer Code gleicht einer in Stein gemeißelten Statue: Ändert man einen Arm, bricht die gesamte Skulptur. Modulare Software ist wie ein <strong>Container-Hafen</strong>: Jeder Container hat genormte Maße (Exports/Imports), arbeitet innen autark und kann beliebig ausgetauscht oder transportiert werden.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SEPARATION OF CONCERNS -->
+        <section class="card">
+          <h2>2. 🏗️ Separation of Concerns (SoC)</h2>
+          <p>Jedes Modul hat genau <strong>eine</strong> Verantwortung. Das verhindert Nebeneffekte und macht Unittests zum Kinderspiel:</p>
+
+          <div style="background: #0f172a; border: 1px solid #334155; border-radius: var(--radius-sm); padding: 16px; margin: 15px 0; color: #f8fafc; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">
+            <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">🏛️ Schichten-Architektur: Rechnungs-System</div>
+            <div style="border-left: 2px solid #38bdf8; padding-left: 12px; margin-bottom: 10px;">
+              <strong>1. Controller / Orchestrator (<code>RechnungsEngine</code>):</strong> Steuert den Ablauf, kennt aber keine Formatierungsdetails.
+            </div>
+            <div style="border-left: 2px solid #34d399; padding-left: 12px; margin-bottom: 10px;">
+              <strong>2. Business Logic (<code>MathModule</code>):</strong> Rechnet mathematisch exakt, wirft Fehler bei 0-Division.
+            </div>
+            <div style="border-left: 2px solid #fbbf24; padding-left: 12px;">
+              <strong>3. Presentation Layer (<code>FormatterModule</code>):</strong> Bereitet Zahlen als <code>"1.250,50 EUR"</code> und Datumsangaben für Menschen auf.
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Modul-Syntax &amp; Konzepte</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konstrukt</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Named Export</code></td>
+                  <td style="padding: 10px;"><code>export function add() {}</code></td>
+                  <td style="padding: 10px;">Exportiert mehrere benannte Elemente</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Default Export</code></td>
+                  <td style="padding: 10px;"><code>export default class App {}</code></td>
+                  <td style="padding: 10px;">Hauptexport eines Moduls (1x pro Datei)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Named Import</code></td>
+                  <td style="padding: 10px;"><code>import { add } from './math.js'</code></td>
+                  <td style="padding: 10px;">Gezieltes Importieren einzelner Funktionen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Namespace Import</code></td>
+                  <td style="padding: 10px;"><code>import * as M from './math.js'</code></td>
+                  <td style="padding: 10px;">Bündelt alle Exporte als Objekt</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Dependency Injection</code></td>
+                  <td style="padding: 10px;"><code>new Engine(mathMod, fmtMod)</code></td>
+                  <td style="padding: 10px;">Abhängigkeiten von außen übergeben (Testbarkeit)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 4. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>MathModule</code> – Grundrechenarten (<code>addieren</code>, <code>subtrahieren</code>, <code>multiplizieren</code>, <code>dividieren</code>) mit Schutz vor 0-Division und <code>runden</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>FormatterModule</code> – Deutsches Währungsformat (<code>formatiereWaehrung</code>) und ISO-Datum (<code>formatiereDatumIso</code>) implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>RechnungsEngine.erstellePosition</code> – Validierung &amp; Gesamtpreis über <code>this.math</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>RechnungsEngine.berechneRechnung</code> – Netto, Steuer &amp; Brutto berechnen und Ausgaben mit <code>this.formatter</code> formatieren.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_4_architektur_und_master&chapter=13_es_module_und_architektur" class="btn" style="background: #eab308; color: #000; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_async_await_und_fetch/index.html" class="btn btn-secondary">&larr; Zurück zu JS 12 (Async &amp; Fetch)</a>
+            <a href="../15_typescript_fortgeschritten/index.html" class="btn btn-secondary">Weiter zu TS 15 (TypeScript Fortgeschritten) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../../../assets/ui_enhancements.js"></script>
+</body>
+</html>

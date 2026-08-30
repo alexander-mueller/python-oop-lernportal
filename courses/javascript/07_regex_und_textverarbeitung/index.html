@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 07: Reguläre Ausdrücke &amp; Textverarbeitung</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .regex-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .regex-token {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .token-char {
+      color: #7c3aed;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .token-desc {
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 Lehrpfad 2: Moderne Datenmodelle &amp; OOP</div>
+          <h1>JS 07: Reguläre Ausdrücke &amp; Textverarbeitung</h1>
+          <p>Lerne mächtiges Pattern-Matching, Text-Mining, Datenvalidierung und Maskierung mit JavaScript RegExp.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WAS IST EIN REGEXP -->
+        <section class="card">
+          <h2>🔍 1. Grundlagen: RegExp-Syntax &amp; Flags</h2>
+          <p>
+            Ein <strong>Regulärer Ausdruck (RegExp)</strong> ist ein Suchmuster zur Textanalyse, Validierung und Transformation. In JavaScript erstellst du Regex entweder als Literal mit Schrägstrichen <code>/muster/flags</code> oder über das <code>RegExp</code>-Objekt:
+          </p>
+
+          <pre><code>// 1. Literal-Schreibweise (empfohlen bei festen Mustern):
+const regexLiteral = /javascript/i; // 'i' = ignore case (Groß-/Kleinschreibung ignorieren)
+
+// 2. Konstruktor-Schreibweise (für dynamische Muster aus Variablen):
+const suchwort = "javascript";
+const regexDynamic = new RegExp(suchwort, "i");
+
+console.log(regexLiteral.test("Ich liebe JavaScript!")); // true</code></pre>
+
+          <h3 style="margin-top: 20px;">🚩 Wichtige Flags (Modifikatoren)</h3>
+          <ul>
+            <li><code>g</code> (global): Findet alle Vorkommen im gesamten Text (nicht nur das erste).</li>
+            <li><code>i</code> (case-insensitive): Ignoriert Unterschiede zwischen Groß- und Kleinschreibung.</li>
+            <li><code>m</code> (multiline): Behandelt Zeilenumbrüche für <code>^</code> (Zeilenanfang) und <code>$</code> (Zeilenende).</li>
+          </ul>
+        </section>
+
+        <!-- 2. THEORIE: METAZEICHEN & QUANTIFIZIERER -->
+        <section class="card">
+          <h2>🧩 2. Metazeichen &amp; Quantifizierer</h2>
+          <p>RegExp nutzt spezielle Steuerzeichen, um Zeichenklassen und Wiederholungen zu beschreiben:</p>
+
+          <div class="regex-card">
+            <div class="regex-token">
+              <div class="token-char">\d</div>
+              <div class="token-desc">Beliebige Ziffer (0-9)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">\w</div>
+              <div class="token-desc">Wortzeichen (a-z, A-Z, 0-9, _)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">\s</div>
+              <div class="token-desc">Leerzeichen, Tabulator, Zeilenumbruch</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">^ &amp; $</div>
+              <div class="token-desc">Textanfang (<code>^</code>) &amp; Textende (<code>$</code>)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">+</div>
+              <div class="token-desc">1 oder mehrmals (mind. 1)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">*</div>
+              <div class="token-desc">0 oder mehrmals (optional)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">?</div>
+              <div class="token-desc">0 oder 1 Mal (optional)</div>
+            </div>
+            <div class="regex-token">
+              <div class="token-char">{min,max}</div>
+              <div class="token-desc">Wiederholungsanzahl z.&nbsp;B. <code>{8,}</code> (mind. 8)</div>
+            </div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🕵️ Didaktische Analogie: Der Muster-Detektiv &amp; Schablonen-Scanner</div>
+            <p>
+              Stelle dir einen <strong>Regulären Ausdruck</strong> wie eine transparente Loch-Schablone vor, die du über eine riesige Zeitungswand legst. 
+              Die Löcher der Schablone sind so gestanzt, dass überall dort, wo eine E-Mail-Adresse, IBAN oder Telefonnummer steht, der Text sofort ins Auge springt, während der restliche Fließtext ausgeblendet wird.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: METHODEN -->
+        <section class="card">
+          <h2>⚙️ 3. RegExp-Methoden in JavaScript</h2>
+          <p>Je nachdem, ob du prüfen, extrahieren oder ersetzen willst, bietet JS passende Methoden:</p>
+
+          <pre><code>const text = "Support: info@code.de oder sales@code.de. Tel: 0171-1234567.";
+
+// 1. regex.test(str) -> boolean (perfekt für Validierung):
+const hatEmail = /@code\.de/.test(text); // true
+
+// 2. str.match(regex) -> Array mit allen Treffern (mit Flag 'g'):
+const emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
+console.log(emails); // ["info@code.de", "sales@code.de"]
+
+// 3. str.replace(regex, neu) -> String ersetzen mit Capturing Groups:
+const maskiert = text.replace(/(\d{4})-(\d+)/g, "$1-XXXX");
+console.log(maskiert); // "... Tel: 0171-XXXX."</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: RegExp Syntax &amp; Methoden</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax / Methode</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>/muster/flags</code></td>
+                  <td style="padding: 10px;"><code>/\d+/g</code></td>
+                  <td style="padding: 10px;">Regex Literal mit Flags</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>regex.test(str)</code></td>
+                  <td style="padding: 10px;"><code>/^[A-Z]/.test("Hallo") // true</code></td>
+                  <td style="padding: 10px;">Prüft, ob Muster im String vorkommt (liefert <code>true</code>/<code>false</code>)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>str.match(regex)</code></td>
+                  <td style="padding: 10px;"><code>"12 a 34".match(/\d+/g) // ["12", "34"]</code></td>
+                  <td style="padding: 10px;">Liefert Array aller Fundstellen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>str.replace(regex, sub)</code></td>
+                  <td style="padding: 10px;"><code>"Hi".replace(/i/, "allo")</code></td>
+                  <td style="padding: 10px;">Ersetzt Treffer durch Ersatz-String oder Funktion</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>[a-z0-9]</code></td>
+                  <td style="padding: 10px;"><code>[A-Z] // Großbuchstabe</code></td>
+                  <td style="padding: 10px;">Zeichenklasse (Matcht ein beliebiges Zeichen im Bereich)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>(gruppe) &amp; $1</code></td>
+                  <td style="padding: 10px;"><code>str.replace(/(\d+)/, "Nr: $1")</code></td>
+                  <td style="padding: 10px;">Capturing Group zum Wiederverwenden von Teiltreffern</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 5. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> <code>istGueltigeEmail(email)</code> mit Regex-Validierung (<code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code>) schreiben.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> <code>findeTelefonnummern(text)</code> für verschiedene Formate (<code>+49...</code>, <code>0171-...</code>) implementieren.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> <code>extrahiereHashtags(text)</code> zur Extraktion aller <code>#hashtag</code> Wörter umsetzen.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> <code>maskiereKreditkarte(text)</code> zur Anonymisierung von 16-stelligen Kartennummern (<code>****-****-****-XXXX</code>) implementieren.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5">
+              <strong>TODO 5:</strong> <code>istStarkesPasswort(passwort)</code> mit Check auf Länge (&gt;=8), Klein-/Großbuchstaben, Ziffern und Sonderzeichen bauen.
+            </label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 4</div>
+            <p>
+              In <code>str.replace(regex, replacement)</code> kannst du runde Klammern <code>(\d{4})</code> für die letzten 4 Ziffern verwenden und diese mit <code>$1</code> im Ersatz-String einfügen!
+            </p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_2_oop_und_daten&chapter=07_regex_und_textverarbeitung" class="btn" style="background: #eab308; color: #000; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 6px;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_klassen_und_oop/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">&larr; Zurück zu JS 06</a>
+            <a href="../08_fehlerbehandlung_und_debugging/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">Weiter zu JS 08 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

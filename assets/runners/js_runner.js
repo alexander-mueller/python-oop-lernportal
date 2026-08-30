@@ -12,7 +12,7 @@
   const BLOCKED_JS_PATTERNS = [
     /(?:parent|top|opener)\.document/i,
     /(?:window|document)\.location/i,
-    /localStorage|sessionStorage|indexedDB/i,
+    /(?:window|parent|top)\.(?:localStorage|sessionStorage|indexedDB)/i,
     /document\.cookie/i
   ];
 

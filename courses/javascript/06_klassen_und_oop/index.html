@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 06: Klassen &amp; Objektorientierung (OOP)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <style>
+    .class-diagram {
+      display: flex;
+      gap: 24px;
+      align-items: stretch;
+      justify-content: center;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .uml-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      width: 280px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .uml-header {
+      background: #4f46e5;
+      color: #ffffff;
+      padding: 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .uml-header.subclass {
+      background: #059669;
+    }
+    .uml-section {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .uml-section:last-child {
+      border-bottom: none;
+    }
+    .uml-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .uml-item {
+      padding: 3px 0;
+      color: var(--text-body);
+    }
+    .uml-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #059669;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 Lehrpfad 2: Moderne Datenmodelle &amp; OOP</div>
+          <h1>JS 06: Klassen &amp; Objektorientierung (OOP)</h1>
+          <p>Lerne professionelle Datenmodellierung mit ES6-Klassen, Kapselung, Vererbung und statischen Fabrikmethoden.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: ES6 KLASSEN & KONSTRUKTOR -->
+        <section class="card">
+          <h2>🏗️ 1. Der Klassen-Bauplan: <code>class</code>, <code>constructor</code> &amp; <code>this</code></h2>
+          <p>
+            Mit ECMAScript 2015 (ES6) führte JavaScript eine elegante, standardisierte Klassensyntax ein. Eine <strong>Klasse</strong> ist wie ein technischer Bauplan, aus dem mit dem Schlüsselwort <code>new</code> beliebig viele konkrete Objekte (Instanzen) gefertigt werden:
+          </p>
+
+          <pre><code>class Benutzer {
+  // Der Konstruktor wird beim Erzeugen mit 'new' aufgerufen:
+  constructor(name, email) {
+    this.name = name;     // Instanzvariable zuweisen
+    this.email = email;
+    this.erstelltAm = new Date();
+  }
+
+  // Methoden werden direkt im Klassenkörper definiert (ohne 'function'):
+  begruessen() {
+    return `Hallo, mein Name ist ${this.name}!`;
+  }
+}
+
+// Instanziierung:
+const user1 = new Benutzer("Anna Schmidt", "anna@dev.io");
+console.log(user1.begruessen()); // "Hallo, mein Name ist Anna Schmidt!"</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: KAPSELUNG & GETTER / SETTER -->
+        <section class="card">
+          <h2>🔒 2. Kapselung: Getters, Setters &amp; Datenvalidierung</h2>
+          <p>
+            Objektorientierte Kapselung schützt interne Zustände vor unkontrollierten Änderungen von außen. Mit <code>get</code> und <code>set</code> steuerst du Lese- und Schreibzugriffe und validierst eingehende Werte:
+          </p>
+
+          <pre><code>class Bankkonto {
+  constructor(inhaber, startSaldo = 0) {
+    this.inhaber = inhaber;
+    this._saldo = startSaldo; // Konvention: Unterstrich signalisiert internen Zustand
+  }
+
+  // Getter: Zugriff wie auf eine normale Eigenschaft (konto.saldo)
+  get saldo() {
+    return this._saldo;
+  }
+
+  // Kontrollierte Methoden statt direktem Schreibzugriff:
+  einzahlen(betrag) {
+    if (betrag &lt;= 0) {
+      throw new Error("Einzahlungsbetrag muss positiv sein.");
+    }
+    this._saldo += betrag;
+    return this._saldo;
+  }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏭 Didaktische Analogie: Der Bauplan &amp; die Fabrikstraße</div>
+            <p>
+              Stelle dir eine <strong>Klasse</strong> wie den CAD-Konstruktionsplan eines Autos in einer Autofabrik vor.
+              Jedes Mal, wenn du <code>new Auto(...)</code> ausführst, rollt ein eigenständiges Fahrzeug vom Fließband auf die Straße (die <strong>Instanz</strong>). 
+              Das Auto besitzt eigene Farben und Seriennummern (<strong>Instanzvariablen</strong>), bedient sich über Pedale und Lenkrad (<strong>Methoden</strong>), und die Maschinen in der Fabrikhalle selbst sind die <strong>statischen Werkzeuge</strong>.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: VERERBUNG & SUPER -->
+        <section class="card">
+          <h2>🧬 3. Vererbung mit <code>extends</code> &amp; Elternaufruf <code>super()</code></h2>
+          <p>
+            Klassen können Eigenschaften und Methoden von Basisklassen erben. Mit <code>extends</code> leitet man eine Kindklasse ab und mit <code>super(...)</code> ruft man den Konstruktor oder die Methoden der Elternklasse auf:
+          </p>
+
+          <pre><code>// Basisklasse:
+class Fahrzeug {
+  constructor(marke, modell, baujahr) {
+    this.marke = marke;
+    this.modell = modell;
+    this.baujahr = baujahr;
+  }
+
+  beschreibung() {
+    return `${this.marke} ${this.modell} (${this.baujahr})`;
+  }
+}
+
+// Kindklasse erbt von Fahrzeug:
+class ElektroAuto extends Fahrzeug {
+  constructor(marke, modell, baujahr, batterieKapazitaet) {
+    super(marke, modell, baujahr); // 1. Pflicht: Eltern-Konstruktor aufrufen!
+    this.batterieKapazitaet = batterieKapazitaet; // 2. Eigene Eigenschaften setzen
+  }
+
+  // Methode der Elternklasse überschreiben & erweitern:
+  beschreibung() {
+    return `${super.beschreibung()} [Elektro: ${this.batterieKapazitaet} kWh]`;
+  }
+
+  reichweiteBerechnen(verbrauchPro100km) {
+    return (this.batterieKapazitaet / verbrauchPro100km) * 100;
+  }
+}</code></pre>
+
+          <!-- KLASSENDIAGRAMM -->
+          <h3 style="margin-top: 24px;">📊 Klassenhierarchie (UML-Diagramm)</h3>
+          <div class="class-diagram">
+            <div class="uml-card">
+              <div class="uml-header">Fahrzeug (Basis)</div>
+              <div class="uml-section">
+                <div class="uml-title">Attribute</div>
+                <div class="uml-item">+ marke: string</div>
+                <div class="uml-item">+ modell: string</div>
+                <div class="uml-item">+ baujahr: number</div>
+              </div>
+              <div class="uml-section">
+                <div class="uml-title">Methoden</div>
+                <div class="uml-item">+ beschreibung(): string</div>
+              </div>
+            </div>
+
+            <div class="uml-arrow">&larr; extends</div>
+
+            <div class="uml-card">
+              <div class="uml-header subclass">ElektroAuto (Kind)</div>
+              <div class="uml-section">
+                <div class="uml-title">Zusatz-Attribute</div>
+                <div class="uml-item">+ batterieKapazitaet: number</div>
+              </div>
+              <div class="uml-section">
+                <div class="uml-title">Zusatz-Methoden</div>
+                <div class="uml-item">+ beschreibung(): string (override)</div>
+                <div class="uml-item">+ reichweiteBerechnen(v): number</div>
+                <div class="uml-item"><em>+ static erstelleStandardTesla()</em></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. THEORIE: STATISCHE METHODEN -->
+        <section class="card">
+          <h2>⚙️ 4. Statische Methoden &amp; Fabrikfunktionen (<code>static</code>)</h2>
+          <p>
+            Statische Methoden gehören zur Klasse selbst und nicht zu einer einzelnen Instanz. Man ruft sie direkt über <code>KlassenName.methode()</code> auf. Sie eignen sich hervorragend für Hilfsfunktionen und <strong>Fabrikmuster (Factory Methods)</strong>:
+          </p>
+
+          <pre><code>class ElektroAuto extends Fahrzeug {
+  // ... Konstruktor und Methoden ...
+
+  // Statische Fabrikmethode erzeugt vorkonfigurierte Instanzen:
+  static erstelleStandardTesla() {
+    return new ElektroAuto("Tesla", "Model 3", 2024, 75);
+  }
+}
+
+// Aufruf direkt an der Klasse, ohne vorheriges 'new':
+const meinTesla = ElektroAuto.erstelleStandardTesla();
+console.log(meinTesla.beschreibung());
+// "Tesla Model 3 (2024) [Elektro: 75 kWh]"</code></pre>
+        </section>
+
+        <!-- 5. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 5. Cheat-Sheet: JavaScript OOP &amp; ES6 Klassen</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konzept</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Klassendeklaration</strong></td>
+                  <td style="padding: 10px;"><code>class Auto { ... }</code></td>
+                  <td style="padding: 10px;">Definiert einen neuen Objekttypen-Bauplan</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Konstruktor</strong></td>
+                  <td style="padding: 10px;"><code>constructor(farbe) { this.farbe = farbe; }</code></td>
+                  <td style="padding: 10px;">Initialisiert neue Objekt-Instanzen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Getter / Setter</strong></td>
+                  <td style="padding: 10px;"><code>get saldo() { return this._saldo; }</code></td>
+                  <td style="padding: 10px;">Kontrollierter Lese- und Schreibzugriff</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Vererbung</strong></td>
+                  <td style="padding: 10px;"><code>class Kind extends Basis { ... }</code></td>
+                  <td style="padding: 10px;">Übernimmt Attribute &amp; Methoden der Elternklasse</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Super-Aufruf</strong></td>
+                  <td style="padding: 10px;"><code>super(arg1, arg2);</code></td>
+                  <td style="padding: 10px;">Führt den Eltern-Konstruktor oder Eltern-Methoden aus</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Statische Methode</strong></td>
+                  <td style="padding: 10px;"><code>static erzeuge() { return new X(); }</code></td>
+                  <td style="padding: 10px;">Klassenbezogene Hilfs- oder Fabrikmethode</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Typ-Prüfung</strong></td>
+                  <td style="padding: 10px;"><code>obj instanceof Klasse</code></td>
+                  <td style="padding: 10px;">Prüft, ob <code>obj</code> aus <code>Klasse</code> oder deren Vererbungslinie stammt</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 6. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 6. Aufgaben &amp; Checkliste in <code>aufgabe.js</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1">
+              <strong>TODO 1:</strong> Klasse <code>Bankkonto</code> mit <code>constructor(inhaber, startSaldo)</code>, Getter <code>saldo</code> sowie Methoden <code>einzahlen(betrag)</code> und <code>abheben(betrag)</code> implementieren.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2">
+              <strong>TODO 2:</strong> Basisklasse <code>Fahrzeug(marke, modell, baujahr)</code> mit Methode <code>beschreibung()</code> schreiben.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3">
+              <strong>TODO 3:</strong> Kindklasse <code>ElektroAuto extends Fahrzeug</code> mit <code>super()</code>, <code>batterieKapazitaet</code> und <code>reichweiteBerechnen(verbrauchPro100km)</code> implementieren.
+            </label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4">
+              <strong>TODO 4:</strong> Statische Fabrikmethode <code>ElektroAuto.erstelleStandardTesla()</code> erstellen.
+            </label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Tipp für Teilziel 3 &amp; 4</div>
+            <p>
+              Vergiss nicht, in der Kindklasse <code>ElektroAuto</code> als allererste Anweisung im Konstruktor <code>super(marke, modell, baujahr)</code> aufzurufen, bevor du auf <code>this.batterieKapazitaet</code> zugreifst!
+            </p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=javascript&track=track_2_oop_und_daten&chapter=06_klassen_und_oop" class="btn" style="background: #eab308; color: #000; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 6px;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_objekte_und_destructuring/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">&larr; Zurück zu JS 03</a>
+            <a href="../07_regex_und_textverarbeitung/index.html" class="btn btn-secondary" style="text-decoration: none; padding: 10px 20px; border-radius: 6px;">Weiter zu JS 07 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
