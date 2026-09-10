@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 06: Cyber-Physische Systeme & IoT (LF 6)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 6</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 06: Cyber-Physische Systeme & IoT (LF 6)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Sensoren & Aktoren, A/D-Wandler, Nyquist-Shannon-Abtasttheorem, Modbus RTU/TCP, CAN-Bus, MQTT Publish-Subscribe & QoS-Stufen.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🤖 LF 6: Das Cyber-Physische System ergänzen</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Cyber-Physische Systeme (CPS) verbinden Software, Netzwerke und physische Sensoren/Aktoren in Gebäudetechnik, Rechenzentren und Fertigungsanlagen (Industrie 4.0).
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Sensoren und Aktoren</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Sensoren (Messwertgeber):</strong> Wandeln physikalische Größen in elektrische Signale um (z. B. PT100 Temperaturfühler, Drucktransmitter, Hall-Sensoren, Rauchmelder).</li>
+    <li><strong>Aktoren (Stellglieder):</strong> Setzen elektrische Steuersignale in mechanische oder thermische Aktionen um (z. B. Stellmotoren für Lüftungsklappen, Schütze, Magnetventile, Relais).</li>
+    <li><strong>Nyquist-Shannon-Abtasttheorem:</strong> Die Abtastfrequenz eines A/D-Wandlers muss mindestens doppelt so hoch sein wie die höchste Frequenz des analogen Signals (<code>f_sample > 2 * f_max</code>), um Aliasing zu verhindern.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. IoT-Kommunikation mit MQTT</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    MQTT (Message Queuing Telemetry Transport) ist ein leichtgewichtiges Publish-Subscribe-Protokoll auf TCP-Basis:<br>
+    - <strong>Broker:</strong> Zentraler Server, der Nachrichten empfängt und an Abonnenten weiterleitet.<br>
+    - <strong>Topics:</strong> Hierarchische Themenpfade (z. B. <code>sensor/halle1/temp</code>).<br>
+    - <strong>QoS 0 (At most once):</strong> Fire and forget, keine Empfangsbestätigung.<br>
+    - <strong>QoS 1 (At least once):</strong> Garantiert mindestens einmal zugestellt (Bestätigung via PUBACK).<br>
+    - <strong>QoS 2 (Exactly once):</strong> Garantiert genau einmal ohne Duplikate (4-Wege-Handshake).
+  </p>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 6
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="Sensoren und Aktoren im CPS" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Sensoren und Aktoren im CPS</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem intelligenten Serverraum überwachen Sensoren die Umgebungstemperatur und steuern bei Bedarf automatisch Lüftungsklappen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie die Begriffe Sensor und Aktor in einem Cyber-Physischen System (CPS) und nennen Sie je zwei typische Komponenten in einem Rechenzentrum.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Sensor: Technisches Bauteil, das physikalische oder chemische Größen (z. B. Temperatur, Helligkeit, Druck) erfasst und in elektrische bzw. digitale Signale umwandelt. Beispiele: Temperaturfühler (PT100/NTC), Rauchmelder, Feuchtigkeitssensor. (3 Pkt.)
+Aktor (Aktorik): Bauteil, das elektrische Steuerbefehle in mechanische Bewegung, Schaltvorgänge oder andere physikalische Wirkungen umsetzt. Beispiele: Stellmotor für Lüftungsklappen, Relais zum Einschalten von Kühlaggregaten, Magnet-Türschloss. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="MQTT-Protokoll Publish-Subscribe" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">MQTT-Protokoll Publish-Subscribe</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Übertragung von Messwerten hunderter IoT-Sensoren an einen Server wird MQTT anstelle von HTTP REST gewählt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die Funktionsweise des Publish-Subscribe-Musters bei MQTT unter Nennung der Rollen Broker, Publisher und Subscriber und erläutern Sie einen Vorteil gegenüber HTTP.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Funktionsweise: Publisher (z. B. ein Temperatursensor) sendet Nachrichten zu einem bestimmten Thema (Topic, z. B. "serverraum/rack1/temp") an den zentralen Vermittler (MQTT-Broker). Subscriber (z. B. ein Dashboard oder Alarmdienst) abonnieren dieses Topic beim Broker. Der Broker leitet jede neue Nachricht automatisch an alle aktiven Abonnenten weiter. (5 Pkt.)
+Vorteil gegenüber HTTP: Extrem geringer Protokoll-Overhead (Header ab 2 Byte), Push-Prinzip statt ständigem Polling, ideal für bandbreitenarme Verbindungen und stromsparende Mikrocontroller. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="MQTT Quality of Service (QoS Level)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">MQTT Quality of Service (QoS Level)</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem IoT-Überwachungssystem müssen verschiedene Meldungen übertragen werden: Regelmäßige Temperaturwerte alle 5 Sekunden und kritische Rauchmelder-Alarme.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die drei MQTT QoS-Stufen (QoS 0, QoS 1, QoS 2) und ordnen Sie die beiden Meldungstypen begründet zu.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  QoS 0 (At most once): Nachricht wird maximal einmal ohne Empfangsbestätigung versendet ("Fire and forget"). Verlust möglich. (2 Pkt.)
+QoS 1 (At least once): Nachricht wird garantiert mindestens einmal zugestellt (Bestätigung via PUBACK), Duplikate sind möglich. (2 Pkt.)
+QoS 2 (Exactly once): Nachricht wird garantiert genau einmal ohne Duplikate über einen 4-Wege-Handshake zugestellt. Höchster Overhead. (2 Pkt.)
+Zuordnung: Regelmäßige Temperaturwerte -> QoS 0 (einzelner Verlust unkritisch); Rauchmelder-Alarm -> QoS 1 oder 2 (darf keinesfalls verloren gehen). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Analog-Digital-Wandlung & Abtasttheorem" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Analog-Digital-Wandlung & Abtasttheorem</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein analoger Drucksensor liefert eine Spannung zwischen 0 und 10 Volt. Ein Mikrocontroller liest das Signal mit einem 10-Bit-A/D-Wandler ein.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die kleinste auflösbare Spannungsstufe (Auflösung) des Wandlers und formulieren Sie das Nyquist-Shannon-Abtasttheorem für periodische Signale.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  10-Bit Auflösung: 2^10 = 1024 diskrete Stufen. (2 Pkt.)
+Spannungsschritt: 10 V / 1024 = 0,009765 V = ca. 9,77 mV. (2 Pkt.)
+Nyquist-Shannon-Abtasttheorem: Um ein bandbegrenztes analoges Signal ohne Informationsverlust (Aliasing) digital rekonstruieren zu können, muss die Abtastfrequenz (Sampling Rate) mehr als doppelt so hoch sein wie die höchste im Signal vorkommende Grenzfrequenz (f_abtast > 2 * f_max). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Feldbussysteme Modbus RTU vs Modbus TCP" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Feldbussysteme Modbus RTU vs Modbus TCP</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Gebäudeleittechnik werden Energiezähler und Klimageräte über Modbus an eine Steuerung angebunden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie Modbus RTU und Modbus TCP bezüglich Übertragungsmedium, Adressierung und Fehlererkennung.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Modbus RTU: Physische Zweidrahtleitung RS-485 (differenzielle Spannung). Master-Slave-Prinzip mit Slave-IDs (1 bis 247). Fehlererkennung erfolgt über eine 16-Bit-CRC-Prüfsumme (Cyclic Redundancy Check) am Frame-Ende. (4 Pkt.)
+Modbus TCP: Basiert auf Standard-Ethernet und TCP/IP (Standard-Port 502). Adressierung erfolgt über reguläre IP-Adressen und Portnummern. Die Fehlererkennung und Flusskontrolle wird vollständig von den darunterliegenden TCP- und Ethernet-Prüfsummen übernommen (kein CRC im Modbus-Header nötig). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Edge Computing vs Cloud Computing" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Edge Computing vs Cloud Computing</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Industrie-4.0-Fertigung erfassen Sensoren 10.000 Messwerte pro Sekunde an einer CNC-Fräse.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Begründen Sie, warum die Auswertung zur Erkennung von Werkzeugbruch über ein Edge-Device direkt an der Maschine und nicht in einer Cloud-Plattform stattfinden muss.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Latenzzeit (Echtzeitfähigkeit): Ein Werkzeugbruch erfordert eine Notabschaltung innerhalb von Millisekunden. Der Roundtrip in eine Cloud über das Internet hat Latenzen von 20-100 ms und ist für Maschinenschutz zu langsam. (2 Pkt.)
+2. Bandbreitenbedarf: 10.000 Messwerte pro Sekunde würden kontinuierlich Gigabytes an Daten über den Internetanschluss pumpen und unnötige Kosten/Leitungsüberlastung erzeugen. (2 Pkt.)
+3. Ausfallsicherheit: Die Maschine muss auch bei einem Ausfall der Internetverbindung autark und sicher weiterlaufen. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../05_lf5_software_zur_datenverwaltung/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../07_lf7_instandhaltung_und_fehlerdiagnose/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

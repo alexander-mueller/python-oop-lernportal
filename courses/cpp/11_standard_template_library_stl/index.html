@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ 11: Standard Template Library (STL)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 C++20 STL &amp; Algorithms</div>
+          <h1>C++ 11: Standard Template Library (STL)</h1>
+          <p>Nutze die volle Leistungsfähigkeit der C++ Standardbibliothek: Schnelle Container (<code>std::vector</code>, <code>std::unordered_map</code>, <code>std::set</code>) und hocheffiziente Algorithmen (<code>std::sort</code>, <code>std::transform</code>, <code>std::accumulate</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: CONTAINER -->
+        <section class="card">
+          <h2>📦 1. Sequenzielle vs. Assoziative STL-Container</h2>
+          <p>Die C++ STL trennt Datenstrukturen und Algorithmen strikt über <strong>Iteratoren</strong>. Die Wahl des passenden Containers ist entscheidend für Cache-Lokalität und Zeitkomplexität:</p>
+          
+          <pre><code>#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    // 1. std::vector: Dynamisches Contiguous Array (O(1) amortisiert, beste Cache-Lokalität)
+    std::vector&lt;int&gt; scores = {85, 92, 78, 99};
+    scores.push_back(95);
+
+    // 2. std::unordered_map: Hash-Tabelle für O(1) Key-Value Lookups
+    std::unordered_map&lt;std::string, int&gt; inventory;
+    inventory["health_potion"] = 10;
+    inventory["mana_potion"] = 5;
+
+    // 3. std::set: Selbstbalancierter Rot-Schwarz-Baum (O(log N), sortiert &amp; dedupliziert)
+    std::set&lt;std::string&gt; tags = {"cpp", "systems", "cpp", "performance"};
+    // tags enthält: {"cpp", "performance", "systems"}
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Hochregallager</div>
+            <p>Ein <code>std::vector</code> ist wie ein <strong>durchgehendes Förderband</strong>: Pakete liegen direkt hintereinander im Speicher, was der CPU blitzschnellen Cache-Zugriff ermöglicht. Eine <code>std::unordered_map</code> ist wie ein <strong>automatisierter Barcode-Scanner</strong>: Barcode einlesen, Fach sofort finden! Ein <code>std::set</code> ist das <strong>alphabetische Register</strong> am Eingang.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: STL ALGORITHMEN -->
+        <section class="card">
+          <h2>⚡ 2. Mächtige STL-Algorithmen (<code>&lt;algorithm&gt;</code> &amp; <code>&lt;numeric&gt;</code>)</h2>
+          <p>Schreibe keine manuellen for-Schleifen, wenn die STL optimierte, ausgetestete Algorithmen bereitstellt:</p>
+
+          <pre><code>#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+struct Player {
+    std::string name;
+    int score;
+};
+
+int main() {
+    std::vector&lt;Player&gt; players = {{"Alice", 350}, {"Bob", 500}, {"Charlie", 420}};
+
+    // 1. Sortieren mit Lambda-Comparator
+    std::sort(players.begin(), players.end(), [](const Player&amp; a, const Player&amp; b) {
+        return a.score &gt; b.score; // Absteigend sortieren
+    });
+
+    // 2. Suchen mit std::find_if
+    auto it = std::find_if(players.begin(), players.end(), [](const Player&amp; p) {
+        return p.name == "Bob";
+    });
+
+    // 3. Akkumulieren mit std::accumulate
+    int total_score = std::accumulate(players.begin(), players.end(), 0,
+        [](int sum, const Player&amp; p) { return sum + p.score; });
+}</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: STL Container &amp; Komplexität</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Container</th>
+                  <th style="padding: 10px;">Zugriff (Lookup)</th>
+                  <th style="padding: 10px;">Einfügen (Insert)</th>
+                  <th style="padding: 10px;">Vorteile &amp; Systems-Einsatz</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::vector&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>O(1)</code> via Index</td>
+                  <td style="padding: 10px;"><code>O(1)</code> am Ende (amortisiert)</td>
+                  <td style="padding: 10px;">Standard-Wahl: Beste Hardware-Cache-Nutzung</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::unordered_map&lt;K, V&gt;</code></td>
+                  <td style="padding: 10px;"><code>O(1)</code> (Avg)</td>
+                  <td style="padding: 10px;"><code>O(1)</code> (Avg)</td>
+                  <td style="padding: 10px;">Schnellste Key-Value Assoziation (Hash-Table)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::set&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>O(log N)</code></td>
+                  <td style="padding: 10px;"><code>O(log N)</code></td>
+                  <td style="padding: 10px;">Sortierte Unikate (Rot-Schwarz-Baum)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::deque&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>O(1)</code> via Index</td>
+                  <td style="padding: 10px;"><code>O(1)</code> an Front &amp; Back</td>
+                  <td style="padding: 10px;">Double-Ended Queue ohne Reallokationskosten</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.cpp</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>InventorySystem</code> mit <code>std::unordered_map</code> für Mengenzählung, Addieren und Abfragen implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>filter_and_sort_leaderboard</code> mit <code>std::copy_if</code> und absteigendem <code>std::sort</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>calculate_telemetry_stats</code> mit <code>std::min_element</code>, <code>std::max_element</code> und <code>std::accumulate</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>extract_unique_sorted_tags</code> mit <code>std::set</code> zur Deduplizierung programmieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>normalize_sensor_data</code> mit <code>std::transform</code> zur Skalierung von Messwerten schreiben.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Performance-Tipp: <code>reserve()</code> verwenden!</div>
+            <p>Wenn du vorab weißt, wie viele Elemente in einen <code>std::vector</code> eingefügt werden, rufe immer <code>vec.reserve(n)</code> auf. Das verhindert wiederholte teure Reallokationen und Memory Copying auf dem Heap!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_3_smart_pointers_stl&chapter=11_standard_template_library_stl" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_lambdas_und_moderne_cpp20_features/index.html" class="btn btn-secondary">Weiter zu C++ 12 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 02: Das Ownership &amp; Borrowing System</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge" style="background: rgba(244, 102, 35, 0.15); color: #f46623; border: 1px solid rgba(244, 102, 35, 0.3);">🦀 Das Herzstück von Rust</div>
+          <h1>Rust 02: Ownership, Move-Semantik &amp; Borrowing (&amp; / &amp;mut)</h1>
+          <p>Verstehe das revolutionäre Speichersicherheits-Modell von Rust ohne Garbage Collector: Stack vs. Heap, Move-Semantik, RAII (Drop), unveränderliche Referenzen und das <em>Aliasing XOR Mutation</em> Prinzip.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: DIE 3 REGELN VON OWNERSHIP -->
+        <section class="card">
+          <h2>👑 1. Die drei goldenen Gesetze des Ownership-Systems</h2>
+          <p>Im Gegensatz zu Sprachen mit Garbage Collector (wie Java/Python) oder manuellem Speichermanagement (wie C/C++) garantiert Rust <strong>Speichersicherheit zur Compile-Zeit</strong> durch drei strikte Regeln:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border-left: 4px solid #f46623;">
+              <h4 style="margin: 0 0 6px 0;">1. Einziger Eigentümer</h4>
+              <p style="margin: 0; font-size: 0.88rem;">Jeder Wert im Speicher hat zu jedem Zeitpunkt genau <strong>eine</strong> Besitzer-Variable (Owner).</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border-left: 4px solid #f46623;">
+              <h4 style="margin: 0 0 6px 0;">2. Move-Semantik</h4>
+              <p style="margin: 0; font-size: 0.88rem;">Wird ein Wert zugewiesen oder übergeben, wandert der Besitz weiter (<strong>Move</strong>). Der alte Owner wird ungültig.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border-left: 4px solid #f46623;">
+              <h4 style="margin: 0 0 6px 0;">3. Automatisches Drop</h4>
+              <p style="margin: 0; font-size: 0.88rem;">Verlässt der Owner seinen Gültigkeitsbereich (Scope <code>}</code>), gibt Rust den Speicher sofort frei (<strong>RAII</strong>).</p>
+            </div>
+          </div>
+
+          <pre><code>fn main() {
+    let s1 = String::from("Rust Systems"); // s1 allokiert Heap-Speicher
+    let s2 = s1;                          // ⚡ MOVE: Besitz wandert zu s2!
+
+    // println!("{}", s1); // ❌ COMPILE-FEHLER: borrow of moved value: `s1`
+    println!("{}", s2);   // ✅ s2 ist der aktuelle Eigentümer
+} // Hier endet der Scope: s2 wird automatisch freigegeben (Drop)!</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🚗 Didaktische Analogie: Der originale Fahrzeugbrief</div>
+            <p>Ein Heap-Objekt wie <code>String</code> besitzt einen Fahrzeugbrief (den Pointer auf dem Stack). Wenn du das Auto verkaufst (<code>let s2 = s1;</code>), übergibst du den originalen Brief. Du kannst danach nicht mehr behaupten, das Auto gehöre dir (<code>s1</code> ist erloschen). So entstehen niemals <em>Double-Free</em>-Sicherheitslücken!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: STACK VS HEAP & COPY TRAIT -->
+        <section class="card">
+          <h2>🧱 2. Stack vs. Heap &amp; der <code>Copy</code> Trait</h2>
+          <p>Typen mit fester Größe zur Compile-Zeit (wie <code>i32</code>, <code>f64</code>, <code>bool</code>, <code>char</code>) implementieren den <strong><code>Copy</code> Trait</strong>. Bei einer Zuweisung werden sie bitweise auf dem schnellen CPU-Stack kopiert, ohne Move:</p>
+
+          <div style="background: #0b0f19; color: #f8fafc; padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.6; margin-bottom: 16px;">
+            <div style="color: #38bdf8;">// STACK (Schnell, feste Größe, automatische Kopie):</div>
+            <div>let a: i32 = 42;</div>
+            <div>let b = a;  <span style="color: #4ade80;">// Beide Variablen 'a' und 'b' existieren unabhängig!</span></div>
+            <br>
+            <div style="color: #f46623;">// HEAP (Dynamisch, Zeiger auf Stack):</div>
+            <div>let s1 = String::from("Hi"); <span style="color: #94a3b8;">// Stack: [ptr, len: 2, cap: 2] -> Heap: ['H', 'i']</span></div>
+            <div>let s2 = s1.clone();         <span style="color: #4ade80;">// Explizite Tiefenkopie auf neuem Heap-Bereich</span></div>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: BORROWING & DIE KERNREGEL -->
+        <section class="card">
+          <h2>🤝 3. References &amp; Borrowing: Ausleihen statt Besitzen</h2>
+          <p>Möchtest du einen Wert nutzen, ohne ihn zu konsumieren, erstellst du eine <strong>Referenz (Borrowing)</strong> mit <code>&amp;</code>:</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px; text-align: left;">Referenz-Typ</th>
+                  <th style="padding: 8px 12px; text-align: left;">Syntax</th>
+                  <th style="padding: 8px 12px; text-align: left;">Befugnis</th>
+                  <th style="padding: 8px 12px; text-align: left;">Erlaubte Anzahl gleichzeitig</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Unveränderlich (Shared Borrow)</strong></td>
+                  <td style="padding: 8px 12px;"><code>&amp;T</code></td>
+                  <td style="padding: 8px 12px;">Nur Lesen (Read-Only)</td>
+                  <td style="padding: 8px 12px;">Beliebig viele (∞)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 12px;"><strong>Veränderbar (Mutable Borrow)</strong></td>
+                  <td style="padding: 8px 12px;"><code>&amp;mut T</code></td>
+                  <td style="padding: 8px 12px;">Lesen &amp; Schreiben (Read/Write)</td>
+                  <td style="padding: 8px 12px;"><strong>Genau eine (1)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-warnung">
+            <div class="box-title">⚖️ Die fundamentale Regel: Aliasing XOR Mutation</div>
+            <p>Du darfst zu jedem Zeitpunkt im selben Gültigkeitsbereich <strong>entweder</strong> beliebig viele unveränderliche Referenzen (<code>&amp;T</code>) <strong>oder</strong> genau eine veränderliche Referenz (<code>&amp;mut T</code>) haben – aber <strong>niemals beides gleichzeitig</strong>! Dies verhindert Data Races und Iterator Invalidation zur Compile-Zeit.</p>
+          </div>
+
+          <pre><code>let mut msg = String::from("Rust");
+
+let r1 = &amp;msg; // Unveränderliche Ausleihe 1
+let r2 = &amp;msg; // Unveränderliche Ausleihe 2
+println!("r1: {}, r2: {}", r1, r2); // ✅ Gültig!
+
+// let r3 = &amp;mut msg; // ❌ COMPILE-FEHLER solange r1/r2 noch aktiv genutzt werden!
+
+let r_mut = &amp;mut msg; // ✅ Gültig, sobald r1/r2 nicht mehr referenziert werden
+r_mut.push_str(" 2024");</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>calculate_length_borrow(s: &amp;String) -&gt; usize</code>: Länge ermitteln, ohne Ownership zu konsumieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>append_security_tag(s: &amp;mut String, tag: &amp;str)</code>: Text in-place über eine veränderliche Referenz anhängen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>take_ownership_and_wrap(s: String, prefix: &amp;str, suffix: &amp;str) -&gt; String</code>: Ownership übernehmen und formatierten String zurückgeben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>clone_and_transform(s: &amp;String) -&gt; (String, usize)</code>: Expliziten Heap-Clone erstellen, zu Uppercase wandeln und Tupel mit Originallänge erzeugen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>swap_values(a: &amp;mut i32, b: &amp;mut i32)</code>: Die Werte zweier Integer-Referenzen in-place tauschen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_1_rust_basics&chapter=02_das_ownership_und_borrowing_system" class="btn" style="background: #f46623; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_slices_und_lifetimes_grundlagen/index.html" class="btn btn-secondary">Weiter zu Rust 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

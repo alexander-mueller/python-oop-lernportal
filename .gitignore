@@ -10,3 +10,5 @@ venv/
 .DS_Store
 *.db
 platform_data.db
+exams/
+*.pdf

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 03: Clients in Netzwerke einbinden (LF 3)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 3</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 03: Clients in Netzwerke einbinden (LF 3)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">IPv4/IPv6-Adressierung, Subnetting FLSM/VLSM, OSI-Modell, Cat 6a/7, Glasfaser (Singlemode vs. Multimode), Switching & Wi-Fi 6.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🌐 LF 3: Clients in Netzwerke einbinden</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Lernfeld 3 ist das Herzstück der Netzwerktechnik in Teil 1 der Abschlussprüfung: IPv4/IPv6-Adressierung, Subnetting, OSI-Referenzmodell, strukturierte Verkabelung und Netzwerkprotokolle.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Die Magische Zahl im Subnetting (FLSM & VLSM)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    Die Schrittweite (Blockgröße) berechnet sich immer aus: <code>Schrittweite = 256 - Subnetzmasken-Oktett</code>.<br>
+    Beispiel /27: Subnetzmaske = 255.255.255.224 -> Schrittweite = 256 - 224 = <strong>32</strong>.<br>
+    Netzwerkblöcke: .0, .32, .64, .96, .128, .160, .192, .224.<br>
+    Nutzbare Hosts: <code>2^(Hostbits) - 2 = 2^5 - 2 = 30 Hosts</code>.
+  </p>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Das 7-Schichten OSI-Referenzmodell (ISO/IEC 7498-1)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead><tr><th>Schicht</th><th>Name</th><th>Protokolle / Hardware</th><th>PDU (Dateneinheit)</th></tr></thead>
+    <tbody>
+      <tr><td>7</td><td>Application (Anwendung)</td><td>HTTP, DNS, DHCP, SMTP, SSH</td><td>Data</td></tr>
+      <tr><td>6</td><td>Presentation (Darstellung)</td><td>TLS, JSON, ASCII, JPEG</td><td>Data</td></tr>
+      <tr><td>5</td><td>Session (Sitzung)</td><td>RPC, NetBIOS, Sockets</td><td>Data</td></tr>
+      <tr><td>4</td><td>Transport (Transport)</td><td>TCP (Segment), UDP (Datagram)</td><td>Segment</td></tr>
+      <tr><td>3</td><td>Network (Vermittlung)</td><td>IPv4, IPv6, ICMP, Router</td><td>Paket</td></tr>
+      <tr><td>2</td><td>Data Link (Sicherung)</td><td>Ethernet, ARP, Switch, MAC-Adresse</td><td>Frame</td></tr>
+      <tr><td>1</td><td>Physical (Bitübertragung)</td><td>RJ45, Glasfaser, Hub, Repeater</td><td>Bit</td></tr>
+    </tbody>
+  </table>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+<div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+    <span>⚡</span> Interaktiver Subnetting-Drill Master
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.9rem;">
+    Trainieren Sie Subnetting-Berechnungen unter Prüfungsbedingungen mit Sofort-Feedback und Schrittweiten-Erklärung:
+  </p>
+  <div id="subnetting-container"></div>
+  <script src="../../../assets/ihk_tools/subnetting_drill.js"></script>
+</div>
+
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 3
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="IPv4 Subnetting /27 Berechnung" data-points="12" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">IPv4 Subnetting /27 Berechnung</strong>
+                <span class="ihk-badge ihk-badge-success">12 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Einem Subnetz ist die IP-Adresse 172.20.14.98 mit der CIDR-Präfixlänge /27 zugewiesen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie: 1. Subnetzmaske in Dezimalpunkt-Notation, 2. Netzwerkadresse, 3. Erste nutzbare Host-IP, 4. Letzte nutzbare Host-IP, 5. Broadcastadresse, 6. Anzahl nutzbarer Hostadressen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Subnetzmaske: 255.255.255.224 (/27 entspricht 11111111.11111111.11111111.11100000). (2 Pkt.)
+2. Schrittweite: 256 - 224 = 32. Blockgrenzen: 0, 32, 64, 96, 128... -> Netzadresse: 172.20.14.96. (2 Pkt.)
+3. Erste nutzbare Host-IP: 172.20.14.97. (2 Pkt.)
+4. Broadcastadresse: 172.20.14.127. (2 Pkt.)
+5. Letzte nutzbare Host-IP: 172.20.14.126. (2 Pkt.)
+6. Nutzbare Hostadressen: 2^5 - 2 = 32 - 2 = 30 Hosts. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="VLSM Variable Length Subnet Mask" data-points="9" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">VLSM Variable Length Subnet Mask</strong>
+                <span class="ihk-badge ihk-badge-success">9 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Das Basisnetz 192.168.50.0/24 soll mittels VLSM für drei Abteilungen aufgeteilt werden: Vertrieb (55 Hosts), Entwicklung (28 Hosts) und Support (12 Hosts).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Ermitteln Sie für alle drei Subnetze jeweils die Netzadresse und die CIDR-Präfixlänge.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Vertrieb (55 Hosts + 2 = 57 Adressen -> 2^6 = 64): Netzadresse 192.168.50.0/26 (Bereich: .0 bis .63). (3 Pkt.)
+Entwicklung (28 Hosts + 2 = 30 Adressen -> 2^5 = 32): Netzadresse 192.168.50.64/27 (Bereich: .64 bis .95). (3 Pkt.)
+Support (12 Hosts + 2 = 14 Adressen -> 2^4 = 16): Netzadresse 192.168.50.96/28 (Bereich: .96 bis .111). (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="IPv6 Kürzungsregeln nach RFC 5952" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">IPv6 Kürzungsregeln nach RFC 5952</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Client hat die IPv6-Adresse 2001:0db8:0000:0042:0000:0000:0000:0001/64 konfiguriert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Kürzen Sie die Adresse nach den offiziellen RFC-5952-Regeln und erläutern Sie die Bedeutung der Link-Local-Adresse (fe80::/10).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Gekürzte Adresse: 2001:db8:0:42::1/64 (Führende Nullen pro Block weglassen; die längste zusammenhängende Folge von Null-Blöcken einmalig durch :: ersetzen). (3 Pkt.)
+Link-Local (fe80::/10): Automatisch generierte, nicht im Internet geroutete Adresse zur lokalen Kommunikation im selben Subnetz (z. B. für Neighbor Discovery Protocol NDP, DHCPv6 und Router Solicitations). (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DHCP DORA-Prozess" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DHCP DORA-Prozess</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein neuer Arbeitsplatz-PC wird mit dem Unternehmensnetzwerk per Patchkabel verbunden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die vier Phasen des DHCP-Lease-Prozesses (DORA) und geben Sie jeweils an, ob die Nachricht als Broadcast oder Unicast gesendet wird.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. DHCPDISCOVER (Broadcast): Client sucht im lokalen Netz nach verfügbaren DHCP-Servern. (2 Pkt.)
+2. DHCPOFFER (Unicast oder Broadcast): DHCP-Server bieten dem Client eine freie IP-Adresse samt Parametern an. (2 Pkt.)
+3. DHCPREQUEST (Broadcast): Client wählt ein Angebot aus und fordert die Bindung an (Broadcast informiert auch andere Server). (2 Pkt.)
+4. DHCPACK (Unicast oder Broadcast): Server bestätigt die Vergabe und überträgt Lease-Dauer, Subnetzmaske, Gateway und DNS. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DNS Resource Records" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DNS Resource Records</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Administrator verwaltet die Forward- und Reverse-Lookup-Zonen im internen DNS-Server.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erklären Sie die jeweilige Funktion der folgenden vier DNS-Resource-Records: A, AAAA, CNAME und PTR.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. A-Record: Löst einen vollqualifizierten Domänennamen (FQDN) in eine IPv4-Adresse auf. (2 Pkt.)
+2. AAAA-Record: Löst einen FQDN in eine 128-Bit IPv6-Adresse auf. (2 Pkt.)
+3. CNAME-Record (Canonical Name): Dient als Alias/Verweis auf einen anderen bestehenden A- oder AAAA-Record. (2 Pkt.)
+4. PTR-Record (Pointer): Ermöglicht das Reverse-DNS-Lookup (Auflösung einer IP-Adresse in den FQDN). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="OSI-Referenzmodell Zuordnung" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">OSI-Referenzmodell Zuordnung</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Netzwerkgeräte und Protokolle werden im 7-Schichten-Modell nach ISO/IEC 7498-1 eingeordnet.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Ordnen Sie die folgenden vier Begriffe der jeweils korrekten Schicht (1 bis 7) mit deutschem und englischem Namen zu: Switch, Router, TCP, HTTP.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Switch: Schicht 2 (Sicherungsschicht / Data Link Layer - Weiterleitung anhand von MAC-Adressen). (2 Pkt.)
+2. Router: Schicht 3 (Vermittlungsschicht / Network Layer - Weiterleitung anhand logischer IP-Adressen). (2 Pkt.)
+3. TCP: Schicht 4 (Transportschicht / Transport Layer - End-to-End-Verbindung und Segmentierung). (2 Pkt.)
+4. HTTP: Schicht 7 (Anwendungsschicht / Application Layer - Protokoll für Webdienste). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Kupferverkabelung Cat 6a vs Cat 7" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Kupferverkabelung Cat 6a vs Cat 7</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Bei einer Neuausstattung eines Bürogebäudes wird über Cat 6a versus Cat 7 diskutiert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie Übertragungsfrequenz und max. Datenrate von Cat 6a und erläutern Sie die Bezeichnung S/FTP.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Cat 6a: Grenzfrequenz 500 MHz, Datenrate bis zu 10 Gbit/s (10GBASE-T) über die maximale Kanallänge von 100 Metern. (2 Pkt.)
+S/FTP: Shielded with Foiled Twisted Pair -> S = Gesamtabschirmung des Kabels durch ein Kupfergeflecht (Braid Screen); FTP = Jedes einzelne der vier Adernpaare ist zusätzlich mit einer Aluminium-Abschirmfolie umwickelt. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="LWL Fasertypen Singlemode vs Multimode" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">LWL Fasertypen Singlemode vs Multimode</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zwei Firmengebäude im Abstand von 950 Metern sollen über ein Glasfaserkabel miteinander verbunden werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie Singlemode- (OS2) und Multimode-Glasfasern (OM4) bezüglich Kerndurchmesser, Lichtquelle und Reichweite und begründen Sie Ihre Wahl für das Projekt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Singlemode (OS2): Kerndurchmesser ca. 9 µm, Lichtquelle Laser, Reichweite bis über 40 km, keine Modendispersion. (3 Pkt.)
+Multimode (OM4): Kerndurchmesser 50 µm, Lichtquelle VCSEL/LED, Reichweite typisch max. 400-550 Meter bei 10 Gbit/s. (3 Pkt.)
+Entscheidung: Für 950 m muss zwingend Singlemode-Glasfaser (OS2) gewählt werden, da Multimode bei 10 Gbit/s die geforderte Distanz überschreitet. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Switch MAC-Address Table & Flooding" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Switch MAC-Address Table & Flooding</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Switch empfängt einen Frame auf Port 3 mit einer Ziel-MAC-Adresse, die nicht in seiner internen SAT-Tabelle (Source Address Table / CAM-Table) verzeichnet ist.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die Reaktion des Switches auf diesen Frame (Unicast Flooding) und erklären Sie, wie der Switch seine MAC-Adresstabelle füllt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Reaktion (Unknown Unicast Flooding): Der Switch leitet den Frame an alle aktiven Ports desselben VLANs weiter, mit Ausnahme des Eingangsports 3. (3 Pkt.)
+Lernen (MAC Learning): Der Switch liest bei jedem eingehenden Frame die Quell-MAC-Adresse (Source MAC) aus dem Ethernet-Header und speichert die Zuordnung Port <-> MAC zusammen mit einem Aging-Timer in seiner CAM-Tabelle. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="WLAN Wi-Fi 6 (802.11ax) Technologien" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">WLAN Wi-Fi 6 (802.11ax) Technologien</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Unternehmen stattet Besprechungsräume mit Wi-Fi 6 Access Points aus.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen und erläutern Sie zwei Schlüsseltechnologien von Wi-Fi 6 (OFDMA und MU-MIMO), die für hohe Clientdichten sorgen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  OFDMA (Orthogonal Frequency Division Multiple Access): Teilt einen Funkkanal in viele kleine Unterträger (Resource Units) auf, sodass der AP gleichzeitig mit mehreren Clients Datenpakete in einem einzigen Übertragungszyklus austauschen kann (geringe Latenz). (3 Pkt.)
+MU-MIMO (Multi-User MIMO): Ermöglicht gleichzeitiges Senden und Empfangen über mehrere räumliche Streams (Spatial Streams) an mehrere Endgeräte zeitgleich in Up- und Downlink. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Kollisionsdomäne vs Broadcastdomäne" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Kollisionsdomäne vs Broadcastdomäne</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Netzwerktopologie befinden sich Hubs, Switche und Router.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie die Begriffe Kollisionsdomäne und Broadcastdomäne und geben Sie an, wie viele dieser Domänen ein 24-Port-Layer-2-Switch standardmäßig besitzt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Kollisionsdomäne: Netzwerkbereich, in dem Datenpakete kollidieren können, wenn zwei Stationen gleichzeitig senden (CSMA/CD). (2 Pkt.)
+Broadcastdomäne: Netzwerkbereich, in dem ein gesendeter Broadcast-Frame (Ziel: FF:FF:FF:FF:FF:FF) alle angeschlossenen Knoten erreicht. (2 Pkt.)
+24-Port-Switch: Besitzt 24 separate Kollisionsdomänen (1 pro Vollduplex-Port) und genau 1 gemeinsame Broadcastdomäne (sofern keine VLANs eingerichtet sind). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="CSMA/CD vs CSMA/CA" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">CSMA/CD vs CSMA/CA</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Vergleichen Sie das Medienzugriffsverfahren im klassischen kabelgebundenen Halbduplex-Ethernet mit dem im WLAN.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie den Unterschied zwischen Collision Detection (CD) und Collision Avoidance (CA).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  CSMA/CD (Ethernet): Stationen senden und hören gleichzeitig die Leitung ab. Erkennt eine Station eine Kollision (Spannungsanstieg), sendet sie ein JAM-Signal, bricht ab und wartet eine zufällige Backoff-Zeit. (3 Pkt.)
+CSMA/CA (WLAN): Da Funkgeräte beim Senden ihr eigenes Empfangssignal überlagern, können Kollisionen nicht zuverlässig erkannt werden. Stattdessen wird der Kanal abgehört (Carrier Sense) und vor dem Senden eine zufällige Wartezeit (Contention Window) eingelegt, ggf. ergänzt durch RTS/CTS-Handshakes. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Netzwerk-Übertragungszeit Berechnung" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Netzwerk-Übertragungszeit Berechnung</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Backup-Image von 450 GiB soll über eine 1-Gbit/s-Ethernet-Leitung auf ein NAS übertragen werden. Der Protokoll-Overhead (TCP/IP/Ethernet) beträgt 8 % und die durchschnittliche Netto-Leitungsauslastung liegt bei 85 %.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die Übertragungsdauer in Stunden und Minuten. (1 GiB = 1024^3 Byte; 1 Gbit/s = 10^9 Bit/s).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Dateigröße in Bit: 450 * 1024 * 1024 * 1024 * 8 Bit = 3.865.470.566.400 Bit. (2 Pkt.)
+Nutzdatenrate der Leitung: 1.000.000.000 Bit/s * 0,85 * (1 - 0,08) = 782.000.000 Bit/s = 782 Mbit/s. (2 Pkt.)
+Dauer in Sekunden: 3.865.470.566.400 / 782.000.000 s = 4943,05 Sekunden. (2 Pkt.)
+Umrechnung: 4943,05 / 3600 = 1,373 h -> 1 Stunde und 22 Minuten (82 Minuten). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="PoE Power over Ethernet Standards" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">PoE Power over Ethernet Standards</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für neue IP-Telefone und Überwachungskameras wird PoE nach IEEE 802.3at (PoE+) auf den Access-Switches benötigt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie die maximale Leistungsabgabe pro Port nach IEEE 802.3af (PoE) und IEEE 802.3at (PoE+) und erklären Sie den Unterschied zwischen Endspan und Midspan.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  PoE (802.3af): Max. 15,4 Watt am Switch-Port (min. 12,95 W am Endgerät). (2 Pkt.)
+PoE+ (802.3at): Max. 30,0 Watt am Switch-Port (min. 25,5 W am Endgerät). (2 Pkt.)
+Endspan: Die Stromversorgung erfolgt direkt über den Ethernet-Switch selbst. (1 Pkt.)
+Midspan: Ein separater PoE-Injektor oder Patchpanel wird zwischen Non-PoE-Switch und Endgerät geschaltet. (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="ARP-Protokoll & ARP-Cache" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">ARP-Protokoll & ARP-Cache</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Host A (192.168.1.10) möchte ein TCP-Paket an Host B (192.168.1.50) im selben Subnetz senden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie, wie Host A mithilfe des Address Resolution Protocols (ARP) die Ziel-Hardwareadresse ermittelt und was geschieht, wenn der Eintrag im Cache veraltet.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. ARP-Request: Host A prüft seinen ARP-Cache. Ist kein Eintrag vorhanden, sendet er einen ARP-Request als Ethernet-Broadcast (FF:FF:FF:FF:FF:FF) mit dem Inhalt: "Wer hat 192.168.1.50? Bitte antworte an 192.168.1.10!". (2 Pkt.)
+2. ARP-Reply: Host B erkennt seine IP und antwortet per Unicast direkt an die MAC von Host A mit seiner MAC-Adresse. (2 Pkt.)
+3. Cache & Aging: Host A trägt die MAC in seinen ARP-Cache ein. Nach Ablauf des Aging-Timers (typisch 5-20 Min.) wird der Eintrag gelöscht und muss bei erneutem Bedarf neu angefragt werden. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="IPv6 SLAAC vs DHCPv6" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">IPv6 SLAAC vs DHCPv6</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem neu eingerichteten IPv6-Netzwerk sollen Clients ihre IP-Adressen automatisch beziehen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie SLAAC (Stateless Address Autoconfiguration) und Stateful DHCPv6 bezüglich Adressvergabe, Router Advertisements und zentraler Protokollierung.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  SLAAC: Client empfängt vom Router per ICMPv6 Router Advertisement (RA) das 64-Bit-Netzwerkpräfix. Den 64-Bit-Interface Identifier generiert der Client selbst (entweder via EUI-64 aus der MAC-Adresse oder zufällig via Privacy Extensions RFC 4941). Keine zentrale Adressdatenbank. (4 Pkt.)
+Stateful DHCPv6: Funktioniert wie traditionelles DHCP: Ein DHCPv6-Server verwaltet einen definierten Adresspool, vergibt spezifische Adressen an Clients und protokolliert diese in einer Lease-Datenbank (zentrale Kontrolle und Auditierbarkeit). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="MTU, MSS und Path MTU Discovery" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">MTU, MSS und Path MTU Discovery</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Nach der Einrichtung eines VPN-Tunnels können Clients zwar kleine Webseiten öffnen, der Download großer Dateien bricht jedoch mit Timeouts ab.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erklären Sie den Zusammenhang zwischen Ethernet-MTU (Maximum Transmission Unit), TCP-MSS (Maximum Segment Size), VPN-Overhead und Path MTU Discovery (PMTUD).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Standard-MTU: Im Ethernet beträgt die MTU maximal 1500 Byte (inkl. 20 Byte IP-Header + 20 Byte TCP-Header -> MSS = 1460 Byte). (2 Pkt.)
+VPN-Overhead: Ein VPN-Tunnel (z. B. IPsec/ESP) fügt zusätzliche Header und Padding hinzu (ca. 40-70 Byte). Ein 1500-Byte-Paket überschreitet nun die physische Leitungs-MTU. (2 Pkt.)
+PMTUD & DF-Bit: Pakete mit gesetztem "Don't Fragment"-Bit (DF) werden vom Router verworfen, wenn sie größer als die MTU des Zwischenlinks sind. Der Router sendet ein ICMP-Paket "Fragmentation Needed" zurück. (2 Pkt.)
+Lösung (Black Hole Vermeidung): Werden ICMP-Nachrichten durch Firewalls blockiert, scheitert PMTUD. Abhilfe: TCP MSS Clamping auf der Firewall (MSS künstlich auf z. B. 1360 Byte reduzieren). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="WLAN WPA3-Sicherheit & SAE Handshake" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">WLAN WPA3-Sicherheit & SAE Handshake</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Die WLAN-Infrastruktur soll von WPA2-Personal (PSK) auf WPA3-Personal migriert werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie, warum WPA2 für Offline-Wörterbuchangriffe anfällig ist und wie der SAE-Handshake (Simultaneous Authentication of Equals / Dragonfly) in WPA3 diesen Angriff unmöglich macht.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Schwachstelle WPA2: Beim klassischen 4-Wege-Handshake kann ein Angreifer die Handshake-Frames mitschneiden (Sniffing) und anschließend offline auf Hochleistungs-GPUs Milliarden Passwörter gegen den Hash testen (Dictionary Attack), ohne weitere Verbindung zum AP. (4 Pkt.)
+WPA3 / SAE-Verfahren: Verwendet den Dragonfly-Schlüsselaustausch (Diffie-Hellman-Variante auf elliptischen Kurven). Das Passwort wird direkt in die Kurvenberechnung einbezogen. Ein Angreifer kann bei jedem Fehlversuch nur genau ein einziges Passwort online verifizieren; Offline-Wörterbuchangriffe auf mitgeschnittene Pakete sind mathematisch unmöglich (Forward Secrecy). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DNSSEC Funktionsweise" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DNSSEC Funktionsweise</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Abwehr von DNS-Spoofing und Cache Poisoning wird DNSSEC auf den Nameservern implementiert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie, wie DNSSEC die Authentizität und Integrität von DNS-Antworten sicherstellt und welche Aufgaben die Records RRSIG und DNSKEY haben.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Funktionsweise: DNSSEC nutzt asymmetrische Kryptografie zur hierarchischen digitalen Signatur von DNS-Zonendaten. Clients können über eine lückenlose Vertrauenskette (Chain of Trust) von der DNS-Root-Zone (. ) über die TLD (z. B. .de) bis zur Domäne prüfen, ob die Antwort unverfälscht vom autoritativen Server stammt. (4 Pkt.)
+DNSKEY: Enthält den öffentlichen Schlüssel der Zone zur Verifikation von Signaturen. (2 Pkt.)
+RRSIG (Resource Record Signature): Enthält die kryptografische Signatur über ein konkretes Resource Record Set (RRSet, z. B. A- oder MX-Records). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../02_lf2_arbeitsplaetze_ausstatten/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../04_lf4_schutzbedarfsanalyse_und_cybersicherheit/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

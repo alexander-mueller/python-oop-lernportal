@@ -1,0 +1,96 @@
+{
+  "id": "ihk_ap2_fisi",
+  "title": "IHK AP2 Crashkurs: Fachinformatiker Systemintegration",
+  "language": "ihk_ap2_fisi",
+  "icon": "📕",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für FISI (LF 9–12, WiSo, 40h-Projekt). VLANs, OSPF, Active Directory, RAID-Simulator, Cloud & 3 vollständige Probeprüfungen.",
+  "tracks": [
+    {
+      "id": "track_1_netzwerke_und_server",
+      "title": "🌱 Lehrpfad 1: Enterprise Netzwerke & Serverdienste (LF 9 & 10)",
+      "description": "VLANs (802.1Q), LACP, Spanning Tree, OSPF, BGP, Active Directory, Gruppenrichtlinien, PKI & Ansible.",
+      "certificateKey": "ihk_ap2_netzwerke",
+      "chapters": [
+        {
+          "folder": "01_lf9_netzwerke_und_dienste",
+          "title": "LF 9: Netzwerke & Dienste bereitstellen (VLAN, Routing, Firewalls)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_lf10_serverdienste_und_automation",
+          "title": "LF 10: Serverdienste & Automation bereitstellen (AD DS, DNS, Ansible)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_storage_und_cloud",
+      "title": "🛡️ Lehrpfad 2: Storage, Hochverfügbarkeit & Cloud (LF 11 & 12)",
+      "description": "RAID 0/1/5/6/10, SAN/NAS, HA-Cluster, Quorum, STONITH, ZFS, Hypervisoren, Docker, Kubernetes & Prometheus.",
+      "certificateKey": "ihk_ap2_sicherheit",
+      "chapters": [
+        {
+          "folder": "03_lf11_speicher_und_hochverfuegbarkeit",
+          "title": "LF 11: Speicher- & Hochverfügbarkeitssysteme (RAID, SAN, Cluster)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "04_lf12_virtualisierung_und_cloud",
+          "title": "LF 12: Virtualisierung, Cloud & Automation (Docker, K8s, IaC)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_wiso_und_projekt",
+      "title": "☁️ Lehrpfad 3: WiSo & 40h-Betriebliche Projektarbeit",
+      "description": "Wirtschafts- & Sozialkunde (Arbeitsrecht, KSchG, Sozialversicherung) & Leitfaden zur 40h-Projektarbeit samt Fachgespräch.",
+      "certificateKey": "ihk_ap2_wiso_projekt",
+      "chapters": [
+        {
+          "folder": "05_wiso_arbeitsrecht_und_wirtschaft",
+          "title": "WiSo: Wirtschafts- & Sozialkunde Prüfungs-Fit (BGB, KSchG, BetrVG)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_betriebliche_projektarbeit_guide",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch-Guide",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_probepruefungen",
+      "title": "🏆 Lehrpfad 4: Offizielle AP2 Probeprüfungen & Simulationen",
+      "description": "Die 3 schriftlichen IHK-Prüfungsteile unter Realbedingungen (Teil 1: 90 Min., Teil 2: 90 Min., WiSo: 60 Min.) mit 150-Fragen-Zufallsgenerator.",
+      "certificateKey": "ihk_ap2_fisi_master",
+      "chapters": [
+        {
+          "folder": "07_ap2_teil_1_probepruefung",
+          "title": "Probeprüfung AP2 Teil 1: Planen & Umsetzen (90 Min. / 100 Pkt.)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_ap2_teil_2_probepruefung",
+          "title": "Probeprüfung AP2 Teil 2: Administration & Netzanalyse (90 Min. / 100 Pkt.)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_ap2_wiso_probepruefung",
+          "title": "Probeprüfung AP2 WiSo: Wirtschafts- & Sozialkunde (60 Min. / 100 Pkt.)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

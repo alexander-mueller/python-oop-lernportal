@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# 12: Exceptions &amp; using-Statements (IDisposable)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: LINQ, Generics &amp; Async/Await</div>
+          <h1>C# 12: Exception Handling &amp; Deterministic Resource Cleanup</h1>
+          <p>Schreibe ausfallsichere Enterprise-Anwendungen: Eigene Domain-Exceptions, Exception Filters (<code>when</code>), das <code>IDisposable</code>-Muster und automatisches Ressourcen-Cleanup mit <code>using var</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.cs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.cs (Startercode)</a>
+            <a href="TestAufgabe.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.cs (xUnit Tests)</a>
+            <a href="Musterloesung.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.cs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: DOMAIN EXCEPTIONS & EXCEPTION FILTERS -->
+        <section class="card">
+          <h2>🛡️ 1. Domain Exceptions &amp; Exception Filtering mit <code>when</code></h2>
+          <p>
+            In Enterprise-Anwendungen wirft man keine generischen <code>Exception</code>-Objekte, sondern präzise typisierte <strong>Custom Domain Exceptions</strong>, die wichtige Fachdaten (z.B. Konto-ID, geforderter Betrag, Fehlercode) transportieren.
+          </p>
+          <p>
+            Mit C# <strong>Exception Filters</strong> (<code>catch (...) when (Bedingung)</code>) kannst du Ausnahmen basierend auf ihren Eigenschaften gezielt abfangen, ohne den Aufrufstapel (Stack Trace) zu zerstören:
+          </p>
+
+          <pre><code>try
+{
+    bankService.TransferFunds(sourceAccountId, targetAccountId, 50000m);
+}
+catch (InsufficientFundsException ex) when (ex.RequestedAmount > 10000m)
+{
+    // Spezieller Handler für Großbetrags-Fehlschläge (z.B. Security-Alert auslösen)
+    logger.LogCritical($"Großüberweisung von {ex.RequestedAmount}€ fehlgeschlagen! Saldo: {ex.CurrentBalance}€");
+}
+catch (BankDomainException ex)
+{
+    // Allgemeiner Handler für sonstige Bank-Fehler
+    logger.LogWarning($"Bankfehler {ex.ErrorCode}: {ex.Message}");
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: IDISPOSABLE & USING DECLARATION -->
+        <section class="card">
+          <h2>🧹 2. Das <code>IDisposable</code> Muster &amp; Modernes <code>using var</code></h2>
+          <p>
+            Der .NET Garbage Collector bereinigt ausschließlich verwalteten Speicher (Heap). Unmanaged Ressourcen wie Dateihandles, Datenbankverbindungen oder Netzwerk-Sockets müssen deterministisch freigegeben werden.
+          </p>
+
+          <!-- Diagramm: IDisposable Scope -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            { // Scope-Beginn<br>
+            &nbsp;&nbsp;using var scope = new AuditLogScope("Transfer-102"); // Ressource reservieren<br>
+            &nbsp;&nbsp;scope.WriteEntry("Operation läuft...");<br>
+            } // Scope-Ende ──► Compiler ruft scope.Dispose() automatisch auf (auch bei Exceptions!)
+          </div>
+
+          <pre><code>public sealed class AuditLogScope : IDisposable
+{
+    private bool _disposed;
+    public string OperationName { get; }
+
+    public AuditLogScope(string opName)
+    {
+        OperationName = opName;
+        Console.WriteLine($"[AUDIT-START] {OperationName}");
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            Console.WriteLine($"[AUDIT-END] {OperationName} abgeschlossen.");
+            _disposed = true;
+        }
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Hotel-Zimmerkarten-System</div>
+            <p>
+              Beim Betreten des Raums aktivierst du mit der Karte das Licht (Ressource reserviert). Mit <code>using var</code> stellst du sicher: Selbst wenn du das Zimmer fluchtartig verlässt (z.B. durch eine Exception ausgelöst), schaltet sich der Strom beim Schließen der Tür garantiert automatisch ab (<code>Dispose()</code>).
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Exception &amp; Resource Rules</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Regel / Konzept</th>
+                  <th style="padding: 10px;">Richtig (Enterprise Best Practice)</th>
+                  <th style="padding: 10px;">Falsch (Anti-Pattern)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Exception Re-throwing</strong></td>
+                  <td style="padding: 10px;"><code>throw;</code> <em>(Bewahrt Stack Trace)</em></td>
+                  <td style="padding: 10px;"><code>throw ex;</code> <em>(Zerstört ursprünglichen Stack Trace!)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Ausnahmen fangen</strong></td>
+                  <td style="padding: 10px;">Spezifische Typen (z.B. <code>IOException</code>)</td>
+                  <td style="padding: 10px;"><code>catch (Exception) {}</code> <em>(Verschluckt kritische Fehler)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>IDisposable Lebenszyklus</strong></td>
+                  <td style="padding: 10px;"><code>using var res = new Res();</code></td>
+                  <td style="padding: 10px;">Manuelles <code>res.Dispose()</code> ohne try-finally</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>ObjectDisposedException</strong></td>
+                  <td style="padding: 10px;">Prüfung <code>ObjectDisposedException.ThrowIf(_disposed, this);</code></td>
+                  <td style="padding: 10px;">Weiterarbeiten auf bereits freigegebenen Objekten</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.cs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Custom Exceptions <code>BankDomainException</code>, <code>AccountNotFoundException</code> und <code>InsufficientFundsException</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>AuditTransactionScope : IDisposable</code> mit Scope-Tracking und <code>Dispose()</code>-Schutz implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>BankAccount</code> mit <code>Deposit()</code> und <code>Withdraw()</code> validieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>BankTransferService.Transfer()</code> mit <code>using var scope</code>, Exception-Filterung und atomarer Transaktion fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Clean Code Pro-Tipp: Argument Exceptions in C# 12</div>
+            <p>Nutze in modernem .NET die praktischen Helfer wie <code>ArgumentNullException.ThrowIfNull(arg)</code> und <code>ArgumentOutOfRangeException.ThrowIfNegative(amount)</code> für saubere, einzeilige Parameterprüfungen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=csharp&track=track_3_linq_async&chapter=12_exception_handling_und_ressourcen" class="btn" style="background: #8b5cf6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_json_serialisierung_und_dateien/index.html" class="btn btn-secondary">Weiter zu C# 13: JSON &amp; Dateien &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

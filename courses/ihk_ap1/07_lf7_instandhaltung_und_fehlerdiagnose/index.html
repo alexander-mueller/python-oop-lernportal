@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 07: Instandhaltung & Fehlerdiagnose (LF 7)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 7</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 07: Instandhaltung & Fehlerdiagnose (LF 7)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Fehlersuchstrategien (Bottom-Up, Top-Down, Divide & Conquer), ESD-Schutz (DIN EN 61340-5-1), Multimeter CAT II/III & S.M.A.R.T.-Parameter.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🔧 LF 7: Cyber-Physische Systeme instand halten</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Systematische Fehlersuche, Messverfahren, Schutz gegen elektrostatische Entladung (ESD) und präventive Instandhaltung von Hardware und IT-Systemen.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Systematische Fehlereingrenzung</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Bottom-Up:</strong> Beginn auf Schicht 1 (Kabel, Strom, LEDs) nach oben zur Anwendung. Ideal bei Neuinstallationen.</li>
+    <li><strong>Top-Down:</strong> Beginn auf Anwendungsebene (Schicht 7, DNS, Browser) nach unten. Gut bei scheinbar anwendungsspezifischen Störungen.</li>
+    <li><strong>Divide and Conquer:</strong> Beginn auf mittlerer Ebene (z. B. Ping auf Default Gateway / Schicht 3). Funktioniert der Ping, liegt der Fehler auf Schicht 4-7; scheitert er, auf Schicht 1-2.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. ESD-Schutzmaßnahmen (DIN EN 61340-5-1)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    Elektrostatische Entladungen können Halbleiterbauteile irreparabel zerstören. Im <strong>EPA-Arbeitsbereich (Electrostatic Protected Area)</strong> gelten:<br>
+    1. Geerdetes antistatisches Handgelenkband mit 1-MOhm-Sicherheitswiderstand.<br>
+    2. Ableitfähige ESD-Tischmatte und ableitfähiger Bodenbelag.<br>
+    3. ESD-sicheres Werkzeug mit ableitenden Griffen.<br>
+    4. Transport hochempfindlicher Baugruppen nur in metallisierten Abschirmbeuteln (Shielding Bags).
+  </p>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Messgeräte: Multimeter & Oszilloskop</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Spannungsmessung (parallel), Strommessung (in Reihe mit unterbrochenem Stromkreis), Durchgangsprüfung nur im spannungsfreien Zustand! Bei Oszilloskopen verringert ein 10:1-Tastkopf die kapazitive Leitungsbelastung und verhindert Signalverzerrungen steiler Rechteckflanken.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 7
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="ESD-Schutzmaßnahmen DIN EN 61340-5-1" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">ESD-Schutzmaßnahmen DIN EN 61340-5-1</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Vor dem Austausch eines Mainboards und RAM-Moduls in einem Server müssen Maßnahmen gegen elektrostatische Entladung (ESD) getroffen werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erklären Sie, wie ESD-Schäden an Halbleiterkomponenten entstehen und nennen Sie vier konkrete Schutzmaßnahmen an einem EPA-Arbeitsplatz (Electrostatic Protected Area).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Entstehung: Durch Reibungselektrizität (Triboelektrischer Effekt) laden sich Personen oder Werkzeuge auf mehrere tausend Volt auf. Bei Annäherung an mikroelektronische Bauteile entlädt sich die Spannung schlagartig über kleinste Leiterbahnen und Gate-Oxide, was zu thermischer Zerstörung oder latenten Vorschäden führt. (3 Pkt.)
+Vier Schutzmaßnahmen:
+1. Antistatisches Erdungsarmband mit Sicherheitswiderstand (1 MOhm). (1 Pkt.)
+2. Leitfähige, geerdete ESD-Tischmatte und ableitfähiger Bodenbelag. (1 Pkt.)
+3. Verwendung von ESD-sicherem Werkzeug (leitfähige Griffe). (1 Pkt.)
+4. Transport von Komponenten ausschließlich in antistatischen Abschirmbeuteln (Shielding Bags). (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Fehlereingrenzung Top-Down vs Bottom-Up" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Fehlereingrenzung Top-Down vs Bottom-Up</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Client-PC kann nach einem Umbau keine Webseiten mehr aufrufen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie die Fehlersuchstrategien Top-Down und Bottom-Up anhand des OSI-Referenzmodells und nennen Sie je einen Prüfschritt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Bottom-Up-Strategie: Fehlersuche beginnt auf Schicht 1 (Physical) und arbeitet sich nach oben vor. Prüfschritt: Link-LED an Netzwerkkarte und Switch prüfen, Patchkabel austauschen. Gut bei Neuinstallationen. (3 Pkt.)
+Top-Down-Strategie: Fehlersuche beginnt auf Schicht 7 (Application) und arbeitet sich nach unten vor. Prüfschritt: DNS-Auflösung und Browserkonfiguration (Proxy) testen. Gut, wenn der Fehler auf eine bestimmte Anwendung beschränkt scheint. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="S.M.A.R.T. Parameter von Festplatten" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">S.M.A.R.T. Parameter von Festplatten</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Server-Monitoring meldet eine Warnung für eine Enterprise-SATA-Festplatte.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie den Zweck von S.M.A.R.T. und nennen Sie zwei kritische Attribute, die auf einen unmittelbar bevorstehenden Hardwaredefekt hinweisen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Zweck: Self-Monitoring, Analysis and Reporting Technology überwacht interne mechanische und elektronische Betriebsparameter von HDDs/SSDs, um Ausfälle frühzeitig vorherzusagen. (2 Pkt.)
+Zwei kritische Attribute:
+1. Reallocated Sectors Count (Anzahl defekter Sektoren, die auf Reservebereiche umgemappt wurden). (2 Pkt.)
+2. Current Pending Sector Count (Anzahl instabiler Sektoren, die auf eine Neuzuweisung warten). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Digitalmultimeter Messungen & Sicherheit" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Digitalmultimeter Messungen & Sicherheit</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Techniker überprüft ein Servernetzteil und misst Spannungen an einem Kaltgerätestecker und auf dem Mainboard.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie den Unterschied zwischen einer Spannungs-, Strom- und Durchgangsmessung hinsichtlich der Schaltung des Multimeters (Reihe vs Parallel) und erklären Sie die Messkategorien CAT II vs CAT III.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Schaltung des Messgeräts:
+- Spannungsmessung (Volt): Messgerät wird PARALLEL zur Spannungsquelle / zum Verbraucher geschaltet (sehr hoher Innenwiderstand). (2 Pkt.)
+- Strommessung (Ampere): Der Stromkreis muss aufgetrennt werden; das Multimeter wird IN REIHE geschaltet (sehr niedriger Innenwiderstand). (2 Pkt.)
+- Durchgangsmessung: Ausschließlich an spannungsfreien Bauteilen! Gerät legt kleine Prüfspannung an und misst Widerstand (Piepton bei < ca. 30 Ohm). (2 Pkt.)
+CAT-Einstufung (Überspannungskategorien): CAT II gilt für Geräte an normalen Haushaltssteckdosen; CAT III gilt für Installationen in der Gebäudeinfrastruktur (Unterverteiler, Verteilerkästen, USV-Festeinspeisung) mit höheren transienten Überspannungsrisiken. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Oszilloskop Tastkopf-Teilung 10:1" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Oszilloskop Tastkopf-Teilung 10:1</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Fehlersuche an einem Datenbus wird ein digitales Speicheroszilloskop mit einem Tastkopf angeschlossen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie, warum für Hochfrequenzsignale ein 10:1-Tastkopf einem 1:1-Tastkopf vorzuziehen ist (Kapazitive Last, Signalverfälschung).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Erklärung: Ein 1:1-Tastkopf besitzt eine relativ hohe Eingangskapazität (ca. 40-100 pF) und geringeren Eingangswiderstand (1 MOhm). Bei schnellen Signalflanken und hohen Frequenzen wirkt diese Kapazität als Tiefpassfilter, belastet die Schaltung und verschleift steile Rechtecksignale. (3 Pkt.)
+10:1-Tastkopf: Schaltet einen 9-MOhm-Widerstand in Reihe zum 1-MOhm-Eingang des Oszilloskops. Das Signal wird um den Faktor 10 gedämpft, wodurch sich die Eingangskapazität drastisch verringert (auf ca. 10-15 pF) und der Gesamtwiderstand auf 10 MOhm steigt -> Keine Signalverfälschung der Busleitung. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../06_lf6_cyber_physische_systeme_iot/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../08_lf8_datenfluesse_und_schnittstellen/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

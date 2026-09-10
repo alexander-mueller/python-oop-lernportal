@@ -1,0 +1,1 @@
+// TEST: Testet sichere_division mit 0 und normalen Zahlen

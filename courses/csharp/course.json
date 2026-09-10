@@ -1,0 +1,58 @@
+{
+  "id": "csharp",
+  "title": "C# 12 & Modernes .NET 8+ Enterprise",
+  "language": "csharp",
+  "icon": "💜",
+  "runner": "csharp",
+  "description": "Von C# 12 Top-Level Statements über Records, LINQ-Pipelines & Async/Await bis zu xUnit Testing & der Enterprise Order Processing Engine.",
+  "tracks": [
+    {
+      "id": "track_1_csharp_basics",
+      "title": "🌱 Lehrpfad 1: C# 12 Essentials & Moderne Syntax",
+      "description": "Top-Level Statements, Nullable Reference Types, moderne Switch-Expressions, Collections und C# Tupel.",
+      "certificateKey": "csharp_grundlagen",
+      "chapters": [
+        { "folder": "01_syntax_datentypen_und_top_level_statements", "title": "C# 01: Syntax, Top-Level Statements & Nullables", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "02_kontrollfluss_und_pattern_matching", "title": "C# 02: Switch-Expressions & Pattern Matching", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "03_arrays_listen_und_collections", "title": "C# 03: Arrays, List<T> & Collection Expressions", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "04_methoden_parameter_und_tuples", "title": "C# 04: Methoden, Out/Ref & Tupel", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" }
+      ]
+    },
+    {
+      "id": "track_2_modern_oop",
+      "title": "🏗️ Lehrpfad 2: Modernes OOP, Records & Interfaces",
+      "description": "Primary Constructors, Records mit with-Expressions, Vererbung & Polymorphismus, Interfaces & Dependency Injection.",
+      "certificateKey": "csharp_oop",
+      "chapters": [
+        { "folder": "05_klassen_objekte_und_primary_constructors", "title": "C# 05: Klassen, Properties & Primary Constructors", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "06_records_und_immutability", "title": "C# 06: Records, Immutability & with-Expressions", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "07_vererbung_polymorphismus_und_abstract", "title": "C# 07: Vererbung, Virtual/Override & Abstract", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "08_interfaces_und_dependency_injection", "title": "C# 08: Interfaces & Dependency Injection", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" }
+      ]
+    },
+    {
+      "id": "track_3_linq_async",
+      "title": "⚡ Lehrpfad 3: LINQ, Generics & Async/Await Tasks",
+      "description": "Generics mit Constraints, LINQ-Pipelines (.Where/.Select/.GroupBy), asynchrone Tasks (async/await) und using-Disposal.",
+      "certificateKey": "csharp_linq",
+      "chapters": [
+        { "folder": "09_generics_und_constraints", "title": "C# 09: Generics & Generic Constraints", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "10_linq_funktionale_datenabfragen", "title": "C# 10: LINQ Datenabfragen & Fluent Chaining", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "11_asynchrone_programmierung_mit_async_await", "title": "C# 11: Async/Await & Task.WhenAll Pipelines", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "12_exception_handling_und_ressourcen", "title": "C# 12: Exceptions & using-Statements (IDisposable)", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" }
+      ]
+    },
+    {
+      "id": "track_4_enterprise_master",
+      "title": "💎 Lehrpfad 4: Architektur, xUnit & Cloud Master",
+      "description": "System.Text.Json, Events & Delegates, xUnit Unit-Testing ([Fact]/[Theory]) & Enterprise Order Processing Engine.",
+      "certificateKey": "csharp_master",
+      "chapters": [
+        { "folder": "13_json_serialisierung_und_dateien", "title": "C# 13: System.Text.Json & Asynchrone Dateien", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "14_events_delegates_und_lambdas", "title": "C# 14: Delegates, Action/Func & Events", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "15_xunit_automatisiertes_unit_testing", "title": "C# 15: xUnit Tests, Data-Theories & Assertions", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" },
+        { "folder": "16_master_abschlussprojekt_enterprise_order_engine", "title": "Master 16: Enterprise Order Processing & Analytics", "taskFile": "Aufgabe.cs", "testFile": "TestAufgabe.cs" }
+      ]
+    }
+  ]
+}

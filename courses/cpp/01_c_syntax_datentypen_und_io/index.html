@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C 01: C-Syntax, Datentypen &amp; Standard I/O</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ C &amp; C++ Systems Engineering</div>
+          <h1>C 01: C-Syntax, Datentypen, Format-Specifier &amp; I/O</h1>
+          <p>Tauche ein in die hardwarenahe Welt von C: Verstehe die Compilation Pipeline, primitive Speichertypen, <code>sizeof</code>, Format-Specifier und sichere Ein-/Ausgabe mit <code>printf</code> &amp; <code>snprintf</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: COMPILATION MODEL -->
+        <section class="card">
+          <h2>🏗️ 1. Das C-Kompilationsmodell</h2>
+          <p>C ist eine kompilierte, maschinennahe Systemsprache. Im Gegensatz zu interpretierten Sprachen durchläuft C-Quellcode vier fundamentale Phasen, bevor er als native Binärdatei direkt von der CPU ausgeführt wird:</p>
+          
+          <pre><code>[ Quellcode (.c / .h) ] 
+         │
+         ▼ (1. Präprozessor: Löst #include, #define, Makros auf)
+[ Präprozessierter Code (.i) ]
+         │
+         ▼ (2. Compiler: Übersetzt C in hardwarenahen Assemblercode)
+[ Assembler-Code (.s) ]
+         │
+         ▼ (3. Assembler: Generiert binären Maschinencode / Maschinensprache)
+[ Objektdatei (.o / .obj) ]
+         │
+         ▼ (4. Linker: Verknüpft Objektdateien & C-Standard-Bibliothek libc)
+[ Ausführbare Binärdatei (ELF / .exe) ]</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏭 Didaktische Analogie: Vom Bauplan zum fertigen Motor</div>
+            <p><strong>Präprozessor:</strong> Ersetzt alle Textbausteine und kopiert Blaupausen (<code>#include &lt;stdio.h&gt;</code>) in deine Werkstatt.</p>
+            <p><strong>Compiler &amp; Assembler:</strong> Die CNC-Fräse, die den Bauplan in millimetergenaue Metallkomponenten (Maschinencode <code>0101...</code>) übersetzt.</p>
+            <p><strong>Linker:</strong> Der Chefmechaniker, der Motor, Getriebe und Treibstofftank aus der Standard-Bibliothek zu einem fahrbereiten Rennwagen zusammenschraubt!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: DATENTYPEN & SIZEOF -->
+        <section class="card">
+          <h2>💾 2. Primitive Datentypen &amp; Speichergrößen</h2>
+          <p>In C besitzt jeder Datentyp eine feste Repräsentation im Arbeitsspeicher. Mit dem Operator <code>sizeof()</code> ermittelst du die exakte Byte-Größe zur Compile-Zeit:</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px;">C-Datentyp</th>
+                  <th style="padding: 8px 12px;">Typische Größe</th>
+                  <th style="padding: 8px 12px;">Wertebereich</th>
+                  <th style="padding: 8px 12px;">Format-Specifier</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>char</code></td>
+                  <td style="padding: 8px 12px;">1 Byte (8 Bit)</td>
+                  <td style="padding: 8px 12px;">-128 bis 127 (ASCII-Zeichen)</td>
+                  <td style="padding: 8px 12px;"><code>%c</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>int</code></td>
+                  <td style="padding: 8px 12px;">4 Bytes (32 Bit)</td>
+                  <td style="padding: 8px 12px;">-2.147.483.648 bis +2.147.483.647</td>
+                  <td style="padding: 8px 12px;"><code>%d</code> / <code>%i</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>float</code></td>
+                  <td style="padding: 8px 12px;">4 Bytes (32 Bit)</td>
+                  <td style="padding: 8px 12px;">~6-7 signifikante Dezimalstellen</td>
+                  <td style="padding: 8px 12px;"><code>%f</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>double</code></td>
+                  <td style="padding: 8px 12px;">8 Bytes (64 Bit)</td>
+                  <td style="padding: 8px 12px;">~15-17 signifikante Dezimalstellen</td>
+                  <td style="padding: 8px 12px;"><code>%lf</code> / <code>%f</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>size_t</code></td>
+                  <td style="padding: 8px 12px;">8 Bytes (64-Bit System)</td>
+                  <td style="padding: 8px 12px;">Vorzeichenlose Array-/Speichergröße</td>
+                  <td style="padding: 8px 12px;"><code>%zu</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 12px;"><code>void*</code> / Pointer</td>
+                  <td style="padding: 8px 12px;">8 Bytes (64-Bit System)</td>
+                  <td style="padding: 8px 12px;">Hexadezimale Speicheradresse</td>
+                  <td style="padding: 8px 12px;"><code>%p</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>⚠️ Typ-Konvertierung (Type Casting) &amp; Ganzzahldivision</h3>
+          <p>Wenn zwei Ganzzahlen dividiert werden, führt C eine Ganzzahldivision durch (Nachkommastellen werden abgeschnitten). Verwende expliziten Type-Cast:</p>
+          <pre><code>int summe = 15;
+int anzahl = 2;
+
+// FALSCH: double avg = summe / anzahl;       // Ergibt 7.0 (Datenverlust!)
+// RICHTIG:
+double avg = (double)summe / (double)anzahl;  // Ergibt 7.5</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: SICHERE STRING-FORMATIERUNG -->
+        <section class="card">
+          <h2>🛡️ 3. Formatierte Ausgabe &amp; Buffer-Sicherheit mit <code>snprintf</code></h2>
+          <p>In Produktions-C ist Buffer-Overflow der gefährlichste Sicherheitsfehler. Verwende niemals unbegrenztes <code>sprintf</code>, sondern immer <code>snprintf</code> mit Buffer-Größe:</p>
+
+          <pre><code>#include &lt;stdio.h&gt;
+
+char buffer[64];
+int sensor_id = 42;
+double temp = 23.456;
+
+// Sicher formatieren mit Längenbegrenzung:
+snprintf(buffer, sizeof(buffer), "Sensor #%03d: %.2f C", sensor_id, temp);
+// Ergebnis in buffer: "Sensor #042: 23.46 C"</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.c</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>berechne_sensor_mittelwert(int summe, int anzahl)</code> mit explizitem <code>(double)</code> Cast implementieren (bei <code>anzahl &lt;= 0</code> Rückgabe <code>0.0</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>formatiere_messpunkt(char* buffer, size_t buf_size, int sensor_id, double temperatur, char einheit)</code> mit <code>snprintf</code> und 2 Dezimalstellen formatieren (<code>"Sensor #%d: %.2f %c"</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>pruefe_datenbereich(int wert, int min_val, int max_val)</code> schreiben (gibt <code>1</code> zurück falls im Bereich inklusiv, sonst <code>0</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>konvertiere_celsius_zu_fahrenheit(double celsius)</code> mit Formel <code>celsius * 9.0 / 5.0 + 32.0</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>ermittle_typ_groesse(int typ_code)</code> mit <code>sizeof()</code> implementieren (1: char, 2: int, 3: double, 4: long long, sonst: 0).</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Systems Pro-Tipp: Format-Specifier Genauigkeit</div>
+            <p>Mit <code>%.2f</code> rundet <code>printf</code> die Fließkommazahl für die Anzeige kaufmännisch auf 2 Nachkommastellen. Mit <code>%03d</code> erzwingst du führende Nullen für dreistellige Sensornummern!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_1_c_basics&chapter=01_c_syntax_datentypen_und_io" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_pointer_und_speicheradressen/index.html" class="btn btn-secondary">Weiter zu C 02 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

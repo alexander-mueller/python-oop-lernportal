@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 01: Variablen, Mutabilität &amp; Typensystem</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge" style="background: rgba(244, 102, 35, 0.15); color: #f46623; border: 1px solid rgba(244, 102, 35, 0.3);">🦀 Rust Modern Systems &amp; WebAssembly</div>
+          <h1>Rust 01: Variablen, Mutabilität, Basistypen &amp; Shadowing</h1>
+          <p>Lerne die fundamentalen Bausteine von Rust kennen: <code>fn main()</code>, Unveränderlichkeit per Default mit <code>let</code> vs. <code>let mut</code>, Skalare &amp; zusammengesetzte Datentypen, Shadowing und Type Inference.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: MUTABILITÄT & IMMUTABILITY BY DEFAULT -->
+        <section class="card">
+          <h2>💡 1. Immutability by Default: <code>let</code> vs. <code>let mut</code></h2>
+          <p>In Rust sind alle Variablen standardmäßig <strong>unveränderlich (immutable)</strong>. Das verhindert versehentliche Zustandsänderungen in komplexen Systemen und nebenläufigen Programmen bereits zur Compile-Zeit:</p>
+          
+          <pre><code>fn main() {
+    // 1. Unveränderliche Variable (Immutable)
+    let max_connections = 100;
+    // max_connections = 200; // ❌ COMPILE-FEHLER: cannot assign twice to immutable variable
+
+    // 2. Veränderbare Variable mit dem Schlüsselwort 'mut'
+    let mut current_load = 42;
+    current_load = 43; // ✅ Gültig!
+
+    // 3. Konstanten: Immer unveränderlich, Typ-Annotation ist Pflicht!
+    const MAX_RETRIES: u32 = 5;
+
+    println!("Max: {}, Current: {}, Retries: {}", max_connections, current_load, MAX_RETRIES);
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Fest verschraubtes Hinweisschild vs. Whiteboard</div>
+            <p>Ein normales <code>let</code> ist wie ein in Stein graviertes Türschild: Einmal angebracht, kann es niemand unbemerkt überschreiben. Nur wenn du explizit <code>let mut</code> wählst, stellst du ein Whiteboard auf, auf dem Werte abgewischt und neu geschrieben werden dürfen.</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SKALARE & ZUSAMMENGESETZTE TYPEN -->
+        <section class="card">
+          <h2>📐 2. Das statische Typensystem von Rust</h2>
+          <p>Rust ist statisch typisiert, verfügt jedoch über eine hochpräzise <strong>Type Inference</strong> (Typableitung). Der Compiler weiß meist selbst, welcher Typ gemeint ist.</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px; text-align: left;">Kategorie</th>
+                  <th style="padding: 8px 12px; text-align: left;">Rust Typen</th>
+                  <th style="padding: 8px 12px; text-align: left;">Beispiel</th>
+                  <th style="padding: 8px 12px; text-align: left;">Besonderheiten</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Ganzzahlen (Signed)</strong></td>
+                  <td style="padding: 8px 12px;"><code>i8, i16, i32, i64, i128, isize</code></td>
+                  <td style="padding: 8px 12px;"><code>-42_i32</code></td>
+                  <td style="padding: 8px 12px;">Standard: <code>i32</code>. <code>_</code> als Tausendertrennzeichen erlaubt.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Ganzzahlen (Unsigned)</strong></td>
+                  <td style="padding: 8px 12px;"><code>u8, u16, u32, u64, u128, usize</code></td>
+                  <td style="padding: 8px 12px;"><code>1024_u32</code></td>
+                  <td style="padding: 8px 12px;"><code>usize</code> entspricht der Pointer-Größe (für Array-Indizes).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Fließkommazahlen</strong></td>
+                  <td style="padding: 8px 12px;"><code>f32, f64</code></td>
+                  <td style="padding: 8px 12px;"><code>3.1415_f64</code></td>
+                  <td style="padding: 8px 12px;">Standard: <code>f64</code> (doppelte IEEE-754 Präzision).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Booleans &amp; Chars</strong></td>
+                  <td style="padding: 8px 12px;"><code>bool, char</code></td>
+                  <td style="padding: 8px 12px;"><code>true, '🦀'</code></td>
+                  <td style="padding: 8px 12px;"><code>char</code> ist 4 Bytes groß (echtes Unicode Scalar Value).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Tupel (Tuples)</strong></td>
+                  <td style="padding: 8px 12px;"><code>(T1, T2, ...)</code></td>
+                  <td style="padding: 8px 12px;"><code>("rust", 2024, true)</code></td>
+                  <td style="padding: 8px 12px;">Feste Länge, heterogene Typen. Zugriff: <code>tup.0</code>, <code>tup.1</code>.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 12px;"><strong>Arrays</strong></td>
+                  <td style="padding: 8px 12px;"><code>[T; N]</code></td>
+                  <td style="padding: 8px 12px;"><code>[1, 2, 3, 4]</code></td>
+                  <td style="padding: 8px 12px;">Feste Länge zur Compile-Zeit, homogener Typ, auf dem Stack!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Explizite Typkonvertierung mit <code>as</code></h3>
+          <p>Rust führt niemals automatische Typ-Casts durch. Jede Konvertierung zwischen numerischen Typen muss mit dem <code>as</code> Keyword explizit deklariert werden:</p>
+          <pre><code>let total_bytes: u64 = 1048576;
+let chunk_size: u32 = 1024;
+// let chunks = total_bytes / chunk_size; // ❌ Fehler: Typen u64 und u32 inkompatibel
+let chunks = total_bytes / (chunk_size as u64); // ✅ Korrekt</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: SHADOWING -->
+        <section class="card">
+          <h2>👥 3. Shadowing: Der saubere Namens-Neustart</h2>
+          <p>In Rust kannst du eine Variable mit <code>let</code> erneut deklarieren. Dies nennt man <strong>Shadowing</strong>. Dabei wird die alte Variable verdeckt und du kannst sogar den Datentyp ändern, ohne einen neuen Variablennamen erfinden zu müssen:</p>
+
+          <pre><code>let input = "   42   ";          // Typ: &amp;str
+let input = input.trim();        // Typ: &amp;str ("42")
+let input: i32 = input.parse().unwrap(); // Typ: i32 (42)
+
+println!("Geparster Integer: {}", input);</code></pre>
+
+          <div class="box box-tipp">
+            <div class="box-title">💡 Shadowing vs. <code>let mut</code></div>
+            <p>Bei <code>let mut</code> behält die Variable denselben Datentyp und Speicherort. Beim <strong>Shadowing</strong> entsteht eine komplett neue Variable mit eigenem Typ und Scope. Die alte Variable bleibt unveränderlich geschützt!</p>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>create_system_specs() -&gt; (String, u32, f64, bool)</code>: Tupel mit OS-Name, RAM (MB), CPU-Takt (GHz) und 64-Bit-Flag zurückgeben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>calculate_average_load(cores: u32, total_ticks: u64) -&gt; f64</code>: Division mit <code>as f64</code> Casting durchführen (0.0 wenn cores == 0).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>format_sensor_reading(sensor_id: u16, temp_celsius: f32, is_alert: bool) -&gt; String</code>: Sensor-String mit <code>format!()</code> zusammensetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>demonstrate_shadowing_and_arrays(input_str: &amp;str) -&gt; [i32; 4]</code>: String per Shadowing zu <code>i32</code> parsen und Array <code>[x, x*2, x*3, x*4]</code> erzeugen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>calculate_disk_utilization_percent(used_bytes: u64, total_bytes: u64) -&gt; f64</code>: Prozentuale Auslastung mit Randfall-Handling berechnen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_1_rust_basics&chapter=01_variablen_mutabilitaet_und_typen" class="btn" style="background: #f46623; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_das_ownership_und_borrowing_system/index.html" class="btn btn-secondary">Weiter zu Rust 02 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

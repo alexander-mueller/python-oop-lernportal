@@ -1,20 +1,17 @@
 // Automatisch generierter lokaler Gamification-Spielstand
 window.GAMIFICATION_DATA = {
   "spieler_name": "Python-Entwicklerin",
-  "xp": 360,
-  "level": 2,
-  "titel": "Code-Detektivin 🔍",
-  "rang": "Bronze II",
-  "geloeste_kapitel": [
-    "lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools",
-    "lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints"
-  ],
-  "bestandene_tests": 16,
+  "xp": 0,
+  "level": 1,
+  "titel": "Code-Küken 🐣",
+  "rang": "Bronze I",
+  "geloeste_kapitel": [],
+  "bestandene_tests": 0,
   "freigeschaltete_badges": [],
   "streak_tage": 1,
-  "letzter_aktiver_tag": "2026-08-29",
+  "letzter_aktiver_tag": "2026-09-10",
   "historie": [],
-  "zuletzt_aktualisiert": "2026-08-30T13:10:32.170183"
+  "zuletzt_aktualisiert": "2026-09-10T07:33:38.614167"
 };
 window.GAMIFICATION_BADGES_KATALOG = {
   "rechenkonegin": {

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 04: Kontrollfluss &amp; Pattern Matching</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge" style="background: rgba(244, 102, 35, 0.15); color: #f46623; border: 1px solid rgba(244, 102, 35, 0.3);">🦀 Rust Modern Systems &amp; WebAssembly</div>
+          <h1>Rust 04: Kontrollfluss, Loops &amp; Mächtiges <code>match</code> Pattern Matching</h1>
+          <p>Nutze <code>if</code> als wertrückgebenden Ausdruck, meistere <code>loop</code>, <code>while</code> und <code>for</code> Schleifen und entfalte die Kraft des lückenlosen <code>match</code> Pattern Matchings mit Guards und Ranges.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: IF ALS EXPRESSION -->
+        <section class="card">
+          <h2>💡 1. <code>if/else</code> als Ausdrücke (Expressions)</h2>
+          <p>In Rust ist fast alles ein Ausdruck, der einen Wert zurückgibt. Deshalb kann <code>if</code> direkt Variablen initialisieren – ganz ohne ternären <code>? :</code> Operator:</p>
+          
+          <pre><code>let is_authenticated = true;
+
+// if als Ausdruck: Beide Zweige müssen denselben Datentyp liefern!
+let access_level = if is_authenticated { 2 } else { 0 };
+
+println!("Zugriffsstufe: {}", access_level);</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SCHLEIFEN IN RUST -->
+        <section class="card">
+          <h2>🔁 2. Die drei Schleifentypen in Rust</h2>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 16px 0;">
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="margin: 0 0 6px 0;">1. <code>loop</code></h4>
+              <p style="margin: 0; font-size: 0.88rem;">Endlosschleife, kann mit <code>break value;</code> Werte zurückgeben!</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="margin: 0 0 6px 0;">2. <code>while</code></h4>
+              <p style="margin: 0; font-size: 0.88rem;">Bedingte Schleife: läuft solange die Condition <code>true</code> ist.</p>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="margin: 0 0 6px 0;">3. <code>for in</code></h4>
+              <p style="margin: 0; font-size: 0.88rem;">Sichere Iteration über Ranges <code>0..10</code> oder Collections.</p>
+            </div>
+          </div>
+
+          <pre><code>// loop mit Rückgabewert:
+let mut counter = 0;
+let result = loop {
+    counter += 1;
+    if counter == 10 {
+        break counter * 2; // Liefert 20 zurück
+    }
+};</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: MATCH PATTERN MATCHING -->
+        <section class="card">
+          <h2>🎯 3. Das mächtige <code>match</code> Pattern Matching</h2>
+          <p><code>match</code> in Rust ist weitaus mächtiger als klassische <code>switch</code>-Anweisungen in C++/Java. Es erzwingt <strong>Vollständigkeit (Exhaustiveness)</strong> und unterstützt Ranges, Destructuring und Match Guards:</p>
+
+          <pre><code>let score = 85;
+
+let grade = match score {
+    90..=100 =&gt; "A (Ausgezeichnet)",
+    80..=89  =&gt; "B (Sehr gut)",
+    70..=79  =&gt; "C (Befriedigend)",
+    0..=69   =&gt; "D (Nicht bestanden)",
+    _        =&gt; "Ungültiger Punktestand", // Catch-All Muster
+};</code></pre>
+
+          <div class="box box-tipp">
+            <div class="box-title">🛡️ Match Guards für feingliedrige Logik</div>
+            <p>Mit <code>pattern if condition =&gt; ...</code> kannst du zusätzliche boolesche Bedingungen an ein Muster anheften, z. B. <code>(role, level) if level &lt;= 3 =&gt; true</code>.</p>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>classify_temperature(temp: i32) -&gt; &amp;'static str</code>: Temperatur mit <code>match</code> und Ranges klassifizieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>compute_fibonacci(n: u32) -&gt; u64</code>: n-te Fibonacci-Zahl per Schleife berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>retry_operation_loop(limit: u32, success_at: u32) -&gt; u32</code>: <code>loop</code> mit <code>break value</code> für Retry-Logik umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>evaluate_permission(role: &amp;str, level: u8, is_admin: bool) -&gt; bool</code>: Tupel-Matching mit Guards.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>count_even_squares(max: u32) -&gt; u64</code>: Summe der Quadrate aller geraden Zahlen von 1 bis max ermitteln.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_1_rust_basics&chapter=04_kontrollfluss_und_pattern_matching" class="btn" style="background: #f46623; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../05_structs_und_impl_methoden/index.html" class="btn btn-secondary">Weiter zu Rust 05 (Lehrpfad 2) &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

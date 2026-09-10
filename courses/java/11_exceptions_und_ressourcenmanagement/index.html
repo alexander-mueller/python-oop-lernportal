@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 11: Exceptions &amp; Ressourcenmanagement</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Generics, Collections &amp; Modern Streams</div>
+          <h1>Java 11: Exceptions &amp; Try-with-Resources</h1>
+          <p>Lerne robustes Enterprise-Fehlermanagement: Checked vs. Unchecked Exceptions, saubere Exception-Hierarchien und automatisches Schließen via <code>AutoCloseable</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.java" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.java (Startercode)</a>
+            <a href="TestAufgabe.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.java (Tests)</a>
+            <a href="Musterloesung.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.java (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: CHECKED VS UNCHECKED -->
+        <section class="card">
+          <h2>⚠️ 1. Checked vs. Unchecked Exceptions</h2>
+          <p>
+            In Java gibt es zwei Hauptkategorien von Ausnahmen:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #fff1f2; border-left: 4px solid #e11d48; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #be123c;">Checked Exceptions (<code>extends Exception</code>)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Compiler fordert Behandlung per <code>try-catch</code> oder <code>throws</code>. Für vorhersehbare Fehler im Systemumfeld (Netzwerk, I/O, Payment).</p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">Unchecked Exceptions (<code>extends RuntimeException</code>)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Keine Deklarationspflicht. Signalisiert Programmierfehler (NullPointer, IndexOutOfBounds) oder Invarianten-Verletzung.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: AUTO CLOSEABLE & TRY WITH RESOURCES -->
+        <section class="card">
+          <h2>🛡️ 2. Sichere Ressourcenverwaltung mit <code>try-with-resources</code></h2>
+          <p>
+            Jede Klasse, die <code>java.lang.AutoCloseable</code> implementiert, kann innerhalb runder Klammern in einem <code>try(...)</code> Block deklariert werden. Die JVM ruft am Ende garantiert die <code>close()</code>-Methode auf &ndash; selbst wenn unvorhergesehene Ausnahmen auftreten.
+          </p>
+
+          <pre><code>try (AuditLogSession session = new AuditLogSession("TXN-100")) {
+    session.log("Transaktion gestartet");
+    bankAccount.transfer(target, amount);
+    session.log("Transaktion abgeschlossen");
+} catch (InsufficientFundsException e) {
+    logger.error("Überziehung verhindert: " + e.getMessage());
+} // session.close() wird HIER deterministisch ausgeführt!</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Sicherheitsschleusen-System im Hochsicherheitstrakt</div>
+            <p>
+              Ein Mitarbeiter betritt den Serverraum mit einer Zutrittskarte (<code>AutoCloseable</code>).
+              <strong>try-with-resources</strong> ist die automatische Drucktür: Egal, ob der Techniker seine Arbeit erfolgreich beendet oder wegen eines Feueralarms fluchtartig den Raum verlässt &ndash; die Schleuse verriegelt sich beim Verlassen stets von selbst und verhindert jedes Datenleck!
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Exception Best Practices</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Muster</th>
+                  <th style="padding: 10px;">Code-Beispiel</th>
+                  <th style="padding: 10px;">Empfehlung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Try-With-Resources</strong></td>
+                  <td style="padding: 10px;"><code>try (Resource r = new Resource())</code></td>
+                  <td style="padding: 10px;">Immer bevorzugen vor manuellen finally-Blöcken</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Multi-Catch</strong></td>
+                  <td style="padding: 10px;"><code>catch (SQLException | IOException e)</code></td>
+                  <td style="padding: 10px;">Verhindert redundanten Code für gleichwertiges Handling</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Exception Chaining</strong></td>
+                  <td style="padding: 10px;"><code>throw new ServiceException("...", cause);</code></td>
+                  <td style="padding: 10px;">Niemals den Original-Stacktrace verwerfen (Ursache erhalten)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Specific Exceptions</strong></td>
+                  <td style="padding: 10px;"><code>throw new IllegalArgumentException(...)</code></td>
+                  <td style="padding: 10px;">Niemals generisches <code>throw new Exception()</code> werfen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.java</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>BankAccount</code> mit IBAN-Prüfung, <code>deposit()</code> und <code>withdraw()</code> (inkl. <code>InsufficientFundsException</code>) schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>AuditLogSession</code> als <code>AutoCloseable</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>PaymentProcessor.processPayment(...)</code> mit <code>try-with-resources</code> und Exception-Chaining fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Enterprise Architect Tipp: Leere Catch-Blöcke vermeiden</div>
+            <p>Ein leerer <code>catch (Exception e) {}</code> Block („Swallowed Exception“) ist eine der gefährlichsten Fehlerquellen im Enterprise-Umfeld. Mindestens loggen oder als Business-Exception weiterwerfen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=java&track=track_3_collections_streams&chapter=11_exceptions_und_ressourcenmanagement" class="btn" style="background: #e11d48; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_lambdas_streams_api_und_optional/index.html" class="btn btn-secondary">Weiter zu Java 12: Streams API &amp; Lambdas &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

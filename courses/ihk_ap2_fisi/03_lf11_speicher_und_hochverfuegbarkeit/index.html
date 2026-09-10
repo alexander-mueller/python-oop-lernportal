@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP2 Modul 03: Speicher & Hochverfügbarkeit (LF 11)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 11 (FISI)</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 03: Speicher & Hochverfügbarkeit (LF 11)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">RAID 0/1/5/6/10 Nutzkapazität, URE-Risiko, SAN (Fibre Channel vs. iSCSI), ZFS Copy-on-Write, HA-Cluster, Split-Brain & STONITH.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #f87171; margin-top: 0;">💾 LF 11: Speicher- und Hochverfügbarkeitssysteme implementieren (FISI)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Hardware- & Software-RAID, Storage Area Networks (Fibre Channel vs. iSCSI), Enterprise-Dateisysteme (ZFS), Hochverfügbarkeits-Cluster, Quorum, STONITH und Disaster Recovery.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. RAID-Level im direkten IHK-Vergleich</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead><tr><th>RAID</th><th>Min. Platten</th><th>Nutzbare Kapazität</th><th>Ausfallsicherheit</th><th>Besonderheit / IHK-Falle</th></tr></thead>
+    <tbody>
+      <tr><td>RAID 0</td><td>2</td><td>N * Plattenkapazität</td><td>0 Platten (Keine Redundanz!)</td><td>Reines Striping, hoher Speed, Totalverlust bei 1 Plattendefekt</td></tr>
+      <tr><td>RAID 1</td><td>2</td><td>50 % (1 Platte)</td><td>1 Platte</td><td>Reine Spiegelung (Mirroring), einfache Wiederherstellung</td></tr>
+      <tr><td>RAID 5</td><td>3</td><td>(N - 1) * Kapazität</td><td>1 Platte</td><td>Block-Striping mit verteilter Parität. URE-Gefahr beim Rebuild!</td></tr>
+      <tr><td>RAID 6</td><td>4</td><td>(N - 2) * Kapazität</td><td>2 Platten zeitgleich</td><td>Doppelte verteilte Parität. Standard für Platten ab 4 TB!</td></tr>
+      <tr><td>RAID 10</td><td>4 (gerade)</td><td>(N / 2) * Kapazität</td><td>1 bis N/2 Platten</td><td>Stripe of Mirrors. Hohe I/O-Leistung für Datenbanken.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Hochverfügbarkeits-Cluster: Split-Brain & STONITH</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    Bricht das Heartbeat-Netzwerk ab, droht das <strong>Split-Brain-Syndrom</strong>: Beide Knoten beanspruchen die Ressourcen für sich und beschreiben gleichzeitig dieselben Datenträger (Datenkorruption!).<br>
+    - <strong>Quorum:</strong> Dienste dürfen nur weitergeführt werden, wenn der Clusterteil über mehr als 50 % aller Stimmen verfügt (z. B. 3 Knoten oder Witness-Server).<br>
+    - <strong>STONITH (Shoot The Other Node In The Head):</strong> Fencing-Methode, bei der ein unklarer Knoten hardwareseitig über IPMI/schaltbare Steckdose sofort stromlos geschaltet wird.
+  </p>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+<div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+    <span>💽</span> Interaktiver RAID-Simulator & URE-Risikorechner
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.9rem;">
+    Simulieren Sie Festplattenausfälle in RAID 0, 1, 5, 6 und 10 mit Hot-Spare-Umschaltung und URE-Risikoanalyse:
+  </p>
+  <div id="raid-sim-container"></div>
+  <script src="../../../assets/ihk_tools/raid_simulator.js"></script>
+</div>
+
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 11 (FISI)
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="RAID 5 vs RAID 6 Nutzkapazität und URE" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">RAID 5 vs RAID 6 Nutzkapazität und URE</strong>
+                <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Storage-Server wird mit 8 Enterprise-Festplatten zu je 10 TB Bruttokapazität bestückt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die nutzbare Speicherkapazität für RAID 5 und RAID 6 und begründen Sie die Empfehlung von RAID 6 bei großen Festplatten anhand des URE-Risikos (Unrecoverable Read Error).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  RAID 5 Nutzkapazität: (N - 1) * Kapazität = (8 - 1) * 10 TB = 70 TB (1 Paritätsplatte). (2 Pkt.)
+RAID 6 Nutzkapazität: (N - 2) * Kapazität = (8 - 2) * 10 TB = 60 TB (2 Paritätsplatten). (2 Pkt.)
+URE-Risiko: Enterprise-SATA-Platten weisen eine URE-Fehlerrate von ca. 1 Bit pro 10^14 bis 10^15 gelesenen Bits auf. Beim tagelangen Rebuild eines RAID 5 nach Plattenausfall müssen zig Terabyte Daten lückenlos fehlerfrei gelesen werden. Tritt dabei ein einzelner Lesefehler auf, bricht der Rebuild ab -> Totalverlust des gesamten Arrays. RAID 6 toleriert durch zweifache Parität den gleichzeitigen Ausfall von zwei Platten und übersteht Lesefehler beim Rebuild unbeschadet. (6 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="RAID 10 Aufbau und Fehlertoleranz" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">RAID 10 Aufbau und Fehlertoleranz</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Datenbankadministrator benötigt maximale I/O-Performance und hohe Ausfallsicherheit und wählt ein RAID 10 aus 8 Festplatten zu je 4 TB.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie den Aufbau eines RAID 10 (Stripe of Mirrors) und berechnen Sie die Nutzkapazität sowie die maximale und minimale Anzahl an Festplattenausfällen, die das Array überlebt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Aufbau: Kombination aus RAID 1 (Spiegelung) und RAID 0 (Striping). Zunächst werden jeweils 2 Festplatten zu einem RAID-1-Spiegelpaar zusammengefasst (4 Paare). Über diese 4 Spiegelpaare wird anschließend ein RAID 0 gestriped. (3 Pkt.)
+Nutzbare Kapazität: (N / 2) * Kapazität = (8 / 2) * 4 TB = 16 TB. (2 Pkt.)
+Fehlertoleranz:
+Minimaler Ausfall: 2 Platten (wenn zufällig beide Platten DENSELBEN RAID-1-Spiegelpaars ausfallen -> Datenverlust). (1,5 Pkt.)
+Maximaler Ausfall: Bis zu 4 Platten (sofern aus jedem der vier Spiegelpaare genau eine Platte ausfällt). (1,5 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Speicherarchitekturen DAS vs NAS vs SAN" data-points="9" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Speicherarchitekturen DAS vs NAS vs SAN</strong>
+                <span class="ihk-badge ihk-badge-success">9 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für die Unternehmens-IT werden verschiedene Storage-Lösungen verglichen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie DAS, NAS und SAN bezüglich Zugriffsebene (Block vs File), Übertragungsmedien/Protokolle und typischem Einsatzzweck.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  DAS (Direct Attached Storage): Direkt am Server angeschlossener lokaler Speicher (SATA/SAS/NVMe). Block-Level-Zugriff. Nicht teilbar, nur für Einzelserver. (3 Pkt.)
+NAS (Network Attached Storage): Eigenständiges Dateisystem im Standard-LAN. File-Level-Zugriff (Datei-Ebene) über SMB/CIFS oder NFS. Ideal für zentrale Dateiablagen und Fileserver. (3 Pkt.)
+SAN (Storage Area Network): Dediziertes Hochgeschwindigkeits-Speichernetzwerk. Block-Level-Zugriff (RAW-LUNs erscheinen dem Host wie lokale Datenträger). Übertragung via Fibre Channel (FC) oder iSCSI. Ideal für Virtualisierungs-Cluster und Datenbanken. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SAN Protokolle Fibre Channel vs iSCSI" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SAN Protokolle Fibre Channel vs iSCSI</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Anbindung eines VMware-vSphere-Clusters steht die Wahl zwischen Fibre Channel (FC) und iSCSI an.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie FC und iSCSI hinsichtlich Hardware-Komponenten, Übertragungsmedium, MTU/Jumbo Frames und Kosten.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Fibre Channel (FC): Benötigt dedizierte FC-Host-Bus-Adapter (HBAs), optische Transceiver und spezialisierte Fibre-Channel-Switche. Verlustfreies Protokoll mit extrem geringen Latenzen und festem Framing; sehr hohe Anschaffungskosten. (4 Pkt.)
+iSCSI: Kapselt SCSI-Befehle in Standard-TCP/IP-Pakete über normales Ethernet (10/25 GbE). Kostengünstiger, da Standard-Netzwerkkomponenten genutzt werden können. Erfordert zur Minimierung des Overheads zwingend Jumbo Frames (MTU 9000) und dedizierte/isolierte VLANs. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="High-Availability Cluster Active-Passive vs Active-Active" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">High-Availability Cluster Active-Passive vs Active-Active</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Web- und Datenbanksystem soll hochverfügbar ausgelegt werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Unterscheiden Sie ein Active/Passive-Cluster von einem Active/Active-Cluster und erklären Sie das Phänomen des Split-Brain-Syndroms.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Active/Passive (Failover): Node 1 bedient alle Anfragen aktiv. Node 2 befindet sich im Standby und übernimmt die Dienste erst, wenn Node 1 ausfällt. Keine Lastverteilung, aber einfaches Datenmodell. (2 Pkt.)
+Active/Active (Load Balancing): Beide Nodes verarbeiten gleichzeitig produktive Anfragen parallel und synchronisieren Daten laufend. Optimale Ressourcenauslastung, erfordert komplexe Cluster-Dateisysteme / verteilte Locks. (2 Pkt.)
+Split-Brain-Syndrom: Wenn das interne Kommunikationsnetzwerk (Heartbeat-Netzwerk) zwischen den Clusterknoten abreißt, können die Knoten einander nicht mehr sehen. Jeder Knoten nimmt fälschlicherweise an, der andere sei tot, und übernimmt alle Ressourcen exklusiv. Beide schreiben gleichzeitig auf denselben Shared Storage -> Datenkorruption und Datenverlust. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Quorum und Fencing (STONITH)" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Quorum und Fencing (STONITH)</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Um Split-Brain in einem 2-Node-Cluster sicher zu verhindern, wird ein Quorum-Mechanismus und STONITH eingerichtet.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Funktionsweise von Quorum (Mehrheitsentscheid) und beschreiben Sie das Prinzip von STONITH (Shoot The Other Node In The Head).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Quorum: Regel, wonach ein Cluster-Teilbereich nur dann Entscheidungen treffen und Dienste weiterführen darf, wenn er über mehr als 50 % aller Cluster-Stimmen verfügt (z. B. 3 Knoten oder 2 Knoten + Witness/Quorum-Server). Bei Netztrennung verliert der isolierte Knoten das Quorum und schaltet sich passiv. (3 Pkt.)
+STONITH: Fencing-Methode. Ein gesunder Knoten schaltet einen nicht mehr reagierenden oder unklaren Knoten über eine IPMI/iLO-Schnittstelle oder eine schaltbare Steckdosenleiste (PDU) hardwareseitig hart ab (Strom aus), um unkontrollierte Schreibzugriffe auf den Shared Storage sicher auszuschließen. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="ZFS Dateisystem Copy-on-Write & Prüfsummen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">ZFS Dateisystem Copy-on-Write & Prüfsummen</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Enterprise-Speicherserver wird unter TrueNAS mit dem Dateisystem ZFS aufgesetzt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Funktionsweise von Copy-on-Write (CoW) in ZFS und beschreiben Sie, wie ZFS "Silent Data Corruption" (Bit-Rot) mithilfe von Prüfsummen und Scrubbing erkennt und repariert.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Copy-on-Write (CoW): ZFS überschreibt geänderte Datenblöcke niemals an derselben Stelle. Stattdessen werden veränderte Daten in neue, freie Blöcke geschrieben. Erst nach erfolgreichem Schreiben wird der Metadatenzeiger im Merkle-Tree atomar auf den neuen Block umgebogen. Verhindert Dateisystem-Inkonsistenzen bei Stromausfall komplett (kein fsck nötig). (4 Pkt.)
+Bit-Rot Schutz: ZFS speichert für jeden Datenblock eine kryptografische 256-Bit-Prüfsumme in dessen übergeordnetem Metadaten-Zeiger. Bei jedem Lesevorgang wird die Prüfsumme neu berechnet. Stimmt sie nicht überein, liest ZFS automatisch die korrekten Daten aus der RAID-Z-Parität oder dem Spiegel und repariert den defekten Block auf der Festplatte (Self-Healing). Ein regelmäßiger "Scrub" prüft alle Daten im Hintergrund präventiv. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="LTO-Bandtechnologie und WORM-Speicher" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">LTO-Bandtechnologie und WORM-Speicher</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Erfüllung gesetzlicher Revisionsanforderungen (GoBD) müssen Buchhaltungsunterlagen unveränderbar auf LTO-Tape archiviert werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie das WORM-Prinzip (Write Once, Read Many) und nennen Sie zwei technische Vorteile von Magnetbändern gegenüber Festplatten zur Langzeitarchivierung.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  WORM-Prinzip: Daten können genau einmal auf das Bandlaufwerk geschrieben werden; jegliches nachträgliches Überschreiben, Verändern oder Löschen der Daten auf dem Band ist hardware- oder firmwareseitig dauerhaft gesperrt. (2 Pkt.)
+Zwei Vorteile von LTO-Tapes:
+1. Haltbarkeit und Zuverlässigkeit: Lagerfähigkeit von bis zu 30 Jahren unter Standardbedingungen ohne Stromzufuhr. (2 Pkt.)
+2. Perfekter Air-Gap und Kosteneffizienz: Kassetten können aus der Library entnommen und im Safe gelagert werden (100% Ransomware-Schutz) bei unschlagbar geringen Terabyte-Preisen für kalte Daten. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Synchrone vs Asynchrone Storage-Replikation" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Synchrone vs Asynchrone Storage-Replikation</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zwei Brandabschnitte eines Rechenzentrums im Abstand von 15 Kilometern sollen gespiegelt werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie synchrone und asynchrone Speicherreplikation hinsichtlich Bestätigung an das Betriebssystem, Latenzabhängigkeit und RPO.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Synchrone Replikation: Ein Schreibbefehl wird der Anwendung erst dann als erfolgreich quittiert (Write Acknowledged), wenn die Daten sowohl auf dem lokalen als auch auf dem entfernten Storage-System fehlerfrei im Cache/Platte geschrieben wurden. RPO = 0 (garantiert kein Datenverlust). Erfordert extrem geringe Roundtrip-Latenzen (< 5 ms) und teure Dark-Fiber-LWL-Verbindungen; begrenzte Distanz (typisch max. 20-40 km). (4 Pkt.)
+Asynchrone Replikation: Der Schreibbefehl wird der Anwendung sofort nach dem Schreiben auf das lokale System quittiert. Die Übertragung an den Remotestandort erfolgt zeitverzögert im Hintergrund. Keine Latenzbeeinträchtigung der Anwendung, unbegrenzte Distanzen möglich. RPO > 0 (Daten der letzten Minuten oder Sekunden können bei Totalausfall verloren gehen). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../02_lf10_serverdienste_und_automation/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../04_lf12_virtualisierung_und_cloud/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

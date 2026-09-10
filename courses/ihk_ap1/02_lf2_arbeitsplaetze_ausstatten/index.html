@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 02: Arbeitsplätze ausstatten & Ergonomie (LF 2)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 2</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 02: Arbeitsplätze ausstatten & Ergonomie (LF 2)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Hardware-Auswahl, Moderne Schnittstellen (Thunderbolt 4), USV-Klassen VFI/VI/VFD, DGUV-Ergonomie, TCO & Nutzwertanalyse.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🖥️ LF 2: Arbeitsplätze nach Kundenanforderung ausstatten</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Lernfeld 2 behandelt die ganzheitliche Konzeption, Hardware-Auswahl, Ergonomie, Schutzvorkehrungen und wirtschaftliche Bewertung von IT-Arbeitsplätzen.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Unterbrechungsfreie Stromversorgung (USV) nach EN 62040-3</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Klasse 3: VFD (Offline):</strong> Voltage and Frequency Dependent. Umschaltzeit 4-10 ms. Schützt nur vor totalem Netzausfall. Einsatz für einfache Büro-PCs.</li>
+    <li><strong>Klasse 2: VI (Line-Interactive):</strong> Voltage Independent. Umschaltzeit 2-4 ms. Integrierte Spannungsregelung (AVR) gegen Unter-/Überspannungen. Für Abteilungs-Switches.</li>
+    <li><strong>Klasse 1: VFI (Online / Doppelwandler):</strong> Voltage and Frequency Independent. Umschaltzeit 0 ms! Permanente Umwandlung AC -> DC -> AC. Filtert alle Oberschwingungen und Netzstörungen sauber heraus. Zwingend für Server und Rechenzentren.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Bildschirmarbeitsplatzverordnung & Ergonomie (DGUV 215-410)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Sehabstand:</strong> 50 bis 70 cm (bei Bildschirmen ab 27 Zoll bis 80 cm).</li>
+    <li><strong>Blickwinkel:</strong> Bildschirmoberkante maximal auf Augenhöhe; Blick um 20-35 Grad nach unten geneigt (schont Nackenmuskulatur).</li>
+    <li><strong>Fensterausrichtung:</strong> Blickrichtung parallel zur Fensterfront zur Vermeidung von Direkt- und Reflexblendung.</li>
+    <li><strong>Beleuchtung:</strong> Mindestens 500 Lux mittlere Beleuchtungsstärke im Arbeitsbereich.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Wirtschaftlichkeit: TCO & Nutzwertanalyse</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Total Cost of Ownership (TCO) unterscheidet <strong>CapEx</strong> (einmalige Investitionsausgaben für Anschaffung) und <strong>OpEx</strong> (laufende Betriebskosten für Strom, Wartung, Lizenzen). Die Nutzwertanalyse gewichtet qualitative und quantitative Kriterien zur objektiven Angebotsauswahl.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+<div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+    <span>⚖️</span> Interaktive Nutzwertanalyse (NWA-Simulator)
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.9rem;">
+    Berechnen Sie den gewichteten Gesamtnutzen für drei IT-Angebote mit Echtzeit-Validierung der 100%-Gewichtungssumme:
+  </p>
+  <div id="nwa-container"></div>
+  <script src="../../../assets/ihk_tools/nwa_calculator.js"></script>
+</div>
+
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 2
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="USV-Klassen nach EN 62040-3" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">USV-Klassen nach EN 62040-3</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Die Geschäftsleitung der Meier Logistik AG rüstet ihren Serverraum mit einer unterbrechungsfreien Stromversorgung aus.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie die drei USV-Klassen nach EN 62040-3 und erläutern Sie, warum für unternehmenskritische Server ausschließlich eine VFI-USV (Online-Doppelwandler) eingesetzt werden sollte.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. VFD (Offline/Voltage and Frequency Dependent): Umschaltzeit 4-10 ms, schützt nur vor Stromausfall. (2 Pkt.)
+2. VI (Line-Interactive/Voltage Independent): Umschaltzeit 2-4 ms, Spannungsstabilisierung via AVR. (2 Pkt.)
+3. VFI (Online/Voltage and Frequency Independent): Keine Umschaltzeit (0 ms), permanente Doppelwandlung AC->DC->AC, filtert alle Netzstörungen, Oberschwingungen und Frequenzschwankungen heraus. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="USV-Dimensionierung Berechnung" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">USV-Dimensionierung Berechnung</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zwei Virtualisierungshosts mit je 550 Watt Leistungsaufnahme und ein SAN-Storage mit 300 Watt sollen bei einem Stromausfall für mindestens 20 Minuten weiterbetrieben werden können. Der Wirkungsgrad der USV liegt bei 85 %.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die mindestens bereitzustellende Energie der USV-Akkus in Wattstunden (Wh). Geben Sie Formel und Rechenweg an.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Gesamtlast: P_ges = (2 * 550 W) + 300 W = 1400 Watt. (2 Pkt.)
+Leistungsbedarf inkl. Wirkungsgrad: P_aufwand = 1400 W / 0,85 = 1647,06 Watt. (2 Pkt.)
+Energie für 20 Minuten (20/60 h = 1/3 h): E = 1647,06 W * (1/3) h = 549,02 Wh. (Mindestens 550 Wh). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Schnittstellen Thunderbolt 4 vs USB4" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Schnittstellen Thunderbolt 4 vs USB4</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für die Grafikabteilung werden Notebooks beschafft, die über ein einziges Kabel an eine Dockingstation zwei 4K-Displays mit 60 Hz ansteuern, das Notebook mit 85 Watt laden und 10-Gbit-Ethernet bereitstellen sollen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie die erforderliche Schnittstelle am Notebook und erläutern Sie zwei relevante Leistungsmerkmale (Power Delivery & DisplayPort Alt Mode).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Schnittstelle: Thunderbolt 4 oder USB4 (mindestens 40 Gbit/s Bandbreite). (2 Pkt.)
+Power Delivery (USB-PD): Unterstützt bidirektionale Ladeleistungen bis 100W bzw. 240W über dasselbe Kabel. (2 Pkt.)
+DisplayPort Alt Mode: Ermöglicht die native Übertragung von DisplayPort-Audiodateien und Videosignalen über die physischen Leitungen. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="RAM & ECC-Funktionsweise" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">RAM & ECC-Funktionsweise</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Kunde fragt, warum in Servern spezieller ECC-Arbeitsspeicher (Error-Correcting Code) verbaut wird, während in Desktop-PCs Non-ECC RAM zum Einsatz kommt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Funktionsweise von ECC-Speicher und begründen Sie die Notwendigkeit im Serverbetrieb.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Funktionsweise: ECC-RAM nutzt zusätzliche Prüfbits (z. B. 72 Bit Datenbreite statt 64 Bit für 8 Paritätsbits), um 1-Bit-Speicherfehler (Single Bit Flips) mittels Hamming-Code automatisch zur Laufzeit im laufenden Betrieb zu korrigieren und 2-Bit-Fehler zu erkennen. (4 Pkt.)
+Notwendigkeit: Verhindert Serverabstürze (Blue Screens / Kernel Panics) und schleichende Datenkorruption in Datenbanken bei 24/7-Dauerbetrieb. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DGUV Ergonomie am Bildschirmarbeitsplatz" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DGUV Ergonomie am Bildschirmarbeitsplatz</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Im Rahmen einer Gefährdungsbeurteilung nach der Arbeitsstättenverordnung (ArbStättV / DGUV Information 215-410) wird ein Bildschirmarbeitsplatz überprüft.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie vier konkrete ergonomische Anforderungen an die Ausgestaltung des Bildschirmarbeitsplatzes.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Sehabstand zum Monitor: 50 bis 70 cm (bei größeren Bildschirmen bis 80 cm). (2 Pkt.)
+2. Positionierung zum Fenster: Blickrichtung parallel zur Fensterfront zur Vermeidung von Direkt- und Reflexblendung. (2 Pkt.)
+3. Höhe der Bildschirmoberkante: Maximal auf Augenhöhe, sodass der Blick um ca. 20-35 Grad leicht nach unten geneigt ist. (2 Pkt.)
+4. Beleuchtung: Mindestens 500 Lux mittlere Beleuchtungsstärke im Arbeitsbereich. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="TCO CapEx vs OpEx Kostenrechnung" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">TCO CapEx vs OpEx Kostenrechnung</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Bei der Anschaffung einer neuen Serverinfrastruktur vergleicht die Geschäftsleitung den Kauf eigener Server (On-Premises) mit einem Cloud-Modell (IaaS).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie die Begriffe CapEx und OpEx und ordnen Sie jeweils zwei typische Kostenpositionen zu.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  CapEx (Capital Expenditure): Einmalige Investitionsausgaben für langlebiges Anlagevermögen. Beispiele: Anschaffungskosten der Server-Hardware, Kauf von Switches, USV-Anlage. (3 Pkt.)
+OpEx (Operational Expenditure): Laufende Betriebsausgaben zur Aufrechterhaltung des Betriebs. Beispiele: Monatliche Cloud-Abonnements, Stromkosten im Rechenzentrum, Wartungs- und Supportverträge. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Nutzwertanalyse Durchführung" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Nutzwertanalyse Durchführung</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Systemhaus bewertet drei Angebote für Notebooks anhand gewichteter Kriterien.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie das rechnerische Vorgehen zur Ermittlung des gewichteten Gesamtnutzens und begründen Sie, warum das Angebot mit den niedrigsten Anschaffungskosten nicht zwingend den Zuschlag erhält.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Vorgehen: Für jedes Kriterium wird die vergebene Punktzahl (z. B. 1-10) mit dem Gewichtungsfaktor in Prozent multipliziert. Die Summe aller gewichteten Teilnutzwerte ergibt den Gesamtnutzwert. Das Angebot mit dem höchsten Gesamtnutzen gewinnt. (4 Pkt.)
+Begründung: Die NWA ist ein multikriterielles Verfahren, das qualitative und funktionale Merkmale (z. B. Akkulaufzeit, Displayqualität, Garantie) gleichberechtigt neben den reinen Anschaffungspreis stellt. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DIN 66399 SSD-Datenlöschung" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DIN 66399 SSD-Datenlöschung</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ausgemusterte Mitarbeiter-Laptops mit SSD-Speichern (Solid State Drives) sollen entsorgt werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie zwei zulässige Verfahren zur sicheren Datenlöschung auf Solid State Drives nach DIN 66399 und erklären Sie, warum klassisches Überschreiben mit Nullen bei SSDs ungeeignet ist.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. ATA-Secure-Erase / NVMe-Sanitize-Befehl: Weist den internen Flash-Controller an, alle Speicherzellen inkl. Reservesektoren durch Spannungsimpulse zu entladen und den internen AES-Schlüssel zu löschen (Crypto Erase). (3 Pkt.)
+2. Mechanisches Schreddern: Physische Zerstörung des SSD-Datenträgers nach Sicherheitsstufe H-4 oder H-5 (Partikelgröße kleiner 30 mm² bzw. 10 mm²). (3 Pkt.)
+Warum Nullen ungeeignet sind: Durch Wear-Leveling und Reservesektoren (Over-Provisioning) adressieren normale Schreibbefehle nicht alle physischen Flash-Zellen; Daten verbleiben ungelöscht. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="UEFI vs BIOS & TPM 2.0" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">UEFI vs BIOS & TPM 2.0</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für moderne Windows-Installationen müssen alle neuen PCs bestimmte Hardwareanforderungen erfüllen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie drei wesentliche technische Unterschiede zwischen Legacy-BIOS und UEFI und erklären Sie die Kernfunktion des TPM 2.0 Chips.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Unterschiede:
+1. Partitionstabelle: UEFI nutzt GPT (Partitionen > 2 TB, bis zu 128 Partitionen), BIOS nutzt MBR (max. 2 TB, nur 4 primäre Partitionen). (2 Pkt.)
+2. Sicherheit: UEFI unterstützt Secure Boot (Signaturprüfung des Bootloaders). (2 Pkt.)
+3. Architektur: UEFI läuft im 64-Bit-Modus mit eigener grafischer Oberfläche und Netzwerkunterstützung, BIOS im 16-Bit-Real-Mode. (2 Pkt.)
+TPM 2.0 (Trusted Platform Module): Kryptografischer Hardwarechip zur sicheren Schlüsselspeicherung (z. B. für BitLocker) und zur Integritätsmessung der Bootkette (Measured Boot). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Dateisysteme Vergleich exFAT vs NTFS vs ext4" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Dateisysteme Vergleich exFAT vs NTFS vs ext4</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Techniker muss ein externes USB-Laufwerk formatieren, das Dateien über 4 GB speichern soll und an Windows-, macOS- und Linux-Rechnern ohne Zusatzsoftware les- und schreibbar sein muss.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Ermitteln Sie das am besten geeignete Dateisystem und begründen Sie den Ausschluss von FAT32 und NTFS.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Geeignetes Dateisystem: exFAT (Extended File Allocation Table). (2 Pkt.)
+Ausschluss FAT32: Unterstützt nur eine maximale Dateigröße von 4 GiB (2^32 - 1 Bytes) und maximale Partitionsgrößen von 2 TB bzw. 32 GB unter Windows-Formatierung. (2 Pkt.)
+Ausschluss NTFS: Wird unter macOS standardmäßig nur lesend unterstützt; Schreibzugriffe erfordern proprietäre Treiber von Drittanbietern. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Netzteile Wirkungsgrad 80 PLUS" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Netzteile Wirkungsgrad 80 PLUS</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Servernetzteil mit 80 PLUS Platinum Zertifizierung liefert 800 Watt Ausgangsleistung an die Serverkomponenten bei einem Wirkungsgrad von 92 %.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die Wirkleistung, die das Netzteil aus dem 230V-Netz aufnimmt, und die entstehende thermische Verlustleistung in Watt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Aufgenommene Leistung: P_in = P_out / Wirkungsgrad = 800 W / 0,92 = 869,57 Watt. (3 Pkt.)
+Verlustleistung (Wärmeabgabe): P_verlust = P_in - P_out = 869,57 W - 800 W = 69,57 Watt. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="PUE-Wert im Rechenzentrum" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">PUE-Wert im Rechenzentrum</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Rechenzentrum verbraucht insgesamt 1.500.000 kWh elektrische Energie pro Jahr. Davon entfallen 1.000.000 kWh direkt auf die IT-Hardware (Server, Storage, Netzwerk).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie den PUE-Wert (Power Usage Effectiveness) und erläutern Sie dessen Bedeutung.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Formel: PUE = Gesamte aufgenommene Energie / Energiebedarf der IT-Hardware. (2 Pkt.)
+Berechnung: PUE = 1.500.000 kWh / 1.000.000 kWh = 1,50. (2 Pkt.)
+Bedeutung: Ein Wert von 1,5 bedeutet, dass für jedes Watt IT-Leistung zusätzliche 0,5 Watt für Infrastruktur (Kühlung, USV-Verluste, Beleuchtung) benötigt werden. Idealwert ist 1,0. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Green IT & Umweltzeichen Blauer Engel" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Green IT & Umweltzeichen Blauer Engel</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für eine öffentliche Ausschreibung von 200 Büro-PCs fordert der Auftraggeber die Zertifizierung nach dem Umweltzeichen "Blauer Engel" (DE-UZ 78).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie vier ökologische und ressourcenschonende Anforderungen, die Geräte für dieses Umweltzeichen erfüllen müssen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Hohe Energieeffizienz des Netzteils und geringer Stromverbrauch im Standby-/Ruhezustand. (2 Pkt.)
+2. Reparierbarkeit und Upgradefähigkeit (Verwendung von Standardkomponenten, zerstörungsfreie Demontierbarkeit mit Standardwerkzeug). (2 Pkt.)
+3. Vermeidung gefährlicher Stoffe (z. B. Verzicht auf halogenierte Flammschutzmittel in Gehäusen und Leiterplatten). (2 Pkt.)
+4. Verfügbarkeit von Ersatzteilen und Software-Updates für mindestens 5 Jahre nach Produktionseinstellung. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Display-Technologien IPS vs OLED vs VA" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Display-Technologien IPS vs OLED vs VA</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für die Beschaffung von 50 Arbeitsplatzmonitoren werden Panels verglichen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie IPS- und OLED-Panels bezüglich Blickwinkelstabilität, Kontrast/Schwarzwert, Energieverbrauch bei hellen Inhalten und Reaktionszeit.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Blickwinkelstabilität: Beide sehr gut; IPS behält Farben bis fast 178 Grad naturgetreu bei, OLED hat nahezu keinen Blickwinkelverlust. (2 Pkt.)
+Kontrast/Schwarzwert: OLED bietet echtes Schwarz und unendlichen Kontrast, da selbstleuchtende Pixel komplett abgeschaltet werden; IPS benötigt Hintergrundbeleuchtung (Backlight), Schwarz wirkt leicht gräulich. (2 Pkt.)
+Energieverbrauch: IPS verbraucht konstant Strom unabhängig vom Bildschirminhalt; OLED verbraucht bei großflächig weißen Dokumenten (Office/Word) signifikant mehr Strom als IPS. (2 Pkt.)
+Burn-In-Risiko: IPS hat kein Burn-In; bei OLED besteht bei statischen Office-Elementen (Taskleiste, Fensterrahmen) im Dauerbetrieb ein Restrisiko für Pixeldegradation. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Bildschirmbrille Kostenübernahme" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Bildschirmbrille Kostenübernahme</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Mitarbeiter klagt nach Umstellung auf Bildschirmarbeit über Kopfschmerzen und brennende Augen. Ein Augenarzt verordnet eine spezielle Bildschirmarbeitsplatzbrille.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beurteilen Sie anhand von § 6 ArbStättV und DGUV Information 250-008, unter welchen Voraussetzungen der Arbeitgeber die Kosten für die Brille übernehmen muss.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Pflicht zur arbeitsmedizinischen Vorsorge: Der Arbeitgeber muss Mitarbeitern an Bildschirmarbeitsplätzen eine regelmäßige Augenuntersuchung ermöglichen. (2 Pkt.)
+2. Medizinische Notwendigkeit: Ergibt die Untersuchung, dass normale Sehhilfen (z. B. Alltagsbrillen, Gleitsichtbrillen) für die spezielle Arbeitsdistanz (50-70 cm) nicht ausreichen, muss der Arbeitgeber eine Bildschirmarbeitsplatzbrille bereitstellen. (2 Pkt.)
+3. Kostenübernahme: Der Arbeitgeber trägt die Kosten im angemessenen, für den Arbeitszweck notwendigen Rahmen voll (§ 6 Abs. 2 ArbStättV). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../01_lf1_unternehmen_und_arbeitsplatz/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../03_lf3_clients_in_netzwerke_einbinden/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

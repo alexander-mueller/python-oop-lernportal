@@ -1,0 +1,1 @@
+// TEST: Testet Mitarbeiter Struct Initialisierung

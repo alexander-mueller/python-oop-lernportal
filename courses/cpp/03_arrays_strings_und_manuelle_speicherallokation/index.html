@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C 03: Strings, Stack vs. Heap &amp; Manuelle Speicherallokation</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ C &amp; C++ Systems Engineering</div>
+          <h1>C 03: Strings, Stack vs. Heap &amp; Manuelle Speicherallokation</h1>
+          <p>Tauche ein in das Speichermanagement: Null-terminierte C-Strings (<code>'\0'</code>), Stack vs. Heap Architektur, <code>malloc()</code>, <code>calloc()</code>, <code>realloc()</code>, <code>free()</code> und die Eliminierung von Memory Leaks.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: C-STRINGS & NULL-TERMINATOR -->
+        <section class="card">
+          <h2>🔤 1. C-Strings &amp; das unsichtbare Null-Byte (<code>'\0'</code>)</h2>
+          <p>In C gibt es keinen eingebauten <code>string</code>-Datentyp. Ein C-String ist schlicht ein sequentielles Array aus <code>char</code>-Bytes, das zwingend mit dem ASCII-Wert <code>0</code> (<code>'\0'</code>, Null-Terminator) endet:</p>
+          
+          <pre><code>char str[] = "C++"; // Belegt im Speicher 4 Bytes: ['C', '+', '+', '\0']</code></pre>
+
+          <!-- STRING DIAGRAMM -->
+          <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px; margin: 18px 0; font-family: monospace; font-size: 0.9rem;">
+            <div style="color: #38bdf8; font-weight: bold; margin-bottom: 8px;">📍 Speicherlayout eines C-Strings:</div>
+            <div>Index:    [ 0 ]   [ 1 ]   [ 2 ]   [ 3 ]</div>
+            <div>Zeichen:  'C'     '+'     '+'     '\0'  <-- Wichtig: Bestimmt das String-Ende!</div>
+            <div>Hex:     0x43    0x2B    0x2B    0x00</div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🛑 Didaktische Analogie: Der Güterzug mit Schlusssignal</div>
+            <p>Ein C-String gleicht einem Güterzug. Die CPU weiß nicht im Voraus, wie viele Waggons (Buchstaben) angehängt sind. Sie fährt von Waggon zu Waggon, bis sie auf das rote Schlusssignal (<code>'\0'</code>) stößt. Fehlt dieses Null-Byte, fährt die CPU ungebremst über fremden Speicher weiter (Buffer Overread)!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: STACK VS. HEAP -->
+        <section class="card">
+          <h2>🏢 2. Stack vs. Heap: Die Speicherarchitektur</h2>
+          <p>Jedes C-Programm teilt seinen virtuellen Adressraum in klar definierte Segmente auf:</p>
+
+          <pre><code>┌────────────────────────────────────────────────────────┐  Hohe Adressen (0x7FFF...)
+│ STACK (Automatisch, LIFO, sehr schnell, z.B. 8MB Limit)│  ▼ wächst nach unten
+├────────────────────────────────────────────────────────┤
+│                       (Freier Raum)                    │
+├────────────────────────────────────────────────────────┤
+│ HEAP (Dynamischer Speicher, manuell mit malloc/free)  │  ▲ wächst nach oben
+├────────────────────────────────────────────────────────┤
+│ BSS / DATA (Globale & statische Variablen)             │
+├────────────────────────────────────────────────────────┤
+│ TEXT SEGMENT (Kompilierter Maschinencode / Read-Only)  │  Niedrige Adressen (0x0000...)
+└────────────────────────────────────────────────────────┘</code></pre>
+
+          <div style="overflow-x: auto; margin-top: 15px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px;">Eigenschaft</th>
+                  <th style="padding: 8px 12px;">Stack (Stapelspeicher)</th>
+                  <th style="padding: 8px 12px;">Heap (Freispeicher)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Lebensdauer</strong></td>
+                  <td style="padding: 8px 12px;">Automatisch an Scope (Funktionsblock <code>{}</code>) gebunden</td>
+                  <td style="padding: 8px 12px;">Manuell: Bis <code>free()</code> aufgerufen wird</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Größe</strong></td>
+                  <td style="padding: 8px 12px;">Fest zur Compile-Zeit / Begrenzt (Stack Overflow bei riesigen Arrays)</td>
+                  <td style="padding: 8px 12px;">Dynamisch zur Laufzeit (GBs an RAM)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><strong>Verwaltung</strong></td>
+                  <td style="padding: 8px 12px;">CPU Stack Pointer Register (0 Overhead)</td>
+                  <td style="padding: 8px 12px;"><code>malloc()</code> / <code>calloc()</code> / <code>realloc()</code> / <code>free()</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. THEORIE: MALLOC, REALLOC & FREE -->
+        <section class="card">
+          <h2>🛠️ 3. Dynamische Speicherallokation &amp; Memory Leaks</h2>
+          <p>Der Lebenszyklus einer Heap-Allokation in C:</p>
+
+          <pre><code>#include &lt;stdlib.h&gt;
+
+// 1. Speicher auf dem Heap reservieren (z.B. für 10 Ganzzahlen):
+int* buffer = (int*)malloc(10 * sizeof(int));
+if (buffer == NULL) {
+    // Allokation fehlgeschlagen (Out of Memory)
+    return -1;
+}
+
+// 2. Speicher verwenden:
+buffer[0] = 123;
+
+// 3. Speicher freigeben & Dangling Pointer eliminieren:
+free(buffer);
+buffer = NULL; // WICHTIG: Verhindert versehentlichen Zugriff nach Freigabe!</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.c</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>c_string_laenge(const char* str)</code> (eigene <code>strlen</code>-Funktion bis <code>'\0'</code>) schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>c_string_umkehren(char* str)</code> (In-Place Reversal mit Two-Pointer) implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>erstelle_dynamisches_array(size_t anzahl, int initial_wert)</code> mit <code>malloc()</code> allokieren und initialisieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>dupliziere_string(const char* src)</code> auf dem Heap allokieren (<code>strlen + 1</code> Bytes) und kopieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>vergroessere_array(int* alt, size_t alt_sz, size_t neu_sz, int fuell_wert)</code> mit <code>realloc()</code> erweitern.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t6">
+            <label class="task-label" for="t6"><strong>TODO 6:</strong> <code>gebe_speicher_frei(void** ptr_ref)</code> mit <code>free(*ptr_ref)</code> und <code>*ptr_ref = NULL</code> gegen Dangling Pointers absichern.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Systems Pro-Tipp: calloc vs. malloc</div>
+            <p><code>malloc()</code> reserviert rohen, uninitialisierten Speicher (enthält zufälligen Datensalat/Garbage). <code>calloc(n, size)</code> setzt alle Bits garantiert auf <code>0</code>!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_1_c_basics&chapter=03_arrays_strings_und_manuelle_speicherallokation" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_pointer_und_speicheradressen/index.html" class="btn btn-secondary">&larr; Zurück zu C 02</a>
+            <a href="../04_structs_und_header_dateien/index.html" class="btn btn-secondary">Weiter zu C 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

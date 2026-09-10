@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 04: Schutzbedarfsanalyse & Cyber-Sicherheit (LF 4)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 4</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 04: Schutzbedarfsanalyse & Cyber-Sicherheit (LF 4)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">CIA-Triade, BSI IT-Grundschutz, DSGVO TOMs (Art. 32), 3-2-1-Backup-Regel, RTO/RPO, TLS 1.3, 2FA/TOTP & Incident Response.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🛡️ LF 4: Schutzbedarfsanalyse & Cyber-Sicherheit im Betrieb</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Informationssicherheit und Datenschutz nach DSGVO und BSI IT-Grundschutz. Verständnis der Schutzziele, Backup-Strategien und moderner Authentifizierungsverfahren.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Die CIA-Triade der IT-Sicherheit</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Confidentiality (Vertraulichkeit):</strong> Schutz vor unbefugtem Zugriff und Datenabfluss (Verschlüsselung mit AES, TLS, Berechtigungskonzept).</li>
+    <li><strong>Integrity (Integrität):</strong> Schutz vor unbemerkter Veränderung und Manipulation (Kryptografische Prüfsummen SHA-256, digitale Signaturen).</li>
+    <li><strong>Availability (Verfügbarkeit):</strong> Zeitgerechter Zugriff autorisierter Benutzer auf Systeme (USV, RAID, redundante Netzteile, Backups).</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Die 3-2-1-Backup-Regel & Disaster Recovery</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>3 Kopien:</strong> Mindestens 3 Datenkopien (1 Produktivdaten + 2 Sicherungen).</li>
+    <li><strong>2 Medientechnologien:</strong> Speicherung auf mindestens 2 unterschiedlichen Medien (z. B. Festplatten-Storage + LTO-Tape).</li>
+    <li><strong>1 Offsite-Kopie:</strong> Mindestens 1 Kopie außer Haus an einem separaten Brandabschnitt / Cloud mit <strong>Air-Gap</strong> (Schutz vor Ransomware).</li>
+    <li><strong>RTO (Recovery Time Objective):</strong> Maximal tolerierbare Zeit bis zur Wiederherstellung des Betriebs.</li>
+    <li><strong>RPO (Recovery Point Objective):</strong> Maximal tolerierbarer Zeitraum für Datenverlust.</li>
+  </ul>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+<div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+    <span>🔒</span> Interaktiver DSGVO TOMs Matcher
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.9rem;">
+    Ordnen Sie Sicherheitsmaßnahmen den 8 gesetzlichen technisch-organisatorischen Maßnahmen (Art. 32 DSGVO) zu:
+  </p>
+  <div id="toms-container"></div>
+  <script src="../../../assets/ihk_tools/toms_matcher.js"></script>
+</div>
+
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 4
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="CIA-Triade Grundwerte der Informationssicherheit" data-points="9" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">CIA-Triade Grundwerte der Informationssicherheit</strong>
+                <span class="ihk-badge ihk-badge-success">9 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein IT-Sicherheitskonzept nach BSI IT-Grundschutz basiert auf den drei klassischen Sicherheitszielen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie die Schutzziele Vertraulichkeit, Integrität und Verfügbarkeit und nennen Sie zu jedem Ziel eine konkrete technische oder organisatorische Maßnahme.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Vertraulichkeit (Confidentiality): Informationen sind nur autorisierten Personen zugänglich und vor unbefugtem Zugriff geschützt. Maßnahme: Festplattenverschlüsselung (BitLocker), TLS-Transportverschlüsselung, Rollen- und Rechtekonzept. (3 Pkt.)
+2. Integrität (Integrity): Daten sind vor unbefugter oder unbeabsichtigter Veränderung/Manipulation geschützt und korrekt. Maßnahme: Kryptografische Hashwerte (SHA-256), digitale Signaturen, Schreibschutz. (3 Pkt.)
+3. Verfügbarkeit (Availability): Autorisierte Benutzer können jederzeit im vereinbarten Zeitrahmen auf Systeme und Daten zugreifen. Maßnahme: Redundante Netzteile, USV, RAID-Systeme, Backup-Konzepte. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Backup-Methoden Vergleich" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Backup-Methoden Vergleich</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem Unternehmen fallen täglich 60 GB veränderte Daten an. Für das Backup-Konzept werden die Verfahren Vollsicherung, differenzielle und inkrementelle Sicherung abgewogen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie differenzielle und inkrementelle Backups hinsichtlich Speichervolumen und Aufwand/Schritte bei einer vollständigen Systemwiederherstellung.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Differenzielle Sicherung: Sichert alle Daten, die sich seit der LETZTEN VOLLSICHERUNG geändert haben. Speicherbedarf wächst täglich bis zur nächsten Vollsicherung. Wiederherstellung: Sehr schnell, es werden nur 2 Sicherungssätze benötigt (letzte Vollsicherung + gewünschter differenzieller Stand). (4 Pkt.)
+Inkrementelle Sicherung: Sichert nur die Daten, die sich seit der UNMITTELBAR VORANGEGANGENEN (Voll- oder Inkrementellen) Sicherung geändert haben. Geringster Speicherbedarf. Wiederherstellung: Aufwändig und zeitintensiv, da die Vollsicherung sowie ausnahmslos ALLE darauffolgenden inkrementellen Stände lückenlos in Reihe eingespielt werden müssen. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="3-2-1-Backup-Regel und Air-Gap" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">3-2-1-Backup-Regel und Air-Gap</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Die Geschäftsleitung fordert die konsequente Umsetzung der 3-2-1-Backup-Strategie zum Schutz vor Ransomware-Angriffen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die drei Vorgaben der 3-2-1-Regel und beschreiben Sie das Konzept eines Air-Gaps.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  3: Es müssen mindestens 3 Datenkopien existieren (1 Produktivdaten + 2 Backups). (2 Pkt.)
+2: Die Sicherungen müssen auf mindestens 2 unterschiedlichen Medientechnologien gespeichert werden (z. B. lokales Festplatten-NAS und LTO-Magnetband). (2 Pkt.)
+1: Mindestens 1 Sicherungskopie muss an einem separaten, externen Standort (Offsite / Cloud / Brandschutzabschnitt) aufbewahrt werden. (2 Pkt.)
+Air-Gap: Eine physische oder logische vollständige Trennung des Backup-Mediums vom Produktivnetzwerk (z. B. entnommene LTO-Tape-Kassetten oder Offline-Storage), sodass Schadsoftware über das Netzwerk keinen Schreib- oder Löschzugriff auf das Backup erlangen kann. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SLA-Kennzahlen RTO und RPO" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SLA-Kennzahlen RTO und RPO</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Im Katastrophenfall-Plan (Disaster Recovery Plan) einer Bank sind vereinbart: RTO = 2 Stunden und RPO = 15 Minuten.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie RTO (Recovery Time Objective) und RPO (Recovery Point Objective) und interpretieren Sie die beiden Kennzahlen anhand des Szenarios.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  RTO (Recovery Time Objective): Die maximal tolerierbare Zeitdauer vom Auftreten des Ausfalls bis zur vollständigen Wiederherstellung der Betriebsbereitschaft. Im Szenario: Nach spätestens 2 Stunden muss das System wieder produktiv laufen. (3 Pkt.)
+RPO (Recovery Point Objective): Der maximal tolerierbare Zeitraum, für den Daten im Katastrophenfall verloren gehen dürfen (gemessen zurück vom Ausfallzeitpunkt). Im Szenario: Es dürfen maximal Transaktionsdaten der letzten 15 Minuten verloren gehen (erfordert z. B. synchrone Replikation). (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DSGVO Art. 32 Technisch-organisatorische Maßnahmen (TOMs)" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DSGVO Art. 32 Technisch-organisatorische Maßnahmen (TOMs)</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Rechenzentrum verarbeitet personenbezogene Kundendaten und muss nach Art. 32 DSGVO angemessene technische und organisatorische Maßnahmen nachweisen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie sechs der acht klassischen Kontrollbereiche (TOMs) und geben Sie jeweils ein konkretes Praxisbeispiel an.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Zutrittskontrolle: Schutz vor unbefugtem räumlichen Betreten (z. B. Chipkarten-Leser, Biometrie, Alarmanlage). (1 Pkt.)
+2. Zugangskontrolle: Schutz vor unbefugter Systemnutzung (z. B. sichere Passwörter, 2FA, Kontosperrung). (1 Pkt.)
+3. Zugriffskontrolle: Schutz vor unbefugtem Lesen/Ändern von Daten (z. B. Rollen- und Rechtekonzept nach Least Privilege). (1 Pkt.)
+4. Weitergabekontrolle: Schutz bei Übertragung und Transport (z. B. VPN, TLS-Verschlüsselung, Transportprotokolle). (1 Pkt.)
+5. Eingabekontrolle: Nachvollziehbarkeit, wer wann welche Daten geändert hat (z. B. manipulationssicheres Logging/Audit-Trail). (1 Pkt.)
+6. Verfügbarkeitskontrolle: Schutz vor Zerstörung und Verlust (z. B. USV, RAID, Brandschutz, tägliches Backup). (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DSGVO Betroffenenrechte" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DSGVO Betroffenenrechte</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein ehemaliger Kunde verlangt die vollständige Löschung seiner gespeicherten Daten.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie den maßgeblichen Artikel der DSGVO (Recht auf Löschen / Recht auf Vergessenwerden) und beschreiben Sie zwei gesetzliche Gründe, die einer sofortigen Löschung entgegenstehen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Recht auf Löschung: Art. 17 DSGVO. (2 Pkt.)
+Ausnahmen/Aufbewahrungspflichten:
+1. Handels- und steuerrechtliche Aufbewahrungsfristen nach § 257 HGB und § 147 AO (Rechnungen und Buchungsbelege müssen 10 Jahre archiviert werden). (2 Pkt.)
+2. Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen im Rahmen gesetzlicher Verjährungsfristen (z. B. § 195 BGB). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="BSI IT-Grundschutz Vorgehensweise" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">BSI IT-Grundschutz Vorgehensweise</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein IT-Sicherheitsbeauftragter erstellt ein Sicherheitskonzept nach BSI-Standard 200-2.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Bringen Sie die folgenden Schritte in die korrekte chronologische Reihenfolge und erläutern Sie die Schutzbedarfsfeststellung: Strukturanalyse, Schutzbedarfsfeststellung, Modellierung, IT-Grundschutz-Check, Risikoanalyse.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Reihenfolge:
+1. Strukturanalyse (Erfassung aller IT-Systeme, Netze, Räume, Anwendungen und Daten). (1 Pkt.)
+2. Schutzbedarfsfeststellung. (1 Pkt.)
+3. Modellierung (Zuordnung der Bausteine des IT-Grundschutz-Kompendiums). (1 Pkt.)
+4. IT-Grundschutz-Check (Soll-Ist-Vergleich der Basisanforderungen). (1 Pkt.)
+5. Risikoanalyse (für Bereiche mit hohem Schutzbedarf oder nicht abgedeckten Gefährdungen). (1 Pkt.)
+Schutzbedarfsfeststellung: Ermittelt für jede Anwendung und jedes System die Schadensauswirkungen bei Verlust von Vertraulichkeit, Integrität und Verfügbarkeit in den Kategorien "Normal", "Hoch" oder "Sehr hoch" unter Anwendung des Maximumprinzips. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Zwei-Faktor-Authentifizierung (2FA / MFA)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Zwei-Faktor-Authentifizierung (2FA / MFA)</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Absicherung von VPN-Zugängen wird eine Zwei-Faktor-Authentifizierung (2FA) vorgeschrieben.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie die drei klassischen Authentifizierungsfaktoren mit jeweils einem Beispiel und erläutern Sie das Funktionsprinzip von TOTP (Time-based One-Time Password).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Drei Faktoren:
+1. Wissen (etwas, das man weiß): z. B. Passwort, PIN. (2 Pkt.)
+2. Besitz (etwas, das man hat): z. B. Smartphone, Hardware-Token (YubiKey), Smartcard. (2 Pkt.)
+3. Inhärenz / Sein (etwas, das man ist): z. B. Fingerabdruck, Gesichtsscan, Iris. (2 Pkt.)
+TOTP-Prinzip: Server und Client-App teilen ein geheimes Shared Secret. Aus diesem Secret und dem aktuellen Unix-Zeitstempel (in 30-Sekunden-Schritten) berechnet ein kryptografischer HMAC-Algorithmus (HMAC-SHA1) einen 6-stelligen Code, der nur für dieses 30s-Zeitfenster gültig ist. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Ransomware Incident Response Maßnahmen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Ransomware Incident Response Maßnahmen</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Mitarbeiter bemerkt am Montagmorgen, dass auf seinem PC Dateien die Endung ".locked" erhalten haben und eine Textdatei mit einer Lösegeldforderung auf dem Desktop liegt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie vier Sofortmaßnahmen, die der IT-Support unverzüglich ergreifen muss, und begründen Sie, warum der Rechner nicht einfach ausgeschaltet werden darf.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Vier Sofortmaßnahmen:
+1. Netzwerkverbindung sofort physisch trennen (LAN-Kabel ziehen, WLAN deaktivieren), um Lateral Movement im Firmennetz zu stoppen. (2 Pkt.)
+2. Incident-Response-Team und IT-Sicherheitsbeauftragten alarmieren. (1 Pkt.)
+3. Firewall-Logs und Netflow-Daten auf externe C2-Server-Kommunikation prüfen und betroffene Segmente isolieren. (1 Pkt.)
+4. Meldepflichten nach Art. 33 DSGVO (72h-Meldung an die Datenschutzaufsichtsbehörde) prüfen. (1 Pkt.)
+Warum nicht hart ausschalten: Durch hartes Ausschalten (Stecker ziehen) gehen flüchtige Speicherinhalte im RAM verloren (z. B. unverschlüsselte Keys, C2-Verbindungen, Injektionspfade), die für die digitale Forensik und Speicheranalyse essenziell sind (Einfrieren/Ruhezustand bevorzugen). (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Phishing & Social Engineering Abwehrmaßnahmen" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Phishing & Social Engineering Abwehrmaßnahmen</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Mitarbeiter erhält eine scheinbar von der Geschäftsleitung stammende E-Mail mit der dringenden Aufforderung, eine Überweisung über 45.000 EUR auf ein ausländisches Konto freizugeben (CEO-Fraud).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie Social Engineering und nennen Sie drei organisatorische Maßnahmen, um Angriffe dieser Art wirksam zu verhindern.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Definition: Zwischenmenschliche Beeinflussung und Manipulation von Mitarbeitern unter Ausnutzung von Hilfsbereitschaft, Respekt vor Autorität oder Zeitdruck, um vertrauliche Informationen zu erlangen oder Handlungen auszulösen. (3 Pkt.)
+Maßnahmen:
+1. Vier-Augen-Prinzip bei Zahlungsfreigaben ab bestimmten Betragsgrenzen. (1 Pkt.)
+2. Regelmäßige Security-Awareness-Schulungen und simulierte Phishing-Kampagnen. (1 Pkt.)
+3. Verpflichtender Callback-Kanal (Rückversicherung über ein separates Kommunikationsmedium, z. B. Telefonat mit bekannter Festnetznummer). (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Passwortrichtlinien nach BSI" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Passwortrichtlinien nach BSI</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Die bestehende Passwortrichtlinie verlangt ein monatliches Ändern von 8-stelligen Passwörtern.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie, warum moderne BSI-Empfehlungen das erzwungene regelmäßige Wechseln ablehnen und welche zwei Kriterien stattdessen für ein sicheres Passwort ausschlaggebend sind.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Kritik am Wechselzwang: Erzwungene periodische Wechsel führen nachweislich dazu, dass Benutzer vorhersehbare Muster wählen (z. B. Sommer2024! -> Herbst2024!) oder Passwörter auf Post-its notieren, anstatt echte Entropie zu nutzen. (2 Pkt.)
+Moderne Kriterien:
+1. Passwortlänge: Mindestens 10 bis 12 Zeichen bei komplexen Passwörtern, bzw. Passphrasen mit 20+ Zeichen aus mehreren Wörtern. (2 Pkt.)
+2. Keine Nutzung bekannter Wörterbuchwörter oder persönlicher Daten; Passwort nur wechseln, wenn ein konkreter Verdacht auf Kompromittierung besteht. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Symmetrische vs Asymmetrische Verschlüsselung" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Symmetrische vs Asymmetrische Verschlüsselung</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Absicherung vertraulicher Datenübertragungen werden kryptografische Algorithmen eingesetzt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie symmetrische und asymmetrische Verschlüsselungsverfahren hinsichtlich Schlüsselverwaltung, Rechenaufwand und typischer Einsatzszenarien und nennen Sie jeweils ein bekanntes Algorithmenbeispiel.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Symmetrische Verschlüsselung: Verwendet denselben gemeinsamen geheimen Schlüssel (Shared Secret) zum Ver- und Entschlüsseln. Sehr schnell und recheneffizient. Problem: Sicherer Schlüsselaustausch. Beispiel: AES (Advanced Encryption Standard). (4 Pkt.)
+Asymmetrische Verschlüsselung: Verwendet ein mathematisches Schlüsselpaar aus öffentlichem Schlüssel (Public Key) und privatem Schlüssel (Private Key). Rechenintensiv und langsamer. Ideal für Schlüsselaustausch und Signaturen. Beispiel: RSA, ECC (Elliptic Curve Cryptography). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Hybride Verschlüsselung TLS" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Hybride Verschlüsselung TLS</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Der Zugriff auf die Intranet-Webseite des Unternehmens wird per HTTPS (TLS 1.3) abgesichert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie das Verfahren der hybriden Verschlüsselung und begründen Sie, warum weder rein symmetrische noch rein asymmetrische Verschlüsselung allein verwendet wird.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Verfahren: Der Verbindungsaufbau (Handshake) erfolgt asymmetrisch (z. B. via Diffie-Hellman-Schlüsselaustausch / ECDHE und RSA/ECC-Zertifikat), um die Identität des Servers zu prüfen und einen temporären symmetrischen Sitzungsschlüssel (Session Key) auszuhandeln. Die eigentlichen Nutzdaten werden anschließend hochperformant symmetrisch (z. B. AES-256-GCM) verschlüsselt. (4 Pkt.)
+Begründung: Kombiniert die Sicherheit des asymmetrischen Schlüsselaustauschs ohne vorheriges Geheimnis mit der enormen Rechengeschwindigkeit symmetrischer Chiffren für Massendaten. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Digitale Signatur und Hashfunktionen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Digitale Signatur und Hashfunktionen</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Softwareentwickler signiert ein Update-Paket digital, bevor es an Kunden ausgeliefert wird.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie Schritt für Schritt, wie die digitale Signatur beim Ersteller erzeugt und beim Kunden auf Echtheit und Unverfälschtheit geprüft wird.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Erzeugung beim Ersteller:
+1. Über die Update-Datei wird ein kryptografischer Hashwert (z. B. SHA-256) gebildet. (2 Pkt.)
+2. Dieser Hashwert wird mit dem privaten Schlüssel (Private Key) des Erstellers asymmetrisch verschlüsselt -> Das Ergebnis ist die digitale Signatur. (2 Pkt.)
+Prüfung beim Kunden:
+3. Der Kunde entschlüsselt die Signatur mit dem öffentlichen Schlüssel (Public Key) des Erstellers und erhält den Original-Hash. (2 Pkt.)
+4. Der Kunde berechnet unabhängig den Hashwert über die heruntergeladene Datei. Stimmen beide Hashwerte exakt überein, ist die Software integer (unverändert) und authentisch (vom echten Ersteller). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DSGVO Art. 9 Besondere Kategorien von Daten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DSGVO Art. 9 Besondere Kategorien von Daten</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Softwarehaus entwickelt eine Mitarbeiter-App, in der auch Arbeitsunfähigkeitsbescheinigungen (Krankmeldungen) und Religionszugehörigkeiten (für Kirchensteuer) gespeichert werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie "besondere Kategorien personenbezogener Daten" nach Art. 9 DSGVO und nennen Sie drei erhöhte Schutzanforderungen, die bei deren Verarbeitung zu beachten sind.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Definition (Art. 9 Abs. 1 DSGVO): Hochsensible Daten, aus denen rassische und ethnische Herkunft, politische Meinungen, religiöse oder weltanschauliche Überzeugungen, Gewerkschaftszugehörigkeit, genetische Daten, biometrische Daten zur Identifizierung oder Gesundheitsdaten und Daten zum Sexualleben hervorgehen. Verarbeitung ist grundsätzlich untersagt, außer es greift ein Ausnahmetatbestand (z. B. Art. 9 Abs. 2 b für Arbeitsrecht). (4 Pkt.)
+Drei Schutzanforderungen:
+1. Zwingende Durchführung einer Datenschutz-Folgenabschätzung (DSFA nach Art. 35 DSGVO). (1,5 Pkt.)
+2. Strikte Verschlüsselung at-rest (Datenbank) und in-transit (TLS 1.3). (1,5 Pkt.)
+3. Extrem restriktives Berechtigungs- und Rollenkonzept mit detaillierter Protokollierung aller Lese- und Schreibzugriffe. (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Firewall DMZ-Konzepte" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Firewall DMZ-Konzepte</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Webshop und ein Mailserver sollen so betrieben werden, dass Kunden aus dem Internet Zugriff haben, ohne dass das interne Firmennetzwerk gefährdet wird.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie das Konzept einer Demilitarisierten Zone (DMZ) und vergleichen Sie eine Single-Firewall-DMZ mit einer mehrstufigen Dual-Firewall-DMZ (Screened Subnet).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  DMZ-Konzept: Ein separates, isoliertes Netzwerksegment zwischen dem unsicheren Internet und dem schützenswerten internen LAN. Öffentliche Server (Web, Mail, Proxy) stehen in der DMZ. Einbruch in die DMZ gewährt keinen direkten Zugriff auf das LAN. (4 Pkt.)
+Single-Firewall (Three-Homed): Eine Firewall mit 3 Interfaces (Internet, DMZ, LAN). Kostengünstig, aber Single Point of Failure (Wird die Firewall kompromittiert, ist das gesamte LAN offen). (2 Pkt.)
+Dual-Firewall (Screened Subnet): Eine äußere und eine innere Firewall unterschiedlicher Hersteller (Heterogenität). Selbst bei Ausnutzung einer Zero-Day-Lücke in der äußeren Firewall blockiert die innere Firewall den Zugriff ins LAN. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Zero-Trust-Sicherheitsarchitektur" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Zero-Trust-Sicherheitsarchitektur</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Unternehmen ersetzt sein traditionelles Perimeter-Sicherheitsmodell ("Burg-und-Graben") durch eine Zero-Trust-Architektur (NIST SP 800-207).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie den Leitsatz "Never trust, always verify" und nennen Sie drei zentrale Säulen von Zero Trust.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Leitsatz: Es gibt kein inhärent sicheres Netzwerk mehr; weder externe Zugriffe noch interne Netzwerkpakete aus dem LAN dürfen a priori als vertrauenswürdig eingestuft werden. Jede einzelne Anfrage muss authentifiziert, autorisiert und verschlüsselt werden. (3 Pkt.)
+Drei Säulen: 1. Identitätsbasierte Zugriffskontrolle (starke MFA, Kontextprüfung wie Standort/Gerätestatus); 2. Mikrosegmentierung (Netze in kleinste Einheiten zerlegen); 3. Prinzip der minimalen Rechtevergabe (Least Privilege & Just-in-Time Access). (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../03_lf3_clients_in_netzwerke_einbinden/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../05_lf5_software_zur_datenverwaltung/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

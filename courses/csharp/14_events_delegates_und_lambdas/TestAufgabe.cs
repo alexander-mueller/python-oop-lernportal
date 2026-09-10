@@ -1,0 +1,1 @@
+// TEST: Testet Func Delegate Ausführung

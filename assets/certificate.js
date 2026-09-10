@@ -133,9 +133,105 @@
       titel = "Master of Go (Golang) Cloud Microservices & Systems Engineering";
       moduleDesc = "Vollständiger Abschluss des Go Curriculums (16 Module, net/http REST APIs, Middleware, Testing & Cloud API Master)";
       trackKey = "go_master";
+    } else if (lehrpfadNummer === "java_grundlagen") {
+      titel = "Java Syntax, Primitive Typen & Kontrollfluss";
+      moduleDesc = "4 Module: Primitive Typen, main(), switch-Expressions (->), Arrays und Methodenüberladung";
+      trackKey = "java_grundlagen";
+    } else if (lehrpfadNummer === "java_oop") {
+      titel = "Reine Objektorientierung & Kapselung in Java";
+      moduleDesc = "4 Module: Klassen, Konstruktor-Chaining, Kapselung, Immutability, Records, Vererbung & Interfaces";
+      trackKey = "java_oop";
+    } else if (lehrpfadNummer === "java_streams") {
+      titel = "Java Generics, Collections & Modern Streams API";
+      moduleDesc = "4 Module: List/Set/Map, Bounded Generics, Checked Exceptions, try-with-resources, Streams API & Optional";
+      trackKey = "java_streams";
+    } else if (lehrpfadNummer === "java_master") {
+      titel = "Master of Java 21+ Enterprise & Banking Systems";
+      moduleDesc = "Vollständiger Abschluss des Java Curriculums (16 Module, NIO.2, Virtual Threads Loom, JUnit 5 & Banking Core Master)";
+      trackKey = "java_master";
+    } else if (lehrpfadNummer === "rust_grundlagen") {
+      titel = "Rust Syntax, Ownership & Borrowing System";
+      moduleDesc = "4 Module: Mutabilität, Move-Semantik, Stack vs. Heap, Referenzen &mut, Slices und Pattern Matching";
+      trackKey = "rust_grundlagen";
+    } else if (lehrpfadNummer === "rust_structs") {
+      titel = "Rust Structs, Enums & Robust Error-Handling";
+      moduleDesc = "4 Module: Structs, impl-Methoden, Option<T>, Result<T, E> mit ?-Operator und Cargo Multi-File Modules";
+      trackKey = "rust_structs";
+    } else if (lehrpfadNummer === "rust_traits") {
+      titel = "Rust Traits, Generics & Smart Pointer";
+      moduleDesc = "4 Module: Traits, Trait Bounds, Monomorphisierung, Closures, Iterator-Adapter, Box, Rc und RefCell";
+      trackKey = "rust_traits";
+    } else if (lehrpfadNummer === "rust_master") {
+      titel = "Master of Rust Systems Programming & WebAssembly";
+      moduleDesc = "Vollständiger Abschluss des Rust Curriculums (16 Module, Fearless Concurrency, Arc/Mutex, Cargo Test & In-Memory LRU Cache Master)";
+      trackKey = "rust_master";
+    } else if (lehrpfadNummer === "csharp_grundlagen") {
+      titel = "C# 12 Syntax, Datentypen & Top-Level Statements";
+      moduleDesc = "4 Module: Top-Level Statements, Nullable Reference Types, Switch Expressions, Collections und Tupel";
+      trackKey = "csharp_grundlagen";
+    } else if (lehrpfadNummer === "csharp_oop") {
+      titel = "Modernes C# OOP, Records & Dependency Injection";
+      moduleDesc = "4 Module: Primary Constructors, Records mit with-Expressions, Polymorphismus & Interfaces";
+      trackKey = "csharp_oop";
+    } else if (lehrpfadNummer === "csharp_linq") {
+      titel = "C# LINQ, Generics & Asynchrone Task Pipelines";
+      moduleDesc = "4 Module: LINQ (.Where/.Select/.GroupBy), Generic Constraints, async/await Tasks und using-Disposal";
+      trackKey = "csharp_linq";
+    } else if (lehrpfadNummer === "csharp_master") {
+      titel = "Master of C# 12 & Modern .NET 8+ Enterprise Cloud";
+      moduleDesc = "Vollständiger Abschluss des C# Curriculums (16 Module, System.Text.Json, Events/Delegates, xUnit & Order Engine Master)";
+      trackKey = "csharp_master";
+    } else if (lehrpfadNummer === "cpp_c_grundlagen") {
+      titel = "C Fundamente & Manuelles Memory Management";
+      moduleDesc = "4 Module: Pointer, Adressoperatoren (&/*), Pointer-Arithmetik, Stack vs. Heap, malloc/free & Header-Dateien";
+      trackKey = "cpp_c_grundlagen";
+    } else if (lehrpfadNummer === "cpp_oop") {
+      titel = "Modern C++ Einstieg, RAII & Objektorientierung";
+      moduleDesc = "4 Module: std::cout, Referenzen, Klassen, Konstruktoren, RAII-Prinzip, virtual Methoden & Operator-Overloading";
+      trackKey = "cpp_oop";
+    } else if (lehrpfadNummer === "cpp_modern") {
+      titel = "Modern C++20: Smart Pointer, Templates & STL";
+      moduleDesc = "4 Module: Templates, std::unique_ptr / shared_ptr, STL-Container (vector/map), Algorithmen & Lambdas";
+      trackKey = "cpp_modern";
+    } else if (lehrpfadNummer === "cpp_master") {
+      titel = "Master of C & Modern C++20 Systems Engineering";
+      moduleDesc = "Vollständiger Abschluss des C/C++ Curriculums (16 Module, std::thread/mutex, GoogleTest & 2D Physics Simulation Master)";
+      trackKey = "cpp_master";
+    } else if (lehrpfadNummer === "ihk_ap1_systeme") {
+      titel = "IHK AP1: IT-Systeme, Netzwerke & Sicherheit (LF 2–4)";
+      moduleDesc = "4 Module: Hardware, Schnittstellen, Ergonomie, IPv4/IPv6 Subnetting, CIA-Schutzziele & DSGVO/TOMs";
+      trackKey = "ihk_ap1_systeme";
+    } else if (lehrpfadNummer === "ihk_ap1_programmierung") {
+      titel = "IHK AP1: Programmierung, UML & SQL-Datenbanken (LF 5)";
+      moduleDesc = "4 Module: Struktogramme (DIN 66261), PAP (DIN 66001), Trace-Tabellen, OOP-Klassendiagramme & SQL";
+      trackKey = "ihk_ap1_programmierung";
+    } else if (lehrpfadNummer === "ihk_ap1_prozesse") {
+      titel = "IHK AP1: Service (ITIL), IoT & Geschäftsprozesse (LF 6–8)";
+      moduleDesc = "3 Module: ITIL Incident/Problem Management, Cyber-physische Systeme / IoT & BPMN/EPK Modellierung";
+      trackKey = "ihk_ap1_prozesse";
+    } else if (lehrpfadNummer === "ihk_ap1_master") {
+      titel = "Zertifikat: IHK Abschlussprüfung Teil 1 (AP1) Meister";
+      moduleDesc = "Vollständiger Abschluss der IHK AP1 Prüfungsvorbereitung (12 Module inkl. 90-Minuten Probeprüfung)";
+      trackKey = "ihk_ap1_master";
+    } else if (lehrpfadNummer === "ihk_ap2_netzwerke") {
+      titel = "IHK AP2: Enterprise Netzwerke & Serverdienste (LF 9 & 10)";
+      moduleDesc = "3 Module: VLANs (802.1Q), LACP, Spanning Tree, OSPF-Routing, Active Directory & PowerShell-Automation";
+      trackKey = "ihk_ap2_netzwerke";
+    } else if (lehrpfadNummer === "ihk_ap2_sicherheit") {
+      titel = "IHK AP2: Storage, Hochverfügbarkeit & IT-Sicherheit (LF 11)";
+      moduleDesc = "3 Module: RAID-Simulator (0/1/5/6/10), SAN/NAS, BSI IT-Grundschutz, DMZ-Firewalls & IPsec-VPN";
+      trackKey = "ihk_ap2_sicherheit";
+    } else if (lehrpfadNummer === "ihk_ap2_wiso_projekt") {
+      titel = "IHK AP2: Virtualisierung, WiSo & 40h-Projektarbeit (LF 12)";
+      moduleDesc = "3 Module: Hypervisor Typ 1 vs. 2, Docker-Container, WiSo-Arbeitsrecht & 40h-Projektarbeits-Leitfaden";
+      trackKey = "ihk_ap2_wiso_projekt";
+    } else if (lehrpfadNummer === "ihk_ap2_fisi_master") {
+      titel = "Zertifikat: IHK Abschlussprüfung Teil 2 (AP2 FISI) Meister";
+      moduleDesc = "Vollständiger Abschluss der IHK AP2 Fachinformatiker Systemintegration (12 Module inkl. 3 Probeprüfungen)";
+      trackKey = "ihk_ap2_fisi_master";
     } else if (lehrpfadNummer === "master") {
-      titel = "Grandmaster of Software & Cloud Engineering (Polyglot)";
-      moduleDesc = "Vollständiger Abschluss aller plattformweiten Curricula (Python, JavaScript/TS, Linux Bash, PowerShell, SQL, HTML/CSS & Go)";
+      titel = "Grandmaster of Software & Systems Engineering (Polyglot)";
+      moduleDesc = "Vollständiger Abschluss aller 11 plattformweiten Curricula (Python, JS/TS, Bash, PowerShell, SQL, HTML/CSS, Go, Java, Rust, C#, C++)";
       trackKey = "master";
     }
 

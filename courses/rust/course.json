@@ -1,0 +1,58 @@
+{
+  "id": "rust",
+  "title": "Rust Modern Systems & WebAssembly",
+  "language": "rust",
+  "icon": "🦀",
+  "runner": "rust",
+  "description": "Vom revolutionären Ownership- & Borrowing-System über Structs, Enums, Option/Result bis zu Traits, Fearless Concurrency & LRU Cache Master.",
+  "tracks": [
+    {
+      "id": "track_1_rust_basics",
+      "title": "🌱 Lehrpfad 1: Rust Grundlagen & Ownership-System",
+      "description": "Variablen, Typen, Mutabilität, Move-Semantik, Stack vs. Heap, Referenzen &mut, Slices und Pattern Matching.",
+      "certificateKey": "rust_grundlagen",
+      "chapters": [
+        { "folder": "01_variablen_mutabilitaet_und_typen", "title": "Rust 01: Variablen, Mutabilität & Typensystem", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "02_das_ownership_und_borrowing_system", "title": "Rust 02: Ownership, Move & Borrowing (&/&mut)", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "03_slices_und_lifetimes_grundlagen", "title": "Rust 03: Slices (&str/&[T]) & Lifetimes ('a)", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "04_kontrollfluss_und_pattern_matching", "title": "Rust 04: Kontrollfluss & match Pattern Matching", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" }
+      ]
+    },
+    {
+      "id": "track_2_structs_enums",
+      "title": "🏗️ Lehrpfad 2: Structs, Enums & Error-Handling",
+      "description": "Structs, impl-Methodenblöcke, Option<T> Monade, Result<T, E> mit ?-Operator und Cargo Multi-File Modul-Architektur.",
+      "certificateKey": "rust_structs",
+      "chapters": [
+        { "folder": "05_structs_und_impl_methoden", "title": "Rust 05: Structs, impl-Methoden & Konstruktoren", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "06_enums_und_option_monade", "title": "Rust 06: Enums, Option<T> & if let", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "07_robustes_error_handling_mit_result", "title": "Rust 07: Result<T, E> & der ?-Operator", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "08_packages_crates_und_module", "title": "Rust 08: Packages, Crates & Multi-File Module", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" }
+      ]
+    },
+    {
+      "id": "track_3_traits_generics",
+      "title": "⚡ Lehrpfad 3: Traits, Generics & Smart Pointer",
+      "description": "Traits, Trait Bounds, Monomorphisierung vs. Trait Objects (dyn Trait), Closures, Iterator-Pipelines & Smart Pointer (Box/Rc/RefCell).",
+      "certificateKey": "rust_traits",
+      "chapters": [
+        { "folder": "09_traits_und_shared_behavior", "title": "Rust 09: Traits & Shared Behavior", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "10_generics_und_dynamischer_dispatch", "title": "Rust 10: Generics & Trait Objects (dyn Trait)", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "11_iteratoren_und_closures", "title": "Rust 11: Closures & Iterator Pipelines", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "12_smart_pointer_und_speichersicherheit", "title": "Rust 12: Smart Pointer (Box<T>, Rc<T>, RefCell<T>)", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" }
+      ]
+    },
+    {
+      "id": "track_4_concurrency_master",
+      "title": "💎 Lehrpfad 4: Fearless Concurrency & Systems Master",
+      "description": "Thread Spawning, MPSC Channels, Send & Sync Traits, Arc<Mutex<T>>, Cargo Testsuite & High-Speed In-Memory LRU Cache Master.",
+      "certificateKey": "rust_master",
+      "chapters": [
+        { "folder": "13_fearless_concurrency_threads_und_channels", "title": "Rust 13: Threads & MPSC Channels", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "14_shared_state_concurrency", "title": "Rust 14: Shared State Concurrency (Arc<Mutex<T>>)", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "15_automatisiertes_testing_mit_cargo_test", "title": "Rust 15: Automatisierte Tests mit cargo test", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" },
+        { "folder": "16_master_abschlussprojekt_high_speed_cache", "title": "Master 16: High-Speed In-Memory LRU Cache Engine", "taskFile": "aufgabe.rs", "testFile": "test_aufgabe.rs" }
+      ]
+    }
+  ]
+}

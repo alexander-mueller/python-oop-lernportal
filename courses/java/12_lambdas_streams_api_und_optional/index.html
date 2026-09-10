@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 12: Lambdas, Streams API &amp; Optional</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Generics, Collections &amp; Modern Streams</div>
+          <h1>Java 12: Lambdas, Streams API &amp; Optional</h1>
+          <p>Deklarative Datenanalyse in modernem Java: Filterung, Mappings, komplexe <code>groupingBy</code>-Aggregationen und Null-Safety mit <code>Optional&lt;T&gt;</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.java" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.java (Startercode)</a>
+            <a href="TestAufgabe.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.java (Tests)</a>
+            <a href="Musterloesung.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.java (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: STREAM PIPELINES -->
+        <section class="card">
+          <h2>🌊 1. Die Anatomie einer Java Stream-Pipeline</h2>
+          <p>
+            Anstelle imperativer <code>for</code>-Schleifen mit temporären Variablen beschreiben Streams <em>was</em> getan werden soll, nicht <em>wie</em> es im Detail geschieht.
+          </p>
+
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [List&lt;Employee&gt;] ──&gt; .stream() ──&gt; .filter(salary &gt;= 75k) ──&gt; .map(Employee::name) ──&gt; .sorted() ──&gt; .toList()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── (Intermediäre Ops: Lazy) ──┘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── (Terminal: Eager) ──┘
+          </div>
+
+          <pre><code>// Modernes Idiom:
+List&lt;String&gt; topPerformers = employees.stream()
+    .filter(e -&gt; e.salary() &gt; 80000)
+    .map(Employee::name)
+    .sorted()
+    .collect(Collectors.toList());</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: COLLECTORS UND OPTIONAL -->
+        <section class="card">
+          <h2>📊 2. Collectors &amp; Null-Safety mit Optional</h2>
+          <p>
+            Mit <code>Collectors.groupingBy</code> aggregierst du Datensätze in Millisekunden nach Kategorien oder Abteilungen:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">1. GroupingBy</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Gruppiert Datensätze in eine <code>Map&lt;Key, List&lt;T&gt;&gt;</code>.</p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">2. Downstream Collectors</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Kombination mit <code>averagingDouble</code> oder <code>counting()</code>.</p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #7e22ce;">3. Optional&lt;T&gt; Chaining</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Sichere Null-Vermeidung mit <code>map()</code> und <code>orElse()</code>.</p>
+            </div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das automatisierte Fließband im Sortierzentrum</div>
+            <p>
+              Stell dir ein Postfließband vor: Die Pakete gleiten am Scanner vorbei (<code>filter</code> entfernt zu schwere Pakete), werden automatisch umetikettiert (<code>map</code>) und fallen über Weichen direkt in die passenden Rollcontainer (<code>Collectors.groupingBy</code>) &ndash; ohne dass ein Mitarbeiter jedes Paket einzeln anfassen muss!
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Streams API &amp; Optional Operationen</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operation</th>
+                  <th style="padding: 10px;">Typ</th>
+                  <th style="padding: 10px;">Beschreibung &amp; Verhalten</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.filter(Predicate&lt;T&gt;)</code></td>
+                  <td style="padding: 10px;">Intermediär</td>
+                  <td style="padding: 10px;">Behält nur Elemente, die das Prädikat erfüllen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.map(Function&lt;T, R&gt;)</code></td>
+                  <td style="padding: 10px;">Intermediär</td>
+                  <td style="padding: 10px;">Transformiert jedes Element in einen neuen Typ</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.flatMap(Function&lt;T, Stream&lt;R&gt;&gt;)</code></td>
+                  <td style="padding: 10px;">Intermediär</td>
+                  <td style="padding: 10px;">Ebnet verschachtelte Streams/Listen in einen flachen Stream ein</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.collect(Collectors.groupingBy(...))</code></td>
+                  <td style="padding: 10px;">Terminal</td>
+                  <td style="padding: 10px;">Aggregiert Daten in eine <code>Map&lt;K, V&gt;</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Optional.map().orElse(...)</code></td>
+                  <td style="padding: 10px;">Null-Safety</td>
+                  <td style="padding: 10px;">Transformiert sicheren Wert oder liefert Standardwert</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.java</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>StreamBasics</code> mit <code>getHighEarnersNames()</code> und <code>extractAllUniqueSkills()</code> (via <code>flatMap</code>) implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>StreamAggregations</code> mit <code>groupByDepartment()</code>, Durchschnittsgehältern und Gehaltspartitionierung umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>OptionalService</code> mit Null-sicheren Abfragen und <code>orElseThrow()</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Performance Tipp: Method References</div>
+            <p>Nutze wann immer möglich Methodenreferenzen wie <code>Employee::salary</code> statt Lambdas wie <code>e -&gt; e.salary()</code>. Das verbessert die Lesbarkeit und vermeidet anonyme Klasseninstanziierungen.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=java&track=track_3_collections_streams&chapter=12_lambdas_streams_api_und_optional" class="btn" style="background: #e11d48; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_dateien_json_und_persistenz/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 4: Java 13 NIO.2 &amp; JSON &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

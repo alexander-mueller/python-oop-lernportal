@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 13: Fearless Concurrency &amp; MPSC Channels</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">💎 Lehrpfad 4: Fearless Concurrency &amp; Systems Master</div>
+          <h1>Rust 13: Threads &amp; MPSC Channels</h1>
+          <p>Entdecke Rusts berühmte <strong>Fearless Concurrency</strong>: Starte native OS-Threads mit <code>std::thread::spawn</code>, kommuniziere sicher über Multi-Producer Single-Consumer (MPSC) Channels und nutze die Marker-Traits <code>Send</code> &amp; <code>Sync</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.rs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.rs (Startercode)</a>
+            <a href="test_aufgabe.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.rs (Tests)</a>
+            <a href="musterloesung.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.rs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: THREAD SPAWNING & JOIN -->
+        <section class="card">
+          <h2>⚡ 1. Native Threads &amp; Join Handles</h2>
+          <p>
+            In Rust erzeugt <code>std::thread::spawn</code> echte Betriebssystem-Threads. Durch das Ownership-System garantiert der Rust-Compiler zur <strong>Compile-Zeit</strong>, dass keine Data Races (gleichzeitige ungeschützte Schreibzugriffe) auftreten können!
+          </p>
+
+          <!-- Concurrency-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Main Thread] ──┬─── thread::spawn(move || work(1)) ───&gt; [Worker 1] ──┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─── thread::spawn(move || work(2)) ───&gt; [Worker 2] ──┼──&gt; handle.join() (Sammeln &amp; Weiter)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─── thread::spawn(move || work(3)) ───&gt; [Worker 3] ──┘
+          </div>
+
+          <pre><code>use std::thread;
+
+let v = vec![1, 2, 3];
+
+// 'move' überträgt den Besitz von 'v' sicher in den neuen Thread
+let handle = thread::spawn(move || {
+    println!("Vector im Thread: {:?}", v);
+    v.iter().sum::&lt;i32&gt;()
+});
+
+let total = handle.join().expect("Thread panickte!");
+println!("Ergebnis: {}", total);</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: MPSC CHANNELS -->
+        <section class="card">
+          <h2>🛡️ 2. MPSC Channels (Multi-Producer, Single-Consumer)</h2>
+          <p>
+            Das Go- &amp; Erlang-Motto gilt auch in Rust: <em>"Do not communicate by sharing memory; instead, share memory by communicating."</em>
+          </p>
+
+          <!-- MPSC Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Worker 1 (tx1)] ──┐<br>
+            [Worker 2 (tx2)] ──┼───&gt; [ MPSC Channel Queue ] ───&gt; [Main Receiver (rx.recv())]<br>
+            [Worker 3 (tx3)] ──┘
+          </div>
+
+          <pre><code>use std::sync::mpsc;
+use std::thread;
+
+let (tx, rx) = mpsc::channel();
+
+for i in 0..3 {
+    let tx_clone = tx.clone();
+    thread::spawn(move || {
+        tx_clone.send(format!("Ergebnis von Worker {}", i)).unwrap();
+    });
+}
+drop(tx); // WICHTIG: Original-Sender droppen, damit rx schließt!
+
+for msg in rx {
+    println!("Empfangen: {}", msg);
+}</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET: SEND & SYNC -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Die Send &amp; Sync Marker-Traits</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Marker-Trait</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Beispiele (Gültig / Ungültig)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong><code>Send</code></strong></td>
+                  <td style="padding: 10px;">Ownership darf an einen anderen Thread übertragen werden</td>
+                  <td style="padding: 10px;">✅ Primitive, <code>Vec&lt;T&gt;</code>, <code>Box&lt;T&gt;</code> &nbsp;|&nbsp; ❌ <code>Rc&lt;T&gt;</code> (nicht Send!)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong><code>Sync</code></strong></td>
+                  <td style="padding: 10px;">Referenz <code>&amp;T</code> darf von mehreren Threads gleichzeitig gelesen werden (T ist Sync gdw. &amp;T Send ist)</td>
+                  <td style="padding: 10px;">✅ <code>Arc&lt;T&gt;</code>, <code>Mutex&lt;T&gt;</code> &nbsp;|&nbsp; ❌ <code>RefCell&lt;T&gt;</code> (nicht Sync!)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Structs <code>Job</code> und <code>JobResult</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>parallel_sum_chunks</code> zur Aufteilung von Berechnungen auf n Threads mit <code>JoinHandle</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>run_worker_pipeline</code> mit <code>mpsc::channel()</code>, Worker-Threads, <code>tx.clone()</code> und geordneter Ergebnissammlung umsetzen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_4_concurrency_master&chapter=13_fearless_concurrency_threads_und_channels" class="btn" style="background: #059669; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_smart_pointer_und_speichersicherheit/index.html" class="btn btn-secondary">&larr; Zurück zu Rust 12</a>
+            <a href="../14_shared_state_concurrency/index.html" class="btn btn-secondary">Weiter zu Rust 14: Shared State &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

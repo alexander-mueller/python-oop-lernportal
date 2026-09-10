@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 09: Traits &amp; Shared Behavior</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Traits, Generics &amp; Smart Pointer</div>
+          <h1>Rust 09: Traits &amp; Shared Behavior</h1>
+          <p>Definiere gemeinsame Schnittstellen mit <code>trait</code>, implementiere Default-Verhalten, nutze Trait Bounds (<code>T: Trait</code>) und kombiniere Supertraits für typsichere Abstraktionen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.rs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.rs (Startercode)</a>
+            <a href="test_aufgabe.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.rs (Tests)</a>
+            <a href="musterloesung.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.rs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: TRAITS IN RUST -->
+        <section class="card">
+          <h2>⚡ 1. Was sind Traits?</h2>
+          <p>
+            Ein <strong>Trait</strong> (vergleichbar mit Interfaces in Java oder C#, aber deutlich mächtiger) definiert gemeinsame Funktionalität, die verschiedene Datentypen teilen können. Ein Trait beschreibt Methoden-Signaturen, die implementierende Typen bereitstellen müssen.
+          </p>
+
+          <!-- Trait Architektur-Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌──────────────────────────────────┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trait TelemetryReport&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──────────────────────────────────┤<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ + summary(&amp;self) -&gt; String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ + severity_level(&amp;self) -&gt; u8&nbsp;&nbsp;&nbsp;&nbsp;│ (Default: 1)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ + is_critical(&amp;self) -&gt; bool&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ (Default: sev &gt;= 8)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└────────────────┬─────────────────┘<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;impl Trait for Type<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌────────────────┴────────────────┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+            ┌───────────────────────┐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌───────────────────────┐<br>
+            │&nbsp;&nbsp;&nbsp;struct CpuMetric&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;struct DiskAlert&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            │&nbsp;usage_percent: f64&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;device: String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            │&nbsp;core_id: usize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;free_space_gb: u32&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            └───────────────────────┘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└───────────────────────┘
+          </div>
+
+          <pre><code>pub trait Summary {
+    // Erforderliche Methode
+    fn summarize(&amp;self) -&gt; String;
+
+    // Methode mit Default-Implementierung
+    fn is_highlighted(&amp;self) -&gt; bool {
+        false
+    }
+}
+
+pub struct NewsArticle {
+    pub headline: String,
+    pub author: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&amp;self) -&gt; String {
+        format!("{}: {}", self.headline, self.author)
+    }
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: TRAIT BOUNDS & WHERE CLAUSES -->
+        <section class="card">
+          <h2>🛡️ 2. Trait Bounds &amp; Mehrfach-Einschränkungen</h2>
+          <p>
+            Mit <strong>Trait Bounds</strong> legst du fest, dass ein generischer Typ bestimmte Eigenschaften aufweisen muss. Mehrere Bounds werden mit <code>+</code> kombiniert:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">1. Syntax mit <code>impl Trait</code></strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Kompakt für einfache Parameter: <code>fn notify(item: &amp;impl Summary)</code></p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">2. Trait Bound Syntax</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Erzwingt gleiche Typen: <code>fn notify&lt;T: Summary + Display&gt;(item: &amp;T)</code></p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #7e22ce;">3. <code>where</code> Clauses</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Erhöht Lesbarkeit bei vielen Typ-Parametern und komplexen Bounds.</p>
+            </div>
+          </div>
+
+          <pre><code>// Mehrere Bounds mit 'where' Klausel
+fn process_telemetry&lt;T, U&gt;(report: &amp;T, target: &amp;U) -&gt; String
+where
+    T: Summary + Clone,
+    U: std::fmt::Display,
+{
+    format!("Sende Report [{}] an Target [{}]", report.summarize(), target)
+}</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Traits &amp; Best Practices</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konzept</th>
+                  <th style="padding: 10px;">Syntax / Rust-Code</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Trait Definition</strong></td>
+                  <td style="padding: 10px;"><code>pub trait Describable { fn desc(&amp;self) -&gt; String; }</code></td>
+                  <td style="padding: 10px;">Definiert gemeinsame Methodensignaturen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Default Implementation</strong></td>
+                  <td style="padding: 10px;"><code>fn is_ok(&amp;self) -&gt; bool { true }</code></td>
+                  <td style="padding: 10px;">Kann bei Bedarf im <code>impl</code> überschrieben werden</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Mehrfach-Bounds</strong></td>
+                  <td style="padding: 10px;"><code>T: Summary + Clone + Send</code></td>
+                  <td style="padding: 10px;">Typ muss alle angegebenen Traits erfüllen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Return <code>impl Trait</code></strong></td>
+                  <td style="padding: 10px;"><code>fn create_reporter() -&gt; impl Summary</code></td>
+                  <td style="padding: 10px;">Kapselt den konkreten Typ vor dem Aufrufer</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Trait <code>TelemetryReport</code> mit Methoden <code>summary()</code>, <code>severity_level()</code> (Default 1) und <code>is_critical()</code> (Default severity &gt;= 8) definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Trait <code>FormatJson</code> mit Methode <code>to_json(&amp;self) -&gt; String</code> definieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>TelemetryReport</code> und <code>FormatJson</code> für <code>CpuMetric</code> und <code>DiskAlert</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Generische Funktion <code>format_and_dispatch&lt;T&gt;(item: &amp;T) -&gt; String</code> mit Trait Bounds <code>TelemetryReport + FormatJson</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Funktion <code>create_default_reporter() -&gt; impl TelemetryReport</code> implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Rustacean Tipp: Das Orphan Rule Prinzip</div>
+            <p>In Rust kannst du einen Trait nur für einen Typen implementieren, wenn entweder der Trait oder der Typ in deiner eigenen Crate definiert ist. Das verhindert Namenskonflikte und sorgt für Stabilität im Ökosystem!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_3_traits_generics&chapter=09_traits_und_shared_behavior" class="btn" style="background: #e43717; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_generics_und_dynamischer_dispatch/index.html" class="btn btn-secondary">Weiter zu Rust 10: Generics &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

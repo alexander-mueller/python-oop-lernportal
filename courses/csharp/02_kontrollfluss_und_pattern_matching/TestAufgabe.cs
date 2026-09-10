@@ -1,0 +1,1 @@
+// TEST: Testet BewerteTemperatur mit verschiedenen Graden

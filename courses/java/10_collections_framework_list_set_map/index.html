@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 10: Collections Framework</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Generics, Collections &amp; Modern Streams</div>
+          <h1>Java 10: Collections Framework (List, Set, Map)</h1>
+          <p>Verstehe das Java Collections Framework bis ins Detail: ArrayList vs. LinkedList, HashSet &amp; equals/hashCode-Vertrag sowie moderne Map-Operationen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.java" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.java (Startercode)</a>
+            <a href="TestAufgabe.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.java (Tests)</a>
+            <a href="Musterloesung.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.java (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: COLLECTIONS ÜBERSICHT -->
+        <section class="card">
+          <h2>🗺️ 1. Die drei Säulen: List, Set &amp; Map</h2>
+          <p>
+            Das Java Collections Framework unterteilt sich in sequentielle Listen (<code>List</code>), mengenbasierte Sammlungen ohne Duplikate (<code>Set</code>) und Schlüssel-Wert-Tabellen (<code>Map</code>).
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">1. List&lt;T&gt; (ArrayList)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Geordnete Reihenfolge, schneller Indexzugriff via <code>get(i)</code> in O(1).</p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">2. Set&lt;T&gt; (HashSet, TreeSet)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Keine Duplikate. HashSet nutzt Hash-Buckets für O(1) Suche.</p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #7e22ce;">3. Map&lt;K, V&gt; (HashMap)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Key-Value Assoziationen mit <code>put()</code>, <code>merge()</code> und <code>computeIfAbsent()</code>.</p>
+            </div>
+          </div>
+
+          <pre><code>// Modernes Map API:
+Map&lt;String, Integer&gt; inventory = new HashMap&lt;&gt;();
+inventory.merge("Laptop", 1, Integer::sum); // Zählt atomar hoch!
+
+// Gruppierung mit computeIfAbsent:
+Map&lt;String, List&lt;Product&gt;&gt; byCategory = new HashMap&lt;&gt;();
+byCategory.computeIfAbsent("Hardware", k -&gt; new ArrayList&lt;&gt;()).add(new Product(...));</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: EQUALS UND HASHCODE -->
+        <section class="card">
+          <h2>🔑 2. Der fundamentale equals() &amp; hashCode() Vertrag</h2>
+          <p>
+            Damit eine <code>HashMap</code> oder ein <code>HashSet</code> ein Objekt wiederfindet, berechnet Java zuerst den Hashcode des Objekts, um den Ziel-Bucket im Speicher zu bestimmen.
+          </p>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Postfachsystem im Hotel</div>
+            <p>
+              <strong>hashCode():</strong> Die Zimmernummer auf dem Schlüsselanhänger bestimmt sofort, zu welcher Etage und welchem Briefkastenfach (Bucket) der Hotelgast geht.
+              <br>
+              <strong>equals():</strong> Im Fach angekommen, vergleicht der Gast den Namen auf dem Briefumschlag, um den richtigen Brief zu greifen. Stimmt der HashCode nicht, sucht der Gast im falschen Stockwerk!
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Collection-Auswahl &amp; Methoden</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Interface</th>
+                  <th style="padding: 10px;">Implementierung</th>
+                  <th style="padding: 10px;">Vorteile &amp; Enterprise Use-Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>List&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>ArrayList&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Standard für Datenlisten; extrem cache-freundlich</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Set&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>HashSet&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Deduplizierung und O(1) Existenzprüfungen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Set&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>TreeSet&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Automatisch sortierte Menge (Rot-Schwarz-Baum)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>Map&lt;K, V&gt;</code></td>
+                  <td style="padding: 10px;"><code>HashMap&lt;K, V&gt;</code></td>
+                  <td style="padding: 10px;">Schnellster Key-Value Speicher für Caching &amp; Lookups</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>Map&lt;K, V&gt;</code></td>
+                  <td style="padding: 10px;"><code>LinkedHashMap&lt;K, V&gt;</code></td>
+                  <td style="padding: 10px;">Behält Einfügereihenfolge oder Access-Order (LRU Cache) bei</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.java</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>ProductCatalog</code> mit <code>addProduct()</code>, <code>findByCategory()</code>, SKU-Löschung und Preis-Sortierung erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>TagManager</code> mit <code>HashSet</code> und <code>TreeSet</code> zur Tag-Deduplizierung bauen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>InventoryStats</code> mit <code>countProductsByCategory()</code> und <code>groupByCategory()</code> implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Clean Code Tipp: Unmodifiable Collections</div>
+            <p>Gib bei Getter-Methoden niemals interne veränderbare Listen direkt zurück! Verwende <code>List.copyOf(products)</code> oder <code>Collections.unmodifiableList(products)</code> zur Wahrung der Datenkapselung.</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=java&track=track_3_collections_streams&chapter=10_collections_framework_list_set_map" class="btn" style="background: #e11d48; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_exceptions_und_ressourcenmanagement/index.html" class="btn btn-secondary">Weiter zu Java 11: Exceptions &amp; Ressourcen &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

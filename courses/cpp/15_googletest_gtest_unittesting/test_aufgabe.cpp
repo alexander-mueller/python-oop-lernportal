@@ -1,0 +1,1 @@
+// TEST: Testet quadrat und ist_positiv mit gtest Assertions

@@ -1,0 +1,1 @@
+// TEST: Testet ist_primzahl mit 2, 7, 10, 13

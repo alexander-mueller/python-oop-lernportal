@@ -1,0 +1,1 @@
+// TEST: Testet Datei-Schreiben mit ofstream

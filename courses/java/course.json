@@ -1,0 +1,58 @@
+{
+  "id": "java",
+  "title": "Java 21+ Enterprise & IHK/Uni Standard",
+  "language": "java",
+  "icon": "☕",
+  "runner": "java",
+  "description": "Vom statischen Typensystem über reine OOP, Kapselung & Records bis zu Generics, Streams API, Virtual Threads Loom & JUnit 5 Banking Master.",
+  "tracks": [
+    {
+      "id": "track_1_java_basics",
+      "title": "🌱 Lehrpfad 1: Java Syntax, Typen & Kontrollfluss",
+      "description": "Primitive Typen, main()-Einstieg, moderne switch-Expressions (->), Schleifen, Arrays und Methodenüberladung.",
+      "certificateKey": "java_grundlagen",
+      "chapters": [
+        { "folder": "01_java_syntax_und_primitive_typen", "title": "Java 01: Java Syntax & Primitive Datentypen", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "02_kontrollfluss_und_verzweigungen", "title": "Java 02: Kontrollfluss & Switch-Expressions", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "03_schleifen_und_arrays", "title": "Java 03: Schleifen, For-Each & Arrays", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "04_methoden_und_parameter", "title": "Java 04: Methoden, Static & Overloading", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" }
+      ]
+    },
+    {
+      "id": "track_2_pure_oop",
+      "title": "🏗️ Lehrpfad 2: Reine Objektorientierung & Kapselung",
+      "description": "Klassen, Konstruktoren, Kapselung, Immutability & Java 17+ Records, Vererbung (extends), Polymorphie & Interfaces.",
+      "certificateKey": "java_oop",
+      "chapters": [
+        { "folder": "05_klassen_objekte_und_konstruktoren", "title": "Java 05: Klassen, Objekte & Konstruktoren", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "06_kapselung_und_records", "title": "Java 06: Kapselung, Immutability & Records", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "07_vererbung_polymorphie_und_super", "title": "Java 07: Vererbung, Polymorphie & Abstract Classes", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "08_interfaces_und_default_methods", "title": "Java 08: Interfaces, Default Methods & Kopplung", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" }
+      ]
+    },
+    {
+      "id": "track_3_collections_streams",
+      "title": "⚡ Lehrpfad 3: Generics, Collections & Modern Streams",
+      "description": "Generics <T>, Java Collections Framework (List/Set/Map), Exception-Hierarchien, try-with-resources, Streams API & Optional.",
+      "certificateKey": "java_streams",
+      "chapters": [
+        { "folder": "09_generics_und_type_safety", "title": "Java 09: Generics <T> & Type Safety", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "10_collections_framework_list_set_map", "title": "Java 10: Collections (ArrayList, HashSet, HashMap)", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "11_exceptions_und_ressourcenmanagement", "title": "Java 11: Exceptions & Try-with-Resources", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "12_lambdas_streams_api_und_optional", "title": "Java 12: Lambdas, Streams API & Optional", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" }
+      ]
+    },
+    {
+      "id": "track_4_enterprise_master",
+      "title": "💎 Lehrpfad 4: Enterprise Architekturen & Masterprojekt",
+      "description": "NIO.2 Dateiverarbeitung, Java 21 Virtual Threads (Loom), JUnit 5 Unittesting & Enterprise Banking Core Master.",
+      "certificateKey": "java_master",
+      "chapters": [
+        { "folder": "13_dateien_json_und_persistenz", "title": "Java 13: Modernes Dateihandling (NIO.2) & JSON", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "14_multithreading_und_virtual_threads", "title": "Java 14: Virtual Threads (Loom) & Concurrency", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "15_junit_5_automatisiertes_unit_testing", "title": "Java 15: JUnit 5 Testsuites & Assertions", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" },
+        { "folder": "16_master_abschlussprojekt_banking_system", "title": "Master 16: Enterprise Banking Core & Transactions", "taskFile": "Aufgabe.java", "testFile": "TestAufgabe.java" }
+      ]
+    }
+  ]
+}

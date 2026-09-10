@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ 12: Lambdas &amp; Moderne C++20 Features</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Modern C++20 Core</div>
+          <h1>C++ 12: C++ Lambdas, Structured Binding &amp; std::optional</h1>
+          <p>Moderne C++20 Ausdrucksstärke: Lerne anonyme Funktionen (Lambdas), Capture-Klauseln, generische Lambdas, Structured Binding (<code>auto [a, b]</code>) und fehlersichere Typen wie <code>std::optional</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: LAMBDAS -->
+        <section class="card">
+          <h2>🎯 1. Lambdas &amp; Capture-Klauseln</h2>
+          <p>Ein C++ Lambda ist ein anonymer Funktionstyp mit der Signatur <code>[capture](parameter) -&gt; return_type { body }</code>:</p>
+          
+          <pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+int main() {
+    int threshold = 50;
+    int call_count = 0;
+
+    // [&amp;] = Capture by Reference, [=] = Capture by Value
+    // [threshold, &amp;call_count] = Selektiver Capture
+    auto is_above = [threshold, &amp;call_count](int val) {
+        ++call_count;
+        return val &gt; threshold;
+    };
+
+    std::vector&lt;int&gt; nums = {10, 60, 30, 80};
+    int count = std::count_if(nums.begin(), nums.end(), is_above);
+    std::cout &lt;&lt; "Größer als 50: " &lt;&lt; count &lt;&lt; " (Prüfungen: " &lt;&lt; call_count &lt;&lt; ")\n";
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der Rucksack des Kuriers</div>
+            <p>Die <strong>Capture-Klausel <code>[...]</code></strong> ist wie ein Rucksack für die Funktion: Sie packt Umgebungsvariablen ein, damit die Funktion sie am Bestimmungsort nutzen kann – entweder als Fotokopie (<code>[=]</code> Value) oder als direktes Funkgerät zum Original (<code>[&amp;]</code> Reference).</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: STRUCTURED BINDING & STD::OPTIONAL -->
+        <section class="card">
+          <h2>🧩 2. Structured Binding (<code>auto [a, b]</code>) &amp; <code>std::optional</code></h2>
+          <p>Seit C++17/C++20 können Tupel, Paare und Structs direkt in benannte Variablen zerlegt werden. Mit <code>std::optional</code> werden fehlende Werte ohne Null-Pointer sicher abgebildet:</p>
+
+          <pre><code>#include &lt;optional&gt;
+#include &lt;string&gt;
+#include &lt;tuple&gt;
+#include &lt;iostream&gt;
+
+struct User {
+    int id;
+    std::string name;
+    std::string role;
+};
+
+// Rückgabe von std::optional (Kein nullptr nötig!)
+std::optional&lt;User&gt; find_user(int id) {
+    if (id == 42) return User{42, "Alice", "Admin"};
+    return std::nullopt; // Wert nicht gefunden
+}
+
+int main() {
+    auto user_opt = find_user(42);
+    if (user_opt.has_value()) {
+        // Structured Binding zum Entpacken der Struct-Felder
+        auto [uid, uname, urole] = user_opt.value();
+        std::cout &lt;&lt; "User: " &lt;&lt; uname &lt;&lt; " (" &lt;&lt; urole &lt;&lt; ")\n";
+    }
+
+    // Default-Wert mit .value_or()
+    auto missing = find_user(99);
+    std::string name = missing ? missing-&gt;name : "Gast";
+}</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Lambdas &amp; Modern Features</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Feature</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Value Capture</td>
+                  <td style="padding: 10px;"><code>[x, y]() { ... }</code></td>
+                  <td style="padding: 10px;">Kopiert Variablen schreibgeschützt in die Closure</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Reference Capture</td>
+                  <td style="padding: 10px;"><code>[&amp;x, &amp;y]() { x++; }</code></td>
+                  <td style="padding: 10px;">Ermöglicht Modifikation der äußeren Variablen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Generic Lambda</td>
+                  <td style="padding: 10px;"><code>[](auto a, auto b) { return a + b; }</code></td>
+                  <td style="padding: 10px;">Automatische Typableitung für Argumente</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Init Capture (Move)</td>
+                  <td style="padding: 10px;"><code>[p = std::move(ptr)]() { ... }</code></td>
+                  <td style="padding: 10px;">Verschiebt Move-only Typen (wie unique_ptr) in das Lambda</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>std::optional&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>std::optional&lt;int&gt; opt;</code></td>
+                  <td style="padding: 10px;">Verhindert Null-Pointer Bugs für optionale Werte</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.cpp</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>find_user_by_id</code> mit Rückgabetyp <code>std::optional&lt;User&gt;</code> und <code>std::nullopt</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>unpack_metric_pair</code> mit Structured Binding (<code>auto [key, val]</code>) programmieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Stateful Counter-Lambda mit Referenz-Capture zur Filterzählung erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>EventDispatcher</code> mit <code>std::function</code> Callback-Registrierung und Event-Broadcasting schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Pipeline-Funktion <code>process_pipeline</code> mit transformierenden Lambdas umsetzen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Modern C++20 Best Practice: <code>std::optional</code> statt Magic Values</div>
+            <p>Verwende niemals Magic Values wie <code>-1</code> oder <code>nullptr</code>, um das Fehlen eines Ergebnisses zu signalisieren. <code>std::optional&lt;T&gt;</code> macht das Vorhandensein im Typensystem explizit und zwingt zur sauberen Fehlerprüfung!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_3_smart_pointers_stl&chapter=12_lambdas_und_moderne_cpp20_features" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_multithreading_mit_std_thread/index.html" class="btn btn-secondary">Weiter zu C++ 13 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 09: Generics &amp; Type Safety</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Generics, Collections &amp; Modern Streams</div>
+          <h1>Java 09: Generics &amp; Type Safety</h1>
+          <p>Beherrsche das Java-Typsystem auf Enterprise-Niveau: Generische Klassen, Bounded Types (<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>) und das PECS-Prinzip für Wildcards.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.java" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.java (Startercode)</a>
+            <a href="TestAufgabe.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.java (Tests)</a>
+            <a href="Musterloesung.java" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.java (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: GENERISCHE KLASSEN & TYPSICHERHEIT -->
+        <section class="card">
+          <h2>📦 1. Das Konzept von Generics &amp; Type Erasure</h2>
+          <p>
+            Vor Java 5 speicherten Datenstrukturen lediglich <code>Object</code>. Fehler durch inkompatible Datentypen wurden erst zur Laufzeit als <code>ClassCastException</code> sichtbar. Mit <strong>Generics</strong> prüft der Java-Compiler Typen bereits zur Compile-Zeit strikt ab.
+          </p>
+
+          <!-- Architekturdiagramm Generics -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Quellcode: Box&lt;String&gt;] ─── (Javac Prüfung: Type-Safe) ───&gt; [Kompilierung: Type Erasure zu Box (Object)]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&gt; [JVM Bytecode: Autocast zu String ohne Overhead]
+          </div>
+
+          <pre><code>public class Box&lt;T&gt; {
+    private T content;
+
+    public Box(T content) {
+        this.content = content;
+    }
+
+    public T getContent() {
+        return this.content;
+    }
+}
+
+// Verwendung:
+Box&lt;String&gt; box = new Box&lt;&gt;("Java 21");
+String val = box.getContent(); // Kein Cast (String) nötig!</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: BOUNDED GENERICS & WILDCARDS (PECS) -->
+        <section class="card">
+          <h2>🛡️ 2. Bounded Types &amp; das PECS-Prinzip</h2>
+          <p>
+            Manchmal muss ein generischer Typ bestimmte Eigenschaften besitzen &ndash; zum Beispiel vergleichbar sein oder eine Zahl repräsentieren. Hierfür nutzen wir <strong>Bounded Type Parameters</strong>:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">1. Upper Bound (<code>&lt;T extends Number&gt;</code>)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Ermöglicht den Zugriff auf Methoden wie <code>doubleValue()</code>.</p>
+            </div>
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">2. Comparable Bound (<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);">Garantiert, dass Elemente per <code>compareTo()</code> sortierbar sind.</p>
+            </div>
+            <div style="background: #fdf4ff; border-left: 4px solid #a855f7; padding: 12px; border-radius: var(--radius-sm);">
+              <strong style="color: #7e22ce;">3. PECS Wildcard (<code>? extends T</code> / <code>? super T</code>)</strong>
+              <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-body);"><strong>Producer Extends, Consumer Super</strong> für maximale API-Flexibilität.</p>
+            </div>
+          </div>
+
+          <pre><code>// PECS: Kopieren von einer Quelle (Producer) in ein Ziel (Consumer)
+public static &lt;T&gt; void copy(List&lt;? extends T&gt; src, List&lt;? super T&gt; dest) {
+    for (T item : src) {
+        dest.add(item);
+    }
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das modulare Stecksystem der Frachtlogistik</div>
+            <p>
+              Stell dir ein Containersystem vor: Ein Container <code>Box&lt;T&gt;</code> kann beliebige Frachtstücke transportieren. Die Frachtschranke (<code>&lt;T extends Gefahrengut&gt;</code>) stellt sicher, dass nur zertifizierte Güter in den Spezialtransporter geladen werden.
+              <strong>PECS:</strong> Wer Fracht nur <em>entlädt</em> (Producer), benötigt mindestens die Form <code>? extends Fracht</code>. Wer Fracht <em>aufnimmt</em> (Consumer), muss Container für <code>? super Fracht</code> bereitstellen!
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Generics in Java</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Syntax / Muster</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung &amp; Enterprise-Einsatz</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>class Box&lt;T&gt;</code></td>
+                  <td style="padding: 10px;"><code>Box&lt;Customer&gt; b;</code></td>
+                  <td style="padding: 10px;">Generische Klasse mit Typparameter T</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>&lt;T extends B&gt;</code></td>
+                  <td style="padding: 10px;"><code>&lt;T extends Comparable&lt;T&gt;&gt;</code></td>
+                  <td style="padding: 10px;">Upper Bound: T muss Subtyp von B sein</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>List&lt;? extends T&gt;</code></td>
+                  <td style="padding: 10px;"><code>List&lt;? extends Number&gt;</code></td>
+                  <td style="padding: 10px;">Read-Only Producer: Liefert Instanzen von T</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>List&lt;? super T&gt;</code></td>
+                  <td style="padding: 10px;"><code>List&lt;? super Integer&gt;</code></td>
+                  <td style="padding: 10px;">Write-Only Consumer: Akzeptiert Instanzen von T</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>List&lt;?&gt;</code></td>
+                  <td style="padding: 10px;"><code>int size(List&lt;?&gt; l)</code></td>
+                  <td style="padding: 10px;">Unbounded Wildcard: Unbekannter Typ für generische Operationen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.java</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>Box&lt;T&gt;</code> mit Kapselung, <code>isEmpty()</code> und <code>toOptional()</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>GenericCache&lt;K, V&gt;</code> mit <code>put()</code>, <code>get()</code>, <code>containsKey()</code> und <code>size()</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>GenericsMath</code> mit Bounded Generics <code>findMax(...)</code> und <code>calculateSum(...)</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>WildcardUtils</code> mit <code>copyList(...)</code> nach PECS und <code>countElements(...)</code> fertigstellen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Enterprise Architect Tipp: PECS leicht merken</div>
+            <p><strong>P</strong>roducer <strong>E</strong>xtends, <strong>C</strong>onsumer <strong>S</strong>uper: Wenn du Werte aus einer Liste entnimmst (Lesen), nutze <code>? extends</code>. Wenn du Werte in eine Liste hineinsteckst (Schreiben), nutze <code>? super</code>!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=java&track=track_3_collections_streams&chapter=09_generics_und_type_safety" class="btn" style="background: #e11d48; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_collections_framework_list_set_map/index.html" class="btn btn-secondary">Weiter zu Java 10: Collections Framework &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

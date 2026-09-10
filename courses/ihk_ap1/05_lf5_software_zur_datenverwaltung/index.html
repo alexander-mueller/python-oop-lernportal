@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP1 Modul 05: Software zur Datenverwaltung (LF 5)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 5</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 05: Software zur Datenverwaltung (LF 5)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Algorithmen, DIN 66261 Struktogramme, Trace-Tabellen, UML-Klassendiagramme, Normalisierung (1NF-3NF) & relationales SQL.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">💻 LF 5: Software zur Datenverwaltung anpassen</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Lernfeld 5 umfasst alle Programmier- und Datenbank-Kompetenzen: Algorithmen, DIN-Struktogramme, zeilenweise Trace-Tabellen, UML-Klassendiagramme, Normalisierung (1NF-3NF) und relationales SQL.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Trace-Tabellen & Schleifenlogik</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  In IHK-Prüfungen müssen Variablenwerte zeilenweise für jeden Schleifendurchlauf exakt tabelliert werden. Typische Operationen: Ganzzahldivision (<code>DIV</code> bzw. <code>//</code>) und Restwertberechnung (<code>MOD</code> bzw. <code>%</code>).
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. UML-Klassendiagramme nach DIN/OMG</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    Dreiteiliger Kasten: <strong>Klassenname</strong>, <strong>Attribute</strong>, <strong>Methoden</strong>.<br>
+    Sichtbarkeiten: <code>+</code> public, <code>-</code> private, <code>#</code> protected.<br>
+    Beziehungen: <strong>Vererbung</strong> (Dreieckspfeil), <strong>Aggregation</strong> (leere Raute o--), <strong>Komposition</strong> (ausgefüllte Raute &lt;*-- existenzielle Abhängigkeit!).
+  </p>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Relationale Datenbanken: Normalisierung & SQL</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>1NF:</strong> Alle Attribute sind atomar (keine Listen / Mehrfachwerte in Feldern).</li>
+    <li><strong>2NF:</strong> 1NF erfüllt + jedes Nichtschlüssel-Attribut ist voll funktional vom Gesamtschlüssel abhängig.</li>
+    <li><strong>3NF:</strong> 2NF erfüllt + keine transitiven Abhängigkeiten (kein Nichtschlüssel bestimmt einen anderen).</li>
+    <li><strong>SQL-Abfragestruktur:</strong> <code>SELECT ... FROM ... JOIN ... WHERE ... GROUP BY ... HAVING ... ORDER BY ...;</code></li>
+  </ul>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+<div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+  <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+    <span>🔍</span> Interaktiver Trace-Tabellen-Trainer
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.9rem;">
+    Simulieren Sie IHK-Algorithmen Schritt für Schritt mit zeilenweiser Validierung:
+  </p>
+  <div id="trace-table-container"></div>
+  <script src="../../../assets/ihk_tools/trace_table_trainer.js"></script>
+</div>
+
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 5
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="Struktogramm Schleifentypen nach DIN 66261" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Struktogramm Schleifentypen nach DIN 66261</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Programmierung eines Algorithmus werden Schleifenstrukturen entworfen.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Vergleichen Sie eine kopfgesteuerte Schleife (WHILE) mit einer fußgesteuerten Schleife (DO-WHILE) hinsichtlich Ausführungslogik und Mindestanzahl von Durchläufen und skizzieren Sie die Darstellung nach Nassi-Shneiderman.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Kopfgesteuerte Schleife (abweisend): Die Bedingung wird VOR jedem Schleifendurchlauf geprüft. Ist die Bedingung von Beginn an falsch, wird der Rumpf 0-mal ausgeführt. Nassi-Shneiderman: Oberer horizontaler Balken mit Bedingung, der den Schleifenkörper links und unten umschließt. (3 Pkt.)
+Fußgesteuerte Schleife (nicht abweisend): Die Bedingung wird NACH jedem Schleifendurchlauf am Fuß geprüft. Der Rumpf wird mindestens 1-mal garantiert ausgeführt. Nassi-Shneiderman: Unterer horizontaler Balken mit Bedingung, der den Schleifenkörper links und oben umschließt. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Trace-Tabelle Quersumme Algorithmus" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Trace-Tabelle Quersumme Algorithmus</strong>
+                <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Gegeben ist folgender Pseudocode zur Berechnung der Quersumme einer Zahl:
+GANZZAHL zahl = 384
+GANZZAHL quersumme = 0
+SOLANGE zahl > 0 WIEDERHOLE:
+    quersumme = quersumme + (zahl MOD 10)
+    zahl = zahl DIV 10
+ENDE_SOLANGE
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erstellen Sie eine vollständige Trace-Tabelle für alle Schleifendurchläufe mit den Spalten: Durchlauf, zahl, (zahl MOD 10), quersumme, (zahl DIV 10) und Bedingung (zahl > 0).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Initial: zahl=384, quersumme=0
+Durchlauf 1: zahl=384 -> 384>0 (wahr) -> MOD 10 = 4 -> quersumme = 0 + 4 = 4 -> zahl = 384 DIV 10 = 38. (3 Pkt.)
+Durchlauf 2: zahl=38 -> 38>0 (wahr) -> MOD 10 = 8 -> quersumme = 4 + 8 = 12 -> zahl = 38 DIV 10 = 3. (3 Pkt.)
+Durchlauf 3: zahl=3 -> 3>0 (wahr) -> MOD 10 = 3 -> quersumme = 12 + 3 = 15 -> zahl = 3 DIV 10 = 0. (3 Pkt.)
+Ende: zahl=0 -> 0>0 (falsch) -> Schleifenabbruch. Endergebnis quersumme = 15. (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Trace-Tabelle Lineare Suche" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Trace-Tabelle Lineare Suche</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Gegeben ist das Array werte = [14, 27, 42, 55, 68] und gesucht = 42.
+GANZZAHL pos = -1
+FÜR i VON 0 BIS 4 SCHRITT 1:
+    WENN werte[i] == gesucht DANN
+        pos = i
+        VERLASSE_SCHLEIFE
+    ENDE_WENN
+ENDE_FÜR
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Führen Sie die Trace-Tabelle bis zum Schleifenabbruch und geben Sie den Endwert von pos und die Anzahl der Vergleiche an.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Schritt i=0: werte[0]=14 == 42 ist FALSCH (1. Vergleich). (2 Pkt.)
+Schritt i=1: werte[1]=27 == 42 ist FALSCH (2. Vergleich). (2 Pkt.)
+Schritt i=2: werte[2]=42 == 42 ist WAHR (3. Vergleich). pos wird auf 2 gesetzt. Schleife wird abgebrochen. (3 Pkt.)
+Endwert pos: 2; Gesamtanzahl Vergleiche: 3. (1 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="UML-Klassendiagramm Sichtbarkeiten und Syntax" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">UML-Klassendiagramm Sichtbarkeiten und Syntax</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für eine IT-Asset-Management-Software soll die Klasse "Server" modelliert werden. Attribute: hostname (String, öffentlich), ipAdresse (String, privat), id (Integer, geschützt). Methoden: booten() (kein Rückgabewert, öffentlich), ping(ip: String) (Rückgabewert boolean, öffentlich).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Stellen Sie die Klasse als UML-Klassendiagramm nach DIN/OMG-Standard dar und beachten Sie die korrekten Sichtbarkeitssymbole.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Dreigeteilter Kasten:
+Oberes Feld (Klassenname): Server (2 Pkt.)
+Mittleres Feld (Attribute mit Sichtbarkeiten):
++ hostname : String
+- ipAdresse : String
+# id : Integer (3 Pkt.)
+Unteres Feld (Methoden):
++ booten() : void
++ ping(ip : String) : Boolean (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="UML Assoziation Aggregation vs Komposition" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">UML Assoziation Aggregation vs Komposition</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem Objektmodell stehen die Klassen "Firma", "Abteilung" und "Mitarbeiter" in Beziehung zueinander.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Unterscheiden Sie Aggregation und Komposition anhand von grafischer Darstellung und Lebensdauer-Abhängigkeit und ordnen Sie die Beziehungen der Klassen begründet zu.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Komposition (ausgefüllte Raute): Strikte existenzielle Abhängigkeit (Teil-Ganzes-Beziehung). Das Teil kann ohne das Ganze nicht existieren. Beispiel: Firma <*-- Abteilung (Wird die Firma aufgelöst, hören ihre Abteilungen auf zu existieren). (4 Pkt.)
+Aggregation (leere Raute): Lose Beziehung. Die Teile können auch unabhängig vom übergeordneten Ganzen fortbestehen. Beispiel: Abteilung o-- Mitarbeiter (Wird eine Abteilung aufgelöst, bleibt der Mitarbeiter weiterhin als Person/Arbeitnehmer bestehen). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="UML Sequenzdiagramm Lebenslinie und Nachrichten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">UML Sequenzdiagramm Lebenslinie und Nachrichten</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Authentifizierungsprozess zwischen Client, Webserver und Datenbank soll visualisiert werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Elemente eines UML-Sequenzdiagramms (Lebenslinie, Aktivierungsbalken, synchrone Nachricht, asynchrone Nachricht, Antwortnachricht).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Lebenslinie (Lifeline): Vertikale gestrichelte Linie, die das Vorhandensein eines Objekts über die Zeit darstellt. (2 Pkt.)
+Aktivierungsbalken (Execution Occurrence): Schmaler vertikaler Kasten auf der Lebenslinie, der anzeigt, dass das Objekt gerade aktiv eine Operation ausführt. (2 Pkt.)
+Synchrone Nachricht: Durchgezogene Linie mit ausgefüllter Pfeilspitze; der Aufrufer wartet blockierend auf die Antwort. (2 Pkt.)
+Antwortnachricht (Reply Message): Gestrichelte Linie mit offener Pfeilspitze zur Rückgabe des Ergebnisses. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Datenbank Normalisierung 1NF bis 3NF" data-points="12" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Datenbank Normalisierung 1NF bis 3NF</strong>
+                <span class="ihk-badge ihk-badge-success">12 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Gegeben ist eine unnormalisierte Tabelle: bestellungen(bestell_nr, datum, kunden_name, kunden_ort, artikel_liste, artikel_preise).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Definieren Sie die 1., 2. und 3. Normalform und überführen Sie das Schema schrittweise in die 3. Normalform.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Normalform (1NF): Alle Attribute sind atomar (jede Zelle enthält nur einen elementaren Wert; keine Wiederholgruppen). Tabelle aufteilen in Bestelldaten und einzelne Bestellpositionen (artikel_liste/preise auflösen). (4 Pkt.)
+2. Normalform (2NF): Das Schema ist in 1NF und jedes Nichtschlüssel-Attribut ist vom gesamten Primärschlüssel voll funktional abhängig (keine Abhängigkeit von Teilen eines zusammengesetzten Schlüssels). Trennung von Bestellpositionen und Artikelstammdaten. (4 Pkt.)
+3. Normalform (3NF): Das Schema ist in 2NF und es existieren keine transitiven Abhängigkeiten zwischen Nichtschlüssel-Attributen (Nichtschlüssel bestimmen keine anderen Nichtschlüssel). Auslagerung von Ort über die PLZ (kunden_name -> kunden_plz -> kunden_ort auflösen). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="ER-Modellierung Kardinalitäten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">ER-Modellierung Kardinalitäten</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Modellieren Sie die Beziehung zwischen "Projekt" und "Mitarbeiter": Ein Projekt kann von mehreren Mitarbeitern bearbeitet werden; ein Mitarbeiter kann in mehreren Projekten mitarbeiten. Zu jeder Mitarbeit wird die Anzahl der investierten Arbeitsstunden erfasst.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Geben Sie den Beziehungstyp (Kardinalität) an und erklären Sie, wie diese Beziehung in einem relationalen Datenbankschema aufgelöst wird.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Kardinalität: n:m-Beziehung (Many-to-Many). (2 Pkt.)
+Auflösung im relationalen Schema: Eine n:m-Beziehung kann nicht direkt über Fremdschlüssel in den beiden Haupttabellen abgebildet werden. Es wird eine Zwischentabelle / Verknüpfungstabelle (z. B. projekt_mitarbeiter) benötigt. (3 Pkt.)
+Struktur der Zwischentabelle: Enthält als Fremdschlüssel projekt_id und mitarbeiter_id (bilden gemeinsam den zusammengesetzten Primärschlüssel) sowie das Beziehungsattribut arbeitsstunden. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL DDL CREATE TABLE mit Constraints" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL DDL CREATE TABLE mit Constraints</strong>
+                <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Für eine Ticket-Verwaltung soll die Tabelle "ticket" per SQL angelegt werden: id (Ganzzahl, Primärschlüssel mit Autoinkrement), titel (Text, max. 100 Zeichen, Pflichtfeld), status (Text, Standardwert "OFFEN"), prioritaet (Ganzzahl, Werte nur von 1 bis 5 erlaubt), ersteller_id (Ganzzahl, Fremdschlüssel auf benutzer.id mit Kaskadierung beim Löschen).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Schreiben Sie das syntaktisch korrekte SQL-Statement nach ANSI/ISO-Standard.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  CREATE TABLE ticket (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    titel VARCHAR(100) NOT NULL,
+    status VARCHAR(20) DEFAULT 'OFFEN',
+    prioritaet INT CHECK (prioritaet BETWEEN 1 AND 5),
+    ersteller_id INT,
+    FOREIGN KEY (ersteller_id) REFERENCES benutzer(id) ON DELETE CASCADE
+); (10 Pkt. - Abzug bei fehlendem NOT NULL, CHECK, DEFAULT oder FOREIGN KEY)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL DML Aggregation und GROUP BY mit HAVING" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL DML Aggregation und GROUP BY mit HAVING</strong>
+                <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Gegeben sind die Tabellen kunden (id, name, stadt) und bestellungen (id, kunde_id, betrag, datum).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Formulieren Sie eine SQL-Abfrage, die den Kundennamen und die Gesamtsumme aller Bestellungen für jeden Kunden ausgibt, dessen Gesamtbestellwert 10.000 EUR überschreitet. Das Ergebnis soll absteigend nach der Summe sortiert sein.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  SELECT k.name, SUM(b.betrag) AS gesamtumsatz
+FROM kunden k
+INNER JOIN bestellungen b ON k.id = b.kunde_id
+GROUP BY k.id, k.name
+HAVING SUM(b.betrag) > 10000
+ORDER BY gesamtumsatz DESC; (10 Pkt. - Abzug bei WHERE statt HAVING für Aggregatfunktion oder fehlendem GROUP BY)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL JOIN-Typen INNER vs LEFT vs FULL" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL JOIN-Typen INNER vs LEFT vs FULL</strong>
+                <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Datenbank existieren mitarbeiter (id, name, abt_id) und abteilungen (id, bezeichnung). Einige Mitarbeiter haben keine Abteilung, und einige Abteilungen haben keine Mitarbeiter.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie den Unterschied im Abfrageergebnis zwischen INNER JOIN und LEFT OUTER JOIN bezüglich der Ergebniszeilen.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  INNER JOIN: Liefert ausschließlich Zeilen zurück, bei denen in beiden Tabellen ein übereinstimmender Wert vorliegt (Schnittmenge). Mitarbeiter ohne Abteilung und Abteilungen ohne Mitarbeiter werden vollständig verworfen. (3 Pkt.)
+LEFT OUTER JOIN (mitarbeiter LEFT JOIN abteilungen): Liefert ALLE Datensätze der linken Tabelle (mitarbeiter), selbst wenn keine Übereinstimmung in abteilungen vorliegt. Die fehlenden Abteilungsspalten werden mit NULL aufgefüllt. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL Transaktionen ACID-Eigenschaften" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Transaktionen ACID-Eigenschaften</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Bei einer Banküberweisung von 500 EUR von Konto A auf Konto B wird ein Transaktionsblock ausgeführt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen und erläutern Sie die vier ACID-Eigenschaften und beschreiben Sie, was passiert, wenn nach dem Abbuchen von Konto A das Datenbanksystem abstürzt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Atomarität (Atomicity): Alles-oder-Nichts-Prinzip. Eine Transaktion wird entweder ganz oder gar nicht ausgeführt. (2 Pkt.)
+Konsistenz (Consistency): Nach Abschluss der Transaktion befindet sich die Datenbank in einem gültigen, integren Zustand. (2 Pkt.)
+Isolation: Gleichzeitige Transaktionen beeinflussen sich nicht gegenseitig. (1 Pkt.)
+Dauerhaftigkeit (Durability): Erfolgreich mit COMMIT bestätigte Änderungen bleiben dauerhaft im Speicher erhalten. (1 Pkt.)
+Absturzfolge: Da die Buchung nicht durch COMMIT bestätigt wurde, greift beim Neustart ein automatisches Rollback (Undo-Logging). Die Abbuchung auf Konto A wird rückgängig gemacht. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Python Exception Handling & Custom Errors" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Python Exception Handling & Custom Errors</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einem Python-Skript soll eine Division durchgeführt und Benutzereingaben validiert werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erklären Sie die Funktionsweise von try, except, else und finally in Python und schreiben Sie einen Code-Ausschnitt, der eine Division durch Null sauber abfängt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Erklärung:
+- try: Enthält den fehleranfälligen Codeblock. (1 Pkt.)
+- except: Fängt spezifische Ausnahmen ab und behandelt sie (z. B. ZeroDivisionError). (1 Pkt.)
+- else: Wird nur ausgeführt, wenn im try-Block KEIN Fehler aufgetreten ist. (1 Pkt.)
+- finally: Wird immer ausgeführt, egal ob ein Fehler auftrat oder nicht (z. B. zum Schließen von Dateien/Sockets). (1 Pkt.)
+Code:
+try:
+    ergebnis = a / b
+except ZeroDivisionError:
+    print("Fehler: Division durch 0 nicht erlaubt!")
+else:
+    print("Ergebnis:", ergebnis)
+finally:
+    print("Berechnung abgeschlossen.") (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL Subqueries mit IN und EXISTS" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Subqueries mit IN und EXISTS</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Gegeben sind die Tabellen kunden (id, name, land) und bestellungen (id, kunde_id, summe).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Formulieren Sie zwei SQL-Abfragen, die alle Kundennamen ausgeben, die mindestens eine Bestellung getätigt haben: Einmal unter Verwendung einer Subquery mit IN und einmal mit EXISTS.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Variante 1 (IN):
+SELECT name FROM kunden WHERE id IN (SELECT kunde_id FROM bestellungen); (4 Pkt.)
+Variante 2 (EXISTS / Korrelierte Unterabfrage):
+SELECT k.name FROM kunden k WHERE EXISTS (SELECT 1 FROM bestellungen b WHERE b.kunde_id = k.id); (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="SQL Window Functions ROW_NUMBER" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Window Functions ROW_NUMBER</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Vertriebsdatenbank sollen die Top-3-Umsätze jedes Verkäufers ermittelt werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Funktionsweise von SQL Window Functions gegenüber GROUP BY und erklären Sie die Syntax von ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Unterschied zu GROUP BY: GROUP BY fasst Zeilen zusammen und reduziert die Ergebnismenge auf eine einzige Zeile pro Gruppe. Eine Window Function führt Berechnungen über eine definierte Zeilenmenge (das Fenster / Window) durch, behält jedoch die individuelle Identität jeder einzelnen Zeile bei. (4 Pkt.)
+Syntax-Erklärung:
+- ROW_NUMBER(): Vergibt eine fortlaufende Zeilennummer (1, 2, 3...).
+- PARTITION BY spalte: Teilt den Datensatz in logische Untergruppen (z. B. pro Verkäufer).
+- ORDER BY spalte DESC: Bestimmt die Sortierreihenfolge innerhalb jeder Partition (z. B. höchster Umsatz zuerst). (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../04_lf4_schutzbedarfsanalyse_und_cybersicherheit/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../06_lf6_cyber_physische_systeme_iot/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

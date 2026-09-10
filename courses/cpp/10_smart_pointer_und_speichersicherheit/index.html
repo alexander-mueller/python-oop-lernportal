@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ 10: Smart Pointer &amp; Modern Memory Safety</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ Modern C++20 Memory Safety</div>
+          <h1>C++ 10: Smart Pointer &amp; Speichersicherheit</h1>
+          <p>Schluss mit Memory Leaks und Dangling Pointern: Beherrsche <code>std::unique_ptr</code>, <code>std::shared_ptr</code>, <code>std::weak_ptr</code> und RAII Custom Deleter in Modern C++20.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: UNIQUE_PTR & EXCLUSIVE OWNERSHIP -->
+        <section class="card">
+          <h2>🔐 1. Exklusiver Besitz: <code>std::unique_ptr</code> &amp; <code>std::make_unique</code></h2>
+          <p>Ein <code>std::unique_ptr</code> besitzt eine Heap-Ressource <strong>exklusiv</strong>. Er kann nicht kopiert, sondern nur via Move-Semantik (<code>std::move</code>) übertragen werden. Sobald der Smart Pointer den Gültigkeitsbereich (Scope) verlässt, wird der Speicher automatisch freigegeben:</p>
+          
+          <pre><code>#include &lt;memory&gt;
+#include &lt;iostream&gt;
+
+struct Connection {
+    int id;
+    Connection(int i) : id(i) { std::cout &lt;&lt; "Connect " &lt;&lt; id &lt;&lt; "\n"; }
+    ~Connection() { std::cout &lt;&lt; "Disconnect " &lt;&lt; id &lt;&lt; "\n"; }
+};
+
+void process_connection(std::unique_ptr&lt;Connection&gt; conn) {
+    std::cout &lt;&lt; "Processing connection " &lt;&lt; conn-&gt;id &lt;&lt; "\n";
+} // conn wird HIER automatisch zerstört!
+
+int main() {
+    // Bevorzugt: std::make_unique (Ausnahmesicher &amp; effizient)
+    auto c1 = std::make_unique&lt;Connection&gt;(101);
+
+    // FEHLER (Kopieren verboten): auto c2 = c1;
+    // KORREKT (Besitz übertragen):
+    process_connection(std::move(c1));
+    // c1 ist jetzt nullptr
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der Generalschlüssel</div>
+            <p>Ein <code>std::unique_ptr</code> ist wie ein <strong>physischer Original-Schlüssel</strong> zu einem Hotelsafe. Es gibt keine Duplikate. Wenn du den Schlüssel an einen Kollegen übergibst (<code>std::move</code>), sind deine eigenen Hände leer (<code>nullptr</code>). Beim Auschecken schließt der Schlüssel den Safe automatisch ab und löscht den Inhalt!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: SHARED_PTR & WEAK_PTR -->
+        <section class="card">
+          <h2>🤝 2. Geteilter Besitz: <code>std::shared_ptr</code> &amp; <code>std::weak_ptr</code></h2>
+          <p>Ein <code>std::shared_ptr</code> verwaltet Ressourcen über einen <strong>Referenzzähler</strong> (Reference Count). Erst wenn die letzte Kopie zerstört wird (Count == 0), wird das Objekt freigegeben. Um zyklische Referenzen (Memory Leaks) zu verhindern, verwenden wir <code>std::weak_ptr</code>:</p>
+
+          <pre><code>#include &lt;memory&gt;
+
+struct Node {
+    int value;
+    std::shared_ptr&lt;Node&gt; next;
+    std::weak_ptr&lt;Node&gt; prev; // Verhindert zirkuläre Referenz!
+
+    Node(int v) : value(v) {}
+};
+
+int main() {
+    auto n1 = std::make_shared&lt;Node&gt;(1);
+    auto n2 = std::make_shared&lt;Node&gt;(2);
+
+    n1-&gt;next = n2;
+    n2-&gt;prev = n1; // Schwache Referenz erhöht den Shared Count nicht
+
+    if (auto parent = n2-&gt;prev.lock()) {
+        std::cout &lt;&lt; "Parent existiert noch: " &lt;&lt; parent-&gt;value &lt;&lt; "\n";
+    }
+}</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: CUSTOM DELETER -->
+        <section class="card">
+          <h2>⚙️ 3. RAII Custom Deleters für C-Ressourcen</h2>
+          <p>Smart Pointer können auch nicht-speicherbasierte OS-Handles (wie Dateideskriptoren, Sockets oder Mutexes) automatisch schließen:</p>
+
+          <pre><code>#include &lt;cstdio&gt;
+#include &lt;memory&gt;
+
+// Custom Deleter für C-Dateizeiger
+auto file_deleter = [](FILE* fp) {
+    if (fp) {
+        std::fclose(fp);
+        std::cout &lt;&lt; "File handle safely closed.\n";
+    }
+};
+
+using SafeFile = std::unique_ptr&lt;FILE, decltype(file_deleter)&gt;;
+
+SafeFile open_safe_file(const char* filename, const char* mode) {
+    FILE* fp = std::fopen(filename, mode);
+    return SafeFile(fp, file_deleter);
+}</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: Smart Pointer Vergleich</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Smart Pointer Typ</th>
+                  <th style="padding: 10px;">Besitzmodell</th>
+                  <th style="padding: 10px;">Kopierbar / Bewegbar</th>
+                  <th style="padding: 10px;">Typischer Anwendungsfall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::unique_ptr&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Exklusiv (1 Besitzer)</td>
+                  <td style="padding: 10px;">Nur Move (<code>std::move</code>)</td>
+                  <td style="padding: 10px;">Standard-Allokation, Factory Methods, RAII Guards</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::shared_ptr&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Geteilt (Ref Count)</td>
+                  <td style="padding: 10px;">Copy &amp; Move erlaubt</td>
+                  <td style="padding: 10px;">Gemeinsame Ressourcen, Graph-Kanten, Caches</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>std::weak_ptr&lt;T&gt;</code></td>
+                  <td style="padding: 10px;">Nicht-besitzend (Observer)</td>
+                  <td style="padding: 10px;">Copy &amp; Move</td>
+                  <td style="padding: 10px;">Backpointer (Parent), Caching, Cycle-Breaking</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>T*</code> (Raw Pointer)</td>
+                  <td style="padding: 10px;">Kein Besitz (Observer)</td>
+                  <td style="padding: 10px;">Copy &amp; Move</td>
+                  <td style="padding: 10px;">Nur noch für optionale Parameter / Beobachtung</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.cpp</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>create_unique_session(id, user)</code> mit <code>std::make_unique</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>SessionManager</code> mit Transfer von <code>std::unique_ptr</code> via <code>std::move</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>SharedDocument</code> und <code>DocumentObserver</code> mit <code>std::shared_ptr</code> und <code>std::weak_ptr</code> verknüpfen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ResourceTracker</code> mit RAII-Zähler für Konstruktion &amp; Destruktion programmieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> Custom Deleter für RAII-Puffer-Cleanup mit <code>std::unique_ptr</code> umsetzen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Modern C++ Regel: Kein manuelles <code>new</code> / <code>delete</code> mehr!</div>
+            <p>Im modernen C++ (seit C++14/C++20) gibt es fast keinen legitimen Grund mehr, <code>new</code> oder <code>delete</code> direkt im Anwendungscode aufzurufen. Verwende stattdessen konsequent <code>std::make_unique</code> und <code>std::make_shared</code>!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_3_smart_pointers_stl&chapter=10_smart_pointer_und_speichersicherheit" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_standard_template_library_stl/index.html" class="btn btn-secondary">Weiter zu C++ 11 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

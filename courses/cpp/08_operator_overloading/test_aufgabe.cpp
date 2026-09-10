@@ -1,0 +1,1 @@
+// TEST: Testet Vektor2D operator+ und operator==

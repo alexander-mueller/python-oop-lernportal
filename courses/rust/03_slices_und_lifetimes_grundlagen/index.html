@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 03: Slices &amp; Lifetimes Grundlagen</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge" style="background: rgba(244, 102, 35, 0.15); color: #f46623; border: 1px solid rgba(244, 102, 35, 0.3);">🦀 Rust Modern Systems &amp; WebAssembly</div>
+          <h1>Rust 03: Slices (&amp;str / &amp;[T]) &amp; Lifetime-Annotationen ('a)</h1>
+          <p>Lerne speichereffiziente Slices als Sichten auf Daten ohne Ownership kennen und meistere die Grundlagen der Rust Lifetimes zur Verhinderung von Dangling References.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: SLICES ALS FAT POINTER -->
+        <section class="card">
+          <h2>🔪 1. Slices: Sichten auf Daten ohne Allokations-Kosten</h2>
+          <p>Ein <strong>Slice</strong> ist eine Referenz auf eine zusammenhängende Folge von Elementen in einer Collection, anstatt die gesamte Collection zu kopieren oder zu besitzen. Intern ist ein Slice ein <em>Fat Pointer</em> bestehend aus:</p>
+          <ul>
+            <li>Einem Zeiger (Pointer) auf das Start-Element</li>
+            <li>Der Länge (Length) des Slices</li>
+          </ul>
+
+          <pre><code>let text = String::from("Rust Systems Engine");
+
+// String Slices (&amp;str) mit Range-Syntax
+let rust = &amp;text[0..4];    // "Rust"
+let engine = &amp;text[13..];  // "Engine" (bis zum Ende)
+let full = &amp;text[..];      // Gesamter String als &amp;str
+
+// Array Slices (&amp;[i32])
+let numbers = [10, 20, 30, 40, 50];
+let middle_slice: &amp;[i32] = &amp;numbers[1..4]; // [20, 30, 40]</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">📖 Didaktische Analogie: Ein Textmarker im Buch</div>
+            <p>Wenn du jemandem ein Zitat aus einem dicken Buch zeigen möchtest, reißt du nicht die Seite heraus und übergibst sie ihm (Ownership Move), noch kopierst du das ganze Buch im Copyshop (Clone). Du nimmst einen Textmarker und zeigst auf Zeile 5 bis 12: Das ist ein <strong>Slice</strong>!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: LIFETIMES GRUNDLAGEN -->
+        <section class="card">
+          <h2>⏳ 2. Warum braucht Rust Lifetimes?</h2>
+          <p>Jede Referenz in Rust hat eine <strong>Lebensdauer (Lifetime)</strong>. Der <strong>Borrow Checker</strong> vergleicht die Scopes, um sicherzustellen, dass keine Referenz länger lebt als die Daten, auf die sie zeigt (Verhinderung von <em>Dangling References</em> / Use-after-Free):</p>
+
+          <pre><code>// ❌ INVALID: Referenz überlebt die Daten
+/*
+fn dangle() -&gt; &amp;String {
+    let s = String::from("hallo");
+    &amp;s // FEHLER: `s` wird am Ende der Funktion gedroppt! Die Referenz zeigt ins Leere!
+}
+*/</code></pre>
+
+          <h3>Explizite Lifetime-Annotationen <code>'a</code></h3>
+          <p>Wenn eine Funktion zwei Referenzen entgegennimmt und eine Referenz zurückgibt, kann der Compiler nicht wissen, welche Eingabe-Referenz zurückgeliefert wird. Mit <code>'a</code> definieren wir die Beziehung der Gültigkeiten:</p>
+
+          <pre><code>// 'a bedeutet: Der Rückgabe-Slice lebt mindestens so lange wie der KÜRZERE der beiden Inputs!
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt;= y.len() {
+        x
+    } else {
+        y
+    }
+}</code></pre>
+
+          <div class="box box-tipp">
+            <div class="box-title">💡 <code>&amp;str</code> als Funktionsparameter bevorzugen</div>
+            <p>Schreibe in Funktionen immer <code>s: &amp;str</code> statt <code>s: &amp;String</code> als Parameter. Ein <code>&amp;str</code> akzeptiert dank Deref Coercion sowohl <code>&amp;String</code> als auch String-Literale (<code>"..."</code>) und Sub-Slices!</p>
+          </div>
+        </section>
+
+        <!-- 3. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>first_word(s: &amp;str) -&gt; &amp;str</code>: Den String-Slice bis zum ersten Leerzeichen zurückgeben (oder gesamten Slice).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>sum_slice(numbers: &amp;[i32]) -&gt; i32</code>: Die Summe aller Integer-Elemente im Slice berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>get_subslice(arr: &amp;[u32], start: usize, len: usize) -&gt; &amp;[u32]</code>: Sicheren Sub-Slice liefern (leerer Slice bei Überlauf).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>longest_str&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str</code>: Längeren String-Slice mit Lifetime-Annotation <code>'a</code> ermitteln.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>strip_prefix_slice&lt;'a&gt;(haystack: &amp;'a str, prefix: &amp;str) -&gt; Option&lt;&amp;'a str&gt;</code>: Präfix prüfen und restlichen Slice als <code>Some(...)</code> zurückgeben.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_1_rust_basics&chapter=03_slices_und_lifetimes_grundlagen" class="btn" style="background: #f46623; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_kontrollfluss_und_pattern_matching/index.html" class="btn btn-secondary">Weiter zu Rust 04 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

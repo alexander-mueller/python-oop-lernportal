@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP2 Modul 02: Serverdienste & Automation bereitstellen (LF 10)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 10 (FISI)</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 02: Serverdienste & Automation bereitstellen (LF 10)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Active Directory DS, 5 FSMO-Rollen, GPO Vererbung (LSDOU), Kerberos 3-Wege-Handshake, PKI X.509, E-Mail-Sicherheit (SPF/DKIM/DMARC) & Ansible.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #f87171; margin-top: 0;">🖥️ LF 10: Serverdienste und Speicherlösungen bereitstellen (FISI)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Bereitstellung und Absicherung unternehmensweiter Verzeichnisdienste (Active Directory DS), Namensauflösung (DNSSEC), automatische IP-Konfiguration (DHCP Snooping), PKI-Zertifikatsketten und Automatisierung mit Ansible.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Active Directory & die 5 FSMO-Rollen</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>Schemamaster (Forest-wide):</strong> Änderungen an Objektklassen und Attributen des AD.</li>
+    <li><strong>Domänennamen-Master (Forest-wide):</strong> Hinzufügen und Entfernen von Domänen.</li>
+    <li><strong>PDC-Emulator (Domain-wide):</strong> Zeitquelle (NTP) der Domäne, sofortige Passwortänderungssynchronisation, Kontosperrungen.</li>
+    <li><strong>RID-Master (Domain-wide):</strong> Vergibt RID-Pools zur Erzeugung eindeutiger SIDs.</li>
+    <li><strong>Infrastrukturmaster (Domain-wide):</strong> Verwaltet standortübergreifende Phantom-Objekte.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Gruppenrichtlinien (GPO) LSDOU-Regel</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Reihenfolge der Richtlinienauswertung: <strong>Local -> Site -> Domain -> OU</strong>. Untere Ebenen überschreiben obere Einstellungen. Mit <strong>Erzwungen (Enforced)</strong> wird eine Richtlinie ausnahmslos durchgesetzt und überstimmt jede Vererbungsblockade.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Infrastruktur-Automatisierung mit Ansible</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Ansible arbeitet <strong>agentless</strong> über SSH / WinRM und gewährleistet <strong>Idempotenz</strong>: Wiederholte Ausführung eines Playbooks führt immer zum identischen Soll-Zustand, ohne redundante Änderungen auszulösen.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+          <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+            <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Lernfeld 10 (FISI)
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+            Aus unserem Fragenpool von 150 IHK-Prüfungsfragen nach offiziellem ZPA/AkA-Wortlaut. Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem Erwartungshorizont:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+            <div class="ihk-exam-task" data-title="Active Directory FSMO-Rollen" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Active Directory FSMO-Rollen</strong>
+                <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Microsoft Active Directory Domain Services (AD DS) Gesamtstruktur existieren fünf FSMO-Rollen (Flexible Single Master Operations).
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Nennen Sie die fünf FSMO-Rollen, unterscheiden Sie zwischen gesamtstrukturweiten und domänenweiten Rollen und erläutern Sie die Aufgaben des PDC-Emulators.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Gesamtstrukturweite Rollen (Forest-wide, genau 1-mal pro Forest):
+1. Schemamaster: Zuständig für Änderungen am AD-Datenbankschema. (1,5 Pkt.)
+2. Domänennamen-Master: Verwaltet das Hinzufügen und Entfernen von Domänen. (1,5 Pkt.)
+Domänenweite Rollen (Domain-wide, 1-mal pro Domäne):
+3. RID-Master: Vergibt RID-Pools an Domain Controller zur Erzeugung eindeutiger SIDs. (1,5 Pkt.)
+4. Infrastrukturmaster: Aktualisiert standortübergreifende Objektverweise (Phantom-Objekte). (1,5 Pkt.)
+5. PDC-Emulator: Haupt-Zeitquelle (NTP-Zeitserver) der Domäne, sofortige Synchronisation von Kennwortänderungen, Verwaltung von Kontosperrungen und Abwärtskompatibilität zu NT4. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Group Policy Objects (GPO) Vererbung LSDOU" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Group Policy Objects (GPO) Vererbung LSDOU</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                In einer Active-Directory-Umgebung werden Gruppenrichtlinien (GPOs) angewendet.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Auswertungsreihenfolge von Richtlinien nach der LSDOU-Regel und beschreiben Sie die Auswirkung der Einstellungen "Vererbung deaktivieren" (Block Inheritance) und "Erzwungen" (Enforced).
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  LSDOU-Reihenfolge:
+1. Local (Lokal auf dem Clientcomputer)
+2. Site (Active Directory Standort)
+3. Domain (Domänenebene)
+4. OU (Organisationseinheit, von oberer OU zur untergeordneten OU).
+Die zuletzt ausgewertete Richtlinie überschreibt bei Konflikten vorherige Einstellungen (OU gewinnt gegen Domäne). (4 Pkt.)
+Vererbung deaktivieren: Verhindert, dass übergeordnete Richtlinien an untergeordnete OUs vererbt werden. (2 Pkt.)
+Erzwungen (Enforced): Setzt eine Richtlinie ausnahmslos durch; überstimmt Vererbungsblockaden untergeordneter OUs und kann nicht überschrieben werden. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Kerberos-Authentifizierung 3-Wege-Handshake" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Kerberos-Authentifizierung 3-Wege-Handshake</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Active Directory verwendet standardmäßig das Kerberos-Protokoll zur sicheren Benutzerauthentifizierung.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die drei Schritte des Kerberos-Prozesses unter Nennung der Rollen KDC, AS, TGS, TGT und Service-Ticket.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Authentication Service (AS-Exchange): Client sendet Anmeldeanforderung an den Authentication Server des KDC. Der AS prüft die Anmeldedaten und antwortet mit einem TGT (Ticket Granting Ticket), das mit dem geheimen Schlüssel des KDC verschlüsselt ist. (3 Pkt.)
+2. Ticket Granting Service (TGS-Exchange): Möchte der Client auf eine Ressource zugreifen, sendet er das TGT an den Ticket Granting Server. Dieser validiert das TGT und stellt ein Service-Ticket für den gewünschten Zielserver aus. (3 Pkt.)
+3. Client-to-Server-Exchange: Der Client übergibt das Service-Ticket an den Zielserver. Der Server entschlüsselt das Ticket mit seinem eigenen Computerkonto-Schlüssel und gewährt den Zugriff ohne Passwortübertragung im Netz. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Public Key Infrastructure (PKI) X.509" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Public Key Infrastructure (PKI) X.509</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Unternehmen baut eine zweistufige Public-Key-Infrastruktur (PKI) mit Offline-Root-CA und Online-Sub-CA auf.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Begründen Sie, warum die Root-CA offline betrieben wird, und erklären Sie den Unterschied zwischen einer Sperrliste (CRL) und OCSP.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Offline Root-CA: Die Stammzertifizierungsstelle ist die Vertrauensbasis der gesamten Organisation. Wird ihr privater Schlüssel kompromittiert, ist die gesamte PKI wertlos. Sie wird offline gehalten (abgeschaltet, im Tresor), um sie vor Netzwerkangriffen zu schützen, und signiert nur die Zertifikate der untergeordneten ausstellenden CAs (Sub-CAs). (4 Pkt.)
+CRL (Certificate Revocation List): Eine signierte Datei, die periodisch von der CA veröffentlicht wird und alle widerrufenen Zertifikate auflistet. Nachteil: Kann sehr groß werden und ist bis zum nächsten Update zeitlich verzögert. (2 Pkt.)
+OCSP (Online Certificate Status Protocol): Ermöglicht eine Echtzeit-Statusabfrage für ein einzelnes konkretes Zertifikat beim OCSP-Responder; extrem bandbreitenschonend und aktuell. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="E-Mail-Sicherheit SPF, DKIM und DMARC" data-points="9" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">E-Mail-Sicherheit SPF, DKIM und DMARC</strong>
+                <span class="ihk-badge ihk-badge-success">9 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Verhinderung von Spam, Spoofing und Phishing im Namen der eigenen Firmendomäne werden DNS-Einträge konfiguriert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erläutern Sie die Aufgaben und Funktionsweisen von SPF, DKIM und DMARC.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  SPF (Sender Policy Framework): Ein DNS-TXT-Record, in dem der Domäneninhaber festlegt, welche IP-Adressen und Mailserver berechtigt sind, E-Mails im Namen dieser Domäne zu versenden. Der empfangende Mailserver gleicht die Quell-IP des Absenders damit ab. (3 Pkt.)
+DKIM (DomainKeys Identified Mail): Der ausgehende Mailserver signiert Teile des E-Mail-Headers und den Body kryptografisch mit einem privaten Schlüssel. Der Empfänger prüft die Signatur mit dem im DNS publizierten öffentlichen Schlüssel auf Unverfälschtheit. (3 Pkt.)
+DMARC (Domain-based Message Authentication): Richtlinie im DNS, die festlegt, wie der empfangende Mailserver verfahren soll, wenn SPF oder DKIM fehlschlagen (z. B. none, quarantine, reject), und fordert aggregierte XML-Sicherheitsberichte an den Domäneninhaber an. (3 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Infrastruktur-Automatisierung mit Ansible" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Infrastruktur-Automatisierung mit Ansible</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Konfiguration von 80 Linux-Servern wird ein Infrastructure-as-Code-Werkzeug eingeführt.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Erklären Sie die Begriffe Agentless und Idempotenz im Kontext von Ansible und beschreiben Sie den Aufbau eines Playbooks.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Agentless: Auf den Zielsystemen muss kein spezieller Hintergrunddienst (Agent) installiert werden; Ansible steuert die Server direkt über Standardprotokolle wie SSH (Linux) oder WinRM (Windows) an und benötigt lediglich Python auf den Zielhosts. (3 Pkt.)
+Idempotenz: Ein Playbook kann beliebig oft ausgeführt werden und führt immer zum identischen Soll-Zustand. Befindet sich ein Server bereits im gewünschten Zustand (z. B. Paket ist bereits installiert), führt Ansible keine Änderungen aus ("ok" statt "changed"). (3 Pkt.)
+Aufbau eines Playbooks: In YAML-Syntax verfasste Datei, die Plays enthält. Jedes Play definiert Ziel-Hosts, Variablen und eine geordnete Liste von Tasks, die vorgefertigte Module (z. B. apt, copy, systemd) aufrufen. (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="DHCP Snooping und Dynamic ARP Inspection (DAI)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">DHCP Snooping und Dynamic ARP Inspection (DAI)</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Zur Härtung der Switch-Ports gegen Man-in-the-Middle-Angriffe werden Sicherheitsfeatures aktiviert.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die Funktionsweise von DHCP Snooping (Trusted vs Untrusted Ports) und erklären Sie, wie Dynamic ARP Inspection (DAI) basierend auf der Snooping-Binding-Database Angriffe abwehrt.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  DHCP Snooping: Teilt Switchports in vertrauenswürdig (Trusted) und unvertrauenswürdig (Untrusted) ein. Ports zu DHCP-Servern werden als Trusted konfiguriert; Ports zu Clients als Untrusted. Sendet ein Client auf einem Untrusted Port DHCP-Server-Antworten (DHCPOFFER/ACK, Rogue DHCP), blockiert der Switch den Port sofort. Der Switch protokolliert zugewiesene IPs, MACs und Ports in der DHCP Snooping Binding Database. (4 Pkt.)
+Dynamic ARP Inspection (DAI): Verhindert ARP-Spoofing/Poisoning. Der Switch fängt jeden ARP-Reply auf Untrusted Ports ab und vergleicht, ob die Zuordnung von IP- und Quell-MAC-Adresse mit der DHCP Snooping Binding Database übereinstimmt. Weicht die MAC ab (gefälschter ARP-Frame), wird das Paket gedroppt und der Angreifer isoliert. (4 Pkt.)
+                </div>
+              </details>
+            </div>
+            
+            <div class="ihk-exam-task" data-title="Linux Systemd Service Unit Konfiguration" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Linux Systemd Service Unit Konfiguration</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Python-Daemon für ein Monitoring-Tool soll unter Linux automatisch beim Booten gestartet und bei Absturz neu gestartet werden.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Beschreiben Sie die drei Hauptabschnitte einer Systemd-Service-Unit ([Unit], [Service], [Install]) und nennen Sie die Direktiven für Ausführungsbefehl, automatischen Neustart und Start-Ziel.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  Abschnitte & Direktiven:
+1. [Unit]: Metadaten und Abhängigkeiten. Direktive: Description=Mein Monitoring Dienst; After=network.target (Startet erst, wenn Netzwerk bereit ist). (2 Pkt.)
+2. [Service]: Ausführungskonfiguration. Direktiven: ExecStart=/usr/bin/python3 /opt/monitor/app.py (Startbefehl); Restart=always (Automatischer Neustart bei Crash); RestartSec=5s; User=monitoruser. (4 Pkt.)
+3. [Install]: Aktivierungsziel für systemctl enable. Direktive: WantedBy=multi-user.target (Dienst startet im regulären Mehrbenutzer-Modus). (2 Pkt.)
+                </div>
+              </details>
+            </div>
+            </div></div>
+
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../01_lf9_netzwerke_und_dienste/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
+      <a href="../../../index.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../03_lf11_speicher_und_hochverfuegbarkeit/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+</body>
+</html>

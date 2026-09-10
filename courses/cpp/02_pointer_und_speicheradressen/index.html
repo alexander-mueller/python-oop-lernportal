@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C 02: Pointer, Speicheradressen &amp; Zeigerarithmetik</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ C &amp; C++ Systems Engineering</div>
+          <h1>C 02: Pointer, Speicheradressen (&amp;/*) &amp; Zeigerarithmetik</h1>
+          <p>Das Herzstück von C: Verstehe physikalische Speicheradressen, die Operatoren <code>&amp;</code> und <code>*</code>, Zeigertypen, Pointer-Arithmetik und Pass-by-Reference Simulation in C.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: WAS IST EIN POINTER? -->
+        <section class="card">
+          <h2>🧠 1. Das Fundament: Was ist eine Speicheradresse?</h2>
+          <p>Der Arbeitsspeicher (RAM) ist eine gigantische, durchnummerierte Kette von Bytes. Jede Variable belegt ab einer bestimmten Adresse Speicher:</p>
+          
+          <pre><code>int zahl = 42;       // Liegt z. B. an Adresse 0x7ffd50
+int* ptr = &zahl;    // 'ptr' speichert die Adresse 0x7ffd50
+*ptr = 99;           // Dereferenzierung: Schreibt 99 an die Adresse von 'zahl'!</code></pre>
+
+          <!-- SPEICHER-DIAGRAMM -->
+          <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px; margin: 18px 0; font-family: monospace; font-size: 0.9rem;">
+            <div style="color: #38bdf8; font-weight: bold; margin-bottom: 8px;">📍 Speicherlayout-Visualisierung:</div>
+            <div>[Adresse]      [Typ]       [Variable]    [Wert / Inhalt]</div>
+            <div>--------------------------------------------------------</div>
+            <div>0x7ffd50       int         zahl          42 (bzw. 99 nach *ptr=99)</div>
+            <div>0x7ffd58       int*        ptr           0x7ffd50 ────┐ (Zeigt auf 'zahl')</div>
+            <div>                                                  │</div>
+            <div>                                                  ▼</div>
+            <div>                       *ptr greift direkt auf 0x7ffd50 zu!</div>
+          </div>
+
+          <div class="box box-analogie">
+            <div class="box-title">📦 Didaktische Analogie: Postfach und Adresszettel</div>
+            <p><strong>Die Variable (<code>zahl</code>):</strong> Ein Schließfach in der Bank, in dem Goldmünzen (der Wert <code>42</code>) liegen.</p>
+            <p><strong>Der Adressoperator (<code>&amp;zahl</code>):</strong> Ermittelt die exakte Schließfachnummer (z. B. Fach Nr. 50).</p>
+            <p><strong>Der Pointer (<code>ptr</code>):</strong> Ein Notizzettel, auf dem <em>"Fach Nr. 50"</em> notiert ist.</p>
+            <p><strong>Die Dereferenzierung (<code>*ptr</code>):</strong> Du gehst mit dem Zettel zum Schließfach Nr. 50, steckst den Schlüssel hinein und nimmst den Inhalt heraus oder legst etwas Neues hinein!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: ZEIGERARITHMETIK -->
+        <section class="card">
+          <h2>📐 2. Zeigerarithmetik (Pointer Arithmetic)</h2>
+          <p>Wenn du zu einem Pointer <code>+ 1</code> addierst, addiert die CPU nicht 1 Byte, sondern springt um die <strong>Größe des Ziel-Datentyps (<code>sizeof(*ptr)</code>)</strong> weiter:</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 16px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 8px 12px;">Zeigertyp</th>
+                  <th style="padding: 8px 12px;">Zielgröße <code>sizeof(T)</code></th>
+                  <th style="padding: 8px 12px;">Operation <code>ptr + 1</code></th>
+                  <th style="padding: 8px 12px;">Speicherverschiebung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>char*</code></td>
+                  <td style="padding: 8px 12px;">1 Byte</td>
+                  <td style="padding: 8px 12px;"><code>0x1000 + 1</code></td>
+                  <td style="padding: 8px 12px;">+1 Byte</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>int*</code></td>
+                  <td style="padding: 8px 12px;">4 Bytes</td>
+                  <td style="padding: 8px 12px;"><code>0x1000 + 1</code></td>
+                  <td style="padding: 8px 12px;">+4 Bytes (0x1004)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px 12px;"><code>double*</code></td>
+                  <td style="padding: 8px 12px;">8 Bytes</td>
+                  <td style="padding: 8px 12px;"><code>0x1000 + 1</code></td>
+                  <td style="padding: 8px 12px;">+8 Bytes (0x1008)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Array-Decay &amp; Pointer-Traversierung:</h3>
+          <pre><code>int werte[3] = {10, 20, 30};
+int* p = werte; // Array-Decay: 'werte' zerfällt automatisch in Zeiger auf erstes Element
+
+printf("%d\n", *p);       // 10
+printf("%d\n", *(p + 1)); // 20 (Springt 4 Bytes weiter)
+printf("%d\n", *(p + 2)); // 30 (Springt 8 Bytes weiter)</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: PASS-BY-REFERENCE IN C -->
+        <section class="card">
+          <h2>🔄 3. Pass-by-Reference Simulation mit Zeigern</h2>
+          <p>In C gibt es ausschließlich <em>Pass-by-Value</em>. Wenn eine Funktion Variablen des Aufrufers modifizieren soll oder mehrere Rückgabewerte benötigt werden, übergeben wir Pointer auf die Variablen:</p>
+
+          <pre><code>void swap(int* a, int* b) {
+    if (a == NULL || b == NULL) return;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int x = 5, y = 10;
+swap(&x, &y); // x ist jetzt 10, y ist jetzt 5!</code></pre>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.c</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>tausche_werte(int* a, int* b)</code> implementieren (vertauscht Werte an den Adressen, fängt <code>NULL</code> sicher ab).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>multipliziere_und_addiere(int a, int b, int* prod, int* sum)</code> umsetzen (Mehrfachrückgabe über Zeiger).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>finde_max_und_min(const int* arr, size_t size, int* out_min, int* out_max)</code> mit Zeigerzugriff schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>pointer_schrittweite(int typ_id)</code> (1: sizeof(char), 2: sizeof(int), 3: sizeof(double)) fertigstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>array_summe_zeigerarithmetik(const int* start, size_t count)</code> ausschließlich mit Pointer-Inkrement <code>ptr++</code> summieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Pointer Pro-Tipp: NULL-Pointer Safety</div>
+            <p>Dereferenziere niemals einen Zeiger ohne vorherige Null-Prüfung: <code>if (ptr != NULL) { *ptr = 42; }</code>. Ein Zugriff auf <code>NULL</code> führt zu einem sofortigen <strong>Segmentation Fault (SIGSEGV)</strong>!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_1_c_basics&chapter=02_pointer_und_speicheradressen" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../01_c_syntax_datentypen_und_io/index.html" class="btn btn-secondary">&larr; Zurück zu C 01</a>
+            <a href="../03_arrays_strings_und_manuelle_speicherallokation/index.html" class="btn btn-secondary">Weiter zu C 03 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

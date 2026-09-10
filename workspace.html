@@ -336,6 +336,10 @@
   <script src="assets/runners/powershell_runner.js"></script>
   <script src="assets/runners/html_css_runner.js"></script>
   <script src="assets/runners/go_runner.js"></script>
+  <script src="assets/runners/java_runner.js"></script>
+  <script src="assets/runners/rust_runner.js"></script>
+  <script src="assets/runners/csharp_runner.js"></script>
+  <script src="assets/runners/cpp_runner.js"></script>
   <script src="assets/monaco_ide.js"></script>
 
   <script>
@@ -416,9 +420,10 @@
           basePath = `courses/${courseId}/${chapterFolder}`;
         }
 
-        let taskFile = runner ? `aufgabe${runner.fileExtension}` : "aufgabe.py";
-        let testFile = runner ? runner.testFileExtension : "test_aufgabe.py";
-        let loesungFile = runner ? `musterloesung${runner.fileExtension}` : "musterloesung.py";
+        const currentChap = CHAPTERS_MANIFEST.find(c => c.folder === chapterFolder);
+        let taskFile = (currentChap && currentChap.taskFile) ? currentChap.taskFile : (runner ? `aufgabe${runner.fileExtension}` : "aufgabe.py");
+        let testFile = (currentChap && currentChap.testFile) ? currentChap.testFile : (runner ? runner.testFileExtension : "test_aufgabe.py");
+        let loesungFile = (currentChap && currentChap.taskFile && currentChap.taskFile.startsWith("Aufgabe")) ? `Musterloesung${runner ? runner.fileExtension : ".java"}` : (runner ? `musterloesung${runner.fileExtension}` : "musterloesung.py");
 
         if (chapterFolder === "04b_umstieg_vscode") {
           taskFile = "vscode_test.py";

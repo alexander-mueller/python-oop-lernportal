@@ -1,0 +1,1 @@
+// TEST: Testet dynamische Array-Allokation und Freigabe

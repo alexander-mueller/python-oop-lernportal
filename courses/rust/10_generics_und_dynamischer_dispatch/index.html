@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust 10: Generics &amp; Dynamischer Dispatch</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: Traits, Generics &amp; Smart Pointer</div>
+          <h1>Rust 10: Generics &amp; Trait Objects (dyn Trait)</h1>
+          <p>Verstehe den Unterschied zwischen statischem Dispatch (Monomorphisierung) und dynamischem Dispatch (<code>dyn Trait</code>) mit vtables für flexible Plugin-Architekturen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="aufgabe.rs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 aufgabe.rs (Startercode)</a>
+            <a href="test_aufgabe.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 test_aufgabe.rs (Tests)</a>
+            <a href="musterloesung.rs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 musterloesung.rs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: STATISCH VS DYNAMISCH -->
+        <section class="card">
+          <h2>⚡ 1. Statischer Dispatch vs. Dynamischer Dispatch (dyn Trait)</h2>
+          <p>
+            Rust bietet zwei grundlegende Wege für Polymorphie. Die Wahl hat entscheidenden Einfluss auf Performance, Inlining und Typsystem:
+          </p>
+
+          <!-- Monomorphisierung vs vtable Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [1. Statischer Dispatch: fn run&lt;T: Plugin&gt;(p: &amp;T)]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── Monomorphisierung zur Compile-Zeit ──&gt; Direkter Funktionsaufruf (Zero-Cost, Inlining!)<br>
+            <br>
+            [2. Dynamischer Dispatch: Box&lt;dyn Plugin&gt; / &amp;dyn Plugin]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── Fat Pointer: [ Pointer auf Instanz | Pointer auf vtable (Methodentabelle) ]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── Ermöglicht heterogene Sammlungen: Vec&lt;Box&lt;dyn Plugin&gt;&gt;
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 18px 0;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 14px; border-radius: var(--radius-sm);">
+              <strong style="color: #15803d;">🚀 Statischer Dispatch (Generics)</strong>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">
+                Compiler erzeugt spezialisierten Maschinencode für jeden Typ (Monomorphisierung). Maximale Geschwindigkeit, jedoch homogene Collections.
+              </p>
+            </div>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 14px; border-radius: var(--radius-sm);">
+              <strong style="color: #1d4ed8;">🧩 Dynamischer Dispatch (dyn Trait)</strong>
+              <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-body);">
+                Laufzeit-Auflösung über vtable. Geringer Indirektions-Overhead, erlaubt aber heterogene Listen wie <code>Vec&lt;Box&lt;dyn DataPlugin&gt;&gt;</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. CODE-BEISPIEL: TRAIT OBJECTS -->
+        <section class="card">
+          <h2>📦 2. Trait Objects in der Praxis</h2>
+          <pre><code>pub trait DataPlugin {
+    fn name(&amp;self) -&gt; &amp;str;
+    fn process(&amp;self, input: &amp;str) -&gt; String;
+}
+
+pub struct PluginPipeline {
+    // Heterogene Sammlung unterschiedlicher Plugin-Typen!
+    plugins: Vec&lt;Box&lt;dyn DataPlugin&gt;&gt;,
+}
+
+impl PluginPipeline {
+    pub fn new() -&gt; Self {
+        Self { plugins: Vec::new() }
+    }
+
+    pub fn register(&amp;mut self, plugin: Box&lt;dyn DataPlugin&gt;) {
+        self.plugins.push(plugin);
+    }
+
+    pub fn run_all(&amp;self, mut data: String) -&gt; String {
+        for plugin in &amp;self.plugins {
+            data = plugin.process(&amp;data);
+        }
+        data
+    }
+}</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Generics &amp; dyn Trait</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Muster</th>
+                  <th style="padding: 10px;">Syntax</th>
+                  <th style="padding: 10px;">Dispatch-Art</th>
+                  <th style="padding: 10px;">Typ-Sicherheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Generische Funktion</strong></td>
+                  <td style="padding: 10px;"><code>fn f&lt;T: Trait&gt;(x: T)</code></td>
+                  <td style="padding: 10px;">Statisch (Compile-Zeit)</td>
+                  <td style="padding: 10px;">100% homogen pro Aufruf</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>impl Trait Parameter</strong></td>
+                  <td style="padding: 10px;"><code>fn f(x: impl Trait)</code></td>
+                  <td style="padding: 10px;">Statisch (Kurzform)</td>
+                  <td style="padding: 10px;">Homogen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Trait Object Referenz</strong></td>
+                  <td style="padding: 10px;"><code>&amp;dyn Trait</code></td>
+                  <td style="padding: 10px;">Dynamisch (vtable)</td>
+                  <td style="padding: 10px;">Heterogen (Borrow)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Owned Trait Object</strong></td>
+                  <td style="padding: 10px;"><code>Box&lt;dyn Trait&gt;</code></td>
+                  <td style="padding: 10px;">Dynamisch (Heap + vtable)</td>
+                  <td style="padding: 10px;">Heterogen (Ownership)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.rs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Generisches Struct <code>DataContainer&lt;T&gt;</code> mit <code>new</code>, <code>get_value</code> und <code>transform&lt;U, F&gt;</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Trait <code>DataPlugin</code> definieren (<code>name(&amp;self) -&gt; &amp;str</code>, <code>process(&amp;self, input: &amp;str) -&gt; String</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Plugins <code>UppercasePlugin</code>, <code>PrefixPlugin</code> und <code>CensorPlugin</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>PluginPipeline</code> mit heterogenem <code>Vec&lt;Box&lt;dyn DataPlugin&gt;&gt;</code> und sequentieller <code>execute</code>-Methode erstellen.</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=rust&track=track_3_traits_generics&chapter=10_generics_und_dynamischer_dispatch" class="btn" style="background: #e43717; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_traits_und_shared_behavior/index.html" class="btn btn-secondary">&larr; Zurück zu Rust 09</a>
+            <a href="../11_iteratoren_und_closures/index.html" class="btn btn-secondary">Weiter zu Rust 11: Iteratoren &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

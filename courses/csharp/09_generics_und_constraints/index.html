@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# 09: Generics &amp; Generic Constraints</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: LINQ, Generics &amp; Async/Await</div>
+          <h1>C# 09: Generische Klassen, Methoden &amp; Constraints</h1>
+          <p>Erstelle typsichere, wiederverwendbare Datenstrukturen und Repositories ohne Boxing/Unboxing mit <code>Repository&lt;T&gt;</code> und mächtigen Generic Constraints (<code>where T : class, new()</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.cs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.cs (Startercode)</a>
+            <a href="TestAufgabe.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.cs (xUnit Tests)</a>
+            <a href="Musterloesung.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.cs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: GENERICS & TYPE SAFETY -->
+        <section class="card">
+          <h2>🧬 1. Warum Generics? Typsicherheit &amp; Zero-Cost Abstraction</h2>
+          <p>
+            Vor der Einführung von Generics mussten Collections mit dem Basistyp <code>object</code> arbeiten. Dies führte zu teurem <strong>Boxing &amp; Unboxing</strong> von Wertetypen (Heap-Allokation) und gefährlichen Laufzeitfehlern (<code>InvalidCastException</code>).
+          </p>
+          <p>
+            Mit Generics (<code>&lt;T&gt;</code>) erzeugt der C#-Compiler zur Laufzeit für jeden Typ spezialisierten, hochoptimierten Maschinencode:
+          </p>
+
+          <!-- Diagramm: Generics vs Object Boxing -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Ohne Generics] ── int (42) ──► [BOXING: Heap-Objekt Allokation] ──► ArrayList ──► [UNBOXING: Cast] (Fehleranfällig!)<br>
+            [Mit Generics]   ── int (42) ──► List&lt;int&gt; [Direkter Stack/Array Speicher] ──► Keine Allokation, 100% typsicher!
+          </div>
+
+          <pre><code>// Generische Result-Wrapper-Klasse
+public sealed class Result&lt;T&gt;
+{
+    public bool IsSuccess { get; }
+    public T? Value { get; }
+    public string? Error { get; }
+
+    private Result(T value) { IsSuccess = true; Value = value; Error = null; }
+    private Result(string error) { IsSuccess = false; Value = default; Error = error; }
+
+    public static Result&lt;T&gt; Success(T value) =&gt; new(value);
+    public static Result&lt;T&gt; Failure(string error) =&gt; new(error);
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: GENERIC CONSTRAINTS -->
+        <section class="card">
+          <h2>🔒 2. Generic Constraints (<code>where T : ...</code>)</h2>
+          <p>
+            Standardmäßig weiß der Compiler bei <code>T</code> nur, dass es ein <code>object</code> ist. Mit <strong>Constraints</strong> schränkst du die erlaubten Typen ein und erhältst Zugriff auf Konstruktoren, Interfaces oder Referenz-/Wertetyp-Eigenschaften:
+          </p>
+
+          <pre><code>// Generic Entity Interface mit flexibler ID
+public interface IEntity&lt;TId&gt;
+{
+    TId Id { get; set; }
+}
+
+// Generic Repository mit mehreren Constraints:
+// 1. TEntity muss eine Klasse sein (class)
+// 2. TEntity muss IEntity&lt;TId&gt; implementieren
+// 3. TEntity muss einen parameterlosen Konstruktor besitzen (new())
+public class InMemoryRepository&lt;TEntity, TId&gt; 
+    where TEntity : class, IEntity&lt;TId&gt;, new()
+    where TId : notnull
+{
+    private readonly Dictionary&lt;TId, TEntity&gt; _storage = new();
+
+    public void Add(TEntity entity) =&gt; _storage[entity.Id] = entity;
+    public TEntity? GetById(TId id) =&gt; _storage.GetValueOrDefault(id);
+    public IReadOnlyList&lt;TEntity&gt; GetAll() =&gt; _storage.Values.ToList().AsReadOnly();
+    public bool Remove(TId id) =&gt; _storage.Remove(id);
+    public int Count =&gt; _storage.Count;
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der genormte Industrie-Lagerplatz</div>
+            <p>
+              Ein generisches Regal <code>Regal&lt;T&gt;</code> kann jeden Gegenstand lagern. Wenn wir jedoch <code>where T : IPaket, new()</code> verlangen, stellen wir sicher: Jeder gelagerte Gegenstand besitzt zwingend einen Barcode (<code>IPaket</code>) und die Lager-Robotik kann bei Bedarf eine leere Standardbox fabrikneu herstellen (<code>new()</code>).
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: C# Generic Constraints</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Constraint</th>
+                  <th style="padding: 10px;">Bedeutung &amp; Syntax</th>
+                  <th style="padding: 10px;">Erlaubte Operationen / Nutzen</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>where T : class</code></td>
+                  <td style="padding: 10px;">Typ muss ein Referenztyp sein</td>
+                  <td style="padding: 10px;">Erlaubt <code>null</code>-Prüfungen, verhindert Wertetypen wie <code>int</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>where T : struct</code></td>
+                  <td style="padding: 10px;">Typ muss ein Wertetyp sein (nicht nullable)</td>
+                  <td style="padding: 10px;">Speichereffizienz auf dem Stack, keine Heap-Allokation</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>where T : new()</code></td>
+                  <td style="padding: 10px;">Muss öffentlichen parameterlosen Konstruktor haben</td>
+                  <td style="padding: 10px;">Erlaubt Instanziierung im Code via <code>new T()</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>where T : ISomeInterface</code></td>
+                  <td style="padding: 10px;">Muss das angegebene Interface implementieren</td>
+                  <td style="padding: 10px;">Direkter Aufruf aller Interface-Methoden und Properties auf <code>T</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>where T : notnull</code></td>
+                  <td style="padding: 10px;">Verbietet Nullable-Typen (z.B. für Dictionary-Keys)</td>
+                  <td style="padding: 10px;">Garantierte Non-Nullability zur Compile-Zeit</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.cs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Generic Interface <code>IEntity&lt;TId&gt;</code> mit Property <code>TId Id { get; set; }</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Generischen Result-Container <code>Result&lt;T&gt;</code> mit <code>IsSuccess</code>, <code>Value</code>, <code>Error</code> und Factory-Methoden <code>Success(T)</code> &amp; <code>Failure(string)</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>InMemoryRepository&lt;TEntity, TId&gt;</code> mit Constraints <code>where TEntity : class, IEntity&lt;TId&gt;, new()</code> und <code>where TId : notnull</code> implementieren (CRUD-Methoden &amp; <code>CreateDefault()</code>).</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Generische Utility-Methoden <code>Swap&lt;T&gt;(ref T a, ref T b)</code> und <code>FindMatches&lt;T&gt;(IEnumerable&lt;T&gt; items, Predicate&lt;T&gt; filter)</code> implementieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Enterprise C# Pro-Tipp: Das Repository-Muster</div>
+            <p>In modernen Clean-Architecture-Projekten abstrahiert ein generisches <code>IRepository&lt;TEntity, TId&gt;</code> den Datenbankzugriff (z.B. Entity Framework Core oder Cosmos DB). So lässt sich die gesamte Persistenzschicht in Unit-Tests kinderleicht durch ein In-Memory-Repository austauschen!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=csharp&track=track_3_linq_async&chapter=09_generics_und_constraints" class="btn" style="background: #8b5cf6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_linq_funktionale_datenabfragen/index.html" class="btn btn-secondary">Weiter zu C# 10: LINQ &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+// TEST: Testet paralleler_zaehler mit 10 Threads

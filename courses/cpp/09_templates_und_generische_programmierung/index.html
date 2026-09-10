@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ 09: Function &amp; Class Templates</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ C++20 Generic Programming</div>
+          <h1>C++ 09: Function Templates &amp; Class Templates</h1>
+          <p>Schreibe typsicheren, wiederverwendbaren Code mit C++ Templates: Funktions-Templates, Template-Klassen, Non-Type Template Parameters (NTTP) und explizite Spezialisierung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 1. THEORIE: FUNCTION TEMPLATES -->
+        <section class="card">
+          <h2>📐 1. Funktions-Templates (<code>template&lt;typename T&gt;</code>)</h2>
+          <p>Templates ermöglichen es, Algorithmen unabhängig von konkreten Datentypen zu formulieren. Zur Compile-Zeit generiert der C++-Compiler (Monomorphisierung) für jeden verwendeten Typ eine optimierte Maschinenbauform:</p>
+          
+          <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+// Generische Minimum-Funktion
+template &lt;typename T&gt;
+T min_value(T a, T b) {
+    return (a &lt; b) ? a : b;
+}
+
+// Mehrere Template-Parameter
+template &lt;typename T, typename U&gt;
+auto add_heterogeneous(T a, U b) -&gt; decltype(a + b) {
+    return a + b;
+}
+
+int main() {
+    std::cout &lt;&lt; min_value(10, 20) &lt;&lt; "\n";          // T = int
+    std::cout &lt;&lt; min_value(3.14, 2.71) &lt;&lt; "\n";      // T = double
+    std::cout &lt;&lt; min_value&lt;std::string&gt;("Alpha", "Beta") &lt;&lt; "\n"; // Explizit
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Der 3D-Drucker-Gussplan</div>
+            <p>Ein Template ist kein fertiges Bauteil, sondern eine <strong>Gussform</strong> (Blaupause). Wenn du <code>min_value(5, 10)</code> aufrufst, gießt der Compiler eine <code>int</code>-Version. Rufst du <code>min_value(2.5, 4.1)</code> auf, gießt er eine <code>double</code>-Version. Es gibt <strong>keinen Runtime-Overhead</strong> (Zero-Cost Abstraction)!</p>
+          </div>
+        </section>
+
+        <!-- 2. THEORIE: CLASS TEMPLATES & NTTP -->
+        <section class="card">
+          <h2>📦 2. Klassen-Templates &amp; Non-Type Template Parameters (NTTP)</h2>
+          <p>Klassen können generisch über Datentypen und über compile-zeitliche Konstanten (wie Array-Größen) parametrisiert werden:</p>
+
+          <pre><code>#include &lt;cstddef&gt;
+#include &lt;stdexcept&gt;
+
+// T = Datentyp, Size = Compile-Zeit Konstante (NTTP)
+template &lt;typename T, std::size_t Size&gt;
+class StaticStack {
+private:
+    T data_[Size];
+    std::size_t top_{0};
+
+public:
+    void push(const T&amp; item) {
+        if (top_ &gt;= Size) throw std::overflow_error("Stack Overflow");
+        data_[top_++] = item;
+    }
+
+    T pop() {
+        if (top_ == 0) throw std::underflow_error("Stack Underflow");
+        return data_[--top_];
+    }
+
+    [[nodiscard]] std::size_t capacity() const { return Size; }
+    [[nodiscard]] std::size_t size() const { return top_; }
+};</code></pre>
+        </section>
+
+        <!-- 3. THEORIE: TEMPLATE SPEZIALISIERUNG -->
+        <section class="card">
+          <h2>🔍 3. Explizite Template-Spezialisierung</h2>
+          <p>Manchmal erfordern spezifische Datentypen (z.B. <code>bool</code> oder <code>const char*</code>) eine spezialisierte Behandlung:</p>
+
+          <pre><code>// Primäres Template
+template &lt;typename T&gt;
+struct TypeFormatter {
+    static std::string format(const T&amp; val) {
+        return "Generic: " + std::to_string(val);
+    }
+};
+
+// Vollständige Spezialisierung für std::string
+template &lt;&gt;
+struct TypeFormatter&lt;std::string&gt; {
+    static std::string format(const std::string&amp; val) {
+        return "String: \"" + val + "\"";
+    }
+};
+
+// Spezialisierung für bool
+template &lt;&gt;
+struct TypeFormatter&lt;bool&gt; {
+    static std::string format(const bool&amp; val) {
+        return val ? "Bool: TRUE" : "Bool: FALSE";
+    }
+};</code></pre>
+        </section>
+
+        <!-- 4. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 4. Cheat-Sheet: C++ Template Konzepte</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Konstrukt</th>
+                  <th style="padding: 10px;">Syntax-Beispiel</th>
+                  <th style="padding: 10px;">Bedeutung &amp; Verwendungszweck</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>template&lt;typename T&gt;</code></td>
+                  <td style="padding: 10px;"><code>T square(T x) { return x * x; }</code></td>
+                  <td style="padding: 10px;">Funktions-Template für beliebige numerische Typen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Class Template</td>
+                  <td style="padding: 10px;"><code>template&lt;typename T&gt; class Buffer;</code></td>
+                  <td style="padding: 10px;">Generischer Container oder Wrapper</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">NTTP (Non-Type)</td>
+                  <td style="padding: 10px;"><code>template&lt;typename T, size_t N&gt;</code></td>
+                  <td style="padding: 10px;">Größen oder Konstanten fest zur Compile-Zeit binden</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Template Specialization</td>
+                  <td style="padding: 10px;"><code>template&lt;&gt; struct Formatter&lt;bool&gt;</code></td>
+                  <td style="padding: 10px;">Sonderlogik für bestimmte Typen definieren</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Type Alias (<code>using</code>)</td>
+                  <td style="padding: 10px;"><code>template&lt;typename T&gt; using Vec = std::vector&lt;T&gt;;</code></td>
+                  <td style="padding: 10px;">Lesbare Alias-Namen für komplexe Template-Typen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.cpp</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>clamp_value&lt;T&gt;(val, min_val, max_val)</code> als Function Template implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>Vector3D&lt;T&gt;</code> Klassen-Template mit <code>operator+</code>, Skalarmultiplikation <code>operator*</code> und <code>dot_product()</code> erstellen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FixedRingBuffer&lt;T, Capacity&gt;</code> mit NTTP, <code>push()</code>, <code>pop()</code>, <code>is_full()</code> und <code>size()</code> implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>Serializer&lt;T&gt;</code> Primärtemplate und Spezialisierungen für <code>std::string</code> und <code>bool</code> schreiben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>apply_transform(const std::vector&lt;T&gt;&amp;, Func)</code> zur generischen Vektor-Transformation umsetzen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 C++20 Pro-Tipp: Header-Only Templates</div>
+            <p>Weil der Compiler den Quellcode der Templates kennen muss, um konkrete Typ-Instanziierungen zu kompilieren, werden Template-Definitionen in C++ üblicherweise komplett in Header-Dateien (<code>.hpp</code> / <code>.h</code>) platziert!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=cpp&track=track_3_smart_pointers_stl&chapter=09_templates_und_generische_programmierung" class="btn" style="background: #00599c; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../10_smart_pointer_und_speichersicherheit/index.html" class="btn btn-secondary">Weiter zu C++ 10 &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

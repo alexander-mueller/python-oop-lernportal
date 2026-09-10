@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# 11: Async/Await &amp; Task.WhenAll Pipelines</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: LINQ, Generics &amp; Async/Await</div>
+          <h1>C# 11: Asynchrone Programmierung mit <code>async</code> &amp; <code>await</code></h1>
+          <p>Erstelle hochperformante, nicht-blockierende Cloud-Dienste: Meistere <code>Task</code>, <code>Task&lt;T&gt;</code>, parallele Ausführung mit <code>Task.WhenAll</code> und kooperativen Abbruch mit <code>CancellationToken</code>.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.cs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.cs (Startercode)</a>
+            <a href="TestAufgabe.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.cs (xUnit Tests)</a>
+            <a href="Musterloesung.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.cs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: ASYNC/AWAIT & TASK-BASED ASYNCHRONOUS PATTERN (TAP) -->
+        <section class="card">
+          <h2>⚡ 1. Warum Asynchronität? Nicht-blockierende I/O</h2>
+          <p>
+            Wenn ein Server auf eine Datenbankabfrage oder einen HTTP-Request wartet, blockiert synchroner Code den Betriebssystem-Thread. In C# gibt <code>await</code> den Thread sofort an den <strong>.NET ThreadPool</strong> zurück, damit er andere Anfragen bearbeiten kann!
+          </p>
+
+          <!-- Diagramm: Synchronous Blocking vs. Async/Await Fan-Out -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [Synchron: 3 Requests sequenziell] ── Req 1 (100ms) ──► Req 2 (100ms) ──► Req 3 (100ms) ──► Dauer: 300ms (1 Thread blockiert)<br>
+            [Asynchron: Task.WhenAll Fan-Out] ──┬──► Task 1 (100ms) ──┐<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──► Task 2 (100ms) ──┼──► Task.WhenAll ──► Dauer: ~100ms (0 Threads blockiert!)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──► Task 3 (100ms) ──┘
+          </div>
+
+          <pre><code>// Paralleler Abruf mehrerer Microservices mit Task.WhenAll:
+public async Task&lt;List&lt;ServiceResponse&gt;&gt; FetchAllAsync(IEnumerable&lt;string&gt; urls, CancellationToken ct)
+{
+    var tasks = urls.Select(url =&gt; FetchSingleServiceAsync(url, ct));
+    var results = await Task.WhenAll(tasks);
+    return results.ToList();
+}</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: CANCELLATIONTOKEN -->
+        <section class="card">
+          <h2>🛑 2. Kooperativer Abbruch mit <code>CancellationToken</code></h2>
+          <p>
+            In verteilten Enterprise-Systemen kann ein Benutzer die Verbindung trennen oder ein Timeout ablaufen. Statt Threads gewaltsam abzubrechen, prüft der asynchrone Code regelmäßig <code>ct.ThrowIfCancellationRequested()</code>:
+          </p>
+
+          <pre><code>using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)); // Timeout nach 5s
+try
+{
+    var data = await DownloadLargeFileAsync("https://api.enterprise.com/data", cts.Token);
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Download wurde durch Timeout abgebrochen!");
+}</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Restaurant-Pagersystem</div>
+            <p>
+              Anstatt am Tresen zu stehen und die Küche zu blockieren (synchrones Warten), erhält der Gast einen <strong>Pager (Task)</strong> und setzt sich an den Tisch (Thread frei). Sobald das Gericht fertig ist, piept der Pager (<code>await</code> weckt die Fortsetzung auf).
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Async &amp; Task Best Practices</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Pattern / API</th>
+                  <th style="padding: 10px;">Empfohlen (Best Practice)</th>
+                  <th style="padding: 10px;">Gefährlich (Anti-Pattern)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Rückgabetyp ohne Rückgabewert</strong></td>
+                  <td style="padding: 10px;"><code>public async Task DoWorkAsync()</code></td>
+                  <td style="padding: 10px;"><code>public async void DoWorkAsync()</code> <em>(Unabfangbare Crashes!)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Auf Ergebnis warten</strong></td>
+                  <td style="padding: 10px;"><code>var res = await GetAsync();</code></td>
+                  <td style="padding: 10px;"><code>var res = GetAsync().Result;</code> <em>(Deadlock-Gefahr!)</em></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Mehrere Tasks parallel</strong></td>
+                  <td style="padding: 10px;"><code>await Task.WhenAll(task1, task2);</code></td>
+                  <td style="padding: 10px;"><code>await task1; await task2;</code> <em>(Läuft sequenziell statt parallel!)</em></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>Abbruch / Timeout</strong></td>
+                  <td style="padding: 10px;"><code>CancellationToken</code> durchreichen</td>
+                  <td style="padding: 10px;">Abbrüche ignorieren und Ressourcen weiter verschwenden</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.cs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>FetchServiceDataAsync(endpoint, delayMs, ct)</code> mit <code>Task.Delay</code> und Abbruchprüfung implementieren.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>AggregateServicesAsync(endpoints, ct)</code> mit <code>Task.WhenAll</code> parallel ausführen und Ergebnisse sammeln.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>FetchFastestResponseAsync(endpoints, ct)</code> mit <code>Task.WhenAny</code> umsetzen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>ExecuteWithTimeoutAsync&lt;T&gt;(operation, timeout)</code> mit <code>CancellationTokenSource</code> kapseln.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Cloud-Architektur Pro-Tipp: Async All The Way</div>
+            <p>Mische niemals synchronen blockierenden Code (<code>.Wait()</code>, <code>.Result</code>) mit asynchronem Code (<code>async/await</code>). In ASP.NET Core führt das unter Last unvermeidlich zum sogenannten <em>Thread Pool Starvation Deadlock</em>!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=csharp&track=track_3_linq_async&chapter=11_asynchrone_programmierung_mit_async_await" class="btn" style="background: #8b5cf6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_exception_handling_und_ressourcen/index.html" class="btn btn-secondary">Weiter zu C# 12: Exceptions &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

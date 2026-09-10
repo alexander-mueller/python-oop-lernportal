@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# 10: LINQ Datenabfragen &amp; Fluent Chaining</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Lehrpfad 3: LINQ, Generics &amp; Async/Await</div>
+          <h1>C# 10: Language Integrated Query (LINQ) Pipelines</h1>
+          <p>Verarbeite Datenmengen funktional und deklarativ mit LINQ Method Syntax: Filtern (<code>Where</code>), Transformieren (<code>Select</code>/<code>SelectMany</code>), Gruppieren (<code>GroupBy</code>) und Paginieren (<code>Skip</code>/<code>Take</code>).</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- 📂 Schnellzugriff & Download -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-sm);">
+          <div style="font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <span>📂 Dateien dieser Lerneinheit:</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="Aufgabe.cs" class="btn" style="padding: 6px 14px; font-size: 0.88rem; background: var(--primary);" download>📄 Aufgabe.cs (Startercode)</a>
+            <a href="TestAufgabe.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>🧪 TestAufgabe.cs (xUnit Tests)</a>
+            <a href="Musterloesung.cs" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;" download>💡 Musterloesung.cs (Lösung)</a>
+            <a href="README.md" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">📖 README.md</a>
+          </div>
+        </div>
+
+        <!-- 1. THEORIE: LINQ METHOD SYNTAX & PIPELINES -->
+        <section class="card">
+          <h2>📊 1. Die funktionale LINQ-Pipeline</h2>
+          <p>
+            <strong>LINQ</strong> (Language Integrated Query) revolutioniert die Datenmanipulation in C#. Statt verschachtelter <code>for</code>- und <code>if</code>-Schleifen nutzt du deklarative Extension-Methoden, die wie eine Fließband-Pipeline zusammengesteckt werden:
+          </p>
+
+          <!-- LINQ Pipeline Diagramm -->
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; margin: 16px 0; border: 1px solid var(--border-color);">
+            [IEnumerable&lt;Order&gt;] ──► .Where(o =&gt; o.IsPaid)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──► .OrderByDescending(o =&gt; o.TotalAmount)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──► .Select(o =&gt; new { o.Customer, o.TotalAmount })<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──► .ToList() [Materialisierung im Speicher]
+          </div>
+
+          <pre><code>// Beispiel: Umsätze nach Produktkategorie aggregieren
+var revenueByCategory = orders
+    .SelectMany(order =&gt; order.Items)
+    .GroupBy(item =&gt; item.Category)
+    .ToDictionary(
+        group =&gt; group.Key,
+        group =&gt; group.Sum(item =&gt; item.Price * item.Quantity)
+    );</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DEFERRED EXECUTION -->
+        <section class="card">
+          <h2>⏳ 2. Deferred Execution vs. Sofortige Materialisierung</h2>
+          <p>
+            Ein zentrales Konzept von LINQ ist die <strong>verzögerte Ausführung (Deferred Execution)</strong>:
+            Methoden wie <code>Where</code> und <code>Select</code> führen die Abfrage <em>noch nicht</em> aus. Sie erstellen lediglich einen Ausführungsplan. Erst wenn die Sequenz enumeriert wird (z.B. mit <code>ToList()</code>, <code>ToArray()</code>, <code>Sum()</code> oder <code>foreach</code>), fließen die Daten!
+          </p>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Didaktische Analogie: Das Restaurant-Bestellsystem</div>
+            <p>
+              <code>Where(...)</code> und <code>Select(...)</code> sind wie das Notieren der Bestellung auf dem Kellnerblock. Es wird noch kein Essen gekocht! Erst wenn der Koch mit <code>ToList()</code> die Zubereitung startet, werden die Zutaten durch die Pfannen gejagt.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: Wichtigste LINQ Operatoren</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Operator</th>
+                  <th style="padding: 10px;">Typ</th>
+                  <th style="padding: 10px;">Zweck &amp; Beschreibung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.Where(p)</code></td>
+                  <td style="padding: 10px;">Filter</td>
+                  <td style="padding: 10px;">Filtert Elemente anhand eines Prädikats (true/false)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.Select(f)</code></td>
+                  <td style="padding: 10px;">Projektion</td>
+                  <td style="padding: 10px;">Transformiert jedes Element in einen neuen Typ oder Wert</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.SelectMany(f)</code></td>
+                  <td style="padding: 10px;">Flattening</td>
+                  <td style="padding: 10px;">Ebnung von verschachtelten Listen (z.B. Liste von Items in Orders)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.OrderBy[Descending]</code></td>
+                  <td style="padding: 10px;">Sortierung</td>
+                  <td style="padding: 10px;">Sortiert Sequenzen auf- oder absteigend (Folgesortierung mit <code>ThenBy</code>)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.GroupBy(keySelector)</code></td>
+                  <td style="padding: 10px;">Gruppierung</td>
+                  <td style="padding: 10px;">Gruppiert Elemente nach gemeinsamen Schlüsseln</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>.Skip(n).Take(m)</code></td>
+                  <td style="padding: 10px;">Partitionierung</td>
+                  <td style="padding: 10px;">Paginierung: Überspringt <code>n</code> Elemente und nimmt die nächsten <code>m</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>.Any() / .All()</code></td>
+                  <td style="padding: 10px;">Quantoren</td>
+                  <td style="padding: 10px;">Prüft, ob mindestens ein bzw. alle Elemente eine Bedingung erfüllen</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>Aufgabe.cs</code></h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>GetHighValueOrders(orders, minTotal)</code> mit <code>.Where()</code> und <code>.OrderByDescending()</code> filtern.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>GetAllPurchasedProductIds(orders)</code> mit <code>.SelectMany()</code> und <code>.Distinct()</code> ermitteln.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>CalculateRevenueByCategory(orders)</code> mit <code>.GroupBy()</code> und <code>.ToDictionary()</code> berechnen.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>GetTopSpendingCustomers(orders, topCount)</code> nach Gesamtausgaben sortiert zurückgeben.</label>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t5">
+            <label class="task-label" for="t5"><strong>TODO 5:</strong> <code>GetPaginatedOrders(orders, pageNumber, pageSize)</code> mit <code>.Skip()</code> und <code>.Take()</code> paginieren.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 Performance Pro-Tipp: Mehrfache Enumeration vermeiden</div>
+            <p>Wenn du ein <code>IEnumerable&lt;T&gt;</code> mehrfach in einer Methode mit <code>.Count()</code> oder <code>foreach</code> durchläufst, führe am Anfang <code>.ToList()</code> aus, um teure wiederholte Berechnungen oder Datenbankabfragen zu verhindern!</p>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=csharp&track=track_3_linq_async&chapter=10_linq_funktionale_datenabfragen" class="btn" style="background: #8b5cf6; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../11_asynchrone_programmierung_mit_async_await/index.html" class="btn btn-secondary">Weiter zu C# 11: Async/Await &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

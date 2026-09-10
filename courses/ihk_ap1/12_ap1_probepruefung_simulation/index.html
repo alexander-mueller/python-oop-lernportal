@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>IHK AP1 Probeprüfung (90 Min. / 100 Punkte)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-success">Offizieller IHK 100-Punkte-Schlüssel</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">Probeprüfung AP1: Einrichten eines IT-gestützten Arbeitsplatzes</h1>
+    <p class="text-slate-400 mb-6">Authentische IHK-Prüfungssimulation (Neuordnung 2020) | Bearbeitungszeit: 90 Minuten | 100 Punkte</p>
+
+    <!-- Timer & Exam Banner -->
+    <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+    <script src="../../../assets/ihk_tools/exam_engine.js"></script>
+    <script>
+      window.exam = new IhkExamEngine({
+        title: "IHK AP1 Abschlussprüfung Teil 1 (Neuordnung 2020)",
+        examType: "AP1",
+        durationMinutes: 90,
+        totalPoints: 100
+      });
+    </script>
+
+    <!-- HANDLUNGSSCHRITT 1: NUTZWERTANALYSE & BESCHAFFUNG -->
+    <div class="ihk-exam-task" data-title="Handlungsschritt 1: Nutzwertanalyse & Beschaffung (LF 2)" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #38bdf8; margin: 0;">1. Handlungsschritt: Hardwareauswahl & Nutzwertanalyse</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Eine Kanzlei benötigt neue Arbeitsplatz-Multifunktionsgeräte. Es liegen drei Angebote vor. Die Bewertungskriterien sind:
+        Druckgeschwindigkeit (Gewichtung 30%), Scangeschwindigkeit (25%), Stromverbrauch/Standby (25%) und Anschaffungspreis (20%).
+      </p>
+      
+      <div class="ihk-input-group">
+        <label>a) Welches Kriterium zählt nach TCO zu den direkten CapEx-Kosten und welches zu den OpEx-Kosten? (4 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="CapEx: ... | OpEx: ..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Gerät 1 erhält 60 Nutzenpunkte, Gerät 2 erhält 75 Nutzenpunkte, Gerät 3 erhält 70 Nutzenpunkte. Begründe die Beschaffungsempfehlung. (6 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Begründung..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>c) Die Altkongeräte enthalten vertrauliche Mandantendaten auf internen Festplatten. Nenne das gesetzliche Regelwerk (ElektroG) und das Verfahren nach DIN 66399 zur sicheren Vernichtung. (15 Punkte)</label>
+        <textarea class="ihk-input" rows="4" placeholder="Rechtsrahmen & DIN-Verfahren..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung & Erwartungshorizont:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (4 Pkt.):</strong> CapEx (Investitionsausgaben) = Anschaffungspreis der Hardware. OpEx (Betriebsausgaben) = Laufende Stromkosten, Toner, Papier, Wartung.<br>
+          <strong>b) (6 Pkt.):</strong> Gerät 2 erzielt mit 75 Punkten den höchsten gewichteten Gesamtnutzen und erfüllt die Kundenanforderungen am besten. Es wird daher zur Beschaffung empfohlen.<br>
+          <strong>c) (15 Pkt.):</strong> Elektro- und Elektronikgerätegesetz (ElektroG) regelt die fachgerechte Rücknahme/Entsorgung. Nach DIN 66399 (Schutzklasse 3 für vertrauliche Daten) müssen magnetische Festplatten entmagnetisiert (Degausser) oder mechanisch geschreddert werden (mindestens Sicherheitsstufe H-4 oder H-5 mit Zertifikat).
+        </p>
+      </div>
+    </div>
+
+    <!-- HANDLUNGSSCHRITT 2: DATENSCHUTZ & IT-SICHERHEIT -->
+    <div class="ihk-exam-task" data-title="Handlungsschritt 2: IT-Sicherheit & Verschlüsselung (LF 4)" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #38bdf8; margin: 0;">2. Handlungsschritt: Datenschutz & Kryptographie</h3>
+        <span class="ihk-badge">20 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        E-Mails zwischen Anwalt und Mandant enthalten sensible personenbezogene Daten (Art. 9 DSGVO).
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Erläutere das asymmetrische Verschlüsselungsverfahren (Public/Private Key) beim E-Mail-Versand vom Anwalt zum Mandanten. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="4" placeholder="Welcher Schlüssel verschlüsselt, welcher entschlüsselt?"></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Welches Schutzzyiel der CIA-Triade wird durch die Verschlüsselung garantiert und welches durch eine digitale Signatur? (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Schutzziele..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung & Erwartungshorizont:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (10 Pkt.):</strong> Der Anwalt verschlüsselt die E-Mail mit dem <strong>öffentlichen Schlüssel (Public Key) des Mandanten</strong>. Ausschließlich der Mandant kann die Nachricht mit seinem geheim gehaltenen <strong>privaten Schlüssel (Private Key)</strong> entschlüsseln.<br>
+          <strong>b) (10 Pkt.):</strong> Die Verschlüsselung garantiert die <strong>Vertraulichkeit</strong> (Confidentiality). Die digitale Signatur garantiert die <strong>Integrität</strong> (Nachricht wurde nicht verändert) sowie die <strong>Authentizität/Verbindlichkeit</strong> (Nachweis des echten Absenders).
+        </p>
+      </div>
+    </div>
+
+    <!-- HANDLUNGSSCHRITT 3: PROGRAMMIERUNG, ALGORITHMEN & TRACE-TABELLE -->
+    <div class="ihk-exam-task" data-title="Handlungsschritt 3: Programmierung & Trace-Tabelle (LF 5)" data-points="30" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #38bdf8; margin: 0;">3. Handlungsschritt: Algorithmen, Datenstrukturen & Schleifen</h3>
+        <span class="ihk-badge">30 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Gegeben ist folgender IHK-Pseudocode zur Überprüfung von Port-Scans in einem Logfile:
+      </p>
+      <pre style="background: #0f172a; padding: 14px; border-radius: 8px; border: 1px solid #334155; color: #38bdf8; font-family: monospace;">GANZZAHL versuche = 0
+GANZZAHL schwellenwert = 5
+BOOLEAN alarm = FALSCH
+FELD logs = [1, 0, 1, 1, 1, 0, 1, 1]
+
+FÜR i VON 0 BIS 7 TUE
+    WENN logs[i] == 1 DANN
+        versuche = versuche + 1
+        WENN versuche >= schwellenwert DANN
+            alarm = WAHR
+        ENDE_WENN
+    ENDE_WENN
+ENDE_FÜR
+AUSGABE alarm, versuche</pre>
+
+      <div class="ihk-input-group">
+        <label>a) Erstelle die Trace-Tabelle für den Variablenverlauf (Durchlauf i, logs[i], versuche, alarm) und gib das finale Ergebnis an. (20 Punkte)</label>
+        <textarea class="ihk-input" rows="5" placeholder="Trace-Tabelle..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Zeichne bzw. beschreibe die innere Verzweigung als Struktogramm-Element nach DIN 66261. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Struktogramm-Beschreibung..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung & Erwartungshorizont:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (20 Pkt.):</strong><br>
+          - Start: versuche=0, alarm=FALSCH<br>
+          - i=0 (1): versuche=1, alarm=FALSCH<br>
+          - i=1 (0): versuche=1, alarm=FALSCH<br>
+          - i=2 (1): versuche=2, alarm=FALSCH<br>
+          - i=3 (1): versuche=3, alarm=FALSCH<br>
+          - i=4 (1): versuche=4, alarm=FALSCH<br>
+          - i=5 (0): versuche=4, alarm=FALSCH<br>
+          - i=6 (1): versuche=5 &rarr; <code>versuche >= 5</code> WAHR &rarr; <strong>alarm=WAHR</strong><br>
+          - i=7 (1): versuche=6, alarm=WAHR<br>
+          Endausgabe: <strong>alarm = WAHR, versuche = 6</strong>.<br>
+          <strong>b) (10 Pkt.):</strong> Zweifache Verzweigung (Rechteck geteilt durch diagonale Linien mit Bedingung <code>versuche >= schwellenwert</code> im Dreieck, linker Zweig 'Ja': <code>alarm = WAHR</code>, rechter Zweig 'Nein': leer).
+        </p>
+      </div>
+    </div>
+
+    <!-- HANDLUNGSSCHRITT 4: IPV4-SUBNETTING & NETZWERKE -->
+    <div class="ihk-exam-task" data-title="Handlungsschritt 4: IPv4 Subnetting & DORA (LF 3)" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #38bdf8; margin: 0;">4. Handlungsschritt: Subnetting & Netzwerkdienste</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Für die Kanzlei steht das Subnetz <strong>192.168.120.64 / 26</strong> zur Verfügung.
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Berechne Subnetzmaske, erste nutzbare Host-IP, letzte nutzbare Host-IP, Broadcast-Adresse und Anzahl nutzbarer Hosts. (15 Punkte)</label>
+        <textarea class="ihk-input" rows="4" placeholder="Maske, First, Last, Broadcast, Hosts..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Erläutere die 4 Phasen des DHCP-DORA-Prozesses beim Starten eines neuen Client-PCs. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="4" placeholder="Discover, Offer, Request, Acknowledge..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung & Erwartungshorizont:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (15 Pkt.):</strong><br>
+          - Subnetzmaske: <strong>255.255.255.192</strong><br>
+          - Erste nutzbare IP: <strong>192.168.120.65</strong><br>
+          - Letzte nutzbare IP: <strong>192.168.120.126</strong><br>
+          - Broadcast: <strong>192.168.120.127</strong><br>
+          - Nutzbare Hosts: ^6 - 2 = $ <strong>62 Hosts</strong>.<br>
+          <strong>b) (10 Pkt.):</strong><br>
+          1. <strong>DHCPDISCOVER:</strong> Client sendet Broadcast ins Netz auf der Suche nach einem DHCP-Server.<br>
+          2. <strong>DHCPOFFER:</strong> DHCP-Server bietet dem Client eine freie IP-Adresse, Subnetzmaske, Gateway und DNS an.<br>
+          3. <strong>DHCPREQUEST:</strong> Client fordert die angebotene IP-Konfiguration verbindlich an.<br>
+          4. <strong>DHCPACK:</strong> Server bestätigt die Zuweisung und bindet die Lease-Zeit.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

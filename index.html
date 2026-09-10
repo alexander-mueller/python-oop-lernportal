@@ -23,14 +23,29 @@
       <div class="sidebar-quick-nav">
         <div style="padding: 0 4px 10px 4px;">
           <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px;">Aktiver Sprachkurs:</label>
-          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="window.location.href = this.value === 'python' ? 'index.html' : 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : (this.value === 'bash' ? 'navigation_dateien_und_globbing' : (this.value === 'powershell' ? 'powershell_konsole_und_cmdlet_architektur' : (this.value === 'html_css' ? 'semantisches_html_und_struktur' : (this.value === 'go' ? 'syntax_variablen_und_typen' : 'tabellen_und_select')))))">
-            <option value="python" selected>🐍 Python 3 (33 Module)</option>
-            <option value="javascript">🌐 JavaScript &amp; TypeScript (16 Module)</option>
-            <option value="bash">🐧 Linux Bash &amp; Cloud DevOps (16 Module)</option>
-            <option value="powershell">🔷 PowerShell 7+ Core (16 Module)</option>
-            <option value="sql">🗄️ SQL &amp; Data Analytics (16 Module)</option>
-            <option value="html_css">🎨 HTML5 &amp; Modern CSS3 (16 Module)</option>
-            <option value="go">⚡ Go Cloud Microservices (16 Module)</option>
+          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="
+            if (this.value === 'python') window.location.href = 'index.html';
+            else if (this.value === 'ihk_ap1') window.location.href = 'courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html';
+            else if (this.value === 'ihk_ap2_fisi') window.location.href = 'courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html';
+            else window.location.href = 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : (this.value === 'bash' ? 'navigation_dateien_und_globbing' : (this.value === 'powershell' ? 'powershell_konsole_und_cmdlet_architektur' : (this.value === 'html_css' ? 'semantisches_html_und_struktur' : (this.value === 'go' ? 'syntax_variablen_und_typen' : (this.value === 'java' ? 'java_syntax_und_primitive_typen' : (this.value === 'rust' ? 'variablen_mutabilitaet_und_typen' : (this.value === 'csharp' ? 'syntax_datentypen_und_top_level_statements' : (this.value === 'cpp' ? 'c_syntax_datentypen_und_io' : 'tabellen_und_select')))))))));
+          ">
+            <optgroup label="🚀 Programmierung &amp; Skriptsprachen">
+              <option value="python" selected>🐍 Python 3 (33 Module)</option>
+              <option value="javascript">🌐 JavaScript &amp; TypeScript (16 Module)</option>
+              <option value="bash">🐧 Linux Bash &amp; Cloud DevOps (16 Module)</option>
+              <option value="powershell">🔷 PowerShell 7+ Core (16 Module)</option>
+              <option value="sql">🗄️ SQL &amp; Data Analytics (16 Module)</option>
+              <option value="html_css">🎨 HTML5 &amp; Modern CSS3 (16 Module)</option>
+              <option value="go">⚡ Go Cloud Microservices (16 Module)</option>
+              <option value="java">☕ Java 21+ Enterprise (16 Module)</option>
+              <option value="rust">🦀 Rust Modern Systems (16 Module)</option>
+              <option value="csharp">💜 C# &amp; Modernes .NET 8+ (16 Module)</option>
+              <option value="cpp">⚙️ C &amp; Modernes C++20 (16 Module)</option>
+            </optgroup>
+            <optgroup label="🎓 IHK Prüfungsvorbereitung (Neuordnung)">
+              <option value="ihk_ap1">📘 IHK AP1: IT-Arbeitsplatz &amp; Programmierung (12 Module)</option>
+              <option value="ihk_ap2_fisi">📕 IHK AP2: Fachinformatiker Systemintegration (12 Module)</option>
+            </optgroup>
           </select>
         </div>
         <a href="./index.html" class="sidebar-link">🏠 Startseite</a>
@@ -1081,6 +1096,10 @@ print(mein_auto.hupen())
   <script src="assets/runners/powershell_runner.js"></script>
   <script src="assets/runners/html_css_runner.js"></script>
   <script src="assets/runners/go_runner.js"></script>
+  <script src="assets/runners/java_runner.js"></script>
+  <script src="assets/runners/rust_runner.js"></script>
+  <script src="assets/runners/csharp_runner.js"></script>
+  <script src="assets/runners/cpp_runner.js"></script>
   <script src="assets/runner.js"></script>
   <script src="assets/ui_enhancements.js"></script>
   <script src="assets/app_auth.js"></script>

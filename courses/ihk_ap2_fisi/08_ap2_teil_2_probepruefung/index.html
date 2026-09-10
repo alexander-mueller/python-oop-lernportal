@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>IHK AP2 Teil 2: Analyse und Entwicklung von Netzwerken</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../index.html" class="text-rose-400 hover:text-rose-300 font-semibold">← Zurück zur Gesamtübersicht</a>
+      <span class="ihk-badge ihk-badge-danger">AP2 FISI Fachqualifikation 2</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-rose-400 mb-2">Probeprüfung AP2 Teil 2: Netzwerkanalyse &amp; Sicherheit</h1>
+    <p class="text-slate-400 mb-6">Authentische Simulation (Winter 2023/24 AO 2020) | Bearbeitungszeit: 90 Minuten | 100 Punkte</p>
+
+    <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+    <script src="../../../assets/ihk_tools/exam_engine.js"></script>
+    <script>
+      window.exam = new IhkExamEngine({
+        title: "IHK AP2 Teil 2: Analyse und Entwicklung von Netzwerken (FISI)",
+        examType: "AP2_T2",
+        durationMinutes: 90,
+        totalPoints: 100
+      });
+    </script>
+
+    <!-- AUFGABE 1: ROUTING-TABELLEN & FEHLERANALYSE -->
+    <div class="ihk-exam-task" data-title="Aufgabe 1: Routing-Tabellen &amp; Next-Hop Analyse" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <h3 style="color: #f87171; margin-top: 0;">1. Aufgabe: Routing-Tabellen, Dynamisches Routing &amp; Metrik (25 Punkte)</h3>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        In einer Router-Konfiguration für Standorte in Hamburg und München können Clients das Remotenetz nicht erreichen.
+      </p>
+      <div class="ihk-input-group">
+        <label>a) Erläutere den Unterschied zwischen statischem Routing und dynamischen Routing-Protokollen (z. B. OSPF) hinsichtlich Ausfallsicherheit und Konfigurationsaufwand. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3"></textarea>
+      </div>
+      <div class="ihk-input-group">
+        <label>b) Was versteht man unter einer Routing-Metrik (z. B. Cost, Hop-Count) und wie beeinflusst sie die Pfadwahl? (15 Punkte)</label>
+        <textarea class="ihk-input" rows="3"></textarea>
+      </div>
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (10 Pkt.):</strong> Statisches Routing muss bei jeder Netzänderung manuell gepflegt werden und bietet keine automatische Umleitung bei Leitungsausfall. Dynamisches Routing (OSPF) tauscht automatisch Link-State-Advertisements aus, berechnet bei Ausfällen binnen Sekunden Alternativrouten und skaliert in großen Netzen.<br>
+          <strong>b) (15 Pkt.):</strong> Die Metrik ist ein numerischer Wert zur Bewertung der Güte eines Pfades. OSPF berechnet die Metrik (Cost) invers zur Bandbreite (Cost = 10^8 / Bandbreite). Der Pfad mit der geringsten Gesamtsumme der Metriken wird in die Routingtabelle übernommen.
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 2: NAT/PAT & FIREWALLING -->
+    <div class="ihk-exam-task" data-title="Aufgabe 2: NAT/PAT &amp; Port-Mapping" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <h3 style="color: #f87171; margin-top: 0;">2. Aufgabe: Network Address Translation &amp; Port Forwarding (25 Punkte)</h3>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Ein interner Client (192.168.10.15) greift über einen Router mit öffentlicher IP 203.0.113.5 auf einen Webserver im Internet zu.
+      </p>
+      <div class="ihk-input-group">
+        <label>a) Erläutere die Arbeitsweise von Port Address Translation (PAT / NAPT / Masquerading). Warum wählt der Router für die ausgehende Verbindung einen dynamischen Quell-Port? (15 Punkte)</label>
+        <textarea class="ihk-input" rows="4"></textarea>
+      </div>
+      <div class="ihk-input-group">
+        <label>b) Bestimme Quell-IP, Quell-Port, Ziel-IP und Ziel-Port des Pakets, nachdem es den Router in Richtung Internet verlassen hat. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3"></textarea>
+      </div>
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (15 Pkt.):</strong> Mehrere interne Clients teilen sich eine einzige öffentliche IPv4-Adresse. Der Router ersetzt die private Quell-IP durch seine öffentliche IP und vergibt einen eindeutigen Quell-Port (z. B. 54321). In einer internen NAT-Tabelle merkt sich der Router dieses Mapping, um eintreffende Antwortpakete wieder dem korrekten internen Client zuzuordnen.<br>
+          <strong>b) (10 Pkt.):</strong> Quell-IP: 203.0.113.5 | Quell-Port: Beliebiger dynamischer Port zwischen 1024 und 65535 | Ziel-IP: IP des Webservers (z. B. 198.51.100.2) | Ziel-Port: 443 (HTTPS) bzw. 80 (HTTP).
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 3: VLAN-ISOLATION & DNS TROUBLESHOOTING -->
+    <div class="ihk-exam-task" data-title="Aufgabe 3: VLAN-Troubleshooting &amp; DNS" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <h3 style="color: #f87171; margin-top: 0;">3. Aufgabe: VLAN-Fehleranalyse &amp; Namensauflösung (25 Punkte)</h3>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Ein Client an Port Fa0/5 kann Webseiten im Internet nicht aufrufen. Ein `ping 8.8.8.8` schlägt fehl, und `nslookup www.ihk.de` meldet einen Timeout.
+      </p>
+      <div class="ihk-input-group">
+        <label>a) Der Switchport Fa0/5 ist in VLAN 20 konfiguriert, das Default Gateway des Routers befindet sich jedoch in VLAN 10. Erläutere die Ursache und zwei Möglichkeiten zur Fehlerbehebung. (15 Punkte)</label>
+        <textarea class="ihk-input" rows="4"></textarea>
+      </div>
+      <div class="ihk-input-group">
+        <label>b) Erkläre den Unterschied zwischen rekursiver und iterativer DNS-Abfrage. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3"></textarea>
+      </div>
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (15 Pkt.):</strong> Ursache: Broadcast-Isolation durch VLAN-Trennung auf Layer 2. Ohne Inter-VLAN Routing können Hosts aus VLAN 20 nicht mit VLAN 10 kommunizieren. Behebung: 1. Port Fa0/5 in VLAN 10 verschieben; oder 2. Router-on-a-Stick bzw. Layer-3 Switch SVI für VLAN 20 konfigurieren.<br>
+          <strong>b) (10 Pkt.):</strong> <em>Rekursiv:</em> Der Client fragt seinen DNS-Server, und der Server übernimmt die vollständige Auflösung bis zur endgültigen Antwort. <em>Iterativ:</em> Der DNS-Server antwortet mit dem Verweis (Referral) auf den nächsten zuständigen Nameserver (z.B. Root-Server &rarr; TLD-Server &rarr; autoritativer Nameserver).
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 4: DMZ & BSI IT-GRUNDSCHUTZ -->
+    <div class="ihk-exam-task" data-title="Aufgabe 4: DMZ &amp; BSI IT-Grundschutz" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <h3 style="color: #f87171; margin-top: 0;">4. Aufgabe: Zwei-Firewall-DMZ &amp; Schutzbedarfsfeststellung (25 Punkte)</h3>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Zur Absicherung öffentlich erreichbarer Web- und Mailserver wird eine Demilitarisierte Zone (DMZ) eingerichtet.
+      </p>
+      <div class="ihk-input-group">
+        <label>a) Skizziere bzw. beschreibe den Aufbau einer Zwei-Firewall-DMZ und begründe, warum zwei Firewalls unterschiedlicher Hersteller eingesetzt werden sollten. (15 Punkte)</label>
+        <textarea class="ihk-input" rows="4"></textarea>
+      </div>
+      <div class="ihk-input-group">
+        <label>b) Bestimme nach BSI IT-Grundschutz den Schutzbedarf (normal, hoch, sehr hoch) für Verfügbarkeit, Vertraulichkeit und Integrität eines Online-Banking-Portals. (10 Punkte)</label>
+        <textarea class="ihk-input" rows="3"></textarea>
+      </div>
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (15 Pkt.):</strong> Aufbau: Internet &rarr; Äußere Firewall &rarr; DMZ (Web/Mailserver) &rarr; Innere Firewall &rarr; Internes LAN. Unterschiedliche Hersteller (z. B. Fortinet außen, pfSense/Cisco innen) verhindern, dass eine Zero-Day-Schwachstelle oder Fehlkonfiguration eines einzelnen Herstellers den Angreifer direkt ins interne LAN durchmarschieren lässt.<br>
+          <strong>b) (10 Pkt.):</strong> Verfügbarkeit: <strong>Sehr hoch</strong> (hoher finanzieller und Reputationsschaden bei Ausfall); Vertraulichkeit: <strong>Sehr hoch</strong> (Bankgeheimnis, Kontostände, DSGVO Art. 9); Integrität: <strong>Sehr hoch</strong> (Fehlbuchungen oder manipulierte Überweisungen existenzbedrohend).
+        </p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "id": "cpp",
+  "title": "C & Modernes C++20 Systems Engineering",
+  "language": "cpp",
+  "icon": "⚙️",
+  "runner": "cpp",
+  "description": "Von C Pointern & manuellem Speichermanagement (malloc/free) über RAII, Smart Pointer (unique_ptr) & STL bis zu GoogleTest & 2D Physics Simulation Master.",
+  "tracks": [
+    {
+      "id": "track_1_c_basics",
+      "title": "🌱 Lehrpfad 1: C Fundamente & Manuelles Memory Management",
+      "description": "C-Syntax, Pointer & Adressoperatoren (&/*), Pointer-Arithmetik, Stack vs. Heap, malloc/free & Header-Dateien (.h/.c).",
+      "certificateKey": "cpp_c_grundlagen",
+      "chapters": [
+        { "folder": "01_c_syntax_datentypen_und_io", "title": "C 01: C Syntax, Datentypen & printf/scanf", "taskFile": "aufgabe.c", "testFile": "test_aufgabe.cpp" },
+        { "folder": "02_pointer_und_speicheradressen", "title": "C 02: Pointer, Adressen (&/*) & Arithmetik", "taskFile": "aufgabe.c", "testFile": "test_aufgabe.cpp" },
+        { "folder": "03_arrays_strings_und_manuelle_speicherallokation", "title": "C 03: Strings, Stack vs. Heap & malloc/free", "taskFile": "aufgabe.c", "testFile": "test_aufgabe.cpp" },
+        { "folder": "04_structs_und_header_dateien", "title": "C 04: Structs, typedef & Header-Architektur", "taskFile": "aufgabe.c", "testFile": "test_aufgabe.cpp" }
+      ]
+    },
+    {
+      "id": "track_2_cpp_oop",
+      "title": "🏗️ Lehrpfad 2: Modern C++ Einstieg, RAII & OOP",
+      "description": "std::cout, Referenzen, Klassen, Konstruktoren/Destruktoren, RAII-Prinzip, virtual Methoden & Operator-Overloading.",
+      "certificateKey": "cpp_oop",
+      "chapters": [
+        { "folder": "05_einstieg_cpp_und_namespaces", "title": "C++ 05: Einstieg C++, Namespaces & Referenzen (&)", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "06_klassen_konstruktoren_und_raii", "title": "C++ 06: Klassen, Destruktoren & RAII-Prinzip", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "07_vererbung_und_virtuelle_methoden", "title": "C++ 07: Vererbung, Virtual & Polymorphismus", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "08_operator_overloading", "title": "C++ 08: Operator Overloading & Rule of Five", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" }
+      ]
+    },
+    {
+      "id": "track_3_smart_pointers_stl",
+      "title": "⚡ Lehrpfad 3: Modern C++20: Smart Pointer & STL",
+      "description": "Templates, Smart Pointer (std::unique_ptr, std::shared_ptr), STL-Container (vector/map), Algorithmen, Lambdas & Structured Binding.",
+      "certificateKey": "cpp_modern",
+      "chapters": [
+        { "folder": "09_templates_und_generische_programmierung", "title": "C++ 09: Function & Class Templates", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "10_smart_pointer_und_speichersicherheit", "title": "C++ 10: Smart Pointer (unique_ptr, shared_ptr)", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "11_standard_template_library_stl", "title": "C++ 11: STL Container (vector/map) & Algorithmen", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "12_lambdas_und_moderne_cpp20_features", "title": "C++ 12: C++ Lambdas, auto & Structured Binding", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" }
+      ]
+    },
+    {
+      "id": "track_4_concurrency_master",
+      "title": "💎 Lehrpfad 4: Concurrency, GoogleTest & Systems Master",
+      "description": "std::thread, std::mutex, Streams & Binärdateien, GoogleTest (gtest) Suite & High-Performance 2D Physics Engine Master.",
+      "certificateKey": "cpp_master",
+      "chapters": [
+        { "folder": "13_multithreading_mit_std_thread", "title": "C++ 13: Multithreading (std::thread & std::mutex)", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "14_dateiverarbeitung_und_streams", "title": "C++ 14: Dateiverarbeitung & Binäre Streams", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "15_googletest_gtest_unittesting", "title": "C++ 15: GoogleTest (gtest) & Assertions", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" },
+        { "folder": "16_master_abschlussprojekt_high_performance_engine", "title": "Master 16: High-Performance 2D Physics Simulation", "taskFile": "aufgabe.cpp", "testFile": "test_aufgabe.cpp" }
+      ]
+    }
+  ]
+}
