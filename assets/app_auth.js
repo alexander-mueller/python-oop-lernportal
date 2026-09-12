@@ -350,9 +350,13 @@
       if (guestBtn) guestBtn.style.display = 'none'; // Gast-Button permanent ausblenden
 
       if (loggedIn && user) {
+        document.body.classList.add('logged-in');
         if (userSpan) {
           userSpan.style.display = 'inline-flex';
           userSpan.innerHTML = `👤 ${escapeHtml(user.name || user.email)}`;
+          userSpan.style.cursor = 'pointer';
+          userSpan.title = 'Zum Kurs-Dashboard wechseln';
+          userSpan.onclick = () => { window.location.href = 'dashboard.html'; };
         }
         if (loginBtn) {
           loginBtn.style.display = 'inline-flex';
@@ -369,7 +373,7 @@
         }
         if (registerBtn) {
           registerBtn.style.display = 'inline-flex';
-          registerBtn.innerHTML = '<span class="btn-text-desktop">💻 Zum Kurs-Dashboard</span><span class="btn-text-mobile">💻 Dashboard</span>';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">💻 Zum Kurs-Dashboard</span><span class="btn-text-mobile">Dashboard</span>';
           registerBtn.style.background = '#10b981';
           registerBtn.removeAttribute('onclick');
           registerBtn.onclick = (e) => {
@@ -407,10 +411,18 @@
             landingUserName.innerText = user.name || user.email.split('@')[0];
           }
         }
-        if (navDashLink) navDashLink.style.display = 'inline-flex';
+        if (navDashLink) navDashLink.style.display = 'none'; // Keine doppelte Schaltfläche in Desktop-Leiste
         if (mobDashLink) mobDashLink.style.display = 'flex';
+        const mobLogoutBtn = document.getElementById('mobile-drawer-logout-btn');
+        if (mobLogoutBtn) mobLogoutBtn.style.display = 'flex';
+        const mobDrawerAuthActions = document.getElementById('mobile-drawer-auth-actions');
+        if (mobDrawerAuthActions) mobDrawerAuthActions.style.display = 'none';
       } else {
-        if (userSpan) userSpan.style.display = 'none';
+        document.body.classList.remove('logged-in');
+        if (userSpan) {
+          userSpan.style.display = 'none';
+          userSpan.onclick = null;
+        }
         if (loginBtn) {
           loginBtn.style.display = 'inline-flex';
           loginBtn.innerText = '🔑 Anmelden';
@@ -421,10 +433,15 @@
         }
         if (registerBtn) {
           registerBtn.style.display = 'inline-flex';
-          registerBtn.innerHTML = '<span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">✨ Registrieren</span>';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span>';
           registerBtn.style.background = '#0284c7';
           registerBtn.onclick = () => window.openAuthModal('register', { allowClose: true });
         }
+        const mobDrawerAuthActions = document.getElementById('mobile-drawer-auth-actions');
+        if (mobDrawerAuthActions) mobDrawerAuthActions.style.display = 'flex';
+        if (mobDashLink) mobDashLink.style.display = 'none';
+        const mobLogoutBtn = document.getElementById('mobile-drawer-logout-btn');
+        if (mobLogoutBtn) mobLogoutBtn.style.display = 'none';
         if (heroPrimaryCta) {
           heroPrimaryCta.innerHTML = '<span>🚀 Jetzt kostenlos registrieren</span>';
           heroPrimaryCta.onclick = (e) => {
@@ -449,6 +466,8 @@
         if (landingBanner) landingBanner.style.display = 'none';
         if (navDashLink) navDashLink.style.display = 'none';
         if (mobDashLink) mobDashLink.style.display = 'none';
+        const mobLogoutBtn = document.getElementById('mobile-drawer-logout-btn');
+        if (mobLogoutBtn) mobLogoutBtn.style.display = 'none';
       }
 
       // 🔒 Strikter Rollen-Filter für Dozenten- und Admin-Funktionen

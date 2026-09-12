@@ -6,7 +6,7 @@
   <title>IT-Praxisportal | Lernbereich &amp; Kurs-Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <meta name="description" content="Dein persönlicher IT-Lernbereich: 16 Fachdisziplinen, 264 Module, Monaco Web-IDE, KMK-Lernfelder und IHK-Prüfungsvorbereitung.">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=2.2.1">
   <style>
     .portal-container {
       max-width: 1240px;
@@ -274,11 +274,15 @@
     <a href="#overview" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Übersicht</a>
     <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">📚 Meine Kurse</a>
     <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK AP1 &amp; AP2 Prüfung</a>
-    <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Web-IDE starten</a>
+    <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🏆 Meine Zertifikate</a>
+    <a href="index.html?view=landing" class="mobile-drawer-link" onclick="toggleMobileMenu()">🌐 Zur Startseite</a>
     <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
     <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
     <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
     <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
+    <button type="button" class="mobile-drawer-link" style="color: #f87171; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; margin-top: 8px; font-weight: 700; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="if(confirm('Möchtest du dich wirklich abmelden?')) window.AUTH.logout();">
+      🚪 Abmelden
+    </button>
   </div>
 
   <!-- 2. DASHBOARD WELCOME & LIVE METRICS -->
@@ -1185,7 +1189,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/app_auth.js?v=2.1.0"></script>
+  <script src="assets/app_auth.js?v=2.2.1"></script>
   <script src="assets/it_ausbildungen_manifest.js?v=2.1.0"></script>
   <script src="assets/courses_manifest.js?v=2.1.0"></script>
   <script src="assets/certificate.js?v=2.1.0"></script>
