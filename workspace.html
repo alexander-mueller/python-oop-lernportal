@@ -189,6 +189,33 @@
         grid-template-rows: 50% 50%;
       }
     }
+
+    @media (max-width: 768px) {
+      .workspace-topbar {
+        padding: 0 10px;
+        height: 48px;
+      }
+      #editor-save-indicator {
+        display: none !important;
+      }
+      .workspace-title a {
+        display: none;
+      }
+      .workspace-title span:first-of-type {
+        display: none;
+      }
+      #workspace-chapter-name {
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.82rem;
+      }
+      .workspace-actions button {
+        padding: 5px 8px !important;
+        font-size: 0.78rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -370,6 +397,23 @@
     }
 
     async function loadCourseManifest() {
+      if (window.COURSES_MANIFEST && window.COURSES_MANIFEST[courseId]) {
+        currentCourseManifest = window.COURSES_MANIFEST[courseId];
+        const list = [];
+        (currentCourseManifest.tracks || []).forEach(tr => {
+          (tr.chapters || []).forEach(ch => {
+            list.push({
+              track: tr.id,
+              folder: ch.folder,
+              title: ch.title,
+              taskFile: ch.taskFile || "aufgabe.py",
+              testFile: ch.testFile || "test_aufgabe.py"
+            });
+          });
+        });
+        CHAPTERS_MANIFEST = list;
+        return;
+      }
       try {
         const res = await fetch(`courses/${courseId}/course.json`);
         if (res.ok) {
@@ -591,5 +635,7 @@
 
     document.addEventListener("DOMContentLoaded", loadWorkspaceData);
   </script>
+  <script src="assets/courses_manifest.js"></script>
+  <script src="assets/course_sidebar.js"></script>
 </body>
 </html>
