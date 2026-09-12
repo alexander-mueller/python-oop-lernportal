@@ -37,41 +37,98 @@
       color: #c2410c;
       border: 1px solid #fed7aa;
     }
-    .portal-card-btn.locked {
-      background: rgba(2, 132, 199, 0.1);
+
+    /* Curriculum Cards Style */
+    .curriculum-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .curriculum-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .curriculum-topics {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 18px 0;
+      font-size: 0.86rem;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .curriculum-topics li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .curriculum-topics li::before {
+      content: "•";
       color: #0284c7;
-      border: 1px solid rgba(2, 132, 199, 0.3);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      line-height: 1;
     }
-    .portal-card-btn.locked:hover {
+
+    .curriculum-cta-btn {
+      width: 100%;
       background: #0284c7;
       color: white;
-      border-color: #0284c7;
-    }
-    .portal-card-btn {
-      background: #0284c7;
-      color: white;
-      border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
+      border: none;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       font-weight: 700;
-      text-decoration: none;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
       transition: all 0.15s ease;
     }
-    .portal-card-btn:hover {
+    .curriculum-cta-btn:hover {
       background: #0369a1;
       transform: translateY(-1px);
+    }
+
+    /* Logged In Welcome Banner */
+    .logged-in-banner {
+      background: linear-gradient(90deg, #0284c7, #10b981);
+      color: white;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
   </style>
 </head>
 <body style="background: #f8fafc; color: #0f172a; font-family: var(--font-sans); margin: 0; padding: 0;">
+
+  <!-- Logged-in Welcome Notification (wird per JS eingeblendet wenn User bereits angemeldet ist) -->
+  <div id="landing-logged-in-banner" class="logged-in-banner" style="display: none;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span>👋</span>
+      <span>Du bist eingeloggt als <strong id="landing-user-name">Teilnehmer</strong>. Dein persönlicher Lernfortschritt ist bereit!</span>
+    </div>
+    <a href="dashboard.html" class="btn" style="background: white; color: #0284c7; font-weight: 800; padding: 6px 14px; font-size: 0.82rem; border-radius: 6px; text-decoration: none;">
+      ▶ Direkt zum Lernbereich Dashboard &rarr;
+    </a>
+  </div>
 
   <!-- 1. STICKY MARKETING HEADER -->
   <header class="portal-header-bar">
@@ -88,10 +145,11 @@
 
       <nav class="portal-nav-links">
         <a href="#hero" class="portal-nav-link">🚀 Übersicht</a>
-        <a href="#katalog" class="portal-nav-link">📚 13 Praxis-Kurse</a>
+        <a href="#curriculum" class="portal-nav-link">📚 Inhalts-Katalog</a>
         <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
         <a href="#features-ide" class="portal-nav-link">💻 Web-IDE</a>
         <a href="#features" class="portal-nav-link">💎 Vorteile</a>
+        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="display: none; color: #34d399; font-weight: 700;">💻 Lernbereich</a>
         <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
         <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
       </nav>
@@ -122,8 +180,8 @@
         <button type="button" id="hero-primary-cta" class="portal-btn-primary" style="cursor: pointer; border: none;" onclick="window.openAuthModal('register', { allowClose: true })">
           <span>🚀 Jetzt kostenlos registrieren</span>
         </button>
-        <a href="#katalog" class="portal-btn-secondary">
-          <span>📚 Curriculum &amp; Inhalte ansehen &darr;</span>
+        <a href="#curriculum" class="portal-btn-secondary">
+          <span>📚 Lehrplan &amp; Inhaltskatalog ansehen &darr;</span>
         </a>
         <a href="#ihk-section" class="portal-btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">
           <span>🎓 IHK AP1 &amp; AP2 Prüfungstrainer</span>
@@ -134,13 +192,13 @@
       <div class="portal-stats-bar">
         <div class="portal-stat-card">
           <div class="portal-stat-num">13</div>
-          <div class="portal-stat-label">Praxis-Lehrpfade</div>
+          <div class="portal-stat-label">Fachdisziplinen</div>
           <div class="portal-stat-desc">Linux, Cloud, OOP, Systems &amp; Web</div>
         </div>
         <div class="portal-stat-card">
           <div class="portal-stat-num">216+</div>
-          <div class="portal-stat-label">Interaktive Module</div>
-          <div class="portal-stat-desc">Geführte Subgoals &amp; Sofort-Tests</div>
+          <div class="portal-stat-label">Inhalts-Module</div>
+          <div class="portal-stat-desc">Geführte Subgoals &amp; Praxislabore</div>
         </div>
         <div class="portal-stat-card">
           <div class="portal-stat-num">150+</div>
@@ -156,342 +214,448 @@
     </div>
   </section>
 
-  <!-- 3. KURS-KATALOG & CURRICULUM ÜBERSICHT -->
-  <main class="portal-container" id="katalog" style="padding-top: 48px; padding-bottom: 64px;">
+  <!-- 3. CURRICULUM & INHALTS-AUFLISTUNG -->
+  <main class="portal-container" id="curriculum" style="padding-top: 48px; padding-bottom: 64px;">
     
     <div class="portal-filter-bar">
       <div>
-        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Lehrplan &amp; Kurs-Katalog</h2>
-        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Entdecke alle 13 Disziplinen. Registriere dich kostenlos, um alle Aufgaben und die Web-IDE freizuschalten.</p>
+        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Lehrplan &amp; Inhalts-Übersicht</h2>
+        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">
+          Hier findest du den vollständigen Lehrplan aller 13 Fachdisziplinen und 216 Module im Detail. Erstelle deinen kostenlosen Account, um den geschützten Lernbereich und die Web-IDE freizuschalten.
+        </p>
       </div>
 
       <!-- Search Box -->
       <div class="portal-search-box">
         <span style="font-size: 1rem;">🔍</span>
-        <input type="text" id="course-filter-input" placeholder="Kurs oder Thema filtern (z.B. Python, Subnetting, SQL, Bash, Rust)...">
+        <input type="text" id="curriculum-filter-input" placeholder="Thema filtern (z.B. Subnetting, SQL, Bash, Python, Rust, Docker)...">
       </div>
     </div>
 
     <!-- Category Filter Tabs -->
     <div class="portal-filter-tabs" style="margin-bottom: 24px;">
-      <button type="button" class="portal-tab-pill active" onclick="filterCourses('all', this)">🌟 Alle Disziplinen (13)</button>
-      <button type="button" class="portal-tab-pill" onclick="filterCourses('ihk', this)">🎓 IHK Prüfung (2)</button>
-      <button type="button" class="portal-tab-pill" onclick="filterCourses('devops', this)">🐧 DevOps &amp; Linux (2)</button>
-      <button type="button" class="portal-tab-pill" onclick="filterCourses('coding', this)">💻 Backend &amp; Systems (6)</button>
-      <button type="button" class="portal-tab-pill" onclick="filterCourses('data', this)">🗄️ Daten &amp; Web (3)</button>
+      <button type="button" class="portal-tab-pill active" onclick="filterCurriculum('all', this)">🌟 Alle Fachbereiche (13)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCurriculum('ihk', this)">🎓 IHK Prüfungen (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCurriculum('devops', this)">🐧 DevOps &amp; Linux (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCurriculum('coding', this)">💻 Backend &amp; Systems (6)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCurriculum('data', this)">🗄️ Daten &amp; Web (3)</button>
     </div>
 
-    <!-- GRID OF ALL 13 COURSES -->
-    <div class="portal-courses-grid" id="courses-grid-container">
+    <!-- GRID OF ALL 13 CURRICULUM OVERVIEWS -->
+    <div class="portal-courses-grid" id="curriculum-grid-container">
 
       <!-- 1. IHK AP1 -->
-      <div class="portal-card" data-category="ihk" data-title="ihk ap1 lernfelder 1-8 it-arbeitsplatz subnetting trace tabellen simulation">
+      <div class="curriculum-card portal-card" data-category="ihk" data-title="ihk ap1 lernfelder 1-8 it-arbeitsplatz subnetting trace tabellen probeprüfung">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">📘</div>
             <span class="portal-card-badge badge-ihk">IHK Abschlussprüfung</span>
           </div>
           <h3 class="portal-card-title">IHK AP1: IT-Arbeitsplatz &amp; Basissysteme</h3>
-          <p class="portal-card-desc">Lückenlose Vorbereitung auf die Abschlussprüfung Teil 1. Alle Lernfelder (LF 1 bis LF 8), Subnetting-Drill, Trace-Tabellen, SQL-Labor &amp; 90-Minuten Probeprüfung.</p>
+          <p class="portal-card-desc">Lückenlose Vorbereitung auf die bundeseinheitliche IHK-Abschlussprüfung Teil 1 für alle Fachinformatiker-Ausbildungsberufe.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lernfeld 1–4:</strong> Verträge, Arbeitsplatz-Ergonomie, Datenschutz &amp; DSGVO</li>
+            <li><strong>Lernfeld 5–8:</strong> BSI-Schutzbedarf, IPv4 &amp; IPv6 Subnetting Berechnungen</li>
+            <li><strong>Methoden-Drill:</strong> Relationale SQL-Abfragen &amp; Trace-Tabellen Ablauflogik</li>
+            <li><strong>Abschluss:</strong> Vollständige 90-Minuten Probeprüfung (100 Punkte)</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">LF 1–8 Kernqualifikation</span>
+            <span class="portal-card-tag">12 Module</span>
             <span class="portal-card-tag">Subnetting Drill</span>
             <span class="portal-card-tag">Trace-Tabellen</span>
             <span class="portal-card-tag">90-Min Simulation</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 12 Module &bull; 100 Pkt.</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="ihk_ap1" data-course-url="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="ihk_ap1" onclick="handleCurriculumAction('ihk_ap1', 'IHK AP1 Prüfungsvorbereitung')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 2. IHK AP2 FISI -->
-      <div class="portal-card" data-category="ihk" data-title="ihk ap2 fisi fachinformatiker systemintegration wiso vlan routing storage cloud 40h-projekt">
+      <div class="curriculum-card portal-card" data-category="ihk" data-title="ihk ap2 fisi systemintegration vlan active directory raid storage cloud 40h-projekt wiso">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">📕</div>
             <span class="portal-card-badge badge-ihk">IHK Abschlussprüfung</span>
           </div>
           <h3 class="portal-card-title">IHK AP2: Fachinformatiker Systemintegration</h3>
-          <p class="portal-card-desc">Fachrichtung Systemintegration: LF 9 (Netzwerke/VLAN), LF 10 (Server/AD), LF 11 (Storage/RAID), LF 12 (Cloud/Docker), WiSo &amp; offizieller Leitfaden zur 40h-Projektarbeit.</p>
+          <p class="portal-card-desc">Spezifische Fachqualifikationen der Fachrichtung Systemintegration nach aktueller Prüfungsordnung AO 2020.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lernfeld 9:</strong> Netzwerkdienste, Topologien, Routing &amp; VLANs</li>
+            <li><strong>Lernfeld 10:</strong> Server-Infrastrukturen, Windows Server &amp; Active Directory GPO</li>
+            <li><strong>Lernfeld 11–12:</strong> Storage (RAID, NAS/SAN), Containerisierung &amp; Cloud</li>
+            <li><strong>Prüfungstraining:</strong> WiSo-Kompaktfragen &amp; 40h-Projektarbeits-Leitfaden</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">9 Module</span>
             <span class="portal-card-tag">LF 9–12 FISI</span>
-            <span class="portal-card-tag">Active Directory &amp; GPO</span>
             <span class="portal-card-tag">WiSo Prüfungsfragen</span>
             <span class="portal-card-tag">40h-Projektarbeit</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 9 Module &bull; 3 Simulationen</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="ihk_ap2_fisi" data-course-url="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="ihk_ap2_fisi" onclick="handleCurriculumAction('ihk_ap2_fisi', 'IHK AP2 FISI Prüfungsvorbereitung')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 3. PYTHON 3 -->
-      <div class="portal-card" data-category="coding" data-title="python software entwicklung oop grundlagen tkinter data engineering">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="python 3 software entwicklung oop grundlagen tkinter data engineering">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🐍</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">Python 3: Vom Einsteiger zum Entwickler</h3>
-          <p class="portal-card-desc">Das umfassende Flaggschiff-Curriculum: Grundlagen (G01–G10), Objektorientierung (00–06), Fortgeschrittenes OOP &amp; GUI (07–16) und Data Engineering (17–22).</p>
+          <p class="portal-card-desc">Das umfassende Flaggschiff-Curriculum von algorithmischen Grundlagen bis zum professionellen Software-Engineering.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Variablen, Kontrollfluss, Listen, Dicts &amp; saubere Funktionen</li>
+            <li><strong>Lehrpfad 2:</strong> Objektorientierung, Klassen, Konstruktor <code>__init__</code> &amp; Git</li>
+            <li><strong>Lehrpfad 3:</strong> Vererbung, Polymorphie, TDD Unit Testing &amp; Tkinter Desktop-GUIs</li>
+            <li><strong>Lehrpfad 4:</strong> Functional Programming, Generatoren, SQLite &amp; REST-APIs</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">OOP &amp; Klassen</span>
+            <span class="portal-card-tag">35 Module</span>
+            <span class="portal-card-tag">4 Lehrpfade</span>
             <span class="portal-card-tag">Pyodide WASM</span>
-            <span class="portal-card-tag">Tkinter GUI</span>
-            <span class="portal-card-tag">Unit Testing</span>
+            <span class="portal-card-tag">TDD Unit Tests</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 35 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="python" data-course-url="workspace.html?course=python&chapter=01_erste_schritte_taschenrechner">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="python" onclick="handleCurriculumAction('python', 'Python 3 Professional')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 4. LINUX BASH & CLOUD DEVOPS -->
-      <div class="portal-card" data-category="devops" data-title="linux bash shell scripting terminal devops jq sed awk docker bats ci/cd">
+      <div class="curriculum-card portal-card" data-category="devops" data-title="linux bash shell scripting devops terminal jq sed awk docker bats parallel">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🐧</div>
             <span class="portal-card-badge badge-devops">DevOps &amp; Cloud</span>
           </div>
           <h3 class="portal-card-title">Linux Bash, Shell Scripting &amp; Cloud DevOps</h3>
-          <p class="portal-card-desc">Terminal-Mastery für Sysadmins: I/O Streams, Pipes, Text-Mining mit <code>jq</code>, <code>sed</code> und <code>awk</code>, Parallelisierung (xargs/parallel), Docker-Scripting &amp; BATS Unittests.</p>
+          <p class="portal-card-desc">Terminal-Mastery und Automatisierung für Linux-Systemadministratoren und DevOps Engineers.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Navigation, Globbing, I/O Redirection, Pipes &amp; Dateirechte</li>
+            <li><strong>Lehrpfad 2:</strong> Regex-Mining mit <code>grep</code>, <code>sed</code>, <code>awk</code>, <code>jq</code> &amp; Strict Mode</li>
+            <li><strong>Lehrpfad 3:</strong> Multiprocessing mit <code>xargs -P</code>, Named Pipes &amp; Systemd Services</li>
+            <li><strong>Lehrpfad 4:</strong> Docker-Scripting, BATS Unittests &amp; DevOps Monitoring Engine</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">I/O Redirection</span>
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">jq JSON Mining</span>
             <span class="portal-card-tag">xargs Multithreading</span>
             <span class="portal-card-tag">BATS Testsuite</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="bash" data-course-url="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="bash" onclick="handleCurriculumAction('bash', 'Linux Bash & Cloud DevOps')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 5. POWERSHELL 7+ CORE -->
-      <div class="portal-card" data-category="devops" data-title="powershell ps7 cmdlets pipeline .net rest api pester active directory">
+      <div class="curriculum-card portal-card" data-category="devops" data-title="powershell ps7 cmdlets pipeline .net rest api pester active directory parallel">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🛡️</div>
             <span class="portal-card-badge badge-devops">DevOps &amp; Cloud</span>
           </div>
           <h3 class="portal-card-title">PowerShell 7+ Core: Enterprise Automation</h3>
-          <p class="portal-card-desc">Modernes Microsoft &amp; Multi-Platform Scripting: Die Objekt-Pipeline, Custom PSCustomObjects, REST-APIs, moderne Parallelisierung mit <code>ForEach-Object -Parallel</code> &amp; Pester Unit Tests.</p>
+          <p class="portal-card-desc">Moderne Windows &amp; Multi-Platform Systemautomatisierung basierend auf der .NET Objekt-Pipeline.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Cmdlet-Architektur, Objekt-Pipeline &amp; berechnete Eigenschaften</li>
+            <li><strong>Lehrpfad 2:</strong> Typisierung, <code>[PSCustomObject]</code>, PS7 Ternary &amp; Error-Handling</li>
+            <li><strong>Lehrpfad 3:</strong> Parallelisierung mit <code>ForEach-Object -Parallel</code> &amp; REST-APIs</li>
+            <li><strong>Lehrpfad 4:</strong> Modul-Manifeste, Pester v5 Unit Tests &amp; Multi-Cloud Ops Engine</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">Objekt-Pipeline</span>
-            <span class="portal-card-tag">PSCustomObject</span>
             <span class="portal-card-tag">Parallel-Jobs</span>
             <span class="portal-card-tag">Pester Tests</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="powershell" data-course-url="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="powershell" onclick="handleCurriculumAction('powershell', 'PowerShell 7+ Core')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 6. SQL & DATENBANKEN -->
-      <div class="portal-card" data-category="data" data-title="sql datenbanken postgresql sqlite normalisierung joins cte window-functions acid">
+      <div class="curriculum-card portal-card" data-category="data" data-title="sql datenbanken relational postgresql sqlite normalisierung joins cte window functions acid">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🐬</div>
             <span class="portal-card-badge badge-data">Daten &amp; Web</span>
           </div>
           <h3 class="portal-card-title">SQL &amp; Relationale Datenbank-Architektur</h3>
-          <p class="portal-card-desc">Vollständiges relationales Datenmanagement: Strikte Normalisierung (1NF–3NF), komplexe Multi-Table JOINs, Subqueries, Common Table Expressions (CTEs), Window Functions &amp; ACID Transaktionen.</p>
+          <p class="portal-card-desc">Vollständiges relationales Datenmanagement vom Tabellenentwurf bis zur Hochleistungs-Analytik.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> DDL/DML, Constraints, Foreign Keys &amp; 1NF–3NF Normalisierung</li>
+            <li><strong>Lehrpfad 2:</strong> Multi-Table JOINs (INNER/LEFT/FULL), Aggregationen &amp; Subqueries</li>
+            <li><strong>Lehrpfad 3:</strong> Common Table Expressions (CTEs) &amp; Analytische Window Functions</li>
+            <li><strong>Lehrpfad 4:</strong> B-Tree Indizes, ACID Transaktionen &amp; Data Warehouse Analytics</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">1NF–3NF Normalisierung</span>
             <span class="portal-card-tag">JOINs &amp; CTEs</span>
-            <span class="portal-card-tag">Window Functions</span>
-            <span class="portal-card-tag">Query Plans</span>
+            <span class="portal-card-tag">ACID Transaktionen</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="sql" data-course-url="workspace.html?course=sql&chapter=01_tabellen_und_select">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="sql" onclick="handleCurriculumAction('sql', 'SQL & Datenbank-Architektur')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 7. JAVASCRIPT & TYPESCRIPT -->
-      <div class="portal-card" data-category="coding" data-title="javascript typescript frontend dom async await es6 web-apps">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="javascript typescript frontend dom async await es6 web apps generics">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🌐</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">JavaScript &amp; Modernes TypeScript</h3>
-          <p class="portal-card-desc">Moderne Web-Entwicklung: ES6+ Syntax, Klassen &amp; OOP, Async/Await &amp; Promises, DOM-Manipulation, Web Storage, ES-Module und statische Typisierung mit TypeScript Generics.</p>
+          <p class="portal-card-desc">Moderne Web-Entwicklung von ES6-Grundlagen bis zur statischen Typisierung mit TypeScript Generics.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> ES6+ Syntax, Scopes, Closures, Destructuring &amp; Datenstrukturen</li>
+            <li><strong>Lehrpfad 2:</strong> Klassen, OOP-Vererbung, RegExp Text-Mining &amp; Custom Errors</li>
+            <li><strong>Lehrpfad 3:</strong> DOM Event-Delegation, LocalStorage &amp; Asynchrones Async/Await</li>
+            <li><strong>Lehrpfad 4:</strong> ES-Module Architektur, TypeScript Generics &amp; Type Guards</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">ES6+ &amp; OOP</span>
             <span class="portal-card-tag">Async/Await</span>
-            <span class="portal-card-tag">DOM Events</span>
             <span class="portal-card-tag">TypeScript Generics</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="javascript" data-course-url="workspace.html?course=javascript&chapter=01_erste_schritte_variablen">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="javascript" onclick="handleCurriculumAction('javascript', 'JavaScript & TypeScript')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 8. JAVA 21 ENTERPRISE -->
-      <div class="portal-card" data-category="coding" data-title="java 21 enterprise oop virtual threads streams junit5 records">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="java 21 enterprise oop virtual threads streams junit5 records">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">☕</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">Java 21+ Enterprise &amp; IHK Standard</h3>
-          <p class="portal-card-desc">Enterprise-Architektur: Strikte Typisierung, Records, Vererbung &amp; Interfaces, Generics, Collections Framework, Streams API, Virtual Threads &amp; automatisierte JUnit 5 Tests.</p>
+          <p class="portal-card-desc">Enterprise-Architektur mit dem IHK-Prüfungsstandard und modernen Sprachfeatures von Java 21 LTS.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Syntax, Typen, Switch Expressions, Methoden &amp; Konstruktoren</li>
+            <li><strong>Lehrpfad 2:</strong> Kapselung, Java 17+ Records, Vererbung &amp; Interfaces</li>
+            <li><strong>Lehrpfad 3:</strong> Generics, Collections Framework, Streams API &amp; Virtual Threads</li>
+            <li><strong>Lehrpfad 4:</strong> JUnit 5 Testsuites &amp; Enterprise Banking Architecture Engine</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">Java 21</span>
-            <span class="portal-card-tag">Records &amp; OOP</span>
-            <span class="portal-card-tag">Streams API</span>
+            <span class="portal-card-tag">16 Module</span>
+            <span class="portal-card-tag">Java 21 LTS</span>
+            <span class="portal-card-tag">Records &amp; Streams</span>
             <span class="portal-card-tag">Virtual Threads</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="java" data-course-url="workspace.html?course=java&chapter=01_java_syntax_und_primitive_typen">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="java" onclick="handleCurriculumAction('java', 'Java 21+ Enterprise')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 9. RUST SYSTEMS -->
-      <div class="portal-card" data-category="coding" data-title="rust systems ownership borrowing concurrency lifetimes cargo">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="rust systems ownership borrowing concurrency lifetimes cargo">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🦀</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">Rust Modern Systems &amp; Safety</h3>
-          <p class="portal-card-desc">Zero-Cost Abstractions: Ownership &amp; Borrowing, Lifetimes, Enums mit Option/Result, Traits, Smart Pointer (Box, Arc, Mutex), Fearless Concurrency &amp; LRU-Cache Masterprojekt.</p>
+          <p class="portal-card-desc">Zero-Cost Abstractions und kompromisslose Speichersicherheit ohne Garbage Collector.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Ownership- &amp; Borrowing-Modell, Aliasing vs Mutation &amp; Lifetimes</li>
+            <li><strong>Lehrpfad 2:</strong> Enums mit Option &amp; Result, Pattern Matching &amp; Cargo Modules</li>
+            <li><strong>Lehrpfad 3:</strong> Traits, Dynamic Dispatch, Closures &amp; Smart Pointer (Box, Arc, Mutex)</li>
+            <li><strong>Lehrpfad 4:</strong> Fearless Concurrency (MPSC Channels) &amp; LRU-Cache Master Engine</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">Ownership System</span>
-            <span class="portal-card-tag">Lifetimes</span>
-            <span class="portal-card-tag">Arc&lt;Mutex&gt;</span>
+            <span class="portal-card-tag">Fearless Concurrency</span>
             <span class="portal-card-tag">Cargo Tests</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="rust" data-course-url="workspace.html?course=rust&chapter=01_variablen_mutabilitaet_und_typen">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="rust" onclick="handleCurriculumAction('rust', 'Rust Systems & Safety')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
-      <!-- 10. GO CLOUD MICROSERVICES (NEU) -->
-      <div class="portal-card" data-category="coding" data-title="go golang microservices concurrency goroutines channels rest apis">
+      <!-- 10. GO CLOUD MICROSERVICES -->
+      <div class="curriculum-card portal-card" data-category="coding" data-title="go golang microservices concurrency goroutines channels rest apis">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🐹</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">Go Cloud Microservices &amp; Concurrency</h3>
-          <p class="portal-card-desc">Entwickle hochskalierbare Cloud-Services mit Google Go: Goroutines, Channel-Pipelines, Mutex Synchronisation, Standard-HTTP-Server, Middleware &amp; REST Microservice Master.</p>
+          <p class="portal-card-desc">Google Go für hochperformante Cloud-Native Backend-Services und parallele Worker-Pipelines.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Go-Syntax, dynamische Slices, Maps &amp; Multiple Return Values</li>
+            <li><strong>Lehrpfad 2:</strong> Structs, Receiver-Methoden, Duck Typing Interfaces &amp; Defer/Panic</li>
+            <li><strong>Lehrpfad 3:</strong> Goroutines, Channels, Select Multiplexing &amp; Mutex Thread-Safety</li>
+            <li><strong>Lehrpfad 4:</strong> Standard-HTTP REST-Server, Middleware &amp; Analytics Microservice</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">Goroutines</span>
-            <span class="portal-card-tag">Channels &amp; Select</span>
+            <span class="portal-card-tag">16 Module</span>
+            <span class="portal-card-tag">Goroutines &amp; Channels</span>
             <span class="portal-card-tag">net/http Server</span>
-            <span class="portal-card-tag">Table Tests</span>
+            <span class="portal-card-tag">Microservice Engine</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="go" data-course-url="workspace.html?course=go&chapter=01_syntax_variablen_und_typen">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="go" onclick="handleCurriculumAction('go', 'Go Microservices & Concurrency')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 11. C# 12 & .NET 8 -->
-      <div class="portal-card" data-category="coding" data-title="csharp dotnet c# 12 linq async tasks xunit clean architecture">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="csharp dotnet c# 12 linq async tasks xunit clean architecture">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🔷</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">C# 12 &amp; Modernes .NET 8 Enterprise</h3>
-          <p class="portal-card-desc">Moderne Unternehmenssoftware: Top-Level Statements, Pattern Matching, Records, LINQ funktionale Datenabfragen, Asynchrones Task/await, xUnit Tests &amp; Enterprise Order Engine.</p>
+          <p class="portal-card-desc">Moderne Unternehmenssoftware mit Clean Architecture, Pattern Matching und funktionalen LINQ-Pipelines.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Top-Level Statements, Pattern Matching &amp; Primary Constructors</li>
+            <li><strong>Lehrpfad 2:</strong> Records &amp; Immutability, Vererbung &amp; Dependency Injection</li>
+            <li><strong>Lehrpfad 3:</strong> LINQ Method Syntax, Asynchrone Tasks &amp; System.Text.Json</li>
+            <li><strong>Lehrpfad 4:</strong> Delegates/Events, xUnit Testsuites &amp; Order Processing Pipeline</li>
+          </ul>
+
           <div class="portal-card-tags">
-            <span class="portal-card-tag">C# 12 Primary Ctors</span>
-            <span class="portal-card-tag">LINQ Queries</span>
-            <span class="portal-card-tag">Async / Await</span>
+            <span class="portal-card-tag">16 Module</span>
+            <span class="portal-card-tag">C# 12 &amp; .NET 8</span>
+            <span class="portal-card-tag">LINQ Analytics</span>
             <span class="portal-card-tag">xUnit Testsuite</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="csharp" data-course-url="workspace.html?course=csharp&chapter=01_syntax_datentypen_und_top_level_statements">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="csharp" onclick="handleCurriculumAction('csharp', 'C# 12 & .NET 8')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 12. C & C++20 SYSTEMS -->
-      <div class="portal-card" data-category="coding" data-title="cpp c c++ c++20 pointer speicher raii stl templates googletest">
+      <div class="curriculum-card portal-card" data-category="coding" data-title="cpp c c++ c++20 pointer speicher raii stl templates googletest">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">⚙️</div>
             <span class="portal-card-badge badge-code">Software &amp; Coding</span>
           </div>
           <h3 class="portal-card-title">C &amp; Modernes C++20 Systems Engineering</h3>
-          <p class="portal-card-desc">Das Fundament der Systemprogrammierung: Pointer &amp; dynamischer Speicher, RAII, Klassen &amp; Rule of Five, Templates, Smart Pointer (unique_ptr, shared_ptr), STL &amp; GoogleTest.</p>
+          <p class="portal-card-desc">Hardwarenahe Systemprogrammierung, Pointer-Arithmetik und moderne C++20 RAII-Abstraktionen.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Pointer-Grundlagen, Heap-Speicherallokation &amp; Structs</li>
+            <li><strong>Lehrpfad 2:</strong> C++ Namespaces, RAII-Prinzip, Rule of Five &amp; Operator Overloading</li>
+            <li><strong>Lehrpfad 3:</strong> Generische Templates, Smart Pointer (unique/shared) &amp; STL</li>
+            <li><strong>Lehrpfad 4:</strong> C++ Lambdas, std::thread Concurrency &amp; GoogleTest Simulation</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">Pointer &amp; Heap</span>
             <span class="portal-card-tag">RAII Resource Guard</span>
-            <span class="portal-card-tag">Smart Pointer</span>
             <span class="portal-card-tag">GoogleTest Suite</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="cpp" data-course-url="workspace.html?course=cpp&chapter=01_c_syntax_datentypen_und_io">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="cpp" onclick="handleCurriculumAction('cpp', 'C & C++20 Systems')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
 
       <!-- 13. HTML5 & CSS3 -->
-      <div class="portal-card" data-category="data" data-title="html css frontend flexbox grid webdesign responsive ui a11y">
+      <div class="curriculum-card portal-card" data-category="data" data-title="html css frontend flexbox grid webdesign responsive ui a11y">
         <div>
           <div class="portal-card-top">
             <div class="portal-card-icon">🎨</div>
             <span class="portal-card-badge badge-data">Daten &amp; Web</span>
           </div>
           <h3 class="portal-card-title">HTML5, Modern CSS3 &amp; Responsive UI</h3>
-          <p class="portal-card-desc">Modernes UI-Handwerk: Semantische Tags, Barrierefreiheit (ARIA/A11y), CSS Custom Properties, 1D-Layouts mit Flexbox, 2D-Layouts mit CSS Grid, Media Queries &amp; Dark Mode.</p>
+          <p class="portal-card-desc">Moderne Benutzeroberflächen vom semantischen Markup über Flexbox/Grid bis zu Dark Mode Themes.</p>
+          
+          <ul class="curriculum-topics">
+            <li><strong>Lehrpfad 1:</strong> Semantische HTML5-Elemente, Formulare &amp; Barrierefreiheit (ARIA)</li>
+            <li><strong>Lehrpfad 2:</strong> CSS Box-Modell, Kaskade, Spezifität &amp; CSS Custom Properties</li>
+            <li><strong>Lehrpfad 3:</strong> 1D-Layouts mit Flexbox, 2D-Layouts mit CSS Grid &amp; Media Queries</li>
+            <li><strong>Lehrpfad 4:</strong> Transitions, BEM-Methodik, Dark Mode Themes &amp; SaaS Landingpage</li>
+          </ul>
+
           <div class="portal-card-tags">
+            <span class="portal-card-tag">16 Module</span>
             <span class="portal-card-tag">Semantik &amp; A11y</span>
-            <span class="portal-card-tag">Flexbox &amp; CSS Grid</span>
-            <span class="portal-card-tag">Dark Mode Themes</span>
+            <span class="portal-card-tag">Flexbox &amp; Grid</span>
             <span class="portal-card-tag">Responsive Design</span>
           </div>
         </div>
-        <div class="portal-card-footer">
-          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="html_css" data-course-url="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur">
-            <span>🔒 Kostenlos freischalten</span>
+
+        <div style="margin-top: 18px;">
+          <button type="button" class="curriculum-cta-btn portal-card-action-btn" data-course-id="html_css" onclick="handleCurriculumAction('html_css', 'HTML5 & CSS3 Responsive UI')">
+            <span>✨ Lehrplan freischalten &amp; starten</span>
           </button>
         </div>
       </div>
@@ -506,33 +670,33 @@
           <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">🎓 IHK Prüfungstrainer AP1 &amp; AP2</h3>
           <p style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 780px;">Realistische Prüfungssimulation nach der neuen Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen (FIAE, FISI, IT-SE, IT-SM).</p>
         </div>
-        <button type="button" class="btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true, title: '🔒 Prüfungssimulation freischalten', message: 'Erstelle einen kostenlosen Account, um den 90-Minuten IHK-Prüfungstrainer mit automatischer Punkteberechnung zu starten.' })">
-          <span>🚀 Prüfungssimulation starten</span>
+        <button type="button" class="btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true, title: '🔒 Prüfungssimulation freischalten', message: 'Erstelle einen kostenlosen Account, um den 90-Minuten IHK-Prüfungstrainer mit automatischer Punkteberechnung im Lernbereich zu starten.' })">
+          <span>🚀 Prüfungssimulation freischalten</span>
         </button>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px;">
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
           <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">📘 AP1: IT-Arbeitsplatz (LF 1–8)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Gemeinsame Kernqualifikationen aller Fachinformatiker: Verträge, Ergonomie, IPv4/IPv6 Subnetting, BSI-Schutzbedarf, relationales SQL &amp; Trace-Tabellen.</p>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="ihk_ap1" data-course-url="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" style="font-size: 0.84rem; padding: 8px 14px;">
-            <span>🔒 AP1 Lehrplan öffnen</span>
+          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Gemeinsame Kernqualifikationen: Verträge, Ergonomie, IPv4/IPv6 Subnetting, BSI-Schutzbedarf, relationales SQL &amp; Trace-Tabellen.</p>
+          <button type="button" class="btn" style="background: #f1f5f9; color: #1e3a8a; border: 1px solid #cbd5e1; font-size: 0.82rem; font-weight: 700; border-radius: 6px; padding: 8px 12px; cursor: pointer;" onclick="handleCurriculumAction('ihk_ap1', 'IHK AP1')">
+            🔒 In Lernbereich freischalten
           </button>
         </div>
 
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
           <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">📕 AP2: Systemintegration (LF 9–12)</h4>
           <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Fachrichtungsspezifisch: VLANs &amp; Routing, Active Directory GPO, RAID &amp; SAN-Speicher, Virtualisierung, WiSo-Kompaktfragen &amp; 40h-Projektleitfaden.</p>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="ihk_ap2_fisi" data-course-url="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" style="font-size: 0.84rem; padding: 8px 14px;">
-            <span>🔒 AP2 FISI Lehrplan öffnen</span>
+          <button type="button" class="btn" style="background: #f1f5f9; color: #991b1b; border: 1px solid #cbd5e1; font-size: 0.82rem; font-weight: 700; border-radius: 6px; padding: 8px 12px; cursor: pointer;" onclick="handleCurriculumAction('ihk_ap2_fisi', 'IHK AP2 FISI')">
+            🔒 In Lernbereich freischalten
           </button>
         </div>
 
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
           <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">⚡ Interaktive Drill-Trainer</h4>
           <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Blitzschnelles Rechnen: Subnetting-Drill Generator mit Live-Punktevergabe, schrittweise Trace-Tabellen-Simulation und relationale Abfrage-Validierung.</p>
-          <button type="button" class="portal-card-btn portal-card-action-btn locked" data-course-id="ihk_ap1" data-course-url="courses/ihk_ap1/11_subnetting_drill_master/index.html" style="font-size: 0.84rem; padding: 8px 14px;">
-            <span>🔒 Drill-Trainer öffnen</span>
+          <button type="button" class="btn" style="background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; font-size: 0.82rem; font-weight: 700; border-radius: 6px; padding: 8px 12px; cursor: pointer;" onclick="handleCurriculumAction('ihk_ap1', 'Subnetting Drill')">
+            🔒 In Lernbereich freischalten
           </button>
         </div>
       </div>
@@ -553,14 +717,14 @@
         </div>
 
         <div>
-          <button type="button" class="btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);" onclick="window.openAuthModal('register', { allowClose: true, title: '🔒 Web-IDE freischalten', message: 'Registriere dich kostenlos, um direkt im Browser mit der Monaco IDE zu programmieren.' })">
+          <button type="button" class="btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);" onclick="window.openAuthModal('register', { allowClose: true, title: '🔒 Web-IDE im Lernbereich freischalten', message: 'Registriere dich kostenlos, um direkt im Browser mit der Monaco IDE zu programmieren.' })">
             <span>✨ Account erstellen &amp; Web-IDE starten &rarr;</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- 6. BENTO FEATURE MATRIX (WARUM IT-PRAXISPORTAL?) -->
+    <!-- 6. BENTO FEATURE MATRIX -->
     <div style="text-align: center; margin: 64px 0 24px 0;" id="features">
       <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">🛠️ Warum IT-Praxisportal?</h2>
       <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Wissenschaftlich fundierte Didaktik, moderne Web-Technologien und zero lokale Installation.</p>
@@ -592,7 +756,7 @@
       </div>
     </div>
 
-    <!-- 7. ZIELGRUPPEN / FÜR WEN IST DAS PORTAL? -->
+    <!-- 7. ZIELGRUPPEN -->
     <section class="card" style="margin-top: 48px; border-radius: 16px; padding: 32px; background: #ffffff;">
       <div style="text-align: center; margin-bottom: 28px;">
         <h3 style="font-size: 1.5rem; font-weight: 900; color: #0f172a; margin: 0 0 6px 0;">👥 Für wen ist das IT-Praxisportal?</h3>
@@ -648,7 +812,7 @@
 
       <div style="display: flex; gap: 20px; font-size: 0.85rem;">
         <a href="#hero" style="color: #94a3b8; text-decoration: none;">Übersicht</a>
-        <a href="#katalog" style="color: #94a3b8; text-decoration: none;">13 Kurse</a>
+        <a href="#curriculum" style="color: #94a3b8; text-decoration: none;">Curriculum</a>
         <a href="#ihk-section" style="color: #94a3b8; text-decoration: none;">IHK Prüfung</a>
         <a href="#features-ide" style="color: #94a3b8; text-decoration: none;">Web-IDE</a>
         <a href="teacher.html" style="color: #94a3b8; text-decoration: none;">Dozenten</a>
@@ -664,13 +828,13 @@
   <script src="assets/app_auth.js"></script>
   
   <script>
-    // Live Filter & Instant Search Engine
-    function filterCourses(category, element) {
+    // Live Filter & Instant Search Engine für Curriculum
+    function filterCurriculum(category, element) {
       document.querySelectorAll('.portal-tab-pill').forEach(btn => btn.classList.remove('active'));
       if (element) element.classList.add('active');
 
-      const cards = document.querySelectorAll('.portal-card');
-      const query = (document.getElementById('course-filter-input').value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.curriculum-card');
+      const query = (document.getElementById('curriculum-filter-input').value || '').toLowerCase().trim();
 
       cards.forEach(card => {
         const cardCat = card.getAttribute('data-category');
@@ -687,17 +851,51 @@
       });
     }
 
-    const searchInput = document.getElementById('course-filter-input');
+    const searchInput = document.getElementById('curriculum-filter-input');
     if (searchInput) {
       searchInput.addEventListener('input', () => {
         const activeTab = document.querySelector('.portal-tab-pill.active');
         const activeCat = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
-        filterCourses(activeCat, activeTab);
+        filterCurriculum(activeCat, activeTab);
       });
+    }
+
+    // Klick auf Curriculum Aktion
+    function handleCurriculumAction(courseId, title) {
+      if (window.AUTH && window.AUTH.isLoggedIn()) {
+        window.location.href = 'dashboard.html';
+      } else {
+        window.openAuthModal('register', {
+          allowClose: true,
+          title: `🔒 ${title} freischalten`,
+          message: 'Erstelle deinen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf alle 216 Module, die Web-IDE und IHK-Prüfungen im Lernbereich zu erhalten.'
+        });
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       window.AUTH.updateUI();
+
+      // Prüfe, ob Nutzer bereits eingeloggt ist -> Banner und Buttons anpassen
+      if (window.AUTH && window.AUTH.isLoggedIn()) {
+        const user = window.AUTH.getUser();
+        const banner = document.getElementById('landing-logged-in-banner');
+        const userNameEl = document.getElementById('landing-user-name');
+        const dashLink = document.getElementById('nav-dashboard-link');
+
+        if (dashLink) dashLink.style.display = 'inline-flex';
+
+        if (banner && user) {
+          banner.style.display = 'flex';
+          if (userNameEl) userNameEl.innerText = user.name || user.email.split('@')[0];
+        }
+
+        // Action Buttons auf "Im Lernbereich öffnen" umstellen
+        document.querySelectorAll('.curriculum-cta-btn').forEach(btn => {
+          btn.innerHTML = '<span>▶ Im Lernbereich öffnen</span> <span>&rarr;</span>';
+          btn.style.background = '#10b981';
+        });
+      }
     });
   </script>
 </body>

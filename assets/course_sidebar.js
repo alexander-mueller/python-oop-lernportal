@@ -258,7 +258,7 @@
     sidebar.innerHTML = `
       <div class="course-sidebar-header">
         <div class="course-sidebar-brand-row">
-          <a href="${rootPrefix}index.html" class="course-sidebar-brand" title="Zur IT-Praxisportal Startseite">
+          <a href="${rootPrefix}dashboard.html" class="course-sidebar-brand" title="Zum Lernbereich Dashboard">
             <div class="course-sidebar-logo">🎓</div>
             <div>
               <div class="course-sidebar-title">IT-Praxisportal</div>
@@ -290,7 +290,7 @@
 
       <div class="course-sidebar-footer">
         ${footerActionHtml}
-        <a href="${rootPrefix}index.html" style="display: inline-flex; align-items: center; gap: 4px;" title="Zur Startseite">
+        <a href="${rootPrefix}dashboard.html" style="display: inline-flex; align-items: center; gap: 4px;" title="Zum Lernbereich Dashboard">
           <span>🏠</span> <span>Dashboard</span>
         </a>
       </div>

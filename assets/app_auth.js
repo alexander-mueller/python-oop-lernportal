@@ -88,7 +88,7 @@
 
       if (redirect) {
         const p = window.location.pathname;
-        if (p.includes('/courses/') || p.includes('/lehrpfad_') || p.endsWith('workspace.html') || p.endsWith('teacher.html') || p.endsWith('admin.html')) {
+        if (p.includes('/courses/') || p.includes('/lehrpfad_') || p.endsWith('workspace.html') || p.endsWith('dashboard.html') || p.endsWith('teacher.html') || p.endsWith('admin.html')) {
           window.location.href = window.location.origin + '/index.html?auth=login';
         } else {
           this.handleMaintenanceDisplay();
@@ -345,13 +345,13 @@
           registerBtn.innerText = '💻 Zum Lernbereich';
           registerBtn.style.background = '#10b981';
           registerBtn.onclick = () => {
-            window.location.href = 'workspace.html?course=python';
+            window.location.href = 'dashboard.html';
           };
         }
         if (heroPrimaryCta) {
-          heroPrimaryCta.innerHTML = '<span>▶ Weiterlernen (Web-IDE)</span>';
+          heroPrimaryCta.innerHTML = '<span>▶ Direkt zum Lernbereich Dashboard</span>';
           heroPrimaryCta.onclick = (e) => {
-            window.location.href = 'workspace.html?course=python';
+            window.location.href = 'dashboard.html';
           };
         }
         if (teacherLink) {
@@ -387,24 +387,26 @@
         if (teacherLink) teacherLink.style.display = 'none';
       }
 
-      // Aktualisiere Kurs-Karten Buttons auf der Startseite
+      // Aktualisiere Curriculum-Aktions-Buttons auf der Landingpage
       document.querySelectorAll('.portal-card-action-btn').forEach(btn => {
         const courseId = btn.getAttribute('data-course-id') || 'python';
         const targetUrl = btn.getAttribute('data-course-url') || `workspace.html?course=${courseId}`;
         
         if (loggedIn) {
-          btn.innerHTML = '<span>▶ Kurs starten</span> <span>&rarr;</span>';
+          btn.innerHTML = '<span>▶ Im Lernbereich öffnen</span> <span>&rarr;</span>';
           btn.classList.remove('locked');
-          btn.onclick = () => { window.location.href = targetUrl; };
+          btn.style.background = '#10b981';
+          btn.onclick = () => { window.location.href = 'dashboard.html'; };
         } else {
-          btn.innerHTML = '<span>🔒 Kostenlos freischalten</span>';
+          btn.innerHTML = '<span>✨ Lehrplan freischalten &amp; starten</span>';
           btn.classList.add('locked');
+          btn.style.background = '#0284c7';
           btn.onclick = (e) => {
             e.preventDefault();
             window.openAuthModal('register', {
               allowClose: true,
-              title: '🔒 Kurszugang freischalten',
-              message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf diesen Kurs und alle 216 Module zu erhalten.'
+              title: '🔒 Lehrplan freischalten',
+              message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf diesen Kurs und alle 216 Module im Lernbereich zu erhalten.'
             });
           };
         }
@@ -597,7 +599,12 @@
           options.onSuccess(result.user);
         } else {
           window.AUTH.updateUI();
-          window.location.reload();
+          const p = window.location.pathname;
+          if (p.endsWith('index.html') || p === '/' || p.endsWith('/')) {
+            window.location.href = 'dashboard.html';
+          } else {
+            window.location.reload();
+          }
         }
       } else {
         errorBox.innerText = result.error || 'Fehler bei der Authentifizierung';

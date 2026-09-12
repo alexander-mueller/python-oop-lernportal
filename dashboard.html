@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-Praxisportal | Lernbereich &amp; Kurs-Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="description" content="Dein persönlicher IT-Lernbereich: 13 Fachdisziplinen, 216 Module, Monaco Web-IDE und IHK-Prüfungsvorbereitung.">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .portal-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .badge-ihk {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .badge-devops {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .badge-code {
+      background: #faf5ff;
+      color: #7e22ce;
+      border: 1px solid #e9d5ff;
+    }
+    .badge-data {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+    }
+
+    /* Course Progress Elements */
+    .course-progress-wrap {
+      margin: 14px 0 16px 0;
+      background: #f1f5f9;
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .course-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #0284c7, #10b981);
+      width: 0%;
+      border-radius: 99px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .course-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Dashboard Action Buttons */
+    .btn-start-ide {
+      background: #0284c7;
+      color: white;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-start-ide:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+    .btn-view-theory {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-view-theory:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Resume Card */
+    .resume-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px 28px;
+      color: #f8fafc;
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+    }
+
+    /* Certificates Grid */
+    .cert-preview-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .cert-preview-card:hover {
+      border-color: #0284c7;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+  </style>
+</head>
+<body style="background: #f8fafc; color: #0f172a; font-family: var(--font-sans); margin: 0; padding: 0;">
+
+  <!-- 1. STICKY DASHBOARD TOPBAR -->
+  <header class="portal-header-bar">
+    <div class="portal-nav-container">
+      <a href="dashboard.html" class="portal-brand">
+        <div class="portal-brand-logo">
+          <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
+        </div>
+        <div>
+          <span class="portal-brand-title">IT-Praxisportal</span>
+          <span class="portal-brand-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Lernbereich</span>
+        </div>
+      </a>
+
+      <nav class="portal-nav-links">
+        <a href="#overview" class="portal-nav-link active">🚀 Übersicht</a>
+        <a href="#katalog" class="portal-nav-link">📚 Meine Kurse</a>
+        <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
+        <a href="workspace.html?course=python" class="portal-nav-link">💻 Web-IDE</a>
+        <a href="#zertifikate-section" class="portal-nav-link">🏆 Zertifikate</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
+        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
+      </nav>
+
+      <!-- User Profile & Logout -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div id="nav-profile-pill" style="display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.08); padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.12);">
+          <span id="nav-auth-user" style="font-size: 0.84rem; font-weight: 700; color: #38bdf8;">👤 Lädt...</span>
+          <span id="nav-auth-role" style="font-size: 0.7rem; font-weight: 800; background: rgba(56, 189, 248, 0.15); color: #7dd3fc; padding: 2px 6px; border-radius: 99px; text-transform: uppercase;"></span>
+        </div>
+        <button type="button" class="btn" id="nav-btn-logout" style="padding: 6px 14px; font-size: 0.82rem; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">
+          Abmelden
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. DASHBOARD WELCOME & LIVE METRICS -->
+  <section class="portal-hero" id="overview" style="padding-top: 36px; padding-bottom: 36px;">
+    <div class="portal-container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div class="portal-hero-pill" style="margin-bottom: 12px;">
+            <span>🟢 Angemeldet als aktiver Teilnehmer</span>
+            <span style="opacity: 0.5;">•</span>
+            <span id="pill-current-date">Heute</span>
+          </div>
+          <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Willkommen zurück, <span id="dash-greeting-name">Entwickler</span>! 👋</h1>
+          <p style="margin: 0; font-size: 1rem; color: #94a3b8; max-width: 680px;">
+            Wähle eine Fachdisziplin, vertiefe dein Wissen im Code-Editor oder trainiere gezielt IHK-Prüfungsszenarien. Dein Fortschritt wird automatisch in der Cloud synchronisiert.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <a href="workspace.html?course=python" class="portal-btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
+            <span>💻 Web-IDE öffnen</span>
+          </a>
+          <a href="index.html" class="portal-btn-secondary" style="padding: 10px 16px; font-size: 0.9rem;" title="Zur öffentlichen Plattform-Startseite">
+            <span>🌐 Startseite</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 Gamification Stats Cards -->
+      <div class="portal-stats-bar" style="margin-top: 28px;">
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-level">1</div>
+          <div class="portal-stat-label">Aktuelles Level</div>
+          <div class="portal-stat-desc" id="stat-user-level-desc">Junior Coder</div>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-xp">0</div>
+          <div class="portal-stat-label">Erfahrungspunkte (XP)</div>
+          <div class="portal-stat-desc">+25 XP pro gelöstem Modul</div>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-streak">1 🔥</div>
+          <div class="portal-stat-label">Tages-Streak</div>
+          <div class="portal-stat-desc">Kontinuierliches Lernen</div>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-solved">0 / 216</div>
+          <div class="portal-stat-label">Gelöste Module</div>
+          <div class="portal-stat-desc" id="stat-user-percent">0% Gesamtfortschritt</div>
+        </div>
+      </div>
+
+      <!-- Quick Resume Card -->
+      <div class="resume-card" id="resume-banner">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; font-size: 1.8rem;" id="resume-icon">
+            🐍
+          </div>
+          <div>
+            <div style="font-size: 0.74rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.6px;">⚡ Schnelleinstieg / Zuletzt gelernt</div>
+            <h3 style="margin: 3px 0 4px 0; font-size: 1.25rem; color: #ffffff;" id="resume-course-title">Python 3: Vom Einsteiger zum Entwickler</h3>
+            <p style="margin: 0; font-size: 0.88rem; color: #94a3b8;" id="resume-course-desc">Setze deine letzte Übung direkt an der gleichen Stelle in der Monaco Web-IDE fort.</p>
+          </div>
+        </div>
+        <div>
+          <a href="workspace.html?course=python" id="resume-action-btn" class="btn" style="background: #10b981; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+            <span>▶ In Web-IDE fortsetzen &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. KURS-HUB & KURS-KATALOG (VOLLER ZUGRIFF) -->
+  <main class="portal-container" id="katalog" style="padding-top: 48px; padding-bottom: 64px;">
+    
+    <div class="portal-filter-bar">
+      <div>
+        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Deine 13 Praxis-Kurse</h2>
+        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Starte jede beliebige Lerneinheit direkt in der Web-IDE oder lies die didaktische Begleittheorie.</p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="portal-search-box">
+        <span style="font-size: 1rem;">🔍</span>
+        <input type="text" id="course-filter-input" placeholder="Kurs, Thema oder Modul filtern (z.B. Python, Bash, SQL, Subnetting)...">
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="portal-filter-tabs" style="margin-bottom: 24px;">
+      <button type="button" class="portal-tab-pill active" onclick="filterCourses('all', this)">🌟 Alle Kurse (13)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('ihk', this)">🎓 IHK Prüfung (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('devops', this)">🐧 DevOps &amp; Linux (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('coding', this)">💻 Backend &amp; Systems (6)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('data', this)">🗄️ Daten &amp; Web (3)</button>
+    </div>
+
+    <!-- GRID OF ALL 13 COURSES -->
+    <div class="portal-courses-grid" id="courses-grid-container">
+
+      <!-- 1. IHK AP1 -->
+      <div class="portal-card" data-category="ihk" data-course-id="ihk_ap1" data-title="ihk ap1 lernfelder 1-8 it-arbeitsplatz subnetting trace tabellen simulation">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">📘</div>
+            <span class="portal-card-badge badge-ihk">IHK Abschlussprüfung</span>
+          </div>
+          <h3 class="portal-card-title">IHK AP1: IT-Arbeitsplatz &amp; Basissysteme</h3>
+          <p class="portal-card-desc">Lückenlose Vorbereitung auf die Abschlussprüfung Teil 1. Alle Lernfelder (LF 1–8), Subnetting-Drill, Trace-Tabellen, SQL-Labor &amp; 90-Minuten Probeprüfung.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">LF 1–8 Kernqualifikation</span>
+            <span class="portal-card-tag">Subnetting Drill</span>
+            <span class="portal-card-tag">Trace-Tabellen</span>
+            <span class="portal-card-tag">90-Min Simulation</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-ihk_ap1"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-ihk_ap1">0 / 12 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=ihk_ap1&chapter=01_lf1_unternehmen_und_arbeitsplatz" class="btn-start-ide" onclick="trackLastCourse('ihk_ap1', 'IHK AP1: IT-Arbeitsplatz', '📘')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. IHK AP2 FISI -->
+      <div class="portal-card" data-category="ihk" data-course-id="ihk_ap2_fisi" data-title="ihk ap2 fisi fachinformatiker systemintegration wiso vlan routing storage cloud 40h-projekt">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">📕</div>
+            <span class="portal-card-badge badge-ihk">IHK Abschlussprüfung</span>
+          </div>
+          <h3 class="portal-card-title">IHK AP2: Fachinformatiker Systemintegration</h3>
+          <p class="portal-card-desc">Fachrichtung Systemintegration: LF 9 (Netzwerke/VLAN), LF 10 (Server/AD), LF 11 (Storage/RAID), LF 12 (Cloud/Docker), WiSo &amp; offizieller Leitfaden zur 40h-Projektarbeit.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">LF 9–12 FISI</span>
+            <span class="portal-card-tag">Active Directory &amp; GPO</span>
+            <span class="portal-card-tag">WiSo Prüfungsfragen</span>
+            <span class="portal-card-tag">40h-Projektarbeit</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-ihk_ap2_fisi"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-ihk_ap2_fisi">0 / 9 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=ihk_ap2_fisi&chapter=01_lf9_netzwerke_und_dienste" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_fisi', 'IHK AP2 Systemintegration', '📕')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. PYTHON 3 -->
+      <div class="portal-card" data-category="coding" data-course-id="python" data-title="python software entwicklung oop grundlagen tkinter data engineering">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐍</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Python 3: Vom Einsteiger zum Entwickler</h3>
+          <p class="portal-card-desc">Das umfassende Flaggschiff-Curriculum: Grundlagen (G01–G10), Objektorientierung (00–06), Fortgeschrittenes OOP &amp; GUI (07–16) und Data Engineering (17–22).</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">OOP &amp; Klassen</span>
+            <span class="portal-card-tag">Pyodide WASM</span>
+            <span class="portal-card-tag">Tkinter GUI</span>
+            <span class="portal-card-tag">Unit Testing</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-python"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-python">0 / 35 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=python&chapter=01_erste_schritte_taschenrechner" class="btn-start-ide" onclick="trackLastCourse('python', 'Python 3 Professional', '🐍')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. LINUX BASH & CLOUD DEVOPS -->
+      <div class="portal-card" data-category="devops" data-course-id="bash" data-title="linux bash shell scripting terminal devops jq sed awk docker bats ci/cd">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐧</div>
+            <span class="portal-card-badge badge-devops">DevOps &amp; Cloud</span>
+          </div>
+          <h3 class="portal-card-title">Linux Bash, Shell Scripting &amp; Cloud DevOps</h3>
+          <p class="portal-card-desc">Terminal-Mastery für Sysadmins: I/O Streams, Pipes, Text-Mining mit <code>jq</code>, <code>sed</code> und <code>awk</code>, Parallelisierung (xargs/parallel), Docker-Scripting &amp; BATS Unittests.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">I/O Redirection</span>
+            <span class="portal-card-tag">jq JSON Mining</span>
+            <span class="portal-card-tag">xargs Multithreading</span>
+            <span class="portal-card-tag">BATS Testsuite</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-bash"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-bash">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" class="btn-start-ide" onclick="trackLastCourse('bash', 'Linux Bash & Cloud DevOps', '🐧')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/bash/01_navigation_dateien_und_globbing/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. POWERSHELL 7+ CORE -->
+      <div class="portal-card" data-category="devops" data-course-id="powershell" data-title="powershell ps7 cmdlets pipeline .net rest api pester active directory">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🛡️</div>
+            <span class="portal-card-badge badge-devops">DevOps &amp; Cloud</span>
+          </div>
+          <h3 class="portal-card-title">PowerShell 7+ Core: Enterprise Automation</h3>
+          <p class="portal-card-desc">Modernes Microsoft &amp; Multi-Platform Scripting: Die Objekt-Pipeline, Custom PSCustomObjects, REST-APIs, moderne Parallelisierung mit <code>ForEach-Object -Parallel</code> &amp; Pester Unit Tests.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Objekt-Pipeline</span>
+            <span class="portal-card-tag">PSCustomObject</span>
+            <span class="portal-card-tag">Parallel-Jobs</span>
+            <span class="portal-card-tag">Pester Tests</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-powershell"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-powershell">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur" class="btn-start-ide" onclick="trackLastCourse('powershell', 'PowerShell 7+ Core', '🛡️')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/powershell/01_powershell_konsole_und_cmdlet_architektur/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. SQL & DATENBANKEN -->
+      <div class="portal-card" data-category="data" data-course-id="sql" data-title="sql datenbanken postgresql sqlite normalisierung joins cte window-functions acid">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐬</div>
+            <span class="portal-card-badge badge-data">Daten &amp; Web</span>
+          </div>
+          <h3 class="portal-card-title">SQL &amp; Relationale Datenbank-Architektur</h3>
+          <p class="portal-card-desc">Vollständiges relationales Datenmanagement: Strikte Normalisierung (1NF–3NF), komplexe Multi-Table JOINs, Subqueries, Common Table Expressions (CTEs), Window Functions &amp; ACID Transaktionen.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">1NF–3NF Normalisierung</span>
+            <span class="portal-card-tag">JOINs &amp; CTEs</span>
+            <span class="portal-card-tag">Window Functions</span>
+            <span class="portal-card-tag">Query Plans</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-sql"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-sql">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=sql&chapter=01_tabellen_und_select" class="btn-start-ide" onclick="trackLastCourse('sql', 'SQL Datenbank-Architektur', '🐬')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/sql/01_tabellen_und_select/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. JAVASCRIPT & TYPESCRIPT -->
+      <div class="portal-card" data-category="coding" data-course-id="javascript" data-title="javascript typescript frontend dom async await es6 web-apps">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🌐</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">JavaScript &amp; Modernes TypeScript</h3>
+          <p class="portal-card-desc">Moderne Web-Entwicklung: ES6+ Syntax, Klassen &amp; OOP, Async/Await &amp; Promises, DOM-Manipulation, Web Storage, ES-Module und statische Typisierung mit TypeScript Generics.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">ES6+ &amp; OOP</span>
+            <span class="portal-card-tag">Async/Await</span>
+            <span class="portal-card-tag">DOM Events</span>
+            <span class="portal-card-tag">TypeScript Generics</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-javascript"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-javascript">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=javascript&chapter=01_erste_schritte_variablen" class="btn-start-ide" onclick="trackLastCourse('javascript', 'JavaScript & TypeScript', '🌐')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/javascript/01_erste_schritte_variablen/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 8. JAVA 21 ENTERPRISE -->
+      <div class="portal-card" data-category="coding" data-course-id="java" data-title="java 21 enterprise oop virtual threads streams junit5 records">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">☕</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Java 21+ Enterprise &amp; IHK Standard</h3>
+          <p class="portal-card-desc">Enterprise-Architektur: Strikte Typisierung, Records, Vererbung &amp; Interfaces, Generics, Collections Framework, Streams API, Virtual Threads &amp; automatisierte JUnit 5 Tests.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Java 21</span>
+            <span class="portal-card-tag">Records &amp; OOP</span>
+            <span class="portal-card-tag">Streams API</span>
+            <span class="portal-card-tag">Virtual Threads</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-java"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-java">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=java&chapter=01_java_syntax_und_primitive_typen" class="btn-start-ide" onclick="trackLastCourse('java', 'Java 21+ Enterprise', '☕')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/java/01_java_syntax_und_primitive_typen/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 9. RUST SYSTEMS -->
+      <div class="portal-card" data-category="coding" data-course-id="rust" data-title="rust systems ownership borrowing concurrency lifetimes cargo">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🦀</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Rust Modern Systems &amp; Safety</h3>
+          <p class="portal-card-desc">Zero-Cost Abstractions: Ownership &amp; Borrowing, Lifetimes, Enums mit Option/Result, Traits, Smart Pointer (Box, Arc, Mutex), Fearless Concurrency &amp; LRU-Cache Masterprojekt.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Ownership System</span>
+            <span class="portal-card-tag">Lifetimes</span>
+            <span class="portal-card-tag">Arc&lt;Mutex&gt;</span>
+            <span class="portal-card-tag">Cargo Tests</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-rust"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-rust">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=rust&chapter=01_variablen_mutabilitaet_und_typen" class="btn-start-ide" onclick="trackLastCourse('rust', 'Rust Systems & Safety', '🦀')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/rust/01_variablen_mutabilitaet_und_typen/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 10. GO CLOUD MICROSERVICES -->
+      <div class="portal-card" data-category="coding" data-course-id="go" data-title="go golang microservices concurrency goroutines channels rest apis">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐹</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Go Cloud Microservices &amp; Concurrency</h3>
+          <p class="portal-card-desc">Entwickle hochskalierbare Cloud-Services mit Google Go: Goroutines, Channel-Pipelines, Mutex Synchronisation, Standard-HTTP-Server, Middleware &amp; REST Microservice Master.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Goroutines</span>
+            <span class="portal-card-tag">Channels &amp; Select</span>
+            <span class="portal-card-tag">net/http Server</span>
+            <span class="portal-card-tag">Table Tests</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-go"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-go">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=go&chapter=01_syntax_variablen_und_typen" class="btn-start-ide" onclick="trackLastCourse('go', 'Go Microservices & Concurrency', '🐹')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/go/01_syntax_variablen_und_typen/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 11. C# 12 & .NET 8 -->
+      <div class="portal-card" data-category="coding" data-course-id="csharp" data-title="csharp dotnet c# 12 linq async tasks xunit clean architecture">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🔷</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">C# 12 &amp; Modernes .NET 8 Enterprise</h3>
+          <p class="portal-card-desc">Moderne Unternehmenssoftware: Top-Level Statements, Pattern Matching, Records, LINQ funktionale Datenabfragen, Asynchrones Task/await, xUnit Tests &amp; Enterprise Order Engine.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">C# 12 Primary Ctors</span>
+            <span class="portal-card-tag">LINQ Queries</span>
+            <span class="portal-card-tag">Async / Await</span>
+            <span class="portal-card-tag">xUnit Testsuite</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-csharp"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-csharp">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=csharp&chapter=01_syntax_datentypen_und_top_level_statements" class="btn-start-ide" onclick="trackLastCourse('csharp', 'C# 12 & .NET 8', '🔷')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/csharp/01_syntax_datentypen_und_top_level_statements/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 12. C & C++20 SYSTEMS -->
+      <div class="portal-card" data-category="coding" data-course-id="cpp" data-title="cpp c c++ c++20 pointer speicher raii stl templates googletest">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">⚙️</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">C &amp; Modernes C++20 Systems Engineering</h3>
+          <p class="portal-card-desc">Das Fundament der Systemprogrammierung: Pointer &amp; dynamischer Speicher, RAII, Klassen &amp; Rule of Five, Templates, Smart Pointer (unique_ptr, shared_ptr), STL &amp; GoogleTest.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Pointer &amp; Heap</span>
+            <span class="portal-card-tag">RAII Resource Guard</span>
+            <span class="portal-card-tag">Smart Pointer</span>
+            <span class="portal-card-tag">GoogleTest Suite</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-cpp"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-cpp">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=cpp&chapter=01_c_syntax_datentypen_und_io" class="btn-start-ide" onclick="trackLastCourse('cpp', 'C & C++20 Systems Engineering', '⚙️')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/cpp/01_c_syntax_datentypen_und_io/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 13. HTML5 & CSS3 -->
+      <div class="portal-card" data-category="data" data-course-id="html_css" data-title="html css frontend flexbox grid webdesign responsive ui a11y">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🎨</div>
+            <span class="portal-card-badge badge-data">Daten &amp; Web</span>
+          </div>
+          <h3 class="portal-card-title">HTML5, Modern CSS3 &amp; Responsive UI</h3>
+          <p class="portal-card-desc">Modernes UI-Handwerk: Semantische Tags, Barrierefreiheit (ARIA/A11y), CSS Custom Properties, 1D-Layouts mit Flexbox, 2D-Layouts mit CSS Grid, Media Queries &amp; Dark Mode.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Semantik &amp; A11y</span>
+            <span class="portal-card-tag">Flexbox &amp; CSS Grid</span>
+            <span class="portal-card-tag">Dark Mode Themes</span>
+            <span class="portal-card-tag">Responsive Design</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-html_css"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-html_css">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur" class="btn-start-ide" onclick="trackLastCourse('html_css', 'HTML5 & Modern CSS3', '🎨')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/html_css/01_semantisches_html_und_struktur/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. IHK PRÜFUNGSVORBEREITUNG (DIREKTE NUTZUNG) -->
+    <section class="card" id="ihk-section" style="margin-top: 56px; border: 1px solid #bfdbfe; background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); border-radius: 16px; padding: 32px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+        <div>
+          <span class="portal-card-badge badge-ihk" style="font-size: 0.8rem; font-weight: 800;">Offizieller Prüfungsstandard</span>
+          <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">🎓 IHK Prüfungstrainer AP1 &amp; AP2</h3>
+          <p style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 780px;">Realistische Prüfungssimulation nach der neuen Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen mit Timer, Notenschlüssel &amp; Lösungserklärungen.</p>
+        </div>
+        <a href="courses/ihk_ap1/12_ihk_ap1_probepruefung_simulation/index.html" class="btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <span>⚡ 90-Min AP1 Probeprüfung starten</span>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px;">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">📘 AP1: IT-Arbeitsplatz (LF 1–8)</h4>
+          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Gemeinsame Kernqualifikationen: Verträge, Ergonomie, IPv4/IPv6 Subnetting, BSI-Schutzbedarf, SQL &amp; Trace-Tabellen.</p>
+          <a href="workspace.html?course=ihk_ap1&chapter=01_lf1_unternehmen_und_arbeitsplatz" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px;">
+            <span>▶ AP1 Module üben</span>
+          </a>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">📕 AP2: Systemintegration (LF 9–12)</h4>
+          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Fachrichtungsspezifisch: VLANs &amp; Routing, Active Directory GPO, RAID &amp; SAN-Speicher, Virtualisierung, WiSo &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_fisi&chapter=01_lf9_netzwerke_und_dienste" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #991b1b;">
+            <span>▶ AP2 FISI Module üben</span>
+          </a>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">⚡ Subnetting-Drill Master</h4>
+          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Interaktiver Rechentrainer: Netz-ID, Broadcast-Adresse, Hostbereich &amp; Präfixlängen im Sekundentakt trainieren.</p>
+          <a href="courses/ihk_ap1/11_subnetting_drill_master/index.html" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #0f172a;">
+            <span>▶ Subnetting-Drill öffnen</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ZERTIFIKATS-HUB -->
+    <section class="card" id="zertifikate-section" style="margin-top: 48px; border-radius: 16px; padding: 32px; background: #ffffff; border: 1px solid #e2e8f0;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+        <div>
+          <span class="portal-card-badge" style="background: #fef3c7; color: #b45309; border: 1px solid #fde68a;">Nachweisbare Qualifikation</span>
+          <h3 style="margin: 8px 0 6px 0; font-size: 1.5rem; color: #0f172a; font-weight: 900;">🏆 Offizielle Leistungs-Zertifikate</h3>
+          <p style="margin: 0; color: #64748b; font-size: 0.92rem; max-width: 720px;">
+            Sobald du die Module eines Lehrpfads absolvierst, kannst du hier dein persönliches, verifizierbares PDF-Zertifikat für deine Bewerbungsunterlagen generieren und ausdrucken.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🐍</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">Python Grundlagen (LP 1)</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">10 Module: Variablen, Datentypen, Kontrollfluss, Listen, Dicts &amp; Funktionen.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat(1)">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🏗️</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">Python OOP &amp; Git (LP 2)</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">9 Module: Klassen, Konstruktoren, self, Methoden, UML, VS Code &amp; Git-Workflows.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat(2)">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🐧</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">Linux Bash Shell Scripting</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">Terminal-Mastery, Streams, jq Text-Mining, Parallelisierung &amp; BATS Testsuites.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat('bash_scripting')">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🐬</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">SQL &amp; Daten-Architektur</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">1NF–3NF Normalisierung, Multi-Table JOINs, CTEs, Window Functions &amp; Transaktionen.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat('sql_relational')">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 6. CLEAN FOOTER -->
+  <footer style="background: #0b0f19; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 24px;">
+    <div class="portal-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="portal-brand-logo" style="width: 32px; height: 32px;">
+          <img src="assets/favicon.svg" alt="Logo" style="width: 20px; height: 20px;">
+        </div>
+        <div>
+          <div style="color: white; font-weight: 800; font-size: 1rem;">it-praxisportal.de &bull; Lernbereich</div>
+          <div style="font-size: 0.75rem; color: #64748b;">Dein persönliches Portal für echte IT-Praxis &bull; Version 1.0 Alpha</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 20px; font-size: 0.85rem;">
+        <a href="dashboard.html" style="color: #94a3b8; text-decoration: none;">Dashboard</a>
+        <a href="#katalog" style="color: #94a3b8; text-decoration: none;">Kurse</a>
+        <a href="#ihk-section" style="color: #94a3b8; text-decoration: none;">IHK Prüfung</a>
+        <a href="workspace.html?course=python" style="color: #94a3b8; text-decoration: none;">Web-IDE</a>
+        <a href="index.html" style="color: #94a3b8; text-decoration: none;">Startseite</a>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #64748b;">
+        🔒 100% DSGVO &bull; Serverstandort Deutschland
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/app_auth.js"></script>
+  <script src="assets/courses_manifest.js"></script>
+  <script src="assets/certificate.js"></script>
+
+  <script>
+    // 1. Authentifizierung erzwingen
+    (function checkDashboardAuth() {
+      if (window.AUTH && typeof window.AUTH.requireAuth === 'function') {
+        const authed = window.AUTH.requireAuth({
+          allowClose: false,
+          title: '🔒 Lernbereich geschützt',
+          message: 'Bitte melde dich an oder erstelle einen kostenlosen Account, um deine Kurse, Module und Lernfortschritte zu laden.',
+          onSuccess: () => {
+            window.location.reload();
+          }
+        });
+        if (!authed) return;
+      }
+    })();
+
+    // 2. Track Zuletzt Gelernt
+    function trackLastCourse(courseId, title, icon) {
+      try {
+        localStorage.setItem('itp_last_course', JSON.stringify({
+          id: courseId,
+          title: title,
+          icon: icon,
+          timestamp: Date.now()
+        }));
+      } catch (e) {}
+    }
+
+    // 3. Live Filter & Instant Search
+    function filterCourses(category, element) {
+      document.querySelectorAll('.portal-tab-pill').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      const cards = document.querySelectorAll('.portal-card');
+      const query = (document.getElementById('course-filter-input').value || '').toLowerCase().trim();
+
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+        
+        const matchesCategory = (category === 'all' || cardCat === category);
+        const matchesQuery = (!query || cardTitle.includes(query) || card.innerText.toLowerCase().includes(query));
+
+        if (matchesCategory && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    const searchInput = document.getElementById('course-filter-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const activeTab = document.querySelector('.portal-tab-pill.active');
+        const activeCat = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+        filterCourses(activeCat, activeTab);
+      });
+    }
+
+    // 4. Zertifikats-Aufruf
+    function zeigeZertifikat(key) {
+      if (typeof window.zeigeZertifikatModal === 'function') {
+        window.zeigeZertifikatModal(key);
+      } else {
+        alert('Zertifikats-Modul lädt noch...');
+      }
+    }
+
+    // 5. Dashboard Data Loader & Progress Synchronizer
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Datum formatieren
+      const dateEl = document.getElementById('pill-current-date');
+      if (dateEl) {
+        dateEl.innerText = new Date().toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: 'short' });
+      }
+
+      // Logout Button konfigurieren
+      const logoutBtn = document.getElementById('nav-btn-logout');
+      if (logoutBtn) {
+        logoutBtn.onclick = () => {
+          if (confirm('Möchtest du dich wirklich abmelden?')) {
+            window.AUTH.logout();
+          }
+        };
+      }
+
+      // Nutzerdaten anzeigen
+      const user = window.AUTH ? window.AUTH.getUser() : null;
+      if (user) {
+        const nameStr = user.name || user.email.split('@')[0];
+        document.getElementById('nav-auth-user').innerText = `👤 ${nameStr}`;
+        document.getElementById('dash-greeting-name').innerText = nameStr;
+        const roleEl = document.getElementById('nav-auth-role');
+        if (roleEl) {
+          roleEl.innerText = user.role === 'admin' ? 'Admin' : (user.role === 'teacher' ? 'Dozent' : 'Schüler');
+        }
+
+        // Dozenten / Admin Nav Links
+        if (user.role === 'admin') {
+          const al = document.getElementById('nav-admin-link');
+          if (al) al.style.display = 'inline-flex';
+          const tl = document.getElementById('nav-teacher-link');
+          if (tl) tl.style.display = 'inline-flex';
+        } else if (user.role === 'teacher') {
+          const tl = document.getElementById('nav-teacher-link');
+          if (tl) tl.style.display = 'inline-flex';
+        }
+      }
+
+      // Gelöste Kapitel sammeln (localStorage + API)
+      const solvedSet = new Set();
+      try {
+        ['python_gamification_state', 'python_gamification_progress'].forEach(k => {
+          const str = localStorage.getItem(k);
+          if (str) {
+            const parsed = JSON.parse(str);
+            if (Array.isArray(parsed.geloeste_kapitel)) {
+              parsed.geloeste_kapitel.forEach(id => solvedSet.add(id));
+            }
+          }
+        });
+      } catch (e) {}
+
+      // Server-Sync falls Token vorhanden
+      if (window.AUTH && window.AUTH.getToken()) {
+        try {
+          const res = await fetch('/api/progress/get', {
+            headers: { 'Authorization': `Bearer ${window.AUTH.getToken()}` }
+          });
+          if (res.ok) {
+            const pData = await res.json();
+            if (pData.all_progress && Array.isArray(pData.all_progress)) {
+              pData.all_progress.forEach(p => {
+                if (p.is_solved) solvedSet.add(p.chapter_id);
+              });
+            }
+            if (pData.progress && Array.isArray(pData.progress.geloeste_kapitel)) {
+              pData.progress.geloeste_kapitel.forEach(id => solvedSet.add(id));
+            }
+            if (user && user.xp !== undefined) {
+              const xp = user.xp || (solvedSet.size * 25);
+              const level = user.level || Math.max(1, Math.floor(xp / 100) + 1);
+              const streak = user.streak_days || 1;
+              document.getElementById('stat-user-xp').innerText = xp;
+              document.getElementById('stat-user-level').innerText = level;
+              document.getElementById('stat-user-streak').innerText = `${streak} 🔥`;
+            }
+          }
+        } catch (e) {
+          console.warn('Progress API unreachable:', e);
+        }
+      }
+
+      // Gesamt-Stats aktualisieren falls nicht vom Server überschrieben
+      const totalSolved = solvedSet.size;
+      const totalModules = 216;
+      const totalPercent = Math.round((totalSolved / totalModules) * 100);
+      document.getElementById('stat-user-solved').innerText = `${totalSolved} / ${totalModules}`;
+      document.getElementById('stat-user-percent').innerText = `${totalPercent}% Gesamtfortschritt`;
+      if (document.getElementById('stat-user-xp').innerText === '0') {
+        const computedXp = totalSolved * 25;
+        const computedLevel = Math.max(1, Math.floor(computedXp / 100) + 1);
+        document.getElementById('stat-user-xp').innerText = computedXp;
+        document.getElementById('stat-user-level').innerText = computedLevel;
+      }
+
+      // Berechnung des Fortschritts für jeden der 13 Kurse aus COURSES_MANIFEST
+      const manifest = window.COURSES_MANIFEST || {};
+      const courseKeys = ['bash', 'cpp', 'csharp', 'go', 'html_css', 'ihk_ap1', 'ihk_ap2_fisi', 'java', 'javascript', 'powershell', 'python', 'rust', 'sql'];
+
+      courseKeys.forEach(cid => {
+        const c = manifest[cid];
+        if (!c) return;
+
+        let cTotal = 0;
+        let cSolved = 0;
+
+        (c.tracks || []).forEach(tr => {
+          (tr.chapters || []).forEach(ch => {
+            cTotal++;
+            const isDone = solvedSet.has(ch.folder) ||
+                           solvedSet.has(`${cid}/${ch.folder}`) ||
+                           solvedSet.has(`${tr.id}/${ch.folder}`);
+            if (isDone) cSolved++;
+          });
+        });
+
+        const percent = cTotal > 0 ? Math.round((cSolved / cTotal) * 100) : 0;
+        const bar = document.getElementById(`prog-bar-${cid}`);
+        const txt = document.getElementById(`prog-text-${cid}`);
+
+        if (bar) bar.style.width = `${percent}%`;
+        if (txt) txt.innerText = `${cSolved} / ${cTotal} Module (${percent}%)`;
+      });
+
+      // Zuletzt gelernt konfigurieren
+      try {
+        const lastStr = localStorage.getItem('itp_last_course');
+        if (lastStr) {
+          const last = JSON.parse(lastStr);
+          if (last && last.id && manifest[last.id]) {
+            const c = manifest[last.id];
+            document.getElementById('resume-icon').innerText = last.icon || c.icon || '💻';
+            document.getElementById('resume-course-title').innerText = last.title || c.title;
+            document.getElementById('resume-course-desc').innerText = `Klicke hier, um sofort in ${last.title || c.title} weiterzumachen.`;
+            document.getElementById('resume-action-btn').href = `workspace.html?course=${last.id}`;
+          }
+        }
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>
