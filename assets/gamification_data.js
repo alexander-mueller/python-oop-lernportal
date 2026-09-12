@@ -9,9 +9,9 @@ window.GAMIFICATION_DATA = {
   "bestandene_tests": 0,
   "freigeschaltete_badges": [],
   "streak_tage": 1,
-  "letzter_aktiver_tag": "2026-09-10",
+  "letzter_aktiver_tag": "2026-09-12",
   "historie": [],
-  "zuletzt_aktualisiert": "2026-09-10T07:33:38.614167"
+  "zuletzt_aktualisiert": "2026-09-12T13:29:30.562924"
 };
 window.GAMIFICATION_BADGES_KATALOG = {
   "rechenkonegin": {
