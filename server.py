@@ -24,6 +24,7 @@ import os
 import re
 import uuid
 import urllib.parse
+import ipaddress
 from pathlib import Path
 from collections import defaultdict
 
@@ -31,6 +32,14 @@ PORT = int(os.environ.get("PORT", 8000))
 BASE_DIR = Path(__file__).parent.resolve()
 DB_FILE = BASE_DIR / "platform_data.db"
 KEY_FILE = BASE_DIR / ".secret_key"
+
+def is_trusted_source(ip: str) -> bool:
+    """Verhindert direkte Zugriffe am Reverse Proxy vorbei."""
+    try:
+        addr = ipaddress.ip_address(ip)
+        return addr.is_loopback or addr.is_private
+    except ValueError:
+        return False
 
 # ------------------------------------------------------------------------------
 # 1. PERSISTENTER SECRET KEY
@@ -161,6 +170,20 @@ def init_db():
     conn.commit()
     conn.close()
 
+def get_platform_setting(key: str, default: str = "") -> str:
+    """Liest einen Einstellungswert sicher aus der Datenbank."""
+    try:
+        conn = get_db()
+        row = conn.execute("SELECT value FROM platform_settings WHERE key = ?", (key,)).fetchone()
+        conn.close()
+        return str(row["value"]) if row and row["value"] is not None else default
+    except Exception:
+        return default
+
+def is_maintenance_active() -> bool:
+    """Prüft, ob der globale Wartungsmodus aktiv ist."""
+    return get_platform_setting("maintenance_mode", "0") == "1"
+
 # ------------------------------------------------------------------------------
 # 4. AUTH & HASHING
 # ------------------------------------------------------------------------------
@@ -185,7 +208,7 @@ def generate_token(user_id: int, email: str, role: str) -> str:
         "uid": user_id,
         "email": email,
         "role": role,
-        "exp": int(time.time()) + (86400 * 30)
+        "exp": int(time.time()) + 43200  # 12 Stunden Token-Gültigkeit (Sitzungsbegrenzung für Alpha-Test)
     }
     payload_json = json.dumps(payload, sort_keys=True)
     sig = hmac.new(SECRET_KEY.encode("utf-8"), payload_json.encode("utf-8"), hashlib.sha256).hexdigest()
@@ -245,18 +268,26 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         auth_header = self.headers.get("Authorization", "")
         if auth_header.startswith("Bearer "):
             token = auth_header[7:].strip()
-            return verify_token(token)
+            verified = verify_token(token)
+            if not verified:
+                return None
+            try:
+                conn = get_db()
+                row = conn.execute("SELECT id, email, name, role, xp, level, streak_days FROM users WHERE id = ?", (verified["uid"],)).fetchone()
+                conn.close()
+                if not row:
+                    return None
+                data = dict(row)
+                data["uid"] = row["id"]
+                return data
+            except Exception:
+                return None
         return None
 
     def get_admin_user(self) -> dict | None:
         user = self.get_auth_user()
-        if not user:
-            return None
-        conn = get_db()
-        row = conn.execute("SELECT id, email, name, role FROM users WHERE id = ?", (user["uid"],)).fetchone()
-        conn.close()
-        if row and row["role"] == "admin":
-            return dict(row)
+        if user and user.get("role") == "admin":
+            return user
         return None
 
     def read_json_body(self) -> dict:
@@ -267,24 +298,50 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         return json.loads(body.decode("utf-8"))
 
     def is_path_blocked(self, path: str) -> bool:
-        clean_path = path.split("?")[0].lower()
-        blocked_extensions = (".db", ".sqlite", ".secret_key", ".py", ".php", ".jsonl")
+        clean_path = urllib.parse.unquote(path).split("?")[0].lower()
+        clean_path = os.path.normpath(clean_path).replace("\\", "/")
+        blocked_extensions = (
+            ".db", ".sqlite", ".sqlite3", ".secret_key", ".py", ".sh", ".php",
+            ".jsonl", ".env", ".bak", ".sql", ".log", ".conf", ".ini", ".yaml", ".yml"
+        )
         if any(clean_path.endswith(ext) for ext in blocked_extensions):
             return True
-        if "/." in clean_path or clean_path.startswith("/."):
+        if "/." in clean_path or clean_path.startswith("."):
             return True
-        if "platform_data.db" in clean_path or ".gamification.json" in clean_path:
+        if clean_path.startswith("/exams/") or clean_path == "/exams":
+            return True
+        if any(seg in clean_path for seg in ["/.git", "/.system_generated", "/.gemini", "platform_data.db", ".secret_key"]):
             return True
         return False
 
     def do_GET(self):
+        # 0. Proxy-Schutz gegen direktes Ansprechen von Port 8008 von außen
+        if not is_trusted_source(self.client_address[0]):
+            return self.send_json({"error": "Direkter Serverzugriff verweigert"}, 403)
+
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
         if self.is_path_blocked(path):
             return self.send_json({"error": "Zugriff verweigert (Geschützte Datei)"}, 403)
 
-        # 1. AUTH ME
+        # 1. ÖFFENTLICHER STATUS-ENDPUNKT (Wartungsmodus, Ankündigung, Registrierung)
+        if path == "/api/platform/status":
+            return self.send_json({
+                "maintenance": is_maintenance_active(),
+                "announcement": get_platform_setting("announcement_banner", ""),
+                "allow_registration": get_platform_setting("allow_registration", "1") == "1"
+            })
+
+        # 2. WARTUNGSMODUS-FILTER FÜR GET-APIS
+        if path.startswith("/api/"):
+            if is_maintenance_active() and not self.get_admin_user():
+                return self.send_json({
+                    "error": "Die Plattform befindet sich derzeit im Wartungsmodus. Nur Administratoren haben Zugriff.",
+                    "maintenance": True
+                }, 503)
+
+        # 3. AUTH ME
         if path == "/api/auth/me":
             user_token = self.get_auth_user()
             if not user_token:
@@ -483,6 +540,10 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_POST(self):
+        # 0. Proxy-Schutz gegen direktes Ansprechen von Port 8008 von außen
+        if not is_trusted_source(self.client_address[0]):
+            return self.send_json({"error": "Direkter Serverzugriff verweigert"}, 403)
+
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         client_ip = self.get_client_ip()
@@ -492,8 +553,19 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception:
             return self.send_json({"error": "Ungültiges JSON"}, 400)
 
+        # Globaler Wartungsmodus-Filter für schreibende Operationen (außer Login und Admin)
+        if path.startswith("/api/") and path != "/api/auth/login" and not path.startswith("/api/admin/"):
+            if is_maintenance_active() and not self.get_admin_user():
+                return self.send_json({
+                    "error": "Die Plattform befindet sich im Wartungsmodus. Schreibaktionen sind derzeit gesperrt.",
+                    "maintenance": True
+                }, 503)
+
         # 1. REGISTRIERUNG
         if path == "/api/auth/register":
+            if is_maintenance_active() or get_platform_setting("allow_registration", "1") != "1":
+                return self.send_json({"error": "Die Registrierung ist derzeit deaktiviert (Wartungsmodus oder Administrator-Sperre)."}, 403)
+
             if not rate_limiter.is_allowed(f"reg_{client_ip}", max_requests=5, window_seconds=60):
                 return self.send_json({"error": "Zu viele Registrierungsversuche. Bitte warte eine Minute."}, 429)
 
@@ -530,7 +602,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             finally:
                 conn.close()
 
-        # 2. LOGIN (mit Constant-Time Schutz gegen Enumeration)
+        # 2. LOGIN (mit Constant-Time Schutz gegen Enumeration & Wartungsmodus-Prüfung)
         elif path == "/api/auth/login":
             if not rate_limiter.is_allowed(f"login_{client_ip}", max_requests=8, window_seconds=60):
                 return self.send_json({"error": "Zu viele Login-Versuche. Bitte warte eine Minute."}, 429)
@@ -548,6 +620,13 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             if not verify_password(password, user["password_hash"], user["salt"]):
                 return self.send_json({"error": "Ungültige E-Mail-Adresse oder Passwort"}, 401)
+
+            # Wartungsmodus: Nur Administratoren dürfen sich anmelden
+            if is_maintenance_active() and user["role"] != "admin":
+                return self.send_json({
+                    "error": "Die Plattform befindet sich im Wartungsmodus. Der Login ist vorübergehend nur für Administratoren freigeschaltet.",
+                    "maintenance": True
+                }, 503)
 
             token = generate_token(user["id"], user["email"], user["role"])
             return self.send_json({

@@ -454,6 +454,17 @@
     }
 
     async function loadWorkspaceData() {
+      // 🔒 Strikter Zugangsschutz für den Alpha-Test
+      if (window.AUTH && typeof window.AUTH.requireAuth === "function") {
+        if (!window.AUTH.requireAuth({
+          allowClose: false,
+          title: "🔒 Anmeldung für die Web-IDE erforderlich",
+          message: "Um deinen Code-Editor zu laden und interaktiv zu programmieren, melde dich bitte mit deinem Test-Account an."
+        })) {
+          return;
+        }
+      }
+
       try {
         await loadCourseManifest();
         setupNextChapterButton();

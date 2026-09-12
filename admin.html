@@ -460,8 +460,12 @@
       document.getElementById('modal-create-user').style.display = 'flex';
     }
 
+    function getAuthToken() {
+      return (window.AUTH && window.AUTH.token) || sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token') || '';
+    }
+
     async function loadAdminData() {
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
       if (!token) {
         showAuthGuard();
         return;
@@ -573,8 +577,8 @@
             </td>
             <td style="color: #64748b; font-size: 0.8rem;">${createdDate}</td>
             <td style="text-align: right;">
-              <button type="button" class="admin-btn" onclick="openResetPasswordModal(${u.id}, '${escapeHtml(u.name)}')" title="Passwort zurücksetzen">🔑</button>
-              <button type="button" class="admin-btn admin-btn-danger" onclick="deleteUser(${u.id}, '${escapeHtml(u.name)}')" title="Benutzer löschen">🗑️</button>
+              <button type="button" class="admin-btn" onclick="openResetPasswordModal(${u.id})" title="Passwort zurücksetzen">🔑</button>
+              <button type="button" class="admin-btn admin-btn-danger" onclick="deleteUser(${u.id})" title="Benutzer löschen">🗑️</button>
             </td>
           </tr>
         `;
@@ -583,7 +587,12 @@
 
     function escapeHtml(t) {
       if (!t) return '';
-      return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      return String(t)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     // Filter Users
@@ -608,7 +617,7 @@
 
     // Change Role
     async function changeUserRole(userId, newRole) {
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
       try {
         const res = await fetch('/api/admin/users/role', {
           method: 'POST',
@@ -628,10 +637,12 @@
       }
     }
 
-    // Delete User
-    async function deleteUser(userId, name) {
+    // Delete User (sicher ohne inline string parameters)
+    async function deleteUser(userId) {
+      const user = ALL_USERS.find(u => u.id === userId);
+      const name = user ? user.name : `#${userId}`;
       if (!confirm(`Soll der Benutzer '${name}' (ID: ${userId}) wirklich unwiderruflich gelöscht werden?`)) return;
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
       try {
         const res = await fetch('/api/admin/users/delete', {
           method: 'POST',
@@ -651,8 +662,10 @@
       }
     }
 
-    // Open Reset Password
-    function openResetPasswordModal(userId, name) {
+    // Open Reset Password (sicher ohne inline string parameters)
+    function openResetPasswordModal(userId) {
+      const user = ALL_USERS.find(u => u.id === userId);
+      const name = user ? user.name : `#${userId}`;
       document.getElementById('reset-user-id').value = userId;
       document.getElementById('reset-user-name').innerText = name;
       document.getElementById('reset-new-password').value = '';
@@ -664,7 +677,7 @@
       e.preventDefault();
       const userId = document.getElementById('reset-user-id').value;
       const newPassword = document.getElementById('reset-new-password').value;
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
 
       try {
         const res = await fetch('/api/admin/users/reset-password', {
@@ -691,7 +704,7 @@
       const email = document.getElementById('create-email').value.trim();
       const password = document.getElementById('create-password').value;
       const role = document.getElementById('create-role').value;
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
 
       try {
         const res = await fetch('/api/admin/users/create', {
@@ -724,7 +737,7 @@
           const d = await res.json();
           const s = d.settings || {};
           document.getElementById('setting-announcement').value = s.announcement_banner || '';
-          document.getElementById('setting-allow-reg').checked = (s.allow_registrations !== '0');
+          document.getElementById('setting-allow-reg').checked = (s.allow_registration !== '0' && s.allow_registrations !== '0');
           document.getElementById('setting-maintenance').checked = (s.maintenance_mode === '1');
         }
       } catch (e) { }
@@ -732,11 +745,14 @@
 
     document.getElementById('admin-settings-form').onsubmit = async (e) => {
       e.preventDefault();
-      const token = localStorage.getItem('auth_token');
+      const token = getAuthToken();
+      const isMaint = document.getElementById('setting-maintenance').checked;
+      const isAllowReg = document.getElementById('setting-allow-reg').checked;
       const settings = {
         announcement_banner: document.getElementById('setting-announcement').value.trim(),
-        allow_registrations: document.getElementById('setting-allow-reg').checked ? '1' : '0',
-        maintenance_mode: document.getElementById('setting-maintenance').checked ? '1' : '0'
+        allow_registration: isAllowReg ? '1' : '0',
+        allow_registrations: isAllowReg ? '1' : '0',
+        maintenance_mode: isMaint ? '1' : '0'
       };
 
       try {
@@ -747,7 +763,10 @@
         });
         const d = await res.json();
         if (res.ok) {
-          alert("Einstellungen erfolgreich gespeichert!");
+          alert("Plattform-Einstellungen erfolgreich gespeichert! " + (isMaint ? "(⚠️ Wartungsmodus ist nun AKTIV)" : "(Wartungsmodus ist inaktiv)"));
+          if (window.AUTH && window.AUTH.checkStatus) {
+            window.AUTH.checkStatus();
+          }
         } else {
           alert("Fehler: " + d.error);
         }
