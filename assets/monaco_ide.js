@@ -106,6 +106,15 @@
 
   // 2. Code-Ausführung via aktivem Language-Runner
   async function runCode() {
+    if (window.AUTH && !window.AUTH.isLoggedIn()) {
+      window.AUTH.requireAuth({
+        allowClose: false,
+        title: '🔒 Registrierung erforderlich',
+        message: 'Um Code in der Web-IDE auszuführen, erstelle bitte einen kostenlosen Account oder melde dich an.'
+      });
+      return;
+    }
+
     const code = getEditorCode();
     clearTerminal();
 
@@ -128,6 +137,15 @@
 
   // 3. Test-Ausführung via aktivem Language-Runner
   async function runTests() {
+    if (window.AUTH && !window.AUTH.isLoggedIn()) {
+      window.AUTH.requireAuth({
+        allowClose: false,
+        title: '🔒 Registrierung erforderlich',
+        message: 'Um automatisierte Tests auszuführen und Lernfortschritt zu speichern, erstelle bitte einen kostenlosen Account oder melde dich an.'
+      });
+      return;
+    }
+
     if (!currentChapterData || !currentChapterData.testCode) {
       logToTerminal("❌ Keine Unittests für dieses Kapitel gefunden.\n", "error");
       return;

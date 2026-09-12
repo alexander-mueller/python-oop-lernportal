@@ -1,267 +1,390 @@
 /**
- * 🔐 AUTHENTIFIZIERUNG, USER MANAGEMENT & SINGLE-USER-MODUS 🔐
- * ==============================================================
- * Unterstützt:
- * 1. 🚀 Single-User Gast-Modus (1-Klick Start ohne Registrierung, 100% offline-fähig)
- * 2. 🎓 Solo-Selbstlerner Konto (Cloud-Save, Streaks, XP & Zertifikate ohne Klassenbindung)
- * 3. 🏫 Schulklassen-Modus (Schüler & Lehrer mit Lernmatrix)
+ * 🔐 AUTHENTIFIZIERUNG & ZUGANGSSCHUTZ (AUTH GUARD) 🔐
+ * =======================================================
+ * IT-Praxisportal – Benutzer-Authentifizierung und Schutz aller Kurse & Web-IDE.
+ * Zugriff auf Kurse, Lerneinheiten und Web-IDE erfordert ein registriertes Benutzerkonto.
  */
 
 (function () {
+  'use strict';
+
   function escapeHtml(text) {
-    if (!text) return "";
-    return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    if (!text) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Initialisiere Auth-Objekt
+  const initialUser = JSON.parse(localStorage.getItem('auth_user') || 'null');
+  // Alte Gast-Sitzungen ungültig machen
+  if (initialUser && initialUser.isGuest) {
+    localStorage.removeItem('auth_user');
+    localStorage.removeItem('auth_token');
   }
 
   window.AUTH = {
-    token: localStorage.getItem("auth_token") || null,
-    user: JSON.parse(localStorage.getItem("auth_user") || "null"),
+    token: localStorage.getItem('auth_token') || null,
+    user: (initialUser && !initialUser.isGuest) ? initialUser : null,
 
-    // 1. GAST / SINGLE-USER MODUS (Sofort loslegen ohne Login)
-    startGuestSoloMode() {
-      const guestUser = {
-        id: "solo_guest",
-        name: "Solo-Entwickler",
-        email: "gast@lokal",
-        role: "solo",
-        xp: 0,
-        level: 1,
-        isGuest: true
-      };
-      this.setSession("guest_token_" + Date.now(), guestUser);
-      if (document.getElementById("auth-modal-overlay")) {
-        document.getElementById("auth-modal-overlay").remove();
-      }
-      this.updateUI();
-      return guestUser;
-    },
-
-    // 2. REGISTRIERUNG
-    async register(name, email, password, role = "solo") {
-      try {
-        const res = await fetch("/api/auth/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, role })
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Registrierung fehlgeschlagen");
-        
-        this.setSession(data.token, data.user);
-        return { success: true, user: data.user };
-      } catch (err) {
-        // Fallback für statische Offline-Nutzung
-        const mockUser = { id: Date.now(), name, email, role, xp: 0, level: 1 };
-        this.setSession("offline_token_" + Date.now(), mockUser);
-        return { success: true, user: mockUser, offline: true };
-      }
-    },
-
-    // 3. LOGIN
-    async login(email, password) {
-      try {
-        const res = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen");
-
-        this.setSession(data.token, data.user);
-        return { success: true, user: data.user };
-      } catch (err) {
-        const mockUser = { id: 1, name: email.split("@")[0], email, role: "solo", xp: 150, level: 2 };
-        this.setSession("offline_token", mockUser);
-        return { success: true, user: mockUser, offline: true };
-      }
-    },
-
-    logout() {
-      this.token = null;
-      this.user = null;
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("auth_user");
-      window.location.reload();
+    isLoggedIn() {
+      return !!(this.token && this.user && !this.user.isGuest && this.user.email);
     },
 
     setSession(token, user) {
       this.token = token;
       this.user = user;
-      localStorage.setItem("auth_token", token);
-      localStorage.setItem("auth_user", JSON.stringify(user));
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('auth_user', JSON.stringify(user));
       this.updateUI();
     },
 
-    async fetchMe() {
-      if (!this.token || (this.user && this.user.isGuest)) return this.user;
+    logout() {
+      this.token = null;
+      this.user = null;
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_user');
+      this.updateUI();
+
+      // Wenn auf einer geschützten Kursseite, zur Startseite leiten
+      const p = window.location.pathname;
+      if (p.includes('/courses/') || p.includes('/lehrpfad_') || p.endsWith('workspace.html')) {
+        window.location.href = window.location.origin + '/index.html?auth=login';
+      }
+    },
+
+    async register(name, email, password, role = 'solo') {
       try {
-        const res = await fetch("/api/auth/me", {
-          headers: { Authorization: `Bearer ${this.token}` }
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, role })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Registrierung fehlgeschlagen');
+
+        this.setSession(data.token, data.user);
+        return { success: true, user: data.user };
+      } catch (err) {
+        // Lokaler Fallback falls Backend temporär nicht erreichbar
+        console.warn('API-Registrierung fehlgeschlagen, nutze lokalen Speicher:', err.message);
+        const localUser = { id: Date.now(), name, email, role, xp: 0, level: 1 };
+        this.setSession('local_token_' + Date.now(), localUser);
+        return { success: true, user: localUser };
+      }
+    },
+
+    async login(email, password) {
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Anmeldung fehlgeschlagen');
+
+        this.setSession(data.token, data.user);
+        return { success: true, user: data.user };
+      } catch (err) {
+        console.warn('API-Login fehlgeschlagen, versuche lokalen Fallback:', err.message);
+        if (email && password && password.length >= 6) {
+          const localUser = { id: 1, name: email.split('@')[0], email, role: 'solo', xp: 100, level: 1 };
+          this.setSession('local_token_' + Date.now(), localUser);
+          return { success: true, user: localUser };
+        }
+        return { success: false, error: err.message || 'Ungültige Anmeldedaten' };
+      }
+    },
+
+    async fetchMe() {
+      if (!this.token) return;
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${this.token}` }
         });
         if (res.ok) {
           const data = await res.json();
           this.user = data.user;
-          localStorage.setItem("auth_user", JSON.stringify(data.user));
+          localStorage.setItem('auth_user', JSON.stringify(data.user));
           this.updateUI();
-          return data.user;
         }
-      } catch (e) {}
-      return this.user;
+      } catch (e) {
+        // Offline / Netzwerkfehler ignorieren
+      }
+    },
+
+    requireAuth(options = {}) {
+      if (this.isLoggedIn()) {
+        return true;
+      }
+      this.showAuthBarrier(options);
+      return false;
+    },
+
+    showAuthBarrier(options = {}) {
+      window.openAuthModal(options.mode || 'register', {
+        allowClose: options.allowClose !== undefined ? options.allowClose : false,
+        title: options.title || '🔒 Registrierung erforderlich',
+        message: options.message || 'Dieser Kursbereich und die Web-IDE sind exklusiv für registrierte Teilnehmer. Erstelle einen kostenlosen Account oder melde dich an, um sofort zu starten.',
+        onSuccess: () => {
+          if (options.onSuccess) options.onSuccess();
+          else window.location.reload();
+        }
+      });
     },
 
     updateUI() {
-      const userBadge = document.getElementById("nav-auth-user");
-      const loginBtn = document.getElementById("nav-btn-login");
-      const registerBtn = document.getElementById("nav-btn-register");
-      const teacherLink = document.getElementById("nav-teacher-link");
-      const soloModeBadge = document.getElementById("solo-mode-indicator");
+      const loggedIn = this.isLoggedIn();
 
-      if (this.user) {
-        if (userBadge) {
-          userBadge.style.display = "inline-flex";
-          const roleLabel = this.user.role === "teacher" ? "👨‍🏫 Lehrer" : (this.user.role === "solo" ? "🎓 Solo" : "🎒 Schüler");
-          userBadge.innerHTML = `<span>👤 ${escapeHtml(this.user.name)} (${roleLabel})</span> <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">${this.user.xp || 0} XP</span>`;
+      // Topbar Elemente in index.html
+      const userSpan = document.getElementById('nav-auth-user');
+      const loginBtn = document.getElementById('nav-btn-login');
+      const registerBtn = document.getElementById('nav-btn-register');
+      const guestBtn = document.getElementById('nav-btn-guest');
+      const teacherLink = document.getElementById('nav-teacher-link');
+      const heroPrimaryCta = document.getElementById('hero-primary-cta');
+
+      if (guestBtn) guestBtn.style.display = 'none'; // Gast-Button permanent ausblenden
+
+      if (loggedIn && this.user) {
+        if (userSpan) {
+          userSpan.style.display = 'inline-flex';
+          userSpan.innerHTML = `👤 ${escapeHtml(this.user.name || this.user.email)}`;
         }
-        if (loginBtn) loginBtn.style.display = "none";
-        if (registerBtn) {
-          registerBtn.innerText = this.user.isGuest ? "Konto anlegen" : "Abmelden";
-          registerBtn.onclick = (e) => {
-            e.preventDefault();
-            if (this.user.isGuest) {
-              window.openAuthModal("register");
-            } else {
+        if (loginBtn) {
+          loginBtn.style.display = 'inline-flex';
+          loginBtn.innerText = 'Abmelden';
+          loginBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+          loginBtn.style.color = '#f87171';
+          loginBtn.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+          loginBtn.onclick = () => {
+            if (confirm('Möchtest du dich wirklich abmelden?')) {
               this.logout();
             }
           };
         }
-        if (teacherLink) {
-          teacherLink.style.display = this.user.role === "teacher" ? "inline-flex" : "none";
+        if (registerBtn) {
+          registerBtn.innerText = '💻 Zum Lernbereich';
+          registerBtn.style.background = '#10b981';
+          registerBtn.onclick = () => {
+            window.location.href = 'workspace.html?course=python';
+          };
         }
-        if (soloModeBadge) {
-          soloModeBadge.style.display = (this.user.role === "solo" || this.user.isGuest) ? "inline-block" : "none";
+        if (heroPrimaryCta) {
+          heroPrimaryCta.innerHTML = '<span>▶ Weiterlernen (Web-IDE)</span>';
+          heroPrimaryCta.onclick = (e) => {
+            window.location.href = 'workspace.html?course=python';
+          };
+        }
+        if (teacherLink) {
+          teacherLink.style.display = this.user.role === 'teacher' ? 'inline-flex' : 'none';
         }
       } else {
-        if (userBadge) userBadge.style.display = "none";
-        if (loginBtn) loginBtn.style.display = "inline-flex";
-        if (registerBtn) {
-          registerBtn.innerText = "Konto erstellen";
-          registerBtn.onclick = () => window.openAuthModal("register");
+        if (userSpan) userSpan.style.display = 'none';
+        if (loginBtn) {
+          loginBtn.style.display = 'inline-flex';
+          loginBtn.innerText = '🔑 Anmelden';
+          loginBtn.style.background = 'rgba(255,255,255,0.12)';
+          loginBtn.style.color = 'white';
+          loginBtn.style.borderColor = 'rgba(255,255,255,0.2)';
+          loginBtn.onclick = () => window.openAuthModal('login', { allowClose: true });
         }
-        if (teacherLink) teacherLink.style.display = "none";
-        if (soloModeBadge) soloModeBadge.style.display = "inline-block";
+        if (registerBtn) {
+          registerBtn.style.display = 'inline-flex';
+          registerBtn.innerText = '✨ Kostenlos registrieren';
+          registerBtn.style.background = '#0284c7';
+          registerBtn.onclick = () => window.openAuthModal('register', { allowClose: true });
+        }
+        if (heroPrimaryCta) {
+          heroPrimaryCta.innerHTML = '<span>🚀 Jetzt kostenlos registrieren</span>';
+          heroPrimaryCta.onclick = (e) => {
+            e.preventDefault();
+            window.openAuthModal('register', { allowClose: true });
+          };
+        }
+        if (teacherLink) teacherLink.style.display = 'none';
       }
+
+      // Aktualisiere Kurs-Karten Buttons auf der Startseite
+      document.querySelectorAll('.portal-card-action-btn').forEach(btn => {
+        const courseId = btn.getAttribute('data-course-id') || 'python';
+        const targetUrl = btn.getAttribute('data-course-url') || `workspace.html?course=${courseId}`;
+        
+        if (loggedIn) {
+          btn.innerHTML = '<span>▶ Kurs starten</span> <span>&rarr;</span>';
+          btn.classList.remove('locked');
+          btn.onclick = () => { window.location.href = targetUrl; };
+        } else {
+          btn.innerHTML = '<span>🔒 Kostenlos freischalten</span>';
+          btn.classList.add('locked');
+          btn.onclick = (e) => {
+            e.preventDefault();
+            window.openAuthModal('register', {
+              allowClose: true,
+              title: '🔒 Kurszugang freischalten',
+              message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf diesen Kurs und alle 216 Module zu erhalten.'
+            });
+          };
+        }
+      });
     }
   };
 
-  // Auth Modal UI mit Single-User & Gast-Option
-  window.openAuthModal = function (mode = "login") {
-    let modal = document.getElementById("auth-modal-overlay");
-    if (!modal) {
-      modal = document.createElement("div");
-      modal.id = "auth-modal-overlay";
-      modal.className = "certificate-overlay";
-      modal.innerHTML = `
-        <div class="certificate-container" style="max-width: 440px; padding: 28px; text-align: left;">
-          <h3 id="auth-modal-title" style="margin-top: 0; font-size: 1.35rem; color: var(--text-main);">🔑 Anmelden</h3>
-          <p id="auth-modal-sub" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px;">Speichere deinen Code, XP und Zertifikate dauerhaft in der Cloud.</p>
+  // Auth Modal UI
+  window.openAuthModal = function (initialMode = 'register', options = {}) {
+    const allowClose = options.allowClose !== false;
+    let modal = document.getElementById('auth-modal-overlay');
+    if (modal) modal.remove();
 
-          <!-- 1-Klick Single-User Gast-Modus -->
-          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px; text-align: center;">
-            <div style="font-weight: 700; color: #166534; font-size: 0.9rem; margin-bottom: 4px;">🚀 Single-User Modus (Sofort starten)</div>
-            <p style="font-size: 0.8rem; color: #1e293b; margin: 0 0 8px 0;">Lerne im eigenen Tempo – ohne Registrierung, ohne Klasse.</p>
-            <button type="button" class="btn" style="background: #059669; font-size: 0.82rem; padding: 6px 14px; width: 100%; justify-content: center;" onclick="window.AUTH.startGuestSoloMode()">Als Solo-Selbstlerner starten &rarr;</button>
-          </div>
+    modal = document.createElement('div');
+    modal.id = 'auth-modal-overlay';
+    modal.className = 'certificate-overlay';
+    modal.style.zIndex = '99999';
 
-          <div style="text-align: center; color: #94a3b8; font-size: 0.8rem; margin: 12px 0; position: relative;">
-            <span style="background: white; padding: 0 10px; position: relative; z-index: 1;">ODER MIT KONTO</span>
-            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e2e8f0; z-index: 0;"></div>
-          </div>
-          
-          <form id="auth-form" style="display: flex; flex-direction: column; gap: 12px;">
-            <div id="auth-field-name" style="display: none;">
-              <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">Dein Name:</label>
-              <input type="text" id="auth-input-name" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.92rem;" placeholder="z.B. Alex Müller">
+    modal.innerHTML = `
+      <div class="certificate-container" style="max-width: 460px; padding: 28px 30px; text-align: left; position: relative; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-radius: 16px;">
+        ${allowClose ? `
+          <button type="button" id="auth-modal-close-x" style="position: absolute; top: 16px; right: 18px; background: transparent; border: none; font-size: 1.3rem; color: #94a3b8; cursor: pointer; line-height: 1;" title="Schließen">✕</button>
+        ` : ''}
+
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🎓</div>
+          <div>
+            <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);" id="auth-modal-title">
+              ${options.title || (initialMode === 'register' ? '✨ Kostenlos registrieren' : '🔑 Anmelden')}
             </div>
-
-            <div>
-              <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">E-Mail-Adresse:</label>
-              <input type="email" id="auth-input-email" required style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.92rem;" placeholder="name@beispiel.de">
-            </div>
-
-            <div>
-              <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">Passwort:</label>
-              <input type="password" id="auth-input-password" required minlength="6" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.92rem;" placeholder="Mindestens 6 Zeichen">
-            </div>
-
-            <div id="auth-field-role" style="display: none;">
-              <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">Lern-Modus:</label>
-              <select id="auth-select-role" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.92rem;">
-                <option value="solo">🎓 Solo-Selbstlerner (Eigenes Tempo, keine Klasse nötig)</option>
-                <option value="student">🎒 Schüler (Teil einer Schulklasse)</option>
-                <option value="teacher">👨‍🏫 Lehrkraft / Dozent (Klassen verwalten)</option>
-              </select>
-            </div>
-
-            <div id="auth-error-msg" style="color: var(--danger); font-size: 0.82rem; display: none;"></div>
-
-            <button type="submit" id="auth-submit-btn" class="btn" style="margin-top: 8px; justify-content: center;">Anmelden</button>
-            <button type="button" class="btn btn-secondary" onclick="document.getElementById('auth-modal-overlay').remove();" style="justify-content: center;">Abbrechen</button>
-          </form>
-
-          <div style="margin-top: 14px; text-align: center; font-size: 0.84rem;">
-            <a href="#" id="auth-toggle-mode" style="color: var(--primary); text-decoration: none; font-weight: 600;">Noch kein Konto? Jetzt registrieren &rarr;</a>
+            <div style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;">IT-PRAXISPORTAL ACCREDITATION</div>
           </div>
         </div>
-      `;
-      document.body.appendChild(modal);
-    }
 
-    const titleEl = document.getElementById("auth-modal-title");
-    const nameField = document.getElementById("auth-field-name");
-    const roleField = document.getElementById("auth-field-role");
-    const submitBtn = document.getElementById("auth-submit-btn");
-    const toggleLink = document.getElementById("auth-toggle-mode");
-    const errorMsg = document.getElementById("auth-error-msg");
-    const form = document.getElementById("auth-form");
+        <p id="auth-modal-desc" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5;">
+          ${options.message || 'Erhalte sofortigen Zugriff auf 13 Praxis-Kurse, 216 interaktive Module, die Web-IDE und IHK AP1 & AP2 Prüfungsfragen.'}
+        </p>
 
-    let isRegister = mode === "register";
+        <!-- Mode Tabs -->
+        <div style="display: flex; background: #f1f5f9; border-radius: 8px; padding: 4px; margin-bottom: 18px;">
+          <button type="button" id="auth-tab-register" style="flex: 1; padding: 8px; font-size: 0.84rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; transition: all 0.15s ease;">Konto erstellen</button>
+          <button type="button" id="auth-tab-login" style="flex: 1; padding: 8px; font-size: 0.84rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; transition: all 0.15s ease;">Anmelden</button>
+        </div>
 
-    function updateModalMode() {
+        <form id="auth-form" style="display: flex; flex-direction: column; gap: 13px;">
+          <div id="auth-field-name">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Dein vollständiger Name:</label>
+            <input type="text" id="auth-input-name" style="width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.92rem; outline: none;" placeholder="z.B. Alex Müller">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">E-Mail-Adresse:</label>
+            <input type="email" id="auth-input-email" required style="width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.92rem; outline: none;" placeholder="name@beispiel.de">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Passwort:</label>
+            <input type="password" id="auth-input-password" required minlength="6" style="width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.92rem; outline: none;" placeholder="Mindestens 6 Zeichen">
+          </div>
+
+          <div id="auth-field-role">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Deine Rolle / Lernziel:</label>
+            <select id="auth-select-role" style="width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.88rem; outline: none; background: white;">
+              <option value="solo">🎓 Solo-Selbstlerner & Quereinsteiger</option>
+              <option value="student">💼 Auszubildender Fachinformatiker (FIAE / FISI)</option>
+              <option value="teacher">👨‍🏫 Lehrkraft / Dozent / Ausbilder</option>
+            </select>
+          </div>
+
+          <div id="auth-error-box" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 9px 12px; border-radius: 6px; font-size: 0.82rem;"></div>
+
+          <button type="submit" id="auth-submit-btn" class="btn" style="width: 100%; justify-content: center; padding: 11px; font-size: 0.92rem; font-weight: 800; background: #0284c7; color: white; border-radius: 8px; margin-top: 4px; border: none; cursor: pointer;">
+            Jetzt kostenlos registrieren &rarr;
+          </button>
+
+          ${!allowClose ? `
+            <a href="${window.location.origin}/index.html" class="btn btn-secondary" style="width: 100%; justify-content: center; padding: 9px; font-size: 0.86rem; text-decoration: none; border-radius: 8px;">
+              &larr; Zurück zur Startseite
+            </a>
+          ` : `
+            <button type="button" class="btn btn-secondary" id="auth-cancel-btn" style="width: 100%; justify-content: center; padding: 9px; font-size: 0.86rem; border-radius: 8px;">
+              Abbrechen
+            </button>
+          `}
+        </form>
+
+        <div style="margin-top: 14px; text-align: center; font-size: 0.76rem; color: #94a3b8;">
+          🔒 100% DSGVO-konform • Deutsche Server • Keine Kreditkarte erforderlich
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    let isRegister = (initialMode === 'register');
+    const tabReg = document.getElementById('auth-tab-register');
+    const tabLog = document.getElementById('auth-tab-login');
+    const nameField = document.getElementById('auth-field-name');
+    const roleField = document.getElementById('auth-field-role');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    const errorBox = document.getElementById('auth-error-box');
+    const form = document.getElementById('auth-form');
+
+    function switchMode(reg) {
+      isRegister = reg;
       if (isRegister) {
-        titleEl.innerText = "✨ Neues Konto erstellen";
-        nameField.style.display = "block";
-        roleField.style.display = "block";
-        submitBtn.innerText = "Konto registrieren";
-        toggleLink.innerText = "Bereits registriert? Hier anmelden &rarr;";
+        tabReg.style.background = '#ffffff';
+        tabReg.style.color = '#0284c7';
+        tabReg.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        tabLog.style.background = 'transparent';
+        tabLog.style.color = '#64748b';
+        tabLog.style.boxShadow = 'none';
+
+        nameField.style.display = 'block';
+        roleField.style.display = 'block';
+        submitBtn.innerText = 'Jetzt kostenlos registrieren →';
+        submitBtn.style.background = '#0284c7';
       } else {
-        titleEl.innerText = "🔑 Anmelden";
-        nameField.style.display = "none";
-        roleField.style.display = "none";
-        submitBtn.innerText = "Anmelden";
-        toggleLink.innerText = "Noch kein Konto? Jetzt registrieren &rarr;";
+        tabLog.style.background = '#ffffff';
+        tabLog.style.color = '#0284c7';
+        tabLog.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        tabReg.style.background = 'transparent';
+        tabReg.style.color = '#64748b';
+        tabReg.style.boxShadow = 'none';
+
+        nameField.style.display = 'none';
+        roleField.style.display = 'none';
+        submitBtn.innerText = 'Anmelden →';
+        submitBtn.style.background = '#059669';
       }
-      errorMsg.style.display = "none";
+      errorBox.style.display = 'none';
     }
 
-    updateModalMode();
+    tabReg.onclick = () => switchMode(true);
+    tabLog.onclick = () => switchMode(false);
+    switchMode(isRegister);
 
-    toggleLink.onclick = (e) => {
-      e.preventDefault();
-      isRegister = !isRegister;
-      updateModalMode();
-    };
+    if (allowClose) {
+      const closeX = document.getElementById('auth-modal-close-x');
+      if (closeX) closeX.onclick = () => modal.remove();
+      const cancelBtn = document.getElementById('auth-cancel-btn');
+      if (cancelBtn) cancelBtn.onclick = () => modal.remove();
+      modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+      };
+    }
 
     form.onsubmit = async (e) => {
       e.preventDefault();
-      errorMsg.style.display = "none";
-      const email = document.getElementById("auth-input-email").value.trim();
-      const password = document.getElementById("auth-input-password").value;
-      const name = document.getElementById("auth-input-name")?.value.trim() || email.split("@")[0];
-      const role = document.getElementById("auth-select-role")?.value || "solo";
+      errorBox.style.display = 'none';
+
+      const email = document.getElementById('auth-input-email').value.trim();
+      const password = document.getElementById('auth-input-password').value;
+      const name = document.getElementById('auth-input-name')?.value.trim() || email.split('@')[0];
+      const role = document.getElementById('auth-select-role')?.value || 'solo';
 
       submitBtn.disabled = true;
-      submitBtn.innerText = "Bitte warten...";
+      submitBtn.innerText = 'Bitte warten...';
 
       let result;
       if (isRegister) {
@@ -271,20 +394,32 @@
       }
 
       submitBtn.disabled = false;
-      submitBtn.innerText = isRegister ? "Konto registrieren" : "Anmelden";
+      submitBtn.innerText = isRegister ? 'Jetzt kostenlos registrieren →' : 'Anmelden →';
 
       if (result.success) {
-        document.getElementById("auth-modal-overlay")?.remove();
-        alert(`Willkommen, ${result.user.name}! 🚀`);
+        modal.remove();
+        if (options.onSuccess) {
+          options.onSuccess(result.user);
+        } else {
+          // Wenn auf der Startseite: UI aktualisieren
+          window.AUTH.updateUI();
+        }
       } else {
-        errorMsg.innerText = result.error || "Ein Fehler ist aufgetreten";
-        errorMsg.style.display = "block";
+        errorBox.innerText = result.error || 'Fehler bei der Authentifizierung';
+        errorBox.style.display = 'block';
       }
     };
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  // URL-Parameter prüfen (z.B. ?auth=login oder ?auth=register)
+  document.addEventListener('DOMContentLoaded', () => {
     window.AUTH.updateUI();
     window.AUTH.fetchMe();
+
+    const params = new URLSearchParams(window.location.search);
+    const authParam = params.get('auth');
+    if (authParam === 'login' || authParam === 'register') {
+      window.openAuthModal(authParam, { allowClose: true });
+    }
   });
 })();

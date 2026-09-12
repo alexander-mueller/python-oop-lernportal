@@ -90,19 +90,40 @@
   function initSidebar() {
     const rootPrefix = getRootPrefix();
 
-    if (!window.COURSES_MANIFEST) {
-      const manifestScript = document.createElement('script');
-      manifestScript.src = `${rootPrefix}assets/courses_manifest.js`;
-      manifestScript.onload = () => buildSidebar();
-      manifestScript.onerror = () => console.error('Konnte courses_manifest.js nicht laden.');
-      document.head.appendChild(manifestScript);
+    function proceed() {
+      if (!window.COURSES_MANIFEST) {
+        const manifestScript = document.createElement('script');
+        manifestScript.src = `${rootPrefix}assets/courses_manifest.js`;
+        manifestScript.onload = () => buildSidebar();
+        manifestScript.onerror = () => console.error('Konnte courses_manifest.js nicht laden.');
+        document.head.appendChild(manifestScript);
+      } else {
+        buildSidebar();
+      }
+    }
+
+    if (!window.AUTH) {
+      const authScript = document.createElement('script');
+      authScript.src = `${rootPrefix}assets/app_auth.js`;
+      authScript.onload = () => proceed();
+      authScript.onerror = () => proceed();
+      document.head.appendChild(authScript);
     } else {
-      buildSidebar();
+      proceed();
     }
   }
 
   function buildSidebar() {
     if (!window.COURSES_MANIFEST) return;
+
+    // Zugangsschutz: Kurse & Web-IDE erfordern Authentifizierung
+    if (window.AUTH && typeof window.AUTH.requireAuth === 'function') {
+      window.AUTH.requireAuth({
+        allowClose: false,
+        title: '🔒 Registrierung erforderlich',
+        message: 'Um die interaktiven Kursmodule und die Web-IDE zu nutzen, erstelle bitte einen kostenlosen Account oder melde dich an.'
+      });
+    }
 
     // Alte legacy sidebars entfernen falls vorhanden
     document.querySelectorAll('.app-sidebar, .sidebar-mobile-toggle, .sidebar-overlay').forEach(el => el.remove());
