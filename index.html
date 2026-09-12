@@ -279,7 +279,8 @@
     <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Kurs-Dashboard</a>
     <a href="#features-ide" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Monaco Web-IDE</a>
     <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
-    <a href="#zielgruppen" class="mobile-drawer-link" onclick="toggleMobileMenu()">👥 Für wen?</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
     <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #34d399; font-weight: 700;">💻 Zum Kurs-Dashboard &rarr;</a>
     <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
     <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
@@ -747,30 +748,74 @@
 
   </main>
 
-  <!-- 10. CLEAN MARKETING FOOTER -->
-  <footer style="background: #0b0f19; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 24px;">
-    <div class="portal-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div class="portal-brand-logo" style="width: 32px; height: 32px;">
-          <img src="assets/favicon.svg" alt="Logo" style="width: 20px; height: 20px;">
-        </div>
-        <div>
-          <div style="color: white; font-weight: 800; font-size: 1rem;">it-praxisportal.de</div>
-          <div style="font-size: 0.75rem; color: #64748b;">Version 1.0 Alpha &bull; Die moderne Plattform für echte IT-Praxis</div>
+  <!-- 10. MODERN MULTI-COLUMN FOOTER -->
+  <footer id="site-footer" class="portal-footer">
+    <div class="portal-footer-grid">
+      <!-- Brand Column -->
+      <div class="portal-footer-brand">
+        <a href="index.html" class="portal-footer-logo-row">
+          <div class="portal-brand-logo" style="width: 36px; height: 36px;">
+            <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 22px; height: 22px;">
+          </div>
+          <span class="portal-footer-logo-text">IT-Praxisportal</span>
+        </a>
+        <p class="portal-footer-desc">
+          Die interaktive Plattform für Fachinformatiker, Software-Entwickler &amp; IT-Auszubildende. Echte Praxis mit browserbasierter Monaco Web-IDE, CI/CD-Pipelines &amp; realistischer IHK-Abschlussprüfungssimulation.
+        </p>
+        <div class="portal-footer-badge">
+          <span>🟢 Alle Systeme online &bull; Serverstandort Deutschland</span>
         </div>
       </div>
 
-      <div style="display: flex; gap: 20px; font-size: 0.85rem;">
-        <a href="#hero" style="color: #94a3b8; text-decoration: none;">Start</a>
-        <a href="#was-du-bekommst" style="color: #94a3b8; text-decoration: none;">Das Konzept</a>
-        <a href="#dashboard-spotlight" style="color: #94a3b8; text-decoration: none;">Kurs-Dashboard</a>
-        <a href="#ihk-section" style="color: #94a3b8; text-decoration: none;">IHK Prüfung</a>
-        <a href="#features-ide" style="color: #94a3b8; text-decoration: none;">Web-IDE</a>
-        <a href="teacher.html" style="color: #94a3b8; text-decoration: none;">Dozenten</a>
+      <!-- Lehrpfade -->
+      <div class="portal-footer-col">
+        <h4>📚 Lehrpfade</h4>
+        <ul class="portal-footer-links">
+          <li><a href="dashboard.html" class="portal-footer-link">🐍 Python &amp; OOP</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">⚡ JavaScript &amp; Web</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🐧 Linux Bash &amp; DevOps</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🔷 PowerShell Core</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🗄️ SQL &amp; Datenbanken</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🌐 Modernes HTML5 &amp; CSS3</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🦀 Rust, Go, C# &amp; C++</a></li>
+        </ul>
       </div>
 
-      <div style="font-size: 0.8rem; color: #64748b;">
-        🔒 100% DSGVO-konform &bull; Serverstandort Deutschland
+      <!-- Features & Tools -->
+      <div class="portal-footer-col">
+        <h4>💻 Plattform</h4>
+        <ul class="portal-footer-links">
+          <li><a href="dashboard.html" class="portal-footer-link">📊 Kurs-Dashboard</a></li>
+          <li><a href="workspace.html?course=python" class="portal-footer-link">💻 Monaco Web-IDE</a></li>
+          <li><a href="#ihk-section" class="portal-footer-link">🎓 IHK Prüfungstrainer</a></li>
+          <li><a href="dashboard.html#zertifikate-section" class="portal-footer-link">🏆 Zertifikate &amp; Badges</a></li>
+          <li><a href="teacher.html" class="portal-footer-link">👨‍🏫 Dozenten-Portal</a></li>
+          <li><a href="admin.html" class="portal-footer-link">🛡️ Administration</a></li>
+        </ul>
+      </div>
+
+      <!-- Rechtliches & Kontakt -->
+      <div class="portal-footer-col">
+        <h4>⚖️ Rechtliches &amp; Kontakt</h4>
+        <ul class="portal-footer-links">
+          <li><a href="impressum.html" class="portal-footer-link">⚖️ Impressum (§ 5 DDG)</a></li>
+          <li><a href="datenschutz.html" class="portal-footer-link">🔒 Datenschutzerklärung (DSGVO)</a></li>
+          <li><a href="mailto:kontakt@it-praxisportal.de" class="portal-footer-link">✉️ Support &amp; Kontakt</a></li>
+          <li><span class="portal-footer-link" style="color: #10b981; cursor: default;">🛡️ Zero Tracking Cookies</span></li>
+          <li><span class="portal-footer-link" style="color: #64748b; cursor: default;">🇩🇪 Deutsches Hosting</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="portal-footer-bottom">
+      <div>
+        &copy; 2026 IT-Praxisportal &bull; Alexander Müller. Alle Rechte vorbehalten.
+      </div>
+      <div class="portal-footer-bottom-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="#hero">Nach oben &uarr;</a>
       </div>
     </div>
   </footer>
@@ -789,6 +834,13 @@
 
     if (window.location.hash === '#menu') {
       document.addEventListener('DOMContentLoaded', () => toggleMobileMenu());
+    } else if (window.location.hash) {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const el = document.querySelector(window.location.hash);
+          if (el) el.scrollIntoView();
+        }, 100);
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {

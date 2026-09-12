@@ -2185,3 +2185,279 @@ body.workspace-page.has-course-sidebar {
   z-index: 9998;
 }
 
+/* ==========================================================================
+   MODERN PORTAL FOOTER (RESPONSIVE MULTI-COLUMN DESIGN)
+   ========================================================================== */
+.portal-footer {
+  background: #070b12;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 64px 24px 32px 24px;
+  position: relative;
+  font-size: 0.9rem;
+  overflow-x: hidden;
+}
+
+.portal-footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1.2fr 1.2fr 1.2fr;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto 52px auto;
+}
+
+.portal-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.portal-footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.portal-footer-logo-text {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.portal-footer-desc {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  max-width: 380px;
+  margin: 0;
+}
+
+.portal-footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 99px;
+  width: fit-content;
+}
+
+.portal-footer-col h4 {
+  color: #f8fafc;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.portal-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.portal-footer-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.portal-footer-link:hover {
+  color: #38bdf8;
+  transform: translateX(2px);
+}
+
+.portal-footer-bottom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 0.84rem;
+  color: #64748b;
+}
+
+.portal-footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.portal-footer-bottom-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.portal-footer-bottom-links a:hover {
+  color: #38bdf8;
+}
+
+/* Legal Pages Styling */
+.legal-page-header {
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #090d16 100%);
+  padding: 64px 24px 44px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.legal-page-title {
+  font-size: clamp(1.5rem, 5.5vw, 2.6rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.legal-page-subtitle {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.legal-content-container {
+  max-width: 900px;
+  margin: -24px auto 80px auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.legal-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+  line-height: 1.75;
+}
+
+.legal-card h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 36px 0 14px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legal-card h2:first-of-type {
+  margin-top: 0;
+}
+
+.legal-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 24px 0 8px 0;
+}
+
+.legal-card p, .legal-card ul {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.legal-card ul {
+  padding-left: 24px;
+}
+
+.legal-card li {
+  margin-bottom: 8px;
+}
+
+.legal-card strong {
+  color: #0f172a;
+}
+
+.legal-info-box {
+  background: #f8fafc;
+  border-left: 4px solid #0284c7;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 0.92rem;
+  color: #334155;
+}
+
+.legal-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* Responsive Overrides for Footer & Legal */
+@media (max-width: 1024px) {
+  .portal-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .portal-footer {
+    padding: 48px 16px 28px 16px;
+  }
+  .portal-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  .portal-footer-desc {
+    max-width: 100%;
+  }
+  .portal-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .portal-footer-bottom-links {
+    gap: 14px;
+  }
+  .legal-card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+  .legal-page-header {
+    padding: 44px 16px 36px 16px;
+  }
+}
+

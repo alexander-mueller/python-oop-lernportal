@@ -182,8 +182,8 @@
     <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">📚 Meine Kurse</a>
     <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK AP1 &amp; AP2 Prüfung</a>
     <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Web-IDE starten</a>
-    <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🏆 Zertifikate</a>
-    <a href="index.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🌐 Zur Landingpage</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
     <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
     <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
   </div>
@@ -819,29 +819,74 @@
 
   </main>
 
-  <!-- 6. CLEAN FOOTER -->
-  <footer style="background: #0b0f19; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 24px;">
-    <div class="portal-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <div class="portal-brand-logo" style="width: 32px; height: 32px;">
-          <img src="assets/favicon.svg" alt="Logo" style="width: 20px; height: 20px;">
-        </div>
-        <div>
-          <div style="color: white; font-weight: 800; font-size: 1rem;">it-praxisportal.de &bull; Lernbereich</div>
-          <div style="font-size: 0.75rem; color: #64748b;">Dein persönliches Portal für echte IT-Praxis &bull; Version 1.0 Alpha</div>
+  <!-- 6. MODERN MULTI-COLUMN FOOTER -->
+  <footer id="site-footer" class="portal-footer">
+    <div class="portal-footer-grid">
+      <!-- Brand Column -->
+      <div class="portal-footer-brand">
+        <a href="dashboard.html" class="portal-footer-logo-row">
+          <div class="portal-brand-logo" style="width: 36px; height: 36px;">
+            <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 22px; height: 22px;">
+          </div>
+          <span class="portal-footer-logo-text">IT-Praxisportal</span>
+        </a>
+        <p class="portal-footer-desc">
+          Dein persönlicher Lernbereich für echte IT-Praxis. Lerne systematisch, meistere Programmiersprachen und bereite dich optimal auf die IHK-Abschlussprüfung vor.
+        </p>
+        <div class="portal-footer-badge">
+          <span>🟢 Angemeldet &bull; Cloud-Sync aktiv</span>
         </div>
       </div>
 
-      <div style="display: flex; gap: 20px; font-size: 0.85rem;">
-        <a href="dashboard.html" style="color: #94a3b8; text-decoration: none;">Dashboard</a>
-        <a href="#katalog" style="color: #94a3b8; text-decoration: none;">Kurse</a>
-        <a href="#ihk-section" style="color: #94a3b8; text-decoration: none;">IHK Prüfung</a>
-        <a href="workspace.html?course=python" style="color: #94a3b8; text-decoration: none;">Web-IDE</a>
-        <a href="index.html" style="color: #94a3b8; text-decoration: none;">Startseite</a>
+      <!-- Lehrpfade -->
+      <div class="portal-footer-col">
+        <h4>📚 Lehrpfade</h4>
+        <ul class="portal-footer-links">
+          <li><a href="#katalog" class="portal-footer-link">🐍 Python &amp; OOP</a></li>
+          <li><a href="#katalog" class="portal-footer-link">⚡ JavaScript &amp; Web</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🐧 Linux Bash &amp; DevOps</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🔷 PowerShell Core</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🗄️ SQL &amp; Datenbanken</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🌐 Modernes HTML5 &amp; CSS3</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🦀 Rust, Go, C# &amp; C++</a></li>
+        </ul>
       </div>
 
-      <div style="font-size: 0.8rem; color: #64748b;">
-        🔒 100% DSGVO &bull; Serverstandort Deutschland
+      <!-- Features & Tools -->
+      <div class="portal-footer-col">
+        <h4>💻 Navigation</h4>
+        <ul class="portal-footer-links">
+          <li><a href="#overview" class="portal-footer-link">🚀 Dashboard-Übersicht</a></li>
+          <li><a href="#katalog" class="portal-footer-link">📚 Kurs-Katalog</a></li>
+          <li><a href="#ihk-section" class="portal-footer-link">🎓 IHK Prüfungstrainer</a></li>
+          <li><a href="workspace.html?course=python" class="portal-footer-link">💻 Web-IDE starten</a></li>
+          <li><a href="#zertifikate-section" class="portal-footer-link">🏆 Meine Zertifikate</a></li>
+          <li><a href="index.html" class="portal-footer-link">🌐 Zur Plattform-Startseite</a></li>
+        </ul>
+      </div>
+
+      <!-- Rechtliches & Kontakt -->
+      <div class="portal-footer-col">
+        <h4>⚖️ Rechtliches &amp; Schutz</h4>
+        <ul class="portal-footer-links">
+          <li><a href="impressum.html" class="portal-footer-link">⚖️ Impressum (§ 5 DDG)</a></li>
+          <li><a href="datenschutz.html" class="portal-footer-link">🔒 Datenschutzerklärung (DSGVO)</a></li>
+          <li><a href="mailto:kontakt@it-praxisportal.de" class="portal-footer-link">✉️ Support kontaktieren</a></li>
+          <li><span class="portal-footer-link" style="color: #10b981; cursor: default;">🛡️ Zero Tracking Cookies</span></li>
+          <li><span class="portal-footer-link" style="color: #64748b; cursor: default;">🇩🇪 Deutsches Hosting</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="portal-footer-bottom">
+      <div>
+        &copy; 2026 IT-Praxisportal &bull; Alexander Müller. Alle Rechte vorbehalten.
+      </div>
+      <div class="portal-footer-bottom-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="#overview">Nach oben &uarr;</a>
       </div>
     </div>
   </footer>

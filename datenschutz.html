@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerklärung | IT-Praxisportal</title>
+  <meta name="description" content="Datenschutzerklärung des IT-Praxisportals: Transparente Informationen zur DSGVO-konformen Datenverarbeitung, Zero-Tracking-Prinzip und Betroffenenrechte.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: #f8fafc; color: #0f172a; font-family: var(--font-sans); margin: 0; padding: 0;">
+
+  <!-- 1. STICKY TOPBAR -->
+  <header class="portal-header-bar">
+    <div class="portal-nav-container">
+      <a href="index.html" class="portal-brand">
+        <div class="portal-brand-logo">
+          <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
+        </div>
+        <div>
+          <span class="portal-brand-title">IT-Praxisportal</span>
+          <span class="portal-brand-badge">Praxis &bull; IHK &bull; Web-IDE</span>
+        </div>
+      </a>
+
+      <nav class="portal-nav-links">
+        <a href="index.html#hero" class="portal-nav-link">🚀 Start</a>
+        <a href="index.html#was-du-bekommst" class="portal-nav-link">💎 Das Konzept</a>
+        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="color: #34d399; font-weight: 700;">💻 Kurs-Dashboard</a>
+        <a href="index.html#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
+        <a href="workspace.html?course=python" class="portal-nav-link">💻 Web-IDE</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
+        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span id="nav-auth-user" style="display: none; font-size: 0.82rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(56, 189, 248, 0.2);"></span>
+        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="window.openAuthModal('login', { allowClose: true })">🔑 Anmelden</button>
+        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #0284c7; color: white;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
+        <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
+          <span>☰</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
+    <a href="index.html#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Start &amp; Übersicht</a>
+    <a href="index.html#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">💎 Was du bekommst</a>
+    <a href="dashboard.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Kurs-Dashboard</a>
+    <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Web-IDE starten</a>
+    <a href="index.html#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()" style="color: #38bdf8;">🔒 Datenschutzerklärung</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
+  </div>
+
+  <!-- 2. PAGE HEADER BANNER -->
+  <section class="legal-page-header">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div style="margin-bottom: 16px;">
+        <a href="index.html" style="color: #38bdf8; text-decoration: none; font-size: 0.88rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+          <span>&larr; Zurück zur Startseite</span>
+        </a>
+      </div>
+      <div class="legal-badge-pill">
+        <span>🔒 DSGVO &bull; 100% Tracking-Frei &bull; Deutsches Hosting</span>
+      </div>
+      <h1 class="legal-page-title">Datenschutzerklärung</h1>
+      <p class="legal-page-subtitle">
+        Informationen über die Art, den Umfang und die Zwecke der Erhebung und Verwendung personenbezogener Daten auf IT-Praxisportal gemäß DSGVO und TDDDG.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. MAIN LEGAL CONTENT -->
+  <main class="legal-content-container">
+    <div class="legal-card">
+
+      <h2>1. Datenschutz auf einen Blick &amp; Verantwortliche Stelle</h2>
+      <p>
+        Der Schutz Ihrer persönlichen Daten ist uns ein zentrales Anliegen. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften (insbesondere der EU-Datenschutz-Grundverordnung, DSGVO) sowie dieser Datenschutzerklärung.
+      </p>
+      <div class="legal-info-box">
+        <strong>Verantwortlicher für die Datenverarbeitung auf dieser Plattform:</strong><br>
+        Alexander Müller &bull; IT-Praxisportal<br>
+        IT-Dienstleistungen &amp; Softwareentwicklung<br>
+        Webseite: <a href="https://alex-mueller.biz" target="_blank" rel="noopener" style="color: #0284c7;">https://alex-mueller.biz</a><br>
+        E-Mail für Datenschutzanfragen: <a href="mailto:datenschutz@it-praxisportal.de" style="color: #0284c7; font-weight: 600;">datenschutz@it-praxisportal.de</a> oder <a href="mailto:kontakt@it-praxisportal.de" style="color: #0284c7;">kontakt@it-praxisportal.de</a>
+      </div>
+
+      <h2>2. Das Zero-Tracking-Prinzip (Keine Werbe-Tracker &amp; keine Cookies)</h2>
+      <p>
+        IT-Praxisportal folgt konsequent dem Prinzip der <strong>Datensparsamkeit (Privacy by Design &amp; Privacy by Default)</strong>:
+      </p>
+      <ul>
+        <li><strong>Kein Google Analytics, kein Meta-Pixel, keine Werbenetzwerke:</strong> Auf dieser Plattform werden keinerlei Drittanbieter-Tools zur Nachverfolgung Ihres Surfverhaltens (Profiling) geladen.</li>
+        <li><strong>Keine zustimmungspflichtigen Tracking-Cookies:</strong> Wir setzen keine Marketing-, Werbe- oder Affiliate-Cookies ein. Sie werden auf unserer Plattform daher nicht mit störenden Cookie-Bannern belästigt.</li>
+        <li><strong>Kein Weiterverkauf von Daten:</strong> Ihre Daten werden zu keinem Zeitpunkt an Werbepartner, Datenbroker oder sonstige Dritte veräußert.</li>
+      </ul>
+
+      <h2>3. Wie erfassen wir Ihre Daten?</h2>
+      
+      <h3>A. Technische Bereitstellung &amp; Server-Log-Dateien</h3>
+      <p>
+        Beim Aufruf unserer Website erhebt und speichert der Webserver automatisch Informationen, die Ihr Browser an uns übermittelt (Server-Logfiles). Dies umfasst:
+      </p>
+      <ul>
+        <li>Browsertyp und Browserversion sowie verwendetes Betriebssystem</li>
+        <li>Referrer URL (die zuvor besuchte Seite)</li>
+        <li>Hostname des zugreifenden Rechners bzw. IP-Adresse</li>
+        <li>Uhrzeit der Serveranfrage und HTTP-Statuscode</li>
+        <li>Übertragene Datenmenge in Bytes</li>
+      </ul>
+      <p>
+        <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der Gewährleistung der Stabilität, Angriffserkennung (DDoS-Schutz), Fehleranalyse und Systemsicherheit unseres Linux-Servers. Diese Protokolldaten werden nach kurzer Zeit automatisch gelöscht bzw. anonymisiert.
+      </p>
+
+      <h3>B. Registrierung &amp; Benutzerkonto</h3>
+      <p>
+        Um die interaktiven Kurse, die Monaco Web-IDE und den IHK-Prüfungstrainer zu nutzen, ist die Erstellung eines Benutzerkontos erforderlich. Dabei erfassen wir:
+      </p>
+      <ul>
+        <li><strong>Vollständiger Name / Anzeigename:</strong> Zur Personalisierung des Dashboards und für die Ausstellung offizieller Leistungsnachweise und Abschlusszertifikate.</li>
+        <li><strong>E-Mail-Adresse:</strong> Zur eindeutigen Identifikation des Kontos, zur Anmeldung und für sicherheitsrelevante Systembenachrichtigungen (z.&nbsp;B. Passwortänderungen).</li>
+        <li><strong>Passwort:</strong> Ihr Passwort wird <em>niemals im Klartext</em> gespeichert oder übertragen. Die Speicherung erfolgt ausschließlich über kryptografisch gehärtete Einweg-Hashfunktionen (PBKDF2/SHA-256 mit individuellem kryptografischem Salt).</li>
+        <li><strong>Rolle:</strong> Schüler, Dozent oder Administrator zur Steuerung der Berechtigungen.</li>
+      </ul>
+      <p>
+        <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags zur Bereitstellung der Bildungsplattform).
+      </p>
+
+      <h3>C. Lernfortschritt, Programmierübungen &amp; Prüfungen</h3>
+      <p>
+        Um Ihren Lernfortschritt darzustellen, Streaks zu berechnen und IHK-Abschlusszertifikate zu generieren, speichern wir:
+      </p>
+      <ul>
+        <li>Erfolgreich gelöste Aufgaben und Kapitel pro Lehrpfad</li>
+        <li>Erreichte Erfahrungspunkte (XP) und Gamification-Metriken</li>
+        <li>Ergebnisse und Zeitstempel simulierter IHK-Abschlussprüfungen</li>
+      </ul>
+      <p>
+        <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO. Die Daten bleiben gespeichert, solange Ihr Benutzerkonto aktiv ist.
+      </p>
+
+      <h3>D. Lokale Speicherung im Browser (Local Storage / Session Storage)</h3>
+      <p>
+        Wir nutzen die moderne Web-Storage-Technologie Ihres Browsers (HTML5 <code>localStorage</code> und <code>sessionStorage</code>), um technisch erforderliche Einstellungen lokal auf Ihrem Endgerät zu hinterlegen:
+      </p>
+      <ul>
+        <li><strong>Authentifizierungs-Token (Session-Token):</strong> Damit Sie beim Wechseln zwischen Lektionen und der Web-IDE angemeldet bleiben.</li>
+        <li><strong>Code-Editor Status:</strong> Zwischenspeicherung Ihres Quellcodes im Editor, damit bei versehentlichem Schließen des Browser-Tabs kein Code verloren geht.</li>
+        <li><strong>UI-Präferenzen:</strong> Ihre gewählte Darstellung (z.&nbsp;B. Dark/Light Mode, Editor-Schriftgröße).</li>
+      </ul>
+      <p>
+        <strong>Rechtsgrundlage:</strong> § 25 Abs. 2 Nr. 2 TDDDG (technisch unbedingt erforderlich, um den vom Nutzer ausdrücklich gewünschten Telemediendienst zur Verfügung zu stellen).
+      </p>
+
+      <h2>4. Hosting &amp; Serverstandort</h2>
+      <p>
+        Unsere Serverinfrastruktur befindet sich in zertifizierten Rechenzentren in <strong>Deutschland (Serverstandort Deutschland / EU)</strong>. Es findet kein Datentransfer in unsichere Drittländer außerhalb der Europäischen Union statt.
+      </p>
+
+      <h2>5. SSL/TLS-Verschlüsselung</h2>
+      <p>
+        Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine moderne Transportverschlüsselung (SSL/TLS über HTTPS). Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von <code>http://</code> auf <code>https://</code> wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+      </p>
+
+      <h2>6. Dauer der Speicherung &amp; Kontolöschung</h2>
+      <p>
+        Wir verarbeiten und speichern personenbezogene Daten nur so lange, wie es zur Erfüllung des jeweiligen Zwecks erforderlich ist. Wenn Sie Ihr Benutzerkonto löschen möchten, können Sie dies jederzeit formlos per E-Mail an <a href="mailto:datenschutz@it-praxisportal.de" style="color: #0284c7;">datenschutz@it-praxisportal.de</a> veranlassen. Sämtliche personenbezogenen Daten sowie gespeicherte Lernfortschritte werden in diesem Fall unverzüglich und unwiderruflich gelöscht.
+      </p>
+
+      <h2>7. Ihre Rechte als betroffene Person (DSGVO)</h2>
+      <p>
+        Nach der Datenschutz-Grundverordnung stehen Ihnen umfassende Betroffenenrechte zu:
+      </p>
+      <ul>
+        <li><strong>Recht auf Auskunft (Art. 15 DSGVO):</strong> Sie haben das Recht, jederzeit unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten.</li>
+        <li><strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie können die unverzügliche Berichtigung unrichtiger oder die Vervollständigung unvollständiger personenbezogener Daten verlangen.</li>
+        <li><strong>Recht auf Löschung (Art. 17 DSGVO):</strong> Sie können die Löschung Ihrer bei uns gespeicherten Daten verlangen („Recht auf Vergessenwerden“).</li>
+        <li><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Unter bestimmten Voraussetzungen können Sie die Einschränkung der Verarbeitung Ihrer Daten fordern.</li>
+        <li><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeiten, in einem gängigen, maschinenlesbaren Format an sich oder an einen Dritten aushändigen zu lassen.</li>
+        <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sofern die Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO beruht, haben Sie das Recht, jederzeit gegen die Verarbeitung Widerspruch einzulegen.</li>
+        <li><strong>Beschwerderecht bei einer Aufsichtsbehörde (Art. 77 DSGVO):</strong> Im Falle datenschutzrechtlicher Verstöße steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde (Landesbeauftragter für den Datenschutz) zu.</li>
+      </ul>
+
+      <h2>8. Aktualität und Änderung dieser Datenschutzerklärung</h2>
+      <p>
+        Diese Datenschutzerklärung ist aktuell gültig und hat den Stand September 2026. Durch die Weiterentwicklung unseres Portals oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, diese Erklärung zu aktualisieren.
+      </p>
+
+      <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <span style="font-size: 0.85rem; color: #64748b;">Stand: September 2026</span>
+        <a href="impressum.html" style="color: #0284c7; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Zum Impressum &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 4. MODERN REUSABLE FOOTER -->
+  <footer class="portal-footer">
+    <div class="portal-footer-grid">
+      <!-- Brand Column -->
+      <div class="portal-footer-brand">
+        <a href="index.html" class="portal-footer-logo-row">
+          <div class="portal-brand-logo" style="width: 36px; height: 36px;">
+            <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 22px; height: 22px;">
+          </div>
+          <span class="portal-footer-logo-text">IT-Praxisportal</span>
+        </a>
+        <p class="portal-footer-desc">
+          Die interaktive Plattform für Fachinformatiker, Software-Entwickler &amp; IT-Auszubildende. Echte Praxis mit browserbasierter Monaco Web-IDE, CI/CD-Pipelines &amp; realistischer IHK-Abschlussprüfungssimulation.
+        </p>
+        <div class="portal-footer-badge">
+          <span>🟢 Alle Systeme online &bull; Serverstandort Deutschland</span>
+        </div>
+      </div>
+
+      <!-- Lehrpfade -->
+      <div class="portal-footer-col">
+        <h4>📚 Lehrpfade</h4>
+        <ul class="portal-footer-links">
+          <li><a href="dashboard.html" class="portal-footer-link">🐍 Python &amp; OOP</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">⚡ JavaScript &amp; Web</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🐧 Linux Bash &amp; DevOps</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🔷 PowerShell Core</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🗄️ SQL &amp; Datenbanken</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🌐 Modernes HTML5 &amp; CSS3</a></li>
+          <li><a href="dashboard.html" class="portal-footer-link">🦀 Rust, Go, C# &amp; C++</a></li>
+        </ul>
+      </div>
+
+      <!-- Features & Tools -->
+      <div class="portal-footer-col">
+        <h4>💻 Plattform</h4>
+        <ul class="portal-footer-links">
+          <li><a href="dashboard.html" class="portal-footer-link">📊 Kurs-Dashboard</a></li>
+          <li><a href="workspace.html?course=python" class="portal-footer-link">💻 Monaco Web-IDE</a></li>
+          <li><a href="index.html#ihk-section" class="portal-footer-link">🎓 IHK Prüfungstrainer</a></li>
+          <li><a href="dashboard.html#zertifikate-section" class="portal-footer-link">🏆 Zertifikate &amp; Badges</a></li>
+          <li><a href="teacher.html" class="portal-footer-link">👨‍🏫 Dozenten-Portal</a></li>
+          <li><a href="admin.html" class="portal-footer-link">🛡️ Administration</a></li>
+        </ul>
+      </div>
+
+      <!-- Rechtliches & Kontakt -->
+      <div class="portal-footer-col">
+        <h4>⚖️ Rechtliches &amp; Kontakt</h4>
+        <ul class="portal-footer-links">
+          <li><a href="impressum.html" class="portal-footer-link">⚖️ Impressum (§ 5 DDG)</a></li>
+          <li><a href="datenschutz.html" class="portal-footer-link" style="color: #38bdf8; font-weight: 700;">🔒 Datenschutzerklärung</a></li>
+          <li><a href="mailto:kontakt@it-praxisportal.de" class="portal-footer-link">✉️ Support &amp; Kontakt</a></li>
+          <li><span class="portal-footer-link" style="color: #10b981; cursor: default;">🛡️ Zero Tracking Cookies</span></li>
+          <li><span class="portal-footer-link" style="color: #64748b; cursor: default;">🇩🇪 Deutsches Hosting</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="portal-footer-bottom">
+      <div>
+        &copy; 2026 IT-Praxisportal &bull; Alexander Müller. Alle Rechte vorbehalten.
+      </div>
+      <div class="portal-footer-bottom-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="index.html#hero">Nach oben &uarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/app_auth.js"></script>
+  <script>
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('portal-mobile-drawer');
+      const btn = document.getElementById('portal-mobile-menu-btn');
+      if (!drawer) return;
+      const isHidden = drawer.style.display === 'none' || !drawer.style.display;
+      drawer.style.display = isHidden ? 'flex' : 'none';
+      if (btn) btn.innerHTML = isHidden ? '✕' : '☰';
+    }
+
+    if (window.location.hash === '#menu') {
+      document.addEventListener('DOMContentLoaded', () => toggleMobileMenu());
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.AUTH && window.AUTH.isLoggedIn()) {
+        const user = window.AUTH.getUser();
+        const mobTeacherLink = document.getElementById('mobile-drawer-teacher-link');
+        const mobAdminLink = document.getElementById('mobile-drawer-admin-link');
+        const navTeacherLink = document.getElementById('nav-teacher-link');
+        const navAdminLink = document.getElementById('nav-admin-link');
+
+        if (user && (user.role === 'admin' || user.role === 'teacher')) {
+          if (navTeacherLink) navTeacherLink.style.display = 'inline-flex';
+          if (mobTeacherLink) mobTeacherLink.style.display = 'flex';
+        }
+        if (user && user.role === 'admin') {
+          if (navAdminLink) navAdminLink.style.display = 'inline-flex';
+          if (mobAdminLink) mobAdminLink.style.display = 'flex';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
