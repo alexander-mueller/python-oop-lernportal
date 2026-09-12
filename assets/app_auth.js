@@ -50,29 +50,47 @@
     user: getStoredUser(),
     platformStatus: { maintenance: false, announcement: '', allow_registration: true },
 
+    getToken() {
+      if (!this.token) {
+        this.token = getStoredToken();
+      }
+      return this.token;
+    },
+
+    getUser() {
+      if (!this.user) {
+        this.user = getStoredUser();
+      }
+      return this.user;
+    },
+
     isLoggedIn() {
-      return !!(this.token && this.user && !this.user.isGuest && this.user.email);
+      const token = this.getToken();
+      const user = this.getUser();
+      return !!(token && user && !user.isGuest && user.email);
     },
 
     isAdmin() {
-      return !!(this.isLoggedIn() && this.user && this.user.role === 'admin');
+      const user = this.getUser();
+      return !!(this.isLoggedIn() && user && user.role === 'admin');
     },
 
-    setSession(token, user, rememberMe = false) {
+    isTeacher() {
+      const user = this.getUser();
+      return !!(this.isLoggedIn() && user && (user.role === 'teacher' || user.role === 'admin'));
+    },
+
+    setSession(token, user, rememberMe = true) {
       this.token = token;
       this.user = user;
 
-      if (rememberMe) {
+      try {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('auth_user', JSON.stringify(user));
-        sessionStorage.removeItem('auth_token');
-        sessionStorage.removeItem('auth_user');
-      } else {
         sessionStorage.setItem('auth_token', token);
         sessionStorage.setItem('auth_user', JSON.stringify(user));
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('auth_user');
-      }
+      } catch (e) {}
+
       this.updateUI();
       this.handleMaintenanceDisplay();
     },
@@ -313,6 +331,7 @@
 
     updateUI() {
       const loggedIn = this.isLoggedIn();
+      const user = this.getUser();
 
       // Topbar Elemente in index.html
       const userSpan = document.getElementById('nav-auth-user');
@@ -322,12 +341,18 @@
       const teacherLink = document.getElementById('nav-teacher-link');
       const heroPrimaryCta = document.getElementById('hero-primary-cta');
 
+      // Dashboard Links auf index.html / impressum / datenschutz
+      const navDashLink = document.getElementById('nav-dashboard-link');
+      const mobDashLink = document.getElementById('mobile-drawer-dash-link');
+      const landingBanner = document.getElementById('landing-logged-in-banner');
+      const landingUserName = document.getElementById('landing-user-name');
+
       if (guestBtn) guestBtn.style.display = 'none'; // Gast-Button permanent ausblenden
 
-      if (loggedIn && this.user) {
+      if (loggedIn && user) {
         if (userSpan) {
           userSpan.style.display = 'inline-flex';
-          userSpan.innerHTML = `👤 ${escapeHtml(this.user.name || this.user.email)}`;
+          userSpan.innerHTML = `👤 ${escapeHtml(user.name || user.email)}`;
         }
         if (loginBtn) {
           loginBtn.style.display = 'inline-flex';
@@ -335,6 +360,7 @@
           loginBtn.style.background = 'rgba(239, 68, 68, 0.15)';
           loginBtn.style.color = '#f87171';
           loginBtn.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+          loginBtn.removeAttribute('onclick');
           loginBtn.onclick = () => {
             if (confirm('Möchtest du dich wirklich abmelden?')) {
               this.logout();
@@ -342,14 +368,18 @@
           };
         }
         if (registerBtn) {
+          registerBtn.style.display = 'inline-flex';
           registerBtn.innerHTML = '<span class="btn-text-desktop">💻 Zum Kurs-Dashboard</span><span class="btn-text-mobile">💻 Dashboard</span>';
           registerBtn.style.background = '#10b981';
-          registerBtn.onclick = () => {
+          registerBtn.removeAttribute('onclick');
+          registerBtn.onclick = (e) => {
+            e.preventDefault();
             window.location.href = 'dashboard.html';
           };
         }
         if (heroPrimaryCta) {
           heroPrimaryCta.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
+          heroPrimaryCta.removeAttribute('onclick');
           heroPrimaryCta.onclick = (e) => {
             e.preventDefault();
             window.location.href = 'dashboard.html';
@@ -360,11 +390,25 @@
         document.querySelectorAll('.landing-cta-btn').forEach(btn => {
           btn.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
           btn.style.background = '#10b981';
+          btn.removeAttribute('onclick');
           btn.onclick = (e) => {
             e.preventDefault();
             window.location.href = 'dashboard.html';
           };
         });
+
+        const footerLoginBtn = document.getElementById('footer-cta-login');
+        if (footerLoginBtn) footerLoginBtn.style.display = 'none';
+
+        // Banner und Dashboard-Links einblenden
+        if (landingBanner) {
+          landingBanner.style.display = 'flex';
+          if (landingUserName) {
+            landingUserName.innerText = user.name || user.email.split('@')[0];
+          }
+        }
+        if (navDashLink) navDashLink.style.display = 'inline-flex';
+        if (mobDashLink) mobDashLink.style.display = 'flex';
       } else {
         if (userSpan) userSpan.style.display = 'none';
         if (loginBtn) {
@@ -398,11 +442,18 @@
             window.openAuthModal('register', { allowClose: true });
           };
         });
+
+        const footerLoginBtn = document.getElementById('footer-cta-login');
+        if (footerLoginBtn) footerLoginBtn.style.display = 'inline-flex';
+
+        if (landingBanner) landingBanner.style.display = 'none';
+        if (navDashLink) navDashLink.style.display = 'none';
+        if (mobDashLink) mobDashLink.style.display = 'none';
       }
 
       // 🔒 Strikter Rollen-Filter für Dozenten- und Admin-Funktionen
-      const isTeacherOrAdmin = loggedIn && this.user && (this.user.role === 'teacher' || this.user.role === 'admin');
-      const isAdmin = loggedIn && this.user && this.user.role === 'admin';
+      const isTeacherOrAdmin = loggedIn && user && (user.role === 'teacher' || user.role === 'admin');
+      const isAdmin = loggedIn && user && user.role === 'admin';
 
       document.querySelectorAll('.teacher-only, #nav-teacher-link, #mobile-drawer-teacher-link, #footer-teacher-link').forEach(el => {
         if (isTeacherOrAdmin) {

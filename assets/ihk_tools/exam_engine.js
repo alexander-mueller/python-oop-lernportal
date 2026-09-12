@@ -630,7 +630,7 @@ class IhkExamEngine {
 
         <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
           <button class="ihk-btn ihk-btn-secondary" onclick="this.closest('[style*=\\'position: fixed\\']').remove()">Musterlösungen studieren</button>
-          <a href="../../../index.html" class="ihk-btn ihk-btn-success">Zurück zur Kursübersicht</a>
+          <a href="../../../dashboard.html" class="ihk-btn ihk-btn-success">Zurück zum Dashboard</a>
         </div>
       </div>
     `;

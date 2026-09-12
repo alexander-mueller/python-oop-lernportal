@@ -343,7 +343,7 @@
       <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 24px;">Alle Tests wurden erfolgreich bestanden. Du hast <strong>+100 XP</strong> verdient!</p>
       
       <div style="display: flex; gap: 10px; justify-content: center;">
-        <a href="index.html" class="btn btn-secondary" style="padding: 10px 18px;">Zurück zum Dashboard</a>
+        <a href="dashboard.html" class="btn btn-secondary" style="padding: 10px 18px;">Zurück zum Dashboard</a>
         <button type="button" class="btn" id="btn-next-chapter" style="padding: 10px 22px;">Nächstes Kapitel &rarr;</button>
       </div>
     </div>
@@ -448,7 +448,7 @@
           if (nextChapter) {
             window.location.href = `workspace.html?course=${courseId}&track=${nextChapter.track}&chapter=${nextChapter.folder}`;
           } else {
-            window.location.href = "index.html#zertifikate";
+            window.location.href = "dashboard.html#zertifikate-section";
           }
         };
       }

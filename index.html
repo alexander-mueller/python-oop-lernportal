@@ -252,11 +252,11 @@
       <nav class="portal-nav-links">
         <a href="#hero" class="portal-nav-link">🚀 Start</a>
         <a href="#was-du-bekommst" class="portal-nav-link">💎 Das Konzept</a>
-        <a href="#dashboard-spotlight" class="portal-nav-link">📊 Kurs-Dashboard</a>
+        <a href="#dashboard-spotlight" class="portal-nav-link">📊 Features</a>
         <a href="#features-ide" class="portal-nav-link">💻 Web-IDE</a>
         <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
         <a href="#zielgruppen" class="portal-nav-link">👥 Für wen?</a>
-        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="display: none; color: #34d399; font-weight: 700;">💻 Kurs-Dashboard</a>
+        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="display: none; color: #34d399; font-weight: 800; background: rgba(52, 211, 153, 0.12); padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.3);">💻 Zum Kurs-Dashboard &rarr;</a>
         <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
         <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
       </nav>
@@ -276,12 +276,12 @@
   <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
     <a href="#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Start &amp; Übersicht</a>
     <a href="#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">💎 Was du bekommst</a>
-    <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Kurs-Dashboard</a>
+    <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Features &amp; Vorschau</a>
     <a href="#features-ide" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Monaco Web-IDE</a>
     <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
     <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
     <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
-    <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #34d399; font-weight: 700;">💻 Zum Kurs-Dashboard &rarr;</a>
+    <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #34d399; font-weight: 800; background: rgba(52, 211, 153, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.3);">💻 Zum Kurs-Dashboard &rarr;</a>
     <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
     <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
   </div>
@@ -740,7 +740,7 @@
         <button type="button" class="landing-cta-btn btn" style="background: #ffffff; color: #0284c7; padding: 12px 28px; font-size: 1rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
           <span>✨ Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>
         </button>
-        <button type="button" class="btn" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 12px 20px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer;" onclick="window.openAuthModal('login', { allowClose: true })">
+        <button type="button" class="btn" id="footer-cta-login" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 12px 20px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer;" onclick="window.openAuthModal('login', { allowClose: true })">
           🔑 Anmelden
         </button>
       </div>
