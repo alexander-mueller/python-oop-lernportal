@@ -3,1165 +3,594 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT-Praxisportal | Interaktives Portal für Software, Systeme &amp; IT-Ausbildung</title>
+  <title>IT-Praxisportal | Die interaktive Plattform für IT-Berufe &amp; Software-Entwicklung</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <meta name="description" content="IT-Praxisportal: Die interaktive Plattform für praxisnahe IT-Ausbildung, 11 Programmiersprachen, DevOps, Cloud &amp; offizielle IHK AP1/AP2 Prüfungsvorbereitung im Browser.">
+  <meta name="description" content="IT-Praxisportal: Die interaktive Lernplattform für Fachinformatiker, Software-Entwickler &amp; IT-Ausbildung. 216+ Module, Monaco Web-IDE und IHK AP1 &amp; AP2 Prüfungsvorbereitung im Browser.">
   <meta property="og:title" content="IT-Praxisportal | Praxisnahe IT-Kompetenz im Browser">
   <meta property="og:description" content="216+ Module für Python, Bash, PowerShell, SQL, Web, Java, Go, Rust, C#, C++ &amp; IHK AP1/AP2 Prüfungssimulation mit integrierter Monaco Web-IDE.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://it-praxisportal.de/">
+  <meta property="og:url" content="https://alpha.it-praxisportal.de/">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Sleek Scoped Enhancements for Minimal Modern UX */
+    .portal-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .badge-ihk {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .badge-devops {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .badge-code {
+      background: #faf5ff;
+      color: #7e22ce;
+      border: 1px solid #e9d5ff;
+    }
+    .badge-data {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+    }
+  </style>
 </head>
-<body>
+<body style="background: #f8fafc; color: #0f172a; font-family: var(--font-sans); margin: 0; padding: 0;">
 
-  <div class="app-layout">
-<aside class="app-sidebar">
-      <div class="sidebar-header">
-        <a href="./index.html" class="sidebar-brand-link">
-          <div class="sidebar-logo" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;">
-            <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
-          </div>
-          <div>
-            <div class="sidebar-title" style="letter-spacing: -0.3px;">IT-Praxisportal</div>
-            <div class="sidebar-subtitle">Software • Systeme • IHK</div>
-          </div>
+  <!-- 1. STICKY TOPBAR -->
+  <header class="portal-header-bar">
+    <div class="portal-nav-container">
+      <a href="index.html" class="portal-brand">
+        <div class="portal-brand-logo">
+          <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
+        </div>
+        <div>
+          <span class="portal-brand-title">IT-Praxisportal</span>
+          <span class="portal-brand-badge">Alpha</span>
+        </div>
+      </a>
+
+      <nav class="portal-nav-links">
+        <a href="#katalog" class="portal-nav-link">📚 Kurs-Katalog</a>
+        <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
+        <a href="workspace.html?course=python" class="portal-nav-link">💻 Web-IDE</a>
+        <a href="#zertifikate" class="portal-nav-link">🏆 Zertifikate</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span id="nav-auth-user" style="display: none; font-size: 0.82rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(56, 189, 248, 0.2);"></span>
+        <button type="button" class="btn" id="nav-btn-guest" style="padding: 6px 14px; font-size: 0.82rem; background: #059669;" onclick="window.AUTH.startGuestSoloMode()">🚀 Solo-Start (Gast)</button>
+        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 14px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white;" onclick="window.openAuthModal('login')">🔑 Anmelden</button>
+        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 14px; font-size: 0.82rem; background: #0284c7;" onclick="window.openAuthModal('register')">Konto erstellen</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section class="portal-hero">
+    <div class="portal-container">
+      <div class="portal-hero-pill">
+        <span>⚡ Version 1.0 Alpha</span>
+        <span style="opacity: 0.5;">•</span>
+        <span>216+ Interaktive Module</span>
+        <span style="opacity: 0.5;">•</span>
+        <span>IHK AO 2020 Konform</span>
+      </div>
+      
+      <h1>Praxisnahe IT-Kompetenz – Direkt im Browser</h1>
+      <p>Die All-in-One Lernplattform für <strong>Fachinformatiker, Software-Entwickler &amp; IT-Auszubildende</strong>. Lerne 11 moderne Programmier- und Skriptsprachen und bereite dich mit echten IHK-Fragen auf deine Abschlussprüfung vor.</p>
+      
+      <div class="portal-hero-actions">
+        <a href="#katalog" class="portal-btn-primary">
+          <span>🚀 Alle Kurse entdecken</span>
+          <span>&darr;</span>
+        </a>
+        <a href="#ihk-section" class="portal-btn-secondary">
+          <span>📘 IHK Prüfungsvorbereitung (AP1 &amp; AP2)</span>
+        </a>
+        <a href="workspace.html?course=python" class="portal-btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">
+          <span>💻 Web-IDE starten</span>
         </a>
       </div>
 
-      <div class="sidebar-quick-nav">
-        <div style="padding: 0 4px 10px 4px;">
-          <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 4px;">Aktiver Sprachkurs:</label>
-          <select id="course-selector-dropdown" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 6px 8px; font-size: 0.82rem; font-weight: 600;" onchange="
-            if (this.value === 'python') window.location.href = 'index.html';
-            else if (this.value === 'ihk_ap1') window.location.href = 'courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html';
-            else if (this.value === 'ihk_ap2_fisi') window.location.href = 'courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html';
-            else window.location.href = 'workspace.html?course=' + this.value + '&chapter=01_' + (this.value === 'javascript' ? 'erste_schritte_variablen' : (this.value === 'bash' ? 'navigation_dateien_und_globbing' : (this.value === 'powershell' ? 'powershell_konsole_und_cmdlet_architektur' : (this.value === 'html_css' ? 'semantisches_html_und_struktur' : (this.value === 'go' ? 'syntax_variablen_und_typen' : (this.value === 'java' ? 'java_syntax_und_primitive_typen' : (this.value === 'rust' ? 'variablen_mutabilitaet_und_typen' : (this.value === 'csharp' ? 'syntax_datentypen_und_top_level_statements' : (this.value === 'cpp' ? 'c_syntax_datentypen_und_io' : 'tabellen_und_select')))))))));
-          ">
-            <optgroup label="🚀 Programmierung &amp; Skriptsprachen">
-              <option value="python" selected>🐍 Python 3 (33 Module)</option>
-              <option value="javascript">🌐 JavaScript &amp; TypeScript (16 Module)</option>
-              <option value="bash">🐧 Linux Bash &amp; Cloud DevOps (16 Module)</option>
-              <option value="powershell">🔷 PowerShell 7+ Core (16 Module)</option>
-              <option value="sql">🗄️ SQL &amp; Data Analytics (16 Module)</option>
-              <option value="html_css">🎨 HTML5 &amp; Modern CSS3 (16 Module)</option>
-              <option value="go">⚡ Go Cloud Microservices (16 Module)</option>
-              <option value="java">☕ Java 21+ Enterprise (16 Module)</option>
-              <option value="rust">🦀 Rust Modern Systems (16 Module)</option>
-              <option value="csharp">💜 C# &amp; Modernes .NET 8+ (16 Module)</option>
-              <option value="cpp">⚙️ C &amp; Modernes C++20 (16 Module)</option>
-            </optgroup>
-            <optgroup label="🎓 IHK Prüfungsvorbereitung (Neuordnung)">
-              <option value="ihk_ap1">📘 IHK AP1: IT-Arbeitsplatz &amp; Programmierung (12 Module)</option>
-              <option value="ihk_ap2_fisi">📕 IHK AP2: Fachinformatiker Systemintegration (12 Module)</option>
-            </optgroup>
-          </select>
+      <!-- 4 Quick Stats -->
+      <div class="portal-stats-bar">
+        <div class="portal-stat-card">
+          <div class="portal-stat-num">216+</div>
+          <div class="portal-stat-label">Interaktive Module</div>
+          <div class="portal-stat-desc">Vollständige Curricula mit Tests</div>
         </div>
-        <a href="./index.html" class="sidebar-link">🏠 Startseite</a>
-        <a href="./index.html#tutorial" class="sidebar-link">📖 Tutorial &amp; Workflow</a>
-        <a href="./index.html#zertifikate" class="sidebar-link">🏆 Zertifikate</a>
-      </div>
-
-      <div class="sidebar-nav">
-        <div class="sidebar-group">
-          <div class="sidebar-group-title">
-            <span>🌱 1. Grundlagen</span>
-            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">G01–G10</span>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <a href="./lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🧮</span>
-              <span class="sidebar-link-text">G01. Taschenrechner</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">📦</span>
-              <span class="sidebar-link-text">G02. Variablen & Typen</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">💬</span>
-              <span class="sidebar-link-text">G03. Ein- & Ausgabe</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🚦</span>
-              <span class="sidebar-link-text">G04. Bedingungen (if)</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🎡</span>
-              <span class="sidebar-link-text">G05. Schleifen (for/while)</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🪄</span>
-              <span class="sidebar-link-text">G06. Funktionen & Module</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">📋</span>
-              <span class="sidebar-link-text">G07. Listen & Sequenzen</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🔤</span>
-              <span class="sidebar-link-text">G08. String-Methoden</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🗃️</span>
-              <span class="sidebar-link-text">G09. Dicts & Sets</span>
-            </a>
-            <a href="./lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🚀</span>
-              <span class="sidebar-link-text">G10. Comprehensions</span>
-            </a>
-          </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num">12</div>
+          <div class="portal-stat-label">Technologie-Tracks</div>
+          <div class="portal-stat-desc">DevOps, Cloud, Web, Systems &amp; IHK</div>
         </div>
-        <div class="sidebar-group">
-          <div class="sidebar-group-title">
-            <span>🏗️ 2. OOP Einstieg</span>
-            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">00–06</span>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <a href="./lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🔍</span>
-              <span class="sidebar-link-text">00. Fehlersuche & Debug</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🏗️</span>
-              <span class="sidebar-link-text">01. Einstieg in Klassen</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/02_init_und_self/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">⚙️</span>
-              <span class="sidebar-link-text">02. Konstruktor & self</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🏎️</span>
-              <span class="sidebar-link-text">03. Methoden & Verhalten</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🧾</span>
-              <span class="sidebar-link-text">04. __str__ Darstellung</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">💻</span>
-              <span class="sidebar-link-text">04b. VS Code Setup</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🌿</span>
-              <span class="sidebar-link-text">04c. Git-Versionskontrolle</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🎵</span>
-              <span class="sidebar-link-text">05. Objekte kombinieren</span>
-            </a>
-            <a href="./lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🥚</span>
-              <span class="sidebar-link-text">06. Projekt: Tamagotchi</span>
-            </a>
-          </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num">150</div>
+          <div class="portal-stat-label">IHK-Prüfungsfragen</div>
+          <div class="portal-stat-desc">Original-Wortlaut &amp; 90-Min Timer</div>
         </div>
-        <div class="sidebar-group">
-          <div class="sidebar-group-title">
-            <span>🚀 3. Fortgeschritten</span>
-            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">07–16</span>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🧠</span>
-              <span class="sidebar-link-text">07. Referenzen & Speicher</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">➕</span>
-              <span class="sidebar-link-text">08. Operator Overloading</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🧪</span>
-              <span class="sidebar-link-text">09. Unit Tests & TDD</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🧬</span>
-              <span class="sidebar-link-text">10. Vererbung & super()</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🎭</span>
-              <span class="sidebar-link-text">11. Polymorphie</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🛡️</span>
-              <span class="sidebar-link-text">12. Exceptions & Fehler</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">💾</span>
-              <span class="sidebar-link-text">13. Persistenz (JSON/CSV)</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🖥️</span>
-              <span class="sidebar-link-text">14. Desktop-GUIs (Tkinter)</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🎒</span>
-              <span class="sidebar-link-text">15. Container & *args</span>
-            </a>
-            <a href="./lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🏆</span>
-              <span class="sidebar-link-text">16. Master-Abschlussprojekt</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- LEHRPFAD 4 -->
-        <div class="sidebar-group">
-          <div class="sidebar-group-title">
-            <span>⚡ 4. Data Engineering</span>
-            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 99px; font-size: 0.7rem;">17–20</span>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <a href="./lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🔍</span>
-              <span class="sidebar-link-text">17. Reguläre Ausdrücke (re)</span>
-            </a>
-            <a href="./lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">⚡</span>
-              <span class="sidebar-link-text">18. Funktionale Programmierung</span>
-            </a>
-            <a href="./lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🌊</span>
-              <span class="sidebar-link-text">19. Generatoren & itertools</span>
-            </a>
-            <a href="./lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/index.html" class="sidebar-link">
-              <span class="sidebar-link-icon">🏷️</span>
-              <span class="sidebar-link-text">20. Dataclasses & Types</span>
-            </a>
-          </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num">100 %</div>
+          <div class="portal-stat-label">Zero-Install Web-IDE</div>
+          <div class="portal-stat-desc">Monaco Editor &amp; WASM im Browser</div>
         </div>
       </div>
-
-      <div class="sidebar-footer">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: white;" id="sidebar-level-text">⭐ Level 1</div>
-          <div style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;" id="sidebar-xp-text">0 XP</div>
-        </div>
-      </div>
-    </aside>
-    <div class="app-main">
-
-      <header>
-        <div class="header-container">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-            <div class="header-badge" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8;">🚀 it-praxisportal.de | Interaktive IT-Akademie &amp; Web-IDE</div>
-            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-              <span id="nav-auth-user" style="display: none; font-size: 0.85rem; font-weight: 700; color: white;"></span>
-              <button type="button" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #059669;" onclick="window.AUTH.startGuestSoloMode()">🚀 Solo-Start (Gast)</button>
-              <button type="button" class="btn" id="nav-btn-login" style="padding: 5px 12px; font-size: 0.8rem; background: rgba(255,255,255,0.15);" onclick="window.openAuthModal('login')">🔑 Anmelden</button>
-              <button type="button" class="btn" id="nav-btn-register" style="padding: 5px 12px; font-size: 0.8rem; background: var(--primary);" onclick="window.openAuthModal('register')">Konto erstellen</button>
-              <a href="teacher.html" class="btn" id="nav-teacher-link" style="padding: 5px 12px; font-size: 0.8rem; background: #0891b2; display: none;">👨‍🏫 Lehrerbereich</a>
-            </div>
-          </div>
-          <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px;">IT-Praxis von Grund auf meistern</h1>
-          <p style="font-size: 1.05rem; line-height: 1.6; max-width: 900px; color: #cbd5e1;">Die interaktive Plattform für <strong>IT-Ausbildung, Software-Entwicklung &amp; Systemintegration</strong>. Über 216 praxisnahe Module für 11 Programmier- &amp; Skriptsprachen sowie die offizielle <strong>IHK AP1- &amp; AP2-Prüfungsvorbereitung (AO 2020)</strong> – direkt im Browser mit integrierter Monaco Web-IDE und Live-Runnern.</p>
-          
-          <nav class="nav-links" style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;">
-            <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd; font-weight: 700;">📘 IHK AP1 (LF 1–8)</a>
-            <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; font-weight: 700;">📕 IHK AP2 FISI (LF 9–12)</a>
-            <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing">🐧 Linux Bash</a>
-            <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur">🔷 PowerShell</a>
-            <a href="workspace.html?course=sql&chapter=01_tabellen_und_select">🗄️ SQL &amp; Data</a>
-            <a href="#lehrpfad-1">🐍 Python Kurs</a>
-            <a href="#tutorial">📖 Workflow</a>
-            <a href="#zertifikate">🏆 Zertifikate</a>
-          </nav>
-        </div>
-      </header>
-
-      <main class="container">
-
-        <!-- Willkommen & Quick-Access Card -->
-        <section class="card" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-            <div>
-              <h2 style="margin-top: 0; color: #0f172a;">👋 Willkommen im IT-Praxisportal!</h2>
-              <p style="color: #475569; font-size: 0.95rem; margin-bottom: 0;">
-                Wähle deinen Schwerpunkt oder starte direkt in der <strong>integrierten Monaco Web-IDE</strong>. Kein Setup, keine Installation – lerne und programmiere sofort im Browser mit automatisierten Tests und Feedback.
-              </p>
-            </div>
-            <div id="solo-mode-indicator" style="background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; padding: 6px 14px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;">
-              🎓 Solo-Modus aktiv (Eigenes Tempo)
-            </div>
-          </div>
-
-          <!-- Feature & Stats Grid -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 18px 0;">
-            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #0284c7; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-              <div style="font-size: 1.4rem; font-weight: 900; color: #0284c7;">216+</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Interaktive Module</div>
-              <div style="font-size: 0.78rem; color: #64748b;">Schritt für Schritt mit Tests</div>
-            </div>
-            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #10b981; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-              <div style="font-size: 1.4rem; font-weight: 900; color: #10b981;">11</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Tech- &amp; Sprach-Tracks</div>
-              <div style="font-size: 0.78rem; color: #64748b;">DevOps, Cloud, Web &amp; Systems</div>
-            </div>
-            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #f59e0b; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-              <div style="font-size: 1.4rem; font-weight: 900; color: #f59e0b;">150</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">IHK-Prüfungsfragen</div>
-              <div style="font-size: 0.78rem; color: #64748b;">Offizieller Wortlaut &amp; Timer</div>
-            </div>
-            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #8b5cf6; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-              <div style="font-size: 1.4rem; font-weight: 900; color: #8b5cf6;">100 %</div>
-              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Browserbasiert</div>
-              <div style="font-size: 0.78rem; color: #64748b;">Monaco IDE &amp; WASM-Runner</div>
-            </div>
-          </div>
-
-          <!-- 4 Haupt-Themenbereiche -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px;">
-            <div style="background: white; border: 1px solid #bfdbfe; border-left: 4px solid #2563eb; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge" style="background: #dbeafe; color: #1d4ed8;">IHK Prüfung</span>
-              <h4 style="margin: 6px 0; color: #1e3a8a;"><a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" style="color: inherit; text-decoration: none;">📘 IHK AP1 &amp; AP2 (FISI) &rarr;</a></h4>
-              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Alle Lernfelder 1–12, WiSo, 40h-Projektarbeit, Subnetting-Drill, Trace-Tabellen &amp; Realtime-Prüfungssimulation.</p>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #2563eb;">AP1 Starten</a>
-                <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #dc2626;">AP2 FISI Starten</a>
-              </div>
-            </div>
-
-            <div style="background: white; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge" style="background: #dcfce7; color: #15803d;">DevOps &amp; Admin</span>
-              <h4 style="margin: 6px 0; color: #14532d;"><a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" style="color: inherit; text-decoration: none;">🐧 Linux Bash &amp; PowerShell &rarr;</a></h4>
-              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Streams, Pipelines, Awk, Jq, Parallelisierung, Cron, Systemd, PS7 Objekt-Pipelines &amp; Cloud Automation.</p>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #16a34a;">Bash IDE</a>
-                <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #0284c7;">PowerShell IDE</a>
-              </div>
-            </div>
-
-            <div style="background: white; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge" style="background: #ffedd5; color: #c2410c;">Daten &amp; Web</span>
-              <h4 style="margin: 6px 0; color: #7c2d12;"><a href="workspace.html?course=sql&chapter=01_tabellen_und_select" style="color: inherit; text-decoration: none;">🗄️ SQL &amp; HTML5/CSS3 &rarr;</a></h4>
-              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Relationale Datenbanken, JOINs, CTEs, Window Functions, Flexbox, CSS Grid &amp; responsives Web-UI.</p>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <a href="workspace.html?course=sql&chapter=01_tabellen_und_select" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #ea580c;">SQL Labor</a>
-                <a href="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #0891b2;">HTML/CSS IDE</a>
-              </div>
-            </div>
-
-            <div style="background: white; border: 1px solid #ddd6fe; border-left: 4px solid #7c3aed; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge" style="background: #ede9fe; color: #6d28d9;">Coding Master</span>
-              <h4 style="margin: 6px 0; color: #4c1d95;"><a href="#lehrpfad-1" style="color: inherit; text-decoration: none;">💻 Python &amp; Moderne Sprachen &rarr;</a></h4>
-              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Python (35 Module), JavaScript/TypeScript, Go, Rust, Java 21+, C# .NET 8 &amp; modernes C++20.</p>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <a href="#lehrpfad-1" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #7c3aed;">Python Track</a>
-                <a href="workspace.html?course=javascript&chapter=01_erste_schritte_variablen" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #f59e0b; color: #1e293b;">JS / TS IDE</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-          <div class="box box-tipp">
-            <div class="box-title">📚 Lehrplan-Abstimmung:</div>
-            Alle Einheiten sind exakt auf das offizielle Unterrichtsskriptum abgestimmt. Detaillierter Leitfaden in <a href="LEHRPLAN.md" style="color: var(--primary); font-weight: bold;">LEHRPLAN.md</a>.
-          </div>
-        </section>
-
-        <!-- 📖 Schritt-für-Schritt Tutorial -->
-        <section class="card" id="tutorial" style="border-left: 4px solid var(--primary);">
-          <h2>📖 Schritt-für-Schritt-Tutorial: So lernst du mit der Online-Plattform</h2>
-          <p>
-            Dieses Portal basiert auf dem <strong>PRIMM-Modell</strong> der Informatikdidaktik:
-          </p>
-
-          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 18px;">
-            
-            <div style="display: flex; gap: 14px; align-items: flex-start;">
-              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
-              <div>
-                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">💻 In Web-IDE öffnen</h4>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Klicke bei jedem Kapitel auf <strong>'In Web-IDE öffnen'</strong>, um den Monaco Code-Editor mit Startercode und Teilzielen direkt im Browser zu starten.</p>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 14px; align-items: flex-start;">
-              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
-              <div>
-                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🧩 Parsons-Puzzle lösen (+25 XP)</h4>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Bringe im Tab 'Puzzle' die durcheinandergeratenen Code-Zeilen in die richtige Reihenfolge, um ein intuitives Verständnis des Codes aufzubauen.</p>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 14px; align-items: flex-start;">
-              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
-              <div>
-                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🧪 Tests im Browser ausführen (+100 XP)</h4>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Klicke oben auf <strong>'🧪 Tests starten'</strong>. Die Python WebAssembly-Engine prüft deinen Code sofort und vergibt bei Erfolg XP und Trophäen.</p>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 14px; align-items: flex-start;">
-              <div style="background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">4</div>
-              <div>
-                <h4 style="margin: 0 0 4px 0; color: var(--text-main);">🩺 Hilfe bei Fehlern &amp; Auto-Save</h4>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Dein Code wird automatisch in deinem Konto gespeichert. Tritt ein Fehler auf, erhältst du im Fehler-Dolmetscher sofort eine verständliche Erklärung auf Deutsch.</p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- 🔍 Live-Suche -->
-        <div class="search-bar-container">
-          <span style="font-size: 1.1rem;">🔍</span>
-          <input type="text" id="portal-search-input" class="search-input" placeholder="Kapitel oder Thema durchsuchen (z.B. Schleifen, Klassen, Git, Tkinter, Dunder, Exceptions)...">
-          <span id="search-results-count" style="font-size: 0.8rem; font-weight: 700; color: var(--primary); display: none;"></span>
-        </div>
-
-        <!-- LEHRPFAD 1 -->
-        <section>
-          <div class="section-header">
-            <div>
-              <h2 id="lehrpfad-1">🌱 Lehrpfad 1: Grundlagen der Programmierung</h2>
-              <div class="section-desc">Datentypen, Kontrollstrukturen, Funktionen und Datenstrukturen (G01–G10).</div>
-            </div>
-            <span class="track-badge track-1-badge">10 Kapitel</span>
-          </div>
-          <div class="roadmap-grid">
-            
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G01</span>
-            <div class="roadmap-title">🧮 Python als Taschenrechner</div>
-            <div class="roadmap-desc">Zahlen (<code>int</code>, <code>float</code>), Grundrechenarten, Ganzzahldivision <code>//</code>, Modulo <code>%</code>, Potenzen <code>**</code> & print().</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=01_erste_schritte_taschenrechner" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G02</span>
-            <div class="roadmap-title">📦 Variablen & Datentypen</div>
-            <div class="roadmap-desc">Typen (<code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>), Typumwandlung (Casting) & Vermeidung typischer Typfehler.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=02_variablen_und_datentypen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/02_variablen_und_datentypen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G03</span>
-            <div class="roadmap-title">💬 Interaktive Ein- & Ausgabe</div>
-            <div class="roadmap-desc">Tastatureingaben mit <code>input()</code>, Textformatierung mit modernen f-Strings und Parametern.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=03_ein_und_ausgabe" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/03_ein_und_ausgabe/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G04</span>
-            <div class="roadmap-title">🚦 Verzweigungen & Bedingungen</div>
-            <div class="roadmap-desc">Entscheidungen treffen mit <code>if</code>, <code>elif</code>, <code>else</code>, Vergleichsoperatoren & logischen Verknüpfungen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=04_verzweigungen_und_bedingungen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G05</span>
-            <div class="roadmap-title">🎡 Schleifen & Wiederholungen</div>
-            <div class="roadmap-desc">Zählschleifen <code>for ... in range()</code>, Bedingungsschleifen <code>while</code>, <code>break</code> & <code>continue</code>.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=05_schleifen_und_wiederholungen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G06</span>
-            <div class="roadmap-title">🪄 Funktionen & Standardmodule</div>
-            <div class="roadmap-desc">Eigene Funktionen definieren mit <code>def</code>, <code>return</code>, Default-Parameter und Importe (<code>math</code>, <code>random</code>).</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=06_funktionen_und_module" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/06_funktionen_und_module/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G07</span>
-            <div class="roadmap-title">📋 Listen & Sequenzen</div>
-            <div class="roadmap-desc">Listen erstellen, Indexzugriff <code>[0]</code>, Slicing <code>[1:4]</code>, Methoden (<code>append</code>, <code>pop</code>) & Schleifen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=07_listen_und_sequenzen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/07_listen_und_sequenzen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G08</span>
-            <div class="roadmap-title">🔤 Strings & Textverarbeitung</div>
-            <div class="roadmap-desc">String-Methoden (<code>split</code>, <code>join</code>, <code>strip</code>, <code>replace</code>), Groß/Klein und Zeichenanalysen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=08_textverarbeitung_und_strings" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G09</span>
-            <div class="roadmap-title">🗃️ Dictionaries & Mengen (Sets)</div>
-            <div class="roadmap-desc">Schlüssel-Wert-Paare <code>dict</code>, sicherer Zugriff mit <code>.get()</code>, eindeutige Mengen <code>set</code> & Operationen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=09_dictionaries_und_sets" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/09_dictionaries_und_sets/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #059669;">
-          <div>
-            <span class="roadmap-number" style="background: #05966918; color: #059669;">G10</span>
-            <div class="roadmap-title">🚀 List Comprehensions & Datetime</div>
-            <div class="roadmap-desc">Kompakte List-Comprehensions, Datumsberechnungen mit <code>datetime</code> & grundlegende Algorithmen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_1_grundlagen&chapter=10_comprehensions_datum_algorithmen" class="card-primary-btn" style="background: #059669;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-          </div>
-        </section>
-
-        <!-- LEHRPFAD 2 -->
-        <section>
-          <div class="section-header">
-            <div>
-              <h2 id="lehrpfad-2">🏗️ Lehrpfad 2: Einstieg in OOP &amp; Entwickler-Tools</h2>
-              <div class="section-desc">Klassen, Konstruktoren, Methoden, Komposition, VS Code, Git &amp; Tamagotchi (00–06).</div>
-            </div>
-            <span class="track-badge track-2-badge">9 Module</span>
-          </div>
-          <div class="roadmap-grid">
-            
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 00</span>
-            <div class="roadmap-title">🔍 Fehlersuche & Debugging</div>
-            <div class="roadmap-desc">Typische Syntax-, Type- und Index-Fehler verstehen, Fehlermeldungen lesen und gezielt beheben.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=00_fehlersuche_und_grundlagen" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 01</span>
-            <div class="roadmap-title">🏗️ Klassen & Baupläne</div>
-            <div class="roadmap-desc">Objektorientierung verstehen: Vom Bauplan zum fertigen Objekt (Instanz) im Speicher.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=01_einstieg_klassen" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/01_einstieg_klassen/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 02</span>
-            <div class="roadmap-title">⚙️ Konstruktor __init__ & self</div>
-            <div class="roadmap-desc">Objekte initialisieren, Instanzvariablen mit <code>self</code> anlegen und Parameter übergeben.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=02_init_und_self" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/02_init_und_self/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/02_init_und_self/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/02_init_und_self/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/02_init_und_self/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 03</span>
-            <div class="roadmap-title">🏎️ Methoden & Verhalten</div>
-            <div class="roadmap-desc">Objekten Fähigkeiten begeben: Methoden definieren, Zustand verändern und Werte berechnen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=03_methoden_und_verhalten" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 04</span>
-            <div class="roadmap-title">🧾 Schöne Ausgabe mit __str__</div>
-            <div class="roadmap-desc">Magische Dunder-Methode <code>__str__</code> für saubere Textausgaben beim Drucken mit <code>print()</code>.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04_str_und_darstellung" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/04_str_und_darstellung/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">Tooling 04b</span>
-            <div class="roadmap-title">💻 Exkurs: Umstieg auf VS Code</div>
-            <div class="roadmap-desc">Vom Schul-IDLE zu einer modernen Entwicklerumgebung: Installation, Python-Extension & Terminal.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04b_umstieg_vscode" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/vscode_test.py" download>💻 vscode_test.py</a>
-                <a href="lehrpfad_2_oop_einstieg/04b_umstieg_vscode/index.html">📖 Guide</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">Tooling 04c</span>
-            <div class="roadmap-title">🌿 Exkurs: Git & GitHub</div>
-            <div class="roadmap-desc">Versionskontrolle: Commits, Branches, Status und kollaboratives Arbeiten im Terminal.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=04c_git_und_versionskontrolle" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/git_uebung.py" download>🌿 git_uebung.py</a>
-                <a href="lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/README.md">📖 README</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">OOP 05</span>
-            <div class="roadmap-title">🎵 Objekte kombinieren (Komposition)</div>
-            <div class="roadmap-desc">Klassen interagieren lassen: Eine Playlist besitzt mehrere Songs, ein Warenkorb mehrere Artikel.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=05_objekte_kombinieren" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/05_objekte_kombinieren/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #4f46e5;">
-          <div>
-            <span class="roadmap-number" style="background: #4f46e518; color: #4f46e5;">Projekt 06</span>
-            <div class="roadmap-title">🥚 Abschlussprojekt: Tamagotchi</div>
-            <div class="roadmap-desc">Das große interaktive Terminal-Haustier: Hunger, Energie, Glück, Schlafen, Füttern & Spielen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_2_oop_einstieg&chapter=06_abschlussprojekt_tamagotchi" class="card-primary-btn" style="background: #4f46e5;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-          </div>
-        </section>
-
-        <!-- LEHRPFAD 3 -->
-        <section>
-          <div class="section-header">
-            <div>
-              <h2 id="lehrpfad-3">🚀 Lehrpfad 3: Fortgeschrittenes OOP &amp; GUIs</h2>
-              <div class="section-desc">Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</div>
-            </div>
-            <span class="track-badge track-3-badge">10 Module</span>
-          </div>
-          <div class="roadmap-grid">
-            
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 07</span>
-            <div class="roadmap-title">🧠 Referenzen & Speicher (Stack/Heap)</div>
-            <div class="roadmap-desc">Veränderliche vs. unveränderliche Datentypen, <code>is</code> vs. <code>==</code>, flache und tiefe Kopien.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=07_referenzen_und_speicher" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 08</span>
-            <div class="roadmap-title">➕ Operator Overloading & Dunder</div>
-            <div class="roadmap-desc">Klassen rechen- und vergleichbar machen mit <code>__add__</code>, <code>__eq__</code>, <code>__len__</code>.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=08_operator_overloading_dunder" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 09</span>
-            <div class="roadmap-title">🧪 Eigene Unit Tests & TDD</div>
-            <div class="roadmap-desc">Software-Qualität sichern: Eigene Testsuiten mit <code>unittest</code> schreiben (Test-Driven Development).</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=09_eigene_unit_tests_schreiben" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 10</span>
-            <div class="roadmap-title">🧬 Vererbung & super()</div>
-            <div class="roadmap-desc">Code wiederverwenden nach dem DRY-Prinzip: Basisklassen und abgeleitete Kindklassen.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=10_vererbung_und_super" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 11</span>
-            <div class="roadmap-title">🎭 Polymorphie & Interfaces</div>
-            <div class="roadmap-desc">Vielgestaltigkeit: Gleiche Methodennamen bei unterschiedlichen Klassen (Duck Typing).</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=11_polymorphie_und_interfaces" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 12</span>
-            <div class="roadmap-title">🛡️ Exceptions & Fehlerkontrolle</div>
-            <div class="roadmap-desc">Fehler abfangen mit <code>try/except/finally</code> und eigene Exception-Klassen definieren.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=12_exceptions_und_fehlerbehandlung" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 13</span>
-            <div class="roadmap-title">💾 Datei-Persistenz: JSON & CSV</div>
-            <div class="roadmap-desc">Daten dauerhaft speichern und laden: Savegames, Konfigurationen und Tabellen-Export.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=13_persistenz_json_und_csv" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 14</span>
-            <div class="roadmap-title">🖥️ Desktop-GUIs mit Tkinter</div>
-            <div class="roadmap-desc">Grafische Benutzeroberflächen: Fenster, Buttons, Eingabefelder und Event-Handler.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=14_gui_mit_tkinter" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Adv 15</span>
-            <div class="roadmap-title">🎒 Parameter (*args/**kwargs) & Container</div>
-            <div class="roadmap-desc">Variable Argumente, Unpacking und eigene Container-Klassen mit <code>__getitem__</code>.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=15_parameter_und_container" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #7c3aed;">
-          <div>
-            <span class="roadmap-number" style="background: #7c3aed18; color: #7c3aed;">Master 16</span>
-            <div class="roadmap-title">🏆 Master-Abschlussprojekt</div>
-            <div class="roadmap-desc">Die Königsdisziplin: Eine vollständige Desktop-App mit MVC, Persistenz, Tests und GUI.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_3_fortgeschrittenes_oop&chapter=16_master_abschlussprojekt" class="card-primary-btn" style="background: #7c3aed;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-          </div>
-        </section>
-
-        <!-- LEHRPFAD 4 -->
-        <section>
-          <div class="section-header">
-            <div>
-              <h2 id="lehrpfad-4">⚡ Lehrpfad 4: Professional Data Engineering</h2>
-              <div class="section-desc">Reguläre Ausdrücke, funktionale Programmierung, Generatoren (yield/itertools) und moderne Dataclasses (17–20).</div>
-            </div>
-            <span class="track-badge" style="background: #0ea5e9; color: white;">4 Module</span>
-          </div>
-          <div class="roadmap-grid">
-            
-        <div class="roadmap-card" style="border-left: 4px solid #0ea5e9;">
-          <div>
-            <span class="roadmap-number" style="background: #0ea5e918; color: #0ea5e9;">Kapitel 17</span>
-            <div class="roadmap-title">🔍 Reguläre Ausdrücke (re)</div>
-            <div class="roadmap-desc">Text-Mining & Validierung: E-Mails, Telefonnummern, Hashtags, IBAN-Maskierung & ISO-Datumsformate.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_4_professional_data_engineering&chapter=17_regulaere_ausdruecke_re" class="card-primary-btn" style="background: #0ea5e9;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_4_professional_data_engineering/17_regulaere_ausdruecke_re/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #0ea5e9;">
-          <div>
-            <span class="roadmap-number" style="background: #0ea5e918; color: #0ea5e9;">Kapitel 18</span>
-            <div class="roadmap-title">⚡ Funktionale Programmierung</div>
-            <div class="roadmap-desc">Pythonic Code: Fließband-Datenpipelines mit enumerate, zip, lambda, map, filter, custom sort, any & all.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_4_professional_data_engineering&chapter=18_funktionale_programmierung_lambda" class="card-primary-btn" style="background: #0ea5e9;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_4_professional_data_engineering/18_funktionale_programmierung_lambda/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #0ea5e9;">
-          <div>
-            <span class="roadmap-number" style="background: #0ea5e918; color: #0ea5e9;">Kapitel 19</span>
-            <div class="roadmap-title">🌊 Generatoren & itertools</div>
-            <div class="roadmap-desc">Memory Efficiency: Riesige Datenmengen streamen mit <code>yield</code>, Lazy Evaluation und <code>itertools</code>.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_4_professional_data_engineering&chapter=19_generatoren_und_itertools" class="card-primary-btn" style="background: #0ea5e9;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_4_professional_data_engineering/19_generatoren_und_itertools/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-        <div class="roadmap-card" style="border-left: 4px solid #0ea5e9;">
-          <div>
-            <span class="roadmap-number" style="background: #0ea5e918; color: #0ea5e9;">Kapitel 20</span>
-            <div class="roadmap-title">🏷️ Dataclasses & Type Hints</div>
-            <div class="roadmap-desc">Moderne Architektur: Typsichere Datenmodelle mit <code>@dataclass</code>, Decorators und fortgeschrittenen Type Hints.</div>
-          </div>
-          <div class="card-actions">
-            <a href="workspace.html?track=lehrpfad_4_professional_data_engineering&chapter=20_dataclasses_und_typehints" class="card-primary-btn" style="background: #0ea5e9;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/index.html" style="text-align: center; font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600;">📖 Kapitel-Guide lesen</a>
-            
-              <div class="card-sublinks">
-                <a href="lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/aufgabe.py" download>📄 aufgabe.py</a>
-                <a href="lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/test_aufgabe.py" download>🧪 tests</a>
-                <a href="lehrpfad_4_professional_data_engineering/20_dataclasses_und_typehints/musterloesung.py" download>💡 lösung</a>
-              </div>
-          </div>
-        </div>
-          </div>
-        </section>
-
-        <!-- 🎮 Gamification Dashboard -->
-        <section class="hud-card" id="gamification-hud">
-          <div class="hud-header">
-            <div class="hud-user">
-              <div class="hud-avatar" id="hud-avatar-icon">🐣</div>
-              <div>
-                <div class="hud-name" id="hud-user-name">Entwickler-Pass</div>
-                <div class="hud-title"><span id="hud-user-title">Code-Küken</span> &bull; <span class="hud-rank" id="hud-user-rank">Rang: Bronze</span></div>
-              </div>
-            </div>
-            <div class="hud-stats">
-              <div class="hud-stat-box">
-                <span class="hud-stat-value" id="hud-stat-level">1</span>
-                <span class="hud-stat-label">Level</span>
-              </div>
-              <div class="hud-stat-box">
-                <span class="hud-stat-value" id="hud-stat-xp">0 XP</span>
-                <span class="hud-stat-label">Erfahrung</span>
-              </div>
-              <div class="hud-stat-box">
-                <span class="hud-stat-value" id="hud-stat-solved">0 / 27</span>
-                <span class="hud-stat-label">Gelöst</span>
-              </div>
-              <div class="hud-stat-box">
-                <span class="hud-stat-value" id="hud-stat-streak">🔥 1 Tag</span>
-                <span class="hud-stat-label">Streak</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="hud-progress-container">
-            <div class="hud-progress-labels">
-              <span>Fortschritt zum nächsten Level</span>
-              <span id="hud-progress-text">0 / 100 XP</span>
-            </div>
-            <div class="hud-progress-bar-bg">
-              <div class="hud-progress-bar-fill" id="hud-progress-bar" style="width: 0%;"></div>
-            </div>
-          </div>
-
-          <div class="hud-footer">
-            <div class="hud-cli-tip">
-              💻 Terminal-Befehl: <code>python3 profil.py</code> &bull; Gesamttest: <code>python3 test_all.py</code>
-            </div>
-            <button type="button" class="hud-btn" onclick="if(window.renderGamificationHUD) window.renderGamificationHUD();">
-              🔄 Status aktualisieren
-            </button>
-          </div>
-        </section>
-
-        <!-- ⚡ Live Python Playground -->
-        <section class="card" id="python-live-playground">
-          <h2>⚡ Interaktiver Python Live-Playground (Pyodide WebAssembly)</h2>
-          <p>Führe beliebigen Python-Code direkt im Browser aus – ohne Installation!</p>
-          
-          <div class="code-container">
-            <div class="code-header">
-              <span>🐍 Python Code-Editor</span>
-              <button type="button" class="btn" id="btn-run-code" style="padding: 4px 12px; font-size: 0.8rem;">▶ Code ausführen</button>
-            </div>
-            <textarea id="playground-editor" style="width: 100%; height: 160px; background: #0b0f19; color: #f8fafc; font-family: var(--font-mono); font-size: 0.95rem; border: none; padding: 14px; outline: none; resize: vertical;"># Schreibe hier deinen Python-Code:
-class Auto:
-    def __init__(self, marke, ps):
-        self.marke = marke
-        self.ps = ps
-
-    def hupen(self):
-        return f"{self.marke} hupt laut: Hup! Hup! 🚗💨 ({self.ps} PS)"
-
-mein_auto = Auto("Porsche 911", 450)
-print(mein_auto.hupen())
-</textarea>
-          </div>
-
-          <div style="background: #060911; border-radius: var(--radius-sm); border: 1px solid var(--border-color); padding: 14px; margin-top: 10px;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🖥️ Programmausgabe (Terminal):</div>
-            <pre id="playground-output" style="color: #38bdf8; min-height: 50px;">Klicke oben auf '▶ Code ausführen', um das Skript zu starten...</pre>
-          </div>
-        </section>
-
-        <!-- 🩺 Fehler-Dolmetscher -->
-        <section class="card" id="error-interpreter-widget">
-          <h2>🩺 Interaktiver Python Fehler-Dolmetscher</h2>
-          <p>Füge eine englische Fehlermeldung (Traceback) aus dem Terminal ein:</p>
-          
-          <textarea id="error-input" placeholder="Beispiel: TypeError: unsupported operand type(s) for +: 'int' and 'str'" style="width: 100%; height: 90px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 10px;"></textarea>
-          <button type="button" class="btn" id="btn-interpret-error">🔍 Fehler übersetzen &amp; erklären</button>
-
-          <div id="error-result" style="display: none; margin-top: 15px; padding: 15px; border-radius: var(--radius-sm); background: #f0fdf4; border: 1px solid #bbf7d0;">
-            <h4 id="error-name" style="margin-top: 0; color: #166534;"></h4>
-            <p id="error-explanation" style="color: #1e293b; margin: 8px 0;"></p>
-            <div style="font-weight: 700; color: #166534; margin-top: 8px;">🛠️ So behebst du das Problem:</div>
-            <ul id="error-fixes" style="padding-left: 20px; color: #334155; margin-top: 4px;"></ul>
-          </div>
-        </section>
-
-        <!-- 🏆 Zertifikate -->
-        <section class="card" id="zertifikate">
-          <h2>🏆 Lehrpfad-Abschluss-Zertifikate</h2>
-          <p>Generiere offizielle, druckbare Zertifikate nach erfolgreichem Abschluss eines Lehrpfads:</p>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
-            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_1');">📜 Zertifikat Lehrpfad 1</button>
-            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_2');">📜 Zertifikat Lehrpfad 2</button>
-            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_3');">📜 Zertifikat Lehrpfad 3</button>
-            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('lehrpfad_4');">📜 Zertifikat Lehrpfad 4</button>
-            <button type="button" class="btn" onclick="if(window.openCertificate) window.openCertificate('master');">👑 Grandmaster-Zertifikat</button>
-          </div>
-        </section>
-
-      </main>
     </div>
-  </div>
+  </section>
 
-  <button type="button" class="sidebar-mobile-toggle"><span>☰ Menü</span></button>
-  <div class="sidebar-overlay"></div>
+  <!-- 3. KURS-KATALOG & FILTER -->
+  <main class="portal-container" id="katalog" style="padding-top: 48px; padding-bottom: 64px;">
+    
+    <div class="portal-filter-bar">
+      <div>
+        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Interaktive Kurse &amp; Tracks</h2>
+        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Wähle eine Disziplin und starte sofort mit Theorie, Subgoals und Live-Code.</p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="portal-search-box">
+        <span style="font-size: 1rem;">🔍</span>
+        <input type="text" id="course-filter-input" placeholder="Kurs oder Thema filtern (z.B. Python, Subnetting, SQL, Bash)...">
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="portal-filter-tabs" style="margin-bottom: 24px;">
+      <button type="button" class="portal-tab-pill active" onclick="filterCourses('all', this)">🌟 Alle Tracks (12)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('ihk', this)">🎓 IHK Prüfung (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('devops', this)">🐧 DevOps &amp; Sysadmin (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('coding', this)">💻 Software &amp; Coding (6)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('data', this)">🗄️ Daten &amp; Web (2)</button>
+    </div>
+
+    <!-- GRID OF 12 COURSES -->
+    <div class="portal-courses-grid" id="courses-grid-container">
+
+      <!-- 1. IHK AP1 -->
+      <div class="portal-card" data-category="ihk" data-title="ihk ap1 lernfelder 1-8 it-arbeitsplatz subnetting trace tabellen simulation">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">📘</div>
+            <span class="portal-card-badge badge-ihk">IHK Prüfung</span>
+          </div>
+          <h3 class="portal-card-title">IHK AP1: IT-Arbeitsplatz &amp; Basissysteme</h3>
+          <p class="portal-card-desc">Lückenlose Vorbereitung auf die Abschlussprüfung Teil 1. Alle Lernfelder (LF 1 bis LF 8), Subnetting-Drill, Trace-Tabellen, SQL-Labor &amp; 90-Minuten Probeprüfung.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">LF 1–8</span>
+            <span class="portal-card-tag">Subnetting</span>
+            <span class="portal-card-tag">Trace-Tabellen</span>
+            <span class="portal-card-tag">Probeprüfung</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 12 Module &bull; 100 Pkt.</span>
+          <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="portal-card-btn">📘 AP1 Starten &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 2. IHK AP2 FISI -->
+      <div class="portal-card" data-category="ihk" data-title="ihk ap2 fisi fachinformatiker systemintegration wiso vlan routing storage cloud 40h-projekt">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">📕</div>
+            <span class="portal-card-badge badge-ihk">IHK Prüfung</span>
+          </div>
+          <h3 class="portal-card-title">IHK AP2: Fachinformatiker Systemintegration</h3>
+          <p class="portal-card-desc">Fachrichtung Systemintegration: LF 9 (Netzwerke/VLAN), LF 10 (Server/AD), LF 11 (Storage/RAID), LF 12 (Cloud/Docker), WiSo &amp; offizieller Leitfaden zur 40h-Projektarbeit.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">LF 9–12</span>
+            <span class="portal-card-tag">Active Directory</span>
+            <span class="portal-card-tag">WiSo</span>
+            <span class="portal-card-tag">40h-Projekt</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 9 Module &bull; 3 Simulationen</span>
+          <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" class="portal-card-btn">📕 AP2 FISI Starten &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 3. PYTHON 3 -->
+      <div class="portal-card" data-category="coding" data-title="python software entwicklung oop grundlagen tkinter data engineering">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐍</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Python 3: Vom Einsteiger zum Software-Entwickler</h3>
+          <p class="portal-card-desc">Das umfassende Flaggschiff-Curriculum: Grundlagen (G01–G10), Objektorientierung (00–06), Fortgeschrittenes OOP &amp; GUI (07–16) und Data Engineering (17–22).</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">OOP &amp; Klassen</span>
+            <span class="portal-card-tag">Pyodide WASM</span>
+            <span class="portal-card-tag">Tkinter GUI</span>
+            <span class="portal-card-tag">Unit Testing</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 35 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=python&chapter=01_erste_schritte_taschenrechner" class="portal-card-btn">🐍 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 4. LINUX BASH -->
+      <div class="portal-card" data-category="devops" data-title="linux bash shell scripting pipelines devops docker systemd automation">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🐧</div>
+            <span class="portal-card-badge badge-devops">DevOps &amp; Sysadmin</span>
+          </div>
+          <h3 class="portal-card-title">Linux Bash, Shell Scripting &amp; Cloud DevOps</h3>
+          <p class="portal-card-desc">Praxisnahe Automatisierung: Streams &amp; Redirection, awk/sed/jq Text Mining, Job-Control, Multithreading mit xargs/parallel, Systemd Services, Docker &amp; CI/CD Pipelines.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Pipes &amp; Streams</span>
+            <span class="portal-card-tag">jq &amp; awk</span>
+            <span class="portal-card-tag">Systemd</span>
+            <span class="portal-card-tag">BATS Tests</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" class="portal-card-btn">🐧 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 5. POWERSHELL -->
+      <div class="portal-card" data-category="devops" data-title="powershell 7 core windows administration cmdlets objekte pester cloud">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🔷</div>
+            <span class="portal-card-badge badge-devops">DevOps &amp; Sysadmin</span>
+          </div>
+          <h3 class="portal-card-title">Modern PowerShell 7+ Core &amp; Automation</h3>
+          <p class="portal-card-desc">Objekt-orientiertes Scripting: .NET Pipeline-Architektur, PSCustomObject, CmdletBinding, Multithreading (-Parallel), REST APIs, Registry, Pester Tests &amp; Cloud Engine.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Objekt-Pipeline</span>
+            <span class="portal-card-tag">PSCustomObject</span>
+            <span class="portal-card-tag">Parallel</span>
+            <span class="portal-card-tag">Pester v5</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur" class="portal-card-btn">🔷 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 6. SQL -->
+      <div class="portal-card" data-category="data" data-title="sql relationale datenbanken joins ctes window functions normalisierung">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🗄️</div>
+            <span class="portal-card-badge badge-data">Daten &amp; Web</span>
+          </div>
+          <h3 class="portal-card-title">SQL &amp; Data Analytics Master</h3>
+          <p class="portal-card-desc">Vom SELECT bis zum Data Warehouse: Normalisierung (1NF–3NF), INNER/LEFT JOINs, Aggregate, Subqueries, CTEs, Window Functions (OVER/PARTITION BY) &amp; ACID-Transaktionen.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">SQLite WASM</span>
+            <span class="portal-card-tag">JOINs &amp; CTEs</span>
+            <span class="portal-card-tag">Window Functions</span>
+            <span class="portal-card-tag">Normalisierung</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=sql&chapter=01_tabellen_und_select" class="portal-card-btn">🗄️ In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 7. JAVASCRIPT & TYPESCRIPT -->
+      <div class="portal-card" data-category="coding" data-title="javascript typescript frontend dom async await es6 web-apps">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🌐</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">JavaScript &amp; Modernes TypeScript</h3>
+          <p class="portal-card-desc">Moderne Web-Entwicklung: ES6+ Syntax, Klassen &amp; OOP, Async/Await &amp; Promises, DOM-Manipulation, Web Storage, ES-Module und statische Typisierung mit TypeScript Generics.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">ES6+</span>
+            <span class="portal-card-tag">Async/Await</span>
+            <span class="portal-card-tag">DOM Events</span>
+            <span class="portal-card-tag">TypeScript</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=javascript&chapter=01_erste_schritte_variablen" class="portal-card-btn">🌐 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 8. JAVA 21+ -->
+      <div class="portal-card" data-category="coding" data-title="java 21 enterprise oop virtual threads streams junit5 records">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">☕</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Java 21+ Enterprise &amp; IHK Standard</h3>
+          <p class="portal-card-desc">Enterprise-Architektur: Strikte Typisierung, Records, Vererbung &amp; Interfaces, Generics, Collections Framework, Streams API, Virtual Threads &amp; automatisierte JUnit 5 Tests.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Java 21</span>
+            <span class="portal-card-tag">Records &amp; OOP</span>
+            <span class="portal-card-tag">Streams API</span>
+            <span class="portal-card-tag">Virtual Threads</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=java&chapter=01_java_syntax_und_primitive_typen" class="portal-card-btn">☕ In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 9. RUST -->
+      <div class="portal-card" data-category="coding" data-title="rust systems ownership borrowing concurrency lifetimes cargo">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🦀</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">Rust Modern Systems &amp; Safety</h3>
+          <p class="portal-card-desc">Zero-Cost Abstractions: Ownership &amp; Borrowing, Lifetimes, Enums mit Option/Result, Traits, Smart Pointer (Box, Arc, Mutex), Fearless Concurrency &amp; LRU-Cache Masterprojekt.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Ownership</span>
+            <span class="portal-card-tag">Lifetimes</span>
+            <span class="portal-card-tag">Arc&lt;Mutex&gt;</span>
+            <span class="portal-card-tag">Cargo Tests</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=rust&chapter=01_variablen_mutabilitaet_und_typen" class="portal-card-btn">🦀 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 10. C# & .NET 8 -->
+      <div class="portal-card" data-category="coding" data-title="csharp dotnet c# 12 linq async tasks xunit clean architecture">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">💜</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">C# 12 &amp; Modernes .NET 8 Enterprise</h3>
+          <p class="portal-card-desc">Moderne Unternehmenssoftware: Top-Level Statements, Pattern Matching, Records, LINQ funktionale Datenabfragen, Asynchrones Task/await, xUnit Tests &amp; Enterprise Order Engine.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">C# 12</span>
+            <span class="portal-card-tag">.NET 8</span>
+            <span class="portal-card-tag">LINQ</span>
+            <span class="portal-card-tag">xUnit Tests</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=csharp&chapter=01_syntax_datentypen_und_top_level_statements" class="portal-card-btn">💜 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 11. C & C++20 -->
+      <div class="portal-card" data-category="coding" data-title="cpp c c++ c++20 pointer speicher raii stl templates googletest">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">⚙️</div>
+            <span class="portal-card-badge badge-code">Software &amp; Coding</span>
+          </div>
+          <h3 class="portal-card-title">C &amp; Modernes C++20 Systems Engineering</h3>
+          <p class="portal-card-desc">Das Fundament der Systemprogrammierung: Pointer &amp; dynamischer Speicher, RAII, Klassen &amp; Rule of Five, Templates, Smart Pointer (unique_ptr, shared_ptr), STL &amp; GoogleTest.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Pointer &amp; Heap</span>
+            <span class="portal-card-tag">RAII</span>
+            <span class="portal-card-tag">Smart Pointer</span>
+            <span class="portal-card-tag">C++20 STL</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=cpp&chapter=01_c_syntax_datentypen_und_io" class="portal-card-btn">⚙️ In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 12. HTML5 & CSS3 -->
+      <div class="portal-card" data-category="data" data-title="html css frontend flexbox grid webdesign responsive ui a11y">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🎨</div>
+            <span class="portal-card-badge badge-data">Daten &amp; Web</span>
+          </div>
+          <h3 class="portal-card-title">HTML5, Modern CSS3 &amp; Responsive UI</h3>
+          <p class="portal-card-desc">Modernes UI-Handwerk: Semantische Tags, Barrierefreiheit (ARIA/A11y), CSS Custom Properties, 1D-Layouts mit Flexbox, 2D-Layouts mit CSS Grid, Media Queries &amp; Dark Mode.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">Semantik &amp; A11y</span>
+            <span class="portal-card-tag">Flexbox &amp; Grid</span>
+            <span class="portal-card-tag">Custom Properties</span>
+            <span class="portal-card-tag">Dark Mode</span>
+          </div>
+        </div>
+        <div class="portal-card-footer">
+          <span class="portal-card-meta">⏱️ 16 Module &bull; 4 Lehrpfade</span>
+          <a href="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur" class="portal-card-btn">🎨 In Web-IDE &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. IHK SPEZIAL-HIGHLIGHT BEREICH -->
+    <section id="ihk-section" style="background: white; border: 1px solid #bfdbfe; border-radius: 16px; padding: 32px; margin: 48px 0; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.05);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="portal-card-badge badge-ihk" style="font-size: 0.78rem;">Offizieller Prüfungsstandard</span>
+          <h2 style="font-size: 1.8rem; font-weight: 900; margin: 8px 0; color: #1e3a8a;">🎓 IHK Abschlussprüfung (AP1 &amp; AP2 FISI)</h2>
+          <p style="color: #475569; max-width: 720px; margin: 0 0 20px 0; font-size: 0.95rem;">Exakt nach der bundeseinheitlichen Ausbildungsordnung (AO 2020) gegliedert. Jedes Lernfeld besitzt ein eigenes Modul mit prüfungsrelevantem Grundlagenwissen, Cheat-Sheets und originalgetreuen IHK-Operatoren.</p>
+        </div>
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 12px; padding: 12px 18px; text-align: center;">
+          <div style="font-size: 1.4rem; font-weight: 900; color: #166534;">100 Punkte</div>
+          <div style="font-size: 0.78rem; font-weight: 700; color: #15803d;">Offizieller Notenschlüssel 1–6</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+          <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">📘 AP1: IT-Arbeitsplatz (LF 1–8)</h4>
+          <p style="font-size: 0.84rem; color: #64748b; margin: 0 0 12px 0;">Gemeinsame Kernqualifikationen aller Fachinformatiker: Verträge, Ergonomie, Subnetting, BSI-Schutzbedarf, SQL, IoT &amp; Instandhaltung.</p>
+          <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="portal-btn-primary" style="font-size: 0.85rem; padding: 8px 16px;">AP1 Lehrplan &rarr;</a>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+          <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">📕 AP2: Systemintegration (LF 9–12)</h4>
+          <p style="font-size: 0.84rem; color: #64748b; margin: 0 0 12px 0;">Fachrichtungsspezifisch: VLANs &amp; Routing, Active Directory, RAID &amp; SAN-Speicher, Virtualisierung, WiSo und 40h-Projektleitfaden.</p>
+          <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" class="portal-btn-primary" style="font-size: 0.85rem; padding: 8px 16px; background: linear-gradient(135deg, #dc2626, #b91c1c);">AP2 FISI Lehrplan &rarr;</a>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px;">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">⚡ Praxis-Drilltrainer</h4>
+          <p style="font-size: 0.84rem; color: #64748b; margin: 0 0 12px 0;">Interaktiver Subnetting-Drill Generator, zeilenweiser Trace-Tabellen-Trainer und interaktives relationales SQL-Labor.</p>
+          <a href="courses/ihk_ap1/11_subnetting_drill_master/index.html" class="portal-btn-secondary" style="font-size: 0.85rem; padding: 8px 16px; background: white; color: #0f172a; border-color: #cbd5e1;">Subnetting-Drill &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. BENTO FEATURE MATRIX (WARUM IT-PRAXISPORTAL?) -->
+    <div style="text-align: center; margin: 64px 0 24px 0;">
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">🛠️ Warum IT-Praxisportal?</h2>
+      <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Wissenschaftlich fundierte Didaktik, moderne Web-Technologien und zero Installation.</p>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-item">
+        <div style="font-size: 1.8rem; margin-bottom: 8px;">⚡</div>
+        <h4>Monaco Web-IDE (VS Code)</h4>
+        <p>Gleicher professioneller Editor wie in Microsoft VS Code: Syntax-Highlighting, Autocomplete, Shortcuts und automatische Tests direkt im Browser.</p>
+      </div>
+
+      <div class="bento-item">
+        <div style="font-size: 1.8rem; margin-bottom: 8px;">⏱️</div>
+        <h4>Realtime Prüfungssimulation</h4>
+        <p>Echte Prüfungsbedingungen: 90 Minuten Countdown, 100 Punkte, dynamisch gemischte 150 IHK-Fragen und automatischer Notenrechner.</p>
+      </div>
+
+      <div class="bento-item">
+        <div style="font-size: 1.8rem; margin-bottom: 8px;">🏆</div>
+        <h4>Gamification &amp; Zertifikate</h4>
+        <p>Sammle XP für bestandene Tests, halte deinen täglichen Lern-Streak und drucke nach Abschluss verifizierbare PDF-Zertifikate aus.</p>
+      </div>
+
+      <div class="bento-item">
+        <div style="font-size: 1.8rem; margin-bottom: 8px;">👨‍🏫</div>
+        <h4>Dozenten &amp; Klassen-Dashboard</h4>
+        <p>Erstelle Schulklassen mit Invite-Codes. Verfolge den Fortschritt deiner Schüler in der Live-Matrix und inspiziere eingereichten Code.</p>
+      </div>
+    </div>
+
+    <!-- 6. GAMIFICATION PASS & ZERTIFIKATE BEREICH -->
+    <section class="card" id="zertifikate" style="margin-top: 48px; border-radius: 16px; padding: 28px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.4rem; color: #0f172a;">🏆 Entwickler-Pass &amp; Zertifikate</h3>
+          <p style="margin: 4px 0 0 0; color: #64748b; font-size: 0.88rem;">Generiere offizielle, personalisierte Abschlusszertifikate für deine Bewerbung oder Ausbildungsakte:</p>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <span style="font-weight: 700; color: #0284c7; font-size: 0.9rem;" id="portal-user-level">Level 1 (Code-Küken)</span>
+          <span style="background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;" id="portal-user-xp">0 XP</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px;">
+        <button type="button" class="btn" style="background: #2563eb;" onclick="if(window.openCertificate) window.openCertificate('ihk_ap1_master');">📜 Zertifikat: IHK AP1</button>
+        <button type="button" class="btn" style="background: #dc2626;" onclick="if(window.openCertificate) window.openCertificate('ihk_ap2_fisi');">📜 Zertifikat: IHK AP2 FISI</button>
+        <button type="button" class="btn" style="background: #16a34a;" onclick="if(window.openCertificate) window.openCertificate('bash_devops');">📜 Zertifikat: Linux DevOps</button>
+        <button type="button" class="btn" style="background: #0284c7;" onclick="if(window.openCertificate) window.openCertificate('powershell_cloud');">📜 Zertifikat: PowerShell 7</button>
+        <button type="button" class="btn" style="background: #ea580c;" onclick="if(window.openCertificate) window.openCertificate('sql_analytics');">📜 Zertifikat: SQL Analytics</button>
+        <button type="button" class="btn" style="background: #7c3aed;" onclick="if(window.openCertificate) window.openCertificate('master');">👑 Grandmaster-Zertifikat</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 7. CLEAN FOOTER -->
+  <footer style="background: #0b0f19; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 48px 24px;">
+    <div class="portal-container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="portal-brand-logo" style="width: 32px; height: 32px;">
+          <img src="assets/favicon.svg" alt="Logo" style="width: 20px; height: 20px;">
+        </div>
+        <div>
+          <div style="color: white; font-weight: 800; font-size: 1rem;">it-praxisportal.de</div>
+          <div style="font-size: 0.75rem; color: #64748b;">Version 1.0 Alpha &bull; Entwickelt für echte IT-Praxis</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 20px; font-size: 0.85rem;">
+        <a href="#katalog" style="color: #94a3b8; text-decoration: none;">Kurse</a>
+        <a href="#ihk-section" style="color: #94a3b8; text-decoration: none;">IHK Prüfung</a>
+        <a href="workspace.html?course=python" style="color: #94a3b8; text-decoration: none;">Monaco Web-IDE</a>
+        <a href="teacher.html" style="color: #94a3b8; text-decoration: none;">Dozenten</a>
+      </div>
+
+      <div style="font-size: 0.8rem; color: #64748b;">
+        🔒 100% DSGVO-konform (Client-Side WASM &amp; Offline-Modus)
+      </div>
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="assets/gamification_data.js"></script>
   <script src="assets/gamification.js"></script>
   <script src="assets/interpreter.js"></script>
   <script src="assets/certificate.js"></script>
-  <script src="assets/parsons.js"></script>
-  <script src="assets/code_guard.js"></script>
-  <script src="assets/runners/runner_registry.js"></script>
-  <script src="assets/runners/python_runner.js"></script>
-  <script src="assets/runners/js_runner.js"></script>
-  <script src="assets/runners/sql_runner.js"></script>
-  <script src="assets/runners/shell_runner.js"></script>
-  <script src="assets/runners/powershell_runner.js"></script>
-  <script src="assets/runners/html_css_runner.js"></script>
-  <script src="assets/runners/go_runner.js"></script>
-  <script src="assets/runners/java_runner.js"></script>
-  <script src="assets/runners/rust_runner.js"></script>
-  <script src="assets/runners/csharp_runner.js"></script>
-  <script src="assets/runners/cpp_runner.js"></script>
-  <script src="assets/runner.js"></script>
-  <script src="assets/ui_enhancements.js"></script>
   <script src="assets/app_auth.js"></script>
-  <script src="assets/sidebar.js"></script>
+  
+  <script>
+    // Live Filter & Instant Search Engine
+    function filterCourses(category, element) {
+      document.querySelectorAll('.portal-tab-pill').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      const cards = document.querySelectorAll('.portal-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Instant Search Input
+    const searchInput = document.getElementById('course-filter-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.portal-card');
+        
+        cards.forEach(card => {
+          const text = (card.getAttribute('data-title') || '') + ' ' + card.innerText.toLowerCase();
+          if (query === '' || text.includes(query)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Auth & Gamification State Sync
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.AUTH && window.AUTH.updateUI) {
+        window.AUTH.updateUI();
+      }
+      const user = window.AUTH ? window.AUTH.user : null;
+      if (user) {
+        const lvlEl = document.getElementById('portal-user-level');
+        const xpEl = document.getElementById('portal-user-xp');
+        if (lvlEl) lvlEl.innerText = `Level ${user.level || 1} (${user.role === 'teacher' ? 'Dozent' : 'Entwickler'})`;
+        if (xpEl) xpEl.innerText = `${user.xp || 0} XP`;
+      }
+    });
+  </script>
 </body>
 </html>

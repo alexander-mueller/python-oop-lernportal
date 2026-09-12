@@ -12,3 +12,4 @@ venv/
 platform_data.db
 exams/
 *.pdf
+.secret_key
