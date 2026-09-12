@@ -160,17 +160,33 @@
       </nav>
 
       <!-- User Profile & Logout -->
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div id="nav-profile-pill" style="display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.08); padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.12);">
-          <span id="nav-auth-user" style="font-size: 0.84rem; font-weight: 700; color: #38bdf8;">👤 Lädt...</span>
-          <span id="nav-auth-role" style="font-size: 0.7rem; font-weight: 800; background: rgba(56, 189, 248, 0.15); color: #7dd3fc; padding: 2px 6px; border-radius: 99px; text-transform: uppercase;"></span>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div id="nav-profile-pill" style="display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.08); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.12);">
+          <span id="nav-auth-user" style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;">👤 Lädt...</span>
+          <span id="nav-auth-role" style="font-size: 0.68rem; font-weight: 800; background: rgba(56, 189, 248, 0.15); color: #7dd3fc; padding: 2px 6px; border-radius: 99px; text-transform: uppercase;"></span>
         </div>
-        <button type="button" class="btn" id="nav-btn-logout" style="padding: 6px 14px; font-size: 0.82rem; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">
-          Abmelden
+        <button type="button" class="btn" id="nav-btn-logout" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">
+          <span class="btn-text-desktop">Abmelden</span>
+          <span class="btn-text-mobile">🚪</span>
+        </button>
+        <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
+          <span>☰</span>
         </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
+    <a href="#overview" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Übersicht</a>
+    <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">📚 Meine Kurse</a>
+    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK AP1 &amp; AP2 Prüfung</a>
+    <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Web-IDE starten</a>
+    <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🏆 Zertifikate</a>
+    <a href="index.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🌐 Zur Landingpage</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
+  </div>
 
   <!-- 2. DASHBOARD WELCOME & LIVE METRICS -->
   <section class="portal-hero" id="overview" style="padding-top: 36px; padding-bottom: 36px;">
@@ -836,6 +852,19 @@
   <script src="assets/certificate.js"></script>
 
   <script>
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('portal-mobile-drawer');
+      const btn = document.getElementById('portal-mobile-menu-btn');
+      if (!drawer) return;
+      const isHidden = drawer.style.display === 'none' || !drawer.style.display;
+      drawer.style.display = isHidden ? 'flex' : 'none';
+      if (btn) btn.innerHTML = isHidden ? '✕' : '☰';
+    }
+
+    if (window.location.hash === '#menu') {
+      document.addEventListener('DOMContentLoaded', () => toggleMobileMenu());
+    }
+
     // 1. Authentifizierung erzwingen
     (function checkDashboardAuth() {
       if (window.AUTH && typeof window.AUTH.requireAuth === 'function') {
@@ -939,9 +968,15 @@
           if (al) al.style.display = 'inline-flex';
           const tl = document.getElementById('nav-teacher-link');
           if (tl) tl.style.display = 'inline-flex';
+          const mAl = document.getElementById('mobile-drawer-admin-link');
+          if (mAl) mAl.style.display = 'flex';
+          const mTl = document.getElementById('mobile-drawer-teacher-link');
+          if (mTl) mTl.style.display = 'flex';
         } else if (user.role === 'teacher') {
           const tl = document.getElementById('nav-teacher-link');
           if (tl) tl.style.display = 'inline-flex';
+          const mTl = document.getElementById('mobile-drawer-teacher-link');
+          if (mTl) mTl.style.display = 'flex';
         }
       }
 

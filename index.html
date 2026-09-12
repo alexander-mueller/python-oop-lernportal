@@ -261,13 +261,29 @@
         <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
         <span id="nav-auth-user" style="display: none; font-size: 0.82rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(56, 189, 248, 0.2);"></span>
-        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 14px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="window.openAuthModal('login', { allowClose: true })">🔑 Anmelden</button>
-        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 14px; font-size: 0.82rem; background: #0284c7; color: white;" onclick="window.openAuthModal('register', { allowClose: true })">✨ Kostenlos registrieren</button>
+        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="window.openAuthModal('login', { allowClose: true })">🔑 Anmelden</button>
+        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #0284c7; color: white;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
+        <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
+          <span>☰</span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
+    <a href="#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Start &amp; Übersicht</a>
+    <a href="#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">💎 Was du bekommst</a>
+    <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Kurs-Dashboard</a>
+    <a href="#features-ide" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Monaco Web-IDE</a>
+    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
+    <a href="#zielgruppen" class="mobile-drawer-link" onclick="toggleMobileMenu()">👥 Für wen?</a>
+    <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #34d399; font-weight: 700;">💻 Zum Kurs-Dashboard &rarr;</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
+  </div>
 
   <!-- 2. HIGH-CONVERTING HERO SECTION -->
   <section class="portal-hero" id="hero">
@@ -761,8 +777,20 @@
 
   <!-- Scripts -->
   <script src="assets/app_auth.js"></script>
-  
   <script>
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('portal-mobile-drawer');
+      const btn = document.getElementById('portal-mobile-menu-btn');
+      if (!drawer) return;
+      const isHidden = drawer.style.display === 'none' || !drawer.style.display;
+      drawer.style.display = isHidden ? 'flex' : 'none';
+      if (btn) btn.innerHTML = isHidden ? '✕' : '☰';
+    }
+
+    if (window.location.hash === '#menu') {
+      document.addEventListener('DOMContentLoaded', () => toggleMobileMenu());
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       // Prüfe Benutzer-Status
       if (window.AUTH && window.AUTH.isLoggedIn()) {
@@ -770,8 +798,21 @@
         const banner = document.getElementById('landing-logged-in-banner');
         const userNameEl = document.getElementById('landing-user-name');
         const dashLink = document.getElementById('nav-dashboard-link');
+        const mobDashLink = document.getElementById('mobile-drawer-dash-link');
+        const mobTeacherLink = document.getElementById('mobile-drawer-teacher-link');
+        const mobAdminLink = document.getElementById('mobile-drawer-admin-link');
 
         if (dashLink) dashLink.style.display = 'inline-flex';
+        if (mobDashLink) mobDashLink.style.display = 'flex';
+
+        if (user) {
+          if (user.role === 'admin') {
+            if (mobAdminLink) mobAdminLink.style.display = 'flex';
+            if (mobTeacherLink) mobTeacherLink.style.display = 'flex';
+          } else if (user.role === 'teacher') {
+            if (mobTeacherLink) mobTeacherLink.style.display = 'flex';
+          }
+        }
 
         if (banner && user) {
           banner.style.display = 'flex';

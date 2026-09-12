@@ -342,7 +342,7 @@
           };
         }
         if (registerBtn) {
-          registerBtn.innerText = '💻 Zum Kurs-Dashboard';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">💻 Zum Kurs-Dashboard</span><span class="btn-text-mobile">💻 Dashboard</span>';
           registerBtn.style.background = '#10b981';
           registerBtn.onclick = () => {
             window.location.href = 'dashboard.html';
@@ -384,7 +384,7 @@
         }
         if (registerBtn) {
           registerBtn.style.display = 'inline-flex';
-          registerBtn.innerText = '✨ Kostenlos registrieren';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">✨ Registrieren</span>';
           registerBtn.style.background = '#0284c7';
           registerBtn.onclick = () => window.openAuthModal('register', { allowClose: true });
         }
