@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Lernportal: Grundlagen, OOP &amp; Software-Entwicklung</title>
+  <title>IT-Praxisportal | Interaktives Portal für Software, Systeme &amp; IT-Ausbildung</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="description" content="IT-Praxisportal: Die interaktive Plattform für praxisnahe IT-Ausbildung, 11 Programmiersprachen, DevOps, Cloud &amp; offizielle IHK AP1/AP2 Prüfungsvorbereitung im Browser.">
+  <meta property="og:title" content="IT-Praxisportal | Praxisnahe IT-Kompetenz im Browser">
+  <meta property="og:description" content="216+ Module für Python, Bash, PowerShell, SQL, Web, Java, Go, Rust, C#, C++ &amp; IHK AP1/AP2 Prüfungssimulation mit integrierter Monaco Web-IDE.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://it-praxisportal.de/">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -12,10 +18,12 @@
 <aside class="app-sidebar">
       <div class="sidebar-header">
         <a href="./index.html" class="sidebar-brand-link">
-          <div class="sidebar-logo">🐍</div>
+          <div class="sidebar-logo" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;">
+            <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
+          </div>
           <div>
-            <div class="sidebar-title">Python Portal</div>
-            <div class="sidebar-subtitle">Lernplattform</div>
+            <div class="sidebar-title" style="letter-spacing: -0.3px;">IT-Praxisportal</div>
+            <div class="sidebar-subtitle">Software • Systeme • IHK</div>
           </div>
         </a>
       </div>
@@ -234,7 +242,7 @@
       <header>
         <div class="header-container">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-            <div class="header-badge">🐍 Python Online-Lernplattform (Solo &amp; Klassen)</div>
+            <div class="header-badge" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8;">🚀 it-praxisportal.de | Interaktive IT-Akademie &amp; Web-IDE</div>
             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
               <span id="nav-auth-user" style="display: none; font-size: 0.85rem; font-weight: 700; color: white;"></span>
               <button type="button" class="btn" style="padding: 5px 12px; font-size: 0.8rem; background: #059669;" onclick="window.AUTH.startGuestSoloMode()">🚀 Solo-Start (Gast)</button>
@@ -243,16 +251,17 @@
               <a href="teacher.html" class="btn" id="nav-teacher-link" style="padding: 5px 12px; font-size: 0.8rem; background: #0891b2; display: none;">👨‍🏫 Lehrerbereich</a>
             </div>
           </div>
-          <h1>Vom Einsteiger zum Software-Entwickler</h1>
-          <p>3 didaktisch strukturierte Lehrpfade mit integrierter **Monaco Web-IDE**, In-Browser Python-Runner (Pyodide), Aufgaben-Checklisten &amp; persistentem Entwickler-Pass.</p>
+          <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px;">IT-Praxis von Grund auf meistern</h1>
+          <p style="font-size: 1.05rem; line-height: 1.6; max-width: 900px; color: #cbd5e1;">Die interaktive Plattform für <strong>IT-Ausbildung, Software-Entwicklung &amp; Systemintegration</strong>. Über 216 praxisnahe Module für 11 Programmier- &amp; Skriptsprachen sowie die offizielle <strong>IHK AP1- &amp; AP2-Prüfungsvorbereitung (AO 2020)</strong> – direkt im Browser mit integrierter Monaco Web-IDE und Live-Runnern.</p>
           
-          <nav class="nav-links" style="margin-top: 18px;">
-            <a href="#tutorial">📖 Anleitung &amp; Workflow</a>
-            <a href="#lehrpfad-1">🌱 1. Grundlagen</a>
-            <a href="#lehrpfad-2">🏗️ 2. OOP Einstieg</a>
-            <a href="#lehrpfad-3">🚀 3. Fortgeschritten</a>
-            <a href="#python-live-playground">⚡ Live-Playground</a>
-            <a href="#error-interpreter-widget">🩺 Fehler-Dolmetscher</a>
+          <nav class="nav-links" style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd; font-weight: 700;">📘 IHK AP1 (LF 1–8)</a>
+            <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; font-weight: 700;">📕 IHK AP2 FISI (LF 9–12)</a>
+            <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing">🐧 Linux Bash</a>
+            <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur">🔷 PowerShell</a>
+            <a href="workspace.html?course=sql&chapter=01_tabellen_und_select">🗄️ SQL &amp; Data</a>
+            <a href="#lehrpfad-1">🐍 Python Kurs</a>
+            <a href="#tutorial">📖 Workflow</a>
             <a href="#zertifikate">🏆 Zertifikate</a>
           </nav>
         </div>
@@ -260,13 +269,13 @@
 
       <main class="container">
 
-        <!-- Willkommen Card -->
-        <section class="card">
+        <!-- Willkommen & Quick-Access Card -->
+        <section class="card" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
             <div>
-              <h2 style="margin-top: 0;">👋 Willkommen zu deiner Python-Lernreise!</h2>
-              <p>
-                Dieses Portal begleitet dich Schritt für Schritt von den ersten Schritten in Python bis hin zu vollständigen Desktop-Apps. Du kannst jedes Kapitel direkt in der <strong>integrierten Monaco Web-IDE</strong> im Browser programmieren und mit 1 Klick gegen automatische Tests prüfen!
+              <h2 style="margin-top: 0; color: #0f172a;">👋 Willkommen im IT-Praxisportal!</h2>
+              <p style="color: #475569; font-size: 0.95rem; margin-bottom: 0;">
+                Wähle deinen Schwerpunkt oder starte direkt in der <strong>integrierten Monaco Web-IDE</strong>. Kein Setup, keine Installation – lerne und programmiere sofort im Browser mit automatisierten Tests und Feedback.
               </p>
             </div>
             <div id="solo-mode-indicator" style="background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; padding: 6px 14px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;">
@@ -274,23 +283,73 @@
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0;">
-            <div style="background: #f8fafc; border-left: 4px solid #059669; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge track-1-badge">Lehrpfad 1</span>
-              <h4 style="margin: 4px 0; color: #065f46;">🌱 Grundlagen der Programmierung</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Rechnen, Variablen, Bedingungen, Schleifen, Funktionen, Listen, Dictionaries &amp; Strings (G01–G10).</p>
+          <!-- Feature & Stats Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 18px 0;">
+            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #0284c7; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <div style="font-size: 1.4rem; font-weight: 900; color: #0284c7;">216+</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Interaktive Module</div>
+              <div style="font-size: 0.78rem; color: #64748b;">Schritt für Schritt mit Tests</div>
             </div>
-            <div style="background: #f8fafc; border-left: 4px solid #4f46e5; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge track-2-badge">Lehrpfad 2</span>
-              <h4 style="margin: 4px 0; color: #312e81;">🏗️ Einstieg in OOP &amp; Tools</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Klassen, __init__, Methoden, UML-Diagramme, VS Code, Git-Versionskontrolle &amp; Tamagotchi (00–06).</p>
+            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #10b981; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <div style="font-size: 1.4rem; font-weight: 900; color: #10b981;">11</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Tech- &amp; Sprach-Tracks</div>
+              <div style="font-size: 0.78rem; color: #64748b;">DevOps, Cloud, Web &amp; Systems</div>
             </div>
-            <div style="background: #f8fafc; border-left: 4px solid #7c3aed; padding: 14px; border-radius: var(--radius-sm);">
-              <span class="track-badge track-3-badge">Lehrpfad 3</span>
-              <h4 style="margin: 4px 0; color: #4c1d95;">🚀 Fortgeschrittenes OOP &amp; GUIs</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Speicher, Dunder-Methoden, Unit Tests (TDD), Vererbung, Exceptions, JSON, Tkinter &amp; Masterprojekt (07–16).</p>
+            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #f59e0b; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <div style="font-size: 1.4rem; font-weight: 900; color: #f59e0b;">150</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">IHK-Prüfungsfragen</div>
+              <div style="font-size: 0.78rem; color: #64748b;">Offizieller Wortlaut &amp; Timer</div>
+            </div>
+            <div style="background: white; border: 1px solid #e2e8f0; border-top: 3px solid #8b5cf6; padding: 12px 14px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <div style="font-size: 1.4rem; font-weight: 900; color: #8b5cf6;">100 %</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #1e293b;">Browserbasiert</div>
+              <div style="font-size: 0.78rem; color: #64748b;">Monaco IDE &amp; WASM-Runner</div>
             </div>
           </div>
+
+          <!-- 4 Haupt-Themenbereiche -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px;">
+            <div style="background: white; border: 1px solid #bfdbfe; border-left: 4px solid #2563eb; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge" style="background: #dbeafe; color: #1d4ed8;">IHK Prüfung</span>
+              <h4 style="margin: 6px 0; color: #1e3a8a;"><a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" style="color: inherit; text-decoration: none;">📘 IHK AP1 &amp; AP2 (FISI) &rarr;</a></h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Alle Lernfelder 1–12, WiSo, 40h-Projektarbeit, Subnetting-Drill, Trace-Tabellen &amp; Realtime-Prüfungssimulation.</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #2563eb;">AP1 Starten</a>
+                <a href="courses/ihk_ap2_fisi/01_lf9_netzwerke_und_dienste/index.html" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #dc2626;">AP2 FISI Starten</a>
+              </div>
+            </div>
+
+            <div style="background: white; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge" style="background: #dcfce7; color: #15803d;">DevOps &amp; Admin</span>
+              <h4 style="margin: 6px 0; color: #14532d;"><a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" style="color: inherit; text-decoration: none;">🐧 Linux Bash &amp; PowerShell &rarr;</a></h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Streams, Pipelines, Awk, Jq, Parallelisierung, Cron, Systemd, PS7 Objekt-Pipelines &amp; Cloud Automation.</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #16a34a;">Bash IDE</a>
+                <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #0284c7;">PowerShell IDE</a>
+              </div>
+            </div>
+
+            <div style="background: white; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge" style="background: #ffedd5; color: #c2410c;">Daten &amp; Web</span>
+              <h4 style="margin: 6px 0; color: #7c2d12;"><a href="workspace.html?course=sql&chapter=01_tabellen_und_select" style="color: inherit; text-decoration: none;">🗄️ SQL &amp; HTML5/CSS3 &rarr;</a></h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Relationale Datenbanken, JOINs, CTEs, Window Functions, Flexbox, CSS Grid &amp; responsives Web-UI.</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="workspace.html?course=sql&chapter=01_tabellen_und_select" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #ea580c;">SQL Labor</a>
+                <a href="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #0891b2;">HTML/CSS IDE</a>
+              </div>
+            </div>
+
+            <div style="background: white; border: 1px solid #ddd6fe; border-left: 4px solid #7c3aed; padding: 14px; border-radius: var(--radius-sm);">
+              <span class="track-badge" style="background: #ede9fe; color: #6d28d9;">Coding Master</span>
+              <h4 style="margin: 6px 0; color: #4c1d95;"><a href="#lehrpfad-1" style="color: inherit; text-decoration: none;">💻 Python &amp; Moderne Sprachen &rarr;</a></h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0 0 8px 0;">Python (35 Module), JavaScript/TypeScript, Go, Rust, Java 21+, C# .NET 8 &amp; modernes C++20.</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="#lehrpfad-1" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #7c3aed;">Python Track</a>
+                <a href="workspace.html?course=javascript&chapter=01_erste_schritte_variablen" class="btn" style="padding: 3px 8px; font-size: 0.75rem; background: #f59e0b; color: #1e293b;">JS / TS IDE</a>
+              </div>
+            </div>
+          </div>
+        </section>
 
           <div class="box box-tipp">
             <div class="box-title">📚 Lehrplan-Abstimmung:</div>
