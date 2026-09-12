@@ -564,8 +564,8 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.close()
 
             if not cert:
-                return self.send_json({"valid": False, "error": "Zertifikat nicht gefunden"}, 404)
-            return self.send_json({"valid": True, "certificate": dict(cert)})
+                return self.send_json({"valid": False, "verified": False, "error": "Zertifikat nicht gefunden"}, 404)
+            return self.send_json({"valid": True, "verified": True, "certificate": dict(cert)})
 
         elif path == "/api/stats/leaderboard":
             conn = get_db()

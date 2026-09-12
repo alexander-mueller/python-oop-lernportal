@@ -137,9 +137,13 @@
 
   if (window.RunnerRegistry) {
     window.RunnerRegistry.register(HtmlCssAdapter);
+    window.RunnerRegistry.register({ ...HtmlCssAdapter, id: "html" });
   } else {
     document.addEventListener("DOMContentLoaded", () => {
-      if (window.RunnerRegistry) window.RunnerRegistry.register(HtmlCssAdapter);
+      if (window.RunnerRegistry) {
+        window.RunnerRegistry.register(HtmlCssAdapter);
+        window.RunnerRegistry.register({ ...HtmlCssAdapter, id: "html" });
+      }
     });
   }
 })();

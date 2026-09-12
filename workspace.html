@@ -369,14 +369,15 @@
   <script src="assets/runners/rust_runner.js"></script>
   <script src="assets/runners/csharp_runner.js"></script>
   <script src="assets/runners/cpp_runner.js"></script>
+  <script src="assets/courses_manifest.js"></script>
   <script src="assets/monaco_ide.js"></script>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const courseId = urlParams.get("course") || "python";
-    const trackFolder = urlParams.get("track") || "lehrpfad_1_grundlagen";
-    const chapterFolder = urlParams.get("chapter") || "01_erste_schritte_taschenrechner";
-    const chapterId = `${trackFolder}/${chapterFolder}`;
+    let trackFolder = urlParams.get("track") || (courseId === "python" ? "lehrpfad_1_grundlagen" : "");
+    let chapterFolder = urlParams.get("chapter") || "";
+    let chapterId = "";
 
     let CHAPTERS_MANIFEST = [];
     let currentCourseManifest = null;
@@ -467,17 +468,33 @@
 
       try {
         await loadCourseManifest();
+
+        // Dynamische Ermittlung des aktuellen Kapitels
+        if (!chapterFolder && CHAPTERS_MANIFEST.length > 0) {
+          chapterFolder = CHAPTERS_MANIFEST[0].folder;
+        } else if (!chapterFolder) {
+          chapterFolder = "01_erste_schritte_taschenrechner";
+        }
+
+        const currentChap = CHAPTERS_MANIFEST.find(c => c.folder === chapterFolder) || CHAPTERS_MANIFEST[0];
+        if (currentChap) {
+          chapterFolder = currentChap.folder;
+          if (currentChap.track && !trackFolder) trackFolder = currentChap.track;
+        }
+        if (!trackFolder) trackFolder = "lehrpfad_1_grundlagen";
+
+        chapterId = (courseId === "python") ? `${trackFolder}/${chapterFolder}` : `${courseId}/${chapterFolder}`;
+
         setupNextChapterButton();
 
-        const activeLanguage = currentCourseManifest ? (currentCourseManifest.language || "python") : "python";
-        const runner = window.RunnerRegistry ? window.RunnerRegistry.get(activeLanguage) : null;
+        const activeRunnerId = currentCourseManifest ? (currentCourseManifest.runner || currentCourseManifest.language || "python") : "python";
+        const runner = window.RunnerRegistry ? (window.RunnerRegistry.get(activeRunnerId) || window.RunnerRegistry.get(currentCourseManifest?.language) || null) : null;
 
         let basePath = `${trackFolder}/${chapterFolder}`;
         if (courseId !== "python") {
           basePath = `courses/${courseId}/${chapterFolder}`;
         }
 
-        const currentChap = CHAPTERS_MANIFEST.find(c => c.folder === chapterFolder);
         let taskFile = (currentChap && currentChap.taskFile) ? currentChap.taskFile : (runner ? `aufgabe${runner.fileExtension}` : "aufgabe.py");
         let testFile = (currentChap && currentChap.testFile) ? currentChap.testFile : (runner ? runner.testFileExtension : "test_aufgabe.py");
         let loesungFile = (currentChap && currentChap.taskFile && currentChap.taskFile.startsWith("Aufgabe")) ? `Musterloesung${runner ? runner.fileExtension : ".java"}` : (runner ? `musterloesung${runner.fileExtension}` : "musterloesung.py");
@@ -646,7 +663,6 @@
 
     document.addEventListener("DOMContentLoaded", loadWorkspaceData);
   </script>
-  <script src="assets/courses_manifest.js"></script>
   <script src="assets/course_sidebar.js"></script>
 </body>
 </html>
