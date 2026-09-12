@@ -181,7 +181,11 @@
           };
         }
         if (teacherLink) {
-          teacherLink.style.display = this.user.role === 'teacher' ? 'inline-flex' : 'none';
+          teacherLink.style.display = (this.user.role === 'teacher' || this.user.role === 'admin') ? 'inline-flex' : 'none';
+        }
+        const adminLink = document.getElementById('nav-admin-link');
+        if (adminLink) {
+          adminLink.style.display = this.user.role === 'admin' ? 'inline-flex' : 'none';
         }
       } else {
         if (userSpan) userSpan.style.display = 'none';

@@ -151,6 +151,13 @@ def init_db():
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )""")
 
+    c.execute("""
+    CREATE TABLE IF NOT EXISTS platform_settings (
+        key TEXT PRIMARY KEY,
+        value TEXT,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )""")
+
     conn.commit()
     conn.close()
 
@@ -239,6 +246,17 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         if auth_header.startswith("Bearer "):
             token = auth_header[7:].strip()
             return verify_token(token)
+        return None
+
+    def get_admin_user(self) -> dict | None:
+        user = self.get_auth_user()
+        if not user:
+            return None
+        conn = get_db()
+        row = conn.execute("SELECT id, email, name, role FROM users WHERE id = ?", (user["uid"],)).fetchone()
+        conn.close()
+        if row and row["role"] == "admin":
+            return dict(row)
         return None
 
     def read_json_body(self) -> dict:
@@ -412,6 +430,55 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             rows = conn.execute("SELECT name, xp, level, role FROM users WHERE role = 'student' ORDER BY xp DESC LIMIT 20").fetchall()
             conn.close()
             return self.send_json({"leaderboard": [dict(r) for r in rows]})
+
+        # 7. ADMIN: SYSTEMSTATISTIKEN
+        elif path == "/api/admin/stats":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            conn = get_db()
+            total_users = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+            roles_count = dict(conn.execute("SELECT role, COUNT(*) FROM users GROUP BY role").fetchall())
+            total_solved = conn.execute("SELECT COUNT(*) FROM chapter_progress WHERE is_solved = 1").fetchone()[0]
+            total_classrooms = conn.execute("SELECT COUNT(*) FROM classrooms").fetchone()[0]
+            recent_users = conn.execute("SELECT COUNT(*) FROM users WHERE created_at >= datetime('now', '-7 days')").fetchone()[0]
+            conn.close()
+            db_size = DB_FILE.stat().st_size if DB_FILE.exists() else 0
+            return self.send_json({
+                "total_users": total_users,
+                "roles": roles_count,
+                "total_solved": total_solved,
+                "total_classrooms": total_classrooms,
+                "recent_users": recent_users,
+                "db_size_kb": round(db_size / 1024, 1)
+            })
+
+        # 8. ADMIN: BENUTZERLISTE
+        elif path == "/api/admin/users":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            conn = get_db()
+            rows = conn.execute("""
+                SELECT u.id, u.email, u.name, u.role, u.xp, u.level, u.streak_days, u.created_at,
+                       COUNT(cp.id) as solved_count
+                FROM users u
+                LEFT JOIN chapter_progress cp ON u.id = cp.user_id AND cp.is_solved = 1
+                GROUP BY u.id
+                ORDER BY u.id DESC
+            """).fetchall()
+            conn.close()
+            return self.send_json({"users": [dict(r) for r in rows]})
+
+        # 9. ADMIN: EINSTELLUNGEN
+        elif path == "/api/admin/settings":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            conn = get_db()
+            rows = conn.execute("SELECT key, value FROM platform_settings").fetchall()
+            conn.close()
+            return self.send_json({"settings": dict(rows)})
 
         return super().do_GET()
 
@@ -640,6 +707,89 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.commit()
             conn.close()
             return self.send_json({"uuid": cert_uuid, "track_id": track_id, "student_name": student_name})
+
+        # 9. ADMIN: ROLLE ÄNDERN
+        elif path == "/api/admin/users/role":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            target_uid = int(body.get("user_id", 0))
+            new_role = str(body.get("role", "")).strip().lower()
+            if new_role not in ["admin", "teacher", "student", "solo"]:
+                return self.send_json({"error": "Ungültige Rolle"}, 400)
+            conn = get_db()
+            conn.execute("UPDATE users SET role = ? WHERE id = ?", (new_role, target_uid))
+            conn.commit()
+            conn.close()
+            return self.send_json({"success": True, "message": f"Rolle auf '{new_role}' geändert"})
+
+        # 10. ADMIN: PASSWORT ZURÜCKSETZEN
+        elif path == "/api/admin/users/reset-password":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            target_uid = int(body.get("user_id", 0))
+            new_pw = str(body.get("new_password", "")).strip()
+            if len(new_pw) < 6:
+                return self.send_json({"error": "Passwort muss mindestens 6 Zeichen lang sein"}, 400)
+            salt = secrets.token_hex(16)
+            pw_hash, _ = hash_password(new_pw, salt)
+            conn = get_db()
+            conn.execute("UPDATE users SET password_hash = ?, salt = ? WHERE id = ?", (pw_hash, salt, target_uid))
+            conn.commit()
+            conn.close()
+            return self.send_json({"success": True, "message": "Passwort erfolgreich aktualisiert"})
+
+        # 11. ADMIN: BENUTZER LÖSCHEN
+        elif path == "/api/admin/users/delete":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            target_uid = int(body.get("user_id", 0))
+            if target_uid == admin["id"]:
+                return self.send_json({"error": "Der eigene Admin-Account kann nicht gelöscht werden"}, 400)
+            conn = get_db()
+            conn.execute("DELETE FROM users WHERE id = ?", (target_uid,))
+            conn.commit()
+            conn.close()
+            return self.send_json({"success": True, "message": "Benutzer erfolgreich gelöscht"})
+
+        # 12. ADMIN: BENUTZER MANUELL ANLEGEN
+        elif path == "/api/admin/users/create":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            name = body.get("name", "").strip()
+            email = body.get("email", "").strip().lower()
+            password = body.get("password", "")
+            role = body.get("role", "student")
+            if not name or not email or len(password) < 6 or role not in ["admin", "teacher", "student", "solo"]:
+                return self.send_json({"error": "Ungültige Eingaben"}, 400)
+            salt = secrets.token_hex(16)
+            pw_hash, _ = hash_password(password, salt)
+            try:
+                conn = get_db()
+                cur = conn.execute("INSERT INTO users (name, email, password_hash, salt, role) VALUES (?, ?, ?, ?, ?)",
+                                   (name, email, pw_hash, salt, role))
+                new_id = cur.lastrowid
+                conn.commit()
+                conn.close()
+                return self.send_json({"success": True, "user_id": new_id, "message": f"Benutzer {name} erstellt"})
+            except sqlite3.IntegrityError:
+                return self.send_json({"error": "E-Mail-Adresse existiert bereits"}, 409)
+
+        # 13. ADMIN: GLOBALE EINSTELLUNGEN SPEICHERN
+        elif path == "/api/admin/settings":
+            admin = self.get_admin_user()
+            if not admin:
+                return self.send_json({"error": "Admin-Rechte erforderlich"}, 403)
+            settings = body.get("settings", {})
+            conn = get_db()
+            for k, v in settings.items():
+                conn.execute("INSERT INTO platform_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP", (str(k), str(v)))
+            conn.commit()
+            conn.close()
+            return self.send_json({"success": True, "message": "Einstellungen gespeichert"})
 
         return self.send_json({"error": "Endpunkt nicht gefunden"}, 404)
 

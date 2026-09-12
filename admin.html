@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | IT-Praxisportal</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body {
+      background: #090d16;
+      color: #f8fafc;
+      font-family: var(--font-sans);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .admin-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 20px 80px 20px;
+    }
+
+    .admin-header {
+      background: #0d1322;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .admin-brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .stat-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .admin-stat-card {
+      background: #0d1322;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .admin-stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      line-height: 1.2;
+    }
+
+    .admin-stat-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-stat-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .admin-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 12px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .admin-tab-btn:hover {
+      color: #f8fafc;
+    }
+
+    .admin-tab-btn.active {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+    }
+
+    .admin-panel-card {
+      background: #0d1322;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 16px;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 10px 14px;
+      color: #64748b;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .role-admin { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .role-teacher { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .role-student { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .role-solo { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .admin-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: #f8fafc;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .admin-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .admin-btn-primary {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: white;
+    }
+    .admin-btn-primary:hover { background: #0369a1; }
+
+    .admin-btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+    .admin-btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #0d1322;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      max-width: 480px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN TOPBAR -->
+  <header class="admin-header">
+    <a href="index.html" class="admin-brand">
+      <div class="admin-brand-logo">🛡️</div>
+      <div>
+        <div style="font-weight: 800; font-size: 1rem; color: #f8fafc;">IT-Praxisportal</div>
+        <div style="font-size: 0.7rem; color: #38bdf8; font-weight: 700; letter-spacing: 0.5px;">ADMIN CONTROL PANEL</div>
+      </div>
+    </a>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="index.html" class="admin-btn">🏠 Startseite</a>
+      <a href="teacher.html" class="admin-btn">👨‍🏫 Dozenten-Dashboard</a>
+      <span id="admin-user-display" style="font-size: 0.82rem; font-weight: 700; color: #f87171; background: rgba(239, 68, 68, 0.1); padding: 5px 12px; border-radius: 99px; border: 1px solid rgba(239, 68, 68, 0.25);">🛡️ Admin</span>
+      <button type="button" class="admin-btn admin-btn-danger" onclick="window.AUTH.logout()">Abmelden</button>
+    </div>
+  </header>
+
+  <!-- ACCESS CHECK BARRIER -->
+  <div id="admin-auth-guard" style="display: none; max-width: 500px; margin: 80px auto; text-align: center; background: #0d1322; border: 1px solid rgba(239,68,68,0.3); border-radius: 16px; padding: 36px 24px;">
+    <div style="font-size: 3rem; margin-bottom: 12px;">⛔</div>
+    <h2 style="margin: 0 0 10px 0; color: #f87171; font-size: 1.4rem;">Zugriff verweigert</h2>
+    <p style="color: #94a3b8; font-size: 0.92rem; margin-bottom: 24px; line-height: 1.5;">
+      Dieses Control Panel ist ausschließlich für System-Administratoren freigegeben. Bitte melde dich mit einem Administrator-Konto an.
+    </p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+      <a href="index.html" class="admin-btn">Zur Startseite</a>
+      <button type="button" class="admin-btn admin-btn-primary" onclick="window.openAuthModal('login', { allowClose: true })">Als Admin anmelden</button>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN CONTENT -->
+  <div class="admin-container" id="admin-main-content">
+
+    <!-- KPI STATS STRIP -->
+    <div class="stat-card-grid">
+      <div class="admin-stat-card">
+        <div class="admin-stat-title">👥 Gesamte Benutzer</div>
+        <div class="admin-stat-val" id="stat-total-users">-</div>
+        <div class="admin-stat-desc" id="stat-recent-users">- Neuregistrierungen (7 Tage)</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-title">🎓 Rollen-Verteilung</div>
+        <div class="admin-stat-val" style="font-size: 1.1rem; color: #f8fafc;" id="stat-roles-breakdown">-</div>
+        <div class="admin-stat-desc">Admins • Dozenten • Schüler • Solos</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-title">🚀 Gelöste Module</div>
+        <div class="admin-stat-val" style="color: #10b981;" id="stat-total-solved">-</div>
+        <div class="admin-stat-desc">Absolvierte Lerneinheiten &amp; Tests</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-title">💾 SQLite Datenbank</div>
+        <div class="admin-stat-val" style="color: #c084fc;" id="stat-db-size">-</div>
+        <div class="admin-stat-desc">platform_data.db Speichergröße</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('users')">👥 Benutzerverwaltung</button>
+      <button type="button" class="admin-tab-btn" onclick="switchAdminTab('settings')">⚙️ Plattform-Einstellungen</button>
+    </div>
+
+    <!-- TAB 1: BENUTZERVERWALTUNG -->
+    <div id="tab-content-users" class="admin-panel-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex: 1; max-width: 600px;">
+          <input type="text" id="admin-search-input" placeholder="🔍 Benutzer nach Name, E-Mail oder ID filtern..." style="flex: 1; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 9px 14px; color: white; font-size: 0.88rem; outline: none;">
+          
+          <select id="admin-filter-role" style="background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 9px 12px; color: white; font-size: 0.84rem; outline: none; cursor: pointer;">
+            <option value="all">Alle Rollen</option>
+            <option value="admin">Nur Admins</option>
+            <option value="teacher">Nur Dozenten</option>
+            <option value="student">Nur Schüler</option>
+            <option value="solo">Nur Solo-Lerner</option>
+          </select>
+        </div>
+
+        <button type="button" class="admin-btn admin-btn-primary" onclick="openCreateUserModal()">
+          <span>➕ Neuen Benutzer anlegen</span>
+        </button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">ID</th>
+              <th>Benutzer</th>
+              <th>E-Mail</th>
+              <th>Rolle</th>
+              <th>XP / Level</th>
+              <th>Gelöst</th>
+              <th>Registriert</th>
+              <th style="text-align: right;">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-tbody">
+            <tr><td colspan="8" style="text-align: center; color: #64748b; padding: 30px;">Lade Benutzerdaten...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: EINSTELLUNGEN -->
+    <div id="tab-content-settings" class="admin-panel-card" style="display: none;">
+      <h3 style="margin: 0 0 16px 0; font-size: 1.2rem; color: #f8fafc;">⚙️ Globale Plattform-Konfiguration</h3>
+      <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 24px;">Steuere Registrierungen, globale System-Hinweise und Server-Verhalten.</p>
+
+      <form id="admin-settings-form" style="display: flex; flex-direction: column; gap: 20px; max-width: 600px;">
+        <div>
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #cbd5e1; margin-bottom: 6px;">📢 Globales Announcement Banner (Startseite)</label>
+          <input type="text" id="setting-announcement" placeholder="z.B. Herzlich willkommen im Alpha-Testlauf des IT-Praxisportals!" style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; color: white; font-size: 0.9rem;">
+          <span style="font-size: 0.75rem; color: #64748b;">Freilassen, wenn kein Banner angezeigt werden soll.</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <input type="checkbox" id="setting-allow-reg" checked style="width: 18px; height: 18px; cursor: pointer;">
+          <label for="setting-allow-reg" style="font-size: 0.9rem; font-weight: 700; color: #cbd5e1; cursor: pointer;">
+            Öffentliche Neuregistrierungen zulassen
+          </label>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <input type="checkbox" id="setting-maintenance" style="width: 18px; height: 18px; cursor: pointer;">
+          <label for="setting-maintenance" style="font-size: 0.9rem; font-weight: 700; color: #f87171; cursor: pointer;">
+            Wartungsmodus aktivieren (Nur Admins haben Zugriff)
+          </label>
+        </div>
+
+        <button type="submit" class="admin-btn admin-btn-primary" style="align-self: flex-start; padding: 10px 20px; font-size: 0.9rem; margin-top: 10px;">
+          Einstellungen speichern
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- MODAL: BENUTZER ANLEGEN -->
+  <div class="modal-backdrop" id="modal-create-user">
+    <div class="modal-box">
+      <h3 style="margin: 0 0 16px 0; font-size: 1.2rem; color: #f8fafc;">➕ Neuen Benutzer anlegen</h3>
+      
+      <form id="form-create-user" style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Vollständiger Name:</label>
+          <input type="text" id="create-name" required style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">E-Mail-Adresse:</label>
+          <input type="email" id="create-email" required style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Initiales Passwort:</label>
+          <input type="password" id="create-password" required minlength="6" style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white;" placeholder="Mindestens 6 Zeichen">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Systemrolle:</label>
+          <select id="create-role" style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white;">
+            <option value="student">Schüler (Klassen)</option>
+            <option value="solo">Solo-Selbstlerner</option>
+            <option value="teacher">Lehrkraft / Dozent</option>
+            <option value="admin">Administrator (Vollzugriff)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
+          <button type="button" class="admin-btn" onclick="closeModal('modal-create-user')">Abbrechen</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Benutzer erstellen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PASSWORT ZURÜCKSETZEN -->
+  <div class="modal-backdrop" id="modal-reset-password">
+    <div class="modal-box">
+      <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #f8fafc;">🔑 Passwort zurücksetzen</h3>
+      <p style="font-size: 0.86rem; color: #94a3b8; margin-bottom: 16px;">
+        Neues Passwort für <strong id="reset-user-name" style="color: #38bdf8;">-</strong> vergeben:
+      </p>
+
+      <form id="form-reset-password" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="reset-user-id">
+        <div>
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">Neues Passwort:</label>
+          <input type="password" id="reset-new-password" required minlength="6" placeholder="Mindestens 6 Zeichen..." style="width: 100%; background: #080c14; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: white;">
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px;">
+          <button type="button" class="admin-btn" onclick="closeModal('modal-reset-password')">Abbrechen</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Passwort speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/app_auth.js"></script>
+  <script>
+    let ALL_USERS = [];
+
+    function switchAdminTab(tabId) {
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-panel-card').forEach(p => p.style.display = 'none');
+
+      const activeBtn = event.target;
+      const content = document.getElementById('tab-content-' + tabId);
+      if (activeBtn) activeBtn.classList.add('active');
+      if (content) content.style.display = 'block';
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
+
+    function openCreateUserModal() {
+      document.getElementById('modal-create-user').style.display = 'flex';
+    }
+
+    async function loadAdminData() {
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        showAuthGuard();
+        return;
+      }
+
+      // Check current user role
+      try {
+        const meRes = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const meData = await meRes.json();
+        if (!meRes.ok || !meData.user || meData.user.role !== 'admin') {
+          showAuthGuard();
+          return;
+        }
+
+        document.getElementById('admin-user-display').innerText = `🛡️ ${meData.user.name} (Admin)`;
+        document.getElementById('admin-auth-guard').style.display = 'none';
+        document.getElementById('admin-main-content').style.display = 'block';
+      } catch (err) {
+        showAuthGuard();
+        return;
+      }
+
+      // Load Stats
+      loadStats(token);
+      // Load Users
+      loadUsers(token);
+      // Load Settings
+      loadSettings(token);
+    }
+
+    function showAuthGuard() {
+      document.getElementById('admin-auth-guard').style.display = 'block';
+      document.getElementById('admin-main-content').style.display = 'none';
+    }
+
+    async function loadStats(token) {
+      try {
+        const res = await fetch('/api/admin/stats', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('stat-total-users').innerText = data.total_users;
+          document.getElementById('stat-recent-users').innerText = `+${data.recent_users} neu in den letzten 7 Tagen`;
+          document.getElementById('stat-total-solved').innerText = `${data.total_solved} Aufgaben`;
+          document.getElementById('stat-db-size').innerText = `${data.db_size_kb} KB`;
+
+          const r = data.roles || {};
+          document.getElementById('stat-roles-breakdown').innerHTML = `
+            <span style="color:#f87171;">${r.admin || 0} Admins</span> &bull; 
+            <span style="color:#c084fc;">${r.teacher || 0} Lehrer</span> &bull; 
+            <span style="color:#38bdf8;">${r.student || 0} Schüler</span> &bull; 
+            <span style="color:#34d399;">${r.solo || 0} Solo</span>
+          `;
+        }
+      } catch (e) {
+        console.error("Konnte Admin-Stats nicht laden:", e);
+      }
+    }
+
+    async function loadUsers(token) {
+      try {
+        const res = await fetch('/api/admin/users', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          ALL_USERS = data.users || [];
+          renderUsersTable(ALL_USERS);
+        }
+      } catch (e) {
+        console.error("Konnte Userliste nicht laden:", e);
+      }
+    }
+
+    function renderUsersTable(users) {
+      const tbody = document.getElementById('admin-users-tbody');
+      if (!users.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #64748b; padding: 24px;">Keine Benutzer gefunden.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = users.map(u => {
+        const roleClass = `role-${u.role || 'student'}`;
+        const createdDate = (u.created_at || '').substring(0, 10);
+        return `
+          <tr>
+            <td style="font-family: var(--font-mono); color: #64748b;">#${u.id}</td>
+            <td>
+              <strong style="color: #f8fafc;">${escapeHtml(u.name)}</strong>
+            </td>
+            <td style="color: #94a3b8; font-family: var(--font-mono);">${escapeHtml(u.email)}</td>
+            <td>
+              <select onchange="changeUserRole(${u.id}, this.value)" style="background: #080c14; border: 1px solid rgba(255,255,255,0.15); color: white; padding: 3px 6px; border-radius: 4px; font-size: 0.76rem; cursor: pointer;">
+                <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                <option value="teacher" ${u.role === 'teacher' ? 'selected' : ''}>Lehrkraft</option>
+                <option value="student" ${u.role === 'student' ? 'selected' : ''}>Schüler</option>
+                <option value="solo" ${u.role === 'solo' ? 'selected' : ''}>Solo-Lerner</option>
+              </select>
+            </td>
+            <td>
+              <span style="color: #fbbf24; font-weight: 700;">⭐ Lvl ${u.level || 1}</span>
+              <span style="color: #64748b; font-size: 0.78rem;">(${u.xp || 0} XP)</span>
+            </td>
+            <td>
+              <span style="color: #10b981; font-weight: 700;">✓ ${u.solved_count || 0}</span>
+            </td>
+            <td style="color: #64748b; font-size: 0.8rem;">${createdDate}</td>
+            <td style="text-align: right;">
+              <button type="button" class="admin-btn" onclick="openResetPasswordModal(${u.id}, '${escapeHtml(u.name)}')" title="Passwort zurücksetzen">🔑</button>
+              <button type="button" class="admin-btn admin-btn-danger" onclick="deleteUser(${u.id}, '${escapeHtml(u.name)}')" title="Benutzer löschen">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(t) {
+      if (!t) return '';
+      return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Filter Users
+    const searchInput = document.getElementById('admin-search-input');
+    const roleFilter = document.getElementById('admin-filter-role');
+
+    function applyFilters() {
+      const q = (searchInput.value || '').toLowerCase().trim();
+      const role = roleFilter.value;
+
+      const filtered = ALL_USERS.filter(u => {
+        const matchesQ = !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || String(u.id) === q;
+        const matchesRole = (role === 'all' || u.role === role);
+        return matchesQ && matchesRole;
+      });
+
+      renderUsersTable(filtered);
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    roleFilter.addEventListener('change', applyFilters);
+
+    // Change Role
+    async function changeUserRole(userId, newRole) {
+      const token = localStorage.getItem('auth_token');
+      try {
+        const res = await fetch('/api/admin/users/role', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ user_id: userId, role: newRole })
+        });
+        const d = await res.json();
+        if (res.ok) {
+          alert(`Rolle erfolgreich geändert: ${d.message}`);
+          loadUsers(token);
+          loadStats(token);
+        } else {
+          alert(`Fehler: ${d.error}`);
+        }
+      } catch (err) {
+        alert("Netzwerkfehler: " + err.message);
+      }
+    }
+
+    // Delete User
+    async function deleteUser(userId, name) {
+      if (!confirm(`Soll der Benutzer '${name}' (ID: ${userId}) wirklich unwiderruflich gelöscht werden?`)) return;
+      const token = localStorage.getItem('auth_token');
+      try {
+        const res = await fetch('/api/admin/users/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ user_id: userId })
+        });
+        const d = await res.json();
+        if (res.ok) {
+          alert("Benutzer gelöscht!");
+          loadUsers(token);
+          loadStats(token);
+        } else {
+          alert("Fehler: " + d.error);
+        }
+      } catch (err) {
+        alert("Netzwerkfehler: " + err.message);
+      }
+    }
+
+    // Open Reset Password
+    function openResetPasswordModal(userId, name) {
+      document.getElementById('reset-user-id').value = userId;
+      document.getElementById('reset-user-name').innerText = name;
+      document.getElementById('reset-new-password').value = '';
+      document.getElementById('modal-reset-password').style.display = 'flex';
+    }
+
+    // Form Reset Password
+    document.getElementById('form-reset-password').onsubmit = async (e) => {
+      e.preventDefault();
+      const userId = document.getElementById('reset-user-id').value;
+      const newPassword = document.getElementById('reset-new-password').value;
+      const token = localStorage.getItem('auth_token');
+
+      try {
+        const res = await fetch('/api/admin/users/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ user_id: userId, new_password: newPassword })
+        });
+        const d = await res.json();
+        if (res.ok) {
+          alert("Passwort erfolgreich geändert!");
+          closeModal('modal-reset-password');
+        } else {
+          alert("Fehler: " + d.error);
+        }
+      } catch (err) {
+        alert("Netzwerkfehler: " + err.message);
+      }
+    };
+
+    // Form Create User
+    document.getElementById('form-create-user').onsubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('create-name').value.trim();
+      const email = document.getElementById('create-email').value.trim();
+      const password = document.getElementById('create-password').value;
+      const role = document.getElementById('create-role').value;
+      const token = localStorage.getItem('auth_token');
+
+      try {
+        const res = await fetch('/api/admin/users/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ name, email, password, role })
+        });
+        const d = await res.json();
+        if (res.ok) {
+          alert(`Benutzer '${name}' erfolgreich angelegt!`);
+          closeModal('modal-create-user');
+          document.getElementById('form-create-user').reset();
+          loadUsers(token);
+          loadStats(token);
+        } else {
+          alert("Fehler: " + d.error);
+        }
+      } catch (err) {
+        alert("Netzwerkfehler: " + err.message);
+      }
+    };
+
+    // Load & Save Settings
+    async function loadSettings(token) {
+      try {
+        const res = await fetch('/api/admin/settings', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const d = await res.json();
+          const s = d.settings || {};
+          document.getElementById('setting-announcement').value = s.announcement_banner || '';
+          document.getElementById('setting-allow-reg').checked = (s.allow_registrations !== '0');
+          document.getElementById('setting-maintenance').checked = (s.maintenance_mode === '1');
+        }
+      } catch (e) { }
+    }
+
+    document.getElementById('admin-settings-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('auth_token');
+      const settings = {
+        announcement_banner: document.getElementById('setting-announcement').value.trim(),
+        allow_registrations: document.getElementById('setting-allow-reg').checked ? '1' : '0',
+        maintenance_mode: document.getElementById('setting-maintenance').checked ? '1' : '0'
+      };
+
+      try {
+        const res = await fetch('/api/admin/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ settings })
+        });
+        const d = await res.json();
+        if (res.ok) {
+          alert("Einstellungen erfolgreich gespeichert!");
+        } else {
+          alert("Fehler: " + d.error);
+        }
+      } catch (err) {
+        alert("Netzwerkfehler: " + err.message);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', loadAdminData);
+  </script>
+</body>
+</html>
