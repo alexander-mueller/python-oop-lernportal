@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 03: UDP vs. TCP Port 53 & EDNS0</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 DNS Netzwerkprotokoll</div>
+          <h1>DNS 03: UDP vs. TCP Port 53 & EDNS0</h1>
+          <p>Transportprotokolle: Port 53 UDP für Standardabfragen (< 512 Bytes), Port 53 TCP für Zonentransfers (AXFR) & DNSSEC.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Transportprotokolle: Port 53 UDP für Standardabfragen (< 512 Bytes), Port 53 TCP für Zonentransfers (AXFR) & DNSSEC.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>DNS Command &amp; Syntax Reference</span>
+              <span>Tool: dig +tcp</span>
+            </div>
+            <pre><code># Wichtige Befehle &amp; Zonensyntax:
+dig dig +tcp
+named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> DNS-Anfrage über UDP Port 53 versenden</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Truncation Flag (TC-Bit) und TCP-Fallback erkennen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> EDNS0 (Extension Mechanisms for DNS) Puffergröße auf 4096 Byte setzen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> TCP-Verbindung für Zonentransfers absichern</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=03_ports_udp_tcp_und_dns_paketaufbau" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../04_ttl_und_dns_propagation/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

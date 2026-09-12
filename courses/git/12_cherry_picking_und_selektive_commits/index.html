@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 12: Selektive Commits mit Git Cherry-Pick</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔀 Cherry-Pick</div>
+          <h1>Git 12: Selektive Commits mit Git Cherry-Pick</h1>
+          <p>Übertrage einzelne, wichtige Commits (z.B. Security-Patches) isoliert zwischen Branches.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Übertrage einzelne, wichtige Commits (z.B. Security-Patches) isoliert zwischen Branches.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Git Terminal Cheat Sheet</span>
+              <span>Bash / CLI</span>
+            </div>
+            <pre><code># Wichtige Befehle für dieses Modul:
+git status -s
+git add &lt;datei&gt;
+git commit -m "feat: deine änderung"
+git log --oneline --graph</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Commit-Hash des Bugfixes im Feature-Branch ermitteln</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Auf Release-Branch wechseln und commit mit git cherry-pick <hash> anwenden</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Cherry-Pick Konflikt auflösen und abschließen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Historie beider Branches vergleichen</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=git&track=track_3_remotes_collaboration&chapter=12_cherry_picking_und_selektive_commits" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_rebase_fuer_saubere_historie/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

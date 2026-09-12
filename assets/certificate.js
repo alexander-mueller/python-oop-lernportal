@@ -229,9 +229,57 @@
       titel = "Zertifikat: IHK Abschlussprüfung Teil 2 (AP2 FISI) Meister";
       moduleDesc = "Vollständiger Abschluss der IHK AP2 Fachinformatiker Systemintegration (12 Module inkl. 3 Probeprüfungen)";
       trackKey = "ihk_ap2_fisi_master";
+    } else if (lehrpfadNummer === "git_basics") {
+      titel = "Git Grundlagen & Lokale Repositories";
+      moduleDesc = "4 Module: Initialisierung, 3-Bereiche-Architektur, Staging, atomare Commits, Diff & .gitignore";
+      trackKey = "git_basics";
+    } else if (lehrpfadNummer === "git_branching") {
+      titel = "Git Branching, Fast-Forward & Merge-Konflikte";
+      moduleDesc = "4 Module: Feature-Branches, Fast-Forward vs 3-Way Merge, Konfliktbehandlung & Git Stash";
+      trackKey = "git_branching";
+    } else if (lehrpfadNummer === "git_collaboration") {
+      titel = "Git Remotes, Upstream & Team-Collaboration";
+      moduleDesc = "4 Module: Remote Tracking, Git Fetch vs Pull, SemVer Tags & Cherry-Picking";
+      trackKey = "git_collaboration";
+    } else if (lehrpfadNummer === "git_master") {
+      titel = "Master of Git Version Control & DevOps Workflows";
+      moduleDesc = "Vollständiger Abschluss des Git Curriculums (16 Module, Rebase -i, Pre-Commit Hooks & Git-Flow Release Master)";
+      trackKey = "git_master";
+    } else if (lehrpfadNummer === "ad_architektur") {
+      titel = "Active Directory Architektur, OUs & FSMO";
+      moduleDesc = "4 Module: Gesamtstruktur & Domänen, die 5 FSMO-Rollen, OU-Design & AD Sites/Replikation";
+      trackKey = "ad_architektur";
+    } else if (lehrpfadNummer === "ad_identity") {
+      titel = "Active Directory Identitätsmanagement & AGDLP";
+      moduleDesc = "4 Module: Benutzerkonten, Maschinenkonten, Gruppenbereiche & saubere Rechtevergabe nach AGDLP";
+      trackKey = "ad_identity";
+    } else if (lehrpfadNummer === "ad_gpo") {
+      titel = "Active Directory Gruppenrichtlinien (GPO) Design";
+      moduleDesc = "4 Module: LSDOU-Vererbung, Computer vs Benutzer, WMI-Sicherheitsfilter & GPO Troubleshooting (gpresult)";
+      trackKey = "ad_gpo";
+    } else if (lehrpfadNummer === "ad_master") {
+      titel = "Master of Active Directory & Windows Server Administration";
+      moduleDesc = "Vollständiger Abschluss des AD Curriculums (16 Module, PowerShell AD Module, CSV-Bulk Provisioning & AD Automation Master)";
+      trackKey = "ad_master";
+    } else if (lehrpfadNummer === "dns_architektur") {
+      titel = "DNS-Architektur, Root-Server & Namensauflösung";
+      moduleDesc = "4 Module: DNS-Hierarchie, rekursive/iterative Queries, Port 53 UDP/TCP & TTL-Propagation";
+      trackKey = "dns_architektur";
+    } else if (lehrpfadNummer === "dns_records_core") {
+      titel = "DNS Resource Records & Zonenverwaltung";
+      moduleDesc = "4 Module: A/AAAA Records, CNAME Alias & Apex-Problem, SOA-Header & PTR Reverse-Lookups";
+      trackKey = "dns_records_core";
+    } else if (lehrpfadNummer === "dns_email_security") {
+      titel = "DNS E-Mail-Sicherheit & Anti-Spoofing (SPF, DKIM, DMARC)";
+      moduleDesc = "4 Module: MX-Prioritäten, SPF TXT-Records, DKIM Kryptosignaturen & DMARC Quarantäne/Reject";
+      trackKey = "dns_email_security";
+    } else if (lehrpfadNummer === "dns_master") {
+      titel = "Master of DNS Records, Domain Security & Infrastructure";
+      moduleDesc = "Vollständiger Abschluss des DNS Curriculums (16 Module, SRV Records, DNSSEC Vertrauenskette, dig-Troubleshooting & Zone Auditor)";
+      trackKey = "dns_master";
     } else if (lehrpfadNummer === "master") {
       titel = "Grandmaster of Software & Systems Engineering (Polyglot)";
-      moduleDesc = "Vollständiger Abschluss aller 11 plattformweiten Curricula (Python, JS/TS, Bash, PowerShell, SQL, HTML/CSS, Go, Java, Rust, C#, C++)";
+      moduleDesc = "Vollständiger Abschluss aller 16 plattformweiten Curricula (Python, JS/TS, Bash, PowerShell, SQL, HTML/CSS, Go, Java, Rust, C#, C++, AD, Git, DNS & IHK)";
       trackKey = "master";
     }
 

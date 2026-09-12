@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 13: SRV Service Records (Active Directory & SIP)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🚀 Service Discovery</div>
+          <h1>DNS 13: SRV Service Records (Active Directory & SIP)</h1>
+          <p>Dienste automatisch im Netzwerk finden: _service._proto.name TTL Class SRV Priority Weight Port Target.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Dienste automatisch im Netzwerk finden: _service._proto.name TTL Class SRV Priority Weight Port Target.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>DNS Command &amp; Syntax Reference</span>
+              <span>Tool: dig SRV</span>
+            </div>
+            <pre><code># Wichtige Befehle &amp; Zonensyntax:
+dig dig SRV
+named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> SRV-Record für Active Directory LDAP (_ldap._tcp.dc._msdcs) erstellen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> SRV-Record für Kerberos Authentifizierung (_kerberos._tcp) anlegen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Priorität und Gewichtung (Weight) für Lastverteilung berechnen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Service-Discovery Abfragen mit dig SRV durchführen</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=dns_records&track=track_4_advanced_dns&chapter=13_srv_service_records_fuer_ad_und_sip" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../14_caa_und_dnssec_sicherheit/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

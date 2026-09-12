@@ -1,0 +1,138 @@
+{
+  "id": "dns_records",
+  "title": "DNS-Records, Domain Name System & E-Mail-Sicherheit",
+  "language": "bash",
+  "icon": "🌐",
+  "runner": "bash",
+  "description": "Vom DNS-Baum über A/AAAA, CNAME, MX und SOA bis zu moderner E-Mail-Sicherheit (SPF, DKIM, DMARC), Active Directory SRV-Records und DNSSEC.",
+  "tracks": [
+    {
+      "id": "track_1_dns_architektur",
+      "title": "🌐 Lehrpfad 1: DNS-Architektur & Namensauflösung",
+      "description": "DNS-Hierarchie, Root-Zone (.), rekursive vs. iterative Abfragen, UDP/TCP Port 53 und TTL Caching.",
+      "certificateKey": "dns_architektur",
+      "chapters": [
+        {
+          "folder": "01_dns_hierarchie_und_root_server",
+          "title": "DNS 01: DNS-Hierarchie & Root-Server",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "02_rekursive_vs_iterative_abfragen",
+          "title": "DNS 02: Rekursive vs. Iterative Abfragen",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "03_ports_udp_tcp_und_dns_paketaufbau",
+          "title": "DNS 03: UDP vs. TCP Port 53 & EDNS0",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "04_ttl_und_dns_propagation",
+          "title": "DNS 04: TTL & DNS-Propagation",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        }
+      ]
+    },
+    {
+      "id": "track_2_core_records",
+      "title": "⚡ Lehrpfad 2: Kern-Resource-Records & Zonen",
+      "description": "A & AAAA Records, CNAME Alias-Regeln, SOA-Header mit Serial und NS/PTR Reverse-Lookups.",
+      "certificateKey": "dns_records_core",
+      "chapters": [
+        {
+          "folder": "05_a_und_aaaa_records",
+          "title": "DNS 05: A & AAAA Records (IPv4 / IPv6)",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "06_cname_canonical_name_und_alias_regeln",
+          "title": "DNS 06: CNAME Alias & das Apex-Problem",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "07_soa_start_of_authority_und_serial",
+          "title": "DNS 07: SOA Start of Authority & Serial",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "08_ns_und_ptr_reverse_dns_lookups",
+          "title": "DNS 08: NS Delegation & PTR Reverse DNS",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        }
+      ]
+    },
+    {
+      "id": "track_3_email_security",
+      "title": "🛡️ Lehrpfad 3: E-Mail-Sicherheit & Security Records",
+      "description": "MX Prioritäten, SPF-Einträge, DKIM-Kryptosignaturen und DMARC Schutz vor Phishing & Spoofing.",
+      "certificateKey": "dns_email_security",
+      "chapters": [
+        {
+          "folder": "09_mx_mail_exchange_und_prioritaeten",
+          "title": "DNS 09: MX Records & Mail-Prioritäten",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "10_txt_records_und_spf_sender_policy_framework",
+          "title": "DNS 10: SPF Sender Policy Framework (TXT)",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "11_dkim_domainkeys_identified_mail",
+          "title": "DNS 11: DKIM Kryptografische E-Mail-Signatur",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "12_dmarc_und_email_security_suite",
+          "title": "DNS 12: DMARC Policy & Phishing-Abwehr",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        }
+      ]
+    },
+    {
+      "id": "track_4_advanced_dns",
+      "title": "🚀 Lehrpfad 4: Erweiterte Records, DNSSEC & Auditing",
+      "description": "SRV Records für Active Directory, CAA, DNSSEC Vertrauenskette, dig-Troubleshooting & Master Auditor.",
+      "certificateKey": "dns_master",
+      "chapters": [
+        {
+          "folder": "13_srv_service_records_fuer_ad_und_sip",
+          "title": "DNS 13: SRV Service Records (Active Directory & SIP)",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "14_caa_und_dnssec_sicherheit",
+          "title": "DNS 14: CAA Records & DNSSEC Vertrauenskette",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "15_dns_troubleshooting_mit_dig_und_nslookup",
+          "title": "DNS 15: DNS-Troubleshooting mit dig & nslookup",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        },
+        {
+          "folder": "16_master_abschlussprojekt_dns_zone_auditor",
+          "title": "Master 16: Enterprise DNS Zone & Security Auditor",
+          "taskFile": "aufgabe.sh",
+          "testFile": "test_aufgabe.sh"
+        }
+      ]
+    }
+  ]
+}

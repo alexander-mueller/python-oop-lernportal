@@ -167,6 +167,20 @@ def init_db():
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )""")
 
+    # Migrationen für Ausbildungen, Lernfelder und Kurszuweisungen
+    for col_def in [
+        "ALTER TABLE classrooms ADD COLUMN assigned_courses TEXT DEFAULT '[]'",
+        "ALTER TABLE classrooms ADD COLUMN profession TEXT DEFAULT 'FISI'",
+        "ALTER TABLE classrooms ADD COLUMN training_year INTEGER DEFAULT 1",
+        "ALTER TABLE users ADD COLUMN profession TEXT DEFAULT 'FISI'",
+        "ALTER TABLE users ADD COLUMN training_year INTEGER DEFAULT 1",
+        "ALTER TABLE users ADD COLUMN assigned_courses TEXT DEFAULT '[]'",
+    ]:
+        try:
+            c.execute(col_def)
+        except Exception:
+            pass
+
     conn.commit()
     conn.close()
 
@@ -347,11 +361,38 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             if not user_token:
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
             conn = get_db()
-            row = conn.execute("SELECT id, email, name, role, xp, level, streak_days FROM users WHERE id = ?", (user_token["uid"],)).fetchone()
-            conn.close()
+            row = conn.execute("SELECT id, email, name, role, xp, level, streak_days, profession, training_year, assigned_courses FROM users WHERE id = ?", (user_token["uid"],)).fetchone()
             if not row:
+                conn.close()
                 return self.send_json({"error": "Benutzer nicht gefunden"}, 404)
-            return self.send_json({"user": dict(row)})
+            user_dict = dict(row)
+            try:
+                assigned_set = set(json.loads(user_dict.get("assigned_courses") or "[]"))
+            except Exception:
+                assigned_set = set()
+
+            # Enrolled classrooms assignments
+            class_courses = conn.execute("""
+                SELECT c.assigned_courses, c.profession, c.training_year 
+                FROM class_enrollments ce 
+                JOIN classrooms c ON ce.classroom_id = c.id 
+                WHERE ce.user_id = ?
+            """, (user_token["uid"],)).fetchall()
+            conn.close()
+
+            for cc in class_courses:
+                if not user_dict.get("profession") and cc["profession"]:
+                    user_dict["profession"] = cc["profession"]
+                if not user_dict.get("training_year") and cc["training_year"]:
+                    user_dict["training_year"] = cc["training_year"]
+                try:
+                    c_arr = json.loads(cc["assigned_courses"] or "[]")
+                    for ca in c_arr:
+                        assigned_set.add(ca)
+                except Exception:
+                    pass
+            user_dict["assigned_courses"] = list(assigned_set)
+            return self.send_json({"user": user_dict})
 
         # 2. PROGRESS GET
         elif path.startswith("/api/progress/get"):
@@ -378,29 +419,70 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
             
             conn = get_db()
-            if user_token.get("role") == "teacher":
-                classes = conn.execute("SELECT id, name, invite_code, created_at FROM classrooms WHERE teacher_id = ?", (user_token["uid"],)).fetchall()
+            if user_token.get("role") in ("teacher", "admin"):
+                if user_token.get("role") == "admin":
+                    classes = conn.execute("SELECT id, name, invite_code, assigned_courses, profession, training_year, created_at FROM classrooms").fetchall()
+                else:
+                    classes = conn.execute("SELECT id, name, invite_code, assigned_courses, profession, training_year, created_at FROM classrooms WHERE teacher_id = ?", (user_token["uid"],)).fetchall()
                 result = []
                 for cl in classes:
                     student_count = conn.execute("SELECT COUNT(*) FROM class_enrollments WHERE classroom_id = ?", (cl["id"],)).fetchone()[0]
-                    result.append({**dict(cl), "student_count": student_count})
+                    courses_raw = cl["assigned_courses"] or "[]"
+                    try:
+                        courses_list = json.loads(courses_raw)
+                    except Exception:
+                        courses_list = []
+                    result.append({
+                        **dict(cl),
+                        "assigned_courses": courses_list,
+                        "student_count": student_count
+                    })
                 conn.close()
                 return self.send_json({"classrooms": result})
             else:
                 classes = conn.execute("""
-                    SELECT c.id, c.name, u.name as teacher_name, ce.joined_at 
+                    SELECT c.id, c.name, c.assigned_courses, c.profession, c.training_year, u.name as teacher_name, ce.joined_at 
                     FROM class_enrollments ce 
                     JOIN classrooms c ON ce.classroom_id = c.id 
                     JOIN users u ON c.teacher_id = u.id 
                     WHERE ce.user_id = ?
                 """, (user_token["uid"],)).fetchall()
+
+                u_row = conn.execute("SELECT profession, training_year, assigned_courses FROM users WHERE id = ?", (user_token["uid"],)).fetchone()
                 conn.close()
-                return self.send_json({"classrooms": [dict(c) for c in classes]})
+
+                parsed_classes = []
+                all_assigned = set()
+                for c in classes:
+                    cd = dict(c)
+                    try:
+                        c_list = json.loads(cd.get("assigned_courses") or "[]")
+                    except Exception:
+                        c_list = []
+                    cd["assigned_courses"] = c_list
+                    for crs in c_list:
+                        all_assigned.add(crs)
+                    parsed_classes.append(cd)
+
+                if u_row and u_row["assigned_courses"]:
+                    try:
+                        user_courses = json.loads(u_row["assigned_courses"])
+                        for crs in user_courses:
+                            all_assigned.add(crs)
+                    except Exception:
+                        pass
+
+                return self.send_json({
+                    "classrooms": parsed_classes,
+                    "assigned_courses": list(all_assigned),
+                    "profession": (u_row and u_row["profession"]) or (parsed_classes and parsed_classes[0].get("profession")) or "FISI",
+                    "training_year": (u_row and u_row["training_year"]) or (parsed_classes and parsed_classes[0].get("training_year")) or 1
+                })
 
         # 4. CLASSROOMS MATRIX (mit IDOR-Schutz)
         elif path.startswith("/api/classrooms/matrix"):
             user_token = self.get_auth_user()
-            if not user_token or user_token.get("role") != "teacher":
+            if not user_token or user_token.get("role") not in ("teacher", "admin"):
                 return self.send_json({"error": "Nur für Lehrkräfte"}, 403)
             
             query = urllib.parse.parse_qs(parsed.query)
@@ -409,7 +491,10 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({"error": "Ungültige classroom_id"}, 400)
 
             conn = get_db()
-            owner_check = conn.execute("SELECT id, name FROM classrooms WHERE id = ? AND teacher_id = ?", (int(classroom_id), user_token["uid"])).fetchone()
+            if user_token.get("role") == "admin":
+                owner_check = conn.execute("SELECT id, name FROM classrooms WHERE id = ?", (int(classroom_id),)).fetchone()
+            else:
+                owner_check = conn.execute("SELECT id, name FROM classrooms WHERE id = ? AND teacher_id = ?", (int(classroom_id), user_token["uid"])).fetchone()
             if not owner_check:
                 conn.close()
                 return self.send_json({"error": "Zugriff verweigert (Nicht deine Klasse)"}, 403)
@@ -714,23 +799,121 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
         # 5. KLASSENRAUM ERSTELLEN
         elif path == "/api/classrooms/create":
             user_token = self.get_auth_user()
-            if not user_token or user_token.get("role") != "teacher":
-                return self.send_json({"error": "Nur für Lehrkräfte gestattet"}, 403)
+            if not user_token or user_token.get("role") not in ("teacher", "admin"):
+                return self.send_json({"error": "Nur für Lehrkräfte und Administratoren gestattet"}, 403)
 
             name = str(body.get("name", "")).strip()[:80]
             if not name:
                 return self.send_json({"error": "Klassenname erforderlich"}, 400)
 
+            profession = str(body.get("profession", "FISI")).strip()[:10]
+            try:
+                training_year = int(body.get("training_year", 1))
+                if training_year not in (1, 2, 3):
+                    training_year = 1
+            except (ValueError, TypeError):
+                training_year = 1
+
+            assigned_courses = body.get("assigned_courses", [])
+            if not isinstance(assigned_courses, list):
+                assigned_courses = []
+            assigned_courses_json = json.dumps(assigned_courses)
+
             invite_code = "PY-" + secrets.token_hex(3).upper()
             conn = get_db()
             c = conn.cursor()
-            c.execute("INSERT INTO classrooms (teacher_id, name, invite_code) VALUES (?, ?, ?)",
-                      (user_token["uid"], name, invite_code))
+            c.execute("INSERT INTO classrooms (teacher_id, name, invite_code, assigned_courses, profession, training_year) VALUES (?, ?, ?, ?, ?, ?)",
+                      (user_token["uid"], name, invite_code, assigned_courses_json, profession, training_year))
             class_id = c.lastrowid
             conn.commit()
             conn.close()
 
-            return self.send_json({"classroom": {"id": class_id, "name": name, "invite_code": invite_code}}, 201)
+            return self.send_json({
+                "classroom": {
+                    "id": class_id,
+                    "name": name,
+                    "invite_code": invite_code,
+                    "profession": profession,
+                    "training_year": training_year,
+                    "assigned_courses": assigned_courses
+                }
+            }, 201)
+
+        # 5b. KLASSENRAUM KURSE & LERNFELDER AKTUALISIEREN
+        elif path == "/api/classrooms/update-courses":
+            user_token = self.get_auth_user()
+            if not user_token or user_token.get("role") not in ("teacher", "admin"):
+                return self.send_json({"error": "Nur für Lehrkräfte und Administratoren"}, 403)
+
+            class_id = body.get("classroom_id")
+            if not class_id:
+                return self.send_json({"error": "classroom_id erforderlich"}, 400)
+
+            assigned_courses = body.get("assigned_courses", [])
+            if not isinstance(assigned_courses, list):
+                assigned_courses = []
+            assigned_courses_json = json.dumps(assigned_courses)
+
+            profession = str(body.get("profession", "FISI")).strip()[:10]
+            try:
+                training_year = int(body.get("training_year", 1))
+                if training_year not in (1, 2, 3):
+                    training_year = 1
+            except (ValueError, TypeError):
+                training_year = 1
+
+            conn = get_db()
+            if user_token.get("role") == "admin":
+                owner_check = conn.execute("SELECT id FROM classrooms WHERE id = ?", (int(class_id),)).fetchone()
+            else:
+                owner_check = conn.execute("SELECT id FROM classrooms WHERE id = ? AND teacher_id = ?", (int(class_id), user_token["uid"])).fetchone()
+
+            if not owner_check:
+                conn.close()
+                return self.send_json({"error": "Klasse nicht gefunden oder keine Berechtigung"}, 403)
+
+            conn.execute("UPDATE classrooms SET assigned_courses = ?, profession = ?, training_year = ? WHERE id = ?",
+                         (assigned_courses_json, profession, training_year, int(class_id)))
+            conn.commit()
+            conn.close()
+            return self.send_json({
+                "status": "updated",
+                "assigned_courses": assigned_courses,
+                "profession": profession,
+                "training_year": training_year
+            })
+
+        # 5c. SCHÜLER AUSBILDUNGSPLAN & KURSE SETZEN
+        elif path == "/api/user/apprenticeship":
+            user_token = self.get_auth_user()
+            if not user_token:
+                return self.send_json({"error": "Nicht authentifiziert"}, 401)
+
+            profession = str(body.get("profession", "FISI")).strip()[:10]
+            try:
+                training_year = int(body.get("training_year", 1))
+                if training_year not in (1, 2, 3):
+                    training_year = 1
+            except (ValueError, TypeError):
+                training_year = 1
+
+            assigned_courses = body.get("assigned_courses", None)
+            conn = get_db()
+            if assigned_courses is not None and isinstance(assigned_courses, list):
+                assigned_json = json.dumps(assigned_courses)
+                conn.execute("UPDATE users SET profession = ?, training_year = ?, assigned_courses = ? WHERE id = ?",
+                             (profession, training_year, assigned_json, user_token["uid"]))
+            else:
+                conn.execute("UPDATE users SET profession = ?, training_year = ? WHERE id = ?",
+                             (profession, training_year, user_token["uid"]))
+            conn.commit()
+            conn.close()
+            return self.send_json({
+                "status": "updated",
+                "profession": profession,
+                "training_year": training_year,
+                "assigned_courses": assigned_courses
+            })
 
         # 6. KLASSENRAUM BEITRETEN
         elif path == "/api/classrooms/join":
@@ -743,7 +926,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             code = str(body.get("invite_code", "")).strip().upper()[:12]
             conn = get_db()
-            cl = conn.execute("SELECT id, name FROM classrooms WHERE invite_code = ?", (code,)).fetchone()
+            cl = conn.execute("SELECT id, name, profession, training_year, assigned_courses FROM classrooms WHERE invite_code = ?", (code,)).fetchone()
             if not cl:
                 conn.close()
                 return self.send_json({"error": "Ungültiger Einladungscode"}, 404)
@@ -757,15 +940,18 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({"message": "Du bist dieser Klasse bereits beigetreten.", "classroom": dict(cl)})
 
-        # 7. KLASSE LÖSCHEN (LEHRER)
+        # 7. KLASSE LÖSCHEN (LEHRER & ADMIN)
         elif path == "/api/classrooms/delete":
             user_token = self.get_auth_user()
-            if not user_token or user_token.get("role") != "teacher":
-                return self.send_json({"error": "Nur für Lehrkräfte"}, 403)
+            if not user_token or user_token.get("role") not in ("teacher", "admin"):
+                return self.send_json({"error": "Nur für Lehrkräfte und Administratoren"}, 403)
 
             class_id = body.get("classroom_id")
             conn = get_db()
-            conn.execute("DELETE FROM classrooms WHERE id = ? AND teacher_id = ?", (class_id, user_token["uid"]))
+            if user_token.get("role") == "admin":
+                conn.execute("DELETE FROM classrooms WHERE id = ?", (class_id,))
+            else:
+                conn.execute("DELETE FROM classrooms WHERE id = ? AND teacher_id = ?", (class_id, user_token["uid"]))
             conn.commit()
             conn.close()
             return self.send_json({"status": "deleted"})

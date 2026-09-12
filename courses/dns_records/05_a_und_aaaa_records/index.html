@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 05: A & AAAA Records (IPv4 / IPv6)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Resource Records</div>
+          <h1>DNS 05: A & AAAA Records (IPv4 / IPv6)</h1>
+          <p>Das Fundament des Web: Hostname zu IPv4 (A) und IPv6 (AAAA) sowie DNS Round-Robin Lastverteilung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Das Fundament des Web: Hostname zu IPv4 (A) und IPv6 (AAAA) sowie DNS Round-Robin Lastverteilung.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>DNS Command &amp; Syntax Reference</span>
+              <span>Tool: named-checkzone</span>
+            </div>
+            <pre><code># Wichtige Befehle &amp; Zonensyntax:
+dig named-checkzone
+named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> A-Record für IPv4 Hostadresse erstellen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> AAAA-Record mit komprimierter IPv6-Adresse anlegen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> DNS-Round-Robin für mehrere Webserver konfigurieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Forward-Lookup-Zonendatei syntaktisch validieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=dns_records&track=track_2_core_records&chapter=05_a_und_aaaa_records" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_cname_canonical_name_und_alias_regeln/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

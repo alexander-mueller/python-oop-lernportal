@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD 14: CSV Bulk-Import & Provisioning</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ Massen-Provisionierung</div>
+          <h1>AD 14: CSV Bulk-Import & Provisioning</h1>
+          <p>Automatisierter Massenimport neuer Mitarbeiter aus CSV-Dateien mit robuster Fehlerbehandlung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Automatisierter Massenimport neuer Mitarbeiter aus CSV-Dateien mit robuster Fehlerbehandlung.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Active Directory PowerShell Referenz</span>
+              <span>PowerShell 7+</span>
+            </div>
+            <pre><code># Wichtige Cmdlets &amp; Syntax:
+Import-ADUsersFromCSV -Domain "corp.it-praxisportal.de"
+Get-ADUser -Filter * -Properties Department, mail
+New-ADOrganizationalUnit -Name "IT-Operations" -Path "DC=corp,DC=de"</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> CSV-Mitarbeiterdaten einlesen (Import-Csv)</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Eindeutige Benutzernamen (SAM-Account) automatisch generieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Automatische OU- und Gruppen-Zuweisung je nach Abteilung durchführen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Erfolgs- und Fehlerprotokoll als Transaktions-Log schreiben</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=active_directory&track=track_4_ad_automation&chapter=14_csv_bulk_import_und_provisioning" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../15_ntfs_und_share_berechtigungssteuerung/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

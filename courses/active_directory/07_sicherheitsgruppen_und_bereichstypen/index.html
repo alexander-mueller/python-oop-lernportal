@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD 07: Sicherheitsgruppen & Bereichstypen</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🛡️ Gruppenverwaltung</div>
+          <h1>AD 07: Sicherheitsgruppen & Bereichstypen</h1>
+          <p>Bereichstypen (Global, Domain Local, Universal), Sicherheits- vs. Verteilergruppen und Token-Größe.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Bereichstypen (Global, Domain Local, Universal), Sicherheits- vs. Verteilergruppen und Token-Größe.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Active Directory PowerShell Referenz</span>
+              <span>PowerShell 7+</span>
+            </div>
+            <pre><code># Wichtige Cmdlets &amp; Syntax:
+New-SecurityGroupHierarchy -Domain "corp.it-praxisportal.de"
+Get-ADUser -Filter * -Properties Department, mail
+New-ADOrganizationalUnit -Name "IT-Operations" -Path "DC=corp,DC=de"</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Globale Benutzergruppen (GG_) und Lokale Ressourcengruppen (DLG_) anlegen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Mitglieder mit Add-ADGroupMember zuweisen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Rekursive Gruppenmitgliedschaften analysieren (Get-ADGroupMember -Recursive)</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Gruppenbereich (GroupScope) konvertieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=active_directory&track=track_2_identitaet_agdlp&chapter=07_sicherheitsgruppen_und_bereichstypen" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../08_das_agdlp_prinzip_in_der_praxis/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

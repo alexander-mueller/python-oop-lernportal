@@ -11,15 +11,22 @@
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
       box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .class-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
     }
     .class-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
     .invite-code-box {
       background: #e0e7ff;
@@ -30,6 +37,7 @@
       font-weight: 800;
       font-size: 1.1rem;
       letter-spacing: 1px;
+      display: inline-block;
     }
     .student-table {
       width: 100%;
@@ -47,6 +55,59 @@
       font-weight: 700;
       color: var(--text-muted);
     }
+    .course-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .course-pill-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .course-pill-label:has(input:checked) {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+    }
+    .course-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .prof-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .badge-fisi { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-fiae { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .badge-fidp { background: #d1fae5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-fidv { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+    .badge-itse { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-itsm { background: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .badge-kdm  { background: #cffafe; color: #0e7490; border: 1px solid #a5f3fc; }
   </style>
 </head>
 <body>
@@ -55,29 +116,29 @@
 
     <aside class="app-sidebar">
       <div class="sidebar-header">
-        <a href="index.html" class="sidebar-brand-link">
-          <div class="sidebar-logo">🐍</div>
+        <a href="dashboard.html" class="sidebar-brand-link">
+          <div class="sidebar-logo">👨‍🏫</div>
           <div>
-            <div class="sidebar-title">Python Portal</div>
-            <div class="sidebar-subtitle">Lehrerbereich</div>
+            <div class="sidebar-title">IT-Praxisportal</div>
+            <div class="sidebar-subtitle">Dozentenbereich</div>
           </div>
         </a>
       </div>
 
       <div class="sidebar-quick-nav">
-        <a href="dashboard.html" class="sidebar-link">💻 Schüler-Dashboard</a>
+        <a href="dashboard.html" class="sidebar-link">💻 Kurs-Dashboard</a>
         <a href="teacher.html" class="sidebar-link active">👨‍🏫 Klassenverwaltung</a>
         <a href="dashboard.html#zertifikate-section" class="sidebar-link">🏆 Zertifikate</a>
-        <a href="index.html" class="sidebar-link">🌐 Startseite</a>
+        <a href="index.html" class="sidebar-link">🌐 Zur Startseite</a>
       </div>
     </aside>
 
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">👨‍🏫 Dozenten- &amp; Lehrer-Portal</div>
-          <h1>Klassenverwaltung &amp; Lernfortschritts-Matrix</h1>
-          <p>Behalte den Überblick über deine Klassen, lade Schüler per Code ein, inspiziere ihren Code und exportiere Notenlisten als CSV.</p>
+          <div class="header-badge">👨‍🏫 Dozenten- &amp; Ausbilder-Portal</div>
+          <h1>Klassenverwaltung, Berufe &amp; Azubi-Kurszuweisung</h1>
+          <p>Verwalte deine Azubi-Klassen, weise spezifische IT-Ausbildungsberufe (FIAE, FISI etc.) und Ausbildungsjahre zu und schalte gezielt Praxiskurse (Git, AD, DNS) frei.</p>
         </div>
       </header>
 
@@ -85,17 +146,61 @@
 
         <!-- Neue Klasse erstellen -->
         <section class="card">
-          <h2>✨ Neue Schulklasse / Kursgruppe anlegen</h2>
-          <form id="create-class-form" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px;">
-            <input type="text" id="input-class-name" required placeholder="Klassenname (z.B. Informatik 10a 2026/27)" style="flex: 1; min-width: 260px; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.95rem;">
-            <button type="submit" class="btn" style="padding: 10px 20px;">➕ Klasse erstellen</button>
+          <h2>✨ Neue Klasse / Azubi-Jahrgang anlegen</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+            Erstelle eine Klasse für deinen Ausbildungsjahrgang. Den Schülern werden automatisch die passenden Lernfelder und Praxiskurse freigeschaltet.
+          </p>
+
+          <form id="create-class-form" style="margin-top: 18px; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+              <div>
+                <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">Klassenname *</label>
+                <input type="text" id="input-class-name" required placeholder="z.B. FISI 2026/27 – Fachstufe 1" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.95rem;">
+              </div>
+
+              <div>
+                <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">IT-Ausbildungsberuf</label>
+                <select id="input-class-profession" onchange="autoSelectRecommendedCourses('create')" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.95rem; background: #fff;">
+                  <option value="FISI">🖥️ FISI - Fachinformatiker Systemintegration</option>
+                  <option value="FIAE">💻 FIAE - Fachinformatiker Anwendungsentwicklung</option>
+                  <option value="FIDP">📊 FIDP - Fachinformatiker Daten- &amp; Prozessanalyse</option>
+                  <option value="FIDV">🌐 FIDV - Fachinformatiker Digitale Vernetzung</option>
+                  <option value="ITSE">⚡ ITSE - IT-System-Elektroniker</option>
+                  <option value="ITSM">💼 ITSM - Kaufleute IT-System-Management</option>
+                  <option value="KDM">📈 KDM - Kaufleute Digitalisierungsmanagement</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px;">Ausbildungsjahr</label>
+                <select id="input-class-year" onchange="autoSelectRecommendedCourses('create')" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.95rem; background: #fff;">
+                  <option value="1">1. Ausbildungsjahr (Grundlagen LF 1–5)</option>
+                  <option value="2">2. Ausbildungsjahr (Netzwerke/Daten LF 6–9 &amp; AP1)</option>
+                  <option value="3">3. Ausbildungsjahr (Fachvertiefung LF 10–12 &amp; AP2)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label style="font-weight: 700; font-size: 0.88rem;">Zugewiesene Praxiskurse für diese Klasse:</label>
+                <span style="font-size: 0.78rem; color: var(--text-muted); cursor: pointer; text-decoration: underline;" onclick="toggleAllCourses('create', true)">Alle auswählen</span>
+              </div>
+              <div class="course-pill-grid" id="create-course-pills">
+                <!-- Dynamisch generiert -->
+              </div>
+            </div>
+
+            <div style="margin-top: 8px;">
+              <button type="submit" class="btn" style="padding: 11px 24px; font-weight: 700;">➕ Klasse erstellen &amp; Einladungscode generieren</button>
+            </div>
           </form>
         </section>
 
         <!-- Vorhandene Klassen -->
         <section>
-          <div class="section-header">
-            <h2>📚 Deine aktiven Klassen</h2>
+          <div class="section-header" style="margin-top: 24px;">
+            <h2>📚 Deine aktiven Klassen &amp; Ausbildungsjahrgänge</h2>
           </div>
 
           <div id="classrooms-list-container">
@@ -108,6 +213,55 @@
       </main>
     </div>
 
+  </div>
+
+  <!-- Modal: Kurse & Zuweisung bearbeiten -->
+  <div class="certificate-overlay" id="edit-class-modal" style="display: none;">
+    <div class="certificate-container" style="max-width: 680px; text-align: left; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 id="edit-modal-title" style="margin: 0; color: var(--text-main);">⚙️ Klasse &amp; Kurszuweisung bearbeiten</h3>
+        <button class="btn btn-secondary" style="padding: 4px 10px;" onclick="closeEditModal()">✕</button>
+      </div>
+      
+      <form id="edit-class-form" onsubmit="saveClassCourses(event)">
+        <input type="hidden" id="edit-class-id">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+          <div>
+            <label style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 4px;">Ausbildungsberuf</label>
+            <select id="edit-class-profession" onchange="autoSelectRecommendedCourses('edit')" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px;">
+              <option value="FISI">🖥️ FISI (Systemintegration)</option>
+              <option value="FIAE">💻 FIAE (Anwendungsentwicklung)</option>
+              <option value="FIDP">📊 FIDP (Daten- &amp; Prozessanalyse)</option>
+              <option value="FIDV">🌐 FIDV (Digitale Vernetzung)</option>
+              <option value="ITSE">⚡ ITSE (System-Elektronik)</option>
+              <option value="ITSM">💼 ITSM (IT-System-Management)</option>
+              <option value="KDM">📈 KDM (Digitalisierungsmanagement)</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 4px;">Ausbildungsjahr</label>
+            <select id="edit-class-year" onchange="autoSelectRecommendedCourses('edit')" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px;">
+              <option value="1">1. Ausbildungsjahr (LF 1–5)</option>
+              <option value="2">2. Ausbildungsjahr (LF 6–9)</option>
+              <option value="3">3. Ausbildungsjahr (LF 10–12)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Freigeschaltete Kurse für die Schüler:</label>
+          <div class="course-pill-grid" id="edit-course-pills">
+            <!-- Checkboxen -->
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Abbrechen</button>
+          <button type="submit" class="btn" style="background: #0284c7; color: white;">💾 Änderungen speichern</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- Student Code Inspector Modal -->
@@ -126,9 +280,42 @@
   </div>
 
   <script src="assets/app_auth.js"></script>
+  <script src="assets/courses_manifest.js"></script>
+  <script src="assets/it_ausbildungen_manifest.js"></script>
+
   <script>
+    // 🔒 1. STRIKTER ROLLEN-GUARD FÜR DOZENTEN / ADMINS
+    (function guardTeacherAccess() {
+      const user = (window.AUTH && window.AUTH.user) || JSON.parse(sessionStorage.getItem("auth_user") || localStorage.getItem("auth_user") || "null");
+      const token = (window.AUTH && window.AUTH.token) || sessionStorage.getItem("auth_token") || localStorage.getItem("auth_token");
+
+      if (!token || !user || (user.role !== "teacher" && user.role !== "admin")) {
+        alert("🔒 Zugriff verweigert: Dieser Bereich ist ausschließlich für Dozenten, Ausbilder und Lehrkräfte reserviert.");
+        window.location.href = "dashboard.html";
+      }
+    })();
+
     let ALL_CLASSROOMS = [];
     let CURRENT_MATRIX = {};
+
+    const ALL_AVAILABLE_COURSES = [
+      { id: "ihk_ap1", title: "IHK AP1 Prüfungstrainer", icon: "📘" },
+      { id: "ihk_ap2_fisi", title: "IHK AP2 FISI Prüfungstrainer", icon: "🎓" },
+      { id: "python", title: "Python 3 Professional", icon: "🐍" },
+      { id: "bash", title: "Linux Bash & DevOps", icon: "🐧" },
+      { id: "powershell", title: "PowerShell 7+ Core", icon: "🔷" },
+      { id: "active_directory", title: "Active Directory & Server", icon: "🏛️" },
+      { id: "dns_records", title: "DNS-Records & Mail Security", icon: "🌐" },
+      { id: "git", title: "Git & Version Control", icon: "🔀" },
+      { id: "sql", title: "SQL & Relationale DBs", icon: "🗄️" },
+      { id: "html_css", title: "HTML5 & Modern CSS3", icon: "🌐" },
+      { id: "javascript", title: "JavaScript & Async", icon: "⚡" },
+      { id: "java", title: "Java 21 Enterprise", icon: "☕" },
+      { id: "csharp", title: "C# & .NET 8", icon: "💜" },
+      { id: "cpp", title: "C & Modern C++20", icon: "⚙️" },
+      { id: "go", title: "Go (Golang) Microservices", icon: "🔵" },
+      { id: "rust", title: "Rust Systems & Memory", icon: "🦀" }
+    ];
 
     function getAuthToken() {
       return (window.AUTH && window.AUTH.token) || sessionStorage.getItem("auth_token") || localStorage.getItem("auth_token") || "";
@@ -144,19 +331,49 @@
         .replace(/'/g, "&#039;");
     }
 
+    // Rendere Kurs-Pills in Formularen
+    function renderCoursePills(containerId, prefix, selectedCourses = []) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = ALL_AVAILABLE_COURSES.map(c => {
+        const checked = selectedCourses.includes(c.id) ? "checked" : "";
+        return `
+          <label class="course-pill-label" for="${prefix}-course-${c.id}">
+            <input type="checkbox" id="${prefix}-course-${c.id}" name="${prefix}_courses" value="${c.id}" ${checked}>
+            <span>${c.icon}</span> ${escapeHtml(c.title)}
+          </label>
+        `;
+      }).join("");
+    }
+
+    function autoSelectRecommendedCourses(mode) {
+      const profId = document.getElementById(`${mode}-class-profession`).value;
+      const year = parseInt(document.getElementById(`${mode}-class-year`).value, 10);
+      
+      let recommended = [];
+      if (window.IT_AUSBILDUNGEN) {
+        const prof = window.IT_AUSBILDUNGEN.getProfession(profId);
+        if (prof && prof.years && prof.years[year]) {
+          recommended = prof.years[year].recommendedCourses || [];
+        }
+      }
+
+      document.querySelectorAll(`input[name="${mode}_courses"]`).forEach(cb => {
+        cb.checked = recommended.includes(cb.value);
+      });
+    }
+
+    function toggleAllCourses(mode, selectAll) {
+      document.querySelectorAll(`input[name="${mode}_courses"]`).forEach(cb => {
+        cb.checked = selectAll;
+      });
+    }
+
     async function loadClassrooms() {
       const container = document.getElementById("classrooms-list-container");
       const token = getAuthToken();
 
-      if (!token) {
-        container.innerHTML = `
-          <div class="card" style="text-align: center; padding: 30px;">
-            <p>Du musst als <strong>Lehrkraft</strong> angemeldet sein, um Klassen zu verwalten.</p>
-            <button class="btn" onclick="window.openAuthModal('login')">🔑 Als Lehrer anmelden</button>
-          </div>
-        `;
-        return;
-      }
+      if (!token) return;
 
       try {
         const res = await fetch("/api/classrooms/list", {
@@ -168,37 +385,110 @@
 
         if (classrooms.length === 0) {
           container.innerHTML = `
-            <div class="card" style="text-align: center; padding: 30px; color: var(--text-muted);">
-              Noch keine Klassen angelegt. Erstelle oben deine erste Klasse!
+            <div class="card" style="text-align: center; padding: 36px; color: var(--text-muted);">
+              Noch keine Klassen angelegt. Erstelle oben deinen ersten Ausbildungsjahrgang!
             </div>
           `;
           return;
         }
 
-        container.innerHTML = classrooms.map(cl => `
-          <div class="class-card">
-            <div class="class-header">
-              <div>
-                <h3 style="margin: 0 0 4px 0; color: var(--text-main); font-size: 1.25rem;">${escapeHtml(cl.name)}</h3>
-                <span style="font-size: 0.85rem; color: var(--text-muted);">${cl.student_count || 0} Schüler eingeschrieben</span>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px;">EINLADUNGSCODE:</div>
-                <div class="invite-code-box">${escapeHtml(cl.invite_code)}</div>
-              </div>
-            </div>
+        container.innerHTML = classrooms.map(cl => {
+          const prof = (window.IT_AUSBILDUNGEN && window.IT_AUSBILDUNGEN.getProfession(cl.profession)) || { name: cl.profession, icon: "💻", badgeClass: "badge-fisi" };
+          const assignedList = cl.assigned_courses || [];
 
-            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
-              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;" onclick="loadClassMatrix(${cl.id})">📊 Lernmatrix anzeigen</button>
-              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;" onclick="exportClassCsv(${cl.id})">📥 CSV-Export</button>
-              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem; color: var(--danger); border-color: var(--danger);" onclick="deleteClassroom(${cl.id})">🗑️ Löschen</button>
+          return `
+            <div class="class-card">
+              <div class="class-header">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <span class="prof-badge ${prof.badgeClass || 'badge-fisi'}">${prof.icon} ${escapeHtml(cl.profession || 'FISI')}</span>
+                    <span class="badge" style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.78rem;">${cl.training_year || 1}. Lehrjahr</span>
+                  </div>
+                  <h3 style="margin: 0 0 4px 0; color: var(--text-main); font-size: 1.3rem;">${escapeHtml(cl.name)}</h3>
+                  <span style="font-size: 0.85rem; color: var(--text-muted);">👥 ${cl.student_count || 0} Schüler / Azubis eingeschrieben</span>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px;">EINLADUNGSCODE:</div>
+                  <div class="invite-code-box">${escapeHtml(cl.invite_code)}</div>
+                </div>
+              </div>
+
+              <!-- Zugewiesene Kurse -->
+              <div style="margin: 12px 0 16px 0; background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="font-size: 0.78rem; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase;">
+                  Freigeschaltete Kurse für Azubis (${assignedList.length}):
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                  ${assignedList.length > 0 ? assignedList.map(cid => {
+                    const found = ALL_AVAILABLE_COURSES.find(c => c.id === cid);
+                    return `<span class="course-badge-tag">${found ? found.icon : '📌'} ${found ? found.title : cid}</span>`;
+                  }).join("") : '<span style="font-size: 0.8rem; color: #94a3b8;">Keine Kurse zugeteilt (Schüler sehen Standard-Lernpfad).</span>'}
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn" style="padding: 7px 14px; font-size: 0.84rem; background: #0284c7; color: white;" onclick="loadClassMatrix(${cl.id})">📊 Lernmatrix anzeigen</button>
+                <button class="btn btn-secondary" style="padding: 7px 14px; font-size: 0.84rem;" onclick="openEditModal(${cl.id})">⚙️ Kurse &amp; Beruf bearbeiten</button>
+                <button class="btn btn-secondary" style="padding: 7px 14px; font-size: 0.84rem;" onclick="exportClassCsv(${cl.id})">📥 CSV-Export</button>
+                <button class="btn btn-secondary" style="padding: 7px 14px; font-size: 0.84rem; color: var(--danger); border-color: var(--danger);" onclick="deleteClassroom(${cl.id})">🗑️ Löschen</button>
+              </div>
+              <div id="matrix-container-${cl.id}" style="display: none; margin-top: 18px;"></div>
             </div>
-            <div id="matrix-container-${cl.id}" style="display: none; margin-top: 14px;"></div>
-          </div>
-        `).join("");
+          `;
+        }).join("");
 
       } catch (err) {
         container.innerHTML = `<div class="box box-danger">Fehler beim Laden: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    function openEditModal(classId) {
+      const cl = ALL_CLASSROOMS.find(c => c.id === classId);
+      if (!cl) return;
+
+      document.getElementById("edit-class-id").value = cl.id;
+      document.getElementById("edit-modal-title").innerText = `⚙️ Kurszuweisung: ${cl.name}`;
+      document.getElementById("edit-class-profession").value = cl.profession || "FISI";
+      document.getElementById("edit-class-year").value = cl.training_year || 1;
+
+      renderCoursePills("edit-course-pills", "edit", cl.assigned_courses || []);
+      document.getElementById("edit-class-modal").style.display = "flex";
+    }
+
+    function closeEditModal() {
+      document.getElementById("edit-class-modal").style.display = "none";
+    }
+
+    async function saveClassCourses(e) {
+      e.preventDefault();
+      const classId = document.getElementById("edit-class-id").value;
+      const profession = document.getElementById("edit-class-profession").value;
+      const trainingYear = parseInt(document.getElementById("edit-class-year").value, 10);
+
+      const selected = [];
+      document.querySelectorAll('input[name="edit_courses"]:checked').forEach(cb => {
+        selected.push(cb.value);
+      });
+
+      const token = getAuthToken();
+      try {
+        const res = await fetch("/api/classrooms/update-courses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            classroom_id: classId,
+            profession: profession,
+            training_year: trainingYear,
+            assigned_courses: selected
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Fehler beim Speichern");
+
+        closeEditModal();
+        loadClassrooms();
+      } catch (err) {
+        alert("Fehler: " + err.message);
       }
     }
 
@@ -222,7 +512,7 @@
         CURRENT_MATRIX[classId] = matrix;
 
         if (matrix.length === 0) {
-          target.innerHTML = "<p style='color: var(--text-muted); font-size: 0.88rem;'>Noch keine Schüler in dieser Klasse beigetreten.</p>";
+          target.innerHTML = "<p style='color: var(--text-muted); font-size: 0.88rem; padding: 12px; background: #f8fafc; border-radius: 6px;'>Noch keine Schüler mit dem Einladungscode beigetreten.</p>";
           return;
         }
 
@@ -230,11 +520,11 @@
           <table class="student-table">
             <thead>
               <tr>
-                <th>Schüler</th>
+                <th>Schüler / Azubi</th>
                 <th>Level</th>
                 <th>XP</th>
                 <th>Streak</th>
-                <th>Gelöste Kapitel</th>
+                <th>Gelöste Module</th>
                 <th>Aktion</th>
               </tr>
             </thead>
@@ -245,7 +535,7 @@
                   <td>⭐ Level ${m.student.level}</td>
                   <td><span style="font-weight: 700; color: #0284c7;">${m.student.xp} XP</span></td>
                   <td>🔥 ${m.student.streak_days} Tage</td>
-                  <td><span style="background: #ecfdf5; color: #059669; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.8rem;">${Object.values(m.solved_chapters).filter(Boolean).length} / 27</span></td>
+                  <td><span style="background: #ecfdf5; color: #059669; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.8rem;">${Object.values(m.solved_chapters).filter(Boolean).length} Module</span></td>
                   <td><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="inspectStudentCode(${classId}, ${m.student.id})">🔍 Code ansehen</button></td>
                 </tr>
               `).join("")}
@@ -262,7 +552,7 @@
       const entry = matrix.find(m => m.student.id === studentId);
       const studentName = entry ? entry.student.name : `#${studentId}`;
 
-      const chapterId = prompt("Welches Kapitel möchtest du inspizieren? (z.B. lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner)", "lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner");
+      const chapterId = prompt("Welches Modul möchtest du inspizieren? (z.B. courses/git/01_git_init_und_repo_basics oder lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner)", "courses/git/01_git_init_und_repo_basics");
       if (!chapterId) return;
 
       const token = getAuthToken();
@@ -273,7 +563,7 @@
         const data = await res.json();
         
         document.getElementById("inspector-title").innerText = `🔍 Code von ${studentName}`;
-        document.getElementById("inspector-meta").innerText = `Kapitel: ${chapterId} | Gelöst: ${data.progress && data.progress.is_solved ? '✅ Ja' : '❌ Nein'}`;
+        document.getElementById("inspector-meta").innerText = `Modul: ${chapterId} | Gelöst: ${data.progress && data.progress.is_solved ? '✅ Ja' : '❌ Nein'}`;
         document.getElementById("inspector-code-content").innerText = (data.progress && data.progress.code_draft) ? data.progress.code_draft : "# Kein Code-Entwurf für dieses Kapitel vorhanden.";
         document.getElementById("code-inspector-modal").style.display = "flex";
       } catch (err) {
@@ -292,7 +582,7 @@
         const data = await res.json();
         const matrix = data.matrix || [];
 
-        let csv = "Name,E-Mail,Level,XP,Streak,Geloeste_Kapitel_Anzahl\n";
+        let csv = "Name,E-Mail,Level,XP,Streak,Geloeste_Module_Anzahl\n";
         matrix.forEach(m => {
           const solved = Object.values(m.solved_chapters).filter(Boolean).length;
           csv += `"${m.student.name.replace(/"/g, '""')}","${m.student.email.replace(/"/g, '""')}",${m.student.level},${m.student.xp},${m.student.streak_days},${solved}\n`;
@@ -320,7 +610,6 @@
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ classroom_id: classId })
         });
-        alert("Klasse gelöscht.");
         loadClassrooms();
       } catch (e) {
         alert("Fehler beim Löschen: " + e.message);
@@ -330,23 +619,32 @@
     document.getElementById("create-class-form").onsubmit = async (e) => {
       e.preventDefault();
       const name = document.getElementById("input-class-name").value.trim();
-      const token = getAuthToken();
+      const profession = document.getElementById("input-class-profession").value;
+      const trainingYear = parseInt(document.getElementById("input-class-year").value, 10);
 
-      if (!token) {
-        window.openAuthModal("login");
-        return;
-      }
+      const selected = [];
+      document.querySelectorAll('input[name="create_courses"]:checked').forEach(cb => {
+        selected.push(cb.value);
+      });
+
+      const token = getAuthToken();
+      if (!token) return;
 
       try {
         const res = await fetch("/api/classrooms/create", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ name })
+          body: JSON.stringify({
+            name: name,
+            profession: profession,
+            training_year: trainingYear,
+            assigned_courses: selected
+          })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Fehler beim Erstellen");
 
-        alert(`Klasse '${name}' mit Einladungscode '${data.classroom.invite_code}' erstellt! 🎉`);
+        alert(`🎉 Klasse '${name}' erfolgreich angelegt!\nEinladungscode für Schüler: ${data.classroom.invite_code}`);
         document.getElementById("input-class-name").value = "";
         loadClassrooms();
       } catch (err) {
@@ -354,7 +652,11 @@
       }
     };
 
-    document.addEventListener("DOMContentLoaded", loadClassrooms);
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCoursePills("create-course-pills", "create");
+      autoSelectRecommendedCourses("create");
+      loadClassrooms();
+    });
   </script>
 </body>
 </html>

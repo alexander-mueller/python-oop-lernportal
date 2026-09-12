@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 01: DNS-Hierarchie & Root-Server</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🌐 DNS Grundlagen</div>
+          <h1>DNS 01: DNS-Hierarchie & Root-Server</h1>
+          <p>Verstehe den globalen DNS-Baum: Root-Zone (.), TLDs (gTLD/ccTLD), SLDs, FQDNs und autoritative vs. rekursive Nameserver.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Verstehe den globalen DNS-Baum: Root-Zone (.), TLDs (gTLD/ccTLD), SLDs, FQDNs und autoritative vs. rekursive Nameserver.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>DNS Command &amp; Syntax Reference</span>
+              <span>Tool: dig</span>
+            </div>
+            <pre><code># Wichtige Befehle &amp; Zonensyntax:
+dig dig
+named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> FQDN in Hostname, SLD und TLD zerlegen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Root-Server-Cluster (A-M) und Anycast-Routing erklären</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Unterschied autoritativer vs. rekursiver Nameserver definieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> DNS-Baumpfad für www.it-praxisportal.de konstruieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=01_dns_hierarchie_und_root_server" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../02_rekursive_vs_iterative_abfragen/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

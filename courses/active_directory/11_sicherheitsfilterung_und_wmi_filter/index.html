@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD 11: Sicherheitsfilterung & WMI-Filter</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📜 GPO Filterung</div>
+          <h1>AD 11: Sicherheitsfilterung & WMI-Filter</h1>
+          <p>Feingranulare Richtliniensteuerung über Sicherheitsfilterung (Security Filtering) und WMI-Queries.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Feingranulare Richtliniensteuerung über Sicherheitsfilterung (Security Filtering) und WMI-Queries.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Active Directory PowerShell Referenz</span>
+              <span>PowerShell 7+</span>
+            </div>
+            <pre><code># Wichtige Cmdlets &amp; Syntax:
+New-WmiGpoFilter -Domain "corp.it-praxisportal.de"
+Get-ADUser -Filter * -Properties Department, mail
+New-ADOrganizationalUnit -Name "IT-Operations" -Path "DC=corp,DC=de"</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Standardfilter 'Authentifizierte Benutzer' anpassen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> GPO auf spezifische Sicherheitsgruppen einschränken</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> WMI-Filter für Windows 11 Clients (SELECT * FROM Win32_OperatingSystem) erstellen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> WMI-Filter mit dem GPO verknüpfen</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=active_directory&track=track_3_gpo_design&chapter=11_sicherheitsfilterung_und_wmi_filter" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../12_gpo_troubleshooting_gpupdate_und_gpresult/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

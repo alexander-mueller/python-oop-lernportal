@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IT-Praxisportal | Lernbereich &amp; Kurs-Dashboard</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <meta name="description" content="Dein persönlicher IT-Lernbereich: 13 Fachdisziplinen, 216 Module, Monaco Web-IDE und IHK-Prüfungsvorbereitung.">
+  <meta name="description" content="Dein persönlicher IT-Lernbereich: 16 Fachdisziplinen, 264 Module, Monaco Web-IDE, KMK-Lernfelder und IHK-Prüfungsvorbereitung.">
   <link rel="stylesheet" href="assets/style.css">
   <style>
     .portal-container {
@@ -32,6 +32,99 @@
       background: #fff7ed;
       color: #c2410c;
       border: 1px solid #fed7aa;
+    }
+
+    /* Azubi Curriculum & Year Filter Pills */
+    .apprenticeship-panel {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .year-pill {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .year-pill:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      transform: translateY(-1px);
+    }
+    .year-pill.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+    }
+    .year-pill.assigned-only-btn {
+      border-color: #10b981;
+      color: #047857;
+      background: #ecfdf5;
+    }
+    .year-pill.assigned-only-btn:hover {
+      background: #d1fae5;
+    }
+    .year-pill.assigned-only-btn.active {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
+      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+    }
+
+    .lf-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1 1 260px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+    }
+    .lf-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .lf-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lf-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .lf-tag-ap1 {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .lf-tag-ap2 {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .lf-tag-wiso {
+      background: #fefce8;
+      color: #a16207;
+      border: 1px solid #fef08a;
     }
 
     /* Course Progress Elements */
@@ -232,7 +325,7 @@
           <div class="portal-stat-desc">Kontinuierliches Lernen</div>
         </div>
         <div class="portal-stat-card">
-          <div class="portal-stat-num" id="stat-user-solved">0 / 216</div>
+          <div class="portal-stat-num" id="stat-user-solved">0 / 264</div>
           <div class="portal-stat-label">Gelöste Module</div>
           <div class="portal-stat-desc" id="stat-user-percent">0% Gesamtfortschritt</div>
         </div>
@@ -264,24 +357,86 @@
     
     <div class="portal-filter-bar">
       <div>
-        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Deine 13 Praxis-Kurse</h2>
-        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Starte jede beliebige Lerneinheit direkt in der Web-IDE oder lies die didaktische Begleittheorie.</p>
+        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Deine 16 Praxis-Kurse</h2>
+        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Starte jede beliebige Lerneinheit direkt in der Web-IDE oder filtere gezielt nach deinem Ausbildungsberuf und Lehrjahr.</p>
       </div>
 
       <!-- Search Box -->
       <div class="portal-search-box">
         <span style="font-size: 1rem;">🔍</span>
-        <input type="text" id="course-filter-input" placeholder="Kurs, Thema oder Modul filtern (z.B. Python, Bash, SQL, Subnetting)...">
+        <input type="text" id="course-filter-input" placeholder="Kurs, Thema oder Modul filtern (z.B. Python, Bash, SQL, Git, AD, Subnetting)...">
       </div>
     </div>
 
     <!-- Category Filter Tabs -->
-    <div class="portal-filter-tabs" style="margin-bottom: 24px;">
-      <button type="button" class="portal-tab-pill active" onclick="filterCourses('all', this)">🌟 Alle Kurse (13)</button>
+    <div class="portal-filter-tabs" style="margin-bottom: 20px;">
+      <button type="button" class="portal-tab-pill active" onclick="filterCourses('all', this)">🌟 Alle Fachbereiche (16)</button>
       <button type="button" class="portal-tab-pill" onclick="filterCourses('ihk', this)">🎓 IHK Prüfung (2)</button>
-      <button type="button" class="portal-tab-pill" onclick="filterCourses('devops', this)">🐧 DevOps &amp; Linux (2)</button>
+      <button type="button" class="portal-tab-pill" onclick="filterCourses('devops', this)">🐧 DevOps, Linux &amp; AD (5)</button>
       <button type="button" class="portal-tab-pill" onclick="filterCourses('coding', this)">💻 Backend &amp; Systems (6)</button>
       <button type="button" class="portal-tab-pill" onclick="filterCourses('data', this)">🗄️ Daten &amp; Web (3)</button>
+    </div>
+
+    <!-- AUSBILDUNGSPLAN & KMK-LERNFELDER BEREICH -->
+    <div class="apprenticeship-panel" id="azubi-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, #0284c7, #1d4ed8); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white;">
+            🎓
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #0f172a;">Dein IT-Ausbildungsplan &amp; KMK-Lernfelder (2020)</h3>
+            <p style="margin: 2px 0 0 0; font-size: 0.86rem; color: #64748b;">Gezielte Zuweisung nach Ausbildungsberuf und Ausbildungsjahr (1.–3. Lehrjahr mit AP1/AP2 Relevanz).</p>
+          </div>
+        </div>
+
+        <!-- Profession Dropdown & Save Button -->
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <label for="azubi-prof-select" style="font-size: 0.85rem; font-weight: 700; color: #475569;">Mein IT-Beruf:</label>
+          <select id="azubi-prof-select" onchange="onProfessionChanged()" style="padding: 7px 12px; font-size: 0.86rem; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0f172a; cursor: pointer;">
+            <option value="FISI">🖥️ FISI - Systemintegration</option>
+            <option value="FIAE">💻 FIAE - Anwendungsentwicklung</option>
+            <option value="FIDP">📊 FIDP - Daten- &amp; Prozessanalyse</option>
+            <option value="FIDV">🌐 FIDV - Digitale Vernetzung</option>
+            <option value="ITSE">⚡ ITSE - IT-System-Elektronik</option>
+            <option value="ITSM">💼 ITSM - IT-System-Management</option>
+            <option value="KDM">📈 KDM - Digitalisierungsmanagement</option>
+          </select>
+          <button type="button" class="btn" id="btn-save-apprenticeship" onclick="saveApprenticeshipChoice()" style="background: #0284c7; color: white; padding: 7px 14px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer;" title="Beruf und Lehrjahr in deinem Profil speichern">
+            💾 Speichern
+          </button>
+        </div>
+      </div>
+
+      <!-- Year Filter Tabs & Assigned Filter -->
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; border-top: 1px solid #f1f5f9; padding-top: 14px;" id="azubi-year-tabs">
+        <button type="button" class="year-pill active" id="pill-year-all" onclick="filterByYear('all', this)">🌟 Alle Lehrjahre</button>
+        <button type="button" class="year-pill" id="pill-year-1" onclick="filterByYear(1, this)">🌱 1. Lehrjahr (LF 1–5)</button>
+        <button type="button" class="year-pill" id="pill-year-2" onclick="filterByYear(2, this)">⚡ 2. Lehrjahr (LF 6–9 · AP1)</button>
+        <button type="button" class="year-pill" id="pill-year-3" onclick="filterByYear(3, this)">🚀 3. Lehrjahr (LF 10–12 · AP2)</button>
+        <button type="button" class="year-pill assigned-only-btn" id="btn-filter-assigned" onclick="filterByAssigned(this)">🔒 Nur mir zugewiesene Kurse</button>
+      </div>
+
+      <!-- Dynamic Lernfeld Drawer / Infobox -->
+      <div id="lernfeld-info-container" style="margin-top: 16px; padding: 14px 18px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <h4 style="margin: 0; font-size: 0.95rem; font-weight: 800; color: #1e293b;" id="lf-info-title">Lernfelder für dieses Lehrjahr</h4>
+          <span style="font-size: 0.76rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 99px;" id="lf-info-badge">KMK Rahmenlehrplan</span>
+        </div>
+        <div id="lf-badges-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <!-- Dynamically populated LF chips -->
+        </div>
+      </div>
+
+      <!-- Assigned Courses Banner for Azubi -->
+      <div id="assigned-courses-alert" style="margin-top: 14px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 10px; font-size: 0.84rem; color: #065f46; display: none; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800;">👨‍🏫 Dozenten-Zuweisung aktiv:</span> <span id="assigned-courses-count-text">Dir wurden gezielt Kurse zugeteilt.</span>
+        </div>
+        <button type="button" onclick="filterByAssigned(document.getElementById('btn-filter-assigned'))" style="background: #10b981; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+          Anzeigen &rarr;
+        </button>
+      </div>
     </div>
 
     <!-- GRID OF ALL 13 COURSES -->
@@ -447,6 +602,106 @@
             <span>▶ Kurs starten</span> <span>&rarr;</span>
           </a>
           <a href="courses/powershell/01_powershell_konsole_und_cmdlet_architektur/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      
+      <!-- 5b. ACTIVE DIRECTORY & WINDOWS SERVER -->
+      <div class="portal-card" data-category="devops" data-course-id="active_directory" data-title="active directory windows server fsmo agdlp gpo powershell ldap ou dns fisi">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🏛️</div>
+            <span class="portal-card-badge badge-devops">SysAdmin &amp; Enterprise</span>
+          </div>
+          <h3 class="portal-card-title">Active Directory &amp; Windows Server</h3>
+          <p class="portal-card-desc">Enterprise Identity Management: AD DS Gesamtstruktur, 5 FSMO-Rollen, OU-Design, Sites &amp; Replikation, AGDLP-Berechtigungen, Gruppenrichtlinien (GPOs) &amp; PowerShell-Automation.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">AD DS &amp; FSMO</span>
+            <span class="portal-card-tag">AGDLP-Prinzip</span>
+            <span class="portal-card-tag">GPO &amp; WMI</span>
+            <span class="portal-card-tag">AD PowerShell</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-active_directory"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-active_directory">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=active_directory&chapter=01_ad_architektur_und_wald_baum_domaene" class="btn-start-ide" onclick="trackLastCourse('active_directory', 'Active Directory', '🏛️')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/active_directory/01_ad_architektur_und_wald_baum_domaene/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5c. GIT VERSIONSKONTROLLE -->
+      <div class="portal-card" data-category="devops" data-course-id="git" data-title="git versionskontrolle branching merging rebase devops github gitlab ci/cd hooks fiae fisi">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🔀</div>
+            <span class="portal-card-badge badge-devops">DevOps &amp; Version Control</span>
+          </div>
+          <h3 class="portal-card-title">Git Versionskontrolle &amp; DevOps Workflows</h3>
+          <p class="portal-card-desc">Industriestandard für Entwickler &amp; Sysadmins: 3-Bereiche-Modell, atomare Commits, Diff-Analyse, Fast-Forward vs. 3-Way-Merge, Konfliktlösung, Interaktives Rebase &amp; Pre-Commit Hooks.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">3-Bereiche-Modell</span>
+            <span class="portal-card-tag">Branching &amp; Merge</span>
+            <span class="portal-card-tag">Rebase Squash</span>
+            <span class="portal-card-tag">Pre-Commit Hooks</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-git"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-git">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=git&chapter=01_git_init_und_repo_basics" class="btn-start-ide" onclick="trackLastCourse('git', 'Git Versionskontrolle', '🔀')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/git/01_git_init_und_repo_basics/index.html" class="btn-view-theory">
+            <span>📖 Lehrplan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5d. DNS-RECORDS & DOMAIN SYSTEM -->
+      <div class="portal-card" data-category="devops" data-course-id="dns_records" data-title="dns domain name system records a aaaa cname mx txt spf dkim dmarc srv dnssec netzwerk fisi fidv">
+        <div>
+          <div class="portal-card-top">
+            <div class="portal-card-icon">🌐</div>
+            <span class="portal-card-badge badge-devops">Netzwerk &amp; Security</span>
+          </div>
+          <h3 class="portal-card-title">DNS-Records &amp; Domain Name System</h3>
+          <p class="portal-card-desc">Fundament des Internets: DNS-Hierarchie, Port 53 UDP/TCP, TTL-Propagation, A/AAAA, CNAME, SOA, PTR, E-Mail-Sicherheit mit SPF/DKIM/DMARC, Active Directory SRV-Records &amp; dig-Auditing.</p>
+          <div class="portal-card-tags">
+            <span class="portal-card-tag">A / AAAA / CNAME</span>
+            <span class="portal-card-tag">SPF / DKIM / DMARC</span>
+            <span class="portal-card-tag">AD SRV Records</span>
+            <span class="portal-card-tag">dig &amp; DNSSEC</span>
+          </div>
+          <div class="course-progress-wrap">
+            <div class="course-progress-bar" id="prog-bar-dns_records"></div>
+          </div>
+          <div class="course-progress-meta">
+            <span>Fortschritt</span>
+            <span id="prog-text-dns_records">0 / 16 Module (0%)</span>
+          </div>
+        </div>
+        <div class="portal-card-footer" style="margin-top: 14px;">
+          <a href="workspace.html?course=dns_records&chapter=01_dns_hierarchie_und_root_server" class="btn-start-ide" onclick="trackLastCourse('dns_records', 'DNS-Records & Domain Security', '🌐')">
+            <span>▶ Kurs starten</span> <span>&rarr;</span>
+          </a>
+          <a href="courses/dns_records/01_dns_hierarchie_und_root_server/index.html" class="btn-view-theory">
             <span>📖 Lehrplan</span>
           </a>
         </div>
@@ -814,6 +1069,39 @@
             🎓 Zertifikat ansehen
           </button>
         </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🔀</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">Git &amp; DevOps Master</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">16 Module: 3 Bereiche, Branching, Rebase Squash, Hooks &amp; Git-Flow.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat('git_master')">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🏛️</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">Active Directory Admin</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">16 Module: AD DS, FSMO-Rollen, AGDLP-Prinzip, GPOs &amp; PowerShell AD.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat('ad_master')">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
+
+        <div class="cert-preview-card">
+          <div>
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🌐</div>
+            <h4 style="margin: 0 0 6px 0; font-size: 1.02rem; color: #0f172a;">DNS &amp; Domain Security</h4>
+            <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 14px 0;">16 Module: Records (A/CNAME/MX), SPF, DKIM, DMARC, SRV &amp; dig-Audit.</p>
+          </div>
+          <button type="button" class="btn" style="background: #0284c7; color: white; padding: 7px 12px; font-size: 0.82rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer;" onclick="zeigeZertifikat('dns_master')">
+            🎓 Zertifikat ansehen
+          </button>
+        </div>
       </div>
     </section>
 
@@ -846,6 +1134,9 @@
           <li><a href="#katalog" class="portal-footer-link">⚡ JavaScript &amp; Web</a></li>
           <li><a href="#katalog" class="portal-footer-link">🐧 Linux Bash &amp; DevOps</a></li>
           <li><a href="#katalog" class="portal-footer-link">🔷 PowerShell Core</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🏛️ Active Directory &amp; Windows</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🔀 Git Versionskontrolle</a></li>
+          <li><a href="#katalog" class="portal-footer-link">🌐 DNS-Records &amp; Security</a></li>
           <li><a href="#katalog" class="portal-footer-link">🗄️ SQL &amp; Datenbanken</a></li>
           <li><a href="#katalog" class="portal-footer-link">🌐 Modernes HTML5 &amp; CSS3</a></li>
           <li><a href="#katalog" class="portal-footer-link">🦀 Rust, Go, C# &amp; C++</a></li>
@@ -862,6 +1153,8 @@
           <li><a href="workspace.html?course=python" class="portal-footer-link">💻 Web-IDE starten</a></li>
           <li><a href="#zertifikate-section" class="portal-footer-link">🏆 Meine Zertifikate</a></li>
           <li><a href="index.html" class="portal-footer-link">🌐 Zur Plattform-Startseite</a></li>
+          <li class="teacher-only" style="display: none;"><a href="teacher.html" class="portal-footer-link" id="footer-teacher-link">👨‍🏫 Dozenten-Portal</a></li>
+          <li class="admin-only" style="display: none;"><a href="admin.html" class="portal-footer-link" id="footer-admin-link">🛡️ Administration</a></li>
         </ul>
       </div>
 
@@ -893,6 +1186,7 @@
 
   <!-- Scripts -->
   <script src="assets/app_auth.js"></script>
+  <script src="assets/it_ausbildungen_manifest.js"></script>
   <script src="assets/courses_manifest.js"></script>
   <script src="assets/certificate.js"></script>
 
@@ -937,35 +1231,227 @@
       } catch (e) {}
     }
 
-    // 3. Live Filter & Instant Search
-    function filterCourses(category, element) {
-      document.querySelectorAll('.portal-tab-pill').forEach(btn => btn.classList.remove('active'));
-      if (element) element.classList.add('active');
+    // Filter State
+    let currentCategory = 'all';
+    let currentYear = 'all'; // 'all', 1, 2, 3, or 'assigned'
+    let currentProfession = 'FISI';
+    let userAssignedCourses = [];
 
+    // Unified Card Filtering
+    function applyAllFilters() {
       const cards = document.querySelectorAll('.portal-card');
       const query = (document.getElementById('course-filter-input').value || '').toLowerCase().trim();
+      
+      const manifestProf = (window.IT_AUSBILDUNGEN && window.IT_AUSBILDUNGEN.getProfession)
+        ? window.IT_AUSBILDUNGEN.getProfession(currentProfession)
+        : null;
+
+      let yearAllowedCourses = null;
+      if (typeof currentYear === 'number' && manifestProf && manifestProf.years && manifestProf.years[currentYear]) {
+        yearAllowedCourses = manifestProf.years[currentYear].recommendedCourses || [];
+      }
+
+      let visibleCount = 0;
 
       cards.forEach(card => {
         const cardCat = card.getAttribute('data-category');
+        const cardId = card.getAttribute('data-course-id');
         const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
-        
-        const matchesCategory = (category === 'all' || cardCat === category);
+
+        // 1. Category check
+        const matchesCategory = (currentCategory === 'all' || cardCat === currentCategory);
+
+        // 2. Search query check
         const matchesQuery = (!query || cardTitle.includes(query) || card.innerText.toLowerCase().includes(query));
 
-        if (matchesCategory && matchesQuery) {
+        // 3. Year / Assigned check
+        let matchesYearOrAssigned = true;
+        if (currentYear === 'assigned') {
+          matchesYearOrAssigned = userAssignedCourses.includes(cardId);
+        } else if (yearAllowedCourses !== null) {
+          matchesYearOrAssigned = yearAllowedCourses.includes(cardId);
+        }
+
+        if (matchesCategory && matchesQuery && matchesYearOrAssigned) {
           card.style.display = 'flex';
+          visibleCount++;
         } else {
           card.style.display = 'none';
         }
       });
     }
 
+    // 3. Live Category Filter
+    function filterCourses(category, element) {
+      document.querySelectorAll('.portal-tab-pill').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+      currentCategory = category;
+      applyAllFilters();
+    }
+
+    // 3b. Year Filter for Azubis
+    function filterByYear(year, element) {
+      document.querySelectorAll('.year-pill').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+      currentYear = year;
+      renderLernfelder(currentProfession, year);
+      applyAllFilters();
+    }
+
+    // 3c. Filter by Assigned Courses
+    function filterByAssigned(element) {
+      document.querySelectorAll('.year-pill').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+      currentYear = 'assigned';
+      renderLernfelder(currentProfession, 'assigned');
+      applyAllFilters();
+    }
+
+    // 3d. On Profession Changed
+    function onProfessionChanged() {
+      const select = document.getElementById('azubi-prof-select');
+      if (select) {
+        currentProfession = select.value;
+        renderLernfelder(currentProfession, currentYear);
+        applyAllFilters();
+      }
+    }
+
+    // 3e. Save Apprenticeship Choice to Backend
+    async function saveApprenticeshipChoice() {
+      const select = document.getElementById('azubi-prof-select');
+      const prof = select ? select.value : 'FISI';
+      const yr = (typeof currentYear === 'number') ? currentYear : 1;
+      const btn = document.getElementById('btn-save-apprenticeship');
+      if (btn) btn.innerText = 'Speichere...';
+
+      const token = window.AUTH ? window.AUTH.getToken() : null;
+      if (token) {
+        try {
+          const res = await fetch('/api/user/apprenticeship', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ profession: prof, training_year: yr })
+          });
+          if (res.ok) {
+            if (btn) {
+              btn.innerText = '✓ Gespeichert';
+              btn.style.background = '#10b981';
+              setTimeout(() => {
+                btn.innerText = '💾 Speichern';
+                btn.style.background = '#0284c7';
+              }, 2000);
+            }
+            const user = window.AUTH.getUser();
+            if (user) {
+              user.profession = prof;
+              user.training_year = yr;
+              localStorage.setItem('auth_user', JSON.stringify(user));
+            }
+          } else {
+            if (btn) btn.innerText = 'Fehler';
+          }
+        } catch (e) {
+          if (btn) btn.innerText = 'Fehler';
+        }
+      } else {
+        if (btn) btn.innerText = '✓ Lokal gemerkt';
+        setTimeout(() => { if (btn) btn.innerText = '💾 Speichern'; }, 2000);
+      }
+    }
+
+    // 3f. Render Dynamic Lernfelder Drawer
+    function renderLernfelder(profId, year) {
+      const container = document.getElementById('lernfeld-info-container');
+      const badgesList = document.getElementById('lf-badges-list');
+      const titleEl = document.getElementById('lf-info-title');
+      const badgeEl = document.getElementById('lf-info-badge');
+      if (!container || !badgesList) return;
+
+      if (!window.IT_AUSBILDUNGEN) {
+        container.style.display = 'none';
+        return;
+      }
+
+      if (year === 'all') {
+        container.style.display = 'none';
+        return;
+      }
+
+      if (year === 'assigned') {
+        container.style.display = 'block';
+        if (titleEl) titleEl.innerText = `🔒 Deine zugeteilten Kurse (${userAssignedCourses.length} Kurse aktiv)`;
+        if (badgeEl) badgeEl.innerText = 'Dozenten-Zuweisung';
+
+        if (userAssignedCourses.length === 0) {
+          badgesList.innerHTML = `
+            <div style="font-size: 0.86rem; color: #64748b; padding: 6px 0;">
+              Dir wurden bisher keine Kurse von einem Dozenten zugewiesen. Wähle oben ein Lehrjahr (1.–3. Lehrjahr), um den offiziellen IHK-Lernfeldplan zu durchlaufen.
+            </div>`;
+        } else {
+          const manifest = window.COURSES_MANIFEST || {};
+          badgesList.innerHTML = userAssignedCourses.map(cid => {
+            const c = manifest[cid] || { title: cid, icon: '📘' };
+            return `
+              <div class="lf-card" style="border-left: 4px solid #10b981;">
+                <div class="lf-card-header">
+                  <span style="font-size: 0.88rem; font-weight: 800; color: #0f172a;">${c.icon || '📘'} ${c.title}</span>
+                  <span class="lf-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">Zugewiesen</span>
+                </div>
+                <div style="margin-top: 6px;">
+                  <a href="workspace.html?course=${cid}" class="btn-start-ide" style="font-size: 0.78rem; padding: 5px 10px;">
+                    ▶ In Web-IDE üben &rarr;
+                  </a>
+                </div>
+              </div>`;
+          }).join('');
+        }
+        return;
+      }
+
+      // Year 1, 2, or 3
+      const lfs = window.IT_AUSBILDUNGEN.getLernfelderForYear(profId, year);
+      const prof = window.IT_AUSBILDUNGEN.getProfession(profId);
+      container.style.display = 'block';
+
+      if (titleEl) {
+        titleEl.innerText = `📖 Lernfelder im ${year}. Ausbildungsjahr (${prof.shortName})`;
+      }
+      if (badgeEl) {
+        badgeEl.innerText = year === 2 ? 'IHK AP1 Prüfungsrelevant' : (year === 3 ? 'IHK AP2 Fachvertiefung' : 'Kernqualifikationen');
+      }
+
+      badgesList.innerHTML = lfs.map(lf => {
+        const tagClass = lf.examRelevance.includes('AP1') ? 'lf-tag-ap1' : (lf.examRelevance.includes('AP2') ? 'lf-tag-ap2' : 'lf-tag-wiso');
+        const courses = lf.relatedCourses || [];
+        const coursePills = courses.map(cid => {
+          const manifest = window.COURSES_MANIFEST || {};
+          const c = manifest[cid] || { title: cid, icon: '📘' };
+          return `<span style="font-size: 0.75rem; background: #f1f5f9; color: #334155; padding: 2px 7px; border-radius: 99px; font-weight: 700; border: 1px solid #cbd5e1;">${c.icon || '📘'} ${c.title.split(':')[0]}</span>`;
+        }).join(' ');
+
+        return `
+          <div class="lf-card">
+            <div class="lf-card-header">
+              <span style="font-size: 0.84rem; font-weight: 800; color: #0f172a;">LF ${lf.number}: ${lf.shortTitle || lf.title}</span>
+              <span class="lf-tag ${tagClass}">${lf.examRelevance}</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #64748b; line-height: 1.35;">
+              ${lf.description}
+            </div>
+            ${coursePills ? `<div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px;">${coursePills}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
     const searchInput = document.getElementById('course-filter-input');
     if (searchInput) {
       searchInput.addEventListener('input', () => {
-        const activeTab = document.querySelector('.portal-tab-pill.active');
-        const activeCat = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
-        filterCourses(activeCat, activeTab);
+        applyAllFilters();
       });
     }
 
@@ -1007,6 +1493,23 @@
           roleEl.innerText = user.role === 'admin' ? 'Admin' : (user.role === 'teacher' ? 'Dozent' : 'Schüler');
         }
 
+        if (user.profession) {
+          currentProfession = user.profession;
+          const profSel = document.getElementById('azubi-prof-select');
+          if (profSel) profSel.value = user.profession;
+        }
+
+        if (user.training_year) {
+          const yrPill = document.getElementById(`pill-year-${user.training_year}`);
+          if (yrPill) {
+            filterByYear(user.training_year, yrPill);
+          }
+        }
+
+        if (Array.isArray(user.assigned_courses)) {
+          userAssignedCourses = user.assigned_courses;
+        }
+
         // Dozenten / Admin Nav Links
         if (user.role === 'admin') {
           const al = document.getElementById('nav-admin-link');
@@ -1042,11 +1545,17 @@
       // Server-Sync falls Token vorhanden
       if (window.AUTH && window.AUTH.getToken()) {
         try {
-          const res = await fetch('/api/progress/get', {
-            headers: { 'Authorization': `Bearer ${window.AUTH.getToken()}` }
-          });
-          if (res.ok) {
-            const pData = await res.json();
+          const [resProg, resMe] = await Promise.all([
+            fetch('/api/progress/get', {
+              headers: { 'Authorization': `Bearer ${window.AUTH.getToken()}` }
+            }),
+            fetch('/api/auth/me', {
+              headers: { 'Authorization': `Bearer ${window.AUTH.getToken()}` }
+            })
+          ]);
+
+          if (resProg.ok) {
+            const pData = await resProg.json();
             if (pData.all_progress && Array.isArray(pData.all_progress)) {
               pData.all_progress.forEach(p => {
                 if (p.is_solved) solvedSet.add(p.chapter_id);
@@ -1064,14 +1573,40 @@
               document.getElementById('stat-user-streak').innerText = `${streak} 🔥`;
             }
           }
+
+          if (resMe.ok) {
+            const meData = await resMe.json();
+            if (meData.user) {
+              if (meData.user.profession) {
+                currentProfession = meData.user.profession;
+                const profSel = document.getElementById('azubi-prof-select');
+                if (profSel) profSel.value = currentProfession;
+              }
+              if (meData.user.training_year && currentYear === 'all') {
+                const yrPill = document.getElementById(`pill-year-${meData.user.training_year}`);
+                if (yrPill) {
+                  filterByYear(meData.user.training_year, yrPill);
+                }
+              }
+              if (Array.isArray(meData.user.assigned_courses)) {
+                userAssignedCourses = meData.user.assigned_courses;
+                if (userAssignedCourses.length > 0) {
+                  const alertBox = document.getElementById('assigned-courses-alert');
+                  const countTxt = document.getElementById('assigned-courses-count-text');
+                  if (alertBox) alertBox.style.display = 'flex';
+                  if (countTxt) countTxt.innerText = `Dir wurden ${userAssignedCourses.length} Kurse von deinem Ausbilder zugeteilt.`;
+                }
+              }
+            }
+          }
         } catch (e) {
-          console.warn('Progress API unreachable:', e);
+          console.warn('Backend API unreachable:', e);
         }
       }
 
       // Gesamt-Stats aktualisieren falls nicht vom Server überschrieben
       const totalSolved = solvedSet.size;
-      const totalModules = 216;
+      const totalModules = 264;
       const totalPercent = Math.round((totalSolved / totalModules) * 100);
       document.getElementById('stat-user-solved').innerText = `${totalSolved} / ${totalModules}`;
       document.getElementById('stat-user-percent').innerText = `${totalPercent}% Gesamtfortschritt`;
@@ -1082,9 +1617,9 @@
         document.getElementById('stat-user-level').innerText = computedLevel;
       }
 
-      // Berechnung des Fortschritts für jeden der 13 Kurse aus COURSES_MANIFEST
+      // Berechnung des Fortschritts für jeden der 16 Kurse aus COURSES_MANIFEST
       const manifest = window.COURSES_MANIFEST || {};
-      const courseKeys = ['bash', 'cpp', 'csharp', 'go', 'html_css', 'ihk_ap1', 'ihk_ap2_fisi', 'java', 'javascript', 'powershell', 'python', 'rust', 'sql'];
+      const courseKeys = ['active_directory', 'bash', 'cpp', 'csharp', 'dns_records', 'git', 'go', 'html_css', 'ihk_ap1', 'ihk_ap2_fisi', 'java', 'javascript', 'powershell', 'python', 'rust', 'sql'];
 
       courseKeys.forEach(cid => {
         const c = manifest[cid];
@@ -1125,6 +1660,9 @@
           }
         }
       } catch (e) {}
+
+      // Initial filter apply
+      applyAllFilters();
     });
   </script>
 </body>

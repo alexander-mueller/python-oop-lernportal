@@ -355,13 +355,6 @@
             window.location.href = 'dashboard.html';
           };
         }
-        if (teacherLink) {
-          teacherLink.style.display = (this.user.role === 'teacher' || this.user.role === 'admin') ? 'inline-flex' : 'none';
-        }
-        const adminLink = document.getElementById('nav-admin-link');
-        if (adminLink) {
-          adminLink.style.display = this.user.role === 'admin' ? 'inline-flex' : 'none';
-        }
 
         // Alle allgemeinen Landing-Page Action Buttons anpassen
         document.querySelectorAll('.landing-cta-btn').forEach(btn => {
@@ -395,7 +388,6 @@
             window.openAuthModal('register', { allowClose: true });
           };
         }
-        if (teacherLink) teacherLink.style.display = 'none';
 
         // Alle allgemeinen Landing-Page Action Buttons für Besucher
         document.querySelectorAll('.landing-cta-btn').forEach(btn => {
@@ -407,6 +399,26 @@
           };
         });
       }
+
+      // 🔒 Strikter Rollen-Filter für Dozenten- und Admin-Funktionen
+      const isTeacherOrAdmin = loggedIn && this.user && (this.user.role === 'teacher' || this.user.role === 'admin');
+      const isAdmin = loggedIn && this.user && this.user.role === 'admin';
+
+      document.querySelectorAll('.teacher-only, #nav-teacher-link, #mobile-drawer-teacher-link, #footer-teacher-link').forEach(el => {
+        if (isTeacherOrAdmin) {
+          el.style.display = (el.tagName === 'LI' || el.tagName === 'DIV') ? 'block' : 'inline-flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      document.querySelectorAll('.admin-only, #nav-admin-link, #mobile-drawer-admin-link, #footer-admin-link').forEach(el => {
+        if (isAdmin) {
+          el.style.display = (el.tagName === 'LI' || el.tagName === 'DIV') ? 'block' : 'inline-flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
 
       // Aktualisiere ggf. vorhandene Curriculum-Aktions-Buttons
       document.querySelectorAll('.portal-card-action-btn').forEach(btn => {

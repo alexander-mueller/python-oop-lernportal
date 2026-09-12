@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 05: Branch-Management & HEAD-Pointer</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔀 Branching</div>
+          <h1>Git 05: Branch-Management & HEAD-Pointer</h1>
+          <p>Erstelle isolierte Arbeitszweige mit git branch und wechsle sicher mit git switch.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Erstelle isolierte Arbeitszweige mit git branch und wechsle sicher mit git switch.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Git Terminal Cheat Sheet</span>
+              <span>Bash / CLI</span>
+            </div>
+            <pre><code># Wichtige Befehle für dieses Modul:
+git status -s
+git add &lt;datei&gt;
+git commit -m "feat: deine änderung"
+git log --oneline --graph</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Neuen Feature-Branch mit git switch -c erstellen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Zwischen Branches hin- und herwechseln</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Alle lokalen und remote Branches listen (git branch -a)</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Veralteten Branch nach dem Mergen mit git branch -d löschen</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=git&track=track_2_branching_merging&chapter=05_branching_und_switch" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../06_fast_forward_und_3way_merge/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

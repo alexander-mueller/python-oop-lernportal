@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 02: Staging Area, Commits & Historie</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔀 Git Staging & History</div>
+          <h1>Git 02: Staging Area, Commits & Historie</h1>
+          <p>Gezieltes Stagen mit git add, atomare Commits und strukturierte Log-Auswertung.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Gezieltes Stagen mit git add, atomare Commits und strukturierte Log-Auswertung.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Git Terminal Cheat Sheet</span>
+              <span>Bash / CLI</span>
+            </div>
+            <pre><code># Wichtige Befehle für dieses Modul:
+git status -s
+git add &lt;datei&gt;
+git commit -m "feat: deine änderung"
+git log --oneline --graph</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Mehrere Dateien selektiv in die Staging-Area übertragen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Conventional Commit Nachricht ('feat: ...', 'fix: ...') verfassen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Kompaktes git log mit One-Line und Graph formatieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Letzten Commit mit --amend korrigieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=git&track=track_1_git_basics&chapter=02_staging_commits_und_historie" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../03_aenderungen_vergleichen_mit_git_diff/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

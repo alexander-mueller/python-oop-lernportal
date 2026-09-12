@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 08: NS Delegation & PTR Reverse DNS</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚡ Nameserver & PTR</div>
+          <h1>DNS 08: NS Delegation & PTR Reverse DNS</h1>
+          <p>Delegierung an Nameserver (NS) und Reverse-Lookup-Zonen (in-addr.arpa / ip6.arpa) für FCrDNS.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Delegierung an Nameserver (NS) und Reverse-Lookup-Zonen (in-addr.arpa / ip6.arpa) für FCrDNS.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>DNS Command &amp; Syntax Reference</span>
+              <span>Tool: dig -x</span>
+            </div>
+            <pre><code># Wichtige Befehle &amp; Zonensyntax:
+dig dig -x
+named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Mindestens zwei autoritative Nameserver (NS) delegieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Reverse-Lookup-Zone für /24 Subnetz (1.168.192.in-addr.arpa) anlegen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> PTR-Record für Mailserver zur SPAM-Vermeidung eintragen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Forward-Confirmed Reverse DNS (FCrDNS) validieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=dns_records&track=track_2_core_records&chapter=08_ns_und_ptr_reverse_dns_lookups" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../09_mx_mail_exchange_und_prioritaeten/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

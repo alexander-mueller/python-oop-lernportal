@@ -1840,5 +1840,419 @@ window.COURSES_MANIFEST = {
         ]
       }
     ]
+  },
+  "active_directory": {
+    "id": "active_directory",
+    "title": "Active Directory & Windows Server Administration",
+    "language": "powershell",
+    "icon": "🏛️",
+    "runner": "powershell",
+    "description": "Praxis-Masterkurs für Fachinformatiker: AD DS Gesamtstruktur, FSMO-Rollen, OU-Design, Sites & Replikation, AGDLP-Berechtigungskonzept, Gruppenrichtlinien (GPOs) & Enterprise PowerShell Automation.",
+    "tracks": [
+      {
+        "id": "track_1_ad_architektur",
+        "title": "🏛️ Lehrpfad 1: AD DS Architektur & Organisationseinheiten (OUs)",
+        "description": "AD DS Gesamtstruktur, Trees, Domänen, DNS-Abhängigkeit (_msdcs), Kerberos & LDAP, die 5 FSMO-Rollen, OU-Hierarchien und Standorte & Replikation.",
+        "certificateKey": "ad_architektur",
+        "chapters": [
+          {
+            "folder": "01_ad_architektur_und_wald_baum_domaene",
+            "title": "AD 01: AD DS Architektur & Wald, Baum, Domäne",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "02_domaenencontroller_und_fsmo_rollen",
+            "title": "AD 02: Domänencontroller & FSMO-Rollen",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "03_organisationseinheiten_und_struktur",
+            "title": "AD 03: Organisationseinheiten & Struktur",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "04_standorte_subnetze_und_replikation",
+            "title": "AD 04: Standorte, Subnetze & Replikation",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          }
+        ]
+      },
+      {
+        "id": "track_2_identitaet_agdlp",
+        "title": "🛡️ Lehrpfad 2: Identitätsmanagement & das AGDLP-Prinzip",
+        "description": "Benutzerkonten, UPN & SAM-Account, UAC-Flags, Computerkonten, Secure Channel, djoin.exe, Sicherheitsgruppenbereiche und das AGDLP-Prinzip.",
+        "certificateKey": "ad_identitaet",
+        "chapters": [
+          {
+            "folder": "05_benutzerkonten_und_attribute",
+            "title": "AD 05: Benutzerkonten & LDAP-Attribute",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "06_computerkonten_und_domaenenbeitritt",
+            "title": "AD 06: Computerkonten & Domänenbeitritt",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "07_sicherheitsgruppen_und_bereichstypen",
+            "title": "AD 07: Sicherheitsgruppen & Bereichstypen",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "08_das_agdlp_prinzip_in_der_praxis",
+            "title": "AD 08: Das AGDLP-Prinzip in der Praxis",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          }
+        ]
+      },
+      {
+        "id": "track_3_gpo_design",
+        "title": "📜 Lehrpfad 3: Gruppenrichtlinien (GPOs) & Richtlinien-Design",
+        "description": "LSDOU-Abarbeitung, Vererbung und Enforced, Computerkonfiguration vs. Benutzerkonfiguration, Loopback Merge/Replace, WMI-Filter und GPO-Troubleshooting.",
+        "certificateKey": "ad_gpo",
+        "chapters": [
+          {
+            "folder": "09_gpo_grundlagen_und_lsdous",
+            "title": "AD 09: GPO-Grundlagen & LSDOU-Hierarchie",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "10_computerkonfiguration_vs_benutzerkonfiguration",
+            "title": "AD 10: Computer- vs. Benutzerkonfiguration & Loopback",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "11_sicherheitsfilterung_und_wmi_filter",
+            "title": "AD 11: Sicherheitsfilterung & WMI-Filter",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "12_gpo_troubleshooting_gpupdate_und_gpresult",
+            "title": "AD 12: GPO Troubleshooting: gpupdate & gpresult",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          }
+        ]
+      },
+      {
+        "id": "track_4_ad_automation",
+        "title": "⚡ Lehrpfad 4: PowerShell AD-Automation & Enterprise Security",
+        "description": "Microsoft ActiveDirectory Modul, Filter-Syntax, CSV-Massenprovisioning mit Kollisionsauflösung, NTFS- & Share-ACLs und Master-Abschlussprojekt.",
+        "certificateKey": "ad_automation",
+        "chapters": [
+          {
+            "folder": "13_powershell_activedirectory_modul_basics",
+            "title": "AD 13: PowerShell ActiveDirectory-Modul Basics",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "14_csv_bulk_import_und_provisioning",
+            "title": "AD 14: CSV Bulk-Import & Provisioning",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "15_ntfs_und_share_berechtigungssteuerung",
+            "title": "AD 15: NTFS- & Share-Berechtigungssteuerung",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          },
+          {
+            "folder": "16_master_abschlussprojekt_ad_automation_suite",
+            "title": "Master 16: Enterprise AD Automation & Security Suite",
+            "taskFile": "aufgabe.ps1",
+            "testFile": "test_aufgabe.ps1"
+          }
+        ]
+      }
+    ]
+  },
+  "git": {
+    "id": "git",
+    "title": "Git Versionskontrolle, Branching & DevOps Workflows",
+    "language": "bash",
+    "icon": "🔀",
+    "runner": "bash",
+    "description": "Vom ersten Commit über Branching, Merge-Konfliktlösung, Remotes & Tags bis zu interaktivem Rebase, Pre-Commit Hooks und professionellem Git-Flow.",
+    "tracks": [
+      {
+        "id": "track_1_git_basics",
+        "title": "🌱 Lehrpfad 1: Git Grundlagen & Lokale Repositories",
+        "description": "Initialisierung, die 3 logischen Bereiche, Staging, atomare Commits, Historie und .gitignore.",
+        "certificateKey": "git_basics",
+        "chapters": [
+          {
+            "folder": "01_git_init_und_repo_basics",
+            "title": "Git 01: Repository-Initialisierung & 3 Bereiche",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "02_staging_commits_und_historie",
+            "title": "Git 02: Staging Area, Commits & Historie",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "03_aenderungen_vergleichen_mit_git_diff",
+            "title": "Git 03: Diff-Analysen & Änderungen untersuchen",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "04_dateien_ignorieren_und_gitignore",
+            "title": "Git 04: .gitignore & Ausschlussregeln",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_2_branching_merging",
+        "title": "⚡ Lehrpfad 2: Branching, Merging & Konflikte",
+        "description": "Paralleles Arbeiten auf Branches, Fast-Forward vs. 3-Way-Merge, Konfliktlösung und Stash.",
+        "certificateKey": "git_branching",
+        "chapters": [
+          {
+            "folder": "05_branching_und_switch",
+            "title": "Git 05: Branch-Management & HEAD-Pointer",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "06_fast_forward_und_3way_merge",
+            "title": "Git 06: Fast-Forward & 3-Way-Merge Strategien",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "07_merge_konflikte_verstehen_und_loesen",
+            "title": "Git 07: Merge-Konflikte analysieren & lösen",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "08_temporaere_aenderungen_mit_git_stash",
+            "title": "Git 08: Zwischenspeichern mit Git Stash",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_3_remotes_collaboration",
+        "title": "🚀 Lehrpfad 3: Remote Repositories & Team-Collaboration",
+        "description": "Origin-Remotes, push/pull, Fetch vs. Pull, SemVer Tags und selektives Cherry-Picking.",
+        "certificateKey": "git_collaboration",
+        "chapters": [
+          {
+            "folder": "09_remotes_verbinden_und_git_push",
+            "title": "Git 09: Remote Repositories & Upstream Tracking",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "10_git_fetch_vs_git_pull",
+            "title": "Git 10: Git Fetch vs. Git Pull & Rebase",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "11_git_tags_und_releases",
+            "title": "Git 11: Release-Tags & Semantische Versionierung",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "12_cherry_picking_und_selektive_commits",
+            "title": "Git 12: Selektive Commits mit Git Cherry-Pick",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_4_advanced_workflows",
+        "title": "💎 Lehrpfad 4: Fortgeschrittene Workflows & Master-Projekt",
+        "description": "Rebase, Interaktives Squashing, Git Hooks und Master-Abschlussprojekt Git-Flow.",
+        "certificateKey": "git_master",
+        "chapters": [
+          {
+            "folder": "13_rebase_fuer_saubere_historie",
+            "title": "Git 13: Lineare Historie mit Git Rebase",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "14_interaktives_rebase_squash_und_fixup",
+            "title": "Git 14: Interaktives Rebase (Squash & Fixup)",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "15_git_hooks_und_automatisierte_checks",
+            "title": "Git 15: Pre-Commit Hooks & Automatisierung",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "16_master_abschlussprojekt_git_flow_und_release",
+            "title": "Master 16: Enterprise Git-Flow & Release Suite",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "dns_records": {
+    "id": "dns_records",
+    "title": "DNS-Records, Domain Name System & E-Mail-Sicherheit",
+    "language": "bash",
+    "icon": "🌐",
+    "runner": "bash",
+    "description": "Vom DNS-Baum über A/AAAA, CNAME, MX und SOA bis zu moderner E-Mail-Sicherheit (SPF, DKIM, DMARC), Active Directory SRV-Records und DNSSEC.",
+    "tracks": [
+      {
+        "id": "track_1_dns_architektur",
+        "title": "🌐 Lehrpfad 1: DNS-Architektur & Namensauflösung",
+        "description": "DNS-Hierarchie, Root-Zone (.), rekursive vs. iterative Abfragen, UDP/TCP Port 53 und TTL Caching.",
+        "certificateKey": "dns_architektur",
+        "chapters": [
+          {
+            "folder": "01_dns_hierarchie_und_root_server",
+            "title": "DNS 01: DNS-Hierarchie & Root-Server",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "02_rekursive_vs_iterative_abfragen",
+            "title": "DNS 02: Rekursive vs. Iterative Abfragen",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "03_ports_udp_tcp_und_dns_paketaufbau",
+            "title": "DNS 03: UDP vs. TCP Port 53 & EDNS0",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "04_ttl_und_dns_propagation",
+            "title": "DNS 04: TTL & DNS-Propagation",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_2_core_records",
+        "title": "⚡ Lehrpfad 2: Kern-Resource-Records & Zonen",
+        "description": "A & AAAA Records, CNAME Alias-Regeln, SOA-Header mit Serial und NS/PTR Reverse-Lookups.",
+        "certificateKey": "dns_records_core",
+        "chapters": [
+          {
+            "folder": "05_a_und_aaaa_records",
+            "title": "DNS 05: A & AAAA Records (IPv4 / IPv6)",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "06_cname_canonical_name_und_alias_regeln",
+            "title": "DNS 06: CNAME Alias & das Apex-Problem",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "07_soa_start_of_authority_und_serial",
+            "title": "DNS 07: SOA Start of Authority & Serial",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "08_ns_und_ptr_reverse_dns_lookups",
+            "title": "DNS 08: NS Delegation & PTR Reverse DNS",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_3_email_security",
+        "title": "🛡️ Lehrpfad 3: E-Mail-Sicherheit & Security Records",
+        "description": "MX Prioritäten, SPF-Einträge, DKIM-Kryptosignaturen und DMARC Schutz vor Phishing & Spoofing.",
+        "certificateKey": "dns_email_security",
+        "chapters": [
+          {
+            "folder": "09_mx_mail_exchange_und_prioritaeten",
+            "title": "DNS 09: MX Records & Mail-Prioritäten",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "10_txt_records_und_spf_sender_policy_framework",
+            "title": "DNS 10: SPF Sender Policy Framework (TXT)",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "11_dkim_domainkeys_identified_mail",
+            "title": "DNS 11: DKIM Kryptografische E-Mail-Signatur",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "12_dmarc_und_email_security_suite",
+            "title": "DNS 12: DMARC Policy & Phishing-Abwehr",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      },
+      {
+        "id": "track_4_advanced_dns",
+        "title": "🚀 Lehrpfad 4: Erweiterte Records, DNSSEC & Auditing",
+        "description": "SRV Records für Active Directory, CAA, DNSSEC Vertrauenskette, dig-Troubleshooting & Master Auditor.",
+        "certificateKey": "dns_master",
+        "chapters": [
+          {
+            "folder": "13_srv_service_records_fuer_ad_und_sip",
+            "title": "DNS 13: SRV Service Records (Active Directory & SIP)",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "14_caa_und_dnssec_sicherheit",
+            "title": "DNS 14: CAA Records & DNSSEC Vertrauenskette",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "15_dns_troubleshooting_mit_dig_und_nslookup",
+            "title": "DNS 15: DNS-Troubleshooting mit dig & nslookup",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          },
+          {
+            "folder": "16_master_abschlussprojekt_dns_zone_auditor",
+            "title": "Master 16: Enterprise DNS Zone & Security Auditor",
+            "taskFile": "aufgabe.sh",
+            "testFile": "test_aufgabe.sh"
+          }
+        ]
+      }
+    ]
   }
 };

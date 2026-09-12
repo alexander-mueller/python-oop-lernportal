@@ -1,0 +1,138 @@
+{
+  "id": "active_directory",
+  "title": "Active Directory & Windows Server Administration",
+  "language": "powershell",
+  "icon": "🏛️",
+  "runner": "powershell",
+  "description": "Praxis-Masterkurs für Fachinformatiker: AD DS Gesamtstruktur, FSMO-Rollen, OU-Design, Sites & Replikation, AGDLP-Berechtigungskonzept, Gruppenrichtlinien (GPOs) & Enterprise PowerShell Automation.",
+  "tracks": [
+    {
+      "id": "track_1_ad_architektur",
+      "title": "🏛️ Lehrpfad 1: AD DS Architektur & Organisationseinheiten (OUs)",
+      "description": "AD DS Gesamtstruktur, Trees, Domänen, DNS-Abhängigkeit (_msdcs), Kerberos & LDAP, die 5 FSMO-Rollen, OU-Hierarchien und Standorte & Replikation.",
+      "certificateKey": "ad_architektur",
+      "chapters": [
+        {
+          "folder": "01_ad_architektur_und_wald_baum_domaene",
+          "title": "AD 01: AD DS Architektur & Wald, Baum, Domäne",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "02_domaenencontroller_und_fsmo_rollen",
+          "title": "AD 02: Domänencontroller & FSMO-Rollen",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "03_organisationseinheiten_und_struktur",
+          "title": "AD 03: Organisationseinheiten & Struktur",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "04_standorte_subnetze_und_replikation",
+          "title": "AD 04: Standorte, Subnetze & Replikation",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        }
+      ]
+    },
+    {
+      "id": "track_2_identitaet_agdlp",
+      "title": "🛡️ Lehrpfad 2: Identitätsmanagement & das AGDLP-Prinzip",
+      "description": "Benutzerkonten, UPN & SAM-Account, UAC-Flags, Computerkonten, Secure Channel, djoin.exe, Sicherheitsgruppenbereiche und das AGDLP-Prinzip.",
+      "certificateKey": "ad_identitaet",
+      "chapters": [
+        {
+          "folder": "05_benutzerkonten_und_attribute",
+          "title": "AD 05: Benutzerkonten & LDAP-Attribute",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "06_computerkonten_und_domaenenbeitritt",
+          "title": "AD 06: Computerkonten & Domänenbeitritt",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "07_sicherheitsgruppen_und_bereichstypen",
+          "title": "AD 07: Sicherheitsgruppen & Bereichstypen",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "08_das_agdlp_prinzip_in_der_praxis",
+          "title": "AD 08: Das AGDLP-Prinzip in der Praxis",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        }
+      ]
+    },
+    {
+      "id": "track_3_gpo_design",
+      "title": "📜 Lehrpfad 3: Gruppenrichtlinien (GPOs) & Richtlinien-Design",
+      "description": "LSDOU-Abarbeitung, Vererbung und Enforced, Computerkonfiguration vs. Benutzerkonfiguration, Loopback Merge/Replace, WMI-Filter und GPO-Troubleshooting.",
+      "certificateKey": "ad_gpo",
+      "chapters": [
+        {
+          "folder": "09_gpo_grundlagen_und_lsdous",
+          "title": "AD 09: GPO-Grundlagen & LSDOU-Hierarchie",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "10_computerkonfiguration_vs_benutzerkonfiguration",
+          "title": "AD 10: Computer- vs. Benutzerkonfiguration & Loopback",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "11_sicherheitsfilterung_und_wmi_filter",
+          "title": "AD 11: Sicherheitsfilterung & WMI-Filter",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "12_gpo_troubleshooting_gpupdate_und_gpresult",
+          "title": "AD 12: GPO Troubleshooting: gpupdate & gpresult",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        }
+      ]
+    },
+    {
+      "id": "track_4_ad_automation",
+      "title": "⚡ Lehrpfad 4: PowerShell AD-Automation & Enterprise Security",
+      "description": "Microsoft ActiveDirectory Modul, Filter-Syntax, CSV-Massenprovisioning mit Kollisionsauflösung, NTFS- & Share-ACLs und Master-Abschlussprojekt.",
+      "certificateKey": "ad_automation",
+      "chapters": [
+        {
+          "folder": "13_powershell_activedirectory_modul_basics",
+          "title": "AD 13: PowerShell ActiveDirectory-Modul Basics",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "14_csv_bulk_import_und_provisioning",
+          "title": "AD 14: CSV Bulk-Import & Provisioning",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "15_ntfs_und_share_berechtigungssteuerung",
+          "title": "AD 15: NTFS- & Share-Berechtigungssteuerung",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        },
+        {
+          "folder": "16_master_abschlussprojekt_ad_automation_suite",
+          "title": "Master 16: Enterprise AD Automation & Security Suite",
+          "taskFile": "aufgabe.ps1",
+          "testFile": "test_aufgabe.ps1"
+        }
+      ]
+    }
+  ]
+}

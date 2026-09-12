@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD 12: GPO Troubleshooting: gpupdate & gpresult</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">📜 GPO Troubleshooting</div>
+          <h1>AD 12: GPO Troubleshooting: gpupdate & gpresult</h1>
+          <p>Richtlinien-Diagnose: gpupdate /force, gpresult /r, HTML-Berichte und Konflikt-Analyse.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Richtlinien-Diagnose: gpupdate /force, gpresult /r, HTML-Berichte und Konflikt-Analyse.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Active Directory PowerShell Referenz</span>
+              <span>PowerShell 7+</span>
+            </div>
+            <pre><code># Wichtige Cmdlets &amp; Syntax:
+Invoke-GPODiagnostics -Domain "corp.it-praxisportal.de"
+Get-ADUser -Filter * -Properties Department, mail
+New-ADOrganizationalUnit -Name "IT-Operations" -Path "DC=corp,DC=de"</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Sofortige Aktualisierung mit gpupdate /force erzwingen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Angewandte GPOs im Terminal mit gpresult /r auswerten</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Detaillierten HTML-Ergebnisbericht mit Get-GPOReport generieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Fehlerhafte oder abgelehnte Richtlinien identifizieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=active_directory&track=track_3_gpo_design&chapter=12_gpo_troubleshooting_gpupdate_und_gpresult" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../13_powershell_activedirectory_modul_basics/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

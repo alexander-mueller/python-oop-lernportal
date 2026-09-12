@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD 13: PowerShell ActiveDirectory-Modul Basics</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">⚙️ PowerShell AD Automation</div>
+          <h1>AD 13: PowerShell ActiveDirectory-Modul Basics</h1>
+          <p>Automatisierung mit dem ActiveDirectory Modul: Get-ADUser, Set-ADAccountPassword und Filter-Syntax.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Automatisierung mit dem ActiveDirectory Modul: Get-ADUser, Set-ADAccountPassword und Filter-Syntax.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Active Directory PowerShell Referenz</span>
+              <span>PowerShell 7+</span>
+            </div>
+            <pre><code># Wichtige Cmdlets &amp; Syntax:
+Get-ADUserReport -Domain "corp.it-praxisportal.de"
+Get-ADUser -Filter * -Properties Department, mail
+New-ADOrganizationalUnit -Name "IT-Operations" -Path "DC=corp,DC=de"</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Komplexe LDAP-Filterabfragen mit -Filter und -SearchBase ausführen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Massenweise Passwörter sicher zurücksetzen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Passwortablauf-Warnungen per PowerShell-Report generieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Objekt-Attribute mit Set-ADUser modifizieren</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=active_directory&track=track_4_ad_automation&chapter=13_powershell_activedirectory_modul_basics" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../14_csv_bulk_import_und_provisioning/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

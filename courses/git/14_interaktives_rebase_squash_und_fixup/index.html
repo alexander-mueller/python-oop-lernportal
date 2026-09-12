@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 14: Interaktives Rebase (Squash & Fixup)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <div class="app-main">
+      <header>
+        <div class="header-container">
+          <div class="header-badge">🔀 Interactive Rebase</div>
+          <h1>Git 14: Interaktives Rebase (Squash & Fixup)</h1>
+          <p>Polierte Commit-Historie vor dem Pull-Request: Mehrere kleine 'WIP'-Commits zusammenfassen.</p>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <h2>💡 Theorie &amp; Praxiskonzept</h2>
+          <p>Polierte Commit-Historie vor dem Pull-Request: Mehrere kleine 'WIP'-Commits zusammenfassen.</p>
+          <div class="code-container">
+            <div class="code-header">
+              <span>Git Terminal Cheat Sheet</span>
+              <span>Bash / CLI</span>
+            </div>
+            <pre><code># Wichtige Befehle für dieses Modul:
+git status -s
+git add &lt;datei&gt;
+git commit -m "feat: deine änderung"
+git log --oneline --graph</code></pre>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t1">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> Interaktiven Rebase für die letzten 3 Commits starten (git rebase -i HEAD~3)</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t2">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> Commits mit 'squash' oder 'fixup' zusammenfassen</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t3">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> Commit-Nachricht mit 'reword' präzisieren</label>
+          </div><div class="task-item">
+            <input type="checkbox" class="task-checkbox" id="t4">
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> Saubere, aussagekräftige Historie prüfen</label>
+          </div>
+
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="../../../workspace.html?course=git&track=track_4_advanced_workflows&chapter=14_interaktives_rebase_squash_und_fixup" class="btn" style="background: #10b981; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
+            <a href="../15_git_hooks_und_automatisierte_checks/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>
