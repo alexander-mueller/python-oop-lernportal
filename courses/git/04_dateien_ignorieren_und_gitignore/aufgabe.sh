@@ -14,7 +14,7 @@ setup_gitignore() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe setup_gitignore in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

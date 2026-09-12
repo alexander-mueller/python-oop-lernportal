@@ -63,29 +63,77 @@
       return { success: true };
     },
 
-    async runTests(userCode, testCode, logCallback) {
-      logCallback("🧪 Führe automatisierte Shell-Unittests (BATS-Stil) aus...\n----------------------------------------\n", "info");
-
-      // Simuliere Test-Ausführung
-      const testLines = testCode.split("\n").filter(l => l.trim().startsWith("# TEST:") || l.trim().startsWith("assert"));
-      let passed = 0;
-      let total = Math.max(testLines.length, 4);
-
-      for (let i = 1; i <= total; i++) {
-        logCallback(`✓ Test ${i}/${total} erfolgreich bestanden.\n`, "stdout");
-        passed++;
+    async runTests(userCode, testCode, logCallback, chapterContext) {
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Das Shell-Skript wurde noch nicht bearbeitet!\nBitte implementiere die geforderte Logik in der Datei, bevor du die Tests ausführst.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
       }
 
-      logCallback("\n🎉 100% aller Shell-Tests erfolgreich bestanden!\n", "success");
-      return { success: true, total, passed, failures: 0 };
+      logCallback("🧪 Starte automatisierte Testsuite in isolierter Linux-Sandbox...\n----------------------------------------\n", "info");
+
+      try {
+        const token = window.AUTH ? window.AUTH.getToken() : localStorage.getItem("auth_token");
+        const payload = {
+          language: (chapterContext && (chapterContext.courseId === "git" ? "git" : (chapterContext.courseId === "dns_records" ? "dns" : "bash"))) || "bash",
+          base_path: (chapterContext && chapterContext.basePath) ? chapterContext.basePath : "",
+          user_code: userCode,
+          task_file: (chapterContext && chapterContext.taskFile) ? chapterContext.taskFile : "aufgabe.sh",
+          test_file: (chapterContext && chapterContext.testFile) ? chapterContext.testFile : "test_aufgabe.sh"
+        };
+
+        const res = await fetch("/api/runners/test", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.stdout) {
+          logCallback(data.stdout, "stdout");
+        }
+        if (data.stderr && data.stderr.trim()) {
+          logCallback(data.stderr, "stderr");
+        }
+
+        if (data.error && !data.stdout) {
+          logCallback(`\n❌ Fehler: ${data.error}\n`, "error");
+        }
+
+        return {
+          success: Boolean(data.success),
+          total: data.total || 1,
+          passed: data.passed || 0,
+          failures: data.failures || (data.success ? 0 : 1),
+          rawOutput: (data.stdout || "") + "\n" + (data.stderr || "")
+        };
+      } catch (err) {
+        logCallback(`\n❌ Verbindungsfehler zum Backend-Runner: ${err.message}\n`, "error");
+        return { success: false, total: 1, passed: 0, failures: 1, rawOutput: err.message };
+      }
     }
   };
 
   if (window.RunnerRegistry) {
     window.RunnerRegistry.register(ShellAdapter);
+    window.RunnerRegistry.register({ ...ShellAdapter, id: "git" });
+    window.RunnerRegistry.register({ ...ShellAdapter, id: "dns_records" });
+    window.RunnerRegistry.register({ ...ShellAdapter, id: "dns" });
   } else {
     document.addEventListener("DOMContentLoaded", () => {
-      if (window.RunnerRegistry) window.RunnerRegistry.register(ShellAdapter);
+      if (window.RunnerRegistry) {
+        window.RunnerRegistry.register(ShellAdapter);
+        window.RunnerRegistry.register({ ...ShellAdapter, id: "git" });
+        window.RunnerRegistry.register({ ...ShellAdapter, id: "dns_records" });
+        window.RunnerRegistry.register({ ...ShellAdapter, id: "dns" });
+      }
     });
   }
 })();

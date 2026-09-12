@@ -14,7 +14,7 @@ cherry_pick_commit() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe cherry_pick_commit in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

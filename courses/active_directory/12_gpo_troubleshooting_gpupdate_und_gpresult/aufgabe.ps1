@@ -21,7 +21,7 @@ function Invoke-GPODiagnostics {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "12_gpo_troubleshooting_gpupdate_und_gpresult"

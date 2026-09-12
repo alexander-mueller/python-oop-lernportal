@@ -126,11 +126,20 @@
     /**
      * Führt JS Unittests aus
      */
-    async runTests(userCode, testCode, logCallback) {
+    async runTests(userCode, testCode, logCallback, chapterContext) {
       const sec = this.validateSecurity(userCode);
       if (!sec.safe) {
         logCallback(`\n${sec.error}\n\n`, "error");
         return { success: false, error: sec.error };
+      }
+
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Die JavaScript-Aufgabe wurde noch nicht bearbeitet!\nBitte implementiere die geforderte Logik in der Datei.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
       }
 
       return new Promise((resolve) => {

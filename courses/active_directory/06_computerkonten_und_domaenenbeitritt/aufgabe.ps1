@@ -21,7 +21,7 @@ function Add-DomainComputerAccount {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "06_computerkonten_und_domaenenbeitritt"

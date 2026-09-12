@@ -357,20 +357,20 @@
   <script src="assets/app_auth.js?v=2.2.1"></script>
   <script src="assets/parsons.js"></script>
   <script src="assets/code_guard.js"></script>
-  <script src="assets/runners/runner_registry.js"></script>
-  <script src="assets/runners/python_runner.js"></script>
-  <script src="assets/runners/js_runner.js"></script>
-  <script src="assets/runners/sql_runner.js"></script>
-  <script src="assets/runners/shell_runner.js"></script>
-  <script src="assets/runners/powershell_runner.js"></script>
-  <script src="assets/runners/html_css_runner.js"></script>
-  <script src="assets/runners/go_runner.js"></script>
-  <script src="assets/runners/java_runner.js"></script>
-  <script src="assets/runners/rust_runner.js"></script>
-  <script src="assets/runners/csharp_runner.js"></script>
-  <script src="assets/runners/cpp_runner.js"></script>
-  <script src="assets/courses_manifest.js"></script>
-  <script src="assets/monaco_ide.js"></script>
+  <script src="assets/runners/runner_registry.js?v=2.2.2"></script>
+  <script src="assets/runners/python_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/js_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/sql_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/shell_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/powershell_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/html_css_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/go_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/java_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/rust_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/csharp_runner.js?v=2.2.2"></script>
+  <script src="assets/runners/cpp_runner.js?v=2.2.2"></script>
+  <script src="assets/courses_manifest.js?v=2.2.2"></script>
+  <script src="assets/monaco_ide.js?v=2.2.2"></script>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -587,6 +587,11 @@
         const lang = currentCourseManifest ? (currentCourseManifest.language || "python") : "python";
         window.initWorkspace({
           chapterId: chapterId,
+          basePath: basePath,
+          taskFile: taskFile,
+          testFile: testFile,
+          courseId: courseId,
+          chapterFolder: chapterFolder,
           starterCode: aufgabeCode,
           testCode: testCode,
           solutionCode: loesungCode

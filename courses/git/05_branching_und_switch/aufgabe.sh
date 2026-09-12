@@ -14,7 +14,7 @@ manage_branches() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe manage_branches in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

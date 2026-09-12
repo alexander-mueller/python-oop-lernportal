@@ -21,7 +21,7 @@ function Sync-ADReplicationSite {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "04_standorte_subnetze_und_replikation"

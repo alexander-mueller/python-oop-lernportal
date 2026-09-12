@@ -13,7 +13,7 @@ configure_ad_srv_records() {
   echo "▶ Analysiere DNS-Konfiguration für $domain..."
 
   # TODO: Implementiere die geforderten DNS-Prüfungen oder Record-Erstellungen
-  return 0
+  return 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

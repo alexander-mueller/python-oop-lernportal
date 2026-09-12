@@ -13,7 +13,7 @@ create_spf_record() {
   echo "▶ Analysiere DNS-Konfiguration für $domain..."
 
   # TODO: Implementiere die geforderten DNS-Prüfungen oder Record-Erstellungen
-  return 0
+  return 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

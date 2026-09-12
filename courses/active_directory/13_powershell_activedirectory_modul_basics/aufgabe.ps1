@@ -21,7 +21,7 @@ function Get-ADUserReport {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "13_powershell_activedirectory_modul_basics"

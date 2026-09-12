@@ -47,7 +47,9 @@
           });
         }
 
-        pyodideInstance = await window.loadPyodide();
+        pyodideInstance = await window.loadPyodide({
+          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+        });
 
         // Sandbox-Härtung im Pyodide-Interpreter aktivieren
         if (window.CODE_GUARD && window.CODE_GUARD.getSandboxBootstrap) {
@@ -113,11 +115,21 @@
     /**
      * Führt automatisierte Unittests aus (🧪 Tests starten)
      */
-    async runTests(userCode, testCode, logCallback) {
+    async runTests(userCode, testCode, logCallback, chapterContext) {
       const securityCheck = this.validateSecurity(userCode);
       if (!securityCheck.safe) {
         logCallback(`\n${securityCheck.error}\n\n`, "error");
         return { success: false, error: securityCheck.error };
+      }
+
+      // Guard: Prüfe ob Startercode noch völlig unberührt ist
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Aufgabe noch nicht bearbeitet!\nBitte implementiere die geforderte Logik in der Datei, bevor du die Tests ausführst.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
       }
 
       const py = await this.loadEngine(logCallback);
@@ -125,29 +137,36 @@
 
       try {
         py.FS.writeFile("aufgabe.py", userCode);
+        py.FS.writeFile("test_aufgabe.py", testCode);
 
         const testRunnerScript = `
-import unittest, io, sys
+import importlib, io, sys, unittest
 from unittest import TextTestRunner
+
+if '.' not in sys.path:
+    sys.path.insert(0, '.')
 
 for mod in list(sys.modules.keys()):
     if mod in ('aufgabe', 'test_aufgabe'):
         del sys.modules[mod]
 
 import aufgabe
+import test_aufgabe
+importlib.reload(aufgabe)
+importlib.reload(test_aufgabe)
 
-${testCode}
-
-suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
+loader = unittest.TestLoader()
+suite = loader.loadTestsFromModule(test_aufgabe)
 stream = io.StringIO()
 runner = TextTestRunner(stream=stream, verbosity=2)
 result = runner.run(suite)
 
 output_text = stream.getvalue()
-success = result.wasSuccessful()
 total_runs = result.testsRun
 failures = len(result.failures)
 errors = len(result.errors)
+success = (total_runs > 0) and (failures == 0) and (errors == 0) and result.wasSuccessful()
+
 (success, total_runs, failures, errors, output_text)
 `;
 
@@ -166,8 +185,10 @@ errors = len(result.errors)
 
         logCallback(outputText + "\n", "stdout");
 
+        const hasPassed = Boolean(isSuccess) && totalRuns > 0 && fails === 0 && errs === 0;
+
         return {
-          success: Boolean(isSuccess),
+          success: hasPassed,
           total: totalRuns,
           passed: totalRuns - (fails + errs),
           failures: fails,

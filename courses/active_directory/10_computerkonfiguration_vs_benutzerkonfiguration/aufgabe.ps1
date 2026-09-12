@@ -21,7 +21,7 @@ function Set-GPOLoopbackPolicy {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "10_computerkonfiguration_vs_benutzerkonfiguration"

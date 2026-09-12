@@ -21,7 +21,7 @@ function New-EnterpriseADUser {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "05_benutzerkonten_und_attribute"

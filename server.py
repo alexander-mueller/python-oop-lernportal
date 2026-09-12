@@ -25,6 +25,9 @@ import re
 import uuid
 import urllib.parse
 import ipaddress
+import subprocess
+import tempfile
+import shutil
 from pathlib import Path
 from collections import defaultdict
 
@@ -314,18 +317,33 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
     def is_path_blocked(self, path: str) -> bool:
         clean_path = urllib.parse.unquote(path).split("?")[0].lower()
         clean_path = os.path.normpath(clean_path).replace("\\", "/")
-        blocked_extensions = (
-            ".db", ".sqlite", ".sqlite3", ".secret_key", ".py", ".sh", ".php",
-            ".jsonl", ".env", ".bak", ".sql", ".log", ".conf", ".ini", ".yaml", ".yml"
-        )
-        if any(clean_path.endswith(ext) for ext in blocked_extensions):
+
+        # 1. System-, Konfigurations- und geheime Dateien immer strikt sperren
+        if any(seg in clean_path for seg in ["/.git", "/.system_generated", "/.gemini", "platform_data.db", ".secret_key", ".env", ".jsonl"]):
             return True
         if "/." in clean_path or clean_path.startswith("."):
             return True
         if clean_path.startswith("/exams/") or clean_path == "/exams":
             return True
-        if any(seg in clean_path for seg in ["/.git", "/.system_generated", "/.gemini", "platform_data.db", ".secret_key"]):
+        if clean_path in ("/server.py", "server.py"):
             return True
+
+        # 2. Gefährliche Endungen für Server-Root und PHP/DB
+        if any(clean_path.endswith(ext) for ext in [".db", ".sqlite", ".sqlite3", ".secret_key", ".php", ".env", ".bak", ".conf"]):
+            return True
+
+        # 3. Kursdateien in den Lehrpfaden und Kursordnern explizit erlauben
+        is_course_file = (
+            clean_path.startswith("/lehrpfad_") or 
+            clean_path.startswith("lehrpfad_") or 
+            clean_path.startswith("/courses/") or 
+            clean_path.startswith("courses/")
+        )
+        if not is_course_file:
+            blocked_outside = (".py", ".sh", ".sql", ".log", ".ini", ".yaml", ".yml")
+            if any(clean_path.endswith(ext) for ext in blocked_outside):
+                return True
+
         return False
 
     def do_GET(self):
@@ -1055,6 +1073,250 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.commit()
             conn.close()
             return self.send_json({"success": True, "message": "Einstellungen gespeichert"})
+
+        # 14. AUTOMATISIERTER RUNNER TESTSUITE ENDPUNKT (BASH, GIT, DNS, POWERSHELL, AD)
+        elif path == "/api/runners/test":
+            user_token = self.get_auth_user()
+            if not user_token:
+                return self.send_json({"error": "Nicht authentifiziert. Bitte melde dich an, um Tests auszuführen."}, 401)
+
+            language = str(body.get("language", "")).strip().lower()
+            base_path = str(body.get("base_path", "")).strip()
+            user_code = str(body.get("user_code", ""))[:100_000]
+            task_file = str(body.get("task_file", "")).strip()
+            test_file = str(body.get("test_file", "")).strip()
+
+            if not base_path or ".." in base_path or base_path.startswith("/") or "\\" in base_path:
+                return self.send_json({"error": "Ungültiger Pfad"}, 400)
+
+            chapter_dir = os.path.normpath(os.path.join(str(BASE_DIR), base_path))
+            if not os.path.isdir(chapter_dir) or not chapter_dir.startswith(str(BASE_DIR)):
+                return self.send_json({"error": "Kapitelverzeichnis nicht gefunden"}, 404)
+
+            # Security: Gefährliche Shell/PowerShell-Befehle blockieren
+            danger_patterns = [
+                r"\brm\s+-[rf]*\s+/(?:\s|$)",
+                r"\bmkfs\b",
+                r"\bdd\s+if=",
+                r"\bshutdown\b",
+                r"\breboot\b",
+                r":\(\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;",
+                r"\bcurl\b.*\|\s*(?:bash|sh)\b",
+                r"Remove-Item\s+-Recurse\s+[\'\"]?/(?:[\'\"]|\s|$)",
+                r"Format-Volume"
+            ]
+            for pat in danger_patterns:
+                if re.search(pat, user_code, re.IGNORECASE):
+                    return self.send_json({
+                        "success": False,
+                        "error": "Sicherheits-Sperre: Unzulässiger Systembefehl im Code erkannt.",
+                        "stdout": "❌ Ausführung durch Sicherheitsfilter blockiert.\n",
+                        "failures": 1,
+                        "total": 1
+                    }, 400)
+
+            sandbox = tempfile.mkdtemp(prefix="test_sandbox_")
+            try:
+                # 1. BASH / GIT / DNS EXECUTION
+                if language in ("bash", "shell", "git", "dns_records", "dns"):
+                    actual_task_file = task_file or "aufgabe.sh"
+                    actual_test_file = test_file or "test_aufgabe.sh"
+                    src_test = os.path.join(chapter_dir, actual_test_file)
+                    if not os.path.isfile(src_test):
+                        return self.send_json({"error": f"Testdatei '{actual_test_file}' nicht gefunden"}, 404)
+
+                    shutil.copy(src_test, os.path.join(sandbox, actual_test_file))
+                    user_script_path = os.path.join(sandbox, actual_task_file)
+                    with open(user_script_path, "w", encoding="utf-8") as f:
+                        f.write(user_code)
+                    os.chmod(user_script_path, 0o755)
+                    os.chmod(os.path.join(sandbox, actual_test_file), 0o755)
+
+                    env = os.environ.copy()
+                    env["HOME"] = sandbox
+                    env["TERM"] = "xterm-256color"
+
+                    proc = subprocess.run(
+                        ["bash", actual_test_file, actual_task_file],
+                        cwd=sandbox,
+                        capture_output=True,
+                        text=True,
+                        timeout=12,
+                        env=env
+                    )
+
+                    stdout = proc.stdout or ""
+                    stderr = proc.stderr or ""
+                    exit_code = proc.returncode
+
+                    passed_match = re.search(r"(\d+)\s+von\s+(\d+)\s+Tests\s+bestanden", stdout)
+                    fail_match = re.search(r"(\d+)\s+von\s+(\d+)\s+Tests\s+fehlgeschlagen", stdout)
+                    
+                    if exit_code == 0:
+                        failures = 0
+                        passed = int(passed_match.group(1)) if passed_match else 4
+                        total = int(passed_match.group(2)) if passed_match else passed
+                    else:
+                        if fail_match:
+                            failures = int(fail_match.group(1))
+                            total = int(fail_match.group(2))
+                            passed = max(0, total - failures)
+                        else:
+                            failures = 1
+                            passed = 0
+                            total = 1
+
+                    return self.send_json({
+                        "success": exit_code == 0 and failures == 0 and total > 0,
+                        "exit_code": exit_code,
+                        "stdout": stdout,
+                        "stderr": stderr,
+                        "total": total,
+                        "passed": passed,
+                        "failures": failures
+                    })
+
+                # 2. POWERSHELL / ACTIVE DIRECTORY EXECUTION
+                elif language in ("powershell", "pwsh", "active_directory", "ad"):
+                    actual_task_file = task_file or "aufgabe.ps1"
+                    actual_test_file = test_file or "test_aufgabe.ps1"
+                    src_test = os.path.join(chapter_dir, actual_test_file)
+                    if not os.path.isfile(src_test):
+                        return self.send_json({"error": f"Testdatei '{actual_test_file}' nicht gefunden"}, 404)
+
+                    shutil.copy(src_test, os.path.join(sandbox, actual_test_file))
+                    user_script_path = os.path.join(sandbox, actual_task_file)
+                    with open(user_script_path, "w", encoding="utf-8") as f:
+                        f.write(user_code)
+
+                    pester_shim = f"""
+function Describe ($name, [ScriptBlock]$block) {{
+    Write-Host "`n🧪 Testsuite: $name" -ForegroundColor Cyan
+    & $block
+}}
+function Context ($name, [ScriptBlock]$block) {{
+    Write-Host "  📂 $name" -ForegroundColor DarkCyan
+    & $block
+}}
+$script:PesterTotal = 0
+$script:PesterPassed = 0
+$script:PesterFailed = 0
+
+function It ($name, [ScriptBlock]$block) {{
+    $script:PesterTotal++
+    try {{
+        & $block
+        Write-Host "  [+] $name [Passed]" -ForegroundColor Green
+        $script:PesterPassed++
+    }} catch {{
+        Write-Host "  [-] $name [Failed]" -ForegroundColor Red
+        Write-Host "      $($_.Exception.Message)" -ForegroundColor DarkGray
+        $script:PesterFailed++
+    }}
+}}
+
+function Should {{
+    [CmdletBinding()]
+    param(
+        [Parameter(ValueFromPipeline = $true)]
+        $Actual,
+        [switch]$Be,
+        [switch]$Not,
+        [switch]$BeGreaterThan,
+        [switch]$BeLessThan,
+        [switch]$Match,
+        [Parameter(Position = 0)]
+        $Expected
+    )
+    process {{
+        if ($Be) {{
+            if ("$Actual" -ne "$Expected") {{
+                throw "Expected: $Expected, but got: $Actual"
+            }}
+        }} elseif ($Not) {{
+            if ("$Actual" -eq "$Expected") {{
+                throw "Expected not: $Expected, but got equal value"
+            }}
+        }} elseif ($Match) {{
+            if ("$Actual" -notmatch "$Expected") {{
+                throw "Expected $Actual to match $Expected"
+            }}
+        }} else {{
+            if ("$Actual" -ne "$Expected") {{
+                throw "Expected: $Expected, but got: $Actual"
+            }}
+        }}
+    }}
+}}
+
+. ./{actual_task_file}
+. ./{actual_test_file}
+
+Write-Host "`n📊 Gesamtergebnis: $script:PesterPassed von $script:PesterTotal Tests bestanden."
+if ($script:PesterFailed -gt 0 -or $script:PesterTotal -eq 0) {{
+    Write-Host "❌ $script:PesterFailed Test(s) fehlgeschlagen!" -ForegroundColor Red
+    exit 1
+}} else {{
+    Write-Host "🎉 Alle $script:PesterTotal Tests erfolgreich bestanden!" -ForegroundColor Green
+    exit 0
+}}
+"""
+                    runner_path = os.path.join(sandbox, "run_pester_test.ps1")
+                    with open(runner_path, "w", encoding="utf-8") as f:
+                        f.write(pester_shim)
+
+                    proc = subprocess.run(
+                        ["pwsh", "-NoProfile", "-NonInteractive", "-File", "run_pester_test.ps1"],
+                        cwd=sandbox,
+                        capture_output=True,
+                        text=True,
+                        timeout=12
+                    )
+
+                    stdout = proc.stdout or ""
+                    stderr = proc.stderr or ""
+                    exit_code = proc.returncode
+
+                    passed_match = re.search(r"(\d+)\s+von\s+(\d+)\s+Tests\s+bestanden", stdout)
+                    if passed_match:
+                        passed = int(passed_match.group(1))
+                        total = int(passed_match.group(2))
+                        failures = total - passed
+                    else:
+                        if exit_code == 0:
+                            passed = 4
+                            total = 4
+                            failures = 0
+                        else:
+                            passed = 0
+                            total = 1
+                            failures = 1
+
+                    return self.send_json({
+                        "success": exit_code == 0 and failures == 0 and total > 0,
+                        "exit_code": exit_code,
+                        "stdout": stdout,
+                        "stderr": stderr,
+                        "total": total,
+                        "passed": passed,
+                        "failures": failures
+                    })
+
+                else:
+                    return self.send_json({"error": f"Kein Server-Runner für Sprache '{language}' konfiguriert"}, 400)
+
+            except subprocess.TimeoutExpired:
+                return self.send_json({
+                    "success": False,
+                    "error": "Zeitüberschreitung: Testausführung dauerte länger als 12 Sekunden.",
+                    "stdout": "⏱️ Zeitüberschreitung bei der Testausführung.\n",
+                    "failures": 1,
+                    "total": 1
+                }, 408)
+            except Exception as e:
+                return self.send_json({"error": f"Serverfehler bei Testausführung: {str(e)}"}, 500)
+            finally:
+                shutil.rmtree(sandbox, ignore_errors=True)
 
         return self.send_json({"error": "Endpunkt nicht gefunden"}, 404)
 

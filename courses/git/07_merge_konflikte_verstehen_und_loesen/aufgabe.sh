@@ -14,7 +14,7 @@ resolve_conflicts() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe resolve_conflicts in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

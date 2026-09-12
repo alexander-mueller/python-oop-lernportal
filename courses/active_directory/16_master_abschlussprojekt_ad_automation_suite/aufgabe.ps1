@@ -21,7 +21,7 @@ function Invoke-ADEnterpriseAutomationSuite {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "16_master_abschlussprojekt_ad_automation_suite"

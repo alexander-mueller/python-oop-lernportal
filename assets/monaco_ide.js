@@ -162,15 +162,25 @@
 
     logToTerminal(`🧪 Führe automatisierte Tests aus (Strg+Shift+Enter)...\n----------------------------------------\n`, "info");
 
-    const result = await runner.runTests(userCode, currentChapterData.testCode, logToTerminal);
+    const result = await runner.runTests(userCode, currentChapterData.testCode, logToTerminal, currentChapterData);
 
-    if (result.success) {
+    const isGenuineSuccess = Boolean(
+      result &&
+      result.success === true &&
+      result.total > 0 &&
+      (!result.failures || result.failures === 0) &&
+      (!result.errors || result.errors === 0)
+    );
+
+    if (isGenuineSuccess) {
       logToTerminal(`\n🎉 HERVORRAGEND! Alle ${result.total || 'erforderlichen'} Tests erfolgreich bestanden! (+100 XP)\n`, "success");
       triggerSuccessCelebration();
       recordChapterSolved();
     } else {
-      logToTerminal(`\n⚠️ ${result.failures || 1} Tests fehlgeschlagen. Überarbeite deinen Code!\n`, "warning");
-      if (result.rawOutput) {
+      const failCount = (result && (result.failures || result.errors)) ? (result.failures + (result.errors || 0)) : 1;
+      const errorMsg = (result && result.error) ? `\n❌ ${result.error}\n` : `\n⚠️ ${failCount} Test(s) fehlgeschlagen oder unvollständig. Überarbeite deinen Code!\n`;
+      logToTerminal(errorMsg, "warning");
+      if (result && result.rawOutput) {
         suggestErrorInterpreter(result.rawOutput);
       }
     }

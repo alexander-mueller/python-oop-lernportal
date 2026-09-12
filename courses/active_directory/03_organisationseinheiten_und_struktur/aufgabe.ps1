@@ -21,7 +21,7 @@ function New-ADStructureOU {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "03_organisationseinheiten_und_struktur"

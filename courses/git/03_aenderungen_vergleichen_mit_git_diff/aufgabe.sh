@@ -14,7 +14,7 @@ diff_inspection() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe diff_inspection in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

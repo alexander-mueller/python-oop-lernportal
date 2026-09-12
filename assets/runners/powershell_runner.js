@@ -58,26 +58,76 @@
       return { success: true };
     },
 
-    async runTests(userCode, testCode, logCallback) {
-      logCallback("🧪 Führe automatisierte Pester v5 Test-Suite aus...\n----------------------------------------\n", "info");
-
-      const testLines = testCode.split("\n").filter(l => l.trim().startsWith("It ") || l.trim().startsWith("# TEST:"));
-      let total = Math.max(testLines.length, 4);
-
-      for (let i = 1; i <= total; i++) {
-        logCallback(`[+] Pester Test ${i}/${total} bestanden [Passed]\n`, "stdout");
+    async runTests(userCode, testCode, logCallback, chapterContext) {
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Das PowerShell-Skript wurde noch nicht bearbeitet!\nBitte implementiere die geforderte Logik in der Datei, bevor du die Tests ausführst.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
       }
 
-      logCallback("\n🎉 Pester v5 Suite: Alle Tests erfolgreich bestanden!\n", "success");
-      return { success: true, total, passed: total, failures: 0 };
+      logCallback("🧪 Starte automatisierte Pester Testsuite in isolierter PowerShell 7+ Sandbox...\n----------------------------------------\n", "info");
+
+      try {
+        const token = window.AUTH ? window.AUTH.getToken() : localStorage.getItem("auth_token");
+        const isAD = chapterContext && (chapterContext.courseId === "active_directory" || chapterContext.courseId === "ad");
+        const payload = {
+          language: isAD ? "active_directory" : "powershell",
+          base_path: (chapterContext && chapterContext.basePath) ? chapterContext.basePath : "",
+          user_code: userCode,
+          task_file: (chapterContext && chapterContext.taskFile) ? chapterContext.taskFile : "aufgabe.ps1",
+          test_file: (chapterContext && chapterContext.testFile) ? chapterContext.testFile : "test_aufgabe.ps1"
+        };
+
+        const res = await fetch("/api/runners/test", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.stdout) {
+          logCallback(data.stdout, "stdout");
+        }
+        if (data.stderr && data.stderr.trim()) {
+          logCallback(data.stderr, "stderr");
+        }
+
+        if (data.error && !data.stdout) {
+          logCallback(`\n❌ Fehler: ${data.error}\n`, "error");
+        }
+
+        return {
+          success: Boolean(data.success),
+          total: data.total || 1,
+          passed: data.passed || 0,
+          failures: data.failures || (data.success ? 0 : 1),
+          rawOutput: (data.stdout || "") + "\n" + (data.stderr || "")
+        };
+      } catch (err) {
+        logCallback(`\n❌ Verbindungsfehler zum Backend-Runner: ${err.message}\n`, "error");
+        return { success: false, total: 1, passed: 0, failures: 1, rawOutput: err.message };
+      }
     }
   };
 
   if (window.RunnerRegistry) {
     window.RunnerRegistry.register(PowerShellAdapter);
+    window.RunnerRegistry.register({ ...PowerShellAdapter, id: "active_directory" });
+    window.RunnerRegistry.register({ ...PowerShellAdapter, id: "pwsh" });
   } else {
     document.addEventListener("DOMContentLoaded", () => {
-      if (window.RunnerRegistry) window.RunnerRegistry.register(PowerShellAdapter);
+      if (window.RunnerRegistry) {
+        window.RunnerRegistry.register(PowerShellAdapter);
+        window.RunnerRegistry.register({ ...PowerShellAdapter, id: "active_directory" });
+        window.RunnerRegistry.register({ ...PowerShellAdapter, id: "pwsh" });
+      }
     });
   }
 })();

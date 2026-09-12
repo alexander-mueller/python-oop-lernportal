@@ -14,7 +14,7 @@ master_git_flow() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe master_git_flow in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

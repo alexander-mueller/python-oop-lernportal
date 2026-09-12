@@ -21,7 +21,7 @@ function Deploy-AGDLPFramework {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "08_das_agdlp_prinzip_in_der_praxis"

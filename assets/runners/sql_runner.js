@@ -126,7 +126,16 @@
       }
     },
 
-    async runTests(userCode, testCode, logCallback) {
+    async runTests(userCode, testCode, logCallback, chapterContext) {
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Die SQL-Aufgabe wurde noch nicht bearbeitet!\nBitte implementiere die geforderten Tabellen und Abfragen.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
+      }
+
       const SQL = await this.loadEngine(logCallback);
       if (!SQL) return { success: false, error: "SQL-Engine nicht geladen" };
 
@@ -141,10 +150,29 @@
         logCallback(formatted, "stdout");
 
         db.close();
-        return { success: true, total: 3, passed: 3, failures: 0 };
+
+        if (!testResults || testResults.length === 0) {
+          logCallback("⚠️ Die Validierungsabfrage ergab kein Tabellenergebnis.\n", "warning");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Keine Ergebnisdaten" };
+        }
+
+        let totalRows = 0;
+        for (const res of testResults) {
+          if (res.values && res.values.length > 0) {
+            totalRows += res.values.length;
+          }
+        }
+
+        if (totalRows === 0) {
+          logCallback("⚠️ Die Testabfrage lieferte 0 Ergebniszeilen zurück. Überprüfe WHERE-Bedingungen und Datensätze!\n", "warning");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "0 Ergebniszeilen" };
+        }
+
+        const totalTests = Math.max(testResults.length, 3);
+        return { success: true, total: totalTests, passed: totalTests, failures: 0 };
       } catch (err) {
         logCallback(`\n❌ Test-Fehler im SQL:\n${err.message}\n`, "error");
-        return { success: false, error: err.message, failures: 1 };
+        return { success: false, error: err.message, total: 1, passed: 0, failures: 1, rawOutput: err.message };
       }
     }
   };

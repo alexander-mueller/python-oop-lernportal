@@ -21,7 +21,7 @@ function Import-ADUsersFromCSV {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "14_csv_bulk_import_und_provisioning"

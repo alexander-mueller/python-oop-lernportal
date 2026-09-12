@@ -54,7 +54,16 @@
       return { success: true };
     },
 
-    async runTests(userCode, testCode, logCallback) {
+    async runTests(userCode, testCode, logCallback, chapterContext) {
+      if (chapterContext && chapterContext.starterCode) {
+        const cleanUser = (userCode || "").replace(/\r\n/g, "\n").trim();
+        const cleanStarter = (chapterContext.starterCode || "").replace(/\r\n/g, "\n").trim();
+        if (cleanUser === cleanStarter) {
+          logCallback("❌ FEHLER: Die HTML/CSS-Aufgabe wurde noch nicht bearbeitet!\nBitte implementiere die geforderten Tags und CSS-Regeln.\n", "error");
+          return { success: false, total: 1, passed: 0, failures: 1, errors: 0, rawOutput: "Aufgabe noch nicht bearbeitet" };
+        }
+      }
+
       logCallback("🧪 Führe automatisierte DOM- & CSS-Prüfungen aus...\n----------------------------------------\n", "info");
 
       const parser = new DOMParser();

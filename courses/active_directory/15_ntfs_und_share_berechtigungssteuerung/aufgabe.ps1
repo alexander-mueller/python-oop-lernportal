@@ -21,7 +21,7 @@ function Set-ShareAndNtfsSecurity {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "15_ntfs_und_share_berechtigungssteuerung"

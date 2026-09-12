@@ -21,7 +21,7 @@ function Get-ADDomainArchitecture {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "01_ad_architektur_und_wald_baum_domaene"

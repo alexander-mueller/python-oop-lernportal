@@ -21,7 +21,7 @@ function Get-FSMORoleOwner {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "02_domaenencontroller_und_fsmo_rollen"

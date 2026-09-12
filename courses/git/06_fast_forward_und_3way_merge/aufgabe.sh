@@ -14,7 +14,7 @@ execute_merges() {
 
   # TODO: Implementiere die geforderten Git-Befehle
   echo "Führe execute_merges in $repo_dir aus..."
-  return 0
+  return 1
 }
 
 # Direkter Aufruf bei Skript-Ausführung

@@ -21,7 +21,7 @@ function New-WmiGpoFilter {
 
     # TODO: Implementiere die geforderten Active Directory Schritte
     $result = [PSCustomObject]@{
-        Success = $true
+        Success = $false
         Domain = $Domain
         Status = "Ready"
         Module = "11_sicherheitsfilterung_und_wmi_filter"
