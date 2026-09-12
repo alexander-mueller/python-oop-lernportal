@@ -342,15 +342,16 @@
           };
         }
         if (registerBtn) {
-          registerBtn.innerText = '💻 Zum Lernbereich';
+          registerBtn.innerText = '💻 Zum Kurs-Dashboard';
           registerBtn.style.background = '#10b981';
           registerBtn.onclick = () => {
             window.location.href = 'dashboard.html';
           };
         }
         if (heroPrimaryCta) {
-          heroPrimaryCta.innerHTML = '<span>▶ Direkt zum Lernbereich Dashboard</span>';
+          heroPrimaryCta.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
           heroPrimaryCta.onclick = (e) => {
+            e.preventDefault();
             window.location.href = 'dashboard.html';
           };
         }
@@ -361,6 +362,16 @@
         if (adminLink) {
           adminLink.style.display = this.user.role === 'admin' ? 'inline-flex' : 'none';
         }
+
+        // Alle allgemeinen Landing-Page Action Buttons anpassen
+        document.querySelectorAll('.landing-cta-btn').forEach(btn => {
+          btn.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
+          btn.style.background = '#10b981';
+          btn.onclick = (e) => {
+            e.preventDefault();
+            window.location.href = 'dashboard.html';
+          };
+        });
       } else {
         if (userSpan) userSpan.style.display = 'none';
         if (loginBtn) {
@@ -385,13 +396,20 @@
           };
         }
         if (teacherLink) teacherLink.style.display = 'none';
+
+        // Alle allgemeinen Landing-Page Action Buttons für Besucher
+        document.querySelectorAll('.landing-cta-btn').forEach(btn => {
+          btn.innerHTML = '<span>✨ Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>';
+          btn.style.background = '#0284c7';
+          btn.onclick = (e) => {
+            e.preventDefault();
+            window.openAuthModal('register', { allowClose: true });
+          };
+        });
       }
 
-      // Aktualisiere Curriculum-Aktions-Buttons auf der Landingpage
+      // Aktualisiere ggf. vorhandene Curriculum-Aktions-Buttons
       document.querySelectorAll('.portal-card-action-btn').forEach(btn => {
-        const courseId = btn.getAttribute('data-course-id') || 'python';
-        const targetUrl = btn.getAttribute('data-course-url') || `workspace.html?course=${courseId}`;
-        
         if (loggedIn) {
           btn.innerHTML = '<span>▶ Im Lernbereich öffnen</span> <span>&rarr;</span>';
           btn.classList.remove('locked');
@@ -406,7 +424,7 @@
             window.openAuthModal('register', {
               allowClose: true,
               title: '🔒 Lehrplan freischalten',
-              message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf diesen Kurs und alle 216 Module im Lernbereich zu erhalten.'
+              message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf alle Kurse und Module im Lernbereich zu erhalten.'
             });
           };
         }
