@@ -1,112 +1,368 @@
-# 🐍 Python Lernportal: Vom Einsteiger zum Software-Entwickler
+# 🚀 IT-Praxisportal
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-188%20%2F%20188%20Passing-success.svg)](./test_all.py)
-[![Lehrpfade](https://img.shields.io/badge/Lehrpfade-3%20Pfade%20%7C%2027%20Module-indigo.svg)](./LEHRPLAN.md)
-[![Gamification](https://img.shields.io/badge/Gamification-Level%201--10%20%7C%2014%20Badges-gold.svg)](./profil.py)
-[![Live Portal](https://img.shields.io/badge/Live%20Portal-GitHub%20Pages-success.svg)](https://alexander-mueller.github.io/python-oop-lernportal/)
+[![Status](https://img.shields.io/badge/Status-Alpha%201.0%20Live-success.svg)](https://alpha.it-praxisportal.de/)
+[![Kurse](https://img.shields.io/badge/Fachdisziplinen-13%20Kurse-blue.svg)](https://alpha.it-praxisportal.de/#curriculum)
+[![Module](https://img.shields.io/badge/Inhalte-216%2B%20Module-indigo.svg)](https://alpha.it-praxisportal.de/#curriculum)
+[![IHK Prüfung](https://img.shields.io/badge/IHK%20Standard-AP1%20%26%20AP2%20(AO%202020)-gold.svg)](https://alpha.it-praxisportal.de/#ihk-section)
+[![Editor](https://img.shields.io/badge/Web--IDE-Monaco%20(VS%20Code)-purple.svg)](https://alpha.it-praxisportal.de/workspace.html)
+[![Compliance](https://img.shields.io/badge/Datenschutz-100%25%20DSGVO%20(DE)-green.svg)](https://alpha.it-praxisportal.de/)
 
-> 🌍 **Interaktives Web-Portal:** [https://alexander-mueller.github.io/python-oop-lernportal/](https://alexander-mueller.github.io/python-oop-lernportal/)
-
-Willkommen zum interaktiven **Python Lernportal**! 🎉
-
-Dieses Portal ist didaktisch strukturiert, zu 100% **abgeglichen mit dem Informatik-Schulunterricht** ([`LEHRPLAN.md`](./LEHRPLAN.md)) und gliedert sich in **3 strukturierte Lehrpfade** mit **27 aufeinander aufbauenden Modulen**.
+> **Die interaktive Lern- und Prüfungsvorbereitungs-Plattform für Fachinformatiker, IT-Systemelektroniker und Software-Entwickler.**  
+> Echte IT-Praxis statt trockener Theorie: 13 Schlüsseltechnologien, 216 didaktisch aufbereitete Module, Monaco Web-IDE und realistische IHK-Abschlussprüfungssimulationen – direkt im Browser ohne lokale Installation.
 
 ---
 
-## 🎮 Entwickler-Pass & Gamification (100% Offline & Lokal)
+## 📋 Inhaltsverzeichnis
 
-Das Lernportal besitzt ein wissenschaftlich fundiertes Gamification-System (Self-Determination Theory & Octalysis), das **vollständig lokal auf deinem Computer funktioniert**:
-
-- 🪪 **Entwickler-Pass im Terminal anzeigen:**
-  ```bash
-  python3 profil.py
-  ```
-- 🧪 **Gesamtfortschritt & XP synchronisieren:**
-  ```bash
-  python3 test_all.py
-  ```
-- 🏆 **10 Entwickler-Level** (vom *Code-Küken 🐣* bis zur *Software-Architektin 🏆*) und **14 freischaltbare Trophäen**.
-
----
-
-## 🧭 Die 3 Lehrpfade im Überblick
-
-### 🛣️ Lehrpfad 1: Grundlagen der Programmierung (Prozedural & Datenstrukturen)
-| Modul | Titel | Themenschwerpunkte |
-| :--- | :--- | :--- |
-| **[G01. Taschenrechner](./lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/)** | **Python als Rechner** | Zahlenarten (`int`, `float`), Grundrechenarten, `//`, `%`, `**`, Rangfolge & `print()` |
-| **[G02. Variablen & Typen](./lehrpfad_1_grundlagen/02_variablen_und_datentypen/)** | **Datentypen** | Speicherboxen, `int`, `float`, `str`, `bool`, Type Casting & Type Hints |
-| **[G03. Ein- & Ausgabe](./lehrpfad_1_grundlagen/03_ein_und_ausgabe/)** | **Interaktion** | Tastatureingaben mit `input()`, f-Strings mit Formatierungs-Codes (`{preis:.2f} €`) |
-| **[G04. Bedingungen](./lehrpfad_1_grundlagen/04_verzweigungen_und_bedingungen/)** | **Entscheidungen** | `if`, `elif`, `else`, Vergleichsoperatoren & Logik (`and`, `or`, `not`) |
-| **[G05. Schleifen](./lehrpfad_1_grundlagen/05_schleifen_und_wiederholungen/)** | **Wiederholungen** | Zählschleifen mit `for in range()`, Bedingungsschleifen mit `while`, `break`/`continue` |
-| **[G06. Funktionen](./lehrpfad_1_grundlagen/06_funktionen_und_module/)** | **Modularität** | `def`, `return`, Parameter, Scope & Module (`math`, `random`) |
-| **[G07. Listen & Sequenzen](./lehrpfad_1_grundlagen/07_listen_und_sequenzen/)** | **Datenstrukturen 1** | Listen erstellen, Indexing, Slicing `[1:4]`, Methoden (`append`, `pop`) & `sum/min/max` |
-| **[G08. Textverarbeitung](./lehrpfad_1_grundlagen/08_textverarbeitung_und_strings/)** | **String-Methoden** | Unveränderlichkeit, `.strip()`, `.replace()`, `.split()`, `", ".join()` & Textanalyse |
-| **[G09. Dictionaries & Sets](./lehrpfad_1_grundlagen/09_dictionaries_und_sets/)** | **Datenstrukturen 2** | Key-Value Paare (`{key: val}`), sicheres `.get()`, Mengen (`set`) ohne Duplikate |
-| **[G10. Comprehensions & Datum](./lehrpfad_1_grundlagen/10_comprehensions_datum_algorithmen/)** | **Vertiefung** | List Comprehensions `[x for x in ...]`, `datetime` & Such-/Sortier-Algorithmen |
+1. [Überblick & Vision](#-überblick--vision)
+2. [Systemarchitektur & Komponenten](#-systemarchitektur--komponenten)
+3. [Die 13 Fachdisziplinen & Modul-Matrix](#-die-13-fachdisziplinen--modul-matrix)
+4. [Monaco Web-IDE & Multi-Runner Engine](#-monaco-web-ide--multi-runner-engine)
+5. [IHK-Prüfungstrainer & Simulations-Engine](#-ihk-prüfungstrainer--simulations-engine)
+6. [Backend, Sicherheit & Authentifizierung](#-backend-sicherheit--authentifizierung)
+7. [Datenbank-Schema & Persistenz](#-datenbank-schema--persistenz)
+8. [Setup, Deployment & Betriebsführung](#-setup-deployment--betriebsführung)
+9. [REST-API Dokumentation](#-rest-api-dokumentation)
+10. [Rollen- & Berechtigungskonzept](#-rollen--berechtigungskonzept)
 
 ---
 
-### 🛣️ Lehrpfad 2: Einstieg in die Objektorientierung (OOP) & Entwickler-Tools
-| Modul | Titel | Themenschwerpunkte |
-| :--- | :--- | :--- |
-| **[00. Fehlersuche](./lehrpfad_2_oop_einstieg/00_fehlersuche_und_grundlagen/)** | **Warm-up & Debugging** | Tracebacks von unten lesen, `IndentationError`, `SyntaxError`, `TypeError` |
-| **[01. Einstieg in Klassen](./lehrpfad_2_oop_einstieg/01_einstieg_klassen/)** | **Bauplan vs. Objekt** | Klassen definieren, Instanziierung, Punktnotation & Type Hints (`Fahrrad`) |
-| **[02. Konstruktor & self](./lehrpfad_2_oop_einstieg/02_init_und_self/)** | **Initialisierung & UML** | `__init__`, `self`, Startwerte & UML-Klassendiagramme (`Bankkonto`, `Smartphone`) |
-| **[03. Methoden & Verhalten](./lehrpfad_2_oop_einstieg/03_methoden_und_verhalten/)** | **Objekt-Interaktion** | Methoden definieren, Rückgabewerte & Duell zweier Objekte (`Rennauto`) |
-| **[04. Schöne Textausgabe](./lehrpfad_2_oop_einstieg/04_str_und_darstellung/)** | **`__str__` Dunder** | Lesbare `print()`-Ausgabe von Objekten, Kassenzettel (`Warenkorb`) |
-| **[04b. VS Code Installation](./lehrpfad_2_oop_einstieg/04b_umstieg_vscode/)** | **IDE-Setup** | Installation (Win/Mac/Linux), Plugins (Error Lens, Python), Shortcuts |
-| **[04c. Git & Versionskontrolle](./lehrpfad_2_oop_einstieg/04c_git_und_versionskontrolle/)** | **Git-Tooling** | Spielstände (Commits) sichern, VS Code Git-Tab, Terminal & Remote Push |
-| **[05. Objekte kombinieren](./lehrpfad_2_oop_einstieg/05_objekte_kombinieren/)** | **Komposition** | 1:1 und 1:n Beziehungen zwischen Objekten (`Spotify Playlist-Manager`) |
-| **[06. Mini-Projekt OOP 1](./lehrpfad_2_oop_einstieg/06_abschlussprojekt_tamagotchi/)** | **Tamagotchi Game** | Voll spielbares, interaktives Haustierspiel im Terminal |
+## 💡 Überblick & Vision
+
+Das **IT-Praxisportal** schließt die Lücke zwischen theoretischem Berufsschulunterricht und den realen Anforderungen moderner IT-Unternehmen. 
+
+- **Didaktik mit Sofort-Feedback:** Jedes Modul gliedert sich in ein prägnantes Theoriestück, nummerierte Teilziele (Subgoals) und automatisierte Testsuiten, die geschriebenen Code im Sekundentakt auf syntaktische und semantische Korrektheit prüfen.
+- **Zero-Install Workflow:** Schüler, Azubis und Umschüler benötigen keinerlei vorkonfigurierte Entwicklungsumgebung. Der Microsoft Monaco Editor (Kern von VS Code) stellt Syntax-Highlighting, Autocomplete und Terminal-Output direkt im Browser zur Verfügung.
+- **Offizieller IHK-Prüfungsstandard:** Vollständige Abdeckung der gemeinsamen Kernqualifikationen (Lernfelder 1–8) für die **Abschlussprüfung Teil 1 (AP1)** sowie fachspezifischer Inhalte (LF 9–12) für die **Abschlussprüfung Teil 2 (AP2)** der Fachrichtung Systemintegration nach Ausbildungsordnung AO 2020.
+- **100% Datenschutz & DSGVO:** Vollständiger Verzicht auf externe Tracking-Skripte oder US-Cloud-Abhängigkeiten. Gehostet auf dedizierten Servern in Deutschland.
 
 ---
 
-### 🛣️ Lehrpfad 3: Fortgeschrittenes OOP, Softwarequalität & Desktop-GUIs
-| Modul | Titel | Themenschwerpunkte |
-| :--- | :--- | :--- |
-| **[07. Referenzen & Speicher](./lehrpfad_3_fortgeschrittenes_oop/07_referenzen_und_speicher/)** | **RAM & Zeiger** | Referenzen im RAM, Aliasing (`b = a`), `is` vs. `==` & Familienstammbaum (`Person`) |
-| **[08. Operator Overloading](./lehrpfad_3_fortgeschrittenes_oop/08_operator_overloading_dunder/)** | **Dunder-Methoden** | Eigene Klassen rechenbar machen mit `__add__`, `__mul__`, `__eq__` (2D-Vektoren) |
-| **[09. Eigene Unit Tests & TDD](./lehrpfad_3_fortgeschrittenes_oop/09_eigene_unit_tests_schreiben/)** | **Softwarequalität** | Testsuiten schreiben mit `unittest`, `assertEqual`, `assertRaises` & TDD |
-| **[10. Vererbung & `super()`](./lehrpfad_3_fortgeschrittenes_oop/10_vererbung_und_super/)** | **Inheritance** | Basis- & Kindklassen, DRY-Prinzip, `super().__init__()` & Fahrzeugflotte |
-| **[11. Polymorphie & Interfaces](./lehrpfad_3_fortgeschrittenes_oop/11_polymorphie_und_interfaces/)** | **Polymorphism** | Duck Typing, abstrakte Basisklassen (`ABC`) & Geometrie-Engine |
-| **[12. Exceptions & Fehler](./lehrpfad_3_fortgeschrittenes_oop/12_exceptions_und_fehlerbehandlung/)** | **Robustes Coding** | `try-except-else-finally`, `raise`, eigene Exception-Klassen im Banking |
-| **[13. Datei-Persistenz](./lehrpfad_3_fortgeschrittenes_oop/13_persistenz_json_und_csv/)** | **JSON & CSV** | Dauerhaftes Speichern & Laden: Savegames & Tabellen-Export |
-| **[14. Desktop-GUIs mit Tkinter](./lehrpfad_3_fortgeschrittenes_oop/14_gui_mit_tkinter/)** | **Tkinter Desktop-Apps** | Echte Fenster, Buttons, Labels, Grid-Layout & MVC-Architektur |
-| **[15. Parameter & Container](./lehrpfad_3_fortgeschrittenes_oop/15_parameter_und_container/)** | **Dunder-Container** | Variable Argumente (`*args`, `**kwargs`), Unpacking & Container (`len`, `[]`, `in`, `iter`) |
-| **[16. Master-Abschlussprojekt](./lehrpfad_3_fortgeschrittenes_oop/16_master_abschlussprojekt/)** | **🏆 Meisterstück: PetCare** | Vollständige Desktop-App: MVC, Vererbung, Polymorphie, JSON-Savegames & Tkinter GUI |
+## 🏛️ Systemarchitektur & Komponenten
 
----
+Das Projekt folgt einer sauberen Trennung zwischen einer statischen, hochperformanten Frontend-Schicht, einem leichtgewichtigen Multi-Threaded Python REST-Backend und einem Caddy Reverse Proxy mit automatischem TLS.
 
-## 🧪 Wie benutze ich die automatischen Tests?
-
-In jedem Kapitelordner liegt eine Datei namens `test_aufgabe.py`. Sie enthält automatische **Unit Tests**, die überprüfen, ob deine Lösung alle Anforderungen erfüllt.
-
-### 1. Einzelnes Kapitel testen
-Öffne das Terminal in VS Code (`Strg + \``) und führe den Test im jeweiligen Ordner aus:
-```bash
-# Beispiel für Grundlagen G01:
-cd g01_erste_schritte_taschenrechner
-python3 test_aufgabe.py
+```
+                    ┌────────────────────────────────────────────────────────┐
+                    │               Internet / Webbrowser                    │
+                    └───────────────────────────┬────────────────────────────┘
+                                                │ HTTPS (Port 443 / TLS 1.3)
+                                                ▼
+┌────────────────────────────────────────────────────────────────────────────────────────────┐
+│                               Caddy 2 Reverse Proxy                                       │
+│  - HSTS, CSP, SAMEORIGIN, nosniff Security Header                                          │
+│  - No-Cache Richtlinien für HTML/JS Kernskripte                                            │
+│  - Download-Schutz für .db, .env, .secret_key, Backups & Prüfungen                         │
+└───────────────────────────────┬────────────────────────────┬───────────────────────────────┘
+                                │                            │
+          Statische Assets      │                            │  /api/* REST-Routen
+         (HTML, CSS, JS, WASM)  │                            │  (Reverse Proxy 127.0.0.1:8008)
+                                ▼                            ▼
+┌──────────────────────────────────────────────┐ ┌──────────────────────────────────────────┐
+│          Statische Plattform                 │ │        Python 3 REST-API Backend         │
+│                                              │ │             (server.py)                  │
+│ • index.html      (Marketing & Curriculum)   │ │ • Token Auth (HMAC SHA-256)              │
+│ • dashboard.html  (Geschützter Kurs-Hub)     │ │ • PBKDF2 Password Hashing                │
+│ • workspace.html  (Monaco Web-IDE)           │ │ • IP-basiertes Rate Limiting             │
+│ • teacher.html    (Dozenten-Dashboard)       │ │ • Wartungsmodus & System-Settings        │
+│ • admin.html      (System-Admin Panel)       │ │ • Multi-Tenancy (Klassenräume)           │
+│ • assets/         (CSS, JS, Tools, Pyodide)  │ │ • ThreadingMixIn für hohe Nebenläufigkeit│
+│ • courses/        (13 Kursbäume / 216 Module)│ └────────────────────┬─────────────────────┘
+└──────────────────────────────────────────────┘                      │
+                                                                      │ SQLite3
+                                                                      ▼
+                                                 ┌──────────────────────────────────────────┐
+                                                 │        SQLite3 Datenbank                 │
+                                                 │         (platform_data.db)               │
+                                                 │ • users, chapter_progress                │
+                                                 │ • classrooms, class_enrollments          │
+                                                 │ • certificates, platform_settings        │
+                                                 │ • audit_log                              │
+                                                 └──────────────────────────────────────────┘
 ```
 
-### 2. Testausgabe richtig lesen:
-- ✅ **`OK`**: Perfekt! Alle Tests sind grün und bestanden. Du erhältst sofort XP und kannst mit dem nächsten Kapitel weitermachen.
-- ❌ **`FAIL` (AssertionError)**: Dein Code läuft, liefert aber einen falschen Wert zurück (z.B. Rechenfehler oder falsche Bedingung). Lies die letzte Zeile der Fehlermeldung!
-- 💥 **`ERROR` (Syntax / AttributeError)**: Dein Code hat einen Absturz (z.B. Tippfehler im Funktionsnamen).
+---
 
-### 3. Gesamten Fortschritt aller 27 Kapitel prüfen:
-Führe im Hauptordner folgenden Befehl aus:
-```bash
-python3 test_all.py
-```
-Dieser Befehl zeigt dir eine Übersicht über alle Kapitel mit `✅` (bestanden) und `⏳` (noch offen) und aktualisiert deinen Gamification-Pass.
+## 📚 Die 13 Fachdisziplinen & Modul-Matrix
+
+Das Portal umfasst insgesamt **216 strukturierte Lerneinheiten**, gegliedert in 4 Schwerpunktbereiche:
+
+| # | Fachdisziplin | ID | Module | Lehrpfade | Runner / Engine | Themenschwerpunkte |
+| :-: | :--- | :--- | :-: | :-: | :--- | :--- |
+| **01** | **IHK AP1 Prüfungsvorbereitung** | `ihk_ap1` | 12 | 2 | Web-IDE / JS | LF 1–8 Kernqualifikation, Datenschutz/DSGVO, IPv4/IPv6 Subnetting, Trace-Tabellen, SQL-Labor, 90-Min Probeprüfung |
+| **02** | **IHK AP2 Systemintegration** | `ihk_ap2_fisi` | 9 | 2 | Web-IDE / JS | LF 9–12 FISI: Routing & VLANs, Active Directory & GPO, Storage/RAID, Cloud/Docker, WiSo-Fragen, 40h-Projektarbeit |
+| **03** | **Python 3 Professional** | `python` | 35 | 4 | Pyodide WASM | Variablen, Kontrollfluss, Listen/Dicts, OOP, Vererbung, TDD Unittests, Tkinter Desktop-GUIs, SQLite & REST-APIs |
+| **04** | **Linux Bash & Cloud DevOps** | `bash` | 16 | 4 | Bash Test-Runner | Streams, Pipes, Text-Mining (`jq`, `sed`, `awk`), Strict Mode (`set -euo pipefail`), `xargs` Parallelisierung, Docker, BATS Tests |
+| **05** | **PowerShell 7+ Core** | `powershell` | 16 | 4 | PS / Pester | Cmdlets, .NET Objekt-Pipeline, `[PSCustomObject]`, Moderne Operatoren, `ForEach-Object -Parallel`, REST-APIs, Pester v5 Unit Tests |
+| **06** | **SQL & Datenbank-Architektur** | `sql` | 16 | 4 | SQLite SQL-Runner | 1NF–3NF Normalisierung, Multi-Table JOINs, Subqueries, CTEs (`WITH`), Window Functions (`OVER`), ACID Transaktionen |
+| **07** | **JavaScript & TypeScript** | `javascript` | 16 | 4 | Node / Browser-JS | ES6+ Syntax, Klassen & OOP, Async/Await, DOM-Events, LocalStorage, ES-Module, TypeScript Generics & Type Guards |
+| **08** | **Java 21+ Enterprise** | `java` | 16 | 4 | JUnit 5 Runner | Strikte Typisierung, Records, OOP-Vererbung, Interfaces, Generics, Streams API, Virtual Threads (Project Loom), JUnit 5 Tests |
+| **09** | **Rust Systems & Safety** | `rust` | 16 | 4 | Cargo Testsuite | Ownership- & Borrowing-System, Lifetimes, Option/Result Monaden, Traits, Smart Pointer (`Arc`, `Mutex`), Concurrency, LRU-Cache |
+| **10** | **Go Cloud Microservices** | `go` | 16 | 4 | Go Test-Runner | Slices, Maps, Structs, Duck Typing Interfaces, Goroutines, Channels & Select, `net/http` REST Server, Table-Driven Tests |
+| **11** | **C# 12 & .NET 8 Enterprise** | `csharp` | 16 | 4 | xUnit Test-Runner | Top-Level Statements, Pattern Matching, Records, LINQ funktionale Abfragen, Async/Await Tasks, xUnit Tests, Order Engine Master |
+| **12** | **C & Modernes C++20 Systems** | `cpp` | 16 | 4 | GoogleTest Runner | Pointer & Adressoperatoren, manueller Heap (`malloc`/`free`), RAII-Prinzip, Rule of Five, Templates, Smart Pointer, STL Container |
+| **13** | **HTML5, CSS3 & Responsive UI** | `html_css` | 16 | 4 | DOM Assertion | Semantische Tags, Barrierefreiheit (ARIA/A11y), CSS Box-Modell, Flexbox, CSS Grid, Media Queries, Dark Mode Themes |
 
 ---
 
-## 💡 3 Wichtige Regeln für die Aufgaben
+## 💻 Monaco Web-IDE & Multi-Runner Engine
 
-1. **`return` statt `print()`:** Tests prüfen das, was eine Funktion/Methode mit `return` zurückliefert. Ein reines `print()` genügt dem Test nicht!
-2. **Exakte Namen:** Die Namen der Funktionen, Methoden und Attribute müssen exakt der Aufgabenstellung entsprechen (`addieren`, nicht `Addieren`).
-3. **Fehlermeldungen von unten nach oben lesen:** Ganz unten im Traceback steht immer die genaue Ursache.
+Die Arbeitsumgebung ([`workspace.html`](workspace.html)) ist für produktives, ablenkungsfreies Arbeiten konzipiert:
+
+- **VS Code Monaco Editor:** Vollwertige Editor-Features inklusive Zeilennummern, Syntax-Färbung, Klammerpaar-Highlighting und Shortcuts (`Strg+Enter` zum Ausführen, `Strg+Shift+Enter` für Tests).
+- **Split-Screen Ergonomie:** Linke Hälfte für didaktische Aufgabenstellung, Subgoals, Theorie-Spickzettel und gestuftes Tipp-System; rechte Hälfte für Code-Editor und Live-Terminal.
+- **Client-Side Python (Pyodide):** Python-Code wird vollständig im Browser via WebAssembly (WASM) ausgeführt – maximale Geschwindigkeit ohne Serverlast.
+- **Multi-Language Runners:** Vorbereitete Ausführungspipelines für alle 13 Sprachen mit farbiger Standard-Out- und Standard-Error-Differenzierung.
+- **Automatisches Cloud-Save:** Editierter Code wird verzögerungsfrei via Debouncing im Browser und in der Cloud gesichert.
+
+---
+
+## 🎓 IHK-Prüfungstrainer & Simulations-Engine
+
+Im Prüfungsbereich können Auszubildende ihr Wissen unter echten Prüfungsbedingungen testen:
+
+- **90-Minuten Countdown:** Realistische Zeiteinteilung wie in der IHK-Abschlussprüfung.
+- **Offizieller IHK-Notenschlüssel:** Automatische Berechnung von Prozentwerten, Punkten (max. 100) und IHK-Noten (1 bis 6) gemäß Prüfungsstandard.
+- **Subnetting-Drill Generator:** Unendlicher Aufgabenpool für IPv4- und IPv6-Berechnungen (Netz-ID, Broadcast, erste/letzte nutzbare Hostadresse, Binär- und CIDR-Masken).
+- **Trace-Tabellen Simulator:** Schrittweise Ausführung von Pseudocode- und Struktogramm-Logiken mit Überprüfung von Variablenzuständen.
+
+---
+
+## 🛡️ Backend, Sicherheit & Authentifizierung
+
+Das Backend ([`server.py`](server.py)) ist auf maximale Zuverlässigkeit, Wartungsfreundlichkeit und Sicherheit gehärtet:
+
+- **HMAC-SHA256 Token Sessions:** Zustandsloses, kryptografisch signiertes Sitzungsformat mit 12-stündiger Gültigkeit (`exp`) und Timing-Safe Verifikation (`hmac.compare_digest`).
+- **Passwort-Sicherheit:** Passwörter werden mit `PBKDF2-HMAC-SHA256` unter Verwendung von 100.000 Iterationen und individuellem 16-Byte kryptografischem Salz gespeichert.
+- **Schutz vor Brute-Force:** In-Memory Rate-Limiter beschränkt fehlgeschlagene Anmelde- und Registrierungsversuche pro IP-Adresse.
+- **Reverse-Proxy Trusted IP Check:** Authentifizierungs- und Schutzmechanismen prüfen `X-Real-IP` und `X-Forwarded-For` ausschließlich dann, wenn die Verbindung von einem vertrauenswürdigen lokalen Reverse-Proxy (`127.0.0.1`, `::1`, Docker-Bridge `172.16.0.0/12`) stammt.
+- **Wartungsmodus (Maintenance Mode):** Per Klick im Admin-Panel aktivierbar. Nicht-Admins erhalten HTTP 503 und einen bildschirmfüllenden Wartungsscreen; Administratoren behalten uneingeschränkten Zugriff für Deployments.
+
+---
+
+## 🗄️ Datenbank-Schema & Persistenz
+
+Alle Anwendungsdaten werden in einer relationalen SQLite-Datenbank (`platform_data.db`) mit Foreign-Key-Unterstützung und Indizes verwaltet:
+
+```sql
+-- 1. Benutzer & Rollen
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
+    name TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'student',  -- 'admin', 'teacher', 'student', 'solo'
+    xp INTEGER NOT NULL DEFAULT 0,
+    level INTEGER NOT NULL DEFAULT 1,
+    streak_days INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Kapitel-Fortschritt
+CREATE TABLE IF NOT EXISTS chapter_progress (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    chapter_id TEXT NOT NULL,
+    code_draft TEXT,
+    subgoals_json TEXT,
+    is_solved BOOLEAN NOT NULL DEFAULT 0,
+    solved_at TIMESTAMP,
+    UNIQUE(user_id, chapter_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- 3. Klassenräume & Einschreibungen
+CREATE TABLE IF NOT EXISTS classrooms (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    teacher_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    invite_code TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS class_enrollments (
+    classroom_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (classroom_id, user_id),
+    FOREIGN KEY (classroom_id) REFERENCES classrooms(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- 4. Verifizierbare Zertifikate
+CREATE TABLE IF NOT EXISTS certificates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uuid TEXT UNIQUE NOT NULL,
+    user_id INTEGER NOT NULL,
+    track_id TEXT NOT NULL,
+    student_name TEXT NOT NULL,
+    issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- 5. Globale Plattform-Einstellungen & Wartung
+CREATE TABLE IF NOT EXISTS platform_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 6. Revisionssicheres Audit-Log
+CREATE TABLE IF NOT EXISTS audit_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    action TEXT NOT NULL,
+    details TEXT,
+    ip_address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 🚀 Setup, Deployment & Betriebsführung
+
+### 1. Lokale Entwicklung
+
+```bash
+# Repository klonen
+git clone ssh://git@git.alex-mueller.biz:2222/alex-mueller/it-praxisportal.git
+cd it-praxisportal
+
+# Server starten
+python3 server.py
+# Server läuft auf http://localhost:8008
+```
+
+### 2. Systemd Service (Production)
+
+Der API-Server wird über einen systemd-Dienst im Hintergrund betrieben:
+
+```ini
+# /etc/systemd/system/it-praxisportal-backend.service
+[Unit]
+Description=IT-Praxisportal API Backend Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/uebungen_python
+ExecStart=/usr/bin/python3 /root/uebungen_python/server.py
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Service steuern:
+```bash
+systemctl daemon-reload
+systemctl restart it-praxisportal-backend.service
+systemctl status it-praxisportal-backend.service
+```
+
+### 3. Caddy Reverse Proxy Konfiguration
+
+```caddy
+alpha.it-praxisportal.de {
+    encode gzip zstd
+
+    # Sicherheits-Header
+    header {
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+
+    # Frische-Garantie für Plattform-Skripte & HTML
+    @noCache {
+        path / /index.html *.html /assets/app_auth.js /assets/course_sidebar.js /assets/courses_manifest.js
+    }
+    header @noCache Cache-Control "no-cache, no-store, must-revalidate"
+
+    # Backend REST API
+    handle /api/* {
+        reverse_proxy 172.17.0.1:8008 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
+    # Schutz für vertrauliche Dateien
+    @forbidden {
+        path *.db *.sqlite* *.secret_key .git* *.py *.sh *.php *.sql *.env* *.bak *.log /exams/*
+    }
+    handle @forbidden {
+        respond "Access denied" 403
+    }
+
+    # Statische Plattform-Auslieferung
+    handle {
+        root * /srv/it-praxisportal
+        file_server
+    }
+}
+```
+
+---
+
+## 📡 REST-API Dokumentation
+
+| Methode | Pfad | Authentifizierung | Beschreibung |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/platform/status` | Öffentlich | Liefert Wartungsstatus, Ankündigungen & Registrierungs-Flag |
+| `POST` | `/api/auth/register` | Öffentlich | Registriert einen neuen Nutzer (`email`, `password`, `name`, `role`) |
+| `POST` | `/api/auth/login` | Öffentlich | Meldet Nutzer an und liefert HMAC-Bearer-Token |
+| `GET` | `/api/auth/me` | Bearer Token | Liefert Profildaten des angemeldeten Nutzers |
+| `GET` | `/api/progress/get` | Bearer Token | Liefert gelöste Kapitel und optional Code-Drafts |
+| `POST` | `/api/progress/save` | Bearer Token | Speichert Code-Entwurf und Teilziele für ein Modul |
+| `POST` | `/api/progress/solve` | Bearer Token | Markiert Modul als gelöst und vergibt XP/Level-Aufstieg |
+| `GET` | `/api/classrooms/list` | Bearer Token | Listet Klassenräume (für Schüler oder Dozenten) |
+| `POST` | `/api/classrooms/create`| Dozent / Admin | Erstellt neuen Klassenraum mit individuellem Einladungscode |
+| `POST` | `/api/classrooms/join` | Schüler | Tritt einer Schulklasse via Invite-Code bei |
+| `GET` | `/api/classrooms/matrix`| Dozent / Admin | Liefert Live-Fortschrittsmatrix aller Schüler einer Klasse |
+| `POST` | `/api/certificates/create`| Bearer Token | Generiert verifizierbare Zertifikats-UUID |
+| `GET` | `/api/admin/stats` | Admin | Liefert System-KPIs, Benutzerzahlen und Aktivitätsmetriken |
+| `GET` | `/api/admin/users` | Admin | Listet registrierte Benutzer mit Filter und Paginierung |
+| `POST` | `/api/admin/users/role` | Admin | Ändert Benutzerrolle (`student`, `teacher`, `admin`) |
+| `POST` | `/api/admin/users/reset-password` | Admin | Setzt Benutzerpasswort administrativ zurück |
+| `POST` | `/api/admin/users/delete` | Admin | Löscht Benutzerkonto und zugehörige Daten |
+| `POST` | `/api/admin/settings` | Admin | Ändert Plattform-Einstellungen (Wartungsmodus, Banner etc.) |
+
+---
+
+## 👥 Rollen- & Berechtigungskonzept
+
+1. **Gast / Unangemeldeter Besucher:**
+   - Sieht die Marketing-Landingpage ([`index.html`](index.html)) mit vollständiger Curriculum-Auflistung.
+   - Kann keine Module in der Web-IDE starten (erhält Registrierungs-Modal).
+2. **Schüler / Auszubildender (`student` / `solo`):**
+   - Hat vollen Zugriff auf den Lernbereich ([`dashboard.html`](dashboard.html)), alle 13 Kurse, 216 Module und die Web-IDE ([`workspace.html`](workspace.html)).
+   - Kann Klassenräumen beitreten, Lernfortschritte synchronisieren und Zertifikate ausstellen.
+3. **Dozent / Ausbilder (`teacher`):**
+   - Beinhaltet alle Schülerrechte.
+   - Hat Zugriff auf das Dozenten-Dashboard ([`teacher.html`](teacher.html)).
+   - Kann Klassenräume erstellen, Einladungscodes vergeben und die Live-Lernmatrix der Klassenmitglieder einsehen.
+4. **Administrator (`admin`):**
+   - Beinhaltet alle Schüler- und Dozentenrechte.
+   - Hat exklusiven Zugriff auf das Admin Control Panel ([`admin.html`](admin.html)).
+   - Kann globale Plattform-Parameter (Wartungsmodus, Ankündigungen) konfigurieren, Benutzer verwalten, Passwörter zurücksetzen und das Audit-Log einsehen.
+   - Hat auch bei aktivem Wartungsmodus vollen Zugriff auf alle Schnittstellen.
+
+---
+
+## 📄 Lizenz & Autoren
+
+- **Entwickler & Maintainer:** Alexander Müller ([alex-mueller.biz](https://alex-mueller.biz))
+- **Plattform-Domain:** [alpha.it-praxisportal.de](https://alpha.it-praxisportal.de/)
+- **Git-Repository:** [git.alex-mueller.biz/alex-mueller/it-praxisportal](https://git.alex-mueller.biz/alex-mueller/it-praxisportal)
+- **Version:** 1.0 Alpha • 2026

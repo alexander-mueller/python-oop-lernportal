@@ -1,15 +1,40 @@
+# Python Bytecode & Cache
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 .coverage
 htmlcov/
-.env
+
+# Virtual Environments
 venv/
 .venv/
-.DS_Store
+env/
+
+# Environment Variables & Secrets
+.env
+.env.*
+.secret_key
+
+# Databases & Backups
 *.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
 platform_data.db
+*.bak
+*.log
+
+# Generated Exams & Certificates (Strictly protected)
 exams/
 *.pdf
-.secret_key
+
+# Operating System & IDE Artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
