@@ -497,6 +497,10 @@
 
   // Auth Modal UI
   window.openAuthModal = function (initialMode = 'login', options = {}) {
+    if (window.AUTH && window.AUTH.isLoggedIn()) {
+      window.location.href = 'dashboard.html';
+      return;
+    }
     const allowClose = options.allowClose !== false;
     let modal = document.getElementById('auth-modal-overlay');
     if (modal) modal.remove();
@@ -679,13 +683,8 @@
         if (options.onSuccess) {
           options.onSuccess(result.user);
         } else {
-          window.AUTH.updateUI();
-          const p = window.location.pathname;
-          if (p.endsWith('index.html') || p === '/' || p.endsWith('/')) {
-            window.location.href = 'dashboard.html';
-          } else {
-            window.location.reload();
-          }
+          try { window.AUTH.updateUI(); } catch (e) {}
+          window.location.href = 'dashboard.html';
         }
       } else {
         errorBox.innerText = result.error || 'Fehler bei der Authentifizierung';
@@ -703,7 +702,11 @@
     const params = new URLSearchParams(window.location.search);
     const authParam = params.get('auth');
     if (authParam === 'login' || authParam === 'register') {
-      window.openAuthModal(authParam, { allowClose: true });
+      if (!window.AUTH.isLoggedIn()) {
+        window.openAuthModal(authParam, { allowClose: true });
+      } else {
+        window.location.replace('dashboard.html');
+      }
     }
   });
 })();

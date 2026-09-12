@@ -104,7 +104,7 @@
 
     if (!window.AUTH) {
       const authScript = document.createElement('script');
-      authScript.src = `${rootPrefix}assets/app_auth.js`;
+      authScript.src = `${rootPrefix}assets/app_auth.js?v=2.1.0`;
       authScript.onload = () => proceed();
       authScript.onerror = () => proceed();
       document.head.appendChild(authScript);

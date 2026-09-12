@@ -11,6 +11,20 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://alpha.it-praxisportal.de/">
   <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app_auth.js?v=2.1.0"></script>
+  <script>
+    // Sofortige automatische Weiterleitung für angemeldete Nutzer direkt ins Dashboard
+    (function autoRedirectLoggedInUser() {
+      try {
+        if (window.AUTH && window.AUTH.isLoggedIn()) {
+          var p = new URLSearchParams(window.location.search);
+          if (!p.has('view') && !p.has('landing') && !p.has('preview')) {
+            window.location.replace('dashboard.html');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
   <style>
     .portal-container {
       max-width: 1240px;
@@ -821,7 +835,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/app_auth.js"></script>
   <script>
     function toggleMobileMenu() {
       const drawer = document.getElementById('portal-mobile-drawer');
