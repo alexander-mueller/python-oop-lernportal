@@ -223,10 +223,21 @@
   <!-- Topbar -->
   <div class="workspace-topbar">
     <div class="workspace-title">
-      <a href="dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.88rem;">🏠 Dashboard</a>
-      <span style="color: #64748b;">/</span>
-      <span id="workspace-chapter-name">Lerneinheit...</span>
-      <span id="editor-save-indicator" style="font-size: 0.75rem; color: #10b981; opacity: 0.5; margin-left: 10px;">💾 Gespeichert</span>
+      <button type="button" id="btn-toggle-chapter-drawer" class="workspace-topbar-btn" title="Kapitel-Übersicht öffnen">
+        <span>☰</span> <span>Kapitel</span>
+      </button>
+      <a href="dashboard.html" id="btn-topbar-dashboard" class="workspace-topbar-btn" title="Zurück zum Lern-Dashboard">
+        <span>🏠</span> <span>Dashboard</span>
+      </a>
+      <div class="workspace-nav-cluster" id="workspace-nav-cluster">
+        <button type="button" class="workspace-topbar-btn" id="btn-topbar-prev-course" title="Vorheriger Kurs">⏮ Kurs</button>
+        <button type="button" class="workspace-topbar-btn" id="btn-topbar-prev-chapter" title="Vorheriges Modul">◀ Zurück</button>
+        <span class="workspace-chapter-badge" id="workspace-chapter-badge">Modul - / -</span>
+        <button type="button" class="workspace-topbar-btn primary" id="btn-topbar-next-chapter" title="Nächstes Modul">Weiter ▶</button>
+        <button type="button" class="workspace-topbar-btn" id="btn-topbar-next-course" title="Nächster Kurs">Kurs ⏭</button>
+      </div>
+      <span id="workspace-chapter-name" style="font-size: 0.84rem; font-weight: 700; color: #f8fafc; margin-left: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px;">Lerneinheit...</span>
+      <span id="editor-save-indicator" style="font-size: 0.75rem; color: #10b981; opacity: 0.7; margin-left: 8px;">💾 Gespeichert</span>
     </div>
 
     <div class="workspace-actions">
@@ -524,6 +535,9 @@
           const doc = parser.parseFromString(htmlDoc, "text/html");
           const mainContent = doc.querySelector("main.container") || doc.body;
           document.getElementById("tab-content-theorie").innerHTML = mainContent.innerHTML;
+          if (window.renderWorkspaceTheoryNavigator) {
+            window.renderWorkspaceTheoryNavigator();
+          }
         }
 
         // 2. Subgoals (Exakte Regex ohne Duplikate)
