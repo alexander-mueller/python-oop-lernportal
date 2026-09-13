@@ -10,8 +10,8 @@
   <meta property="og:description" content="Interaktives IT-Praxisportal mit Monaco Web-IDE, 216+ Modulen und 90-Minuten IHK-Prüfungssimulation. Kostenlos registrieren und Kurse im Dashboard wählen.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://alpha.it-praxisportal.de/">
-  <link rel="stylesheet" href="assets/style.css?v=2.2.1">
-  <script src="assets/app_auth.js?v=2.2.1"></script>
+  <link rel="stylesheet" href="assets/style.css?v=2.2.3">
+  <script src="assets/app_auth.js?v=2.2.3"></script>
   <script>
     // Sofortige automatische Weiterleitung für angemeldete Nutzer direkt ins Dashboard
     (function autoRedirectLoggedInUser() {
@@ -385,7 +385,7 @@
         </div>
 
         <div>
-          <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);">
+          <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);" onclick="window.openAuthModal('register', { allowClose: true })">
             <span>✨ Kostenlos registrieren &amp; Dashboard öffnen &rarr;</span>
           </button>
         </div>
@@ -595,7 +595,7 @@
         <div>
           <strong>🎯 Bereit zur Kurswahl?</strong> Nach dem Login stehen alle 13 Spezialkurse im Dashboard zur freien Verfügung.
         </div>
-        <button type="button" class="landing-cta-btn btn" style="background: #0284c7; color: white; padding: 8px 16px; font-size: 0.84rem; font-weight: 700; border-radius: 6px; border: none; cursor: pointer;">
+        <button type="button" class="landing-cta-btn btn" style="background: #0284c7; color: white; padding: 8px 16px; font-size: 0.84rem; font-weight: 700; border-radius: 6px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true })">
           <span>✨ Account erstellen &amp; Kurse wählen &rarr;</span>
         </button>
       </div>
@@ -609,7 +609,7 @@
           <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">🎓 IHK Prüfungstrainer AP1 &amp; AP2</h3>
           <p style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 780px;">Realistische Prüfungssimulation nach der bundeseinheitlichen Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen (FIAE, FISI, FIDP, FITD).</p>
         </div>
-        <button type="button" class="landing-cta-btn btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; border: none; cursor: pointer;">
+        <button type="button" class="landing-cta-btn btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true })">
           <span>🚀 Prüfungssimulation im Dashboard starten</span>
         </button>
       </div>
@@ -653,7 +653,7 @@
         </div>
 
         <div>
-          <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);">
+          <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);" onclick="window.openAuthModal('register', { allowClose: true })">
             <span>✨ Web-IDE im Dashboard starten &rarr;</span>
           </button>
         </div>
@@ -763,7 +763,7 @@
         Erstelle jetzt in weniger als 30 Sekunden deinen kostenlosen Account und wähle deine Kurse direkt im Dashboard aus.
       </p>
       <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-        <button type="button" class="landing-cta-btn btn" style="background: #ffffff; color: #0284c7; padding: 12px 28px; font-size: 1rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+        <button type="button" class="landing-cta-btn btn" style="background: #ffffff; color: #0284c7; padding: 12px 28px; font-size: 1rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.2);" onclick="window.openAuthModal('register', { allowClose: true })">
           <span>✨ Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>
         </button>
         <button type="button" class="btn" id="footer-cta-login" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 12px 20px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer;" onclick="window.openAuthModal('login', { allowClose: true })">

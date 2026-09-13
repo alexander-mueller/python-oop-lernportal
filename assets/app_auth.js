@@ -462,12 +462,8 @@
 
         const footerLoginBtn = document.getElementById('footer-cta-login');
         if (footerLoginBtn) footerLoginBtn.style.display = 'inline-flex';
-
         if (landingBanner) landingBanner.style.display = 'none';
         if (navDashLink) navDashLink.style.display = 'none';
-        if (mobDashLink) mobDashLink.style.display = 'none';
-        const mobLogoutBtn = document.getElementById('mobile-drawer-logout-btn');
-        if (mobLogoutBtn) mobLogoutBtn.style.display = 'none';
       }
 
       // 🔒 Strikter Rollen-Filter für Dozenten- und Admin-Funktionen
@@ -713,7 +709,7 @@
   };
 
   // Initialisierung beim Laden des DOMs
-  document.addEventListener('DOMContentLoaded', () => {
+  function initAuth() {
     window.AUTH.updateUI();
     window.AUTH.checkStatus();
     window.AUTH.fetchMe();
@@ -727,5 +723,11 @@
         window.location.replace('dashboard.html');
       }
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAuth);
+  } else {
+    initAuth();
+  }
 })();
