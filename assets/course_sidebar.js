@@ -454,11 +454,14 @@
       const existingNav = document.getElementById('courseModuleNavigator');
       if (existingNav) existingNav.remove();
 
-      // Legacy-Buttons ausblenden
-      const legacyActionDivs = mainEl.querySelectorAll('.card > div[style*="flex"]:last-child, main > div[style*="flex"]:last-child');
-      legacyActionDivs.forEach(div => {
-        if (div.querySelector('a[href*="workspace.html"]') || div.querySelector('a[href*="index.html"]')) {
-          div.style.display = 'none';
+      // Legacy-Buttons ausblenden / entfernen
+      const legacyCandidates = mainEl.querySelectorAll(
+        '.card > div[style*="flex"]:last-child, main > div[style*="flex"]:last-child, div[style*="flex"]:last-child, ' +
+        '.border-t, div[class*="border-t"], div[class*="justify-between"], div.mt-8.pt-6'
+      );
+      legacyCandidates.forEach(el => {
+        if (el.querySelector('a[href*="index.html"]') || el.querySelector('a[href*="workspace.html"]') || el.querySelector('.ihk-btn') || el.innerText.includes('Nächstes Modul') || el.innerText.includes('Vorheriges Modul')) {
+          el.remove();
         }
       });
 
@@ -566,10 +569,13 @@
       const existingPaneNav = theoriePane.querySelector('.course-module-navigator');
       if (existingPaneNav) existingPaneNav.remove();
 
-      const legacyActionDivs = theoriePane.querySelectorAll('.card > div[style*="flex"]:last-child, div[style*="flex"]:last-child');
-      legacyActionDivs.forEach(div => {
-        if (div.querySelector('a[href*="workspace.html"]') || div.querySelector('a[href*="index.html"]')) {
-          div.style.display = 'none';
+      const legacyCandidates = theoriePane.querySelectorAll(
+        '.card > div[style*="flex"]:last-child, div[style*="flex"]:last-child, ' +
+        '.border-t, div[class*="border-t"], div[class*="justify-between"], div.mt-8.pt-6'
+      );
+      legacyCandidates.forEach(el => {
+        if (el.querySelector('a[href*="index.html"]') || el.querySelector('a[href*="workspace.html"]') || el.querySelector('.ihk-btn') || el.innerText.includes('Nächstes Modul') || el.innerText.includes('Vorheriges Modul')) {
+          el.remove();
         }
       });
 

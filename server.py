@@ -45,6 +45,41 @@ def is_trusted_source(ip: str) -> bool:
         return False
 
 # ------------------------------------------------------------------------------
+# 0. AUTOMATISCHES ROUTING FÜR ALLE 264 KURS-KAPITEL
+# ------------------------------------------------------------------------------
+CHAPTER_ROUTES = {}
+
+def load_chapter_routes():
+    global CHAPTER_ROUTES
+    manifest_path = BASE_DIR / "assets" / "courses_manifest.js"
+    if not manifest_path.exists():
+        return
+    try:
+        content = manifest_path.read_text(encoding="utf-8")
+        idx = content.find("{")
+        if idx != -1:
+            json_str = content[idx:].strip()
+            if json_str.endswith(";"):
+                json_str = json_str[:-1]
+            manifest = json.loads(json_str)
+            routes = {}
+            for cid, c in manifest.items():
+                for tr in c.get("tracks", []):
+                    tid = tr.get("id", "")
+                    for ch in tr.get("chapters", []):
+                        f = ch.get("folder", "")
+                        if f:
+                            if cid == "python":
+                                routes[f] = f"/{tid}/{f}"
+                            else:
+                                routes[f] = f"/courses/{cid}/{f}"
+            CHAPTER_ROUTES = routes
+    except Exception as e:
+        print(f"Warnung beim Laden der Kapitel-Routen: {e}")
+
+load_chapter_routes()
+
+# ------------------------------------------------------------------------------
 # 1. PERSISTENTER SECRET KEY
 # ------------------------------------------------------------------------------
 def get_or_create_secret_key() -> str:
@@ -356,6 +391,25 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         if self.is_path_blocked(path):
             return self.send_json({"error": "Zugriff verweigert (Geschützte Datei)"}, 403)
+
+        # Automatische Weiterleitung für Direktaufrufe von Kapitel-Ordnern an der Root-Ebene
+        # (z. B. /02_lf2_arbeitsplaetze_ausstatten/index.html -> /courses/ihk_ap1/02_lf2_arbeitsplaetze_ausstatten/index.html)
+        path_parts = [p for p in path.split("/") if p]
+        if path_parts and not path.startswith("/api/"):
+            first_part = path_parts[0]
+            if first_part in CHAPTER_ROUTES:
+                target_base = CHAPTER_ROUTES[first_part]
+                sub_path = "/".join(path_parts[1:])
+                if not sub_path:
+                    sub_path = "index.html"
+                target_url = f"{target_base}/{sub_path}"
+                if parsed.query:
+                    target_url += f"?{parsed.query}"
+                self.send_response(302)
+                self.send_header("Location", target_url)
+                self.send_header("Cache-Control", "no-cache")
+                self.end_headers()
+                return
 
         # 1. ÖFFENTLICHER STATUS-ENDPUNKT (Wartungsmodus, Ankündigung, Registrierung)
         if path == "/api/platform/status":

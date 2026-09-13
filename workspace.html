@@ -533,8 +533,35 @@
         if (htmlDoc) {
           const parser = new DOMParser();
           const doc = parser.parseFromString(htmlDoc, "text/html");
-          const mainContent = doc.querySelector("main.container") || doc.body;
-          document.getElementById("tab-content-theorie").innerHTML = mainContent.innerHTML;
+          const mainContent = doc.querySelector("main.container") || doc.querySelector("main") || doc.querySelector(".container") || doc.body;
+
+          // Legacy-Navigationsleisten und Dashboard-Breadcrumbs im IDE-Theorietext entfernen
+          const legacyBars = mainContent.querySelectorAll(
+            '.border-t, div[class*="border-t"], div[class*="justify-between"], div.mt-8.pt-6, .course-module-navigator, .course-sidebar-mobile-btn'
+          );
+          legacyBars.forEach(el => {
+            if (el.querySelector('a[href*="index.html"]') || el.querySelector('a[href*="dashboard.html"]') || el.querySelector('.ihk-btn') || el.innerText.includes('Nächstes Modul') || el.innerText.includes('Vorheriges Modul') || el.innerText.includes('← Zurück zum Dashboard')) {
+              el.remove();
+            }
+          });
+
+          const theorieContainer = document.getElementById("tab-content-theorie");
+          theorieContainer.innerHTML = mainContent.innerHTML;
+
+          // Alle Links innerhalb des Theorie-Panels absichern:
+          // Kapitel-Links schalten die Web-IDE um, anstatt die IDE zu verlassen
+          theorieContainer.querySelectorAll("a").forEach(link => {
+            const rawHref = link.getAttribute("href") || "";
+            const chapMatch = rawHref.match(/([0-9]{2}_[a-zA-Z0-9_-]+)/);
+            if (chapMatch && !rawHref.startsWith("http") && !rawHref.includes("workspace.html")) {
+              link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const targetChapter = chapMatch[1];
+                window.location.href = `workspace.html?course=${encodeURIComponent(courseId)}&chapter=${encodeURIComponent(targetChapter)}`;
+              });
+            }
+          });
+
           if (window.renderWorkspaceTheoryNavigator) {
             window.renderWorkspaceTheoryNavigator();
           }
