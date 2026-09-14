@@ -2272,5 +2272,347 @@ window.COURSES_MANIFEST = {
         ]
       }
     ]
+  },
+  "ihk_ap2_fiae": {
+    "id": "ihk_ap2_fiae",
+    "title": "IHK AP2 Crashkurs: Fachinformatiker Anwendungsentwicklung",
+    "language": "ihk_ap2_fiae",
+    "icon": "💻",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für FIAE (LF 9–12, WiSo, 80h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Software-Architektur (MVC, Hexagonal, Clean), GoF-Entwurfsmuster, UML 2.5, Algorithmen (O-Notation), OOP & SOLID, Enterprise SQL & ORM, REST/GraphQL, Testing & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_architektur_und_design",
+        "title": "🌱 Lehrpfad 1: Software-Architektur, Modellierung & Anforderungsanalyse (LF 9 & 10)",
+        "description": "Clean & Hexagonal Architecture, GoF Patterns (Singleton, Factory, Strategy, Observer), UML 2.5 (Klassendiagramm, Sequenzdiagramm, Aktivitätsdiagramm, State Machine), User Stories, Lasten-/Pflichtenheft & Function-Point-Methode.",
+        "certificateKey": "ihk_ap2_fiae_architektur",
+        "chapters": [
+          {
+            "folder": "01_software_architektur_und_design_patterns",
+            "title": "LF 9: Software-Architektur & Design Patterns (MVC, Clean, GoF-Muster)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_uml_modellierung_und_softwareentwurf",
+            "title": "LF 9: Normierte UML 2.5 Modellierung (Klassen-, Sequenz- & Aktivitätsdiagramme)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_anforderungsanalyse_und_aufwandsschaetzung",
+            "title": "LF 10: Anforderungsanalyse, Agilität & Aufwandsschätzung (Function Points, COCOMO)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_algorithmen_und_oop",
+        "title": "⚙️ Lehrpfad 2: Algorithmen, Datenstrukturen & Objektorientierung (LF 10 & 11)",
+        "description": "O-Notation (Zeit- & Speicherkomplexität), Sortier- & Suchalgorithmen, Bäume, Graphen, Hashmaps, OOP-Konzepte & SOLID-Prinzipien.",
+        "certificateKey": "ihk_ap2_fiae_algorithmen",
+        "chapters": [
+          {
+            "folder": "04_algorithmen_und_komplexitaet_o_notation",
+            "title": "LF 10: Algorithmen, Komplexität & O-Notation (Sortieren, Suchen, Rekursion)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_datenstrukturen_und_speichermanagement",
+            "title": "LF 10: Fortgeschrittene Datenstrukturen & Memory Management (Trees, HashTables, Caching)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_objektorientierte_programmierung_solid",
+            "title": "LF 11: Objektorientierte Programmierung & SOLID-Prinzipien (Clean Code)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_daten_apis_und_testing",
+        "title": "☁️ Lehrpfad 3: Enterprise SQL, API-Design & Quality Assurance (LF 11 & 12)",
+        "description": "ZPA-SQL (DDL, DML, DCL, Normalisierung, Transaktionen/ACID), RESTful APIs (HTTP Verbs, Statuscodes, OpenAPI), GraphQL, TDD, Unit-/Integrations-Tests & CI/CD.",
+        "certificateKey": "ihk_ap2_fiae_daten_testing",
+        "chapters": [
+          {
+            "folder": "07_enterprise_sql_und_datenbank_modellierung",
+            "title": "LF 11: Enterprise SQL & Datenbank-Design (ER-Modell, Normalisierung, ACID, Transaktionen)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_api_design_rest_json_und_graphql",
+            "title": "LF 11: Modernes API-Design, REST, JSON & Web-Security (OAuth2, JWT, CORS)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_software_testing_und_ci_cd_pipelines",
+            "title": "LF 12: Software-Testing, Teststufen & CI/CD (TDD, Mocking, Testüberdeckung)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_wiso_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: WiSo, 80h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "Software-Lizenzmodelle (GPL, MIT, Apache, SaaS), Arbeits- & Urheberrecht, Leitfaden für die 80-stündige Projektarbeit samt Dokumentation & Fachgespräch sowie Vollprüfung.",
+        "certificateKey": "ihk_ap2_fiae_master",
+        "chapters": [
+          {
+            "folder": "10_wiso_arbeitsrecht_und_lizenzmodelle",
+            "title": "WiSo: IT-Arbeitsrecht, Urheberrecht, Lizenzmodelle (Open Source vs. Commercial) & DSGVO",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_80h",
+            "title": "Projekt: Betriebliche Projektarbeit (80h) & Fachgespräch (Guide nach § 15 BBiG)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_fiae_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 FIAE Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
+  },
+  "ihk_ap2_fidp": {
+    "id": "ihk_ap2_fidp",
+    "title": "IHK AP2 Crashkurs: Fachinformatiker Daten- und Prozessanalyse",
+    "language": "ihk_ap2_fidp",
+    "icon": "📊",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für FIDP (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Geschäftsprozessanalyse, BPMN 2.0 (ISO 19510), ISO 25012 Datenqualität, ETL/CDC, Star-/Snowflake-Schema, Big Data & Kafka, Deskriptive/Induktive Statistik, Machine Learning Evaluation (Confusion Matrix, ROC), BI-Dashboard-Design, Data Governance & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_prozessanalyse_und_qualitaet",
+        "title": "🌱 Lehrpfad 1: Prozessanalyse, BPMN 2.0 & Datenqualität (LF 9 & 10)",
+        "description": "Ist-Analyse, Durchlaufzeiten (DLZ), Prozess-Effizienz, BPMN 2.0 (Pools, Lanes, Gateways, Boundary Events), Datenformate (JSON, Parquet) & ISO/IEC 25012 Datenqualitätsmerkmale.",
+        "certificateKey": "ihk_ap2_fidp_prozesse",
+        "chapters": [
+          {
+            "folder": "01_prozessanalyse_und_prozessoptimierung",
+            "title": "LF 9: Geschäftsprozessanalyse & Optimierungsmethoden (KPIs, Kaizen, Lean)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_bpmn20_und_prozessmodellierung_vertiefung",
+            "title": "LF 9: Normierte BPMN 2.0 Prozessmodellierung (Gateways, Intermediate Events)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_datenquellen_und_datenqualitaet",
+            "title": "LF 10: Datenquellen, Formate & Datenqualität (ISO 25012, Parquet)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_etl_und_warehousing",
+        "title": "⚙️ Lehrpfad 2: Data Engineering, ETL & Data Warehousing (LF 10 & 11)",
+        "description": "ETL vs. ELT, Change Data Capture (CDC), Idempotenz, DWH-3-Schichten-Architektur, Star- vs. Snowflake-Schema, Slowly Changing Dimensions (SCD 1-3) & Big Data Streaming (Kafka, Lakehouse).",
+        "certificateKey": "ihk_ap2_fidp_dwh",
+        "chapters": [
+          {
+            "folder": "04_etl_prozesse_und_datenpipelines",
+            "title": "LF 10: ETL/ELT-Prozesse & Moderne Datenpipelines (CDC, Airflow, Idempotenz)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_data_warehouse_und_datenmodellierung",
+            "title": "LF 10: Data Warehouse Architekturen & Star-/Snowflake-Schema (SCD 1-3)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_big_data_architekturen_und_streaming",
+            "title": "LF 11: Big Data, Streaming & Data Lakehouse (5 V's, Kafka, Lambda/Kappa)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_statistik_ml_und_bi",
+        "title": "☁️ Lehrpfad 3: Statistik, Machine Learning & BI-Reporting (LF 11 & 12)",
+        "description": "Deskriptive & induktive Statistik (Mittelwert, Median, Hypothesentest, p-Wert), Machine Learning Evaluation (Confusion Matrix, Precision, Recall, F1-Score) & Dashboard-Design nach Tufte & IBCS.",
+        "certificateKey": "ihk_ap2_fidp_analytics",
+        "chapters": [
+          {
+            "folder": "07_deskriptive_und_induktive_statistik",
+            "title": "LF 11: Deskriptive & Induktive Statistik (Lage-/Streumaße, Hypothesentests)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_machine_learning_und_kuenstliche_intelligenz",
+            "title": "LF 11: Machine Learning & Modell-Evaluation (Confusion Matrix, F1-Score)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_datenvisualisierung_und_bi_reporting",
+            "title": "LF 12: Datenvisualisierung & BI-Dashboard-Design (IBCS, Tufte, Power BI)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_governance_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Governance, 40h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "DSGVO (Art. 5/6/9), Anonymisierung vs. Pseudonymisierung, Data Lineage, Leitfaden für die 40h-Projektarbeit samt Nutzwertanalyse & Vollprüfungssimulation.",
+        "certificateKey": "ihk_ap2_fidp_master",
+        "chapters": [
+          {
+            "folder": "10_datenschutz_compliance_und_wiso",
+            "title": "WiSo & LF 12: Data Governance, DSGVO & IT-Recht (Anonymisierung, Lineage)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_40h",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_fidp_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 FIDP Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
+  },
+  "ihk_ap2_fidv": {
+    "id": "ihk_ap2_fidv",
+    "title": "IHK AP2 Crashkurs: Fachinformatiker Digitale Vernetzung",
+    "language": "ihk_ap2_fidv",
+    "icon": "🏭",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für FIDV (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Cyber-Physische Systeme (CPS), RAMI 4.0, IO-Link & Sensorik, Edge Computing (IPCs, K3s), Profinet IO (RT/IRT), TSN (802.1Qbv), OPC UA & MQTT, Private 5G-Campusnetze (Band n78), Industrial Security IEC 62443, Purdue-Modell & IDMZ, PRP/HSR Zero-Failover & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_cps_und_edge",
+        "title": "🌱 Lehrpfad 1: CPS, Sensorik & Edge Computing (LF 9 & 10)",
+        "description": "Cyber-Physische Systeme (CPS), RAMI 4.0, Verwaltungsschale (AAS), 4-20 mA Stromschleifen, IO-Link (IEC 61131-9), Nyquist-Shannon & Industrie-PCs / Edge-Gateways.",
+        "certificateKey": "ihk_ap2_fidv_cps",
+        "chapters": [
+          {
+            "folder": "01_industrie40_und_cyber_physische_systeme",
+            "title": "LF 9: Industrie 4.0 & Cyber-Physische Systeme (RAMI 4.0, AAS, Digital Twin)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_sensorik_aktorik_und_signalverarbeitung",
+            "title": "LF 9: Industrielle Sensorik, Aktorik & Signalwandlung (IO-Link, 4-20 mA)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_edge_computing_und_iot_gateways",
+            "title": "LF 10: Edge Computing, Industrie-PCs & IoT-Gateways (Docker, K3s, Filterung)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_busse_und_protokolle",
+        "title": "⚙️ Lehrpfad 2: Industrielle Kommunikation & IoT-Protokolle (LF 10 & 11)",
+        "description": "Modbus RTU/TCP, Profinet IO (RT/IRT), TSN (IEEE 802.1Qbv), OPC UA (Client/Server, Nodes), MQTT (QoS 0/1/2, LWT, Retain) & Private 5G-Campusnetze (Band n78 3,7-3,8 GHz).",
+        "certificateKey": "ihk_ap2_fidv_busse",
+        "chapters": [
+          {
+            "folder": "04_industrielle_kommunikation_und_feldbusse",
+            "title": "LF 10: Feldbusse & Industrial Ethernet (Profinet IO, Modbus, TSN)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_iot_protokolle_mqtt_coap_und_opc_ua",
+            "title": "LF 11: Industrielle IoT-Protokolle (OPC UA, MQTT, CoAP)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_drahtlose_vernetzung_und_5g_campusnetze",
+            "title": "LF 11: Drahtlose Vernetzung & Private 5G-Campusnetze (URLLC, n78, LoRaWAN)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_ot_security_und_resilienz",
+        "title": "☁️ Lehrpfad 3: Industrial Security & OT-Netzwerkresilienz (LF 11 & 12)",
+        "description": "IEC 62443 (Zonen & Conduits, Security Levels 1-4), Purdue-Modell (Level 0-5), Industrial DMZ (IDMZ 3.5), Deep Packet Inspection (DPI), PRP/HSR Zero-Failover & passives OT-Monitoring.",
+        "certificateKey": "ihk_ap2_fidv_security",
+        "chapters": [
+          {
+            "folder": "07_industrial_security_iec_62443",
+            "title": "LF 11: Industrial Security nach IEC 62443 (Zonen & Conduits, SL 1-4)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_netzwerksegmentierung_und_ot_firewalls",
+            "title": "LF 11: Purdue-Referenzmodell & OT-Netzwerksegmentierung (IDMZ, DPI)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_ot_monitoring_anomalieerkennung_und_resilienz",
+            "title": "LF 12: OT-Netzwerkresilienz, PRP/HSR & Passives Monitoring (TAP vs. SPAN)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_safety_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Maschinensicherheit, 40h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "Safety vs. Security, Performance Level (PL) & SIL, CE-Kennzeichnung (wesentliche Veränderung), Leitfaden für die 40h-Projektarbeit samt Retrofit & Vollprüfungssimulation.",
+        "certificateKey": "ihk_ap2_fidv_master",
+        "chapters": [
+          {
+            "folder": "10_betriebsorganisation_sicherheit_und_wiso",
+            "title": "WiSo & LF 12: Maschinensicherheit (Safety vs. Security, SIL/PL) & Recht",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_40h",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_fidv_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 FIDV Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
   }
 };

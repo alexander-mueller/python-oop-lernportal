@@ -312,9 +312,9 @@
         },
         relatedCourses: {
           "FISI": ["active_directory", "powershell", "bash", "ihk_ap2_fisi"],
-          "FIAE": ["html_css", "javascript", "git"],
-          "FIDP": ["python", "sql", "git"],
-          "FIDV": ["bash", "dns_records", "cpp"],
+          "FIAE": ["ihk_ap2_fiae", "html_css", "javascript", "git"],
+          "FIDP": ["ihk_ap2_fidp", "python", "sql", "git"],
+          "FIDV": ["ihk_ap2_fidv", "bash", "dns_records", "cpp"],
           "ITSE": ["bash", "cpp"],
           "ITSM": ["sql", "python"],
           "KDM": ["sql", "git"]
@@ -337,9 +337,9 @@
         },
         relatedCourses: {
           "FISI": ["dns_records", "active_directory", "ihk_ap2_fisi"],
-          "FIAE": ["java", "csharp", "go", "rust"],
-          "FIDP": ["python", "sql"],
-          "FIDV": ["dns_records", "bash"],
+          "FIAE": ["ihk_ap2_fiae", "java", "csharp", "go", "rust"],
+          "FIDP": ["ihk_ap2_fidp", "python", "sql"],
+          "FIDV": ["ihk_ap2_fidv", "dns_records", "bash"],
           "ITSE": ["dns_records"],
           "ITSM": ["sql"],
           "KDM": ["sql", "python"]
@@ -362,9 +362,9 @@
         },
         relatedCourses: {
           "FISI": ["ihk_ap2_fisi", "active_directory", "dns_records", "bash"],
-          "FIAE": ["git", "java", "csharp", "python"],
-          "FIDP": ["sql", "python", "git"],
-          "FIDV": ["bash", "dns_records"],
+          "FIAE": ["ihk_ap2_fiae", "git", "java", "csharp", "python"],
+          "FIDP": ["ihk_ap2_fidp", "sql", "python", "git"],
+          "FIDV": ["ihk_ap2_fidv", "bash", "dns_records"],
           "ITSE": ["bash"],
           "ITSM": ["sql"],
           "KDM": ["sql"]

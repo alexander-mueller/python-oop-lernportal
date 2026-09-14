@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 9: Geschäftsprozessanalyse & Optimierungsmethoden – IHK AP2 FIDP</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=01_prozessanalyse_und_prozessoptimierung" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-blue">IHK AP2 Fachinformatiker Daten- und Prozessanalyse</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 9: Geschäftsprozessanalyse & Optimierungsmethoden</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Ist-Analyse, Wertschöpfungskette, Prozesskennzahlen (KPIs), Kaizen & Lean Six Sigma</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Die <strong>Geschäftsprozessanalyse</strong> ist die Kernkompetenz des FIDP in Prüfungsbereich 2. Ziel ist die strukturierte Erfassung des Ist-Zustands, das Aufdecken von Verschwendung (Muda) und Medienbrüchen sowie die Definition messbarer KPIs für den optimierten Soll-Prozess.</p>
+      
+      <h4>1. Prozess-Identifikation & Erhebungstechniken</h4>
+      <ul>
+        <li><strong>Dokumentenanalyse:</strong> Sichtung bestehender Verfahrensanweisungen, Organigramme und Systemlogs.</li>
+        <li><strong>Interview & Fragebogen:</strong> Befragung von Prozessbeteiligten (Achtung vor subjektiven Verzerrungen).</li>
+        <li><strong>Beobachtung & Arbeitsablaufstudie:</strong> REFA-Methoden, 'Gemba Walk' vor Ort.</li>
+        <li><strong>Process Mining:</strong> Automatisierte Rekonstruktion realer Abläufe aus Event-Logs relationaler Datenbanken und ERP-Systeme.</li>
+      </ul>
+
+      <h4>2. Prozesskennzahlen (KPIs) nach IHK</h4>
+      <table>
+        <tr><th>Kennzahl</th><th>Formel / Definition</th><th>Prüfungsrelevanz</th></tr>
+        <tr><td><strong>Durchlaufzeit (DLZ)</strong></td><td>Bearbeitungszeit + Rüstzeit + Wartezeit + Liegezeit + Transportzeit</td><td>Häufigste Berechnungsaufgabe in AP2</td></tr>
+        <tr><td><strong>Prozesseffizienz (PCE)</strong></td><td>(Wertschöpfende Zeit / Gesamte Durchlaufzeit) &times; 100 %</td><td>Zeigt Verschwendung durch Liege-/Wartezeiten auf</td></tr>
+        <tr><td><strong>First Pass Yield (FPY)</strong></td><td>(Fehlerfreie Einheiten im 1. Durchlauf / Gesamteinheiten) &times; 100 %</td><td>Qualitätskennzahl ohne Nacharbeit</td></tr>
+        <tr><td><strong>Fehlerrate / Ausschuss</strong></td><td>(Fehlerhafte Vorgänge / Gesamtvorgänge) &times; 100 %</td><td>Wirtschaftlichkeitsanalyse</td></tr>
+      </table>
+
+      <h4>3. Optimierungsmethoden (Lean, Kaizen, Six Sigma)</h4>
+      <p>Nach IHK müssen Sie Schwachstellen typisieren können: <strong>Medienbruch</strong> (z.B. Ausdrucken einer E-Mail zur manuellen Datenerfassung), <strong>Redundante Arbeitsschritte</strong>, <strong>Fehlende Schnittstellen</strong> und <strong>Bottlenecks (Engpässe)</strong> nach der Theory of Constraints (Goldratt).</p>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Prozessanalyse Durchlauf- und Liegezeiten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Prozessanalyse Durchlauf- und Liegezeiten</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem Logistikunternehmen soll die Auftragsabwicklung von Bestelleingang bis Warenausgang analysiert und optimiert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie Durchlaufzeit, Bearbeitungszeit, Liegezeit und Rüstzeit. Erläutern Sie die Prozess-Zykluseffizienz (Process Cycle Efficiency PCE) und wie Flaschenhälse (Bottlenecks) identifiziert werden.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <span class="ihk-btn ihk-btn-secondary" style="opacity: 0.5; cursor: not-allowed;">⬅️ Erstes Modul</span>
+        <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=01_prozessanalyse_und_prozessoptimierung" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../02_bpmn20_und_prozessmodellierung_vertiefung/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

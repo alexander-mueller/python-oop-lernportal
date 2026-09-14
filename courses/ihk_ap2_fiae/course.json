@@ -1,0 +1,114 @@
+{
+  "id": "ihk_ap2_fiae",
+  "title": "IHK AP2 Crashkurs: Fachinformatiker Anwendungsentwicklung",
+  "language": "ihk_ap2_fiae",
+  "icon": "💻",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für FIAE (LF 9–12, WiSo, 80h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Software-Architektur (MVC, Hexagonal, Clean), GoF-Entwurfsmuster, UML 2.5, Algorithmen (O-Notation), OOP & SOLID, Enterprise SQL & ORM, REST/GraphQL, Testing & Vollsimulation.",
+  "tracks": [
+    {
+      "id": "track_1_architektur_und_design",
+      "title": "🌱 Lehrpfad 1: Software-Architektur, Modellierung & Anforderungsanalyse (LF 9 & 10)",
+      "description": "Clean & Hexagonal Architecture, GoF Patterns (Singleton, Factory, Strategy, Observer), UML 2.5 (Klassendiagramm, Sequenzdiagramm, Aktivitätsdiagramm, State Machine), User Stories, Lasten-/Pflichtenheft & Function-Point-Methode.",
+      "certificateKey": "ihk_ap2_fiae_architektur",
+      "chapters": [
+        {
+          "folder": "01_software_architektur_und_design_patterns",
+          "title": "LF 9: Software-Architektur & Design Patterns (MVC, Clean, GoF-Muster)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_uml_modellierung_und_softwareentwurf",
+          "title": "LF 9: Normierte UML 2.5 Modellierung (Klassen-, Sequenz- & Aktivitätsdiagramme)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_anforderungsanalyse_und_aufwandsschaetzung",
+          "title": "LF 10: Anforderungsanalyse, Agilität & Aufwandsschätzung (Function Points, COCOMO)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_algorithmen_und_oop",
+      "title": "⚙️ Lehrpfad 2: Algorithmen, Datenstrukturen & Objektorientierung (LF 10 & 11)",
+      "description": "O-Notation (Zeit- & Speicherkomplexität), Sortier- & Suchalgorithmen, Bäume, Graphen, Hashmaps, OOP-Konzepte & SOLID-Prinzipien.",
+      "certificateKey": "ihk_ap2_fiae_algorithmen",
+      "chapters": [
+        {
+          "folder": "04_algorithmen_und_komplexitaet_o_notation",
+          "title": "LF 10: Algorithmen, Komplexität & O-Notation (Sortieren, Suchen, Rekursion)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "05_datenstrukturen_und_speichermanagement",
+          "title": "LF 10: Fortgeschrittene Datenstrukturen & Memory Management (Trees, HashTables, Caching)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_objektorientierte_programmierung_solid",
+          "title": "LF 11: Objektorientierte Programmierung & SOLID-Prinzipien (Clean Code)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_daten_apis_und_testing",
+      "title": "☁️ Lehrpfad 3: Enterprise SQL, API-Design & Quality Assurance (LF 11 & 12)",
+      "description": "ZPA-SQL (DDL, DML, DCL, Normalisierung, Transaktionen/ACID), RESTful APIs (HTTP Verbs, Statuscodes, OpenAPI), GraphQL, TDD, Unit-/Integrations-Tests & CI/CD.",
+      "certificateKey": "ihk_ap2_fiae_daten_testing",
+      "chapters": [
+        {
+          "folder": "07_enterprise_sql_und_datenbank_modellierung",
+          "title": "LF 11: Enterprise SQL & Datenbank-Design (ER-Modell, Normalisierung, ACID, Transaktionen)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_api_design_rest_json_und_graphql",
+          "title": "LF 11: Modernes API-Design, REST, JSON & Web-Security (OAuth2, JWT, CORS)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_software_testing_und_ci_cd_pipelines",
+          "title": "LF 12: Software-Testing, Teststufen & CI/CD (TDD, Mocking, Testüberdeckung)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_wiso_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: WiSo, 80h-Projektarbeit & AP2-Prüfungssimulation",
+      "description": "Software-Lizenzmodelle (GPL, MIT, Apache, SaaS), Arbeits- & Urheberrecht, Leitfaden für die 80-stündige Projektarbeit samt Dokumentation & Fachgespräch sowie Vollprüfung.",
+      "certificateKey": "ihk_ap2_fiae_master",
+      "chapters": [
+        {
+          "folder": "10_wiso_arbeitsrecht_und_lizenzmodelle",
+          "title": "WiSo: IT-Arbeitsrecht, Urheberrecht, Lizenzmodelle (Open Source vs. Commercial) & DSGVO",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "11_betriebliche_projektarbeit_guide_80h",
+          "title": "Projekt: Betriebliche Projektarbeit (80h) & Fachgespräch (Guide nach § 15 BBiG)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "12_ap2_fiae_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 FIAE Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

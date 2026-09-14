@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 10: Feldbusse & Industrial Ethernet (Profinet, Modbus, TSN) – IHK AP2 FIDV</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=04_industrielle_kommunikation_und_feldbusse" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-purple">IHK AP2 Fachinformatiker Digitale Vernetzung</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 10: Feldbusse & Industrial Ethernet (Profinet, Modbus, TSN)</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Modbus RTU/TCP, Profinet IO (RT/IRT), EtherCAT, Time-Sensitive Networking (TSN)</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Industrielle Kommunikation unterscheidet sich grundlegend von Büro-IT: Determinismus und garantierte Übertragungszeiten im Millisekundenbereich sind zwingend erforderlich.</p>
+
+      <h4>1. Klassische Feldbusse vs. Industrial Ethernet</h4>
+      <ul>
+        <li><strong>Modbus RTU:</strong> Master-Slave-Verfahren über serielle RS-485 Zweidrahtleitung. Modbus TCP kapselt die Modbus-Frames in Standard-TCP/IP-Pakete (Port 502).</li>
+        <li><strong>Profinet IO:</strong> Basiert auf Ethernet (IEEE 802.3), nutzt aber optimierte Kommunikationskanäle:
+          <ul>
+            <li><em>Standard-TCP/IP:</em> Für Parametrierung und Diagnose (keine Echtzeit).</li>
+            <li><em>Profinet RT (Real-Time):</em> Umgeht den TCP/IP-Stack (Layer 2, EtherType 0x8892), Zykluszeiten 1-10 ms.</li>
+            <li><em>Profinet IRT (Isochronous Real-Time):</em> Hard-Real-Time mit Hardware-Taktsynchronisation (Zyklus &lt; 1 ms, Jitter &lt; 1 &micro;s) für Servo-Achsen.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>2. Time-Sensitive Networking (TSN)</h4>
+      <p>TSN erweitert Standard-Ethernet um Mechanismen für garantierte Latenz und Koexistenz:</p>
+      <ul>
+        <li><strong>IEEE 802.1AS:</strong> Präzise Zeitsynchronisation im Submikrosekundenbereich (gPTP).</li>
+        <li><strong>IEEE 802.1Qbv (Time-Aware Shaper):</strong> Teilt die Übertragungszeit in zyklische Zeitschlitze. Zeitkritischer Steuerungsverkehr erhält garantierte exklusive Slots ohne Pufferstau durch Standard-IT-Traffic.</li>
+      </ul>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Industrielle Feldbusse Profinet vs Modbus TCP" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Industrielle Feldbusse Profinet vs Modbus TCP</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Eine Industrieanlage soll mit Steuerungen (SPS) und Antrieben vernetzt werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Vergleichen Sie Modbus TCP und Profinet hinsichtlich OSI-Schicht, Echtzeitfähigkeit (Jitter, Latenz) und Einsatzgebieten. Erklären Sie die 3 Conformance Classes (CC-A, CC-B, CC-C) bzw. RT und IRT von Profinet.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+        <div class="ihk-exam-task" data-title="Industrielle Kommunikation: Profinet IO vs. TSN" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Industrielle Kommunikation: Profinet IO vs. TSN</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einer Fertigungslinie tauschen speicherprogrammierbare Steuerungen (SPS) und Servoantriebe zyklisch Prozessdaten aus. Gleichzeitig sollen Kamerabilder zur Qualitätsprüfung über dieselbe Netzwerkinfrastruktur übertragen werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Erläutern Sie den Unterschied zwischen Profinet RT (Real-Time) und Profinet IRT (Isochronous Real-Time).
+b) Welches grundlegende Problem des Standard-Ethernet (CSMA/CD bzw. Best-Effort Switching) verhindert harte Echtzeitfähigkeit?
+c) Wie löst Time-Sensitive Networking (TSN, z.B. IEEE 802.1Qbv) die Koexistenz von zeitkritischem Steuerungsverkehr und bandbreitenintensivem IT-Videoverkehr auf derselben physikalischen Leitung?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) Profinet RT arbeitet softwarebasiert auf Layer 2 und umgeht den TCP/IP-Stack (Zykluszeiten typischerweise 1-10 ms). Profinet IRT nutzt spezielle Switch-Hardware für taktsynchronisierte Datenübertragung mit fest reservierten Zeitschlitzen im Mikrosekundenbereich (harte Echtzeit, Jitter < 1 µs).
+b) Standard-Ethernet nutzt Best-Effort Übertragung. Wenn mehrere Sender gleichzeitig Pakete über einen Switch-Port leiten, entstehen Puffer-Warteschlangen (Queuing Delay), Jitter und im schlimmsten Fall Paketverluste.
+c) TSN nutzt den Time-Aware Shaper (IEEE 802.1Qbv): Die Übertragungszeit auf der Leitung wird in sich wiederholende Zeitschlitze unterteilt. In definierten Zeitfenstern dürfen ausschließlich zeitkritische Pakete mit höchster Priorität die Leitung blockierungsfrei nutzen, während Standard-Datenverkehr temporär pausiert wird.
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../03_edge_computing_und_iot_gateways/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=04_industrielle_kommunikation_und_feldbusse" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../05_iot_protokolle_mqtt_coap_und_opc_ua/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 11: Industrial Security nach IEC 62443 – IHK AP2 FIDV</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=07_industrial_security_iec_62443" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-blue">IHK AP2 Fachinformatiker Digitale Vernetzung</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 11: Industrial Security nach IEC 62443</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Zonen & Conduits, Security Levels (SL 1-4), Defense-in-Depth & Schutzziele OT vs. IT</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Die internationale Normenreihe <strong>IEC 62443</strong> ist der maßgebliche Standard für Cybersicherheit in industriellen Automatisierungs- und Steuerungssystemen (IACS).</p>
+
+      <h4>1. Schutzziele: IT vs. OT (Die umgekehrte Triade)</h4>
+      <table>
+        <tr><th>Priorität</th><th>Klassische Office-IT (CIA)</th><th>Industrielle Automation / OT (AIC)</th></tr>
+        <tr><td><strong>Priorität 1</strong></td><td><strong>Confidentiality (Vertraulichkeit):</strong> Schutz vor Datendiebstahl.</td><td><strong style="color: #4ade80;">Availability (Verfügbarkeit):</strong> Unterbrechungsfreier Betrieb; Stillstand kostet Millionen!</td></tr>
+        <tr><td><strong>Priorität 2</strong></td><td><strong>Integrity (Integrität):</strong> Korrektheit der Daten.</td><td><strong>Integrity (Integrität):</strong> Manipulation von Messwerten führt zu physischen Schäden.</td></tr>
+        <tr><td><strong>Priorität 3</strong></td><td><strong>Availability (Verfügbarkeit):</strong> Downtimes sind tolerierbar.</td><td><strong>Confidentiality (Vertraulichkeit):</strong> Produktionswerte oft lokal isoliert.</td></tr>
+      </table>
+
+      <h4>2. Zonen- und Conduit-Konzept (IEC 62443-3-2)</h4>
+      <ul>
+        <li><strong>Sicherheitszone (Zone):</strong> Eine logische oder physische Gruppierung von Assets mit vergleichbaren Sicherheitsanforderungen.</li>
+        <li><strong>Verbindungskanal (Conduit):</strong> Kommunikationspfad zwischen zwei Zonen. Jeder Datenfluss muss durch Schutzmaßnahmen (Firewalls, VPN, DPI) kontrolliert werden.</li>
+      </ul>
+
+      <h4>3. Security Levels (SL)</h4>
+      <ul>
+        <li><strong>SL 1:</strong> Schutz vor zufälligem Missbrauch / Fehlbedienung.</li>
+        <li><strong>SL 2:</strong> Schutz vor gezieltem Angriff mit einfachen Mitteln (Skript-Kiddies).</li>
+        <li><strong>SL 3:</strong> Schutz vor gezieltem Angriff mit professionellen Hacking-Tools.</li>
+        <li><strong>SL 4:</strong> Schutz vor hochgerüsteten staatlichen Angreifern (Nation State Actors / APTs).</li>
+      </ul>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Industrial Security nach IEC 62443" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Industrial Security nach IEC 62443</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Das Automatisierungsnetzwerk einer Fabrik soll gegen Cyber-Angriffe und Sabotage gehärtet werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie das Zonen- und Conduit-Modell nach der Normenreihe IEC 62443. Was ist ein Conduit (Verbindungskanal)? Welche Sicherheitsanforderungen gelten an den Schnittstellen zwischen IT- und OT-Netzen?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../06_drahtlose_vernetzung_und_5g_campusnetze/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=07_industrial_security_iec_62443" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../08_netzwerksegmentierung_und_ot_firewalls/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

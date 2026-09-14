@@ -1,0 +1,114 @@
+{
+  "id": "ihk_ap2_fidp",
+  "title": "IHK AP2 Crashkurs: Fachinformatiker Daten- und Prozessanalyse",
+  "language": "ihk_ap2_fidp",
+  "icon": "📊",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für FIDP (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Geschäftsprozessanalyse, BPMN 2.0 (ISO 19510), ISO 25012 Datenqualität, ETL/CDC, Star-/Snowflake-Schema, Big Data & Kafka, Deskriptive/Induktive Statistik, Machine Learning Evaluation (Confusion Matrix, ROC), BI-Dashboard-Design, Data Governance & Vollsimulation.",
+  "tracks": [
+    {
+      "id": "track_1_prozessanalyse_und_qualitaet",
+      "title": "🌱 Lehrpfad 1: Prozessanalyse, BPMN 2.0 & Datenqualität (LF 9 & 10)",
+      "description": "Ist-Analyse, Durchlaufzeiten (DLZ), Prozess-Effizienz, BPMN 2.0 (Pools, Lanes, Gateways, Boundary Events), Datenformate (JSON, Parquet) & ISO/IEC 25012 Datenqualitätsmerkmale.",
+      "certificateKey": "ihk_ap2_fidp_prozesse",
+      "chapters": [
+        {
+          "folder": "01_prozessanalyse_und_prozessoptimierung",
+          "title": "LF 9: Geschäftsprozessanalyse & Optimierungsmethoden (KPIs, Kaizen, Lean)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_bpmn20_und_prozessmodellierung_vertiefung",
+          "title": "LF 9: Normierte BPMN 2.0 Prozessmodellierung (Gateways, Intermediate Events)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_datenquellen_und_datenqualitaet",
+          "title": "LF 10: Datenquellen, Formate & Datenqualität (ISO 25012, Parquet)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_etl_und_warehousing",
+      "title": "⚙️ Lehrpfad 2: Data Engineering, ETL & Data Warehousing (LF 10 & 11)",
+      "description": "ETL vs. ELT, Change Data Capture (CDC), Idempotenz, DWH-3-Schichten-Architektur, Star- vs. Snowflake-Schema, Slowly Changing Dimensions (SCD 1-3) & Big Data Streaming (Kafka, Lakehouse).",
+      "certificateKey": "ihk_ap2_fidp_dwh",
+      "chapters": [
+        {
+          "folder": "04_etl_prozesse_und_datenpipelines",
+          "title": "LF 10: ETL/ELT-Prozesse & Moderne Datenpipelines (CDC, Airflow, Idempotenz)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "05_data_warehouse_und_datenmodellierung",
+          "title": "LF 10: Data Warehouse Architekturen & Star-/Snowflake-Schema (SCD 1-3)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_big_data_architekturen_und_streaming",
+          "title": "LF 11: Big Data, Streaming & Data Lakehouse (5 V's, Kafka, Lambda/Kappa)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_statistik_ml_und_bi",
+      "title": "☁️ Lehrpfad 3: Statistik, Machine Learning & BI-Reporting (LF 11 & 12)",
+      "description": "Deskriptive & induktive Statistik (Mittelwert, Median, Hypothesentest, p-Wert), Machine Learning Evaluation (Confusion Matrix, Precision, Recall, F1-Score) & Dashboard-Design nach Tufte & IBCS.",
+      "certificateKey": "ihk_ap2_fidp_analytics",
+      "chapters": [
+        {
+          "folder": "07_deskriptive_und_induktive_statistik",
+          "title": "LF 11: Deskriptive & Induktive Statistik (Lage-/Streumaße, Hypothesentests)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_machine_learning_und_kuenstliche_intelligenz",
+          "title": "LF 11: Machine Learning & Modell-Evaluation (Confusion Matrix, F1-Score)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_datenvisualisierung_und_bi_reporting",
+          "title": "LF 12: Datenvisualisierung & BI-Dashboard-Design (IBCS, Tufte, Power BI)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_governance_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: Governance, 40h-Projektarbeit & AP2-Prüfungssimulation",
+      "description": "DSGVO (Art. 5/6/9), Anonymisierung vs. Pseudonymisierung, Data Lineage, Leitfaden für die 40h-Projektarbeit samt Nutzwertanalyse & Vollprüfungssimulation.",
+      "certificateKey": "ihk_ap2_fidp_master",
+      "chapters": [
+        {
+          "folder": "10_datenschutz_compliance_und_wiso",
+          "title": "WiSo & LF 12: Data Governance, DSGVO & IT-Recht (Anonymisierung, Lineage)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "11_betriebliche_projektarbeit_guide_40h",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "12_ap2_fidp_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 FIDP Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

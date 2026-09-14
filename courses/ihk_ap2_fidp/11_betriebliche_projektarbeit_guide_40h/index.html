@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch – IHK AP2 FIDP</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=11_betriebliche_projektarbeit_guide_40h" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-success">IHK AP2 Fachinformatiker Daten- und Prozessanalyse</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Leitfaden für FIDP: Projektantrag, Phasenplanung, Nutzwertanalyse, Dokumentation & Präsentation</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Die <strong>Betriebliche Projektarbeit</strong> für Fachinformatiker/in für Daten- und Prozessanalyse umfasst exakt <strong>40 Stunden</strong> Bearbeitungszeit. Ziel ist der Nachweis, dass Sie einen komplexen betrieblichen Prozess analysieren und eine datenbasierte Lösung eigenverantwortlich konzipieren und umsetzen können.</p>
+
+      <h4>1. Typische Projektthemen für FIDP</h4>
+      <ul>
+        <li>Automatisierung und Optimierung eines fehleranfälligen Bestell- oder Rechnungsfreigabeprozesses (BPMN 2.0 + Robotic Process Automation / Airflow).</li>
+        <li>Aufbau einer modernen ETL-Pipeline zur Integration von CRM- und Shop-Daten in ein Snowflake/BigQuery Star-Schema.</li>
+        <li>Entwicklung eines Machine-Learning-Modells zur Kundenabwanderungsprognose (Churn Prediction) samt Konfusionsmatrix-Evaluation und Dashboard-Anbindung.</li>
+        <li>Implementierung eines automatisierten Data-Quality-Monitoring-Frameworks nach ISO 25012 für Stammdaten.</li>
+      </ul>
+
+      <h4>2. Empfohlene 40-Stunden-Phasenverteilung nach ZPA</h4>
+      <table>
+        <tr><th>Projektphase</th><th>Typische Aufgaben</th><th>Stunden (ca.)</th></tr>
+        <tr><td><strong>1. Initialisierung & Analyse</strong></td><td>Ist-Analyse des Prozesses, Stakeholder-Interviews, Datenprofiling, Lastenheft</td><td><strong>8 h</strong></td></tr>
+        <tr><td><strong>2. Entwurf & Konzeption</strong></td><td>Soll-Konzept (BPMN 2.0), Star-Schema Datenmodellierung, Toolauswahl (Nutzwertanalyse)</td><td><strong>8 h</strong></td></tr>
+        <tr><td><strong>3. Umsetzung / Realisierung</strong></td><td>Entwicklung der ETL-Pipeline, Datenbereinigung, Skripte, BI-Dashboard-Erstellung</td><td><strong>14 h</strong></td></tr>
+        <tr><td><strong>4. Qualitätssicherung & Test</strong></td><td>Validierung der Datenqualität, Integrationstest, UAT (User Acceptance Test)</td><td><strong>4 h</strong></td></tr>
+        <tr><td><strong>5. Dokumentation & Abschluss</strong></td><td>Erstellung des Projektreports (max. 15 Seiten + Anhang) und Fazit</td><td><strong>6 h</strong></td></tr>
+        <tr><td><strong>Gesamtzeit</strong></td><td></td><td><strong>40 h</strong></td></tr>
+      </table>
+
+      <h4>3. Bewertungskriterien der IHK-Prüfer</h4>
+      <p>Prüfer achten besonders auf: 1. Wirtschaftliche Betrachtung (Amortisationsrechnung oder Nutzwertanalyse), 2. Normgerechte Modellierung (BPMN 2.0 oder ER-Diagramm), 3. Klare Begründung fachlicher Entscheidungen und 4. Einwandfreie Formatierung und Rechtschreibung der Dokumentation.</p>
+    
+      </div>
+
+      <div id="nwa-calculator-app" style="margin: 24px 0;"></div>
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../10_datenschutz_compliance_und_wiso/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=11_betriebliche_projektarbeit_guide_40h" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../12_ap2_fidp_gesamtpruefung_simulation/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  <script src="../../../assets/ihk_tools/nwa_calculator.js"></script>
+</body>
+</html>

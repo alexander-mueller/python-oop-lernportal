@@ -74,8 +74,21 @@ def load_chapter_routes():
                             else:
                                 routes[f] = f"/courses/{cid}/{f}"
             legacy_aliases = {
+                # AP1 legacy aliases
+                "05_lf5_software_zur_datenverwaltung": "/courses/ihk_ap1/06_lf5_software_und_anwendungsentwicklung",
+                "06_lf6_cyber_physische_systeme_iot": "/courses/ihk_ap1/07_lf6_serviceanfragen_und_itsm",
+                "07_lf7_instandhaltung_und_fehlerdiagnose": "/courses/ihk_ap1/07_lf6_serviceanfragen_und_itsm",
+                "08_lf8_datenfluesse_und_schnittstellen": "/courses/ihk_ap1/08_belegsaetze_und_kaufmaennische_rechnung",
+                "09_trace_tabellen_trainer": "/courses/ihk_ap1/09_netzplantechnik_und_projektmanagement",
+                "10_sql_datenbank_labor": "/courses/ihk_ap1/10_relationales_datenmodell_und_erm",
+                "12_ihk_ap1_probepruefung_simulation": "/courses/ihk_ap1/12_ap1_probepruefung_simulation",
+                # AP2 FISI legacy aliases
                 "01_lf9_netzwerke_und_dienste": "/courses/ihk_ap2_fisi/01_lf9_netzwerkinfrastruktur_und_routing",
                 "02_lf10_serverdienste_und_automation": "/courses/ihk_ap2_fisi/03_lf10_serverdienste_und_identitaeten",
+                "03_lf11_speicher_und_hochverfuegbarkeit": "/courses/ihk_ap2_fisi/05_lf11_speicher_und_hochverfuegbarkeit",
+                "04_lf12_virtualisierung_und_cloud": "/courses/ihk_ap2_fisi/08_lf12_virtualisierung_und_cloud",
+                "05_wiso_arbeitsrecht_und_wirtschaft": "/courses/ihk_ap2_fisi/09_wiso_arbeitsrecht_und_wirtschaft",
+                "06_betriebliche_projektarbeit_guide": "/courses/ihk_ap2_fisi/11_betriebliche_projektarbeit_guide",
                 "07_ap2_teil_1_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation",
                 "08_ap2_teil_2_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation",
                 "09_ap2_wiso_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation"

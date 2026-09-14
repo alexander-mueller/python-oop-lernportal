@@ -1630,6 +1630,252 @@ add_q('wiso_019', 'WiSo', 'WiSo', 'Prokura vs Handlungsvollmacht nach HGB',
       'Handelsregister: Prokura MUSS zwingend ins Handelsregister eingetragen werden (deklaratorisch); Handlungsvollmacht wird NICHT eingetragen. (1,5 Pkt.)\n'
       'Zeichnung: Prokurist zeichnet mit \"per procura\" / \"ppa. Vorname Nachname\"; Handlungsbevollmächtigter zeichnet mit \"in Vollmacht\" / \"i.V.\" oder \"in Auftrag\" / \"i.A.\". (1,5 Pkt.)')
 
+
+# ==============================================================================
+# FACHINFORMATIKER ANWENDUNGSENTWICKLUNG (FIAE) - AP2 FACHQUALIFIKATIONEN
+# ==============================================================================
+add_q('fiae_arch_001', 'AP2_T1', 'LF 9 AE', 'Clean Architecture & Schichtenmodell',
+      'Für ein E-Commerce-Portal soll eine wartbare und zukunftssichere Softwarearchitektur konzipiert werden.',
+      'Erläutern Sie das Prinzip der Schichtenarchitektur (Drei-Schichten-Architektur: Präsentation, Geschäftslogik, Datenzugriff). Erklären Sie die Dependency Inversion Rule (Abhängigkeitsregel) in der Clean Architecture und warum Domänenlogik unabhängig von Datenbanken und Frameworks sein muss.',
+      8,
+      'Drei-Schichten-Architektur:\n'
+      '1. Präsentationsschicht (Presentation Layer / UI): Verantwortlich für Interaktion mit Benutzer/Client (Views, REST-Controller). Nimmt Eingaben entgegen und stellt Ergebnisse dar. (2 Pkt.)\n'
+      '2. Geschäftslogikschicht (Business Logic / Domain Layer): Beinhaltet Kernregeln, Berechnungen und Validierungen des Unternehmens. Unabhängig von UI und DB. (2 Pkt.)\n'
+      '3. Datenzugriffsschicht (Data Access / Persistence Layer): Verwaltet Datenbankabfragen, ORM, Dateizugriffe und externe APIs. (2 Pkt.)\n\n'
+      'Clean Architecture & Dependency Inversion:\n'
+      'Die Abhängigkeitsregel besagt, dass Quellcode-Abhängigkeiten immer nur nach innen auf die Domänenlogik zeigen dürfen. Äußere Schichten (DB, Web-Framework, UI) hängen von inneren Schichten (Entities, Use Cases) ab, niemals umgekehrt. Dies geschieht über Interfaces: Die Geschäftslogik definiert Schnittstellen (z. B. IUserRepository), die die äußere Datenschicht implementiert. Vorteil: Datenbanken, UI oder externe APIs können ohne Änderung der Geschäftsregeln ausgetauscht oder getestet werden. (2 Pkt.)')
+
+add_q('fiae_arch_002', 'AP2_T1', 'LF 9 AE', 'Design Patterns Strategy vs Factory Method',
+      'In einem Warenwirtschaftssystem sollen unterschiedliche Rabattberechnungen und Versandarten dynamisch zur Laufzeit angewendet werden.',
+      'Beschreiben Sie das GoF-Entwurfsmuster "Strategy (Strategie)" anhand von Context, Strategy-Interface und Concrete Strategies. Grenzen Sie es kurz vom Factory Method Pattern ab.',
+      8,
+      'Strategy Pattern (Verhaltensmuster):\n'
+      '- Zweck: Definiert eine Familie von Algorithmen, kapselt jeden einzelnen und macht sie zur Laufzeit austauschbar. (2 Pkt.)\n'
+      '- Komponenten:\n'
+      '  1. Strategy (Interface): Definiert die gemeinsame Methodensignatur für alle Algorithmen (z. B. calculateDiscount(Order order): double). (2 Pkt.)\n'
+      '  2. Concrete Strategies: Konkrete Implementierungen des Algorithmus (z. B. VipCustomerDiscount, SeasonalDiscount, NoDiscount). (2 Pkt.)\n'
+      '  3. Context (Kontext): Hält eine Referenz auf ein Strategy-Objekt und delegiert die Ausführung an dieses (z. B. OrderProcessor.setDiscountStrategy(...)). (1 Pkt.)\n'
+      '- Abgrenzung zum Factory Method Pattern: Strategy ist ein Verhaltensmuster zur dynamischen Verhaltensänderung bestehender Objekte; Factory Method ist ein Erzeugungsmuster zur instanziierungsunabhängigen Erzeugung von Objekten über abgeleitete Klassen. (1 Pkt.)')
+
+add_q('fiae_arch_003', 'AP2_T1', 'LF 9 AE', 'Design Patterns Observer & Singleton',
+      'In einer Messaging-Applikation sollen mehrere Benutzeroberflächen-Komponenten sofort informiert werden, sobald eine neue Chatnachricht eintrifft.',
+      'Erläutern Sie das Entwurfsmuster Observer (Beobachter) mit den Rollen Subject (Publisher) und Observer (Subscriber). Erklären Sie zudem das Singleton-Muster und warum es in modernen Softwaresystemen oft als Anti-Pattern angesehen wird.',
+      8,
+      'Observer Pattern (Publisher/Subscriber):\n'
+      '- Subject (Publisher): Verwaltet eine Liste von Abonnenten (Observer). Bietet Methoden zum Anmelden (attach/subscribe), Abmelden (detach/unsubscribe) und Benachrichtigen (notifyObservers()). Bei Zustandsänderung durchläuft notifyObservers() die Liste und ruft update() auf. (3 Pkt.)\n'
+      '- Observer (Subscriber): Definiert eine gemeinsame update()-Methode, die vom Subject aufgerufen wird, um über Änderungen informiert zu werden. Lose Kopplung zwischen Sender und Empfängern. (2 Pkt.)\n\n'
+      'Singleton Pattern:\n'
+      '- Zweck: Stellt sicher, dass von einer Klasse exakt eine einzige Instanz existiert, und bietet einen globalen Zugriffspunkt (privater Konstruktor, statische Instanzvariable, statische getInstance()-Methode). (1,5 Pkt.)\n'
+      '- Kritik / Anti-Pattern: Erzeugt enge globale Kopplung, erschwert Unit-Testing und Mocking massiv, verstößt gegen das Single Responsibility Principle und kann in Multi-Threaded-Umgebungen Race Conditions verursachen. Moderner Ersatz: Dependency Injection. (1,5 Pkt.)')
+
+add_q('fiae_algo_001', 'AP2_T2', 'LF 10 AE', 'Algorithmen-Komplexität O-Notation',
+      'Für eine stark wachsende Plattform müssen Algorithmen auf ihre Skalierbarkeit und Laufzeitkomplexität hin analysiert werden.',
+      'Erklären Sie die Landau-Symbole (O-Notation) zur Abschätzung der Zeitkomplexität. Ordnen Sie folgende Komplexitätsklassen von der effizientesten zur ineffizientesten Laufzeit: O(n log n), O(1), O(n²), O(log n), O(n). Nennen Sie je ein typisches Code- oder Algorithmenbeispiel für O(1), O(log n) und O(n).',
+      8,
+      'Bedeutung der O-Notation:\n'
+      'Beschreibt das asymptotische Wachstumsverhalten des Ressourcenbedarfs (Laufzeit/Speicher) eines Algorithmus in Abhängigkeit von der Eingabegröße n im Worst-Case-Szenario. Konstante Faktoren werden vernachlässigt. (2 Pkt.)\n\n'
+      'Reihenfolge nach Effizienz (von schnell/effizient zu langsam/ineffizient):\n'
+      '1. O(1) [konstant] < 2. O(log n) [logarithmisch] < 3. O(n) [linear] < 4. O(n log n) [linear-logarithmisch] < 5. O(n²) [quadratisch]. (3 Pkt.)\n\n'
+      'Beispiele:\n'
+      '- O(1): Direkter Array-Zugriff per Index (z. B. array[5]) oder Abfrage per Schlüssel in einer Hash-Map. (1 Pkt.)\n'
+      '- O(log n): Binäre Suche in einem sortierten Array (Halbierungsprinzip). (1 Pkt.)\n'
+      '- O(n): Lineare Suche in einer unsortierten Liste oder eine einfache for-Schleife über n Elemente. (1 Pkt.)')
+
+add_q('fiae_algo_002', 'AP2_T2', 'LF 10 AE', 'Sortieralgorithmen Quicksort vs Mergesort',
+      'Ein Datenstrom von Millionen Datensätzen soll effizient sortiert werden.',
+      'Vergleichen Sie Quicksort und Mergesort nach dem Divide-and-Conquer-Prinzip hinsichtlich Best-Case-, Average-Case- und Worst-Case-Laufzeit, Speicherplatzkomplexität und Stabilität.',
+      8,
+      'Gemeinsamkeit: Beide nutzen Divide-and-Conquer (Teile-und-Herrsche). (1 Pkt.)\n\n'
+      'Quicksort:\n'
+      '- Laufzeit: Best-Case O(n log n), Average-Case O(n log n), Worst-Case O(n²) (wenn Pivot-Element extrem ungünstig gewählt, z. B. bereits sortierte Liste). (2 Pkt.)\n'
+      '- Speicherkomplexität: O(log n) durch Rekursions-Stack (In-Place-Verfahren, benötigt kein Zusatzarray). (1,5 Pkt.)\n'
+      '- Stabilität: In der Regel instabil (gleiche Elemente können ihre relative Reihenfolge ändern). (0,5 Pkt.)\n\n'
+      'Mergesort:\n'
+      '- Laufzeit: Garantiert O(n log n) in Best-, Average- und Worst-Case! (2 Pkt.)\n'
+      '- Speicherkomplexität: O(n), da Hilfsarrays beim Verschmelzen (Merge) benötigt werden. (0,5 Pkt.)\n'
+      '- Stabilität: Stabil (relative Reihenfolge gleicher Elemente bleibt erhalten). (0,5 Pkt.)')
+
+add_q('fiae_oop_001', 'AP2_T2', 'LF 10 AE', 'SOLID-Prinzipien der OOP',
+      'Ein Software-Projekt leidet unter Spaghetti-Code und mangelnder Erweiterbarkeit.',
+      'Benennen und erläutern Sie die 5 SOLID-Prinzipien der objektorientierten Programmierung. Gehen Sie vertieft auf das Single Responsibility Principle (SRP) und das Dependency Inversion Principle (DIP) ein.',
+      8,
+      'Die 5 SOLID-Prinzipien:\n'
+      '1. S - Single Responsibility Principle (SRP): Eine Klasse sollte genau eine einzige Verantwortung (einen einzigen Grund zur Änderung) haben. Beispiel: Eine Klasse User sollte Daten halten, aber nicht selbst E-Mails versenden oder sich in der Datenbank speichern. (2 Pkt.)\n'
+      '2. O - Open/Closed Principle (OCP): Software-Einheiten sollten offen für Erweiterung, aber geschlossen für Modifikation sein (z. B. durch Vererbung und Interfaces statt if/else-Ketten). (1,5 Pkt.)\n'
+      '3. L - Liskov Substitution Principle (LSP): Subklassen müssen anstelle ihrer Basisklassen eingesetzt werden können, ohne dass das Programm fehlerhaft reagiert. (1,5 Pkt.)\n'
+      '4. I - Interface Segregation Principle (ISP): Viele spezialisierte, schlanke Interfaces sind besser als ein riesiges Allzweck-Interface (keine erzwungene Implementierung ungenutzter Methoden). (1,5 Pkt.)\n'
+      '5. D - Dependency Inversion Principle (DIP): High-Level-Module dürfen nicht von Low-Level-Modulen abhängen; beide müssen von Abstraktionen (Interfaces) abhängen. Abstraktionen dürfen nicht von Details abhängen. (1,5 Pkt.)')
+
+add_q('fiae_api_001', 'AP2_T2', 'LF 11 AE', 'RESTful API Design & HTTP-Statuscodes',
+      'Für eine Smartphone-App wird ein Backend mit REST-Schnittstellen entworfen.',
+      'Definieren Sie die 4 zentralen HTTP-Verben (GET, POST, PUT, DELETE) und deren Idempotenz. Nennen und erläutern Sie je zwei typische HTTP-Statuscodes der Kategorien 2xx, 4xx und 5xx.',
+      8,
+      'HTTP-Verben & Idempotenz (Mehrfache Ausführung führt zum selben Serverzustand):\n'
+      '- GET: Ruft Ressourcen ab. Sicher & Idempotent. (1 Pkt.)\n'
+      '- POST: Erzeugt eine neue Ressource unter einer Collection. Nicht idempotent (mehrfache Aufrufe erzeugen mehrere Datensätze). (1 Pkt.)\n'
+      '- PUT: Ersetzt eine bestehende Ressource vollständig. Idempotent. (1 Pkt.)\n'
+      '- DELETE: Löscht eine Ressource. Idempotent. (1 Pkt.)\n\n'
+      'HTTP-Statuscodes:\n'
+      '- 2xx (Erfolg): 200 OK (Standard-Erfolg), 201 Created (Ressource neu angelegt), 204 No Content (Erfolg ohne Rückgabedaten). (1,5 Pkt.)\n'
+      '- 4xx (Client-Fehler): 400 Bad Request (Fehlerhafte Syntax/Validierung), 401 Unauthorized (Nicht authentifiziert), 403 Forbidden (Rechte fehlen), 404 Not Found (Ressource existiert nicht). (1,5 Pkt.)\n'
+      '- 5xx (Server-Fehler): 500 Internal Server Error (Unbehandelter Serverfehler), 502 Bad Gateway, 503 Service Unavailable (Überlastung/Wartung). (1 Pkt.)')
+
+add_q('fiae_test_001', 'AP2_T2', 'LF 12 AE', 'Test-Driven Development TDD & Testpyramide',
+      'In einem agilen Scrum-Team soll die Softwarequalität durch automatisierte Tests gesichert werden.',
+      'Beschreiben Sie den TDD-Zyklus (Red-Green-Refactor). Erläutern Sie die Testpyramide (Unit-Tests, Integrationstests, End-to-End-Tests) und warum Unit-Tests das Fundament bilden.',
+      8,
+      'TDD-Zyklus (Red-Green-Refactor):\n'
+      '1. Red: Einen neuen automatisierten Unit-Test für ein Feature schreiben, bevor Produktionscode existiert. Der Test muss zwingend fehlschlagen (rot). (1,5 Pkt.)\n'
+      '2. Green: Minimalen Produktionscode schreiben, der gerade ausreicht, um den Test erfolgreich zu bestehen (grün). (1,5 Pkt.)\n'
+      '3. Refactor: Den Code bereinigen (Duplikate entfernen, Lesbarkeit verbessern, Patterns anwenden), während sichergestellt wird, dass alle Tests weiterhin grün bleiben. (1,5 Pkt.)\n\n'
+      'Testpyramide:\n'
+      '- Basis: Unit-Tests (Komponententests). Testen einzelne Klassen/Methoden isoliert mit Mocks. Schnellste Ausführung (ms), geringste Kosten, höchste Testabdeckung (ca. 70-80 %). (2 Pkt.)\n'
+      '- Mitte: Integrationstests. Testen das Zusammenspiel mehrerer Module (z. B. Service mit DB oder API). Längere Laufzeit, mittlere Anzahl. (1 Pkt.)\n'
+      '- Spitze: End-to-End (E2E) / UI-Tests. Testen das Gesamtsystem aus Nutzersicht über Browser/Client. Langsam, fehleranfällig (brittle), teuer im Unterhalt, geringste Anzahl. (0,5 Pkt.)')
+
+# ==============================================================================
+# FACHINFORMATIKER DATEN- UND PROZESSANALYSE (FIDP) - AP2 FACHQUALIFIKATIONEN
+# ==============================================================================
+add_q('fidp_proc_001', 'AP2_T1', 'LF 9 DP', 'Prozessanalyse Durchlauf- und Liegezeiten',
+      'In einem Logistikunternehmen soll die Auftragsabwicklung von Bestelleingang bis Warenausgang analysiert und optimiert werden.',
+      'Definieren Sie Durchlaufzeit, Bearbeitungszeit, Liegezeit und Rüstzeit. Erläutern Sie die Prozess-Zykluseffizienz (Process Cycle Efficiency PCE) und wie Flaschenhälse (Bottlenecks) identifiziert werden.',
+      8,
+      'Zeitdefinitionen im Prozess:\n'
+      '- Durchlaufzeit (DLZ): Die gesamte Zeitspanne vom Start des Prozesses (Bestelleingang) bis zur Fertigstellung (Auslieferung). (2 Pkt.)\n'
+      '- Bearbeitungszeit: Die Zeit, in der tatsächlich wertschöpfend am Auftrag gearbeitet wird. (1,5 Pkt.)\n'
+      '- Liegezeit / Wartezeit: Unproduktive Zeit, in der ein Auftrag auf Bearbeitung, Transport oder Freigabe wartet (macht oft 80-95 % der DLZ aus!). (1,5 Pkt.)\n'
+      '- Rüstzeit: Zeit zur Vorbereitung von Maschinen/Systemen auf den nächsten Auftrag. (1 Pkt.)\n\n'
+      'Prozess-Zykluseffizienz (PCE):\n'
+      'PCE = (Wertschöpfende Bearbeitungszeit / Gesamte Durchlaufzeit) * 100 %. Zeigt den Grad der Prozessverschwendung. (1 Pkt.)\n'
+      'Flaschenhals-Identifikation (Bottleneck): Der Prozessschritt mit der geringsten Kapazität bzw. der längsten Bearbeitungszeit je Einheit, vor dem sich Auftragsstaus bilden. Bestimmt den maximalen Durchsatz des Gesamtsystems. (1 Pkt.)')
+
+add_q('fidp_data_001', 'AP2_T1', 'LF 9 DP', 'Datenqualität nach ISO 8000',
+      'Für eine KI-gestützte Kundenanalyse sollen CRM-, ERP- und Webshop-Daten zusammengeführt werden.',
+      'Nennen und erläutern Sie 4 wesentliche Dimensionen der Datenqualität nach ISO 8000 / DAMA DMBOK. Beschreiben Sie typische Methoden des Data Cleaning (Datenbereinigung).',
+      8,
+      'Dimensionen der Datenqualität:\n'
+      '1. Vollständigkeit (Completeness): Alle benötigten Datenfelder und Datensätze sind vorhanden (keine unbegründeten NULL-Werte). (1,5 Pkt.)\n'
+      '2. Korrektheit / Genauigkeit (Accuracy): Die Daten spiegeln die reale Welt fehlerfrei wider (z. B. korrekte Schreibweise von Namen und Adressen). (1,5 Pkt.)\n'
+      '3. Konsistenz (Consistency): Keine widersprüchlichen Daten in verschiedenen Systemen oder Tabellen (z. B. identische Postleitzahl und Ort). (1,5 Pkt.)\n'
+      '4. Aktualität (Timeliness): Die Daten repräsentieren den aktuellen Zustand und sind für den Verwendungszweck zeitnah verfügbar. (1,5 Pkt.)\n\n'
+      'Methoden des Data Cleaning:\n'
+      '- Deduplizierung: Erkennung und Zusammenführung doppelter Datensätze (Fuzzy Matching). (1 Pkt.)\n'
+      '- Standardisierung / Normalisierung: Vereinheitlichung von Formaten (z. B. Telefonnummern im E.164-Format, Datumsformate nach ISO 8601). (1 Pkt.)')
+
+add_q('fidp_etl_001', 'AP2_T1', 'LF 10 DP', 'ETL vs ELT Datenpipelines & CDC',
+      'Ein Unternehmen baut eine moderne Analytics-Plattform mit Cloud Data Warehouse auf.',
+      'Vergleichen Sie das klassische ETL-Verfahren (Extract, Transform, Load) mit dem modernen ELT-Verfahren (Extract, Load, Transform). Erläutern Sie Change Data Capture (CDC) zur inkrementellen Datenübernahme.',
+      8,
+      'Vergleich ETL vs. ELT:\n'
+      '- ETL (Extract, Transform, Load): Daten werden aus Quellsystemen extrahiert, auf einem separaten Transformations-Server bereinigt/aggregiert und erst danach in das Ziel-Data-Warehouse geladen. Vorteil: Nur bereinigte Daten erreichen das DWH, Schutz sensibler Daten vor Laden. Nachteil: Eigener ETL-Server als Flaschenhals. (3 Pkt.)\n'
+      '- ELT (Extract, Load, Transform): Rohdaten werden direkt aus den Quellen in das Zielsystem (z. B. Cloud DWH wie Snowflake, BigQuery oder Data Lake) geladen; die Transformation erfolgt dort mit der massiv parallelen Rechenleistung des DWHs. Vorteil: Extrem skalierbar, Rohdaten bleiben für spätere neue Analysen erhalten. (3 Pkt.)\n\n'
+      'Change Data Capture (CDC):\n'
+      'Verfahren zur Identifikation und Weiterleitung ausschließlich geänderter Daten (Inserts, Updates, Deletes) aus Quell-Datenbanken (z. B. über das Datenbank-Transaktionslog). Verhindert ressourcenfressende tägliche Vollexporte. (2 Pkt.)')
+
+add_q('fidp_dwh_001', 'AP2_T1', 'LF 10 DP', 'Data Warehouse Star-Schema vs Snowflake-Schema',
+      'Für das Management-Reporting einer Handelskette wird ein multidimensionales Datenmodell entworfen.',
+      'Erklären Sie den Aufbau eines Star-Schemas (Faktentabelle und Dimensionstabellen). Grenzen Sie das Star-Schema vom Snowflake-Schema hinsichtlich Normalisierung und Abfrageperformance ab.',
+      8,
+      'Aufbau des Star-Schemas:\n'
+      '- Faktentabelle: Zentrales Element. Enthält numerische, aggregierbare Messgrößen (Fakten, z. B. Umsatz, Menge, Rabatt) sowie Fremdschlüssel zu allen angebundenen Dimensionen. (2,5 Pkt.)\n'
+      '- Dimensionstabellen: Umgeben die Faktentabelle wie Zacken eines Sterns. Enthalten beschreibende Attribute zur Filterung und Gruppierung (z. B. Zeit, Kunde, Filiale, Produkt). Sind im Star-Schema bewusst DENORMALISIERT. (2,5 Pkt.)\n\n'
+      'Abgrenzung zum Snowflake-Schema:\n'
+      '- Snowflake-Schema: Die Dimensionstabellen werden bis zur 3. Normalform normalisiert (z. B. Produkt -> Produktkategorie -> Hauptgruppe). Vorteil: Geringere Redundanz, Vermeidung von Update-Anomalien. (1,5 Pkt.)\n'
+      '- Abfrageperformance: Star-Schema ist bei OLAP-Abfragen deutlich schneller, da weniger relationale JOINs für Berichte nötig sind. In modernen Data Warehouses wird das Star-Schema bevorzugt. (1,5 Pkt.)')
+
+add_q('fidp_stat_001', 'AP2_T2', 'LF 11 DP', 'Statistische Kennzahlen & Hypothesentests',
+      'In einer A/B-Testing-Studie soll geprüft werden, ob ein neues Checkout-Design die Conversion Rate signifikant erhöht.',
+      'Unterscheiden Sie Mittelwert, Median und Modus. Erläutern Sie Standardabweichung und Varianz. Was bedeuten Nullhypothese (H0), Alternativhypothese (H1) und der p-Wert bei einem Signifikanzniveau von alpha = 0,05?',
+      8,
+      'Lage- und Streumaße:\n'
+      '- Mittelwert: Arithmetischer Durchschnitt. Anfällig für extreme Ausreißer. (1 Pkt.)\n'
+      '- Median: Der Wert, der die sortierte Datenreihe genau in zwei Hälften teilt (50 %-Quantil). Robust gegen Ausreißer. (1 Pkt.)\n'
+      '- Modus: Der am häufigsten vorkommende Wert in einer Datenmenge. (1 Pkt.)\n'
+      '- Varianz: Mittlere quadrierte Abweichung aller Messwerte vom arithmetischen Mittelwert. Standardabweichung ist die Quadratwurzel der Varianz (selbe Einheit wie Ausgangsdaten). (2 Pkt.)\n\n'
+      'Hypothesentest:\n'
+      '- Nullhypothese (H0): Annahme, dass KEIN Unterschied oder Effekt zwischen Variante A und B existiert. (1 Pkt.)\n'
+      '- Alternativhypothese (H1): Die Forschungshypothese, dass ein signifikanter Unterschied besteht. (1 Pkt.)\n'
+      '- p-Wert und Signifikanz: Wahrscheinlichkeit, die beobachteten Daten zu erhalten, wenn H0 wahr wäre. Ist p < 0,05, wird H0 verworfen: Das Ergebnis ist statistisch signifikant. (1 Pkt.)')
+
+add_q('fidp_ml_001', 'AP2_T2', 'LF 12 DP', 'Machine Learning Evaluation Confusion Matrix',
+      'Ein Machine-Learning-Modell soll betrügerische Kreditkartentransaktionen (Fraud) automatisiert klassifizieren.',
+      'Erläutern Sie die 4 Felder einer Confusion Matrix (TP, FP, TN, FN). Definieren Sie die Kennzahlen Precision (Genauigkeit), Recall (Trefferquote/Sensitivität) und F1-Score. Warum ist die reine Accuracy (Genauigkeit) bei unausgeglichenen Datensätzen irreführend?',
+      8,
+      'Confusion Matrix (Wahrheitsmatrix):\n'
+      '- True Positive (TP): Betrug korrekt als Betrug erkannt. (1 Pkt.)\n'
+      '- False Positive (FP): Legitime Buchung fälschlicherweise als Betrug markiert (Fehlalarm, Typ-I-Fehler). (1 Pkt.)\n'
+      '- True Negative (TN): Legitime Buchung korrekt als legitim eingestuft. (1 Pkt.)\n'
+      '- False Negative (FN): Betrug fälschlicherweise übersehen und als legitim deklariert (Typ-II-Fehler, hohes Schadensrisiko!). (1 Pkt.)\n\n'
+      'Metriken:\n'
+      '- Precision = TP / (TP + FP): Wie viele der als Betrug deklarierten Fälle waren wirklich Betrug? (1 Pkt.)\n'
+      '- Recall = TP / (TP + FN): Wie viel Prozent aller tatsächlichen Betrugsfälle hat das Modell aufgespürt? (1 Pkt.)\n'
+      '- F1-Score = 2 * (Precision * Recall) / (Precision + Recall): Harmonisches Mittel aus Precision und Recall. (1 Pkt.)\n\n'
+      'Accuracy-Problem bei Unbalanced Data: Bei 99,9 % regulären Buchungen erreicht ein primitives Modell, das einfach immer "Legitim" rät, 99,9 % Accuracy, erkennt aber NULL Betrugsfälle! Daher ist Accuracy unbrauchbar. (1 Pkt.)')
+
+# ==============================================================================
+# FACHINFORMATIKER DIGITALE VERNETZUNG (FIDV) - AP2 FACHQUALIFIKATIONEN
+# ==============================================================================
+add_q('fidv_cps_001', 'AP2_T1', 'LF 9 DV', 'Cyber-physische Systeme & RAMI 4.0',
+      'In einer Smart Factory werden Fertigungsanlagen mit dem Cloud-Leitsystem vernetzt.',
+      'Definieren Sie ein Cyber-physisches System (CPS) und dessen Komponenten. Erläutern Sie das Referenzarchitekturmodell Industrie 4.0 (RAMI 4.0) mit seinen 3 Dimensionen (Schichten, Lebenszyklus/Wertstrom, Hierarchieebenen).',
+      8,
+      'Cyber-physisches System (CPS):\n'
+      'Verbindung von mechanischen und elektronischen Komponenten (Hardware, Sensoren, Aktoren) mit softwarebasierten Steuerungen und Kommunikationsnetzen (Internet/Ethernet). CPS erfassen physikalische Daten, werten sie autonom aus und steuern physische Prozesse über Aktoren in Echtzeit. (3 Pkt.)\n\n'
+      'RAMI 4.0 (Dreidimensionales Modell):\n'
+      '1. Achse: Schichten (Layers / 6 Ebenen): Asset, Integration, Communication, Information, Functional, Business. Beschreibt IT- und Geschäftsaspekte. (2 Pkt.)\n'
+      '2. Achse: Lebenszyklus & Wertstrom (Life Cycle & Value Stream nach IEC 62890): Entwicklung (Typ) bis Produktion/Nutzung (Instanz). (1,5 Pkt.)\n'
+      '3. Achse: Hierarchieebenen (nach IEC 62264): Vom Produkt (Product), über Feldgerät (Field Device), Steuerung (Control Device), Station, Arbeitsplatz (Work Center), Unternehmen (Enterprise) bis zur vernetzten Welt (Connected World). (1,5 Pkt.)')
+
+add_q('fidv_bus_001', 'AP2_T1', 'LF 10 DV', 'Industrielle Feldbusse Profinet vs Modbus TCP',
+      'Eine Industrieanlage soll mit Steuerungen (SPS) und Antrieben vernetzt werden.',
+      'Vergleichen Sie Modbus TCP und Profinet hinsichtlich OSI-Schicht, Echtzeitfähigkeit (Jitter, Latenz) und Einsatzgebieten. Erklären Sie die 3 Conformance Classes (CC-A, CC-B, CC-C) bzw. RT und IRT von Profinet.',
+      8,
+      'Modbus TCP vs. Profinet:\n'
+      '- Modbus TCP: Einfaches Master-Slave / Client-Server Protokoll auf OSI-Schicht 7 über Standard-TCP/IP (Port 502). Nicht echtzeitfähig, da TCP-Handshakes und Retransmissions unvorhersehbare Latenzen erzeugen. Sehr weit verbreitet für einfache Sensorabfragen. (2 Pkt.)\n'
+      '- Profinet: Industrial Ethernet Standard (IEC 61158). Bietet deterministische Echtzeitkommunikation durch Umgehung des TCP/IP-Stacks bei Prozessdaten. (2 Pkt.)\n\n'
+      'Profinet Echtzeitklassen:\n'
+      '- Profinet Standard (TCP/IP): Für Konfiguration und Diagnose (Zykluszeit > 100 ms). (1 Pkt.)\n'
+      '- Profinet RT (Real-Time): Prozessdaten umgehen TCP/IP und laufen direkt auf Layer 2 mit VLAN-Priorisierung (Zykluszeit 1-10 ms, softwarebasiert). (1,5 Pkt.)\n'
+      '- Profinet IRT (Isochronous Real-Time): Taktsynchron mit Hardware-Unterstützung (spezielle ASIC-Switches). Zeitschlitzverfahren (TDMA) garantiert Latenzen < 1 ms und Jitter < 1 µs für hochpräzise Motion-Control-Antriebe. (1,5 Pkt.)')
+
+add_q('fidv_iot_001', 'AP2_T1', 'LF 10 DV', 'OPC UA Informationsmodell vs MQTT',
+      'Maschinendaten einer heterogenen Produktionslinie sollen sowohl an das interne SCADA-System als auch an ein Cloud-Analytics-System übertragen werden.',
+      'Vergleichen Sie OPC UA (Open Platform Communications Unified Architecture) mit dem MQTT-Protokoll bezüglich Kommunikationsmuster (Client/Server vs. Publish/Subscribe), Datenmodellierung, Overhead und typischem Einsatzzweck.',
+      8,
+      'Vergleich OPC UA vs. MQTT:\n'
+      '- Kommunikationsmuster:\n'
+      '  • OPC UA: Primär Client/Server (Punkt-zu-Punkt Anfrage/Antwort), optional auch Pub/Sub. Bietet Methodenaufrufe (RPC) und Quittierungen. (1,5 Pkt.)\n'
+      '  • MQTT: Reines Publish/Subscribe über einen zentralen Message Broker. Entkoppelt Sender und Empfänger zeitlich und räumlich. (1,5 Pkt.)\n'
+      '- Datenmodellierung & Semantik:\n'
+      '  • OPC UA: Extrem mächtiges, objektorientiertes Informationsmodell (Nodes, References, Datentypen, Einheiten). Die Maschine beschreibt sich selbst semantisch! (2 Pkt.)\n'
+      '  • MQTT: Vollkommen payload-agnostisch (reiner Byte-Stream im Body, z. B. JSON). Keine standardisierte Semantik. (1 Pkt.)\n'
+      '- Overhead & Einsatzzweck:\n'
+      '  • OPC UA: Höherer Protokoll-Overhead, ideal für M2M-Kommunikation und vertikale Integration von der Maschine ins MES/ERP. (1 Pkt.)\n'
+      '  • MQTT: Extrem schlanker Header (ab 2 Byte), ideal für bandbreitenarme Funknetze (LoRaWAN, Mobilfunk) und Massen-Telemetriedaten in die Cloud. (1 Pkt.)')
+
+add_q('fidv_sec_001', 'AP2_T2', 'LF 11 DV', 'Industrial Security nach IEC 62443',
+      'Das Automatisierungsnetzwerk einer Fabrik soll gegen Cyber-Angriffe und Sabotage gehärtet werden.',
+      'Erläutern Sie das Zonen- und Conduit-Modell nach der Normenreihe IEC 62443. Was ist ein Conduit (Verbindungskanal)? Welche Sicherheitsanforderungen gelten an den Schnittstellen zwischen IT- und OT-Netzen?',
+      8,
+      'Zonen- und Conduit-Modell (IEC 62443):\n'
+      '- Zonen (Zones): Gruppierung logischer oder physischer Assets mit denselben Sicherheitsanforderungen (Security Level SL 1 bis 4). Alle Systeme innerhalb einer Zone vertrauen einander weitgehend. (3 Pkt.)\n'
+      '- Conduits (Verbindungskanäle): Kommunikationspfade zwischen unterschiedlichen Zonen. Ein Conduit bündelt alle Verbindungen und MUSS durch Sicherheitsmaßnahmen (z. B. Industrial Firewall, VPN, IDS) überwacht und reglementiert werden. Unkontrollierte Querkommunikation zwischen Zonen ist verboten. (3 Pkt.)\n\n'
+      'IT/OT-Schnittstellen:\n'
+      '- Strikt getrennte Demilitarisierte Zone (Industrial DMZ / IDMZ) nach dem Purdue-Modell (Level 3.5).\n'
+      '- Kein direkter Datenverkehr zwischen Office-IT (Level 4/5) und Fertigungs-OT (Level 0-3). Kommunikation darf nur über Proxies, Bastion Hosts oder Jump-Server in der IDMZ erfolgen. (2 Pkt.)')
+
+add_q('fidv_net_001', 'AP2_T2', 'LF 12 DV', 'Redundanzprotokolle PRP und HSR in der OT',
+      'In einem Energie-Umspannwerk darf bei einem Netzwerkausfall keine einzige Millisekunde Datenübertragung verloren gehen.',
+      'Erläutern Sie die industriellen Redundanzprotokolle Parallel Redundancy Protocol (PRP) und High-availability Seamless Redundancy (HSR) nach IEC 62439-3. Warum reicht das klassische Spanning Tree Protocol (RSTP) in diesen Anwendungen nicht aus?',
+      8,
+      'Kritik an Spanning Tree (RSTP):\n'
+      'RSTP benötigt nach einem Linkausfall mehrere hundert Millisekunden bis Sekunden zur Rekonvergenz. Für zeitkritische Schutzabschaltungen in Industrie und Energie (Schaltzeit < 4 ms) bedeutet dies einen unzulässigen Stillstand. (2 Pkt.)\n\n'
+      'PRP (Parallel Redundancy Protocol):\n'
+      '- Ein Endgerät (DANP - Dual Attached Node with PRP) ist gleichzeitig an ZWEI komplett voneinander getrennte Netzwerke (LAN A und LAN B) angeschlossen.\n'
+      '- Datenframes werden dupliziert und zeitgleich über beide Netze versendet. Der Empfänger verarbeitet das zuerst eintreffende Paket und verwirft das Duplikat nahtlos (Umschaltzeit: EXAKT 0 ms!). Fällt ein Netz komplett aus, läuft der Betrieb ohne Unterbrechung weiter. (3 Pkt.)\n\n'
+      'HSR (High-availability Seamless Redundancy):\n'
+      '- Ring-Topologie ohne zentrale Switche. Jedes Gerät sendet das Paket zeitgleich in beide Ringrichtungen (im und gegen den Uhrzeigersinn). Der Empfänger entnimmt das erste Paket und verwirft das zweite (Umschaltzeit 0 ms). (3 Pkt.)')
+
 # ==============================================================================
 # SPEICHERN DER FRAGENDATENBANK ALS JSON & JS (ZERO-CORS)
 # ==============================================================================

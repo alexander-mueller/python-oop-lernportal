@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>FIAE Modul 08: API-Design (REST, JSON, GraphQL) (LF 11)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">LF 11 Anwendungsentwicklung</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">FIAE Modul 08: API-Design (REST, JSON, GraphQL) (LF 11)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">REST-Prinzipien, HTTP-Verben, Statuscodes, JWT/OAuth2 & Vergleich REST vs. GraphQL.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🌐 API-Design: REST, JSON & GraphQL (LF 11 AE)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Moderne Schnittstellenarchitekturen: RESTful Principles, HTTP-Verben, Idempotenz, Statuscodes, Authentifizierung via JWT/OAuth2 und GraphQL-Konzepte.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. RESTful Best Practices</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    - <strong>Ressourcen-orientierte URLs:</strong> Nomen im Plural (z. B. <code>/api/v1/customers/42/orders</code>). Keine Verben in der URL!<br>
+    - <strong>HTTP-Verben:</strong> <code>GET</code> (Lesen), <code>POST</code> (Erstellen), <code>PUT</code> (Vollständiges Ersetzen), <code>PATCH</code> (Teilweises Aktualisieren), <code>DELETE</code> (Löschen).<br>
+    - <strong>Zustandslosigkeit (Statelessness):</strong> Jeder Request muss alle nötigen Informationen zur Autorisierung enthalten (z. B. Bearer Token im <code>Authorization</code> Header).
+  </p>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. REST vs. GraphQL</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead>
+      <tr><th>Kriterium</th><th>REST API</th><th>GraphQL API</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Endpunkte</strong></td><td>Viele feste Endpunkte je Ressource (z. B. <code>/users</code>, <code>/orders</code>)</td><td>Ein einziger universeller HTTP-Endpunkt (z. B. <code>/graphql</code> via POST)</td></tr>
+      <tr><td><strong>Datenabruf</strong></td><td>Gefahr von Over-Fetching (zu viele Daten) oder Under-Fetching (mehrere Requests)</td><td>Client spezifiziert exakt die benötigten Felder (kein Over-/Under-Fetching)</td></tr>
+      <tr><td><strong>Caching</strong></td><td>Sehr einfach über Standard-HTTP-Header (ETag, Cache-Control)</td><td>Komplexer, da POST-Anfragen nicht nativ gecacht werden</td></tr>
+    </tbody>
+  </table>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage (FIAE)
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="RESTful API Design & HTTP-Statuscodes" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">RESTful API Design & HTTP-Statuscodes</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Für eine Smartphone-App wird ein Backend mit REST-Schnittstellen entworfen.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie die 4 zentralen HTTP-Verben (GET, POST, PUT, DELETE) und deren Idempotenz. Nennen und erläutern Sie je zwei typische HTTP-Statuscodes der Kategorien 2xx, 4xx und 5xx.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../07_enterprise_sql_und_datenbank_modellierung/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../09_software_testing_und_ci_cd_pipelines/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

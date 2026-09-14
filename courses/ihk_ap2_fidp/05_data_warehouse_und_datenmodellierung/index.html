@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 10: Data Warehouse Architekturen & Star-/Snowflake-Schema – IHK AP2 FIDP</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=05_data_warehouse_und_datenmodellierung" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-purple">IHK AP2 Fachinformatiker Daten- und Prozessanalyse</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 10: Data Warehouse Architekturen & Star-/Snowflake-Schema</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Fakten- und Dimensionstabellen, Surrogatschlüssel, Slowly Changing Dimensions (SCD Typ 1-3)</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Das <strong>Data Warehouse (DWH)</strong> nach Ralph Kimball oder Bill Inmon ist das analytische Herzstück von Business-Intelligence-Lösungen.</p>
+
+      <h4>1. 3-Schichten-Architektur</h4>
+      <ul>
+        <li><strong>Staging Area:</strong> 1:1 Kopie der Quellsysteme, flüchtig oder persistent, keine Transformationen für Endanwender.</li>
+        <li><strong>Core DWH:</strong> Bereinigte, harmonisierte und integrierte Datenbasis. Häufig nach 3NF oder Data Vault 2.0 modelliert.</li>
+        <li><strong>Data Marts:</strong> Abteilungsspezifische Auswertungsbereiche (Vertrieb, Einkauf, Finanzen), optimiert für schnelle Abfragen im <strong>Sternschema (Star Schema)</strong>.</li>
+      </ul>
+
+      <h4>2. Star-Schema vs. Snowflake-Schema</h4>
+      <table>
+        <tr><th>Merkmal</th><th>Sternschema (Star Schema)</th><th>Schneeflockenschema (Snowflake Schema)</th></tr>
+        <tr><td><strong>Dimensionstabellen</strong></td><td>Denormalisiert (redundant, wenige JOINs)</td><td>Normalisiert (in 3NF zerlegt, viele Sub-Tabellen)</td></tr>
+        <tr><td><strong>Abfragekomplexität</strong></td><td>Sehr einfach, minimale JOINs, extrem performant</td><td>Komplexer, erfordert Multi-Level-JOINs</td></tr>
+        <tr><td><strong>Speicherplatz</strong></td><td>Höher durch Redundanz (in DWH irrelevant)</td><td>Geringer, redundanzfrei</td></tr>
+        <tr><td><strong>IHK-Empfehlung</strong></td><td>Standard für analytische OLAP Data Marts</td><td>Selten bevorzugt wegen JOIN-Overhead</td></tr>
+      </table>
+
+      <h4>3. Slowly Changing Dimensions (SCD)</h4>
+      <ul>
+        <li><strong>SCD Typ 1:</strong> Überschreiben alter Werte. Keine Historie. (Z.B. Korrektur von Tippfehlern).</li>
+        <li><strong>SCD Typ 2:</strong> Neuer Datensatz pro Änderung mit Gültigkeitszeitraum (<code>valid_from</code>, <code>valid_to</code>, <code>is_current</code>) und neuem Surrogatschlüssel. Volle historische Genauigkeit!</li>
+        <li><strong>SCD Typ 3:</strong> Zusätzliche Spalte <code>previous_value</code>. Nur begrenzte Historie (1 Vorwert).</li>
+      </ul>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Data Warehouse Star-Schema vs Snowflake-Schema" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Data Warehouse Star-Schema vs Snowflake-Schema</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Für das Management-Reporting einer Handelskette wird ein multidimensionales Datenmodell entworfen.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erklären Sie den Aufbau eines Star-Schemas (Faktentabelle und Dimensionstabellen). Grenzen Sie das Star-Schema vom Snowflake-Schema hinsichtlich Normalisierung und Abfrageperformance ab.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+        <div class="ihk-exam-task" data-title="Data Warehouse: Slowly Changing Dimensions (SCD Typ 1 vs. Typ 2)" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Data Warehouse: Slowly Changing Dimensions (SCD Typ 1 vs. Typ 2)</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem CRM-System ändert ein Großkunde seinen Firmensitz von München nach Frankfurt am Main. Im Data Warehouse sollen historische Umsatzzahlen weiterhin der Region München zugeordnet bleiben, zukünftige Umsätze jedoch Frankfurt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Begründen Sie, warum SCD Typ 1 für diese Anforderung ungeeignet ist.
+b) Beschreiben Sie den Aufbau und die Funktionsweise einer SCD Typ 2 Implementierung in der Kundendimension (nennen Sie drei typische Metadaten-Spalten).
+c) Was versteht man unter einem 'Surrogatschlüssel' (Surrogate Key) und warum ist er bei SCD Typ 2 zwingend erforderlich?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) SCD Typ 1 überschreibt den bestehenden Datensatz einfach. Dadurch geht die Historie verloren, und historische Umsätze würden fälschlicherweise nachträglich Frankfurt zugeordnet.
+b) Bei SCD Typ 2 wird für jede Änderung ein neuer Datensatz in der Dimensionstabelle angelegt. Die Historie wird über Metadatenspalten gesteuert: 1. `gueltig_von` (Valid From / Startdatum), 2. `gueltig_bis` (Valid To / Enddatum, z.B. 9999-12-31), 3. `is_current` (Flag 1/0 für den aktuell gültigen Datensatz).
+c) Ein Surrogatschlüssel ist ein künstlicher, datenbankinterner Primärschlüssel (z.B. fortlaufende Ganzzahl / Bigint). Da der fachliche Geschäftsschlüssel (Business Key, z.B. Kundennummer) bei SCD Typ 2 mehrfach in der Tabelle vorkommt, garantiert nur der Surrogatschlüssel die Eindeutigkeit jeder historischen Version.
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../04_etl_prozesse_und_datenpipelines/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_fidp&chapter=05_data_warehouse_und_datenmodellierung" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../06_big_data_architekturen_und_streaming/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

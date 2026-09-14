@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>FIAE Modul 02: UML-Modellierung & Softwareentwurf (LF 9)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">LF 9 Anwendungsentwicklung</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">FIAE Modul 02: UML-Modellierung & Softwareentwurf (LF 9)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">UML-Klassendiagramm (Sichtbarkeiten, Aggregation vs. Komposition), Sequenzdiagramm & Use Cases.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">📐 UML-Modellierung & Objektorientierter Entwurf (LF 9 AE)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Die Unified Modeling Language (UML) ist das universelle Dokumentations- und Modellierungswerkzeug in allen IHK-Abschlussprüfungen für Anwendungsentwickler.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. UML-Klassendiagramm: Sichtbarkeiten & Relationen</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead>
+      <tr><th>Symbol</th><th>Sichtbarkeit / Beziehung</th><th>Bedeutung & Beispiel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>+</code></td><td>public</td><td>Von überall im System zugänglich.</td></tr>
+      <tr><td><code>-</code></td><td>private</td><td>Nur innerhalb der eigenen Klasse sichtbar (Kapselung!).</td></tr>
+      <tr><td><code>#</code></td><td>protected</td><td>Nur in eigener Klasse und abgeleiteten Unterklassen sichtbar.</td></tr>
+      <tr><td><code>~</code></td><td>package</td><td>Nur innerhalb des selben Pakets/Namespaces sichtbar.</td></tr>
+      <tr><td>$\longrightarrow$</td><td>Assoziation</td><td>Verbindung/Beziehung ("nutzt ein"). Multiplizitäten: <code>1..*</code>, <code>0..1</code>.</td></tr>
+      <tr><td>$\diamondsuit\hspace{-4pt}-$</td><td>Aggregation (weiße Raute)</td><td>Teil-Ganzes-Beziehung ("hat ein"). Teile können unabhängig vom Ganzen existieren (z. B. Abteilung $\diamondsuit$ Mitarbeiter).</td></tr>
+      <tr><td>$lacklozenge\hspace{-4pt}-$</td><td>Komposition (schwarze Raute)</td><td>Existenzabhängige Teil-Ganzes-Beziehung. Stirbt das Ganze, sterben auch alle Teile (z. B. Rechnung $lacklozenge$ Rechnungspositionen).</td></tr>
+      <tr><td>$	riangle\hspace{-4pt}-$</td><td>Generalisierung / Vererbung</td><td>Unterklasse erbt von Basisklasse ("ist ein", z. B. Manager $	riangle$ Mitarbeiter).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. UML-Sequenzdiagramm: Interaktions-Dynamik</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Stellt den zeitlichen Ablauf von Methodenaufrufen dar:<br>
+  - <strong>Lebenslinie (Lifeline):</strong> Gestrichelte vertikale Linie eines Objekts.<br>
+  - <strong>Aktivierungsbalken:</strong> Schmaler Balken auf der Lebenslinie zeigt, wann das Objekt aktiv Code ausführt.<br>
+  - <strong>Synchrone Nachricht:</strong> Durchgezogener Pfeil mit gefüllter Spitze $ightarrow$ (Aufrufer blockiert und wartet).<br>
+  - <strong>Asynchrone Nachricht:</strong> Durchgezogener Pfeil mit offener Spitze $ightharpoonup$ (Aufrufer läuft sofort weiter).<br>
+  - <strong>Antwortnachricht:</strong> Gestrichelter Pfeil $<--$.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage (FIAE)
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="UML-Klassendiagramm Sichtbarkeiten und Syntax" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">UML-Klassendiagramm Sichtbarkeiten und Syntax</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Für eine IT-Asset-Management-Software soll die Klasse "Server" modelliert werden. Attribute: hostname (String, öffentlich), ipAdresse (String, privat), id (Integer, geschützt). Methoden: booten() (kein Rückgabewert, öffentlich), ping(ip: String) (Rückgabewert boolean, öffentlich).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Stellen Sie die Klasse als UML-Klassendiagramm nach DIN/OMG-Standard dar und beachten Sie die korrekten Sichtbarkeitssymbole.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="UML Assoziation Aggregation vs Komposition" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">UML Assoziation Aggregation vs Komposition</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem Objektmodell stehen die Klassen "Firma", "Abteilung" und "Mitarbeiter" in Beziehung zueinander.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Unterscheiden Sie Aggregation und Komposition anhand von grafischer Darstellung und Lebensdauer-Abhängigkeit und ordnen Sie die Beziehungen der Klassen begründet zu.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="UML Sequenzdiagramm Lebenslinie und Nachrichten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">UML Sequenzdiagramm Lebenslinie und Nachrichten</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Authentifizierungsprozess zwischen Client, Webserver und Datenbank soll visualisiert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Elemente eines UML-Sequenzdiagramms (Lebenslinie, Aktivierungsbalken, synchrone Nachricht, asynchrone Nachricht, Antwortnachricht).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="UML-Aktivitätsdiagramm & Pseudocode Schleifenlogik" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">UML-Aktivitätsdiagramm & Pseudocode Schleifenlogik</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Für einen automatisierten Backup-Prozess soll die Kontrolllogik modelliert werden: Es wird geprüft, ob ausreichend Speicherplatz frei ist. Wenn ja, werden Dateien kopiert und eine Erfolgsmeldung gesendet. Wenn nein, wird ein Fehler protokolliert und der Vorgang abgebrochen.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Vergleichen Sie die Modellierung von Kontrollstrukturen im UML-Aktivitätsdiagramm (Entscheidungsknoten / Raute, Guards) mit strukturiertem Pseudocode (WENN-DANN-SONST) und erläutern Sie die Funktion von Fork- und Join-Knoten (Synchronisationsbalken) bei parallelen Abläufen.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../01_software_architektur_und_design_patterns/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../03_anforderungsanalyse_und_aufwandsschaetzung/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

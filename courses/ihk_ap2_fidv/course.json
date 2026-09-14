@@ -1,0 +1,114 @@
+{
+  "id": "ihk_ap2_fidv",
+  "title": "IHK AP2 Crashkurs: Fachinformatiker Digitale Vernetzung",
+  "language": "ihk_ap2_fidv",
+  "icon": "🏭",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für FIDV (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Cyber-Physische Systeme (CPS), RAMI 4.0, IO-Link & Sensorik, Edge Computing (IPCs, K3s), Profinet IO (RT/IRT), TSN (802.1Qbv), OPC UA & MQTT, Private 5G-Campusnetze (Band n78), Industrial Security IEC 62443, Purdue-Modell & IDMZ, PRP/HSR Zero-Failover & Vollsimulation.",
+  "tracks": [
+    {
+      "id": "track_1_cps_und_edge",
+      "title": "🌱 Lehrpfad 1: CPS, Sensorik & Edge Computing (LF 9 & 10)",
+      "description": "Cyber-Physische Systeme (CPS), RAMI 4.0, Verwaltungsschale (AAS), 4-20 mA Stromschleifen, IO-Link (IEC 61131-9), Nyquist-Shannon & Industrie-PCs / Edge-Gateways.",
+      "certificateKey": "ihk_ap2_fidv_cps",
+      "chapters": [
+        {
+          "folder": "01_industrie40_und_cyber_physische_systeme",
+          "title": "LF 9: Industrie 4.0 & Cyber-Physische Systeme (RAMI 4.0, AAS, Digital Twin)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_sensorik_aktorik_und_signalverarbeitung",
+          "title": "LF 9: Industrielle Sensorik, Aktorik & Signalwandlung (IO-Link, 4-20 mA)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_edge_computing_und_iot_gateways",
+          "title": "LF 10: Edge Computing, Industrie-PCs & IoT-Gateways (Docker, K3s, Filterung)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_busse_und_protokolle",
+      "title": "⚙️ Lehrpfad 2: Industrielle Kommunikation & IoT-Protokolle (LF 10 & 11)",
+      "description": "Modbus RTU/TCP, Profinet IO (RT/IRT), TSN (IEEE 802.1Qbv), OPC UA (Client/Server, Nodes), MQTT (QoS 0/1/2, LWT, Retain) & Private 5G-Campusnetze (Band n78 3,7-3,8 GHz).",
+      "certificateKey": "ihk_ap2_fidv_busse",
+      "chapters": [
+        {
+          "folder": "04_industrielle_kommunikation_und_feldbusse",
+          "title": "LF 10: Feldbusse & Industrial Ethernet (Profinet IO, Modbus, TSN)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "05_iot_protokolle_mqtt_coap_und_opc_ua",
+          "title": "LF 11: Industrielle IoT-Protokolle (OPC UA, MQTT, CoAP)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_drahtlose_vernetzung_und_5g_campusnetze",
+          "title": "LF 11: Drahtlose Vernetzung & Private 5G-Campusnetze (URLLC, n78, LoRaWAN)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_ot_security_und_resilienz",
+      "title": "☁️ Lehrpfad 3: Industrial Security & OT-Netzwerkresilienz (LF 11 & 12)",
+      "description": "IEC 62443 (Zonen & Conduits, Security Levels 1-4), Purdue-Modell (Level 0-5), Industrial DMZ (IDMZ 3.5), Deep Packet Inspection (DPI), PRP/HSR Zero-Failover & passives OT-Monitoring.",
+      "certificateKey": "ihk_ap2_fidv_security",
+      "chapters": [
+        {
+          "folder": "07_industrial_security_iec_62443",
+          "title": "LF 11: Industrial Security nach IEC 62443 (Zonen & Conduits, SL 1-4)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_netzwerksegmentierung_und_ot_firewalls",
+          "title": "LF 11: Purdue-Referenzmodell & OT-Netzwerksegmentierung (IDMZ, DPI)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_ot_monitoring_anomalieerkennung_und_resilienz",
+          "title": "LF 12: OT-Netzwerkresilienz, PRP/HSR & Passives Monitoring (TAP vs. SPAN)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_safety_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: Maschinensicherheit, 40h-Projektarbeit & AP2-Prüfungssimulation",
+      "description": "Safety vs. Security, Performance Level (PL) & SIL, CE-Kennzeichnung (wesentliche Veränderung), Leitfaden für die 40h-Projektarbeit samt Retrofit & Vollprüfungssimulation.",
+      "certificateKey": "ihk_ap2_fidv_master",
+      "chapters": [
+        {
+          "folder": "10_betriebsorganisation_sicherheit_und_wiso",
+          "title": "WiSo & LF 12: Maschinensicherheit (Safety vs. Security, SIL/PL) & Recht",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "11_betriebliche_projektarbeit_guide_40h",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "12_ap2_fidv_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 FIDV Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

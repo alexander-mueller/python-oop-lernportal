@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 11: Drahtlose Vernetzung & Private 5G-Campusnetze – IHK AP2 FIDV</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0284c7; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0369a1; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #38bdf8; ring: 2px #38bdf8; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    .ihk-subgoal { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #38bdf8; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #38bdf8; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=06_drahtlose_vernetzung_und_5g_campusnetze" class="ihk-btn ihk-btn-primary">💻 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-purple">IHK AP2 Fachinformatiker Digitale Vernetzung</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 11: Drahtlose Vernetzung & Private 5G-Campusnetze</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">5G URLLC vs. eMBB, deutsches Frequenzband n78 (3,7-3,8 GHz), LoRaWAN & Industrial Wi-Fi 6</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #38bdf8; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Mobile Roboter (AGVs), fahrerlose Transportsysteme und mobile Bedienpanels erfordern hochgradig zuverlässige, kabellose Verbindungen.</p>
+
+      <h4>1. Private 5G-Campusnetze im Industrieumfeld</h4>
+      <p>In Deutschland können Unternehmen bei der Bundesnetzagentur eigene Frequenzen im Bereich <strong>3,7 bis 3,8 GHz (Band n78)</strong> für lokale private Campusnetze exklusiv beantragen.</p>
+      <ul>
+        <li><strong>URLLC (Ultra-Reliable Low-Latency Communication):</strong> Latenzen &lt; 1 ms bei einer Zuverlässigkeit von 99,999 % (Five Nines) &rarr; Geeignet für mobile Roboter und Safety-Funktionen.</li>
+        <li><strong>eMBB (Enhanced Mobile Broadband):</strong> Hohe Datenraten im Gigabit-Bereich für hochauflösende Kameras und AR-Brillen.</li>
+        <li><strong>mMTC (Massive Machine Type Communication):</strong> Bis zu 1 Million Sensoren pro km&sup2; mit minimalem Energieverbrauch.</li>
+      </ul>
+
+      <h4>2. LoRaWAN (Long Range Wide Area Network)</h4>
+      <ul>
+        <li>Arbeitet im lizenzfreien ISM-Band (868 MHz in Europa).</li>
+        <li>Sehr hohe Reichweiten (2 bis 15 km) bei minimaler Sendeleistung (Batterielaufzeit 5-10 Jahre).</li>
+        <li>Sehr geringe Datenrate (0,3 bis 50 kbit/s) und regulatorische Sendezeitbegrenzung (<strong>Duty Cycle von meist 1 %</strong>). Ideal für Zustandstracking im Freigelände!</li>
+      </ul>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Drahtlose Vernetzung: 5G Campusnetze vs. LoRaWAN" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Drahtlose Vernetzung: 5G Campusnetze vs. LoRaWAN</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Logistikzentrum plant die Vernetzung von autonom fahrenden Flurförderzeugen (AGVs) in der Halle und die Verfolgung von Containern auf einem 10 km² großen Außengelände.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Begründen Sie, warum für die Steuerung der autonomen Fahrzeuge (AGVs) ein privates 5G-Campusnetz (URLLC) anstelle von LoRaWAN eingesetzt werden muss.
+b) Welcher Frequenzbereich steht Unternehmen in Deutschland für private 5G-Campusnetze durch die Bundesnetzagentur zur Verfügung?
+c) Warum ist LoRaWAN die optimale Wahl für die Batterieversorgten Tracker auf dem Außengelände? Nennen Sie zwei Gründe.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) AGVs erfordern kontinuierliche Steuerung mit extrem geringer Latenz (< 5 ms) und hoher Zuverlässigkeit (URLLC - Ultra-Reliable Low-Latency Communication). LoRaWAN hat extrem geringe Bandbreite, hohe Latenzen und Sendezeitbeschränkungen (Duty Cycle von meist 1 %).
+b) Frequenzbereich 3.700 MHz bis 3.800 MHz (3,7 - 3,8 GHz / Band n78).
+c) 1. Sehr hohe Funkreichweite (mehrere Kilometer im Freifeld durch Sub-GHz Chirp Spread Spectrum Modulation). 2. Extrem geringer Energieverbrauch, der Batterie-Laufzeiten von 5 bis 10 Jahren ohne Wartung ermöglicht.
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../05_iot_protokolle_mqtt_coap_und_opc_ua/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_fidv&chapter=06_drahtlose_vernetzung_und_5g_campusnetze" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../07_industrial_security_iec_62443/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

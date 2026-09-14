@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>FIAE Modul 12: AP2 FIAE Gesamtprüfungssimulation (Echtzeit)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-danger">Offizielle IHK FIAE Simulation</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-rose-400 mb-2">FIAE Modul 12: AP2 FIAE Gesamtprüfungssimulation (Echtzeit)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Prüfungssimulation für Fachinformatiker Anwendungsentwicklung: PB 1 (Planen eines Softwareproduktes), PB 2 (Entwicklung und Umsetzung von Algorithmen) und PB 3 (WiSo).</p>
+
+    <!-- Prüfungs-Tabs -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+      <h3 style="color: #38bdf8; margin: 0 0 12px 0;">Wählen Sie Ihren FIAE-Prüfungsteil:</h3>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button id="btn-fiae-pb1" class="ihk-btn ihk-btn-primary">📋 PB 1: Planen eines Softwareproduktes (90 Min.)</button>
+        <button id="btn-fiae-pb2" class="ihk-btn ihk-btn-secondary">⚙️ PB 2: Entwicklung & Algorithmen (90 Min.)</button>
+        <button id="btn-fiae-wiso" class="ihk-btn ihk-btn-secondary">⚖️ PB 3: WiSo (60 Min.)</button>
+      </div>
+    </div>
+
+    <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+    <script src="../../../assets/ihk_tools/exam_engine.js"></script>
+    <script>
+      function startExam(type, title, duration) {
+        window.exam = new IhkExamEngine({
+          title: title,
+          examType: type,
+          durationMinutes: duration,
+          totalPoints: 100
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        startExam("AP2_T1", "IHK AP2 FIAE PB 1: Planen eines Softwareproduktes", 90);
+
+        document.getElementById("btn-fiae-pb1").addEventListener("click", () => {
+          document.getElementById("btn-fiae-pb1").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-fiae-pb2").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-fiae-wiso").className = "ihk-btn ihk-btn-secondary";
+          startExam("AP2_T1", "IHK AP2 FIAE PB 1: Planen eines Softwareproduktes", 90);
+        });
+
+        document.getElementById("btn-fiae-pb2").addEventListener("click", () => {
+          document.getElementById("btn-fiae-pb2").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-fiae-pb1").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-fiae-wiso").className = "ihk-btn ihk-btn-secondary";
+          startExam("AP2_T2", "IHK AP2 FIAE PB 2: Entwicklung und Umsetzung von Algorithmen", 90);
+        });
+
+        document.getElementById("btn-fiae-wiso").addEventListener("click", () => {
+          document.getElementById("btn-fiae-wiso").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-fiae-pb1").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-fiae-pb2").className = "ihk-btn ihk-btn-secondary";
+          startExam("WiSo", "IHK AP2 FIAE PB 3: Wirtschafts- und Sozialkunde", 60);
+        });
+      });
+    </script>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../11_betriebliche_projektarbeit_guide_80h/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-success font-semibold">🏆 Zurück zur Kursübersicht</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>
