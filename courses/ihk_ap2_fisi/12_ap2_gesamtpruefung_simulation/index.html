@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP2 Modul 12: AP2 Gesamtprüfungssimulation (Echtzeit)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-danger">Offizielle IHK Simulation</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-rose-400 mb-2">AP2 Modul 12: AP2 Gesamtprüfungssimulation (Echtzeit)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Simulation unter realen Prüfungsbedingungen nach ZPA Nord-West 2. Auflage: PB 1 (90 Min.), PB 2 (90 Min.) und WiSo (60 Min.) mit Notenrechner.</p>
+
+    <!-- Prüfungs-Tabs -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+      <h3 style="color: #38bdf8; margin: 0 0 12px 0;">Wählen Sie Ihren Prüfungsteil für die Simulation:</h3>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button id="btn-part-t1" class="ihk-btn ihk-btn-primary">📋 Teil 1: Planen & Umsetzen (90 Min. / 100 Pkt.)</button>
+        <button id="btn-part-t2" class="ihk-btn ihk-btn-secondary">🌐 Teil 2: Netzanalyse & Redundanz (90 Min. / 100 Pkt.)</button>
+        <button id="btn-part-wiso" class="ihk-btn ihk-btn-secondary">⚖️ Teil 3: WiSo (60 Min. / 100 Pkt.)</button>
+      </div>
+    </div>
+
+    <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+    <script src="../../../assets/ihk_tools/exam_engine.js"></script>
+    <script>
+      function startExam(type, title, duration) {
+        window.exam = new IhkExamEngine({
+          title: title,
+          examType: type,
+          durationMinutes: duration,
+          totalPoints: 100
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        startExam("AP2_T1", "IHK AP2 Teil 1: Planen und Umsetzen eines IT-Systems (FISI)", 90);
+
+        document.getElementById("btn-part-t1").addEventListener("click", () => {
+          document.getElementById("btn-part-t1").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-part-t2").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-part-wiso").className = "ihk-btn ihk-btn-secondary";
+          startExam("AP2_T1", "IHK AP2 Teil 1: Planen und Umsetzen eines IT-Systems (FISI)", 90);
+        });
+
+        document.getElementById("btn-part-t2").addEventListener("click", () => {
+          document.getElementById("btn-part-t2").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-part-t1").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-part-wiso").className = "ihk-btn ihk-btn-secondary";
+          startExam("AP2_T2", "IHK AP2 Teil 2: Analyse und Entwicklung von Netzwerken (FISI)", 90);
+        });
+
+        document.getElementById("btn-part-wiso").addEventListener("click", () => {
+          document.getElementById("btn-part-wiso").className = "ihk-btn ihk-btn-primary";
+          document.getElementById("btn-part-t1").className = "ihk-btn ihk-btn-secondary";
+          document.getElementById("btn-part-t2").className = "ihk-btn ihk-btn-secondary";
+          startExam("WiSo", "IHK AP2 Teil 3: Wirtschafts- und Sozialkunde (WiSo)", 60);
+        });
+      });
+    </script>
+
+    <!-- Standard-Aufgaben für Teil 1 -->
+    <div class="ihk-exam-task" data-title="Aufgabe 1: Virtual Desktop Infrastructure (VDI) & Thin Clients" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #f87171; margin: 0;">1. Aufgabe: VDI, Thin Clients & Gruppenrichtlinien</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Ein Unternehmen plant die Ablösung klassischer Desktop-PCs durch eine Virtual Desktop Infrastructure (VDI) mit zentralem Server-Cluster und Thin Clients.
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Nenne 3 wesentliche administrative oder wirtschaftliche Vorteile einer zentralen VDI-Lösung gegenüber Fat Clients. (6 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Vorteile..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Wie wird sichergestellt, dass Konfigurationsänderungen auf allen virtuellen Desktops konsistent erzwungen werden? Erläutere die GPO-Verarbeitungshierarchie (LSDOU). (10 Punkte)</label>
+        <textarea class="ihk-input" rows="4" placeholder="GPO-Hierarchie..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>c) Welche Netzwerkprotokolle (z. B. RDP, Blast, PCoIP) und Bandbreitenanforderungen sind für flüssiges Arbeiten im VDI-Umfeld notwendig? (9 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Protokolle & Bandbreite..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (6 Pkt.):</strong> 1. Zentrale Administration, Rollout und Patchmanagement am Server; 2. Geringere Hardware- und Energiekosten an den Endgeräten (Thin Clients brauchen wenig Strom); 3. Höhere Datensicherheit, da keine Unternehmensdaten lokal auf den Clients gespeichert werden.<br>
+          <strong>b) (10 Pkt.):</strong> GPO-Hierarchie LSDOU (Local, Site, Domain, OU). Letztere überschreibt vorherige, es sei denn "Erzwungen" ist aktiv. Benutzer- und Computerkonfiguration werden strikt getrennt.<br>
+          <strong>c) (9 Pkt.):</strong> Protokolle: VMware Blast Extreme, Teradici PCoIP, Microsoft RDP. Bandbreite: ca. 1,5 bis 3 Mbit/s pro Standard-Office-Sitzung; Latenz sollte unter 50 ms liegen.
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 2: ENTERPRISE STORAGE & RAID 6 -->
+    <div class="ihk-exam-task" data-title="Aufgabe 2: Enterprise SAN Storage & RAID 6" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #f87171; margin: 0;">2. Aufgabe: Enterprise SAN Storage & RAID-Berechnung</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Für das neue Virtualisierungs-Cluster wird ein zentrales SAN mit einem All-Flash-Array beschafft. Es kommen 8 SSDs à 3,84 TB zum Einsatz, konfiguriert als RAID 6 plus 1 globale Hot-Spare-SSD.
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Berechne die nutzbare Speicherkapazität (Netto) des Arrays in TB. Zeige den Rechenweg. (8 Punkte)</label>
+        <textarea class="ihk-input" rows="2" placeholder="Rechnung..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Warum empfiehlt der Hersteller bei SSD-Größen über 2 TB dringend RAID 6 statt RAID 5? Erläutere das Risiko von URE (Unrecoverable Read Errors) beim Rebuild. (9 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="URE & Rebuild-Risiko..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>c) Vergleiche die Protokolle iSCSI und Fibre Channel hinsichtlich Kosten, Hardwareanforderungen und Performance. (8 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="iSCSI vs. Fibre Channel..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (8 Pkt.):</strong> 8 SSDs abzüglich 1 Hot-Spare = 7 aktive SSDs im RAID. Bei RAID 6 gehen 2 Platten für Parität ab: Nutzkapazität = (7 - 2) * 3,84 TB = 5 * 3,84 TB = 19,20 TB.<br>
+          <strong>b) (9 Pkt.):</strong> Bei sehr großen Datenträgern ist die Wahrscheinlichkeit eines URE während des tagelangen Rebuilds eines RAID 5 extrem hoch. Fällt beim Rebuild ein weiterer Sektor aus, ist das gesamte RAID 5 unwiderruflich verloren. RAID 6 toleriert einen zweiten Fehler durch doppelte Parität (Reed-Solomon).<br>
+          <strong>c) (8 Pkt.):</strong> iSCSI nutzt bestehendes Ethernet (günstig, Standard-NICs, TCP Port 3260), erzeugt aber CPU-Overhead. Fibre Channel (FC) erfordert dedizierte FC-Switches und Host Bus Adapter (HBA), ist teurer, bietet aber garantierte Latenzfreiheit und Lossless-Framing.
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 3: OSPF & BGP ROUTING -->
+    <div class="ihk-exam-task" data-title="Aufgabe 3: Dynamisches Routing mit OSPF & BGP" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #f87171; margin: 0;">3. Aufgabe: Dynamisches Routing mit OSPF</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Ein Standortnetz mit drei Gebäuden wird über ein OSPF-Single-Area-Design (Area 0) redundant verbunden.
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Wie berechnet OSPF die Metrik (Kosten) einer Route? Welche Referenzbandbreite wird standardmäßig verwendet und wie lautet die Formel? (8 Punkte)</label>
+        <textarea class="ihk-input" rows="2" placeholder="Formel..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Erläutere die Rollen von DR (Designated Router) und BDR (Backup Designated Router) in Multi-Access-Netzen. Welchem Zweck dienen sie? (9 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="DR / BDR..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>c) Warum muss Area 0 (Backbone Area) in jedem OSPF-Netzwerk vorhanden sein und wie müssen andere Areas angebunden werden? (8 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Area 0..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (8 Pkt.):</strong> Formel: Cost = Referenzbandbreite / Schnittstellenbandbreite. Standardmäßig 100 Mbit/s (10^8 bit/s). Für Gigabit/10G-Netze muss auto-cost reference-bandwidth angepasst werden.<br>
+          <strong>b) (9 Pkt.):</strong> In Broadcast-Netzen reduzieren DR/BDR die Anzahl der Adjacency-Beziehungen von n*(n-1)/2 auf n. Router senden LSAs nur an 224.0.0.6 (AllDRouters), DR verteilt sie an 224.0.0.5 weiter.<br>
+          <strong>c) (8 Pkt.):</strong> Area 0 dient als schleifenfreier Kern (Loop Prevention). Jede Nicht-Backbone-Area muss physisch oder über Virtual Links direkt mit Area 0 verbunden sein (Star-Topologie).
+        </p>
+      </div>
+    </div>
+
+    <!-- AUFGABE 4: IT-SICHERHEIT & ZERO TRUST -->
+    <div class="ihk-exam-task" data-title="Aufgabe 4: Zero Trust Architektur & NGFW" data-points="25" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="color: #f87171; margin: 0;">4. Aufgabe: Zero Trust Architecture & Next-Gen Firewall</h3>
+        <span class="ihk-badge">25 Punkte</span>
+      </div>
+      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+        Ein FinTech-Unternehmen stellt seine Sicherheitsarchitektur von einem klassischen Perimeter-Modell auf Zero Trust um.
+      </p>
+
+      <div class="ihk-input-group">
+        <label>a) Beschreibe die 3 Grundprinzipien von Zero Trust nach NIST SP 800-207. (8 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="3 Prinzipien..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>b) Was unterscheidet eine Stateful-Inspection-Firewall von einer Next-Generation-Firewall (NGFW)? Nenne 3 NGFW-Sicherheitsfeatures. (9 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="NGFW Features..."></textarea>
+      </div>
+
+      <div class="ihk-input-group">
+        <label>c) Erläutere den Unterschied zwischen IPSec Site-to-Site VPN im Tunnel-Modus vs. Transport-Modus. (8 Punkte)</label>
+        <textarea class="ihk-input" rows="3" placeholder="Tunnel vs. Transport..."></textarea>
+      </div>
+
+      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
+        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
+        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+          <strong>a) (8 Pkt.):</strong> 1. "Never trust, always verify" (Jede Anfrage wird authentifiziert und autorisiert); 2. "Least Privilege" (Minimaler Rechtezugriff); 3. "Assume Breach" (Sicherheitsüberprüfungen gehen davon aus, dass Angreifer bereits im Netz sind).<br>
+          <strong>b) (9 Pkt.):</strong> Stateful Inspection filtert nur L3/L4 anhand von IP, Port und State-Table. NGFW prüft bis Layer 7: Deep Packet Inspection (DPI), Application Control (App-ID), integriertes Intrusion Prevention System (IPS), SSL/TLS-Entschlüsselung.<br>
+          <strong>c) (8 Pkt.):</strong> Transport-Modus: Verschlüsselt nur die Nutzlast (Payload), IP-Header bleibt unverändert (für Host-to-Host). Tunnel-Modus: Verschlüsselt das gesamte ursprüngliche IP-Paket und setzt einen neuen IP-Header davor (Standard für Router-to-Router Site-to-Site VPNs).
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../11_betriebliche_projektarbeit_guide/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-success font-semibold">🏆 Zurück zur Kursübersicht</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

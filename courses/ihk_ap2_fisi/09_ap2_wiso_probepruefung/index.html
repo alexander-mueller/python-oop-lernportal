@@ -1,131 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
-  <title>IHK AP2 Wirtschafts- und Sozialkunde (WiSo)</title>
+  <meta http-equiv="refresh" content="0; url=../12_ap2_gesamtpruefung_simulation/index.html">
+  <title>Weiterleitung zum aktualisierten Modul...</title>
   <link rel="stylesheet" href="../../../assets/style.css">
   <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans p-6">
-  <div class="container mx-auto max-w-4xl">
-    <div class="flex justify-between items-center mb-6">
-      <a href="../../../dashboard.html" class="text-rose-400 hover:text-rose-300 font-semibold">← Zurück zum Dashboard</a>
-      <span class="ihk-badge ihk-badge-warning">WiSo Prüfungsteil 3 (60 Min.)</span>
-    </div>
-
-    <h1 class="text-3xl font-extrabold text-rose-400 mb-2">Probeprüfung AP2: Wirtschafts- &amp; Sozialkunde (WiSo)</h1>
-    <p class="text-slate-400 mb-6">Authentische IHK-WiSo Simulation (Winter 2023/24) | Bearbeitungszeit: 60 Minuten | 100 Punkte</p>
-
-    <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
-    <script src="../../../assets/ihk_tools/exam_engine.js"></script>
-    <script>
-      window.exam = new IhkExamEngine({
-        title: "IHK AP2 Teil 3: Wirtschafts- und Sozialkunde (WiSo)",
-        examType: "WiSo",
-        durationMinutes: 60,
-        totalPoints: 100
-      });
-    </script>
-
-    <!-- AUFGABE 1: KÜNDIGUNGSFRISTEN & ARBEITSRECHT -->
-    <div class="ihk-exam-task" data-title="Aufgabe 1: Kündigungsfristen nach BGB § 622" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
-      <h3 style="color: #facc15; margin-top: 0;">1. Aufgabe: Kündigungsfristen &amp; Probezeit (20 Punkte)</h3>
-      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-        Ein Fachinformatiker ist seit 6 Jahren im selben Betrieb beschäftigt. Der Arbeitgeber kündigt das Arbeitsverhältnis am 10. Mai 2026.
-      </p>
-      <div class="ihk-input-group">
-        <label>a) Zu welchem Stichtag wird die Kündigung nach BGB § 622 Abs. 2 wirksam? (10 Punkte)</label>
-        <textarea class="ihk-input" rows="2" placeholder="Stichtag mit Begründung..."></textarea>
-      </div>
-      <div class="ihk-input-group">
-        <label>b) Welche Kündigungsfrist gilt während einer vereinbarten Probezeit nach BGB / BBiG? (10 Punkte)</label>
-        <textarea class="ihk-input" rows="2" placeholder="Frist während Probezeit..."></textarea>
-      </div>
-      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
-        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
-        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-          <strong>a) (10 Pkt.):</strong> Bei 6 Jahren Betriebszugehörigkeit beträgt die Kündigungsfrist <strong>zwei Monate zum Ende eines Kalendermonats</strong>. Kündigungsausspruch am 10. Mai &rarr; Ende Juni (Monat 1) &rarr; <strong>Wirksam zum 31. Juli 2026</strong>.<br>
-          <strong>b) (10 Pkt.):</strong> Im Arbeitsvertrag nach BGB § 622 Abs. 3: <strong>Zwei Wochen zu jedem beliebigen Tag</strong> (ohne Bindung an Monatsende). Im Ausbildungsverhältnis nach BBiG § 22 Abs. 1: <strong>Jederzeit fristlos</strong> ohne Angabe von Gründen.
-        </p>
-      </div>
-    </div>
-
-    <!-- AUFGABE 2: MITBESTIMMUNG DES BETRIEBSRATS -->
-    <div class="ihk-exam-task" data-title="Aufgabe 2: Betriebsrat &amp; Mitbestimmung" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
-      <h3 style="color: #facc15; margin-top: 0;">2. Aufgabe: Betriebsverfassungsgesetz (BetrVG) (20 Punkte)</h3>
-      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-        Die Geschäftsleitung plant die Einführung einer neuen Zeiterfassungs- und Überwachungssoftware für alle Mitarbeiter.
-      </p>
-      <div class="ihk-input-group">
-        <label>Welches Recht steht dem Betriebsrat nach § 87 Abs. 1 Nr. 6 BetrVG zu und welche Konsequenz hat eine fehlende Zustimmung? (20 Punkte)</label>
-        <textarea class="ihk-input" rows="3"></textarea>
-      </div>
-      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
-        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
-        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-          Der Betriebsrat hat ein <strong>echtes Mitbestimmungsrecht</strong> bei der Einführung und Anwendung von technischen Einrichtungen, die dazu bestimmt sind, das Verhalten oder die Leistung der Arbeitnehmer zu überwachen (§ 87 Abs. 1 Nr. 6 BetrVG). Ohne Zustimmung des Betriebsrats darf die Software nicht eingeführt werden. Bei Nichteinigung muss die <strong>Einigungsstelle</strong> angerufen werden.
-        </p>
-      </div>
-    </div>
-
-    <!-- AUFGABE 3: GESELLSCHAFTSFORMEN -->
-    <div class="ihk-exam-task" data-title="Aufgabe 3: Rechtsformen (GmbH vs. KG)" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
-      <h3 style="color: #facc15; margin-top: 0;">3. Aufgabe: Unternehmensformen &amp; Haftung (20 Punkte)</h3>
-      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-        Drei IT-Spezialisten gründen ein Cloud-Consulting-Unternehmen. Sie vergleichen die Rechtsformen <strong>GmbH</strong> und <strong>Kommanditgesellschaft (KG)</strong>.
-      </p>
-      <div class="ihk-input-group">
-        <label>Vergleiche Mindeststammkapital, Haftung der Gesellschafter und Eintragung ins Handelsregister (Abteilung A vs. B). (20 Punkte)</label>
-        <textarea class="ihk-input" rows="4"></textarea>
-      </div>
-      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
-        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
-        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-          <strong>GmbH:</strong> Mindeststammkapital 25.000 € (bei Gründung min. 12.500 € eingezahlt). Haftung auf das Gesellschaftsvermögen beschränkt. Eintragung in <strong>Handelsregister Abteilung B</strong> (Kapitalgesellschaften).<br>
-          <strong>KG:</strong> Kein gesetzliches Mindestkapital. Mindestens ein Vollhafter (Komplementär, haftet unbeschränkt mit Privatvermögen) und mindestens ein Teilhafter (Kommanditist, haftet nur bis zur eingetragenen Hafteinlage). Eintragung in <strong>Handelsregister Abteilung A</strong> (Personengesellschaften).
-        </p>
-      </div>
-    </div>
-
-    <!-- AUFGABE 4: GEHALTSABRECHNUNG & SOZIALVERSICHERUNG -->
-    <div class="ihk-exam-task" data-title="Aufgabe 4: Gehaltsabrechnung &amp; Sozialabgaben" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
-      <h3 style="color: #facc15; margin-top: 0;">4. Aufgabe: Entgeltabrechnung &amp; 5 Säulen der Sozialversicherung (20 Punkte)</h3>
-      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-        Nenne die 5 gesetzlichen Sozialversicherungszweige und gib an, welche Versicherung als einzige zu 100% vom Arbeitgeber getragen wird. (20 Punkte)
-      </p>
-      <textarea class="ihk-input" rows="4"></textarea>
-      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
-        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
-        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-          1. Gesetzliche Krankenversicherung (GKV - paritätisch)<br>
-          2. Soziale Pflegeversicherung (SPV - paritätisch + Kinderlosenzuschlag)<br>
-          3. Gesetzliche Rentenversicherung (GRV - paritätisch)<br>
-          4. Arbeitslosenversicherung (ALV - paritätisch)<br>
-          5. <strong>Gesetzliche Unfallversicherung (Berufsgenossenschaft / DGUV): Wird zu 100 % allein vom Arbeitgeber getragen!</strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- AUFGABE 5: TARIFRECHT & ARBEITSKAMPF -->
-    <div class="ihk-exam-task" data-title="Aufgabe 5: Tarifautonomie &amp; Streik" data-points="20" style="background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;">
-      <h3 style="color: #facc15; margin-top: 0;">5. Aufgabe: Tarifautonomie, Friedenspflicht &amp; Warnstreik (20 Punkte)</h3>
-      <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
-        Erläutere die Begriffe Tarifautonomie, Friedenspflicht während der Laufzeit eines Tarifvertrages und die Voraussetzungen für einen legalen Streik. (20 Punkte)
-      </p>
-      <textarea class="ihk-input" rows="4"></textarea>
-      <div class="ihk-task-solution" style="display: none; margin-top: 16px; padding: 16px; background: #0f172a; border-left: 4px solid #4ade80; border-radius: 6px;">
-        <h4 style="color: #4ade80; margin-top: 0;">Offizielle IHK-Musterlösung:</h4>
-        <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-          <strong>Tarifautonomie (Art. 9 Abs. 3 GG):</strong> Das Recht der Tarifparteien (Gewerkschaften und Arbeitgeberverbände), Arbeitsbedingungen ohne Einmischung des Staates autonom auszuhandeln.<br>
-          <strong>Friedenspflicht:</strong> Solange ein Tarifvertrag läuft, dürfen bezüglich der geregelten Inhalte keine Arbeitskampfmaßnahmen (Streiks) durchgeführt werden.<br>
-          <strong>Voraussetzungen für legalen Streik:</strong> Tarifvertrag muss abgelaufen sein, Verhandlungen für gescheitert erklärt, Urabstimmung unter den Gewerkschaftsmitgliedern (in der Regel mindestens 75 % Zustimmung) und Aufruf durch eine tariffähige Gewerkschaft.
-        </p>
-      </div>
-    </div>
-
+<body class="bg-slate-900 text-slate-100 p-8 flex items-center justify-center min-h-screen">
+  <div class="text-center max-w-lg bg-slate-800 p-8 rounded-xl border border-slate-700">
+    <h2 class="text-xl font-bold text-sky-400 mb-4">Modul aktualisiert</h2>
+    <p class="text-slate-300 mb-6">Dieses Modul wurde im Rahmen der ZPA Nord-West 2. Auflage aktualisiert. Sie werden automatisch weitergeleitet...</p>
+    <a href="../12_ap2_gesamtpruefung_simulation/index.html" class="ihk-btn ihk-btn-primary font-semibold">Direkt zum neuen Modul →</a>
   </div>
-  <script src="../../../assets/courses_manifest.js"></script>
-  <script src="../../../assets/course_sidebar.js"></script>
 </body>
 </html>

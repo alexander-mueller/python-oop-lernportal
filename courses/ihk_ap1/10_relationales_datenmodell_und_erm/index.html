@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP1 Modul 10: Relationales Datenmodell & ERM (LF 5)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA 2. Auflage Standard</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 10: Relationales Datenmodell & ERM</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Konzeptioneller Datenbankentwurf: Chen- & Krähenfuß-Notation, Kardinalitäten, Normalisierung (1NF–3NF), Primär-/Fremdschlüssel & referenzielle Integrität (ohne SQL!).</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+      <div style="background: #0f172a; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 style="color: #fcd34d; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+          <span>⚠️</span> Wichtiger ZPA-Reformhinweis (Katalog 2. Auflage, S. 5):
+        </h3>
+        <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+          <strong>SQL-Abfragen wurden aus Teil 1 (AP1) komplett gestrichen!</strong> Laut offizieller Vorbemerkung der ZPA Nord-West ist SQL nun <em>ausschließlich</em> Gegenstand von Teil 2 (AP2). In der AP1 sind im Datenbankbereich lediglich <strong>einfache ER-Modelle</strong>, <strong>Normalisierung</strong> und das <strong>relationale Tabellenschema</strong> prüfungsrelevant.
+        </p>
+      </div>
+
+      <h2 style="color: #38bdf8; margin-top: 0;">🗂️ 1. Entity-Relationship-Modellierung (ERM)</h2>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        Das ER-Modell beschreibt die konzeptionelle Struktur einer Datenbank unabhängig vom konkreten Datenbank-Managementsystem (DBMS).
+      </p>
+
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <table class="ihk-table">
+          <thead>
+            <tr><th>Konzept</th><th>Chen-Notation</th><th>Krähenfuß-Notation (Martin)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Entitätstyp</strong></td>
+              <td>Rechteck (z. B. <code>[Kunde]</code>)</td>
+              <td>Rechteckige Tabelle mit getrennter Kopfzeile für den Namen</td>
+            </tr>
+            <tr>
+              <td><strong>Attribute</strong></td>
+              <td>Ovale/Ellipsen, die an die Entität angebunden sind (PK ist <u>unterstrichen</u>)</td>
+              <td>Direkt als Textzeilen innerhalb des Kastenblocks (gekennzeichnet mit PK / FK)</td>
+            </tr>
+            <tr>
+              <td><strong>Beziehung</strong></td>
+              <td>Raute mit Verbindungslinien (z. B. <code>[Kunde] ──◇ kauft ── [Artikel]</code>)</td>
+              <td>Linie direkt zwischen den Tabellenkästen mit Symbolen an den Enden</td>
+            </tr>
+            <tr>
+              <td><strong>Kardinalitäten</strong></td>
+              <td>Beschriftung an den Linien: <code>1</code>, <code>n</code>, <code>m</code></td>
+              <td>Grafische Symbole: Strich (|) = eins, Kreis (O) = null/optional, Dreizack (Ψ) = viele</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">2. Transformationsregeln: ERM in Relationales Schema</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>1:1-Beziehung:</strong> Der Primärschlüssel einer der beiden Tabellen wird als Fremdschlüssel (mit UNIQUE-Bedingung) in die andere Tabelle übernommen.</li>
+          <li><strong>1:n-Beziehung (Standard):</strong> Der Primärschlüssel der 1-Seite (Elterntabelle) wandert als <strong>Fremdschlüssel (FK)</strong> in die Tabelle der n-Seite (Kindtabelle). <em>Es wird keine Zwischentabelle benötigt!</em></li>
+          <li><strong>n:m-Beziehung (Viele-zu-Viele):</strong> Kann im relationalen Modell nicht direkt abgebildet werden! Es muss zwingend eine <strong>Verknüpfungstabelle (Zwischentabelle)</strong> angelegt werden. Diese enthält die Primärschlüssel beider Ursprungstabellen als Fremdschlüssel, die gemeinsam den zusammengesetzten Primärschlüssel bilden, sowie eventuelle Beziehungsattribute (z. B. <code>arbeitsstunden</code> oder <code>menge</code>).</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">3. Normalisierung (1NF bis 3NF)</h3>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        Die Normalisierung verhindert Datenredundanzen und Anomalien (Einfüge-, Änderungs- und Löschanomalien):
+      </p>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <ol style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>1. Normalform (1NF) - Atomarität:</strong> Jedes Attribut enthält nur elementare, unteilbare Werte (keine Listen, Kommagetrennte Strings oder Wiederholgruppen wie <code>telefon1, telefon2</code>).</li>
+          <li><strong>2. Normalform (2NF) - Voll funktionale Abhängigkeit:</strong> Die Tabelle ist in 1NF und jedes Nichtschlüssel-Attribut hängt voll funktional vom <em>gesamten</em> Primärschlüssel ab (relevant bei zusammengesetzten Primärschlüsseln!). Attribute, die nur von einem Teil des Schlüssels abhängen, werden in eine eigene Tabelle ausgelagert.</li>
+          <li><strong>3. Normalform (3NF) - Keine transitiven Abhängigkeiten:</strong> Die Tabelle ist in 2NF und kein Nichtschlüssel-Attribut hängt von einem anderen Nichtschlüssel-Attribut ab. Typisches Beispiel: Die Spalte <code>Ort</code> hängt von der <code>PLZ</code> ab und muss in eine separate Relation <code>plz_orte(plz, ort)</code> ausgelagert werden.</li>
+        </ol>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">4. Referenzielle Integrität & Datenvalidierung</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Referenzielle Integrität:</strong> Stellt sicher, dass jeder Fremdschlüsselwert tatsächlich auf einen existierenden Primärschlüssel der Elterntabelle verweist (Verhinderung verwaister Datensätze). Optionen beim Löschen/Ändern: <em>CASCADE</em> (automatisches Weiterlöschen) oder <em>RESTRICT</em> (Löschen wird verboten, solange abhängige Daten existieren).</li>
+          <li><strong>Validierungsmethoden:</strong> Pflichtfeldprüfung (NOT NULL), Wertebereichsprüfung (Range Check z. B. Alter 18–67), Formatprüfung (Regex für E-Mail, IBAN) und Plausibilitätsprüfungen.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Authentische IHK-Prüfungsaufgaben -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Datenmodellen & ERM
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Aufgaben nach ZPA-Standard: Normalisierung, Kardinalitäten und relationale Integrität (ohne SQL).
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Aufgabe 1: Normalisierung -->
+        <div class="ihk-exam-task" data-title="Normalisierung 1NF bis 3NF" data-points="12" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Datenbank Normalisierung 1NF bis 3NF</strong>
+            <span class="ihk-badge ihk-badge-success">12 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Gegeben ist eine unnormalisierte Bestelltabelle: bestellung (bestell_nr, datum, kunden_name, kunden_plz, kunden_ort, artikel_liste, preise).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie die 1., 2. und 3. Normalform und überführen Sie das Schema schrittweise in die 3. Normalform.
+          </p>
+          <textarea class="ihk-input" rows="4" placeholder="Definitionen und Tabellenstrukturen 1NF, 2NF, 3NF..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              1. Normalform (1NF): Alle Attribute sind atomar (jede Zelle enthält nur einen elementaren Wert; keine Wiederholgruppen). Tabelle aufteilen in Bestelldaten und einzelne Bestellpositionen (artikel_liste/preise auflösen). (4 Pkt.)
+2. Normalform (2NF): Das Schema ist in 1NF und jedes Nichtschlüssel-Attribut ist vom gesamten Primärschlüssel voll funktional abhängig (keine Abhängigkeit von Teilen eines zusammengesetzten Schlüssels). Trennung von Bestellpositionen und Artikelstammdaten. (4 Pkt.)
+3. Normalform (3NF): Das Schema ist in 2NF und es existieren keine transitiven Abhängigkeiten zwischen Nichtschlüssel-Attributen (Nichtschlüssel bestimmen keine anderen Nichtschlüssel). Auslagerung von Ort über die PLZ (kunden_name -> kunden_plz -> kunden_ort auflösen). (4 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 2: ERM Kardinalitäten n:m -->
+        <div class="ihk-exam-task" data-title="ER-Modellierung Kardinalitäten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">ER-Modellierung Kardinalitäten & n:m-Auflösung</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Modellieren Sie die Beziehung zwischen "Projekt" und "Mitarbeiter": Ein Projekt kann von mehreren Mitarbeitern bearbeitet werden; ein Mitarbeiter kann in mehreren Projekten mitarbeiten. Zu jeder Mitarbeit wird die Anzahl der investierten Arbeitsstunden erfasst.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Geben Sie den Beziehungstyp (Kardinalität) an und erklären Sie, wie diese Beziehung in einem relationalen Datenbankschema aufgelöst wird.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Kardinalität und Zwischentabelle beschreiben..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Kardinalität: n:m-Beziehung (Many-to-Many). (2 Pkt.)
+Auflösung im relationalen Schema: Eine n:m-Beziehung kann nicht direkt über Fremdschlüssel in den beiden Haupttabellen abgebildet werden. Es wird eine Zwischentabelle / Verknüpfungstabelle (z. B. projekt_mitarbeiter) benötigt. (3 Pkt.)
+Struktur der Zwischentabelle: Enthält als Fremdschlüssel projekt_id und mitarbeiter_id (bilden gemeinsam den zusammengesetzten Primärschlüssel) sowie das Beziehungsattribut arbeitsstunden. (3 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 3: Chen vs Krähenfuß -->
+        <div class="ihk-exam-task" data-title="Chen vs Krähenfuß" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">ER-Modellierung Chen vs. Krähenfuß-Notation</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zur Dokumentation eines Kundensystems werden Entity-Relationship-Modelle (ERM) eingesetzt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Vergleichen Sie die Chen-Notation mit der Krähenfuß-Notation (Martin-Notation) hinsichtlich der Darstellung von Entitäten, Attributen und Kardinalitäten (1:1, 1:n, n:m).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Vergleich der Notationen..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Entitäten: Bei Chen als Rechteck dargestellt; bei Krähenfuß ebenfalls als Rechteck/Tabelle mit getrenntem Kopf für den Entitätsnamen. (2 Pkt.)
+Attribute: Bei Chen als Ellipsen, die mit der Entität verbunden sind (Primärschlüssel unterstrichen); bei Krähenfuß direkt als Zeilen innerhalb des Entitätsrechtecks aufgelistet (PK/FK gekennzeichnet). (3 Pkt.)
+Kardinalitäten: Bei Chen über Rauten als Beziehungselemente mit Beschriftung 1, n, m an den Kanten; bei Krähenfuß direkt an den Linienenden über Symbole (Strich = genau eins, Kreis = optional/null, Dreizack/Krähenfuß = viele). (3 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 4: Referenzielle Integrität -->
+        <div class="ihk-exam-task" data-title="Referenzielle Integrität" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Relationales Datenmodell & Referenzielle Integrität</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einer relationalen Datenbank werden Kundendaten und deren Bestellungen verwaltet.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie die Begriffe Primärschlüssel, Fremdschlüssel und Referenzielle Integrität und erklären Sie, welche Gefahr droht, wenn die referenzielle Integrität verletzt wird.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Begriffe und Gefahren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Primärschlüssel (Primary Key): Ein Attribut oder eine minimale Attributkombination, die jeden Datensatz einer Tabelle eindeutig und unveränderlich identifiziert (Darf weder Duplikate noch NULL enthalten). (2 Pkt.)
+Fremdschlüssel (Foreign Key): Ein Attribut in einer Relation, das auf den Primärschlüssel einer anderen (oder derselben) Relation verweist und logische Beziehungen herstellt. (2 Pkt.)
+Referenzielle Integrität: Die Integritätsbedingung besagt, dass jeder Fremdschlüsselwert entweder NULL sein muss oder tatsächlich als gültiger Primärschlüsselwert in der referenzierten Elterntabelle existieren muss. (2 Pkt.)
+Gefahr bei Verletzung: Entstehung von "verwaisten Datensätzen" (Orphan Records), z. B. Bestellungen ohne zugehörigen Kunden, was zu inkonsistenten Datenbeständen und Abstürzen in Auswertungen führt. (2 Pkt.)
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <!-- Footer Navigation -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../09_netzplantechnik_und_projektmanagement/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../11_subnetting_drill_master/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

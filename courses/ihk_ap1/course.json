@@ -1,96 +1,90 @@
 {
   "id": "ihk_ap1",
-  "title": "IHK AP1 Crashkurs: IT-Arbeitsplatz & Programmierung",
+  "title": "IHK AP1 Prüfungstraining: Einrichten eines IT-gestützten Arbeitsplatzes",
   "language": "ihk_ap1",
   "icon": "📘",
   "runner": "none",
-  "description": "Lückenlose Vorbereitung auf die IHK-Abschlussprüfung Teil 1. Alle Lernfelder (LF 1 bis LF 8) mit interaktiven Übungen, 150-Fragen-Pool & 90-Minuten Probeprüfung.",
+  "description": "Offizieller Vorbereitungskurs auf die IHK-Abschlussprüfung Teil 1 (Neuordnung nach ZPA-Katalog 2. Auflage). Alle Lernfelder (LF 1 bis LF 6), BPMN 2.0, EPK, PrintTop-Belegrechnung, Netzplantechnik & 171-Fragen-Pool.",
   "tracks": [
     {
       "id": "track_1_it_systeme",
-      "title": "🌱 Lehrpfad 1: Basissysteme & Sicherheit (LF 1–4)",
-      "description": "Unternehmen & Rolle im Betrieb, Hardware & Ergonomie, Subnetting & Netzwerke, Schutzbedarfsanalyse & DSGVO.",
+      "title": "🌱 Lehrpfad 1: Basissysteme, Hardware & Netzwerke (LF 1–4)",
+      "description": "Unternehmen & BGB-Verträge, Hardware, Ergonomie & IEC-Binärpräfixe, Subnetting & Netzwerke, Schutzbedarfsanalyse & DSGVO.",
       "certificateKey": "ihk_ap1_systeme",
       "chapters": [
         {
           "folder": "01_lf1_unternehmen_und_arbeitsplatz",
-          "title": "LF 1: Unternehmen & Rolle im Betrieb (Organisation, Verträge, ITIL)",
+          "title": "LF 1: Unternehmen & Rolle im Betrieb (Organisation, Verträge, ITIL 4 & KI-Support)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
           "folder": "02_lf2_arbeitsplaetze_ausstatten",
-          "title": "LF 2: Arbeitsplätze ausstatten (Hardware, Ergonomie, USV, NWA)",
+          "title": "LF 2: Arbeitsplätze ausstatten (Displays, ArbStättV, USV & IEC-Binärpräfixe)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
           "folder": "03_lf3_clients_in_netzwerke_einbinden",
-          "title": "LF 3: Clients in Netzwerke einbinden (Subnetting, IPv6, LWL)",
+          "title": "LF 3: Clients in Netzwerke einbinden (IPv4/IPv6, Subnetting, LWL & Übertragungszeiten)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
           "folder": "04_lf4_schutzbedarfsanalyse_und_cybersicherheit",
-          "title": "LF 4: Schutzbedarfsanalyse & Cyber-Sicherheit (CIA, Backup, TOMs)",
+          "title": "LF 4: Schutzbedarfsanalyse & Cyber-Sicherheit (CIA, Backup, TOM & KI-Datenschutz)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
       ]
     },
     {
-      "id": "track_2_programmierung_und_datenbanken",
-      "title": "💻 Lehrpfad 2: Software, CPS & Schnittstellen (LF 5–8)",
-      "description": "Algorithmen & SQL-Datenbanken, Cyber-physische Systeme, Instandhaltung & Fehlerdiagnose, REST-Schnittstellen.",
+      "id": "track_2_prozesse_software_itsm",
+      "title": "⚡ Lehrpfad 2: Prozessmodellierung, Software-Design & ITSM (LF 1, 5, 6)",
+      "description": "BPMN 2.0 Gateways & EPK, UML-Diagramme & Pseudocode (kein PAP/Struktogramm mehr!), IT-Servicemanagement & SLAs.",
       "certificateKey": "ihk_ap1_programmierung",
       "chapters": [
         {
-          "folder": "05_lf5_software_zur_datenverwaltung",
-          "title": "LF 5: Software zur Datenverwaltung anpassen (Trace, UML, SQL)",
+          "folder": "05_prozessmodellierung_bpmn_und_epk",
+          "title": "BPMN & EPK: Geschäftsprozessmodellierung nach ZPA-Standard (LF 1/6)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "06_lf6_cyber_physische_systeme_iot",
-          "title": "LF 6: Das Cyber-Physische System ergänzen (Sensoren, Aktoren, MQTT)",
+          "folder": "06_lf5_software_und_anwendungsentwicklung",
+          "title": "LF 5: Software- & Anwendungsentwicklung (UML, Pseudocode & Trace-Tabellen)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "07_lf7_instandhaltung_und_fehlerdiagnose",
-          "title": "LF 7: Cyber-Physische Systeme instand halten (Diagnose, ESD, Messen)",
-          "taskFile": "README.md",
-          "testFile": "index.html"
-        },
-        {
-          "folder": "08_lf8_datenfluesse_und_schnittstellen",
-          "title": "LF 8: Datenflüsse optimieren & Schnittstellen anpassen (REST, JSON, JWT)",
+          "folder": "07_lf6_serviceanfragen_und_itsm",
+          "title": "LF 6: Serviceanfragen bearbeiten & ITSM (Tickettriage, SLAs & Eskalation)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
       ]
     },
     {
-      "id": "track_3_praxis_drills",
-      "title": "⚡ Lehrpfad 3: Interaktive Praxis-Drills & Labore",
-      "description": "Trace-Tabellen-Trainer mit zeilenweiser Prüfung, Relationales SQL-Labor & Subnetting-Drill Master.",
+      "id": "track_3_kaufmaennisches_und_datenmodelle",
+      "title": "📊 Lehrpfad 3: Kaufmännische Steuerung, Netzplantechnik & Datenmodelle (LF 1, 2, 5)",
+      "description": "PrintTop GmbH Rechnungsprüfung, Verzugszinsen § 288 BGB, DIN 69900 Netzplantechnik und relationale ER-Modelle (ohne SQL).",
       "certificateKey": "ihk_ap1_prozesse",
       "chapters": [
         {
-          "folder": "09_trace_tabellen_trainer",
-          "title": "Drill 1: Interaktiver Trace-Tabellen-Trainer (LF 5)",
+          "folder": "08_belegsaetze_und_kaufmaennische_rechnung",
+          "title": "LF 1/2: Belegsätze & Kaufmännische Rechnung (PrintTop GmbH, Skonto, Rabatt & Verzug)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "10_sql_datenbank_labor",
-          "title": "Drill 2: Relationale Datenbanken & Live-SQL Labor (LF 5)",
+          "folder": "09_netzplantechnik_und_projektmanagement",
+          "title": "LF 1: Netzplantechnik & Projektcontrolling (FAZ/FEZ/SAZ/SEZ, Puffer & Kritischer Pfad)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "11_subnetting_drill_master",
-          "title": "Drill 3: Endlos Subnetting-Drill Generator (LF 3)",
+          "folder": "10_relationales_datenmodell_und_erm",
+          "title": "LF 5: Relationales Datenmodell & ERM (Chen/Krähenfuß, Normalisierung 1NF-3NF)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
@@ -98,13 +92,19 @@
     },
     {
       "id": "track_4_probepruefung",
-      "title": "🏆 Lehrpfad 4: Offizielle AP1 Probeprüfung & Notenrechner",
-      "description": "90-Minuten Realtime Prüfungsmodus mit Countdown, 100 Punkten, Zufallsgenerator aus 150 Fragen & Erwartungshorizont.",
+      "title": "🏆 Lehrpfad 4: Interaktive Praxis-Drills & IHK-Probeprüfung",
+      "description": "Endlos-Subnetting-Drill Generator & authentische 90-Minuten-Prüfungssimulation mit 100-Punkte-Schlüssel.",
       "certificateKey": "ihk_ap1_master",
       "chapters": [
         {
+          "folder": "11_subnetting_drill_master",
+          "title": "Drill: Subnetting- & Präfix-Trainer mit Sofort-Validierung (LF 3)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
           "folder": "12_ap1_probepruefung_simulation",
-          "title": "Probeprüfung AP1: 90 Min. Realtime Simulation (100 Pkt.)",
+          "title": "Simulation: IHK AP1 Probeprüfung (90 Min. / 100 Punkte nach ZPA 2. Auflage)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }

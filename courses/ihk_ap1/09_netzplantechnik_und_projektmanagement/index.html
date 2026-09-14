@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP1 Modul 09: Netzplantechnik & Projektmanagement (LF 1)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA 2. Auflage Standard</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 09: Netzplantechnik & Projektmanagement</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Offizieller ZPA-Anhang (S. 41): DIN 69900 Vorgangsknoten, Vorwärts- & Rückwärtsrechnung, Gesamtpuffer (GP), freier Puffer (FP) & Kritischer Pfad.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+      <h2 style="color: #38bdf8; margin-top: 0;">📅 Netzplantechnik nach DIN 69900</h2>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        Die Netzplantechnik (Katalog 2. Auflage, S. 41) dient der logischen und zeitlichen Planung komplexer IT-Projekte. Sie ermöglicht die Bestimmung der Gesamtdauer und identifiziert Terminpuffer sowie den kritischen Weg.
+      </p>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">1. Der offizielle ZPA-Vorgangsknoten (DIN 69900)</h3>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        In der Prüfung besteht jeder Vorgang aus folgendem genormten 7-teiligen Kasten:
+      </p>
+
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 16px 0; max-width: 440px; margin-left: auto; margin-right: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #38bdf8; font-family: monospace; font-size: 0.9rem;">
+          <tr style="border-bottom: 1px solid #38bdf8; background: #1e293b;">
+            <td style="width: 30%; border-right: 1px solid #38bdf8; padding: 6px;">Nr. (z. B. A)</td>
+            <td style="padding: 6px;" colspan="2"><strong>Vorgangsbezeichnung</strong></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #38bdf8; background: #0f172a;">
+            <td style="border-right: 1px solid #38bdf8; padding: 6px;" colspan="3"><strong>Dauer (D) in Tagen</strong></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #38bdf8; background: #1e293b;">
+            <td style="width: 33%; border-right: 1px solid #38bdf8; padding: 6px; color: #4ade80;">FAZ</td>
+            <td style="width: 34%; border-right: 1px solid #38bdf8; padding: 6px;">&nbsp;</td>
+            <td style="width: 33%; padding: 6px; color: #4ade80;">FEZ</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #38bdf8; background: #1e293b;">
+            <td style="border-right: 1px solid #38bdf8; padding: 6px; color: #f87171;">SAZ</td>
+            <td style="border-right: 1px solid #38bdf8; padding: 6px;">&nbsp;</td>
+            <td style="padding: 6px; color: #f87171;">SEZ</td>
+          </tr>
+          <tr style="background: #0f172a;">
+            <td style="border-right: 1px solid #38bdf8; padding: 6px; color: #fbbf24;">GP</td>
+            <td style="border-right: 1px solid #38bdf8; padding: 6px;">&nbsp;</td>
+            <td style="padding: 6px; color: #38bdf8;">FP</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">2. Die Rechenregeln im Detail</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <h4 style="color: #4ade80; margin-top: 0;">A. Vorwärtsrechnung (von links nach rechts):</h4>
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li>Erster Vorgang: <code>FAZ = 0</code></li>
+          <li>Endzeitpunkt berechnen: <code>FEZ = FAZ + Dauer</code></li>
+          <li><strong>Zusammenführung:</strong> Laufen mehrere Vorgänger in einen Vorgang ein, gilt: <code>FAZ = MAX(alle eingehenden FEZ)</code>. Der Vorgang kann erst starten, wenn der <em>letzte</em> Vorgänger fertig ist.</li>
+        </ul>
+
+        <h4 style="color: #f87171; margin-top: 16px;">B. Rückwärtsrechnung (von rechts nach links):</h4>
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li>Letzter Vorgang: <code>SEZ = FEZ</code> (Projektendtermin wird übernommen)</li>
+          <li>Anfangszeitpunkt berechnen: <code>SAZ = SEZ - Dauer</code></li>
+          <li><strong>Verzweigung:</strong> Gehen von einem Vorgang mehrere Nachfolger aus, gilt: <code>SEZ = MIN(alle nachfolgenden SAZ)</code>. Der Vorgang muss fertig sein, bevor der <em>früheste</em> Nachfolger starten muss.</li>
+        </ul>
+
+        <h4 style="color: #fbbf24; margin-top: 16px;">C. Pufferzeiten-Berechnung:</h4>
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Gesamtpuffer (GP):</strong> Zeitspanne, um die ein Vorgang maximal verschoben werden darf, ohne das <em>Gesamtprojektende</em> zu verzögern.<br>
+            <code>GP = SAZ - FAZ = SEZ - FEZ</code>
+          </li>
+          <li><strong>Freier Puffer (FP):</strong> Zeitspanne, um die ein Vorgang maximal verschoben werden darf, ohne den <em>frühesten Start des Nachfolgers</em> zu gefährden.<br>
+            <code>FP = MIN(FAZ aller Nachfolger) - FEZ</code>
+          </li>
+        </ul>
+
+        <h4 style="color: #ef4444; margin-top: 16px;">D. Der Kritische Pfad (Critical Path):</h4>
+        <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+          Die Kette aller Vorgänge vom Projektstart bis zum Projektende, bei denen der <strong>Gesamtpuffer GP = 0</strong> (und FP = 0) ist. 
+          <br>⚠️ <em>Jede Verzögerung bei einem Vorgang auf dem kritischen Pfad verlängert unmittelbar die Projektdauer!</em>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Interaktiver Netzplan Trainer -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+      <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+        <span>🖩</span> Interaktiver Netzplan-Trainer (Beispielprojekt)
+      </h3>
+      <p style="color: #94a3b8; font-size: 0.9rem;">
+        Berechnen Sie FAZ, FEZ, SAZ, SEZ und Pufferzeiten für folgendes Server-Migrationsprojekt:
+      </p>
+
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin-bottom: 16px; font-family: monospace; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+        - Vorgang A: Server beschaffen (Dauer = 4 Tage, Vorgänger: keine)<br>
+        - Vorgang B: Betriebssystem installieren (Dauer = 3 Tage, Vorgänger: A)<br>
+        - Vorgang C: Verkabelung prüfen (Dauer = 2 Tage, Vorgänger: keine)<br>
+        - Vorgang D: Datenbank einrichten (Dauer = 5 Tage, Vorgänger: B und C)
+      </div>
+
+      <table class="ihk-table">
+        <thead>
+          <tr><th>Vorgang</th><th>Dauer</th><th>FAZ</th><th>FEZ</th><th>SAZ</th><th>SEZ</th><th>GP</th><th>FP</th><th>Kritisch?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>A: Beschaffung</strong></td><td>4</td><td>0</td><td>4</td><td>0</td><td>4</td><td>0</td><td>0</td><td style="color:#ef4444; font-weight:bold;">JA</td></tr>
+          <tr><td><strong>B: OS-Installation</strong></td><td>3</td><td>4</td><td>7</td><td>4</td><td>7</td><td>0</td><td>0</td><td style="color:#ef4444; font-weight:bold;">JA</td></tr>
+          <tr><td><strong>C: Verkabelung</strong></td><td>2</td><td>0</td><td>2</td><td>5</td><td>7</td><td style="color:#fbbf24; font-weight:bold;">5</td><td style="color:#38bdf8; font-weight:bold;">5</td><td style="color:#94a3b8;">NEIN</td></tr>
+          <tr><td><strong>D: Datenbank</strong></td><td>5</td><td>7</td><td>12</td><td>7</td><td>12</td><td>0</td><td>0</td><td style="color:#ef4444; font-weight:bold;">JA</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 14px; padding: 12px; background: #0f172a; border-left: 4px solid #ef4444; border-radius: 6px; color: #cbd5e1; font-size: 0.9rem;">
+        <strong>Kritischer Weg:</strong> Start ──► A ──► B ──► D ──► Ende (Mindestprojektdauer: <strong>12 Tage</strong>). Vorgang C hat 5 Tage Puffer.
+      </div>
+    </div>
+
+    <!-- Authentische IHK-Prüfungsaufgaben -->
+    
+    <!-- Interaktives Tool: netzplan_trainer.js -->
+    <div id="netzplan-trainer-container" style="margin-bottom: 24px;"></div>
+    <script src="../../../assets/ihk_tools/netzplan_trainer.js"></script>
+
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Netzplantechnik
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Aufgaben nach DIN 69900 und offiziellem ZPA-Bewertungsschema.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Aufgabe 1: Vorwärts- und Rückwärtsrechnung -->
+        <div class="ihk-exam-task" data-title="Netzplantechnik Vorwärts- & Rückwärtsrechnung" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Netzplantechnik Vorwärts- und Rückwärtsrechnung</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Gegeben ist ein Projektausschnitt mit folgenden Vorgängen (Dauer D in Tagen):<br>
+            - Vorgang A: Server beschaffen (D=4, kein Vorgänger)<br>
+            - Vorgang B: Betriebssystem installieren (D=3, Vorgänger A)<br>
+            - Vorgang C: Verkabelung prüfen (D=2, kein Vorgänger)<br>
+            - Vorgang D: Datenbank einrichten (D=5, Vorgänger B und C)<br>
+            Projektstart ist an Tag 0.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Berechnen Sie für alle Vorgänge (A, B, C, D) den Frühesten Anfangszeitpunkt (FAZ), den Frühesten Endzeitpunkt (FEZ), den Spätesten Anfangszeitpunkt (SAZ) und den Spätesten Endzeitpunkt (SEZ) und geben Sie die minimale Projektdauer an.
+          </p>
+          <textarea class="ihk-input" rows="4" placeholder="FAZ/FEZ und SAZ/SEZ tabellieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Vorwärtsrechnung (FAZ + Dauer = FEZ):
+- A: FAZ = 0, FEZ = 0 + 4 = 4. (1,5 Pkt.)
+- B: Vorgänger A -> FAZ = 4, FEZ = 4 + 3 = 7. (1,5 Pkt.)
+- C: Kein Vorgänger -> FAZ = 0, FEZ = 0 + 2 = 2. (1,5 Pkt.)
+- D: Vorgänger B (FEZ 7) und C (FEZ 2) -> FAZ = MAX(7, 2) = 7, FEZ = 7 + 5 = 12. (1,5 Pkt.)
+Projektdauer: 12 Tage. (1 Pkt.)
+
+Rückwärtsrechnung (SEZ - Dauer = SAZ):
+- D: SEZ = 12, SAZ = 12 - 5 = 7. (1 Pkt.)
+- B: Nachfolger D -> SEZ = 7, SAZ = 7 - 3 = 4. (1 Pkt.)
+- C: Nachfolger D -> SEZ = 7, SAZ = 7 - 2 = 5. (1 Pkt.)
+- A: Nachfolger B -> SEZ = 4, SAZ = 4 - 4 = 0. (1 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 2: Kritischer Pfad & Puffer -->
+        <div class="ihk-exam-task" data-title="Kritischer Pfad & Pufferzeiten" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Kritischer Pfad und Pufferzeiten (GP vs. FP)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Bezugnehmend auf den berechneten Netzplan mit den Vorgängen A, B, C und D.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie Gesamtpuffer (GP) und freien Puffer (FP) mit ihren mathematischen Formeln, berechnen Sie GP und FP für Vorgang C und identifizieren Sie den kritischen Pfad des Projekts.
+          </p>
+          <textarea class="ihk-input" rows="4" placeholder="Definitionen, Formeln und Berechnung..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Definitionen & Formeln:
+- Gesamtpuffer (GP = SAZ - FAZ bzw. SEZ - FEZ): Die Zeitspanne, um die ein Vorgang maximal verschoben werden darf, ohne den gesamten Projektendtermin zu gefährden. (2 Pkt.)
+- Freier Puffer (FP = FAZ_Nachfolger - FEZ_aktuell): Die Zeitspanne, um die ein Vorgang maximal verschoben werden darf, ohne den frühesten Anfangszeitpunkt des direkten Nachfolgers zu beeinflussen. (2 Pkt.)
+
+Berechnung für Vorgang C (FAZ=0, FEZ=2, SAZ=5, SEZ=7, Nachfolger D mit FAZ=7):
+- GP(C) = 5 - 0 = 5 Tage (oder 7 - 2 = 5 Tage). (1,5 Pkt.)
+- FP(C) = FAZ(D) - FEZ(C) = 7 - 2 = 5 Tage. (1,5 Pkt.)
+
+Kritischer Pfad: Die Kette von Vorgängen, bei denen der Gesamtpuffer 0 beträgt: Start -> A (GP=0) -> B (GP=0) -> D (GP=0) -> Ende (Dauer 12 Tage). (1 Pkt.)
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <!-- Footer Navigation -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../08_belegsaetze_und_kaufmaennische_rechnung/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../10_relationales_datenmodell_und_erm/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

@@ -691,97 +691,91 @@ window.COURSES_MANIFEST = {
   },
   "ihk_ap1": {
     "id": "ihk_ap1",
-    "title": "IHK AP1 Crashkurs: IT-Arbeitsplatz & Programmierung",
+    "title": "IHK AP1 Prüfungstraining: Einrichten eines IT-gestützten Arbeitsplatzes",
     "language": "ihk_ap1",
     "icon": "📘",
     "runner": "none",
-    "description": "Lückenlose Vorbereitung auf die IHK-Abschlussprüfung Teil 1. Alle Lernfelder (LF 1 bis LF 8) mit interaktiven Übungen, 150-Fragen-Pool & 90-Minuten Probeprüfung.",
+    "description": "Offizieller Vorbereitungskurs auf die IHK-Abschlussprüfung Teil 1 (Neuordnung nach ZPA-Katalog 2. Auflage). Alle Lernfelder (LF 1 bis LF 6), BPMN 2.0, EPK, PrintTop-Belegrechnung, Netzplantechnik & 171-Fragen-Pool.",
     "tracks": [
       {
         "id": "track_1_it_systeme",
-        "title": "🌱 Lehrpfad 1: Basissysteme & Sicherheit (LF 1–4)",
-        "description": "Unternehmen & Rolle im Betrieb, Hardware & Ergonomie, Subnetting & Netzwerke, Schutzbedarfsanalyse & DSGVO.",
+        "title": "🌱 Lehrpfad 1: Basissysteme, Hardware & Netzwerke (LF 1–4)",
+        "description": "Unternehmen & BGB-Verträge, Hardware, Ergonomie & IEC-Binärpräfixe, Subnetting & Netzwerke, Schutzbedarfsanalyse & DSGVO.",
         "certificateKey": "ihk_ap1_systeme",
         "chapters": [
           {
             "folder": "01_lf1_unternehmen_und_arbeitsplatz",
-            "title": "LF 1: Unternehmen & Rolle im Betrieb (Organisation, Verträge, ITIL)",
+            "title": "LF 1: Unternehmen & Rolle im Betrieb (Organisation, Verträge, ITIL 4 & KI-Support)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
             "folder": "02_lf2_arbeitsplaetze_ausstatten",
-            "title": "LF 2: Arbeitsplätze ausstatten (Hardware, Ergonomie, USV, NWA)",
+            "title": "LF 2: Arbeitsplätze ausstatten (Displays, ArbStättV, USV & IEC-Binärpräfixe)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
             "folder": "03_lf3_clients_in_netzwerke_einbinden",
-            "title": "LF 3: Clients in Netzwerke einbinden (Subnetting, IPv6, LWL)",
+            "title": "LF 3: Clients in Netzwerke einbinden (IPv4/IPv6, Subnetting, LWL & Übertragungszeiten)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
             "folder": "04_lf4_schutzbedarfsanalyse_und_cybersicherheit",
-            "title": "LF 4: Schutzbedarfsanalyse & Cyber-Sicherheit (CIA, Backup, TOMs)",
+            "title": "LF 4: Schutzbedarfsanalyse & Cyber-Sicherheit (CIA, Backup, TOM & KI-Datenschutz)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
         ]
       },
       {
-        "id": "track_2_programmierung_und_datenbanken",
-        "title": "💻 Lehrpfad 2: Software, CPS & Schnittstellen (LF 5–8)",
-        "description": "Algorithmen & SQL-Datenbanken, Cyber-physische Systeme, Instandhaltung & Fehlerdiagnose, REST-Schnittstellen.",
+        "id": "track_2_prozesse_software_itsm",
+        "title": "⚡ Lehrpfad 2: Prozessmodellierung, Software-Design & ITSM (LF 1, 5, 6)",
+        "description": "BPMN 2.0 Gateways & EPK, UML-Diagramme & Pseudocode (kein PAP/Struktogramm mehr!), IT-Servicemanagement & SLAs.",
         "certificateKey": "ihk_ap1_programmierung",
         "chapters": [
           {
-            "folder": "05_lf5_software_zur_datenverwaltung",
-            "title": "LF 5: Software zur Datenverwaltung anpassen (Trace, UML, SQL)",
+            "folder": "05_prozessmodellierung_bpmn_und_epk",
+            "title": "BPMN & EPK: Geschäftsprozessmodellierung nach ZPA-Standard (LF 1/6)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "06_lf6_cyber_physische_systeme_iot",
-            "title": "LF 6: Das Cyber-Physische System ergänzen (Sensoren, Aktoren, MQTT)",
+            "folder": "06_lf5_software_und_anwendungsentwicklung",
+            "title": "LF 5: Software- & Anwendungsentwicklung (UML, Pseudocode & Trace-Tabellen)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "07_lf7_instandhaltung_und_fehlerdiagnose",
-            "title": "LF 7: Cyber-Physische Systeme instand halten (Diagnose, ESD, Messen)",
-            "taskFile": "README.md",
-            "testFile": "index.html"
-          },
-          {
-            "folder": "08_lf8_datenfluesse_und_schnittstellen",
-            "title": "LF 8: Datenflüsse optimieren & Schnittstellen anpassen (REST, JSON, JWT)",
+            "folder": "07_lf6_serviceanfragen_und_itsm",
+            "title": "LF 6: Serviceanfragen bearbeiten & ITSM (Tickettriage, SLAs & Eskalation)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
         ]
       },
       {
-        "id": "track_3_praxis_drills",
-        "title": "⚡ Lehrpfad 3: Interaktive Praxis-Drills & Labore",
-        "description": "Trace-Tabellen-Trainer mit zeilenweiser Prüfung, Relationales SQL-Labor & Subnetting-Drill Master.",
+        "id": "track_3_kaufmaennisches_und_datenmodelle",
+        "title": "📊 Lehrpfad 3: Kaufmännische Steuerung, Netzplantechnik & Datenmodelle (LF 1, 2, 5)",
+        "description": "PrintTop GmbH Rechnungsprüfung, Verzugszinsen § 288 BGB, DIN 69900 Netzplantechnik und relationale ER-Modelle (ohne SQL).",
         "certificateKey": "ihk_ap1_prozesse",
         "chapters": [
           {
-            "folder": "09_trace_tabellen_trainer",
-            "title": "Drill 1: Interaktiver Trace-Tabellen-Trainer (LF 5)",
+            "folder": "08_belegsaetze_und_kaufmaennische_rechnung",
+            "title": "LF 1/2: Belegsätze & Kaufmännische Rechnung (PrintTop GmbH, Skonto, Rabatt & Verzug)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "10_sql_datenbank_labor",
-            "title": "Drill 2: Relationale Datenbanken & Live-SQL Labor (LF 5)",
+            "folder": "09_netzplantechnik_und_projektmanagement",
+            "title": "LF 1: Netzplantechnik & Projektcontrolling (FAZ/FEZ/SAZ/SEZ, Puffer & Kritischer Pfad)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "11_subnetting_drill_master",
-            "title": "Drill 3: Endlos Subnetting-Drill Generator (LF 3)",
+            "folder": "10_relationales_datenmodell_und_erm",
+            "title": "LF 5: Relationales Datenmodell & ERM (Chen/Krähenfuß, Normalisierung 1NF-3NF)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
@@ -789,13 +783,19 @@ window.COURSES_MANIFEST = {
       },
       {
         "id": "track_4_probepruefung",
-        "title": "🏆 Lehrpfad 4: Offizielle AP1 Probeprüfung & Notenrechner",
-        "description": "90-Minuten Realtime Prüfungsmodus mit Countdown, 100 Punkten, Zufallsgenerator aus 150 Fragen & Erwartungshorizont.",
+        "title": "🏆 Lehrpfad 4: Interaktive Praxis-Drills & IHK-Probeprüfung",
+        "description": "Endlos-Subnetting-Drill Generator & authentische 90-Minuten-Prüfungssimulation mit 100-Punkte-Schlüssel.",
         "certificateKey": "ihk_ap1_master",
         "chapters": [
           {
+            "folder": "11_subnetting_drill_master",
+            "title": "Drill: Subnetting- & Präfix-Trainer mit Sofort-Validierung (LF 3)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
             "folder": "12_ap1_probepruefung_simulation",
-            "title": "Probeprüfung AP1: 90 Min. Realtime Simulation (100 Pkt.)",
+            "title": "Simulation: IHK AP1 Probeprüfung (90 Min. / 100 Punkte nach ZPA 2. Auflage)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
@@ -809,89 +809,107 @@ window.COURSES_MANIFEST = {
     "language": "ihk_ap2_fisi",
     "icon": "📕",
     "runner": "none",
-    "description": "Vollständige Prüfungsvorbereitung für FISI (LF 9–12, WiSo, 40h-Projekt). VLANs, OSPF, Active Directory, RAID-Simulator, Cloud & 3 vollständige Probeprüfungen.",
+    "description": "Vollständige Prüfungsvorbereitung für FISI (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: VLANs, VRT-Symbole, Active Directory, RAID 0-10, Backup 3-2-1-1-0, Enterprise SQL & Vollsimulation.",
     "tracks": [
       {
         "id": "track_1_netzwerke_und_server",
         "title": "🌱 Lehrpfad 1: Enterprise Netzwerke & Serverdienste (LF 9 & 10)",
-        "description": "VLANs (802.1Q), LACP, Spanning Tree, OSPF, BGP, Active Directory, Gruppenrichtlinien, PKI & Ansible.",
+        "description": "VLANs (802.1Q), LACP, Spanning Tree, OSPF, BGP, VRT-Symbole, Strukturierte Verkabelung, Active Directory & Kerberos.",
         "certificateKey": "ihk_ap2_netzwerke",
         "chapters": [
           {
-            "folder": "01_lf9_netzwerke_und_dienste",
-            "title": "LF 9: Netzwerke & Dienste bereitstellen (VLAN, Routing, Firewalls)",
+            "folder": "01_lf9_netzwerkinfrastruktur_und_routing",
+            "title": "LF 9: Enterprise Routing & Switching (VLAN, STP, LACP, OSPF)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "02_lf10_serverdienste_und_automation",
-            "title": "LF 10: Serverdienste & Automation bereitstellen (AD DS, DNS, Ansible)",
+            "folder": "02_vrt_netzwerkplaene_und_infrastruktur",
+            "title": "LF 9: Normierte Netzwerkpläne (VRT-Symbole) & Verkabelung",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_lf10_serverdienste_und_identitaeten",
+            "title": "LF 10: Serverdienste, Active Directory & Identitäten (AD DS, GPO, Kerberos)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
         ]
       },
       {
-        "id": "track_2_storage_und_cloud",
-        "title": "🛡️ Lehrpfad 2: Storage, Hochverfügbarkeit & Cloud (LF 11 & 12)",
-        "description": "RAID 0/1/5/6/10, SAN/NAS, HA-Cluster, Quorum, STONITH, ZFS, Hypervisoren, Docker, Kubernetes & Prometheus.",
-        "certificateKey": "ihk_ap2_sicherheit",
+        "id": "track_2_storage_und_automation",
+        "title": "⚙️ Lehrpfad 2: Skripting, Storage & Hochverfügbarkeit (LF 10 & 11)",
+        "description": "PowerShell, Bash, Ansible, RAID 0/1/5/6/10 (exklusiv AP2!), SAN/NAS, iSCSI, 3-2-1-1-0 Backup & HA-Cluster.",
+        "certificateKey": "ihk_ap2_storage_automation",
         "chapters": [
           {
-            "folder": "03_lf11_speicher_und_hochverfuegbarkeit",
-            "title": "LF 11: Speicher- & Hochverfügbarkeitssysteme (RAID, SAN, Cluster)",
+            "folder": "04_systemautomation_powershell_bash_python",
+            "title": "LF 10: Skriptprogrammierung & Systemautomation (PowerShell, Bash, Ansible)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "04_lf12_virtualisierung_und_cloud",
-            "title": "LF 12: Virtualisierung, Cloud & Automation (Docker, K8s, IaC)",
+            "folder": "05_lf11_speicher_und_hochverfuegbarkeit",
+            "title": "LF 11: Enterprise Storage, RAID & SAN-Architekturen (RAID 0-10, iSCSI, ZFS)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_backup_dr_und_hochverfuegbarkeit",
+            "title": "LF 11: Backup, Disaster Recovery & Hochverfügbarkeit (3-2-1-1-0, RTO/RPO)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
         ]
       },
       {
-        "id": "track_3_wiso_und_projekt",
-        "title": "☁️ Lehrpfad 3: WiSo & 40h-Betriebliche Projektarbeit",
-        "description": "Wirtschafts- & Sozialkunde (Arbeitsrecht, KSchG, Sozialversicherung) & Leitfaden zur 40h-Projektarbeit samt Fachgespräch.",
-        "certificateKey": "ihk_ap2_wiso_projekt",
+        "id": "track_3_datenbanken_und_cloud",
+        "title": "☁️ Lehrpfad 3: Enterprise SQL, Cloud & WiSo Arbeitsrecht (LF 10, 11 & 12)",
+        "description": "ZPA-SQL (DDL, DCL, Multi-Table JOINs, DATEDIFF), Hypervisoren, Docker, Kubernetes, Zero Trust & WiSo Arbeitsrecht.",
+        "certificateKey": "ihk_ap2_cloud_sql",
         "chapters": [
           {
-            "folder": "05_wiso_arbeitsrecht_und_wirtschaft",
-            "title": "WiSo: Wirtschafts- & Sozialkunde Prüfungs-Fit (BGB, KSchG, BetrVG)",
+            "folder": "07_enterprise_sql_und_datenbank_admin",
+            "title": "LF 10/11: Enterprise SQL & Datenbank-Administration (DDL, DCL, Joins, DATEDIFF)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "06_betriebliche_projektarbeit_guide",
-            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch-Guide",
+            "folder": "08_lf12_virtualisierung_und_cloud",
+            "title": "LF 12: Cloud-Architekturen, Virtualisierung & Security (Docker, K8s, Zero Trust)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_wiso_arbeitsrecht_und_wirtschaft",
+            "title": "WiSo 1: Arbeitsrecht, Tarifrecht & Gehaltsabrechnung (BBiG, KSchG, ArbZG)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }
         ]
       },
       {
-        "id": "track_4_probepruefungen",
-        "title": "🏆 Lehrpfad 4: Offizielle AP2 Probeprüfungen & Simulationen",
-        "description": "Die 3 schriftlichen IHK-Prüfungsteile unter Realbedingungen (Teil 1: 90 Min., Teil 2: 90 Min., WiSo: 60 Min.) mit 150-Fragen-Zufallsgenerator.",
+        "id": "track_4_betrieb_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Organisation, 40h-Projektarbeit & Prüfungssimulation",
+        "description": "Unternehmensformen, BetrVG, PUE-Wert, Green IT, Leitfaden zur 40h-Projektarbeit samt Fachgespräch & Vollsimulation AP2.",
         "certificateKey": "ihk_ap2_fisi_master",
         "chapters": [
           {
-            "folder": "07_ap2_teil_1_probepruefung",
-            "title": "Probeprüfung AP2 Teil 1: Planen & Umsetzen (90 Min. / 100 Pkt.)",
+            "folder": "10_wiso_betriebsorganisation_und_umwelt",
+            "title": "WiSo 2: Unternehmensformen, Umweltschutz (PUE) & Organisation (BetrVG)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "08_ap2_teil_2_probepruefung",
-            "title": "Probeprüfung AP2 Teil 2: Administration & Netzanalyse (90 Min. / 100 Pkt.)",
+            "folder": "11_betriebliche_projektarbeit_guide",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
             "taskFile": "README.md",
             "testFile": "index.html"
           },
           {
-            "folder": "09_ap2_wiso_probepruefung",
-            "title": "Probeprüfung AP2 WiSo: Wirtschafts- & Sozialkunde (60 Min. / 100 Pkt.)",
+            "folder": "12_ap2_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
             "taskFile": "README.md",
             "testFile": "index.html"
           }

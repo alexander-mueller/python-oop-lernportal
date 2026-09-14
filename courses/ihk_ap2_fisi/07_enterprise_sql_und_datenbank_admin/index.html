@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP2 Modul 07: Enterprise SQL & Datenbank-Administration (LF 10/11)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">Exklusiv in AP2</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 07: Enterprise SQL & Datenbank-Administration (LF 10/11)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">ZPA-SQL-Syntax: DDL (CREATE/ALTER TABLE), DCL (GRANT/REVOKE), Multi-Table JOINs, DATEDIFF & ACID.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🗄️ Enterprise SQL & Datenbank-Administration (LF 10 & 11)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  <span style="color: #facc15; font-weight: bold;">Offizieller ZPA 2. Auflage Standard:</span> Alle SQL-Befehle (DDL, DML, DCL, Joins, Unterabfragen und spezifische ZPA-Funktionen wie <code>DATEDIFF</code>) wurden aus AP1 entfernt und sind nun <strong>exklusiv in der AP2</strong> verortet!
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. DDL: Tabellenstruktur & Constraints</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <pre style="background: #1e293b; padding: 12px; border-radius: 6px; color: #38bdf8; overflow-x: auto; margin: 0;">
+CREATE TABLE mitarbeiter (
+    mit_nr INTEGER PRIMARY KEY,
+    nachname VARCHAR(50) NOT NULL,
+    vorname VARCHAR(50) NOT NULL,
+    gehalt DECIMAL(10,2) CHECK (gehalt &gt; 0),
+    eintrittsdatum DATE NOT NULL,
+    abt_nr INTEGER,
+    CONSTRAINT fk_abt FOREIGN KEY (abt_nr) 
+        REFERENCES abteilung(abt_nr) ON DELETE RESTRICT
+);
+
+-- Tabellenstruktur nachträglich ändern
+ALTER TABLE mitarbeiter ADD COLUMN email VARCHAR(100);
+ALTER TABLE mitarbeiter MODIFY COLUMN nachname VARCHAR(80);
+ALTER TABLE mitarbeiter DROP COLUMN email;
+  </pre>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. DCL: Benutzer- & Rechteverwaltung</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <pre style="background: #1e293b; padding: 12px; border-radius: 6px; color: #4ade80; overflow-x: auto; margin: 0;">
+-- Benutzer anlegen & Rechte vergeben
+CREATE USER 'reporting'@'localhost' IDENTIFIED BY 'Start2025!Secure';
+GRANT SELECT, INSERT ON unternehmen.* TO 'reporting'@'localhost' WITH GRANT OPTION;
+REVOKE INSERT ON unternehmen.* FROM 'reporting'@'localhost';
+  </pre>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Multi-Table JOINs, Aggregation & ZPA-Funktionen</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  - <strong>JOINs:</strong> <code>INNER JOIN</code> (nur übereinstimmende Paare), <code>LEFT JOIN</code> (alle Zeilen der linken Tabelle, auch ohne Treffer rechts).<br>
+  - <strong>Datumsdifferenz:</strong> <code>DATEDIFF(end_datum, start_datum)</code> berechnet Tage zwischen Daten.<br>
+  - <strong>GROUP BY & HAVING:</strong> <code>SELECT abt_nr, AVG(gehalt) FROM mitarbeiter GROUP BY abt_nr HAVING COUNT(*) &gt;= 5;</code><br>
+  - <strong>ACID:</strong> Atomicity (Alles oder Nichts), Consistency (Konsistenz), Isolation (Transaktionsisolierung), Durability (Dauerhaftigkeit).
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="SQL DDL CREATE TABLE mit Constraints" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL DDL CREATE TABLE mit Constraints</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Für eine Ticket-Verwaltung soll die Tabelle "ticket" per SQL angelegt werden: id (Ganzzahl, Primärschlüssel mit Autoinkrement), titel (Text, max. 100 Zeichen, Pflichtfeld), status (Text, Standardwert "OFFEN"), prioritaet (Ganzzahl, Werte nur von 1 bis 5 erlaubt), ersteller_id (Ganzzahl, Fremdschlüssel auf benutzer.id mit Kaskadierung beim Löschen).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Schreiben Sie das syntaktisch korrekte SQL-Statement nach ANSI/ISO-Standard.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL DML Aggregation und GROUP BY mit HAVING" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL DML Aggregation und GROUP BY mit HAVING</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Gegeben sind die Tabellen kunden (id, name, stadt) und bestellungen (id, kunde_id, betrag, datum).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Formulieren Sie eine SQL-Abfrage, die den Kundennamen und die Gesamtsumme aller Bestellungen für jeden Kunden ausgibt, dessen Gesamtbestellwert 10.000 EUR überschreitet. Das Ergebnis soll absteigend nach der Summe sortiert sein.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL JOIN-Typen INNER vs LEFT vs FULL" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL JOIN-Typen INNER vs LEFT vs FULL</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einer Datenbank existieren mitarbeiter (id, name, abt_id) und abteilungen (id, bezeichnung). Einige Mitarbeiter haben keine Abteilung, und einige Abteilungen haben keine Mitarbeiter.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie den Unterschied im Abfrageergebnis zwischen INNER JOIN und LEFT OUTER JOIN bezüglich der Ergebniszeilen.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL Transaktionen ACID-Eigenschaften" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Transaktionen ACID-Eigenschaften</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Bei einer Banküberweisung von 500 EUR von Konto A auf Konto B wird ein Transaktionsblock ausgeführt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Nennen und erläutern Sie die vier ACID-Eigenschaften und beschreiben Sie, was passiert, wenn nach dem Abbuchen von Konto A das Datenbanksystem abstürzt.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL Subqueries mit IN und EXISTS" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Subqueries mit IN und EXISTS</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Gegeben sind die Tabellen kunden (id, name, land) und bestellungen (id, kunde_id, summe).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Formulieren Sie zwei SQL-Abfragen, die alle Kundennamen ausgeben, die mindestens eine Bestellung getätigt haben: Einmal unter Verwendung einer Subquery mit IN und einmal mit EXISTS.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL Window Functions ROW_NUMBER & RANK" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Window Functions ROW_NUMBER & RANK</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einer Vertriebsdatenbank sollen die Top-3-Umsätze jedes Verkäufers ermittelt werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Funktionsweise von SQL Window Functions gegenüber GROUP BY und erklären Sie die Syntax von ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="SQL Datums- und Zeitfunktionen (DATEDIFF & DATEADD)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">SQL Datums- und Zeitfunktionen (DATEDIFF & DATEADD)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem Support-System (Tabelle tickets mit id, erstelldatum, schliessdatum) soll die Bearbeitungsdauer analysiert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Formulieren Sie eine SQL-Abfrage nach ZPA-Standard, die für alle im laufenden Jahr geschlossenen Tickets die Ticket-ID und die Bearbeitungsdauer in Tagen berechnet (unter Verwendung von DATEDIFF) und nur Tickets anzeigt, deren Bearbeitung länger als 14 Tage gedauert hat.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="Statistische SQL-Funktionen (STDDEV, VARIANCE, CORR)" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Statistische SQL-Funktionen (STDDEV, VARIANCE, CORR)</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Im Rahmen einer Performance-Analyse von Server-Antwortzeiten (Tabelle server_metrics mit server_id, response_time_ms, cpu_load) werden statistische Kennzahlen benötigt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Aufgaben und mathematische Bedeutung der SQL-Aggregatfunktionen STDDEV(), VARIANCE() und CORR() und beschreiben Sie einen Anwendungsfall zur Erkennung von Lastanomalien.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../06_backup_dr_und_hochverfuegbarkeit/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../08_lf12_virtualisierung_und_cloud/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP1 Modul 05: Prozessmodellierung mit BPMN 2.0 & EPK (LF 1/6)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA 2. Auflage Standard</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 05: Prozessmodellierung mit BPMN 2.0 & EPK</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Offizielle ZPA-Anhänge (S. 39–40): BPMN 2.0 Gateways (XOR, AND, OR), Pools & Lanes, Sequenz- vs. Nachrichtenfluss sowie Ereignisgesteuerte Prozessketten (EPK).</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+      <h2 style="color: #38bdf8; margin-top: 0;">📊 Geschäftsprozessmodellierung nach IHK-Standard</h2>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        Mit der 2. Auflage des ZPA-Prüfungskatalogs sind <strong>BPMN 2.0</strong> und <strong>Ereignisgesteuerte Prozessketten (EPK)</strong> feste, verbindliche Anhänge für die IHK-Abschlussprüfungen. Veraltete Programmablaufpläne (PAP) und DIN 66261 Struktogramme wurden gestrichen.
+      </p>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">1. BPMN 2.0 (Business Process Model and Notation)</h3>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        BPMN 2.0 ist der weltweite Standard zur Modellierung betrieblicher Geschäftsprozesse. Die ZPA Nord-West definiert folgende Kernelemente (Katalog S. 39):
+      </p>
+
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <table class="ihk-table">
+          <thead>
+            <tr><th>Element</th><th>Grafisches Symbol</th><th>Bedeutung & IHK-Regeln</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Start-Ereignis</strong></td>
+              <td>Dünner grüner/schwarzer Kreis ◯</td>
+              <td>Löst den Prozess aus (z. B. "Störungsmeldung eingegangen"). Hat nur ausgehende Sequenzflüsse.</td>
+            </tr>
+            <tr>
+              <td><strong>Zwischen-Ereignis</strong></td>
+              <td>Doppelter Kreis ⊚</td>
+              <td>Tritt während des Prozesses ein (z. B. Timer/Wartezeit, Nachricht empfangen).</td>
+            </tr>
+            <tr>
+              <td><strong>End-Ereignis</strong></td>
+              <td>Dicker schwarzer/roter Kreis ⬤</td>
+              <td>Beendet den Prozesspfad (z. B. "Ticket erfolgreich geschlossen").</td>
+            </tr>
+            <tr>
+              <td><strong>Aktivität / Task</strong></td>
+              <td>Rechteck mit abgerundeten Ecken ▢</td>
+              <td>Einzelschritt einer Arbeit (Aktion im Infinitiv, z. B. "Server neustarten", "Kunde benachrichtigen").</td>
+            </tr>
+            <tr>
+              <td><strong>Exklusives Gateway (XOR)</strong></td>
+              <td>Raute mit X (oder leer) ╳</td>
+              <td><strong>Entweder-oder:</strong> Genau ein ausgehender Pfad wird gewählt. Beim Zusammenführen leitet es jedes eintreffende Token sofort weiter (kein Warten).</td>
+            </tr>
+            <tr>
+              <td><strong>Paralleles Gateway (AND)</strong></td>
+              <td>Raute mit Pluszeichen ➕</td>
+              <td><strong>Parallelität:</strong> Alle ausgehenden Pfade starten gleichzeitig (Fork). Beim Zusammenführen (Join) wird gewartet, bis <em>alle</em> Zweige fertig sind.</td>
+            </tr>
+            <tr>
+              <td><strong>Inklusives Gateway (OR)</strong></td>
+              <td>Raute mit Kreis ◯</td>
+              <td><strong>Ein oder mehrere Pfade:</strong> Alle Pfade mit wahrer Bedingung werden aktiviert und beim Join wieder synchronisiert.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="color: #38bdf8; margin-top: 20px;">Pools, Lanes & Flussregeln:</h4>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Pool (Teilnehmer):</strong> Repräsentiert eine eigenständige juristische Person, ein Partnerunternehmen oder ein autonomes System (z. B. "Kunde" oder "Systemhaus").</li>
+          <li><strong>Lane (Schwimmbahn):</strong> Unterteilt einen Pool intern in Verantwortungsbereiche oder Abteilungen (z. B. "First-Level-Support", "Netzwerktechnik", "Einkauf").</li>
+          <li><strong>Sequenzfluss (durchgezogener Pfeil ──►):</strong> Verbindet Aktivitäten innerhalb <em>desselben</em> Pools. ⚠️ <strong>Strikte IHK-Regel: Ein Sequenzfluss darf niemals Pool-Grenzen überschreiten!</strong></li>
+          <li><strong>Nachrichtenfluss (gestrichelte Linie mit Kreis & offenem Pfeil ⭘┄┄▷):</strong> Zeigt den asynchronen Informationsaustausch <em>zwischen zwei unterschiedlichen Pools</em> (z. B. E-Mail, API-Call).</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 28px;">2. Ereignisgesteuerte Prozessketten (EPK)</h3>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        Die EPK (ZPA Anhang S. 40) visualisiert Geschäftsprozesse durch die strikte zeitlich-logische Abfolge von Zuständen und Aktivitäten:
+      </p>
+
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <table class="ihk-table">
+          <thead>
+            <tr><th>Element</th><th>Geometrie</th><th>Inhalt / Formulierung</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ereignis</strong></td>
+              <td>Sechseck (Hexagon) ⬡</td>
+              <td>Beschreibt einen <strong>Zustand</strong> (Partizip Perfekt: "Bestellung eingegangen", "Rechnung freigegeben"). Ein Ereignis trifft keine Entscheidungen!</td>
+            </tr>
+            <tr>
+              <td><strong>Funktion</strong></td>
+              <td>Abgerundetes Rechteck ▢</td>
+              <td>Beschreibt eine <strong>Transformation / Tätigkeit</strong> (Infinitiv: "Bonität prüfen", "Paket versenden").</td>
+            </tr>
+            <tr>
+              <td><strong>Konnektoren</strong></td>
+              <td>Kreis mit Symbol ⊕, ∨, ∧</td>
+              <td>Logische Verknüpfung: <strong>UND (∧)</strong>, <strong>ODER (∨)</strong>, <strong>XOR (⊕)</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: #0f172a; border-left: 4px solid #38bdf8; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <p style="color: #38bdf8; font-weight: bold; margin-top: 0;">📌 Die zwei goldenen EPK-Modellierungsregeln:</p>
+        <ol style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Alternierungsregel:</strong> Ereignisse und Funktionen müssen sich im Prozessverlauf immer abwechseln (Ereignis → Funktion → Ereignis → ...). Es dürfen niemals zwei Ereignisse oder zwei Funktionen direkt hintereinander folgen.</li>
+          <li><strong>Konnektorenregel:</strong> Nach einem einzelnen Ereignis darf <em>niemals</em> ein ODER- oder XOR-Konnektor verzweigen, da Ereignisse passiv sind und keine eigene Entscheidungskraft besitzen. Entscheidungen werden stets von einer vorangehenden Funktion gefällt.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <!-- Interaktiver BPMN / EPK Referenz-Viewer -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 24px 0;">
+      <h3 style="color: #38bdf8; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+        <span>🔍</span> BPMN 2.0 & EPK Referenzmuster (IT-Support Prozess)
+      </h3>
+      <p style="color: #94a3b8; font-size: 0.9rem;">
+        Typisches IHK-Prüfungsszenario: Ticket-Eingang, automatisierte KI-Klassifizierung und Eskalation.
+      </p>
+
+      <div style="background: #0b1329; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 0.85rem; color: #7dd3fc; line-height: 1.8; overflow-x: auto;">
++---------------------------------------------------------------------------------------------------------+
+| POOL: IT-Systemhaus Kundensupport                                                                       |
+| +-----------------+-----------------------------------------------------------------------------------+ |
+| | First-Level     | [◯ Start: Störung gemeldet]                                                       | |
+| | Support         |       │                                                                           | |
+| | (mit KI-Triage) |       ▼                                                                           | |
+| |                 | [▢ Ticket durch KI vorqualifizieren] ──► {╳ Prio-Check (XOR)}                    | |
+| |                 |                                              │                │                   | |
+| |                 |                              Standard (Prio 3-4)   Kritisch (Prio 1-2)            | |
+| |                 |                                              │                │                   | |
+| |                 |                                              ▼                ▼                   | |
+| |                 |                             [▢ FAQ an Kunden]                 │                   | |
+| +-----------------+----------------------------------------------│----------------│-------------------+ |
+| | Second-Level    |                                              │                ▼                   | |
+| | Support         |                                              │     [▢ Techniker alarmieren]       | |
+| | (Netzwerk & HA) |                                              │                │                   | |
+| |                 |                                              ▼                ▼                   | |
+| |                 |                                          {➕ Zusammenführung (AND)}               | |
+| |                 |                                                       │                           | |
+| |                 |                                                       ▼                           | |
+| |                 |                                          [▢ Abschlussbericht senden]              | |
+| |                 |                                                       │                           | |
+| |                 |                                                       ▼                           | |
+| |                 |                                            [⬤ End: Störung behoben]               | |
+| +-----------------+-----------------------------------------------------------------------------------+ |
++---------------------------------------------------------------------------------------------------------+
+      </div>
+    </div>
+
+    <!-- Authentische IHK-Prüfungsaufgaben -->
+    
+    <!-- Interaktives Tool: bpmn_trainer.js -->
+    <div id="bpmn-trainer-container" style="margin-bottom: 24px;"></div>
+    <script src="../../../assets/ihk_tools/bpmn_trainer.js"></script>
+
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Prozessmodellierung
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Offizielle Prüfungsaufgaben nach dem neuen ZPA-Raster (Katalog 2. Auflage, S. 39–40). Bearbeiten Sie die Aufgaben und prüfen Sie Ihren Lösungsweg:
+      </p>
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Aufgabe 1: Gateways -->
+        <div class="ihk-exam-task" data-title="BPMN 2.0 Gateways" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">BPMN 2.0 Gateways (Exklusiv XOR, Parallel AND, Inklusiv OR)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem IT-Service-Helpdesk wird die Bearbeitung eingehender Störungsmeldungen als BPMN 2.0 Geschäftsprozess modelliert.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Funktionsweise und grafischen Symbole der drei BPMN-Gateways: Exklusives Gateway (XOR), Paralleles Gateway (AND) und Inklusives Gateway (OR) beim Verzweigen (Diverging) und Zusammenführen (Converging).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Exklusives Gateway (XOR, Raute mit X oder leer): Genau ein einziger ausgehender Pfad wird gewählt, dessen Bedingung zutrifft. Beim Zusammenführen wartet es nicht, sondern leitet jedes eintreffende Token sofort weiter. (3 Pkt.)
+Paralleles Gateway (AND, Raute mit Pluszeichen +): Alle ausgehenden Pfade werden gleichzeitig/nebenläufig aktiviert (Fork). Beim Zusammenführen (Join) wartet das Gateway, bis auf ALLEN eingehenden Pfaden ein Token eingetroffen ist, bevor der Prozess fortgesetzt wird. (3 Pkt.)
+Inklusives Gateway (OR, Raute mit Kreis O): Ein oder mehrere Pfade werden gewählt, deren Bedingungen wahr sind. Beim Zusammenführen synchronisiert es alle tatsächlich aktiven eingehenden Pfade. (2 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 2: Pools & Lanes -->
+        <div class="ihk-exam-task" data-title="BPMN 2.0 Pools & Lanes" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">BPMN 2.0 Pools, Lanes und Flussregeln</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zur Abbildung eines Bestell- und Freigabeprozesses für Neugeräte zwischen Kunde, IT-Einkauf und Buchhaltung wird ein BPMN-Diagramm erstellt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Unterscheiden Sie Pools und Swimlanes (Bahnen) und erläutern Sie die Regeln bezüglich Sequenzfluss (Sequence Flow) und Nachrichtenfluss (Message Flow).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Pool: Repräsentiert eine eigenständige Organisationseinheit, ein externes Unternehmen oder einen eigenständigen Teilnehmer/Prozess (Black Box oder White Box). (2 Pkt.)
+Lane: Unterteilt einen Pool in interne Rollen, Abteilungen oder Systeme (z. B. IT-Einkauf, Buchhaltung). (1 Pkt.)
+Flussregeln: Ein Sequenzfluss (durchgezogener Pfeil) verbindet Aktivitäten innerhalb DENSELBEN Pools und darf niemals Pool-Grenzen überschreiten. Ein Nachrichtenfluss (gestrichelte Linie mit offenem Pfeil und Kreis am Start) stellt die asynchrone Kommunikation ZWISCHEN zwei unterschiedlichen Pools dar. (3 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 3: EPK -->
+        <div class="ihk-exam-task" data-title="EPK Modellierungsregeln" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Ereignisgesteuerte Prozesskette (EPK) Modellierungsregeln</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Onboarding-Prozess für neue Mitarbeiter wird als Ereignisgesteuerte Prozesskette (EPK) dokumentiert.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Nennen Sie die drei Grundelemente einer EPK mit ihren geometrischen Symbolen und erläutern Sie zwei fundamentale Syntaxregeln für die Verknüpfung von Ereignissen und Funktionen.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              Grundelemente:
+1. Ereignis: Sechseck (Hexagon). Beschreibt einen eingetretenen Zustand (Auslöser/Ergebnis, z. B. "Mitarbeitervertrag unterzeichnet"). (2 Pkt.)
+2. Funktion: Rechteck mit abgerundeten Ecken. Beschreibt eine auszuführende Transformation/Aktivität im Infinitiv (z. B. "Benutzerkonto im AD anlegen"). (2 Pkt.)
+3. Logischer Konnektor: Kreis mit Symbol (UND, ODER, XOR) zur Verzweigung/Zusammenführung. (1 Pkt.)
+
+Zwei Syntaxregeln:
+- Alternierungsregel: Ereignisse und Funktionen müssen sich im Ablauf immer strikt abwechseln (niemals Ereignis direkt auf Ereignis oder Funktion direkt auf Funktion ohne Konnektor). (1,5 Pkt.)
+- Konnektorenregel: Ein Ereignis hat keine Entscheidungskraft; nach einem einzelnen Ereignis darf daher niemals ein ODER- oder XOR-Konnektor verzweigen (nur UND ist nach Einzelereignis zulässig). (1,5 Pkt.)
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <!-- Footer Navigation -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../04_lf4_schutzbedarfsanalyse_und_cybersicherheit/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../06_lf5_software_und_anwendungsentwicklung/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP2 Modul 06: Backup, Disaster Recovery & Hochverfügbarkeit (LF 11)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">Lernfeld 11 (FISI)</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 06: Backup, Disaster Recovery & Hochverfügbarkeit (LF 11)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">3-2-1-1-0 Backup-Regel, Großvater-Vater-Sohn, RTO/RPO, LTO/WORM, HA-Cluster, Quorum & STONITH.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">🛡️ Backup, Disaster Recovery & Hochverfügbarkeit (LF 11)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Datensicherheit und Business Continuity: Die 3-2-1-1-0 Backup-Regel, Großvater-Vater-Sohn Prinzip, Notfall-Kennzahlen (RTO, RPO, MTBF, MTTR), HA-Cluster, Quorum und Fencing.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Die 3-2-1-1-0 Backup-Regel (BSI-Standard)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>3 Kopien:</strong> Mindestens 3 Kopien der Geschäftsdaten (1x Produktivdaten + 2x Backups).</li>
+    <li><strong>2 Medientypen:</strong> Auf mindestens 2 unterschiedlichen Speichertechnologien (z. B. SSD-Storage + LTO-Magnetband).</li>
+    <li><strong>1 Offsite:</strong> Mindestens 1 Kopie an einem geographisch getrennten Standort (Schutz vor Brand/Diebstahl).</li>
+    <li><strong>1 Immutable / Air-Gapped:</strong> Mindestens 1 unveränderbare oder offline getrennte Kopie (WORM-Tape / Object Lock) als sicherer Schutz vor Ransomware.</li>
+    <li><strong>0 Fehler:</strong> Regelmäßige automatisierte Wiederherstellungstests mit 0 Fehlern!</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Kennzahlen des Notfallmanagements (BCM): RTO & RPO</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    - <strong>RTO (Recovery Time Objective):</strong> Maximal tolerierbare Ausfallzeit bis zur Wiederaufnahme des Betriebs ($t_{\text{Ausfall}} \le RTO$).<br>
+    - <strong>RPO (Recovery Point Objective):</strong> Maximal tolerierbarer Datenverlust gemessen in Zeit ($t_{\text{Verlust}} \le RPO$).<br>
+    - <strong>Verfügbarkeitsberechnung:</strong> $A = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}} \times 100\,\%$. Bei 99,99 % ("Four Nines") beträgt die jährliche Gesamtausfallzeit max. 52,56 Minuten.
+  </p>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. HA-Cluster, Quorum & STONITH</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  - <strong>Quorum:</strong> Um bei einem Netzwerk-Split (Split-Brain) zu verhindern, dass zwei Clusterhälften gleichzeitig Schreibzugriffe ausführen und Daten korrumpieren, benötigt das Cluster ein <em>Quorum (&gt; 50 % der Stimmen)</em>.<br>
+  - <strong>STONITH (Shoot The Other Node In The Head):</strong> Radikales Fencing über IPMI/iDRAC/USV schaltet den fehlerhaften Knoten hardwareseitig stromlos.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="Quorum und Fencing (STONITH)" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Quorum und Fencing (STONITH)</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Um Split-Brain in einem 2-Node-Cluster sicher zu verhindern, wird ein Quorum-Mechanismus und STONITH eingerichtet.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Funktionsweise von Quorum (Mehrheitsentscheid) und beschreiben Sie das Prinzip von STONITH (Shoot The Other Node In The Head).
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="ZFS Dateisystem Copy-on-Write & Prüfsummen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">ZFS Dateisystem Copy-on-Write & Prüfsummen</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Enterprise-Speicherserver wird unter TrueNAS mit dem Dateisystem ZFS aufgesetzt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die Funktionsweise von Copy-on-Write (CoW) in ZFS und beschreiben Sie, wie ZFS "Silent Data Corruption" (Bit-Rot) mithilfe von Prüfsummen und Scrubbing erkennt und repariert.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="LTO-Bandtechnologie und WORM-Speicher" data-points="6" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">LTO-Bandtechnologie und WORM-Speicher</strong>
+            <span class="ihk-badge ihk-badge-success">6 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zur Erfüllung gesetzlicher Revisionsanforderungen (GoBD) müssen Buchhaltungsunterlagen unveränderbar auf LTO-Tape archiviert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Definieren Sie das WORM-Prinzip (Write Once, Read Many) und nennen Sie zwei technische Vorteile von Magnetbändern gegenüber Festplatten zur Langzeitarchivierung.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="Synchrone vs Asynchrone Storage-Replikation" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Synchrone vs Asynchrone Storage-Replikation</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zwei Brandabschnitte eines Rechenzentrums im Abstand von 15 Kilometern sollen gespiegelt werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Vergleichen Sie synchrone und asynchrone Speicherreplikation hinsichtlich Bestätigung an das Betriebssystem, Latenzabhängigkeit und RPO.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../05_lf11_speicher_und_hochverfuegbarkeit/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../07_enterprise_sql_und_datenbank_admin/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

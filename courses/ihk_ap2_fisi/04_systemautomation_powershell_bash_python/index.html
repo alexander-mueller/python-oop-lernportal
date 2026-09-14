@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP2 Modul 04: Skriptprogrammierung & Systemautomation (LF 10)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA Katalog S. 22 & 24</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 04: Skriptprogrammierung & Systemautomation (LF 10)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">PowerShell ActiveDirectory-Modul & CSV-Import, Bash Backup-Skripte, Systemd Units & Ansible Playbooks.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">⚙️ Skriptprogrammierung & Systemautomation (LF 10)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Gemäß § 21 Abs. 1 Nr. 4 der Ausbildungsordnung und ZPA-Katalog S. 22/24 müssen Systemintegratoren in der Lage sein, <strong>Programme zur automatisierten Systemverwaltung</strong> in PowerShell, Bash und Python zu erstellen.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Microsoft PowerShell: Objektorientierte Pipeline & AD-Automation</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    Im Gegensatz zu traditionellen Text-Pipes übergibt PowerShell echte <strong>.NET-Objekte</strong> mit typisierten Eigenschaften:<br>
+  </p>
+  <pre style="background: #1e293b; padding: 12px; border-radius: 6px; color: #38bdf8; overflow-x: auto; margin-top: 8px;">
+# Automatisiertes Onboarding aus CSV mit Fehlerbehandlung
+$ErrorActionPreference = 'Stop'
+try {
+    $users = Import-Csv -Path "C:\Temp\azubis.csv" -Delimiter ";"
+    foreach ($u in $users) {
+        $secPass = ConvertTo-SecureString "Start2025!" -AsPlainText -Force
+        New-ADUser -Name "$($u.Vorname) $($u.Nachname)" `
+                   -SamAccountName $u.Login `
+                   -UserPrincipalName "$($u.Login)@unternehmen.local" `
+                   -Path "OU=Azubis,OU=Benutzer,DC=unternehmen,DC=local" `
+                   -AccountPassword $secPass `
+                   -Enabled $true
+        Write-Host "✓ Angelegt: $($u.Login)" -ForegroundColor Green
+    }
+} catch [Exception] {
+    Write-Error "Kritischer Fehler bei Benutzeranlage: $($_.Exception.Message)"
+}
+  </pre>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Linux Bash-Automatisierung & Systemd Service Units</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+    - <strong>Robuste Shell-Skripte:</strong> <code>set -euo pipefail</code> (bricht sofort bei unbehandelten Fehlern oder ungesetzten Variablen ab).<br>
+    - <strong>Systemd Unit-Datei (z. B. <code>/etc/systemd/system/backup.service</code>):</strong>
+  </p>
+  <pre style="background: #1e293b; padding: 12px; border-radius: 6px; color: #4ade80; overflow-x: auto; margin-top: 8px;">
+[Unit]
+Description=Tägliches Backup-Skript für Unternehmensdaten
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup_rsync.sh
+User=root
+
+[Install]
+WantedBy=multi-user.target
+  </pre>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Infrastruktur-Automatisierung mit Ansible & IaC</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  - <strong>Ansible:</strong> Agentless über SSH. Deklarative YAML-Playbooks definieren den <em>Soll-Zustand (Idempotenz)</em>.<br>
+  - <strong>Infrastructure as Code (IaC):</strong> Reproduzierbare Bereitstellung ganzer Serverlandschaften (z. B. mit Terraform oder Cloud-Init) vermeidet manuelle Konfigurationsdrifts.
+</p>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="Infrastruktur-Automatisierung mit Ansible" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Infrastruktur-Automatisierung mit Ansible</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zur Konfiguration von 80 Linux-Servern wird ein Infrastructure-as-Code-Werkzeug eingeführt.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erklären Sie die Begriffe Agentless und Idempotenz im Kontext von Ansible und beschreiben Sie den Aufbau eines Playbooks.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="DHCP Snooping und Dynamic ARP Inspection (DAI)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">DHCP Snooping und Dynamic ARP Inspection (DAI)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zur Härtung der Switch-Ports gegen Man-in-the-Middle-Angriffe werden Sicherheitsfeatures aktiviert.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Beschreiben Sie die Funktionsweise von DHCP Snooping (Trusted vs Untrusted Ports) und erklären Sie, wie Dynamic ARP Inspection (DAI) basierend auf der Snooping-Binding-Database Angriffe abwehrt.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="Linux Systemd Service Unit Konfiguration" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Linux Systemd Service Unit Konfiguration</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Python-Daemon für ein Monitoring-Tool soll unter Linux automatisch beim Booten gestartet und bei Absturz neu gestartet werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Beschreiben Sie die drei Hauptabschnitte einer Systemd-Service-Unit ([Unit], [Service], [Install]) und nennen Sie die Direktiven für Ausführungsbefehl, automatischen Neustart und Start-Ziel.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../03_lf10_serverdienste_und_identitaeten/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../05_lf11_speicher_und_hochverfuegbarkeit/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

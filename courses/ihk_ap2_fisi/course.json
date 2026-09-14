@@ -4,89 +4,107 @@
   "language": "ihk_ap2_fisi",
   "icon": "📕",
   "runner": "none",
-  "description": "Vollständige Prüfungsvorbereitung für FISI (LF 9–12, WiSo, 40h-Projekt). VLANs, OSPF, Active Directory, RAID-Simulator, Cloud & 3 vollständige Probeprüfungen.",
+  "description": "Vollständige Prüfungsvorbereitung für FISI (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: VLANs, VRT-Symbole, Active Directory, RAID 0-10, Backup 3-2-1-1-0, Enterprise SQL & Vollsimulation.",
   "tracks": [
     {
       "id": "track_1_netzwerke_und_server",
       "title": "🌱 Lehrpfad 1: Enterprise Netzwerke & Serverdienste (LF 9 & 10)",
-      "description": "VLANs (802.1Q), LACP, Spanning Tree, OSPF, BGP, Active Directory, Gruppenrichtlinien, PKI & Ansible.",
+      "description": "VLANs (802.1Q), LACP, Spanning Tree, OSPF, BGP, VRT-Symbole, Strukturierte Verkabelung, Active Directory & Kerberos.",
       "certificateKey": "ihk_ap2_netzwerke",
       "chapters": [
         {
-          "folder": "01_lf9_netzwerke_und_dienste",
-          "title": "LF 9: Netzwerke & Dienste bereitstellen (VLAN, Routing, Firewalls)",
+          "folder": "01_lf9_netzwerkinfrastruktur_und_routing",
+          "title": "LF 9: Enterprise Routing & Switching (VLAN, STP, LACP, OSPF)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "02_lf10_serverdienste_und_automation",
-          "title": "LF 10: Serverdienste & Automation bereitstellen (AD DS, DNS, Ansible)",
+          "folder": "02_vrt_netzwerkplaene_und_infrastruktur",
+          "title": "LF 9: Normierte Netzwerkpläne (VRT-Symbole) & Verkabelung",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_lf10_serverdienste_und_identitaeten",
+          "title": "LF 10: Serverdienste, Active Directory & Identitäten (AD DS, GPO, Kerberos)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
       ]
     },
     {
-      "id": "track_2_storage_und_cloud",
-      "title": "🛡️ Lehrpfad 2: Storage, Hochverfügbarkeit & Cloud (LF 11 & 12)",
-      "description": "RAID 0/1/5/6/10, SAN/NAS, HA-Cluster, Quorum, STONITH, ZFS, Hypervisoren, Docker, Kubernetes & Prometheus.",
-      "certificateKey": "ihk_ap2_sicherheit",
+      "id": "track_2_storage_und_automation",
+      "title": "⚙️ Lehrpfad 2: Skripting, Storage & Hochverfügbarkeit (LF 10 & 11)",
+      "description": "PowerShell, Bash, Ansible, RAID 0/1/5/6/10 (exklusiv AP2!), SAN/NAS, iSCSI, 3-2-1-1-0 Backup & HA-Cluster.",
+      "certificateKey": "ihk_ap2_storage_automation",
       "chapters": [
         {
-          "folder": "03_lf11_speicher_und_hochverfuegbarkeit",
-          "title": "LF 11: Speicher- & Hochverfügbarkeitssysteme (RAID, SAN, Cluster)",
+          "folder": "04_systemautomation_powershell_bash_python",
+          "title": "LF 10: Skriptprogrammierung & Systemautomation (PowerShell, Bash, Ansible)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "04_lf12_virtualisierung_und_cloud",
-          "title": "LF 12: Virtualisierung, Cloud & Automation (Docker, K8s, IaC)",
+          "folder": "05_lf11_speicher_und_hochverfuegbarkeit",
+          "title": "LF 11: Enterprise Storage, RAID & SAN-Architekturen (RAID 0-10, iSCSI, ZFS)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_backup_dr_und_hochverfuegbarkeit",
+          "title": "LF 11: Backup, Disaster Recovery & Hochverfügbarkeit (3-2-1-1-0, RTO/RPO)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
       ]
     },
     {
-      "id": "track_3_wiso_und_projekt",
-      "title": "☁️ Lehrpfad 3: WiSo & 40h-Betriebliche Projektarbeit",
-      "description": "Wirtschafts- & Sozialkunde (Arbeitsrecht, KSchG, Sozialversicherung) & Leitfaden zur 40h-Projektarbeit samt Fachgespräch.",
-      "certificateKey": "ihk_ap2_wiso_projekt",
+      "id": "track_3_datenbanken_und_cloud",
+      "title": "☁️ Lehrpfad 3: Enterprise SQL, Cloud & WiSo Arbeitsrecht (LF 10, 11 & 12)",
+      "description": "ZPA-SQL (DDL, DCL, Multi-Table JOINs, DATEDIFF), Hypervisoren, Docker, Kubernetes, Zero Trust & WiSo Arbeitsrecht.",
+      "certificateKey": "ihk_ap2_cloud_sql",
       "chapters": [
         {
-          "folder": "05_wiso_arbeitsrecht_und_wirtschaft",
-          "title": "WiSo: Wirtschafts- & Sozialkunde Prüfungs-Fit (BGB, KSchG, BetrVG)",
+          "folder": "07_enterprise_sql_und_datenbank_admin",
+          "title": "LF 10/11: Enterprise SQL & Datenbank-Administration (DDL, DCL, Joins, DATEDIFF)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "06_betriebliche_projektarbeit_guide",
-          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch-Guide",
+          "folder": "08_lf12_virtualisierung_und_cloud",
+          "title": "LF 12: Cloud-Architekturen, Virtualisierung & Security (Docker, K8s, Zero Trust)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_wiso_arbeitsrecht_und_wirtschaft",
+          "title": "WiSo 1: Arbeitsrecht, Tarifrecht & Gehaltsabrechnung (BBiG, KSchG, ArbZG)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }
       ]
     },
     {
-      "id": "track_4_probepruefungen",
-      "title": "🏆 Lehrpfad 4: Offizielle AP2 Probeprüfungen & Simulationen",
-      "description": "Die 3 schriftlichen IHK-Prüfungsteile unter Realbedingungen (Teil 1: 90 Min., Teil 2: 90 Min., WiSo: 60 Min.) mit 150-Fragen-Zufallsgenerator.",
+      "id": "track_4_betrieb_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: Organisation, 40h-Projektarbeit & Prüfungssimulation",
+      "description": "Unternehmensformen, BetrVG, PUE-Wert, Green IT, Leitfaden zur 40h-Projektarbeit samt Fachgespräch & Vollsimulation AP2.",
       "certificateKey": "ihk_ap2_fisi_master",
       "chapters": [
         {
-          "folder": "07_ap2_teil_1_probepruefung",
-          "title": "Probeprüfung AP2 Teil 1: Planen & Umsetzen (90 Min. / 100 Pkt.)",
+          "folder": "10_wiso_betriebsorganisation_und_umwelt",
+          "title": "WiSo 2: Unternehmensformen, Umweltschutz (PUE) & Organisation (BetrVG)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "08_ap2_teil_2_probepruefung",
-          "title": "Probeprüfung AP2 Teil 2: Administration & Netzanalyse (90 Min. / 100 Pkt.)",
+          "folder": "11_betriebliche_projektarbeit_guide",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide)",
           "taskFile": "README.md",
           "testFile": "index.html"
         },
         {
-          "folder": "09_ap2_wiso_probepruefung",
-          "title": "Probeprüfung AP2 WiSo: Wirtschafts- & Sozialkunde (60 Min. / 100 Pkt.)",
+          "folder": "12_ap2_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
           "taskFile": "README.md",
           "testFile": "index.html"
         }

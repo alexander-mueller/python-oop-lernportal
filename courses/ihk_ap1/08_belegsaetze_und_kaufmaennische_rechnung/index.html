@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP1 Modul 08: Belegsätze & Kaufmännische Rechnung (LF 1/2)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA 2. Auflage Standard</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP1 Modul 08: Belegsätze & Kaufmännische Rechnung</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Offizieller ZPA-Standard (Musterbeleg PrintTop GmbH): Bezugskalkulation (Rabatt, Skonto, Fracht, MwSt.), Zahlungsverzug & Verzugszinsen (§ 288 BGB).</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+      <h2 style="color: #38bdf8; margin-top: 0;">🧾 Kaufmännische Belegprüfung & Kalkulation</h2>
+      <p style="color: #cbd5e1; line-height: 1.6;">
+        In der IHK-Abschlussprüfung werden kaufmännische Geschäftsvorfälle anhand standardisierter Belegsätze (Lieferscheine, Rechnungen, Mahnungen) geprüft. Im Prüfungskatalog (2. Auflage, S. 49) dient die <strong>PrintTop GmbH</strong> als offizielles Referenzmuster.
+      </p>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">1. Das Vorwärtskalkulationsschema (Bezugspreis)</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <table class="ihk-table">
+          <thead>
+            <tr><th>Rechenschritt</th><th>Bezeichnung</th><th>Erläuterung & Formel</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>&nbsp;</td><td><strong>Listeneinkaufspreis (LEP)</strong></td><td>Katalog- oder Angebotspreis des Lieferanten (netto)</td></tr>
+            <tr><td>-</td><td>Liefererrabatt</td><td>Mengen- oder Sonderrabatt in % (vom LEP)</td></tr>
+            <tr><td>=</td><td><strong>Zieleinkaufspreis (ZEP)</strong></td><td>LEP abzüglich Rabatt</td></tr>
+            <tr><td>-</td><td>Liefererskonto</td><td>Skonto in % (vom ZEP bei vorzeitiger Zahlung)</td></tr>
+            <tr><td>=</td><td><strong>Bareinkaufspreis (BEP)</strong></td><td>Tatsächlich gezahlter Warenwert</td></tr>
+            <tr><td>+</td><td>Bezugskosten</td><td>Transport, Fracht, Verpackung, Rollgeld, Transportversicherung</td></tr>
+            <tr><td>=</td><td><strong>Bezugspreis / Einstandspreis</strong></td><td>Gesamte Anschaffungskosten (netto) bis ins eigene Lager</td></tr>
+            <tr><td>+</td><td>19 % Umsatzsteuer (MwSt.)</td><td>Gesetzliche Mehrwertsteuer auf den Rechnungsbetrag</td></tr>
+            <tr><td>=</td><td><strong>Rechnungsbetrag (brutto)</strong></td><td>Endbetrag der Rechnung inklusive Mehrwertsteuer</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">2. Zahlungsverzug & Verzugszinsen nach BGB (§ 286 / § 288)</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Automatischer Verzugseintritt (§ 286 Abs. 3 BGB):</strong> Bei Entgeltforderungen gerät der Schuldner spätestens 30 Tage nach Fälligkeit und Erhalt einer Rechnung automatisch in Verzug, ohne dass eine Mahnung erforderlich ist (gilt uneingeschränkt im B2B-Geschäft).</li>
+          <li><strong>Gesetzlicher Verzugszinssatz (§ 288 BGB):</strong>
+            <ul>
+              <li><strong>B2B (Geschäfte zwischen Unternehmen):</strong> <strong>Basiszinssatz + 9 Prozentpunkte</strong> (§ 288 Abs. 2 BGB).</li>
+              <li><strong>B2C (Unter Beteiligung eines Verbrauchers):</strong> <strong>Basiszinssatz + 5 Prozentpunkte</strong> (§ 288 Abs. 1 BGB).</li>
+            </ul>
+          </li>
+          <li><strong>Gesetzliche Verzugspauschale (§ 288 Abs. 5 BGB):</strong> Gläubiger haben im B2B-Bereich bei Zahlungsverzug Anspruch auf eine pauschale Entschädigung von <strong>40,00 EUR</strong> für Mahn- und Betreibungskosten.</li>
+          <li><strong>Kaufmännische Zinsformel:</strong><br>
+            <code style="color: #38bdf8; font-size: 1rem;">Zinsen = (Kapital × Zinssatz in % × Tage) / (100 × 360)</code>
+          </li>
+        </ul>
+      </div>
+
+      <h3 style="color: #cbd5e1; margin-top: 24px;">3. Mängelrüge beim Handelskauf (§ 377 HGB)</h3>
+      <div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+        <table class="ihk-table">
+          <thead>
+            <tr><th>Mangelart</th><th>Erkennbarkeit</th><th>Rügefrist (B2B nach § 377 HGB)</th><th>Rechtsfolge bei Versäumnis</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Offener Mangel</strong></td>
+              <td>Sofort bei Wareneingangsprüfung erkennbar (z. B. Glasbruch, Falschlieferung).</td>
+              <td><strong>Unverzüglich</strong> (ohne schuldhaftes Zögern, i. d. R. 1-2 Werktage).</td>
+              <td>Ware gilt als genehmigt; alle Mängelrechte erlöschen!</td>
+            </tr>
+            <tr>
+              <td><strong>Versteckter Mangel</strong></td>
+              <td>Erst bei Inbetriebnahme oder im Betrieb erkennbar (z. B. defekter RAM nach Stresstest).</td>
+              <td><strong>Unverzüglich nach Entdeckung</strong> (innerhalb der 2-jährigen Verjährungsfrist).</td>
+              <td>Bei fristgerechter Rüge: Nacherfüllung, Rücktritt oder Minderung (§ 437 BGB).</td>
+            </tr>
+            <tr>
+              <td><strong>Arglistig verschwiegener Mangel</strong></td>
+              <td>Verkäufer wusste vom Mangel und verschwieg ihn vorsätzlich.</td>
+              <td>Reguläre Verjährungsfrist: <strong>3 Jahre</strong> zum Jahresende (§ 195 BGB).</td>
+              <td>Schadensersatz und Anfechtung wegen arglistiger Täuschung (§ 123 BGB).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Visuelles Belegmuster nach ZPA (PrintTop GmbH) -->
+    <div style="background: #ffffff; color: #0f172a; border-radius: 8px; padding: 24px; margin: 24px 0; font-family: 'Segoe UI', Arial, sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+      <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 16px;">
+        <div>
+          <h2 style="margin: 0; color: #0284c7; font-size: 1.5rem;">PrintTop GmbH</h2>
+          <div style="font-size: 0.8rem; color: #64748b;">Druck- und Serversysteme | Industriestraße 42, 48153 Münster</div>
+        </div>
+        <div style="text-align: right; font-size: 0.85rem; color: #334155;">
+          <strong>RECHNUNG Nr. RE-2026-8841</strong><br>
+          Datum: 15. März 2026<br>
+          Kunden-Nr.: KD-99201
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px; font-size: 0.85rem; line-height: 1.4;">
+        <strong>Empfänger:</strong><br>
+        Meier IT-Solutions GmbH<br>
+        Technologiepark 12, 48149 Münster
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 16px;">
+        <thead>
+          <tr style="background: #f1f5f9; border-bottom: 1px solid #cbd5e1; text-align: left;">
+            <th style="padding: 6px;">Pos.</th>
+            <th style="padding: 6px;">Bezeichnung</th>
+            <th style="padding: 6px; text-align: center;">Menge</th>
+            <th style="padding: 6px; text-align: right;">Einzelpreis (netto)</th>
+            <th style="padding: 6px; text-align: right;">Gesamt (netto)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 6px;">01</td>
+            <td style="padding: 6px;">Enterprise Netzwerk-Multifunktionsdrucker PT-8500DN</td>
+            <td style="padding: 6px; text-align: center;">10 Stk.</td>
+            <td style="padding: 6px; text-align: right;">650,00 EUR</td>
+            <td style="padding: 6px; text-align: right;">6.500,00 EUR</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 6px;" colspan="4">Nachlass: 8,0 % Mengenrabatt</td>
+            <td style="padding: 6px; text-align: right; color: #dc2626;">- 520,00 EUR</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 6px;" colspan="4">Fracht- und Logistikpauschale</td>
+            <td style="padding: 6px; text-align: right;">+ 70,00 EUR</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #94a3b8; font-weight: bold;">
+            <td style="padding: 8px;" colspan="4">Rechnungsbetrag Netto:</td>
+            <td style="padding: 8px; text-align: right;">6.050,00 EUR</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px;" colspan="4">zzgl. 19,0 % Mehrwertsteuer:</td>
+            <td style="padding: 6px; text-align: right;">1.149,50 EUR</td>
+          </tr>
+          <tr style="font-size: 1rem; font-weight: bold; background: #f8fafc; border-top: 2px solid #0284c7;">
+            <td style="padding: 8px;" colspan="4">Zahlbetrag Brutto:</td>
+            <td style="padding: 8px; text-align: right; color: #0284c7;">7.199,50 EUR</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 10px 14px; font-size: 0.8rem; color: #334155;">
+        <strong>Zahlungsbedingungen:</strong> Zahlbar innerhalb von 14 Tagen unter Abzug von 2,0 % Skonto (bis zum 29.03.2026) oder bis zum 14.04.2026 rein netto ohne Abzug.
+      </div>
+    </div>
+
+    <!-- Authentische IHK-Prüfungsaufgaben -->
+    
+    <!-- Interaktives Tool: beleg_kalkulator.js -->
+    <div id="beleg-kalkulator-container" style="margin-bottom: 24px;"></div>
+    <script src="../../../assets/ihk_tools/beleg_kalkulator.js"></script>
+
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben zu Belegen & Kaufmännischer Rechnung
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Offizielle Berechnungsaufgaben nach den ZPA-Prüfungsbelegen.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Aufgabe 1: Rechnungsprüfung PrintTop -->
+        <div class="ihk-exam-task" data-title="Kaufmännische Rechnung PrintTop GmbH" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Kaufmännische Rechnung PrintTop GmbH (Rabatt, Skonto, MwSt.)</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Bezugnehmend auf obigen Originalbeleg der PrintTop GmbH (10 Drucker à 650 EUR, 8 % Rabatt, 2 % Skonto, 70 EUR Fracht, 19 % MwSt.).
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erstellen Sie das vollständige kaufmännische Prüfungsschema nach ZPA-Belegstandard und berechnen Sie: 1. Gesamter Listenpreis, 2. Rabattbetrag, 3. Bareinkaufspreis vor Fracht, 4. Netto-Rechnungsbetrag, 5. Skontobetrag, 6. Überweisungsbetrag bei fristgerechter Zahlung.
+          </p>
+          <textarea class="ihk-input" rows="4" placeholder="Schrittweise Berechnung..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              1. Listenpreis gesamt (netto): 10 * 650,00 EUR = 6.500,00 EUR. (1 Pkt.)
+2. - 8 % Liefererrabatt: 6.500,00 * 0,08 = 520,00 EUR. (1,5 Pkt.)
+3. = Zieleinkaufspreis: 6.500,00 - 520,00 = 5.980,00 EUR. (1,5 Pkt.)
+4. + Frachtkosten (netto): 5.980,00 + 70,00 = 6.050,00 EUR (Rechnungsbetrag Netto). (1,5 Pkt.)
+5. + 19 % Umsatzsteuer: 6.050,00 * 0,19 = 1.149,50 EUR -> Rechnungsbetrag Brutto: 7.199,50 EUR. (1,5 Pkt.)
+6. - 2 % Skonto (auf skontofähigen Betrag 5.980 EUR Warenwert bzw. Bruttowarenwert 7.116,20 EUR):
+   Skonto auf Bruttorechnung (7.199,50 EUR * 0,02) = 143,99 EUR (oder warenwertbezogen 119,60 EUR netto = 142,32 EUR brutto). (1,5 Pkt.)
+7. Überweisungsbetrag (Zahlbetrag): 7.199,50 EUR - 143,99 EUR = 7.055,51 EUR. (1,5 Pkt.)
+            </div>
+          </details>
+        </div>
+
+        <!-- Aufgabe 2: Verzugszinsen -->
+        <div class="ihk-exam-task" data-title="Lieferungsverzug & Verzugszinsen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Lieferungsverzug und Verzugszinsen nach BGB (§ 288 BGB)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Die Systemhaus Nord GmbH hat eine fällige Rechnung eines gewerblichen Kunden (B2B) über 12.000,00 EUR brutto. Das Zahlungsziel war der 15. März. Nach Eintritt des Verzugs zahlt der Kunde die Gesamtsumme erst nach 45 Tagen Verzug. Der Basiszinssatz der Deutschen Bundesbank beträgt zum Stichtag 3,62 %.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die gesetzlichen Voraussetzungen für den Verzugseintritt bei Entgeltforderungen im B2B-Bereich (§ 286 BGB), berechnen Sie den gesetzlichen Verzugszinssatz nach § 288 Abs. 2 BGB und ermitteln Sie die geschuldeten Verzugszinsen sowie die gesetzliche Verzugspauschale (§ 288 Abs. 5 BGB).
+          </p>
+          <textarea class="ihk-input" rows="4" placeholder="Berechnung Verzugszinsen & Pauschale..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+              1. Verzugseintritt im B2B-Geschäft (§ 286 Abs. 3 BGB): Gerät spätestens 30 Tage nach Fälligkeit und Zugang einer Rechnung automatisch in Verzug, ohne dass es einer gesonderten Mahnung bedarf. (2 Pkt.)
+2. Gesetzlicher Verzugszinssatz (§ 288 Abs. 2 BGB für Rechtsgeschäfte ohne Verbraucherbeteiligung):
+   Basiszinssatz + 9 Prozentpunkte = 3,62 % + 9,00 % = 12,62 % p. a. (2 Pkt.)
+3. Berechnung der Verzugszinsen für 45 Tage (kaufmännische Zinsformel Z = (K * p * t) / (100 * 360)):
+   Zinsen = (12.000 EUR * 12,62 * 45) / 36.000 = 6.814.800 / 36.000 = 189,30 EUR. (2 Pkt.)
+4. Gesetzliche Mahn- und Verzugspauschale nach § 288 Abs. 5 BGB: Gesetzlicher Anspruch auf eine Pauschale von 40,00 EUR bei B2B-Zahlungsverzug. (2 Pkt.)
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <!-- Footer Navigation -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../07_lf6_serviceanfragen_und_itsm/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../09_netzplantechnik_und_projektmanagement/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+</body>
+</html>

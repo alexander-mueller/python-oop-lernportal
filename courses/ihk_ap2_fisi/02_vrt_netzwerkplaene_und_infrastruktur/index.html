@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <meta charset="UTF-8">
+  <title>AP2 Modul 02: Normierte Netzwerkpläne (VRT) & Verkabelung (LF 9)</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6">
+  <div class="container mx-auto max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
+      <span class="ihk-badge ihk-badge-success">ZPA Anhang S. 42</span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-sky-400 mb-2">AP2 Modul 02: Normierte Netzwerkpläne (VRT) & Verkabelung (LF 9)</h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-6">Offizielle ZPA-Symbole nach VRT Network Equipment, DIN EN 50173 100m-Längenregel & Glasfasertechnik.</p>
+
+    <!-- Fachtheorie & Wissen -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+      
+<h2 style="color: #38bdf8; margin-top: 0;">📐 Normierte Netzwerkpläne (VRT) & Strukturierte Verkabelung (LF 9)</h2>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Die 2. Auflage des ZPA Nord-West Prüfungskatalogs (Anhang S. 42) fordert verbindlich die Anwendung der <strong>offiziellen VRT-Netzwerksymbole</strong> sowie fundierte Kenntnisse der <strong>strukturierten Verkabelung nach DIN EN 50173</strong> und moderner Glasfasertechnologien.
+</p>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">1. Normierte VRT-Netzwerksymbole nach ZPA-Katalog (Anhang S. 42)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead>
+      <tr><th>Netzwerk-Komponente</th><th>Symbol / Darstellung</th><th>IHK-Definition & OSI-Schicht</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Layer-2-Switch</strong></td>
+        <td>Rechteck mit 4 horizontalen entgegengesetzten Pfeilen [ ⇄ ⇄ ]</td>
+        <td>Schaltet Frames auf Layer 2 (Data Link Layer) anhand der MAC-Adresstabelle (CAM-Table). Trennt Kollisionsdomänen, bildet eine Broadcast-Domäne.</td>
+      </tr>
+      <tr>
+        <td><strong>Layer-3-Switch</strong></td>
+        <td>Kreis oder Rechteck mit Schaltsymbol & Kreuzpfeilen</td>
+        <td>Kombiniert L2-Switching mit hardwarebasiertem L3-Routing (SVI) bei Wire-Speed. Trennt Kollisions- und Broadcast-Domänen.</td>
+      </tr>
+      <tr>
+        <td><strong>Router</strong></td>
+        <td>Zylinder / Kreis mit 4 kreuzförmigen Pfeilen (2 rein, 2 raus)</td>
+        <td>Verbindet disjunkte IP-Netzwerke auf Layer 3 (Network Layer). Führt Pfadentscheidungen durch, trennt Broadcastdomänen und betreibt NAT/PAT.</td>
+      </tr>
+      <tr>
+        <td><strong>Firewall (Stateful / NGFW)</strong></td>
+        <td>Mauer / Ziegelwand-Symbol mit Schild</td>
+        <td>Filtert Netzwerkverkehr. Stateful Inspection überwacht Sitzungszustände (TCP Flags, SYN/ACK). Next-Gen Firewalls (NGFW) führen Deep Packet Inspection (DPI) und App-ID auf Layer 7 durch.</td>
+      </tr>
+      <tr>
+        <td><strong>Access Point (WLAN)</strong></td>
+        <td>Kleine Basisstation mit Funkwellen 📶</td>
+        <td>Bridge zwischen IEEE 802.3 (Ethernet) und IEEE 802.11 (WLAN). Verwaltet SSIDs, VLAN-Mapping und 802.1X/WPA3 Authentifizierung.</td>
+      </tr>
+      <tr>
+        <td><strong>SOHO-Kombigerät</strong></td>
+        <td>Kombi-Box (Router + Switch + AP + DSL/Kabel-Modem)</td>
+        <td>Typisches All-in-One-Gerät für Heim- und Kleinbüros (z. B. FRITZ!Box). Nicht für ausfallsichere Enterprise-Topologien geeignet.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">2. Strukturierte Verkabelung nach DIN EN 50173 & ISO/IEC 11801</h3>
+<p style="color: #cbd5e1; line-height: 1.6;">
+  Die strukturierte Verkabelung gliedert das Unternehmensnetzwerk in drei standardisierte Hierarchieebenen:
+</p>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>1. Primärbereich (Campus-/Geländeverkabelung):</strong> Verbindet mehrere Gebäude auf einem Liegenschaftsgelände (Standort-Verteiler SV zu Gebäude-Verteiler GV). Medium: Glasfaser (LWL Singlemode OS2), max. 1.500–2.000 m.</li>
+    <li><strong>2. Sekundärbereich (Steigbereich / Backbone im Gebäude):</strong> Verbindet den Gebäude-Verteiler (GV) mit den Etagen-Verteilern (EV) in den Stockwerken. Medium: LWL Multimode (OM4/OM5) oder Cat 7 Kupfer, max. 500 m.</li>
+    <li><strong>3. Tertiärbereich (Etagenverkabelung zum Arbeitsplatz):</strong> Verbindet den Etagenverteiler (EV / Patchpanel) mit den Anschlussdosen (TA) am Arbeitsplatz.<br>
+      <span style="color: #facc15; font-weight: bold;">⚠️ Striktes IHK-Längenlimit:</span> Max. <strong>90 m starres Verlegekabel</strong> (Permanent Link) + max. <strong>10 m flexible Patchkabel</strong> (Arbeitsplatz + Rangierfeld) = <strong>max. 100 m Gesamt-Übertragungsstrecke (Channel Link)!</strong></li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">3. Glasfasertechnik: Singlemode (OS2) vs. Multimode (OM4/OM5)</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <table class="ihk-table">
+    <thead>
+      <tr><th>Eigenschaft</th><th>Singlemode-Faser (OS2)</th><th>Multimode-Faser (OM4 / OM5)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kerndurchmesser</strong></td>
+        <td>Extrem dünn: ca. <strong>9 µm</strong> (Mantel 125 µm)</td>
+        <td>Dicker: ca. <strong>50 µm</strong> (Mantel 125 µm)</td>
+      </tr>
+      <tr>
+        <td><strong>Lichtquelle & Wellenlänge</strong></td>
+        <td>Halbleiterlaser (1310 nm / 1550 nm)</td>
+        <td>VCSEL oder LED (850 nm / 1300 nm)</td>
+      </tr>
+      <tr>
+        <td><strong>Dispersion & Reichweite</strong></td>
+        <td>Nur ein Lichtmodus breitet sich axial aus. Keine Modendispersion! Reichweiten: <strong>10 bis 40+ km</strong>.</td>
+        <td>Viele Lichtmodi reflektieren zickzack im Kern. Modendispersion begrenzt Reichweite auf <strong>300–550 m</strong> bei 10/40 Gbps.</td>
+      </tr>
+      <tr>
+        <td><strong>Messverfahren (OTDR)</strong></td>
+        <td colspan="2">Das <em>Optical Time Domain Reflectometer (OTDR)</em> sendet Lichtimpulse ein und misst die Rückstreuung (Rayleigh-Streuung) sowie Reflexionen (Fresnel-Reflexion) an Steckern, Spleißen und Faserbrüchen mit metergenauer Lokalisierung.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    </div>
+
+    <!-- Interaktives Tool falls vorhanden -->
+    
+
+    <!-- Fragenpool -->
+    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin: 32px 0;">
+      <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <span>📝</span> Authentische IHK-Prüfungsaufgaben nach ZPA 2. Auflage
+      </h2>
+      <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+        Bearbeiten Sie die Aufgaben und vergleichen Sie Ihre Antwort mit dem offiziellen Erwartungshorizont:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="ihk-exam-task" data-title="Normierte Netzwerkplan-Symbole nach VRT Network Equipment" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Normierte Netzwerkplan-Symbole nach VRT Network Equipment</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            In einem IHK-Prüfungsszenario soll ein Unternehmensnetzwerk nach dem offiziellen VRT-Symbolstandard der ZPA Nord-West dokumentiert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Erläutern Sie die visuellen Unterscheidungsmerkmale und Funktionen der genormten VRT-Symbole für: 1. Layer-2-Switch, 2. Layer-3-Switch, 3. Router mit NAT/PAT, 4. Firewall (Stateful Inspection / NGFW) und 5. Access Point.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="Site-to-Site VPN IPsec IKEv2 Phasen" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Site-to-Site VPN IPsec IKEv2 Phasen</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zwei Unternehmensstandorte sollen dauerhaft über ein IPsec-Site-to-Site-VPN verschlüsselt miteinander verbunden werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Beschreiben Sie die zwei Phasen des IKEv2-Handshakes (Internet Key Exchange) und unterscheiden Sie die Protokolle AH und ESP.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+
+        <div class="ihk-exam-task" data-title="Stateful Packet Inspection vs Next-Gen Firewall (NGFW)" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Stateful Packet Inspection vs Next-Gen Firewall (NGFW)</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Im Unternehmen soll eine alte Paketfilter-Firewall durch eine Next-Generation-Firewall (NGFW) ersetzt werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            Vergleichen Sie Stateful Inspection mit Deep Packet Inspection (DPI) einer NGFW und nennen Sie zwei moderne NGFW-Features.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+
+            </div>
+          </details>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer Navigation mit echten Buttons -->
+    <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
+      <a href="../01_lf9_netzwerkinfrastruktur_und_routing/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
+      <a href="../03_lf10_serverdienste_und_identitaeten/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
+    </div>
+  </div>
+
+  <script src="../../../assets/courses_manifest.js"></script>
+  <script src="../../../assets/course_sidebar.js"></script>
+  
+</body>
+</html>

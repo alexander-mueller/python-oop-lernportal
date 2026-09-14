@@ -10,7 +10,7 @@
 <body class="bg-slate-900 text-slate-100 font-sans p-6">
   <div class="container mx-auto max-w-4xl">
     <div class="flex justify-between items-center mb-6">
-      <a href="../../../dashboard.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Zurück zum Dashboard</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary text-sm">← Zurück zum Dashboard</a>
       <span class="ihk-badge ihk-badge-success">Lernfeld 2</span>
     </div>
 
@@ -49,6 +49,36 @@
   Total Cost of Ownership (TCO) unterscheidet <strong>CapEx</strong> (einmalige Investitionsausgaben für Anschaffung) und <strong>OpEx</strong> (laufende Betriebskosten für Strom, Wartung, Lizenzen). Die Nutzwertanalyse gewichtet qualitative und quantitative Kriterien zur objektiven Angebotsauswahl.
 </p>
 
+<h3 style="color: #cbd5e1; margin-top: 20px;">🖥️ 4. Moderne Display-Technologien & ArbStättV-Anforderungen</h3>
+<div style="background: #0f172a; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 20px;">
+    <li><strong>IPS (In-Plane Switching):</strong> Exzellente Blickwinkelstabilität (178°), hohe Farbtreue (sRGB/AdobeRGB). Ideal für Büroarbeitsplätze, Grafiker und CAD.</li>
+    <li><strong>VA (Vertical Alignment):</strong> Hoher statischer Kontrast (3000:1), sattes Schwarz, aber leichte Blickwinkelabhängigkeit und Schlierenbildung bei schnellen Bewegungen.</li>
+    <li><strong>OLED:</strong> Selbstleuchtende Pixel, perfekter Schwarzwert und unendlicher Kontrast, extrem schnelle Reaktionszeiten. Nachteil: Risiko von Burn-In bei statischen Office-Elementen und höherer Stromverbrauch bei hellem Hintergrund.</li>
+    <li><strong>Bildschirmarbeitsplatzbrille (§ 6 ArbStättV / ArbMedVV):</strong> Reicht eine normale Sehhilfe nicht aus, um den Nahbereich von 50–70 cm scharf zu stellen, hat der Beschäftigte Anspruch auf Kostenübernahme einer speziellen Bildschirmbrille durch den Arbeitgeber.</li>
+  </ul>
+</div>
+
+<h3 style="color: #cbd5e1; margin-top: 20px;">📏 5. Pflichtkriterium ZPA: Strikte Unterscheidung Binär- vs. Dezimalpräfixe</h3>
+<div style="background: #0f172a; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 12px 0;">
+  <p style="color: #fcd34d; font-weight: bold; margin-top: 0;">⚠️ Strenger IHK-Bewertungsmaßstab (ZPA 2. Auflage):</p>
+  <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 8px;">
+    Bei Aufgaben zu Speichergrößen und Dateivolumina <strong>müssen zwingend Binärpräfixe (IEC)</strong> verwendet werden. Die Verwendung von Dezimalpräfixen (SI) bei Datenspeichern führt zu Punktabzug!
+  </p>
+  <table class="ihk-table" style="margin-top: 10px;">
+    <thead>
+      <tr><th>Präfix-Typ</th><th>Norm</th><th>Basis</th><th>Einheiten</th><th>Anwendungsbereich</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Binärpräfixe</strong></td><td>IEC 60027-2</td><td>$2^{10} = 1.024$</td><td>KiB, MiB, GiB, TiB, PiB</td><td><strong>Ausschließlich Datenmengen & Speicher</strong> (RAM, SSD, HDD, Dateien)</td></tr>
+      <tr><td><strong>Dezimalpräfixe</strong></td><td>SI-System</td><td>$10^3 = 1.000$</td><td>kB, MB, GB, TB, PB</td><td><strong>Nur physikalische Größen</strong> (Takt in Hz, Übertragungsrate in Bit/s, Watt)</td></tr>
+    </tbody>
+  </table>
+  <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 8px;">
+    Beispiel: $1\text{ GiB} = 1.024^3\text{ Byte} = 1.073.741.824\text{ Byte}$, während $1\text{ GB} = 10^9\text{ Byte} = 1.000.000.000\text{ Byte}$ (Abweichung von ca. $7,37\,\%$!).
+  </p>
+</div>
+
     </div>
 
     <!-- Interaktives Tool falls vorhanden -->
@@ -64,6 +94,11 @@
   <script src="../../../assets/ihk_tools/nwa_calculator.js"></script>
 </div>
 
+
+    
+    <!-- Interaktives Tool: prefix_converter.js -->
+    <div id="prefix-converter-container" style="margin-bottom: 24px;"></div>
+    <script src="../../../assets/ihk_tools/prefix_converter.js"></script>
 
     <!-- Fragenpool -->
     
@@ -406,11 +441,40 @@ Burn-In-Risiko: IPS hat kein Burn-In; bei OLED besteht bei statischen Office-Ele
                 </div>
               </details>
             </div>
+
+            <div class="ihk-exam-task" data-title="Binärpräfixe (IEC) vs. Dezimalpräfixe (SI) bei Speichermedien" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong style="color: #38bdf8; font-size: 1.05rem;">Binärpräfixe (IEC) vs. Dezimalpräfixe (SI) bei Speichermedien (Neu 2025)</strong>
+                <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+              </div>
+              <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+                Ein Festplattenhersteller deklariert eine NVMe-SSD mit einer Speicherkapazität von exakt 4 TB (Terabyte). Das Betriebssystem zeigt nach der Formatierung jedoch eine Kapazität in GiB (Gibibyte) bzw. TiB (Tebibyte) an.
+              </div>
+              <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Berechnen Sie die Kapazität der Festplatte in Byte auf Basis der Herstellerangabe (SI-Präfix), rechnen Sie diese exakt in GiB und TiB (IEC-Präfixe) um und ermitteln Sie die prozentuale scheinbare Differenz.
+              </p>
+              <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung mit Rechenweg formulieren..."></textarea>
+              <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+                <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+                <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+                  1. Herstellerangabe in Byte (Dezimal / SI, Basis 10):
+   4 TB = 4 * 10^12 Byte = 4.000.000.000.000 Byte. (2 Pkt.)
+2. Umrechnung in GiB und TiB (Binär / IEC, Basis 2):
+   1 GiB = 1.024^3 Byte = 1.073.741.824 Byte.
+   Kapazität in GiB = 4.000.000.000.000 / 1.073.741.824 ≈ 3.725,29 GiB. (2 Pkt.)
+   1 TiB = 1.024^4 Byte = 1.099.511.627.776 Byte.
+   Kapazität in TiB = 4.000.000.000.000 / 1.099.511.627.776 ≈ 3,638 TiB. (2 Pkt.)
+3. Prozentuale scheinbare Differenz:
+   (4,000 - 3,638) / 4,000 = 0,362 / 4,000 = 9,05 % (bzw. bezogen auf 4 TiB fehlen ca. 9,1 %). (2 Pkt.)
+                </div>
+              </details>
+            </div>
             </div></div>
 
+    <!-- Footer Navigation -->
     <div class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center">
-      <a href="../01_lf1_unternehmen_und_arbeitsplatz/index.html" class="text-sky-400 hover:text-sky-300 font-semibold">← Vorheriges Modul</a>
-      <a href="../../../dashboard.html" class="text-slate-400 hover:text-white">🏠 Übersicht</a>
+      <a href="../01_lf1_unternehmen_und_arbeitsplatz/index.html" class="ihk-btn ihk-btn-secondary font-semibold">← Vorheriges Modul</a>
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">🏠 Kursübersicht</a>
       <a href="../03_lf3_clients_in_netzwerke_einbinden/index.html" class="ihk-btn ihk-btn-primary font-semibold">Nächstes Modul →</a>
     </div>
   </div>

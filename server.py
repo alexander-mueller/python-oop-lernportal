@@ -73,6 +73,14 @@ def load_chapter_routes():
                                 routes[f] = f"/{tid}/{f}"
                             else:
                                 routes[f] = f"/courses/{cid}/{f}"
+            legacy_aliases = {
+                "01_lf9_netzwerke_und_dienste": "/courses/ihk_ap2_fisi/01_lf9_netzwerkinfrastruktur_und_routing",
+                "02_lf10_serverdienste_und_automation": "/courses/ihk_ap2_fisi/03_lf10_serverdienste_und_identitaeten",
+                "07_ap2_teil_1_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation",
+                "08_ap2_teil_2_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation",
+                "09_ap2_wiso_probepruefung": "/courses/ihk_ap2_fisi/12_ap2_gesamtpruefung_simulation"
+            }
+            routes.update(legacy_aliases)
             CHAPTER_ROUTES = routes
     except Exception as e:
         print(f"Warnung beim Laden der Kapitel-Routen: {e}")
