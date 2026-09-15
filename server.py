@@ -568,7 +568,7 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({
                     "classrooms": parsed_classes,
                     "assigned_courses": list(all_assigned),
-                    "profession": (u_row and u_row["profession"]) or (parsed_classes and parsed_classes[0].get("profession")) or "FISI",
+                    "profession": (u_row["profession"] if (u_row and u_row["profession"] is not None) else "") or (parsed_classes and parsed_classes[0].get("profession")) or "",
                     "training_year": (u_row and u_row["training_year"]) or (parsed_classes and parsed_classes[0].get("training_year")) or 1
                 })
 
@@ -761,19 +761,23 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             if role not in ("student", "teacher", "solo"):
                 role = "solo"
 
+            profession = str(body.get("profession", "")).strip()[:10]
+            if profession not in ("FISI", "FIAE", "FIDP", "FIDV", "ITSE", "ITSM", "KDM", "ALL"):
+                profession = ""
+
             pwd_hash, salt = hash_password(password)
             conn = get_db()
             try:
                 c = conn.cursor()
-                c.execute("INSERT INTO users (email, password_hash, salt, name, role) VALUES (?, ?, ?, ?, ?)",
-                          (email, pwd_hash, salt, name, role))
+                c.execute("INSERT INTO users (email, password_hash, salt, name, role, profession) VALUES (?, ?, ?, ?, ?, ?)",
+                          (email, pwd_hash, salt, name, role, profession))
                 user_id = c.lastrowid
                 conn.commit()
                 token = generate_token(user_id, email, role)
                 return self.send_json({
                     "message": "Erfolgreich registriert!",
                     "token": token,
-                    "user": {"id": user_id, "email": email, "name": name, "role": role, "xp": 0, "level": 1}
+                    "user": {"id": user_id, "email": email, "name": name, "role": role, "profession": profession, "xp": 0, "level": 1}
                 }, 201)
             except sqlite3.IntegrityError:
                 return self.send_json({"error": "Ein Benutzer mit dieser E-Mail existiert bereits"}, 409)
@@ -815,6 +819,8 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "email": user["email"],
                     "name": user["name"],
                     "role": user["role"],
+                    "profession": user["profession"] if "profession" in user.keys() and user["profession"] else "",
+                    "training_year": user["training_year"] if "training_year" in user.keys() and user["training_year"] else 1,
                     "xp": user["xp"],
                     "level": user["level"],
                     "streak_days": user["streak_days"]
@@ -982,7 +988,9 @@ class PlatformRequestHandler(http.server.SimpleHTTPRequestHandler):
             if not user_token:
                 return self.send_json({"error": "Nicht authentifiziert"}, 401)
 
-            profession = str(body.get("profession", "FISI")).strip()[:10]
+            profession = str(body.get("profession", "")).strip()[:10]
+            if profession not in ("FISI", "FIAE", "FIDP", "FIDV", "ITSE", "ITSM", "KDM", "ALL", ""):
+                profession = ""
             try:
                 training_year = int(body.get("training_year", 1))
                 if training_year not in (1, 2, 3):

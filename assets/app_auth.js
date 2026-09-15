@@ -114,12 +114,12 @@
       }
     },
 
-    async register(name, email, password, role = 'solo', rememberMe = false) {
+    async register(name, email, password, role = 'solo', rememberMe = false, profession = '') {
       try {
         const res = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password, role })
+          body: JSON.stringify({ name, email, password, role, profession })
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
@@ -577,9 +577,24 @@
             <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Deine Rolle / Lernziel:</label>
             <select id="auth-select-role" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; outline: none; background: white; box-sizing: border-box;">
               <option value="solo">🎓 Solo-Selbstlerner & Quereinsteiger</option>
-              <option value="student">💼 Auszubildender Fachinformatiker (FIAE / FISI)</option>
+              <option value="student">💼 Auszubildender IT-Beruf</option>
               <option value="teacher">👨‍🏫 Lehrkraft / Dozent / Ausbilder</option>
             </select>
+          </div>
+
+          <div id="auth-field-profession" style="display: none;">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Dein IT-Ausbildungsberuf (optional):</label>
+            <select id="auth-select-profession" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; outline: none; background: white; box-sizing: border-box;">
+              <option value="">Keine Angabe / Quereinsteiger</option>
+              <option value="FISI">🖥️ Fachinformatiker Systemintegration (FISI)</option>
+              <option value="FIAE">💻 Fachinformatiker Anwendungsentwicklung (FIAE)</option>
+              <option value="FIDP">📊 Fachinformatiker Daten- &amp; Prozessanalyse (FIDP)</option>
+              <option value="FIDV">🌐 Fachinformatiker Digitale Vernetzung (FIDV)</option>
+              <option value="ITSE">⚡ IT-System-Elektroniker/in (ITSE)</option>
+              <option value="ITSM">💼 Kaufleute für IT-System-Management (ITSM)</option>
+              <option value="KDM">📈 Kaufleute für Digitalisierungsmanagement (KDM)</option>
+            </select>
+            <span style="display: block; font-size: 0.74rem; color: #64748b; margin-top: 3px;">Schaltet deinen spezifischen IHK AP2-Prüfungskurs auf dem Dashboard frei.</span>
           </div>
 
           <!-- Session-Einstellung (Standard: nicht angehakt für Login-Zwang nach Schließen des Browsers) -->
@@ -618,6 +633,7 @@
     const tabReg = document.getElementById('auth-tab-register');
     const nameField = document.getElementById('auth-field-name');
     const roleField = document.getElementById('auth-field-role');
+    const profField = document.getElementById('auth-field-profession');
     const submitBtn = document.getElementById('auth-submit-btn');
     const errorBox = document.getElementById('auth-error-box');
     const form = document.getElementById('auth-form');
@@ -634,8 +650,9 @@
         tabLog.style.color = '#64748b';
         tabLog.style.boxShadow = 'none';
 
-        nameField.style.display = 'block';
-        roleField.style.display = 'block';
+        if (nameField) nameField.style.display = 'block';
+        if (roleField) roleField.style.display = 'block';
+        if (profField) profField.style.display = 'block';
         submitBtn.innerText = 'Jetzt kostenlos registrieren →';
         submitBtn.style.background = '#0284c7';
       } else {
@@ -648,8 +665,9 @@
           tabReg.style.boxShadow = 'none';
         }
 
-        nameField.style.display = 'none';
-        roleField.style.display = 'none';
+        if (nameField) nameField.style.display = 'none';
+        if (roleField) roleField.style.display = 'none';
+        if (profField) profField.style.display = 'none';
         submitBtn.innerText = 'Anmelden →';
         submitBtn.style.background = '#059669';
       }
@@ -678,6 +696,7 @@
       const password = document.getElementById('auth-input-password').value;
       const name = document.getElementById('auth-input-name')?.value.trim() || email.split('@')[0];
       const role = document.getElementById('auth-select-role')?.value || 'solo';
+      const profession = document.getElementById('auth-select-profession')?.value || '';
       const rememberMe = document.getElementById('auth-remember-me')?.checked || false;
 
       submitBtn.disabled = true;
@@ -685,7 +704,7 @@
 
       let result;
       if (isRegister) {
-        result = await window.AUTH.register(name, email, password, role, rememberMe);
+        result = await window.AUTH.register(name, email, password, role, rememberMe, profession);
       } else {
         result = await window.AUTH.login(email, password, rememberMe);
       }
