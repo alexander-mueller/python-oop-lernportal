@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 10: Stromversorgungs- & USV-Anlagen Projektierung – IHK AP2 ITSE</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-amber { background: #d97706; color: #ffffff; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #d97706; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #b45309; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #f59e0b; ring: 2px #f59e0b; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #fcd34d; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #fcd34d; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=02_stromversorgung_und_usv_anlagen" class="ihk-btn ihk-btn-primary">⚡ In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-amber">IHK AP2 IT-System-Elektroniker/in</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 10: Stromversorgungs- & USV-Anlagen Projektierung</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Wirk-, Blind- und Scheinleistung, USV-Klassifizierung (VFD, VI, VFI) & Autonomiezeit</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #fcd34d; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>USV-Anlagen sichern unterbrechungsfreien Betrieb bei Netzausfällen und filtern Oberwellen, Spannungsspitzen und Frequenzschwankungen.</p>
+      <h4>1. Leistungsdreieck & Berechnungen</h4>
+      <ul>
+        <li><strong>Wirkleistung $P$ (Watt - W):</strong> Die tatsächliche Nutzleistung, die thermisch/mechanisch umgesetzt wird: $P = U \cdot I \cdot \cosarphi$.</li>
+        <li><strong>Scheinleistung $S$ (Voltampere - VA):</strong> Die gesamte vom Netz geforderte Leistung: $S = U \cdot I = rac{P}{\cosarphi}$.</li>
+        <li><strong>Leistungsfaktor $\cosarphi$:</strong> Verhältnis von Wirkleistung zu Scheinleistung (Server-Netzteile typisch 0,9 bis 0,98 mit PFC).</li>
+      </ul>
+      <h4>2. USV-Typen nach DIN EN 62040-3</h4>
+      <table>
+        <tr><th>Klasse</th><th>Bezeichnung</th><th>Umschaltzeit</th><th>Einsatzbereich</th></tr>
+        <tr><td><strong>VFD</strong></td><td>Offline / Standby</td><td>4 - 10 ms</td><td>Einfache Büro-PCs, Router (nicht für Server)</td></tr>
+        <tr><td><strong>VI</strong></td><td>Line-Interactive</td><td>2 - 4 ms</td><td>Abteilungs-Server, Netzwerk-Switches</td></tr>
+        <tr><td><strong>VFI</strong></td><td>Online / Dauerwandler</td><td><strong>0 ms (unterbrechungsfrei)</strong></td><td>Rechenzentren, Core-Infrastruktur, Medizintechnik</td></tr>
+      </table>
+    
+      </div>
+
+      <div id="usv-calculator-app" style="margin: 24px 0;"></div>
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="USV-Dimensionierung & Leistungsberechnung" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">USV-Dimensionierung & Leistungsberechnung</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Ein Rack im Serverraum beherbergt 4 Server (je 450 W Wirkleistung, cos phi = 0,9), 2 Core-Switches (je 120 W, cos phi = 0,85) und ein SAN-Storage (600 W, cos phi = 0,92). Die Anlage soll bei Stromausfall für mindestens 20 Minuten durch eine Online-USV (VFI) abgesichert werden.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Berechnen Sie die gesamte Wirkleistung P (in W) und die gesamte Scheinleistung S (in VA) aller Verbraucher.
+b) Welcher USV-Typ nach DIN EN 62040-3 (VFD, VI oder VFI) ist für Rechenzentren zwingend einzusetzen? Begründen Sie Ihre Wahl anhand der Umschaltzeit.
+c) Welcher Sicherheitszuschlag wird für die Dimensionierung der USV-Nennleistung empfohlen?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) Wirkleistung P = (4 * 450 W) + (2 * 120 W) + 600 W = 1800 W + 240 W + 600 W = 2.640 W (2,64 kW).
+Scheinleistung S = (1800 / 0,9) + (240 / 0,85) + (600 / 0,92) = 2000 VA + 282,35 VA + 652,17 VA = 2.934,52 VA (ca. 2,94 kVA).
+b) VFI (Voltage and Frequency Independent / Dauerwandler / Online-USV). Nur VFI arbeitet mit unterbrechungsfreier Umschaltung (Umschaltzeit = 0 ms), da der Wechselrichter permanent die Last versorgt.
+c) Empfohlen wird ein Sicherheits- und Erweiterungszuschlag von mindestens 20 % bis 30 % (USV-Mindestleistung ca. 3,5 bis 3,8 kVA).
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../01_elektrotechnik_und_schutzmassnahmen_vde0100/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=02_stromversorgung_und_usv_anlagen" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../03_blitzschutz_ueberspannung_und_erdung/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  <script src="../../../assets/ihk_tools/usv_calculator.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 11: Lichtwellenleiter (LWL) & Fusionsspleißen – IHK AP2 ITSE</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-amber { background: #d97706; color: #ffffff; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #d97706; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #b45309; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #f59e0b; ring: 2px #f59e0b; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #fcd34d; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #fcd34d; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=05_lichtwellenleiter_und_spleisstechnik" class="ihk-btn ihk-btn-primary">⚡ In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-purple">IHK AP2 IT-System-Elektroniker/in</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 11: Lichtwellenleiter (LWL) & Fusionsspleißen</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Singlemode (OS2) vs. Multimode (OM3-5), Faservorbereitung & Spleißdämpfung</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #fcd34d; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Lichtwellenleiter übertragen Daten als Lichtimpulse und sind immun gegen elektromagnetische Störfelder (vollständige galvanische Trennung).</p>
+      <h4>1. Faserarten im Vergleich</h4>
+      <table>
+        <tr><th>Eigenschaft</th><th>Singlemode (OS1/OS2)</th><th>Multimode (OM3/OM4/OM5)</th></tr>
+        <tr><td><strong>Kerndurchmesser</strong></td><td>ca. 9 µm</td><td>50 µm</td></tr>
+        <tr><td><strong>Manteldurchmesser</strong></td><td>125 µm</td><td>125 µm</td></tr>
+        <tr><td><strong>Lichtquelle</strong></td><td>Laserdiode (1310 nm / 1550 nm)</td><td>VCSEL / LED (850 nm / 1300 nm)</td></tr>
+        <tr><td><strong>Reichweite (10G)</strong></td><td>Bis 10 km (oder 40 km)</td><td>300 m (OM3) bzw. 400 m (OM4)</td></tr>
+        <tr><td><strong>Dämpfung</strong></td><td>ca. 0,4 dB/km bei 1310 nm</td><td>ca. 2,5 dB/km bei 850 nm</td></tr>
+      </table>
+      <h4>2. Fusionsspleiß-Ablauf</h4>
+      <p>1. Absetzen des Außenmantels und Primärcoatings (Strippen), 2. Reinigen mit Isopropanol, 3. Präzises Brechen im 90°-Winkel (Cleaven), 4. Einlegen ins Spleißgerät mit Lichtbogenverschmelzung, 5. Spleißschutz mit Schrumpfschlauch anbringen (Spleißdämpfung muss $\le 0{,}1	ext{ dB}$ sein).</p>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="LWL-Technik: Singlemode vs. Multimode & OTDR-Messtechnik" data-points="8" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">LWL-Technik: Singlemode vs. Multimode & OTDR-Messtechnik</strong>
+            <span class="ihk-badge ihk-badge-success">8 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Zwischen zwei Gebäuden auf einem Firmencampus (Entfernung 850 m) soll eine 10-Gigabit-Ethernet-Verbindung verlegt werden. Die Techniker messen die verlegte Glasfaserstrecke mit einem OTDR.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Begründen Sie, warum für diese Entfernung ein Singlemode-Kabel (OS2) anstelle eines Multimode-Kabels (z.B. OM3) gewählt werden muss.
+b) Welchen Kern- und Manteldurchmesser besitzt eine Standard-Singlemode-Faser?
+c) Auf dem OTDR-Messprotokoll ist ein steiler Peak (Spitze) nach oben gefolgt von einem Dämpfungssprung zu sehen. Um welches Ereignis handelt es sich (Fresnel-Reflexion oder Fusionsspleiß)?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) OM3-Multimode-Fasern sind bei 10 Gbit/s (10GBASE-SR) auf eine maximale Reichweite von 300 m begrenzt (Modendispersion). Für 850 m ist Singlemode-Glasfaser (10GBASE-LR bis 10 km) zwingend erforderlich.
+b) Kerndurchmesser: ca. 9 µm; Manteldurchmesser (Cladding): 125 µm (9/125 µm).
+c) Fresnel-Reflexion an einer Steckverbindung oder an einem offenen Faserende (durch Brechungsindexunterschied Glas/Luft). Ein Fusionsspleiß zeigt im OTDR keinen Reflexionspeak, sondern nur eine Stufe nach unten.
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../04_strukturierte_verkabelung_kupfer/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=05_lichtwellenleiter_und_spleisstechnik" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../06_optische_messtechnik_und_otdr/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

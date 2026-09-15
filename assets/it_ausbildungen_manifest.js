@@ -137,7 +137,7 @@
         color: "#d97706",
         badgeClass: "badge-itse",
         description: "Planung, Errichtung und Instandhaltung elektrotechnischer Schutz- und Stromversorgungssysteme sowie optischer Leitungsnetze.",
-        coreCourses: ["ihk_ap1", "bash", "dns_records", "cpp"],
+        coreCourses: ["ihk_ap1", "ihk_ap2_itse", "bash", "dns_records", "cpp"],
         years: {
           1: {
             title: "1. Ausbildungsjahr (Elektrotechnische Grundlagen & Arbeitsplatz)",
@@ -152,7 +152,7 @@
           3: {
             title: "3. Ausbildungsjahr (VDE-Prüfungen, USV-Anlagen & Messtechnik)",
             lernfelder: [10, 11, 12],
-            recommendedCourses: ["cpp", "bash"]
+            recommendedCourses: ["ihk_ap2_itse", "cpp", "bash"]
           }
         }
       },
@@ -164,7 +164,7 @@
         color: "#2563eb",
         badgeClass: "badge-itsm",
         description: "Kaufmännische IT-Beratung, Konzeption und Vertrieb von IT-Lösungen, ITIL-Serviceverträge und IT-Projektmanagement.",
-        coreCourses: ["ihk_ap1", "sql", "python", "html_css"],
+        coreCourses: ["ihk_ap1", "ihk_ap2_itsm", "sql", "python", "html_css"],
         years: {
           1: {
             title: "1. Ausbildungsjahr (IT-Märkte, Hard-/Software & Kalkulation)",
@@ -179,7 +179,7 @@
           3: {
             title: "3. Ausbildungsjahr (SLA-Vertrieb, ITIL-Services & IT-Projekte)",
             lernfelder: [10, 11, 12],
-            recommendedCourses: ["sql", "html_css"]
+            recommendedCourses: ["ihk_ap2_itsm", "sql", "html_css"]
           }
         }
       },
@@ -191,7 +191,7 @@
         color: "#0891b2",
         badgeClass: "badge-kdm",
         description: "Analyse und Digitalisierung betriebswirtschaftlicher Wertschöpfungsketten, ERP-Systeme, Datenökonomie und Compliance.",
-        coreCourses: ["ihk_ap1", "sql", "python", "git"],
+        coreCourses: ["ihk_ap1", "ihk_ap2_kdm", "sql", "python", "git"],
         years: {
           1: {
             title: "1. Ausbildungsjahr (Geschäftsprozesse & IT-Organisation)",
@@ -206,7 +206,7 @@
           3: {
             title: "3. Ausbildungsjahr (Plattformökonomie, Digital ROI & Controlling)",
             lernfelder: [10, 11, 12],
-            recommendedCourses: ["sql", "python"]
+            recommendedCourses: ["ihk_ap2_kdm", "sql", "python"]
           }
         }
       }
@@ -315,9 +315,9 @@
           "FIAE": ["ihk_ap2_fiae", "html_css", "javascript", "git"],
           "FIDP": ["ihk_ap2_fidp", "python", "sql", "git"],
           "FIDV": ["ihk_ap2_fidv", "bash", "dns_records", "cpp"],
-          "ITSE": ["bash", "cpp"],
-          "ITSM": ["sql", "python"],
-          "KDM": ["sql", "git"]
+          "ITSE": ["ihk_ap2_itse", "bash", "cpp"],
+          "ITSM": ["ihk_ap2_itsm", "sql", "python"],
+          "KDM": ["ihk_ap2_kdm", "sql", "git"]
         }
       },
       11: {
@@ -340,9 +340,9 @@
           "FIAE": ["ihk_ap2_fiae", "java", "csharp", "go", "rust"],
           "FIDP": ["ihk_ap2_fidp", "python", "sql"],
           "FIDV": ["ihk_ap2_fidv", "dns_records", "bash"],
-          "ITSE": ["dns_records"],
-          "ITSM": ["sql"],
-          "KDM": ["sql", "python"]
+          "ITSE": ["ihk_ap2_itse", "dns_records"],
+          "ITSM": ["ihk_ap2_itsm", "sql"],
+          "KDM": ["ihk_ap2_kdm", "sql", "python"]
         }
       },
       12: {
@@ -365,9 +365,9 @@
           "FIAE": ["ihk_ap2_fiae", "git", "java", "csharp", "python"],
           "FIDP": ["ihk_ap2_fidp", "sql", "python", "git"],
           "FIDV": ["ihk_ap2_fidv", "bash", "dns_records"],
-          "ITSE": ["bash"],
-          "ITSM": ["sql"],
-          "KDM": ["sql"]
+          "ITSE": ["ihk_ap2_itse", "bash"],
+          "ITSM": ["ihk_ap2_itsm", "sql"],
+          "KDM": ["ihk_ap2_kdm", "sql"]
         }
       }
     }

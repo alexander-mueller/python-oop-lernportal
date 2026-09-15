@@ -2614,5 +2614,347 @@ window.COURSES_MANIFEST = {
         ]
       }
     ]
+  },
+  "ihk_ap2_itse": {
+    "id": "ihk_ap2_itse",
+    "title": "IHK AP2 Crashkurs: IT-System-Elektroniker/in",
+    "language": "ihk_ap2_itse",
+    "icon": "⚡",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für ITSE (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: DIN VDE 0100 Schutzmaßnahmen, Netzformen (TN/TT/IT), USV-Dimensionierung & VFI, Überspannungsschutz Typ 1-3, Strukturierte Verkabelung (EN 50173), LWL Singlemode/Multimode, Fusionsspleißen & OTDR-Messtechnik, DGUV V3 Prüfungen (VDE 0701/0702), Fehlersuche, EMV & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_elektrotechnik_und_usv",
+        "title": "🌱 Lehrpfad 1: Elektrotechnik, Netzformen & USV-Anlagen (LF 9 & 10)",
+        "description": "DIN VDE 0100 Schutzmaßnahmen, Netzformen (TN-C, TN-S, TT, IT), RCD-Dimensionierung, Leistungsberechnung (P, S, cos phi), USV-Klassen (VFD, VI, VFI) & Blitzschutzzonen (LPZ 0-3).",
+        "certificateKey": "ihk_ap2_itse_strom",
+        "chapters": [
+          {
+            "folder": "01_elektrotechnik_und_schutzmassnahmen_vde0100",
+            "title": "LF 9: Elektrotechnische Grundlagen & Schutzmaßnahmen (DIN VDE 0100)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_stromversorgung_und_usv_anlagen",
+            "title": "LF 10: Stromversorgungs- & USV-Anlagen Projektierung (VFI, Scheinleistung)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_blitzschutz_ueberspannung_und_erdung",
+            "title": "LF 10: Blitzschutz, Überspannungsschutz & Erdungskonzepte (LPZ, Typ 1-3)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_leitungsnetze_und_lwl",
+        "title": "⚙️ Lehrpfad 2: Leitungsnetze, Glasfaser & Messtechnik (LF 10 & 11)",
+        "description": "Strukturierte Verkabelung nach DIN EN 50173, Kupfer Cat.6A/7, LWL Singlemode (OS2) vs. Multimode (OM3-5), Fusionsspleißen, OTDR-Kurvenanalyse & optisches Dämpfungsbudget.",
+        "certificateKey": "ihk_ap2_itse_lwl",
+        "chapters": [
+          {
+            "folder": "04_strukturierte_verkabelung_kupfer",
+            "title": "LF 11: Strukturierte Verkabelung & Kupfer-Messtechnik (Cat.6A/7, NEXT)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_lichtwellenleiter_und_spleisstechnik",
+            "title": "LF 11: Lichtwellenleiter (LWL) & Fusionsspleißen (OS2 vs. OM3-5)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_optische_messtechnik_und_otdr",
+            "title": "LF 11: Optische Messtechnik & Dämpfungsbudget (OTDR, Fresnel-Reflexion)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_dguv_instandhaltung_und_funk",
+        "title": "☁️ Lehrpfad 3: DGUV V3 Prüfungen, Instandhaltung & Funk (LF 9 & 12)",
+        "description": "Wiederkehrende Prüfungen elektrischer Geräte nach DGUV Vorschrift 3 (DIN EN 50678 / VDE 0701), systematische Fehlersuche in Netzen & Funkübertragung / Antennentechnik (EIRP, EMV).",
+        "certificateKey": "ihk_ap2_itse_instandhaltung",
+        "chapters": [
+          {
+            "folder": "07_dguv_v3_pruefungen_vde0701",
+            "title": "LF 9: Geräteprüfung nach DGUV Vorschrift 3 (VDE 0701/0702, R_PE, R_ISO)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_fehlersuche_in_it_und_tk_systemen",
+            "title": "LF 9: Systematische Fehlersuche in IT- & TK-Infrastrukturen (TDR, OSI)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_funktechnik_antennen_und_emv",
+            "title": "LF 12: Funkübertragung, Antennentechnik & EMV (EIRP, Richtfunk)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_arbeitssicherheit_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Sicherheit, 40h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "Die 5 Sicherheitsregeln der Elektrotechnik, ElektroG/BattG, Leitfaden für die 40h-Projektarbeit samt Montage/VDE-Prüfung & Vollprüfungssimulation.",
+        "certificateKey": "ihk_ap2_itse_master",
+        "chapters": [
+          {
+            "folder": "10_arbeitssicherheit_umwelt_und_wiso",
+            "title": "WiSo: Arbeitssicherheit (5 Sicherheitsregeln) & ElektroG (BattG, WEEE)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_40h",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide ITSE)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_itse_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 ITSE Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
+  },
+  "ihk_ap2_itsm": {
+    "id": "ihk_ap2_itsm",
+    "title": "IHK AP2 Crashkurs: Kaufleute für IT-System-Management",
+    "language": "ihk_ap2_itsm",
+    "icon": "💼",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für ITSM (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: IT-Marktanalyse, SWOT & 7P Marketing-Mix, TCO/ROI, B2B-Vertrieb & Buying Center, Einwandbehandlung & Harvard-Konzept, CRM, Handelskalkulation (LEP bis BVP), IT-Vertragsrecht (Werk-/Dienstvertrag, EVB-IT), Service Level Agreements (SLAs, 99,9%), ITIL v4 & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_maerkte_marketing_tco",
+        "title": "🌱 Lehrpfad 1: IT-Märkte, Marketing-Mix & Wirtschaftlichkeit (LF 9 & 10)",
+        "description": "Marktforschung, SWOT-Analyse, BCG-Matrix, 7P-Dienstleistungsmarketing, Total Cost of Ownership (TCO), ROI & statische Amortisationsrechnung.",
+        "certificateKey": "ihk_ap2_itsm_marketing",
+        "chapters": [
+          {
+            "folder": "01_it_marktanalyse_wettbewerb_und_swot",
+            "title": "LF 9: IT-Marktanalyse, Wettbewerb & SWOT-Analyse (BCG-Matrix)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_marketing_mix_fuer_it_dienstleistungen",
+            "title": "LF 10: Der Marketing-Mix für IT-Dienstleistungen (7P, Lead Nurturing)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_investitions_und_wirtschaftlichkeitsrechnung",
+            "title": "LF 9: Investitions- & Wirtschaftlichkeitsrechnung (TCO, ROI, Amortisation)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_vertrieb_crm_akquise",
+        "title": "⚙️ Lehrpfad 2: B2B-Vertrieb, CRM & Kundenakquise (LF 10 & 11)",
+        "description": "B2B-Vertriebszyklus, Buying Center Rollen, BANT-Qualifizierung, Fragetechniken, Einwandbehandlung (Bumerang), Harvard-Verhandlung & CRM-Kundenbindung.",
+        "certificateKey": "ihk_ap2_itsm_vertrieb",
+        "chapters": [
+          {
+            "folder": "04_b2b_vertriebsprozess_und_lead_management",
+            "title": "LF 10: Der B2B-Vertriebsprozess & Buying Center Analyse (BANT)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_kundenakquise_einwandbehandlung_und_verhandlung",
+            "title": "LF 11: Kundenakquise, Einwandbehandlung & Verhandlungsführung (Harvard)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_crm_systeme_und_kundenbindung",
+            "title": "LF 11: CRM-Systeme, Customer Journey & Kundenbindung (CLV, Churn)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_kalkulation_recht_slas",
+        "title": "☁️ Lehrpfad 3: Kalkulation, IT-Recht & Service Level Agreements (LF 11 & 12)",
+        "description": "Kaufmännische Handelskalkulation (LEP bis BVP), Deckungsbeitrag, Break-Even-Point, BGB-Vertragstypen (Werk vs. Dienst), EVB-IT, SLAs (99,9%) & ITIL v4.",
+        "certificateKey": "ihk_ap2_itsm_kalkulation",
+        "chapters": [
+          {
+            "folder": "07_handelskalkulation_und_deckungsbeitrag",
+            "title": "LF 11: Handelskalkulation & Deckungsbeitragsrechnung (Vorwärtskalkulation)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_it_vertragsrecht_und_evb_it",
+            "title": "LF 12: IT-Vertragsrecht, BGB-Vertragstypen & EVB-IT (Werk- vs. Dienstvertrag)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_service_level_agreements_und_itil",
+            "title": "LF 12: Service Level Agreements (SLAs) & ITIL Service Management",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_controlling_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Controlling, 40h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "Finanzierungsarten (Leasing, Factoring), Liquidität, Leitfaden für die 40h-Projektarbeit samt Vermarktungskonzept & Vollprüfungssimulation.",
+        "certificateKey": "ihk_ap2_itsm_master",
+        "chapters": [
+          {
+            "folder": "10_it_controlling_finanzierung_und_wiso",
+            "title": "WiSo: Finanzierungsformen (Leasing vs. Kauf), Bilanz & WiSo Arbeitsrecht",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_40h",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide ITSM)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_itsm_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 ITSM Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
+  },
+  "ihk_ap2_kdm": {
+    "id": "ihk_ap2_kdm",
+    "title": "IHK AP2 Crashkurs: Kaufleute für Digitalisierungsmanagement",
+    "language": "ihk_ap2_kdm",
+    "icon": "📈",
+    "runner": "none",
+    "description": "Vollständige Prüfungsvorbereitung für KDM (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Digitale Geschäftsmodelle, Business Model Canvas (BMC), Plattformökonomie & Netzwerkeffekte, Datenmonetarisierung, BPMN 2.0 Prozessdigitalisierung, ERP-Modulverzahnung, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung), Change Management (Kotter/Lewin), Controlling & KPIs, Datenschutz-Folgenabschätzung (DSFA Art. 35 DSGVO), EU AI Act & Vollsimulation.",
+    "tracks": [
+      {
+        "id": "track_1_geschaeftsmodelle_und_plattformen",
+        "title": "🌱 Lehrpfad 1: Digitale Geschäftsmodelle & Plattformökonomie (LF 9 & 11)",
+        "description": "Business Model Canvas (BMC), Subscription Economy, direkte & indirekte Netzwerkeffekte, Metcalfe'sches Gesetz, Hühnchen-Ei-Problem & Datenmonetarisierung.",
+        "certificateKey": "ihk_ap2_kdm_models",
+        "chapters": [
+          {
+            "folder": "01_digitale_geschaeftsmodelle_und_bmc",
+            "title": "LF 9: Analyse & Transformation digitaler Geschäftsmodelle (BMC)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "02_plattformoekonomie_und_netzwerkeffekte",
+            "title": "LF 11: Plattformökonomie, Netzwerkeffekte & Disruption (Metcalfe)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "03_datenwerterschoepfung_und_datenmonetarisierung",
+            "title": "LF 9: Datenökonomie & Monetarisierung betrieblicher Daten (DIKW)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_2_prozesse_erp_change",
+        "title": "⚙️ Lehrpfad 2: Prozessdigitalisierung, ERP & Workflows (LF 9 & 10)",
+        "description": "Geschäftsprozess-Digitalisierung in BPMN 2.0, Medienbrüche, RPA vs. API, ERP-Architekturen, GoBD-konformes DMS/ECM & E-Invoicing (ZUGFeRD/XRechnung nach EN 16931).",
+        "certificateKey": "ihk_ap2_kdm_processes",
+        "chapters": [
+          {
+            "folder": "04_geschaeftsprozess_digitalisierung_bpmn",
+            "title": "LF 10: Geschäftsprozess-Digitalisierung in BPMN 2.0 (RPA, Medienbrüche)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "05_erp_und_dokumentenmanagement_dms",
+            "title": "LF 10: ERP-Systeme, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "06_change_management_und_agile_methoden",
+            "title": "LF 10: Change Management & Agiles Transformationsmanagement (Kotter/Lewin)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_3_controlling_dsfa_compliance",
+        "title": "☁️ Lehrpfad 3: Business Analytics, Controlling & Compliance (LF 11 & 12)",
+        "description": "Datengetriebenes Controlling, Straight-Through-Processing (STP), Cost per Transaction, Datenschutz-Folgenabschätzung (DSFA Art. 35), k-Anonymität & EU AI Act.",
+        "certificateKey": "ihk_ap2_kdm_controlling",
+        "chapters": [
+          {
+            "folder": "07_datengetriebenes_controlling_und_kpis",
+            "title": "LF 11: Datengetriebenes Controlling & KPI-Dashboards (STP-Rate, IBCS)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "08_datenschutz_folgenabschaetzung_und_ai_act",
+            "title": "LF 12: Datenschutz-Folgenabschätzung (DSFA) & EU AI Act (Risikoklassen)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "09_it_sicherheitsmanagement_und_risiko",
+            "title": "LF 12: IT-Sicherheitsmanagement & Risikobeurteilung (BSI, R = E * S)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      },
+      {
+        "id": "track_4_nachhaltigkeit_projekt_und_pruefung",
+        "title": "🏆 Lehrpfad 4: Nachhaltigkeit, 40h-Projektarbeit & AP2-Prüfungssimulation",
+        "description": "Green IT, PUE-Wert, Mitbestimmung des Betriebsrats (§ 87 BetrVG), Leitfaden für die 40h-Projektarbeit zur Prozessdigitalisierung & Vollprüfungssimulation.",
+        "certificateKey": "ihk_ap2_kdm_master",
+        "chapters": [
+          {
+            "folder": "10_nachhaltigkeit_green_it_und_wiso",
+            "title": "WiSo: Nachhaltigkeit (Green IT), Ethik & Mitbestimmung (§ 87 BetrVG)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "11_betriebliche_projektarbeit_guide_40h",
+            "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide KDM)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          },
+          {
+            "folder": "12_ap2_kdm_gesamtpruefung_simulation",
+            "title": "Abschluss: AP2 KDM Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+            "taskFile": "README.md",
+            "testFile": "index.html"
+          }
+        ]
+      }
+    ]
   }
 };

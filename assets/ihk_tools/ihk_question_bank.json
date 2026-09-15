@@ -2448,5 +2448,125 @@
     "scenario": "Ein Sondermaschinenbauer vernetzt eine Roboterzelle mit der Firmen-IT, um Zustandsdaten zu analysieren.",
     "question": "a) Erläutern Sie den fundamentalen Unterschied zwischen 'Safety' (Maschinensicherheit) und 'Security' (Informationssicherheit).\nb) Welche Rolle spielt der Performance Level (PL nach EN ISO 13849-1) bzw. das Safety Integrity Level (SIL nach IEC 61508) bei einer Not-Aus-Schaltung?\nc) Erklären Sie, warum das nachträgliche Vernetzen einer Bestandsmaschine zu einem Erlöschen der CE-Konformität führen kann (Wesentliche Veränderung).",
     "expected_solution": "a) Safety schützt Menschen und die Umwelt vor Gefahren, die von der Maschine ausgehen (z.B. Verletzungen durch Roboterarm, Not-Aus). Security schützt die Maschine und Daten vor Gefahren, die von böswilligen Angreifern oder Schadsoftware ausgehen (z.B. Hacking, Manipulation).\nb) PL (a bis e) und SIL (1 bis 4) klassifizieren die Zuverlässigkeit und Ausfallwahrscheinlichkeit sicherheitsbezogener Steuerungsfunktionen. Ein Not-Aus erfordert typischerweise PL e / SIL 3 (höchste Sicherheitsstufe mit redundanter Auslegung).\nc) Werden durch die digitale Vernetzung neue Gefährdungen geschaffen (z.B. Manipulierbarkeit von Schutzmechanismen über das Netzwerk), liegt eine 'wesentliche Veränderung' nach dem Produktsicherheitsgesetz / Maschinenrichtlinie vor. Das bestehende CE-Zeichen wird ungültig, und der Betreiber wird rechtlich zum Hersteller mit Pflicht zur erneuten Risikobeurteilung und CE-Zertifizierung."
+  },
+  {
+    "id": "itse_vde_001",
+    "profession": "ITSE",
+    "exam_part": "AP2_PB1",
+    "topic": "Schutzmaßnahmen DIN VDE 0100 & Netzformen (TN-C vs. TN-S)",
+    "points": 10,
+    "scenario": "In einem Bürogebäude wird die Elektroinstallation für einen neuen Serverraum ertüchtigt. Im bestehenden Hauptverteiler ist ein TN-C-Netz vorhanden. Für den Serverraum soll ein TN-S-Netz realisiert werden.",
+    "question": "a) Erläutern Sie den Unterschied zwischen einem TN-C-System und einem TN-S-System hinsichtlich Neutralleiter (N) und Schutzleiter (PE).\nb) Begründen Sie, warum im IT- und Serverumfeld ein reines TN-C-Netz unzulässig ist und zu EMV-Problemen sowie Datenfehlern führt.\nc) An welcher Stelle darf die Auftrennung des PEN-Leiters in N und PE erfolgen und darf dieser danach wieder zusammengeführt werden?",
+    "expected_solution": "a) TN-C: Neutralleiter und Schutzleiter sind in einem gemeinsamen Leiter kombiniert (PEN-Leiter). TN-S: Neutralleiter (N) und Schutzleiter (PE) sind im gesamten Netz strikt getrennt geführt.\nb) Im TN-C-Netz fließen betriebsmäßige Betriebsströme über den PEN-Leiter. Da der PEN auch mit Schutzleiterkontakten und Gehäusen verbunden ist, kommt es zu Potenzialverschleppungen und vagabundierenden Strömen über Schirmungen von Netzwerkkabeln (Brummschleifen, Datenübertragungsfehler, Brandgefahr).\nc) Die Auftrennung erfolgt an einem zentralen Erdungspunkt (z.B. Hauptverteilung / Unterverteiler). Nach der Trennung in N und PE dürfen beide Leiter an keiner Stelle im nachfolgenden Leitungsverlauf wieder zusammengeführt werden."
+  },
+  {
+    "id": "itse_usv_001",
+    "profession": "ITSE",
+    "exam_part": "AP2_PB1",
+    "topic": "USV-Dimensionierung & Leistungsberechnung",
+    "points": 10,
+    "scenario": "Ein Rack im Serverraum beherbergt 4 Server (je 450 W Wirkleistung, cos phi = 0,9), 2 Core-Switches (je 120 W, cos phi = 0,85) und ein SAN-Storage (600 W, cos phi = 0,92). Die Anlage soll bei Stromausfall für mindestens 20 Minuten durch eine Online-USV (VFI) abgesichert werden.",
+    "question": "a) Berechnen Sie die gesamte Wirkleistung P (in W) und die gesamte Scheinleistung S (in VA) aller Verbraucher.\nb) Welcher USV-Typ nach DIN EN 62040-3 (VFD, VI oder VFI) ist für Rechenzentren zwingend einzusetzen? Begründen Sie Ihre Wahl anhand der Umschaltzeit.\nc) Welcher Sicherheitszuschlag wird für die Dimensionierung der USV-Nennleistung empfohlen?",
+    "expected_solution": "a) Wirkleistung P = (4 * 450 W) + (2 * 120 W) + 600 W = 1800 W + 240 W + 600 W = 2.640 W (2,64 kW).\nScheinleistung S = (1800 / 0,9) + (240 / 0,85) + (600 / 0,92) = 2000 VA + 282,35 VA + 652,17 VA = 2.934,52 VA (ca. 2,94 kVA).\nb) VFI (Voltage and Frequency Independent / Dauerwandler / Online-USV). Nur VFI arbeitet mit unterbrechungsfreier Umschaltung (Umschaltzeit = 0 ms), da der Wechselrichter permanent die Last versorgt.\nc) Empfohlen wird ein Sicherheits- und Erweiterungszuschlag von mindestens 20 % bis 30 % (USV-Mindestleistung ca. 3,5 bis 3,8 kVA)."
+  },
+  {
+    "id": "itse_lwl_001",
+    "profession": "ITSE",
+    "exam_part": "AP2_PB2",
+    "topic": "LWL-Technik: Singlemode vs. Multimode & OTDR-Messtechnik",
+    "points": 8,
+    "scenario": "Zwischen zwei Gebäuden auf einem Firmencampus (Entfernung 850 m) soll eine 10-Gigabit-Ethernet-Verbindung verlegt werden. Die Techniker messen die verlegte Glasfaserstrecke mit einem OTDR.",
+    "question": "a) Begründen Sie, warum für diese Entfernung ein Singlemode-Kabel (OS2) anstelle eines Multimode-Kabels (z.B. OM3) gewählt werden muss.\nb) Welchen Kern- und Manteldurchmesser besitzt eine Standard-Singlemode-Faser?\nc) Auf dem OTDR-Messprotokoll ist ein steiler Peak (Spitze) nach oben gefolgt von einem Dämpfungssprung zu sehen. Um welches Ereignis handelt es sich (Fresnel-Reflexion oder Fusionsspleiß)?",
+    "expected_solution": "a) OM3-Multimode-Fasern sind bei 10 Gbit/s (10GBASE-SR) auf eine maximale Reichweite von 300 m begrenzt (Modendispersion). Für 850 m ist Singlemode-Glasfaser (10GBASE-LR bis 10 km) zwingend erforderlich.\nb) Kerndurchmesser: ca. 9 µm; Manteldurchmesser (Cladding): 125 µm (9/125 µm).\nc) Fresnel-Reflexion an einer Steckverbindung oder an einem offenen Faserende (durch Brechungsindexunterschied Glas/Luft). Ein Fusionsspleiß zeigt im OTDR keinen Reflexionspeak, sondern nur eine Stufe nach unten."
+  },
+  {
+    "id": "itse_dguv_001",
+    "profession": "ITSE",
+    "exam_part": "AP2_PB2",
+    "topic": "Geräteprüfung nach DGUV Vorschrift 3 (DIN EN 50678 / VDE 0701)",
+    "points": 10,
+    "scenario": "Nach einer Reparatur an einem Server-Netzteil führt der IT-System-Elektroniker eine Prüfung nach DGUV Vorschrift 3 / DIN EN 50678 (VDE 0701) an dem Gerät (Schutzklasse I) durch.",
+    "question": "a) Nennen Sie die vier aufeinanderfolgenden Prüfschritte der Geräteprüfung in der korrekten Reihenfolge.\nb) Welcher Grenzwert gilt für den Schutzleiterwiderstand bei Kaltgeräteleitungen bis 5 m Länge?\nc) Welcher Mindestwert gilt für den Isolationswiderstand bei Geräten der Schutzklasse I?",
+    "expected_solution": "a) 1. Sichtprüfung (Gehäuse, Anschlussleitung, Zugentlastung auf Beschädigungen),\n2. Messtechnische Prüfung (Schutzleiterwiderstand, Isolationswiderstand, Berührungs-/Schutzleiterstrom),\n3. Funktionsprüfung,\n4. Dokumentation und Kennzeichnung (Prüfprotokoll & Prüfplakette).\nb) Schutzleiterwiderstand R_PE <= 0,3 Ohm (für Längen bis 5 m; zzgl. 0,1 Ohm je weitere 7,5 m bis max. 1,0 Ohm).\nc) Isolationswiderstand R_ISO >= 1,0 MOhm (Prüfspannung 500 V DC; bei Geräten mit Überspannungsschutz 250 V DC)."
+  },
+  {
+    "id": "itsm_kalk_001",
+    "profession": "ITSM",
+    "exam_part": "AP2_PB2",
+    "topic": "Handelskalkulation & Deckungsbeitragsrechnung",
+    "points": 10,
+    "scenario": "Ein IT-Systemhaus bezieht Server zu einem Listeneinkaufspreis (LEP) von 3.000,00 EUR netto pro Stück. Der Distributor gewährt 20 % Lieferantenrabatt und 2 % Lieferantenskonto. Die Bezugskosten betragen 50,00 EUR. Der Handlungskostenzuschlag (HKZ) liegt bei 15 %, der Gewinnzuschlag bei 25 %.",
+    "question": "a) Berechnen Sie im Schema der Vorwärtskalkulation den Einstandspreis (Bezugspreis) sowie den Barverkaufspreis (BVP).\nb) Ein Kunde fragt nach einem Sonderpreis für 10 Einheiten. Die variablen Kosten pro Server betragen 2.450 EUR. Welche kaufmännische Untergrenze darf kurzfristig nicht unterschritten werden?\nc) Definieren Sie den Begriff 'Deckungsbeitrag' und geben Sie die Berechnungsformel an.",
+    "expected_solution": "a) Vorwärtskalkulation:\nListeneinkaufspreis: 3.000,00 EUR\n- 20 % Rabatt: -600,00 EUR\n= Zieleinkaufspreis: 2.400,00 EUR\n- 2 % Skonto: -48,00 EUR\n= Bareinkaufspreis: 2.352,00 EUR\n+ Bezugskosten: +50,00 EUR\n= Einstandspreis: 2.402,00 EUR\n+ 15 % Handlungskosten: +360,30 EUR\n= Selbstkostenpreis: 2.762,30 EUR\n+ 25 % Gewinn: +690,58 EUR\n= Barverkaufspreis: 3.452,88 EUR.\nb) Die kurzfristige Preisuntergrenze entspricht den variablen Stückkosten (2.450,00 EUR), sodass zumindest kein Deckungsverlust entsteht (Deckungsbeitrag = 0 EUR).\nc) Der Deckungsbeitrag (DB) ist der Betrag, der nach Abzug der variablen Kosten von den Umsatzerlösen zur Deckung der Fixkosten verbleibt: DB = Umsatzerlöse - variable Kosten."
+  },
+  {
+    "id": "itsm_tco_001",
+    "profession": "ITSM",
+    "exam_part": "AP2_PB1",
+    "topic": "Wirtschaftlichkeitsanalyse: TCO & Amortisationsrechnung",
+    "points": 10,
+    "scenario": "Ein Kunde vergleicht die Anschaffung eigener Vor-Ort-Server (On-Premises) mit der Migration in eine Managed-Cloud-Lösung über einen Betrachtungszeitraum von 3 Jahren.",
+    "question": "a) Nennen Sie drei typische Kostenarten der 'Indirect Costs' oder 'Hidden Costs' bei On-Premises IT-Infrastrukturen.\nb) Die On-Premises-Lösung erfordert eine Einmalinvestition von 60.000 EUR und spart gegenüber dem Altsystem jährlich 24.000 EUR Betriebskosten ein. Berechnen Sie die statische Amortisationszeit in Jahren und Monaten.\nc) Erläutern Sie den Unterschied zwischen CapEx (Capital Expenditures) und OpEx (Operational Expenditures) anhand von Cloud- und On-Premises-Modellen.",
+    "expected_solution": "a) Strom- und Klimatisierungskosten (PUE-Faktor), Aufwand für Patch- und Backup-Administration durch internes Personal, Ausfallkosten durch ungeplante Downtimes, Raummiete & Brandmeldeanlagen.\nb) Amortisationszeit = Anschaffungskosten / jährliche Einsparung = 60.000 EUR / 24.000 EUR/Jahr = 2,5 Jahre (2 Jahre und 6 Monate).\nc) CapEx sind langfristige Investitionsausgaben für Sachanlagen (z.B. Serverhardware, die bilanziert und über AfA abgeschrieben wird - typisch für On-Premises). OpEx sind laufende betriebliche Betriebskosten, die sofort steuerlich als Aufwand abzugsfähig sind (z.B. monatliche Cloud- und SaaS-Gebühren)."
+  },
+  {
+    "id": "itsm_sla_001",
+    "profession": "ITSM",
+    "exam_part": "AP2_PB1",
+    "topic": "Service Level Agreements (SLAs) & Vertragsstrafen (Pönalen)",
+    "points": 8,
+    "scenario": "Ein IT-Dienstleister vereinbart mit einem Kunden einen 24/7 SLA für eine E-Commerce-Plattform mit einer garantierten Verfügbarkeit von 99,9 % pro Kalenderjahr (365 Tage).",
+    "question": "a) Berechnen Sie die maximal zulässige ungeplante Ausfallzeit pro Jahr in Stunden und Minuten bei 99,9 % Verfügbarkeit.\nb) Erläutern Sie den Unterschied zwischen 'Reaktionszeit' und 'Wiederherstellungszeit' (MTTR - Mean Time to Repair).\nc) Welche Funktion haben Pönalen in einem SLA und wie werden sie typischerweise geregelt?",
+    "expected_solution": "a) Gesamtstunden/Jahr = 365 * 24 h = 8.760 h. Maximaler Ausfall (0,1 %) = 8.760 h * 0,001 = 8,76 Stunden (8 Stunden, 45 Minuten und 36 Sekunden).\nb) Reaktionszeit: Die Zeitspanne von der Störungsmeldung bis zum Beginn der qualifizierten Fehleranalyse durch einen Techniker. Wiederherstellungszeit: Die Gesamtzeitspanne bis zur vollständigen Wiederherstellung des regulären Betriebs.\nc) Pönalen sind vertraglich vereinbarte Konventionalstrafen bei Nichterfüllung zugesicherter Service-Level (z.B. Gutschrift eines prozentualen Teils der monatlichen Servicegebühr je angefangene Stunde Überschreitung)."
+  },
+  {
+    "id": "itsm_recht_001",
+    "profession": "ITSM",
+    "exam_part": "AP2_PB2",
+    "topic": "IT-Vertragsrecht: Werkvertrag vs. Dienstvertrag & EVB-IT",
+    "points": 8,
+    "scenario": "Ein Unternehmen beauftragt die Entwicklung einer individuellen Software-Schnittstelle sowie die anschließende Durchführung von Mitarbeiterschulungen.",
+    "question": "a) Welchem Vertragstyp nach BGB (Werkvertrag nach § 631 BGB oder Dienstvertrag nach § 611 BGB) ist die Schnittstellenentwicklung zuzuordnen? Begründen Sie Ihre Wahl.\nb) Welcher Vertragstyp liegt bei den Mitarbeiterschulungen vor und warum?\nc) Was versteht man unter den EVB-IT und welche Vertragsparteien nutzen diese?",
+    "expected_solution": "a) Werkvertrag (§ 631 BGB), da ein konkretes, funktionsfähiges Arbeitsergebnis (der 'Erfolg') geschuldet ist und eine formelle Abnahme stattfindet.\nb) Dienstvertrag (§ 611 BGB), da nur das fachgerechte Erbringen der Dienstleistung (die Lehrtätigkeit als Bemühen) geschuldet ist, nicht jedoch ein garantierter Lernerfolg der Teilnehmer.\nc) EVB-IT (Ergänzende Vertragsbedingungen für die Beschaffung von IT-Leistungen) sind standardisierte Vertragsmuster der öffentlichen Hand zur rechtssicheren Beschaffung von IT-Systemen, Software und Dienstleistungen durch Behörden und Verwaltungen."
+  },
+  {
+    "id": "kdm_bmc_001",
+    "profession": "KDM",
+    "exam_part": "AP2_PB1",
+    "topic": "Business Model Canvas (BMC) & Plattformökonomie",
+    "points": 10,
+    "scenario": "Ein traditioneller Maschinenbauer transformiert sein Geschäftsmodell vom reinen Verkauf von Maschinen hin zu einem 'Predictive Maintenance'-Abonnementmodell auf einer digitalen Plattform.",
+    "question": "a) Nennen Sie vier der neun Bausteine des Business Model Canvas (BMC) nach Alexander Osterwalder.\nb) Erläutern Sie das Prinzip 'indirekter Netzwerkeffekte' bei digitalen Plattformen anhand dieses Szenarios.\nc) Welche Risiken birgt ein Lock-in-Effekt für den Kunden bei einer proprietären Cloud-Plattform?",
+    "expected_solution": "a) 1. Value Proposition (Wertangebot), 2. Customer Segments (Kundensegmente), 3. Channels (Vertriebskanäle), 4. Revenue Streams (Einnahmequellen) [weitere gültige: Key Activities, Key Resources, Key Partnerships, Customer Relationships, Cost Structure].\nb) Indirekte Netzwerkeffekte entstehen, wenn der Wert der Plattform für eine Nutzergruppe (z.B. Maschinenbetreiber) steigt, weil eine andere Gruppe (z.B. App-Entwickler, Sensorhersteller, Servicedienstleister) zusätzliche kompatible Tools und Schnittstellen anbietet.\nc) Hohe Wechselkosten und technische Abhängigkeit: Daten liegen in proprietären Formaten vor; ein Umzug zu einem Konkurrenten verursacht erhebliche Kosten, Prozessunterbrechungen oder Datenverluste."
+  },
+  {
+    "id": "kdm_xrech_001",
+    "profession": "KDM",
+    "exam_part": "AP2_PB2",
+    "topic": "E-Invoicing: XRechnung vs. ZUGFeRD & Revisionssichere Archivierung",
+    "points": 10,
+    "scenario": "Im Rahmen der B2B-E-Rechnungspflicht stellt ein Großhändler seine Fakturierung von papierhaften und einfachen PDF-Rechnungen auf elektronische Rechnungen nach europäischer Norm EN 16931 um.",
+    "question": "a) Warum erfüllt eine reine PDF-Rechnung per E-Mail nach neuem EU-Recht nicht die Kriterien einer elektronischen Rechnung (E-Rechnung)?\nb) Erläutern Sie den strukturellen Aufbau des ZUGFeRD-Formats (hybrides Format) im Vergleich zur reinen XRechnung.\nc) Nennen Sie drei Grundsätze der GoBD zur revisionssicheren elektronischen Archivierung von Rechnungsbelegen.",
+    "expected_solution": "a) Eine reine PDF-Rechnung enthält die Daten in unstrukturierter visueller Form. Eine echte E-Rechnung muss in einem strukturierten, maschinenlesbaren XML-Format nach EN 16931 vorliegen, das automatisiert verarbeitet werden kann.\nb) ZUGFeRD ist ein hybrides Format: Es besteht aus einer sichtbaren PDF/A-3-Datei für das menschliche Auge, in welche die strukturierte Rechnungs-XML eingebettet ist. Die XRechnung ist ein reines, bildloses XML-Dokument (UBL oder CII).\nc) 1. Nachvollziehbarkeit und Nachprüfbarkeit (Verfahrensdokumentation), 2. Vollständigkeit und Richtigkeit (kein Belegverlust), 3. Unveränderbarkeit (Schutz vor nachträglicher Manipulation, z.B. WORM-Speicher oder Zeitstempel)."
+  },
+  {
+    "id": "kdm_proc_001",
+    "profession": "KDM",
+    "exam_part": "AP2_PB2",
+    "topic": "Prozessdigitalisierung & Robotic Process Automation (RPA)",
+    "points": 8,
+    "scenario": "In der Buchhaltung überträgt eine Sachbearbeiterin täglich manuelle Adressdaten aus Web-Formularen in ein 20 Jahre altes Terminal-ERP-System ohne API-Schnittstelle.",
+    "question": "a) Erläutern Sie das Funktionsprinzip von Robotic Process Automation (RPA) im Vergleich zu einer systemischen API-Integration.\nb) Nennen Sie zwei Kriterien, die einen Geschäftsprozess besonders für den Einsatz von RPA qualifizieren.\nc) Welche Nachteile hat RPA bei Änderungen an der grafischen Benutzeroberfläche (GUI) des Altsystems?",
+    "expected_solution": "a) RPA simuliert menschliche Interaktionen an der grafischen Benutzeroberfläche (Tastatureingaben, Mausklicks, Bildschirmauslesen / Screen Scraping), ohne in den Quellcode oder die Backend-Logik der Anwendung einzugreifen. Eine API bindet Systeme direkt auf Daten- und Protokollebene an.\nb) 1. Hohe Standardisierung und regelbasierte Logik (keine unvorhersehbaren Ausnahmen), 2. Hohes Transaktionsvolumen und repetitive Arbeitsabläufe.\nc) Hohe Fragilität: Bereits geringfügige Änderungen am Layout, Schaltflächen-Positionen oder Auflösungen können dazu führen, dass der Software-Bot fehlschlägt und manuelle Nacharbeit erfordert."
+  },
+  {
+    "id": "kdm_dsfa_001",
+    "profession": "KDM",
+    "exam_part": "AP2_PB1",
+    "topic": "Datenschutz-Folgenabschätzung (DSFA) & EU AI Act",
+    "points": 8,
+    "scenario": "Ein Einzelhändler plant den Einsatz von KI-gestützter Videoanalyse und Gesichtserkennung in seinen Filialen, um personalisierte Werbung auf Kundenmonitoren auszuspielen.",
+    "question": "a) Prüfen Sie, ob für dieses Vorhaben eine Datenschutz-Folgenabschätzung (DSFA nach Art. 35 DSGVO) zwingend erforderlich ist, und begründen Sie Ihre Entscheidung.\nb) In welche Risikoklasse nach dem EU AI Act (KI-Verordnung) fällt biometrische Identifikation und Emotionserkennung im öffentlichen Raum?\nc) Was versteht man im Rahmen von Analytics unter dem Konzept 'k-Anonymität'?",
+    "expected_solution": "a) Ja, zwingend erforderlich. Gemäß Art. 35 Abs. 3 DSGVO ist eine DSFA vorgeschrieben bei systematischer und umfassender Überwachung öffentlich zugänglicher Bereiche sowie beim Einsatz neuer Technologien mit voraussichtlich hohem Risiko für die Rechte und Freiheiten natürlicher Personen.\nb) Hochrisiko-KI-System (bzw. in Teilen unzulässige/verbotene KI-Praxis bei biometrischer Echtzeit-Fernidentifikation ohne strenge richterliche Ausnahme).\nc) Ein Datensatz erfüllt k-Anonymität, wenn die quasi-identifizierenden Merkmale (z.B. PLZ, Alter, Geschlecht) jedes Individuums nicht von mindestens k-1 anderen Personen im Datensatz unterschieden werden können (Gruppengröße >= k)."
   }
 ]

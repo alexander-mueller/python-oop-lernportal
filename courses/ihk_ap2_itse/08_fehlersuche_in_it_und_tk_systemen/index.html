@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 9: Systematische Fehlersuche in IT- & TK-Infrastrukturen – IHK AP2 ITSE</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-amber { background: #d97706; color: #ffffff; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #d97706; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #b45309; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #f59e0b; ring: 2px #f59e0b; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    pre { background: #090d16; padding: 16px; border-radius: 8px; overflow-x: auto; color: #fcd34d; border: 1px solid #1e293b; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #fcd34d; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=08_fehlersuche_in_it_und_tk_systemen" class="ihk-btn ihk-btn-primary">⚡ In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-blue">IHK AP2 IT-System-Elektroniker/in</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 9: Systematische Fehlersuche in IT- & TK-Infrastrukturen</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Top-Down vs. Bottom-Up, Leitungsprüfer, TDR-Reflektometrie & Brummschleifen</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #fcd34d; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>Störungen in Kommunikationssystemen erfordern methodisches Vorgehen statt blindem Komponententausch.</p>
+      <h4>1. Vorgehensmodelle zur Fehlerlokalisierung</h4>
+      <ul>
+        <li><strong>Bottom-Up (von Schicht 1 nach 7):</strong> Prüfung der physikalischen Verbindung (Link-LED, Kabeltester, Spannungsversorgung) vor Softwaretests.</li>
+        <li><strong>Top-Down (von Schicht 7 nach 1):</strong> Prüfung der Anwendung und DNS-Auflösung vor der Hardware.</li>
+        <li><strong>Divide and Conquer:</strong> Prüfung der Mitte (z.B. Ping auf Gateway / Schicht 3), um die Fehlerquelle sofort zu halbieren.</li>
+      </ul>
+      <h4>2. Typische Fehlerbilder</h4>
+      <p>Kabelbruch / Adernvertauschung (Split Pair), Impedanzsprünge durch Knickstellen (TDR-Kabellängenmessung), Brummschleifen durch doppelte Erdung bei Schirmung über unterschiedliche Potentiale.</p>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="Geräteprüfung nach DGUV Vorschrift 3 (DIN EN 50678 / VDE 0701)" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">Geräteprüfung nach DGUV Vorschrift 3 (DIN EN 50678 / VDE 0701)</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Nach einer Reparatur an einem Server-Netzteil führt der IT-System-Elektroniker eine Prüfung nach DGUV Vorschrift 3 / DIN EN 50678 (VDE 0701) an dem Gerät (Schutzklasse I) durch.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Nennen Sie die vier aufeinanderfolgenden Prüfschritte der Geräteprüfung in der korrekten Reihenfolge.
+b) Welcher Grenzwert gilt für den Schutzleiterwiderstand bei Kaltgeräteleitungen bis 5 m Länge?
+c) Welcher Mindestwert gilt für den Isolationswiderstand bei Geräten der Schutzklasse I?
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) 1. Sichtprüfung (Gehäuse, Anschlussleitung, Zugentlastung auf Beschädigungen),
+2. Messtechnische Prüfung (Schutzleiterwiderstand, Isolationswiderstand, Berührungs-/Schutzleiterstrom),
+3. Funktionsprüfung,
+4. Dokumentation und Kennzeichnung (Prüfprotokoll & Prüfplakette).
+b) Schutzleiterwiderstand R_PE <= 0,3 Ohm (für Längen bis 5 m; zzgl. 0,1 Ohm je weitere 7,5 m bis max. 1,0 Ohm).
+c) Isolationswiderstand R_ISO >= 1,0 MOhm (Prüfspannung 500 V DC; bei Geräten mit Überspannungsschutz 250 V DC).
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../07_dguv_v3_pruefungen_vde0701/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_itse&chapter=08_fehlersuche_in_it_und_tk_systemen" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../09_funktechnik_antennen_und_emv/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

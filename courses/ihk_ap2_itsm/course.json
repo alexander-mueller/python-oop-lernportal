@@ -1,0 +1,114 @@
+{
+  "id": "ihk_ap2_itsm",
+  "title": "IHK AP2 Crashkurs: Kaufleute für IT-System-Management",
+  "language": "ihk_ap2_itsm",
+  "icon": "💼",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für ITSM (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: IT-Marktanalyse, SWOT & 7P Marketing-Mix, TCO/ROI, B2B-Vertrieb & Buying Center, Einwandbehandlung & Harvard-Konzept, CRM, Handelskalkulation (LEP bis BVP), IT-Vertragsrecht (Werk-/Dienstvertrag, EVB-IT), Service Level Agreements (SLAs, 99,9%), ITIL v4 & Vollsimulation.",
+  "tracks": [
+    {
+      "id": "track_1_maerkte_marketing_tco",
+      "title": "🌱 Lehrpfad 1: IT-Märkte, Marketing-Mix & Wirtschaftlichkeit (LF 9 & 10)",
+      "description": "Marktforschung, SWOT-Analyse, BCG-Matrix, 7P-Dienstleistungsmarketing, Total Cost of Ownership (TCO), ROI & statische Amortisationsrechnung.",
+      "certificateKey": "ihk_ap2_itsm_marketing",
+      "chapters": [
+        {
+          "folder": "01_it_marktanalyse_wettbewerb_und_swot",
+          "title": "LF 9: IT-Marktanalyse, Wettbewerb & SWOT-Analyse (BCG-Matrix)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_marketing_mix_fuer_it_dienstleistungen",
+          "title": "LF 10: Der Marketing-Mix für IT-Dienstleistungen (7P, Lead Nurturing)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_investitions_und_wirtschaftlichkeitsrechnung",
+          "title": "LF 9: Investitions- & Wirtschaftlichkeitsrechnung (TCO, ROI, Amortisation)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_vertrieb_crm_akquise",
+      "title": "⚙️ Lehrpfad 2: B2B-Vertrieb, CRM & Kundenakquise (LF 10 & 11)",
+      "description": "B2B-Vertriebszyklus, Buying Center Rollen, BANT-Qualifizierung, Fragetechniken, Einwandbehandlung (Bumerang), Harvard-Verhandlung & CRM-Kundenbindung.",
+      "certificateKey": "ihk_ap2_itsm_vertrieb",
+      "chapters": [
+        {
+          "folder": "04_b2b_vertriebsprozess_und_lead_management",
+          "title": "LF 10: Der B2B-Vertriebsprozess & Buying Center Analyse (BANT)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "05_kundenakquise_einwandbehandlung_und_verhandlung",
+          "title": "LF 11: Kundenakquise, Einwandbehandlung & Verhandlungsführung (Harvard)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_crm_systeme_und_kundenbindung",
+          "title": "LF 11: CRM-Systeme, Customer Journey & Kundenbindung (CLV, Churn)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_kalkulation_recht_slas",
+      "title": "☁️ Lehrpfad 3: Kalkulation, IT-Recht & Service Level Agreements (LF 11 & 12)",
+      "description": "Kaufmännische Handelskalkulation (LEP bis BVP), Deckungsbeitrag, Break-Even-Point, BGB-Vertragstypen (Werk vs. Dienst), EVB-IT, SLAs (99,9%) & ITIL v4.",
+      "certificateKey": "ihk_ap2_itsm_kalkulation",
+      "chapters": [
+        {
+          "folder": "07_handelskalkulation_und_deckungsbeitrag",
+          "title": "LF 11: Handelskalkulation & Deckungsbeitragsrechnung (Vorwärtskalkulation)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_it_vertragsrecht_und_evb_it",
+          "title": "LF 12: IT-Vertragsrecht, BGB-Vertragstypen & EVB-IT (Werk- vs. Dienstvertrag)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_service_level_agreements_und_itil",
+          "title": "LF 12: Service Level Agreements (SLAs) & ITIL Service Management",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_controlling_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: Controlling, 40h-Projektarbeit & AP2-Prüfungssimulation",
+      "description": "Finanzierungsarten (Leasing, Factoring), Liquidität, Leitfaden für die 40h-Projektarbeit samt Vermarktungskonzept & Vollprüfungssimulation.",
+      "certificateKey": "ihk_ap2_itsm_master",
+      "chapters": [
+        {
+          "folder": "10_it_controlling_finanzierung_und_wiso",
+          "title": "WiSo: Finanzierungsformen (Leasing vs. Kauf), Bilanz & WiSo Arbeitsrecht",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "11_betriebliche_projektarbeit_guide_40h",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide ITSM)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "12_ap2_itsm_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 ITSM Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

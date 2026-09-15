@@ -74,7 +74,10 @@
 
 <h3 style="color: #cbd5e1; margin-top: 20px;">3. GPO-Verarbeitung (LSDOU) & Kerberos-Handshake</h3>
 <p style="color: #cbd5e1; line-height: 1.6;">
-  - <strong>LSDOU-Reihenfolge:</strong> 1. Local Policy $ightarrow$ 2. Site Policy $ightarrow$ 3. Domain Policy $ightarrow$ 4. OU Policy (untergeordnete OUs überschreiben übergeordnete). Ausnahmen: <em>Enforced (Erzwungen)</em> bricht Blockierungen.<br>
+  - <strong>LSDOU-Reihenfolge:</strong> 1. Local Policy $
+ightarrow$ 2. Site Policy $
+ightarrow$ 3. Domain Policy $
+ightarrow$ 4. OU Policy (untergeordnete OUs überschreiben übergeordnete). Ausnahmen: <em>Enforced (Erzwungen)</em> bricht Blockierungen.<br>
   - <strong>Kerberos Authentifizierung (Port 88):</strong> 1. Client sendet <em>AS-REQ</em> an KDC und erhält <em>TGT (Ticket Granting Ticket)</em>; 2. Client sendet <em>TGS-REQ</em> mit TGT und erhält <em>Service Ticket</em>; 3. Client weist sich mit Service Ticket beim Zielserver aus (<em>AP-REQ</em>). Kein Passwort wird je über das Netz übertragen!
 </p>
 

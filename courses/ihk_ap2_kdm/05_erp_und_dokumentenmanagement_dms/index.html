@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LF 10: ERP-Systeme, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung) – IHK AP2 KDM</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <link rel="stylesheet" href="../../../assets/ihk_tools/ihk_tools.css">
+  <style>
+    .ihk-container { max-width: 1000px; margin: 0 auto; padding: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ihk-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+    .ihk-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .ihk-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .ihk-badge-cyan { background: #0891b2; color: #ffffff; }
+    .ihk-badge-blue { background: #0284c7; color: #ffffff; }
+    .ihk-badge-success { background: #16a34a; color: #ffffff; }
+    .ihk-badge-purple { background: #9333ea; color: #ffffff; }
+    .ihk-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #334155; flex-wrap: wrap; gap: 12px; }
+    .ihk-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .ihk-btn-primary { background: #0891b2; color: #ffffff; }
+    .ihk-btn-primary:hover { background: #0e7490; }
+    .ihk-btn-secondary { background: #334155; color: #cbd5e1; }
+    .ihk-btn-secondary:hover { background: #475569; color: #ffffff; }
+    .ihk-btn-success { background: #16a34a; color: #ffffff; }
+    .ihk-btn-success:hover { background: #15803d; }
+    .ihk-input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; color: #f8fafc; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; resize: vertical; }
+    .ihk-input:focus { outline: none; border-color: #22d3ee; ring: 2px #22d3ee; }
+    .ihk-theory-box { background: #0f172a; border-left: 4px solid #0891b2; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; }
+    th { background: #0f172a; color: #22d3ee; }
+  </style>
+</head>
+<body style="background: #090d16; margin: 0; padding: 20px 0;">
+  <div class="ihk-container">
+    
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <a href="../../../dashboard.html" class="ihk-btn ihk-btn-secondary">⬅️ Zur Kursübersicht</a>
+      <a href="../../../workspace.html?course=ihk_ap2_kdm&chapter=05_erp_und_dokumentenmanagement_dms" class="ihk-btn ihk-btn-primary">📈 In Web-IDE öffnen</a>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="ihk-card">
+      <div class="ihk-header">
+        <div>
+          <span class="ihk-badge ihk-badge-purple">IHK AP2 Kaufleute für Digitalisierungsmanagement</span>
+          <h1 style="color: #f8fafc; margin: 8px 0 4px 0; font-size: 1.8rem;">LF 10: ERP-Systeme, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung)</h1>
+          <p style="color: #94a3b8; margin: 0; font-size: 1.05rem;">Revisionssichere Archivierung, Verfahrensdokumentation & B2B-E-Rechnungspflicht (EN 16931)</p>
+        </div>
+      </div>
+
+      <!-- Theory Section -->
+      <div class="ihk-theory-box">
+        <h3 style="color: #22d3ee; margin-top: 0;">📚 Fachwissen & IHK-Prüfungsrelevanz</h3>
+        
+      <p>ERP- und Dokumentenmanagement-Systeme bilden das administrative Rückgrat digitaler Unternehmen.</p>
+      <h4>1. GoBD-Konformität im DMS / ECM</h4>
+      <p>Grundsätze zur ordnungsmäßigen Führung und Aufbewahrung von Büchern: Nachvollziehbarkeit, Nachprüfbarkeit, Vollständigkeit, Richtigkeit, zeitgerechte Erfassung, Ordnung und <strong>Unveränderbarkeit</strong> (Revisionssicherheit durch WORM-Speicher oder kryptographische Hashes).</p>
+      <h4>2. E-Rechnung nach EN 16931 (Gesetzliche Pflicht ab 2025)</h4>
+      <table>
+        <tr><th>Format</th><th>Struktur</th><th>Besonderheit</th></tr>
+        <tr><td><strong>Reine PDF-Rechnung</strong></td><td>Unstrukturiert</td><td>Gilt gesetzlich <em>nicht</em> mehr als E-Rechnung!</td></tr>
+        <tr><td><strong>ZUGFeRD (ab v2.x)</strong></td><td>Hybrid (PDF/A-3 + XML)</td><td>Sowohl vom Menschen lesbar als auch maschinell verarbeitbar.</td></tr>
+        <tr><td><strong>XRechnung</strong></td><td>Reines XML (CII oder UBL)</td><td>Standard für deutsche Behörden (B2G) und B2B-Automatisierung.</td></tr>
+      </table>
+    
+      </div>
+
+      
+
+      <!-- Exam Questions Section -->
+      <h3 style="color: #4ade80; margin-top: 32px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+        📝 Original-Prüfungsaufgaben (ZPA Nord-West)
+      </h3>
+      
+        <div class="ihk-exam-task" data-title="E-Invoicing: XRechnung vs. ZUGFeRD & Revisionssichere Archivierung" data-points="10" style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: #38bdf8; font-size: 1.05rem;">E-Invoicing: XRechnung vs. ZUGFeRD & Revisionssichere Archivierung</strong>
+            <span class="ihk-badge ihk-badge-success">10 Punkte</span>
+          </div>
+          <div style="background: #1e293b; border-left: 4px solid #0284c7; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; color: #cbd5e1; font-size: 0.9rem; font-style: italic;">
+            Im Rahmen der B2B-E-Rechnungspflicht stellt ein Großhändler seine Fakturierung von papierhaften und einfachen PDF-Rechnungen auf elektronische Rechnungen nach europäischer Norm EN 16931 um.
+          </div>
+          <p style="color: #f8fafc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            a) Warum erfüllt eine reine PDF-Rechnung per E-Mail nach neuem EU-Recht nicht die Kriterien einer elektronischen Rechnung (E-Rechnung)?
+b) Erläutern Sie den strukturellen Aufbau des ZUGFeRD-Formats (hybrides Format) im Vergleich zur reinen XRechnung.
+c) Nennen Sie drei Grundsätze der GoBD zur revisionssicheren elektronischen Archivierung von Rechnungsbelegen.
+          </p>
+          <textarea class="ihk-input" rows="3" placeholder="Ihre Lösung zur Prozessdigitalisierung stichpunktartig formulieren..."></textarea>
+          <details style="margin-top: 14px; background: #1e293b; padding: 12px 16px; border-radius: 6px; cursor: pointer;">
+            <summary style="font-weight: 600; color: #4ade80;">💡 Offizieller IHK-Erwartungshorizont & Punkteverteilung</summary>
+            <div class="ihk-task-solution" style="margin-top: 10px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">
+a) Eine reine PDF-Rechnung enthält die Daten in unstrukturierter visueller Form. Eine echte E-Rechnung muss in einem strukturierten, maschinenlesbaren XML-Format nach EN 16931 vorliegen, das automatisiert verarbeitet werden kann.
+b) ZUGFeRD ist ein hybrides Format: Es besteht aus einer sichtbaren PDF/A-3-Datei für das menschliche Auge, in welche die strukturierte Rechnungs-XML eingebettet ist. Die XRechnung ist ein reines, bildloses XML-Dokument (UBL oder CII).
+c) 1. Nachvollziehbarkeit und Nachprüfbarkeit (Verfahrensdokumentation), 2. Vollständigkeit und Richtigkeit (kein Belegverlust), 3. Unveränderbarkeit (Schutz vor nachträglicher Manipulation, z.B. WORM-Speicher oder Zeitstempel).
+            </div>
+          </details>
+        </div>
+    
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="ihk-nav-bar">
+        <a href="../04_geschaeftsprozess_digitalisierung_bpmn/index.html" class="ihk-btn ihk-btn-secondary">⬅️ Vorheriges Modul</a>
+        <a href="../../../workspace.html?course=ihk_ap2_kdm&chapter=05_erp_und_dokumentenmanagement_dms" class="ihk-btn ihk-btn-primary">Praxisübung im Terminal</a>
+        <a href="../06_change_management_und_agile_methoden/index.html" class="ihk-btn ihk-btn-primary">Nächstes Modul ➡️</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../../assets/ihk_tools/ihk_question_bank.js"></script>
+  
+</body>
+</html>

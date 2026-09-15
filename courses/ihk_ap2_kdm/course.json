@@ -1,0 +1,114 @@
+{
+  "id": "ihk_ap2_kdm",
+  "title": "IHK AP2 Crashkurs: Kaufleute für Digitalisierungsmanagement",
+  "language": "ihk_ap2_kdm",
+  "icon": "📈",
+  "runner": "none",
+  "description": "Vollständige Prüfungsvorbereitung für KDM (LF 9–12, WiSo, 40h-Projekt). 12 Module nach ZPA Nord-West 2. Auflage: Digitale Geschäftsmodelle, Business Model Canvas (BMC), Plattformökonomie & Netzwerkeffekte, Datenmonetarisierung, BPMN 2.0 Prozessdigitalisierung, ERP-Modulverzahnung, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung), Change Management (Kotter/Lewin), Controlling & KPIs, Datenschutz-Folgenabschätzung (DSFA Art. 35 DSGVO), EU AI Act & Vollsimulation.",
+  "tracks": [
+    {
+      "id": "track_1_geschaeftsmodelle_und_plattformen",
+      "title": "🌱 Lehrpfad 1: Digitale Geschäftsmodelle & Plattformökonomie (LF 9 & 11)",
+      "description": "Business Model Canvas (BMC), Subscription Economy, direkte & indirekte Netzwerkeffekte, Metcalfe'sches Gesetz, Hühnchen-Ei-Problem & Datenmonetarisierung.",
+      "certificateKey": "ihk_ap2_kdm_models",
+      "chapters": [
+        {
+          "folder": "01_digitale_geschaeftsmodelle_und_bmc",
+          "title": "LF 9: Analyse & Transformation digitaler Geschäftsmodelle (BMC)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "02_plattformoekonomie_und_netzwerkeffekte",
+          "title": "LF 11: Plattformökonomie, Netzwerkeffekte & Disruption (Metcalfe)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "03_datenwerterschoepfung_und_datenmonetarisierung",
+          "title": "LF 9: Datenökonomie & Monetarisierung betrieblicher Daten (DIKW)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_2_prozesse_erp_change",
+      "title": "⚙️ Lehrpfad 2: Prozessdigitalisierung, ERP & Workflows (LF 9 & 10)",
+      "description": "Geschäftsprozess-Digitalisierung in BPMN 2.0, Medienbrüche, RPA vs. API, ERP-Architekturen, GoBD-konformes DMS/ECM & E-Invoicing (ZUGFeRD/XRechnung nach EN 16931).",
+      "certificateKey": "ihk_ap2_kdm_processes",
+      "chapters": [
+        {
+          "folder": "04_geschaeftsprozess_digitalisierung_bpmn",
+          "title": "LF 10: Geschäftsprozess-Digitalisierung in BPMN 2.0 (RPA, Medienbrüche)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "05_erp_und_dokumentenmanagement_dms",
+          "title": "LF 10: ERP-Systeme, GoBD-DMS & E-Invoicing (ZUGFeRD/XRechnung)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "06_change_management_und_agile_methoden",
+          "title": "LF 10: Change Management & Agiles Transformationsmanagement (Kotter/Lewin)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_3_controlling_dsfa_compliance",
+      "title": "☁️ Lehrpfad 3: Business Analytics, Controlling & Compliance (LF 11 & 12)",
+      "description": "Datengetriebenes Controlling, Straight-Through-Processing (STP), Cost per Transaction, Datenschutz-Folgenabschätzung (DSFA Art. 35), k-Anonymität & EU AI Act.",
+      "certificateKey": "ihk_ap2_kdm_controlling",
+      "chapters": [
+        {
+          "folder": "07_datengetriebenes_controlling_und_kpis",
+          "title": "LF 11: Datengetriebenes Controlling & KPI-Dashboards (STP-Rate, IBCS)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "08_datenschutz_folgenabschaetzung_und_ai_act",
+          "title": "LF 12: Datenschutz-Folgenabschätzung (DSFA) & EU AI Act (Risikoklassen)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "09_it_sicherheitsmanagement_und_risiko",
+          "title": "LF 12: IT-Sicherheitsmanagement & Risikobeurteilung (BSI, R = E * S)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    },
+    {
+      "id": "track_4_nachhaltigkeit_projekt_und_pruefung",
+      "title": "🏆 Lehrpfad 4: Nachhaltigkeit, 40h-Projektarbeit & AP2-Prüfungssimulation",
+      "description": "Green IT, PUE-Wert, Mitbestimmung des Betriebsrats (§ 87 BetrVG), Leitfaden für die 40h-Projektarbeit zur Prozessdigitalisierung & Vollprüfungssimulation.",
+      "certificateKey": "ihk_ap2_kdm_master",
+      "chapters": [
+        {
+          "folder": "10_nachhaltigkeit_green_it_und_wiso",
+          "title": "WiSo: Nachhaltigkeit (Green IT), Ethik & Mitbestimmung (§ 87 BetrVG)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "11_betriebliche_projektarbeit_guide_40h",
+          "title": "Projekt: Betriebliche Projektarbeit (40h) & Fachgespräch (Guide KDM)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        },
+        {
+          "folder": "12_ap2_kdm_gesamtpruefung_simulation",
+          "title": "Abschluss: AP2 KDM Gesamtprüfungssimulation (PB 1, PB 2 & WiSo)",
+          "taskFile": "README.md",
+          "testFile": "index.html"
+        }
+      ]
+    }
+  ]
+}

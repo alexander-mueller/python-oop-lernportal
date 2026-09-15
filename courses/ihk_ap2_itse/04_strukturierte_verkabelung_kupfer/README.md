@@ -1,0 +1,17 @@
+# LF 11: Strukturierte Verkabelung & Kupfer-Messtechnik
+> DIN EN 50173, Cat.6A/7/8, S/FTP, Link-Zertifizierung & NEXT/FEXT
+
+## IHK-Prüfungsrelevanz & Lernziele
+Nach offiziellem ZPA Nord-West Prüfungskatalog 2. Auflage für IT-System-Elektroniker/in (ITSE).
+
+### Teilziele
+1. Elektrotechnische Schutzmaßnahmen und DIN VDE Normen beherrschen
+2. Stromversorgungs-, USV- und LWL-Übertragungsnetze normgerecht projektieren und berechnen
+3. Prüfungen nach DGUV Vorschrift 3 und OTDR-Dämpfungsmessungen durchführen und protokollieren
+4. Prüfungsaufgaben nach IHK-Erwartungshorizont fehlerfrei lösen
+
+## Praxisübung
+Öffnen Sie diese Lerneinheit in der Web-IDE:
+- Startdatei: `aufgabe.py`
+- Testsuite: `python3 test_aufgabe.py`
+- Musterlösung: `musterloesung.py`
