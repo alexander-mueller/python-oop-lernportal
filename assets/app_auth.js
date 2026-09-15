@@ -353,7 +353,7 @@
         document.body.classList.add('logged-in');
         if (userSpan) {
           userSpan.style.display = 'inline-flex';
-          userSpan.innerHTML = `👤 ${escapeHtml(user.name || user.email)}`;
+          userSpan.innerHTML = `${escapeHtml(user.name || user.email)}`;
           userSpan.style.cursor = 'pointer';
           userSpan.title = 'Zum Kurs-Dashboard wechseln';
           userSpan.onclick = () => { window.location.href = 'dashboard.html'; };
@@ -373,7 +373,7 @@
         }
         if (registerBtn) {
           registerBtn.style.display = 'inline-flex';
-          registerBtn.innerHTML = '<span class="btn-text-desktop">💻 Zum Kurs-Dashboard</span><span class="btn-text-mobile">Dashboard</span>';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">Zum Kurs-Dashboard</span><span class="btn-text-mobile">Dashboard</span>';
           registerBtn.style.background = '#10b981';
           registerBtn.removeAttribute('onclick');
           registerBtn.onclick = (e) => {
@@ -382,7 +382,7 @@
           };
         }
         if (heroPrimaryCta) {
-          heroPrimaryCta.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
+          heroPrimaryCta.innerHTML = '<span>Zum Dashboard &amp; Kurse wählen &rarr;</span>';
           heroPrimaryCta.removeAttribute('onclick');
           heroPrimaryCta.onclick = (e) => {
             e.preventDefault();
@@ -392,7 +392,7 @@
 
         // Alle allgemeinen Landing-Page Action Buttons anpassen
         document.querySelectorAll('.landing-cta-btn').forEach(btn => {
-          btn.innerHTML = '<span>▶ Zum Dashboard &amp; Kurse wählen &rarr;</span>';
+          btn.innerHTML = '<span>Zum Dashboard &amp; Kurse wählen &rarr;</span>';
           btn.style.background = '#10b981';
           btn.removeAttribute('onclick');
           btn.onclick = (e) => {
@@ -425,7 +425,7 @@
         }
         if (loginBtn) {
           loginBtn.style.display = 'inline-flex';
-          loginBtn.innerText = '🔑 Anmelden';
+          loginBtn.innerText = 'Anmelden';
           loginBtn.style.background = 'rgba(255,255,255,0.12)';
           loginBtn.style.color = 'white';
           loginBtn.style.borderColor = 'rgba(255,255,255,0.2)';
@@ -433,7 +433,7 @@
         }
         if (registerBtn) {
           registerBtn.style.display = 'inline-flex';
-          registerBtn.innerHTML = '<span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span>';
+          registerBtn.innerHTML = '<span class="btn-text-desktop">Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span>';
           registerBtn.style.background = '#0284c7';
           registerBtn.onclick = () => window.openAuthModal('register', { allowClose: true });
         }
@@ -443,7 +443,7 @@
         const mobLogoutBtn = document.getElementById('mobile-drawer-logout-btn');
         if (mobLogoutBtn) mobLogoutBtn.style.display = 'none';
         if (heroPrimaryCta) {
-          heroPrimaryCta.innerHTML = '<span>🚀 Jetzt kostenlos registrieren</span>';
+          heroPrimaryCta.innerHTML = '<span>Jetzt kostenlos registrieren &rarr;</span>';
           heroPrimaryCta.onclick = (e) => {
             e.preventDefault();
             window.openAuthModal('register', { allowClose: true });
@@ -452,7 +452,7 @@
 
         // Alle allgemeinen Landing-Page Action Buttons für Besucher
         document.querySelectorAll('.landing-cta-btn').forEach(btn => {
-          btn.innerHTML = '<span>✨ Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>';
+          btn.innerHTML = '<span>Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>';
           btn.style.background = '#0284c7';
           btn.onclick = (e) => {
             e.preventDefault();
@@ -489,19 +489,19 @@
       // Aktualisiere ggf. vorhandene Curriculum-Aktions-Buttons
       document.querySelectorAll('.portal-card-action-btn').forEach(btn => {
         if (loggedIn) {
-          btn.innerHTML = '<span>▶ Im Lernbereich öffnen</span> <span>&rarr;</span>';
+          btn.innerHTML = '<span>Im Lernbereich öffnen</span> <span>&rarr;</span>';
           btn.classList.remove('locked');
           btn.style.background = '#10b981';
           btn.onclick = () => { window.location.href = 'dashboard.html'; };
         } else {
-          btn.innerHTML = '<span>✨ Lehrplan freischalten &amp; starten</span>';
+          btn.innerHTML = '<span>Lehrplan ansehen</span>';
           btn.classList.add('locked');
           btn.style.background = '#0284c7';
           btn.onclick = (e) => {
             e.preventDefault();
             window.openAuthModal('register', {
               allowClose: true,
-              title: '🔒 Lehrplan freischalten',
+              title: 'Lehrplan freischalten',
               message: 'Erstelle einen kostenlosen Account in unter 30 Sekunden, um sofort vollen Zugriff auf alle Kurse und Module im Lernbereich zu erhalten.'
             });
           };
@@ -534,10 +534,10 @@
         ` : ''}
 
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🎓</div>
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; color: #1d4ed8; font-weight: 800;">IT</div>
           <div>
             <div style="font-size: 1.15rem; font-weight: 800; color: #0f172a;" id="auth-modal-title">
-              ${escapeHtml(options.title || (initialMode === 'register' && allowReg ? '✨ Kostenlos registrieren' : '🔑 Anmelden'))}
+              ${escapeHtml(options.title || (initialMode === 'register' && allowReg ? 'Kostenlos registrieren' : 'Anmelden'))}
             </div>
             <div style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;">IT-PRAXISPORTAL AUTHENTICATION</div>
           </div>
@@ -576,9 +576,9 @@
           <div id="auth-field-role" style="display: none;">
             <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Deine Rolle / Lernziel:</label>
             <select id="auth-select-role" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; outline: none; background: white; box-sizing: border-box;">
-              <option value="solo">🎓 Solo-Selbstlerner & Quereinsteiger</option>
-              <option value="student">💼 Auszubildender IT-Beruf</option>
-              <option value="teacher">👨‍🏫 Lehrkraft / Dozent / Ausbilder</option>
+              <option value="solo">Solo-Selbstlerner &amp; Quereinsteiger</option>
+              <option value="student">Auszubildender IT-Beruf</option>
+              <option value="teacher">Lehrkraft / Dozent / Ausbilder</option>
             </select>
           </div>
 
@@ -586,13 +586,13 @@
             <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Dein IT-Ausbildungsberuf (optional):</label>
             <select id="auth-select-profession" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.88rem; outline: none; background: white; box-sizing: border-box;">
               <option value="">Keine Angabe / Quereinsteiger</option>
-              <option value="FISI">🖥️ Fachinformatiker Systemintegration (FISI)</option>
-              <option value="FIAE">💻 Fachinformatiker Anwendungsentwicklung (FIAE)</option>
-              <option value="FIDP">📊 Fachinformatiker Daten- &amp; Prozessanalyse (FIDP)</option>
-              <option value="FIDV">🌐 Fachinformatiker Digitale Vernetzung (FIDV)</option>
-              <option value="ITSE">⚡ IT-System-Elektroniker/in (ITSE)</option>
-              <option value="ITSM">💼 Kaufleute für IT-System-Management (ITSM)</option>
-              <option value="KDM">📈 Kaufleute für Digitalisierungsmanagement (KDM)</option>
+              <option value="FISI">Fachinformatiker Systemintegration (FISI)</option>
+              <option value="FIAE">Fachinformatiker Anwendungsentwicklung (FIAE)</option>
+              <option value="FIDP">Fachinformatiker Daten- &amp; Prozessanalyse (FIDP)</option>
+              <option value="FIDV">Fachinformatiker Digitale Vernetzung (FIDV)</option>
+              <option value="ITSE">IT-System-Elektroniker/in (ITSE)</option>
+              <option value="ITSM">Kaufleute für IT-System-Management (ITSM)</option>
+              <option value="KDM">Kaufleute für Digitalisierungsmanagement (KDM)</option>
             </select>
             <span style="display: block; font-size: 0.74rem; color: #64748b; margin-top: 3px;">Schaltet deinen spezifischen IHK AP2-Prüfungskurs auf dem Dashboard frei.</span>
           </div>
@@ -621,7 +621,7 @@
         </form>
 
         <div style="margin-top: 14px; text-align: center; font-size: 0.76rem; color: #94a3b8;">
-          🔒 100% DSGVO-konform • Deutsche Server • Keine Tracking-Cookies
+          100% DSGVO-konform • Serverstandort Deutschland • Keine Tracking-Cookies
         </div>
       </div>
     `;

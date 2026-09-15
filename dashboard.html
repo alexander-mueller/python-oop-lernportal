@@ -38,19 +38,19 @@
     .apprenticeship-panel {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 22px 26px;
+      border-radius: 12px;
+      padding: 22px 24px;
       margin-bottom: 24px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
     .year-pill {
-      background: #f1f5f9;
+      background: #ffffff;
       color: #475569;
       border: 1px solid #cbd5e1;
-      padding: 8px 16px;
-      border-radius: 99px;
-      font-size: 0.84rem;
-      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
       display: inline-flex;
@@ -58,36 +58,38 @@
       gap: 6px;
     }
     .year-pill:hover {
-      background: #e2e8f0;
+      background: #f8fafc;
       color: #0f172a;
-      transform: translateY(-1px);
+      border-color: #94a3b8;
     }
     .year-pill.active {
-      background: #0284c7;
+      background: #0f172a;
       color: #ffffff;
-      border-color: #0284c7;
-      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+      border-color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
     .year-pill.assigned-only-btn {
-      border-color: #10b981;
-      color: #047857;
-      background: #ecfdf5;
+      border-color: #cbd5e1;
+      color: #475569;
+      background: #ffffff;
     }
     .year-pill.assigned-only-btn:hover {
-      background: #d1fae5;
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #94a3b8;
     }
     .year-pill.assigned-only-btn.active {
-      background: #10b981;
+      background: #0f172a;
       color: #ffffff;
-      border-color: #10b981;
-      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+      border-color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .lf-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 12px 16px;
+      border-radius: 8px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -96,8 +98,7 @@
       transition: all 0.15s ease;
     }
     .lf-card:hover {
-      border-color: #38bdf8;
-      transform: translateY(-1px);
+      border-color: #cbd5e1;
       box-shadow: var(--shadow-md);
     }
     .lf-card-header {
@@ -107,14 +108,14 @@
     }
     .lf-tag {
       font-size: 0.72rem;
-      font-weight: 800;
+      font-weight: 600;
       padding: 2px 7px;
-      border-radius: 6px;
+      border-radius: 4px;
     }
     .lf-tag-ap1 {
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
     }
     .lf-tag-ap2 {
       background: #fef2f2;
@@ -122,107 +123,106 @@
       border: 1px solid #fecaca;
     }
     .lf-tag-wiso {
-      background: #fefce8;
-      color: #a16207;
-      border: 1px solid #fef08a;
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
     }
 
     /* Course Progress Elements */
     .course-progress-wrap {
-      margin: 14px 0 16px 0;
+      margin: 12px 0 14px 0;
       background: #f1f5f9;
-      border-radius: 99px;
-      height: 8px;
+      border-radius: 4px;
+      height: 6px;
       overflow: hidden;
       position: relative;
     }
     .course-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #0284c7, #10b981);
+      background: #1d4ed8;
       width: 0%;
-      border-radius: 99px;
+      border-radius: 4px;
       transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .course-progress-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #64748b;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     /* Dashboard Action Buttons */
     .btn-start-ide {
-      background: #0284c7;
+      background: #0f172a;
       color: white;
       border: none;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .btn-start-ide:hover {
-      background: #0369a1;
-      transform: translateY(-1px);
-    }
-    .btn-view-theory {
-      background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #cbd5e1;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.84rem;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.15s ease;
     }
+    .btn-start-ide:hover {
+      background: #1d4ed8;
+    }
+    .btn-view-theory {
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
     .btn-view-theory:hover {
-      background: #e2e8f0;
+      background: #f8fafc;
       color: #0f172a;
+      border-color: #94a3b8;
     }
 
     /* Resume Card */
     .resume-card {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 24px 28px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px 24px;
       color: #f8fafc;
       margin-top: 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 18px;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     /* Certificates Grid */
     .cert-preview-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       box-shadow: var(--shadow-sm);
     }
     .cert-preview-card:hover {
-      border-color: #0284c7;
-      transform: translateY(-2px);
+      border-color: #cbd5e1;
       box-shadow: var(--shadow-md);
     }
   </style>
@@ -234,34 +234,34 @@
     <div class="portal-nav-container">
       <a href="dashboard.html" class="portal-brand">
         <div class="portal-brand-logo">
-          <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 24px; height: 24px;">
+          <img src="assets/favicon.svg" alt="IT-Praxisportal Logo" style="width: 22px; height: 22px;">
         </div>
         <div>
           <span class="portal-brand-title">IT-Praxisportal</span>
-          <span class="portal-brand-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Lernbereich</span>
+          <span class="portal-brand-badge">Aus- &amp; Weiterbildung</span>
         </div>
       </a>
 
       <nav class="portal-nav-links">
-        <a href="#overview" class="portal-nav-link active">🚀 Übersicht</a>
-        <a href="#katalog" class="portal-nav-link">📚 Meine Kurse</a>
-        <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
-        <a href="workspace.html?course=python" class="portal-nav-link">💻 Web-IDE</a>
-        <a href="#zertifikate-section" class="portal-nav-link">🏆 Zertifikate</a>
-        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
-        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
+        <a href="#overview" class="portal-nav-link active">Übersicht</a>
+        <a href="#katalog" class="portal-nav-link">Kurse</a>
+        <a href="#ihk-section" class="portal-nav-link">IHK-Prüfung</a>
+        <a href="workspace.html?course=python" class="portal-nav-link">Web-IDE</a>
+        <a href="#zertifikate-section" class="portal-nav-link">Zertifikate</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">Dozentenbereich</a>
+        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171;">Administration</a>
       </nav>
 
       <!-- User Profile & Logout -->
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <div id="nav-profile-pill" style="display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.08); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.12);">
-          <span id="nav-auth-user" style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;">👤 Lädt...</span>
-          <span id="nav-auth-role" style="font-size: 0.68rem; font-weight: 800; background: rgba(56, 189, 248, 0.15); color: #7dd3fc; padding: 2px 6px; border-radius: 99px; text-transform: uppercase;"></span>
-          <span id="nav-auth-profession" style="display: none; font-size: 0.68rem; font-weight: 800; background: rgba(16, 185, 129, 0.25); color: #34d399; padding: 2px 7px; border-radius: 99px; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.4);" title="Aktiver IT-Ausbildungsberuf"></span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div id="nav-profile-pill" style="display: flex; align-items: center; gap: 8px; background: #1e293b; padding: 4px 12px; border-radius: 6px; border: 1px solid #334155;">
+          <span id="nav-auth-user" style="font-size: 0.82rem; font-weight: 600; color: #f8fafc;">Lädt...</span>
+          <span id="nav-auth-role" style="font-size: 0.68rem; font-weight: 600; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;"></span>
+          <span id="nav-auth-profession" style="display: none; font-size: 0.68rem; font-weight: 600; background: rgba(29, 78, 216, 0.2); color: #93c5fd; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid rgba(29, 78, 216, 0.4);" title="Aktiver IT-Ausbildungsberuf"></span>
         </div>
-        <button type="button" class="btn" id="nav-btn-logout" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">
+        <button type="button" class="btn" id="nav-btn-logout" style="padding: 6px 12px; font-size: 0.82rem; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 6px; font-weight: 500; cursor: pointer;">
           <span class="btn-text-desktop">Abmelden</span>
-          <span class="btn-text-mobile">🚪</span>
+          <span class="btn-text-mobile">Abmelden</span>
         </button>
         <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
           <span>☰</span>
@@ -272,17 +272,17 @@
 
   <!-- Mobile Navigation Drawer -->
   <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
-    <a href="#overview" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Übersicht</a>
-    <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">📚 Meine Kurse</a>
-    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK AP1 &amp; AP2 Prüfung</a>
-    <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🏆 Meine Zertifikate</a>
-    <a href="index.html?view=landing" class="mobile-drawer-link" onclick="toggleMobileMenu()">🌐 Zur Startseite</a>
-    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
-    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
-    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
-    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
-    <button type="button" class="mobile-drawer-link" style="color: #f87171; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; margin-top: 8px; font-weight: 700; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="if(confirm('Möchtest du dich wirklich abmelden?')) window.AUTH.logout();">
-      🚪 Abmelden
+    <a href="#overview" class="mobile-drawer-link" onclick="toggleMobileMenu()">Übersicht</a>
+    <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">Kurse</a>
+    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">IHK-Prüfungsvorbereitung</a>
+    <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">Zertifikate</a>
+    <a href="index.html?view=landing" class="mobile-drawer-link" onclick="toggleMobileMenu()">Startseite</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Datenschutzerklärung</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">Dozenten-Portal</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171;">Administration</a>
+    <button type="button" class="mobile-drawer-link" style="color: #f87171; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; margin-top: 6px; font-weight: 600; width: 100%; display: flex; align-items: center; font-size: 0.88rem;" onclick="if(confirm('Möchtest du dich wirklich abmelden?')) window.AUTH.logout();">
+      Abmelden
     </button>
   </div>
 
@@ -292,65 +292,67 @@
       <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
         <div>
           <div class="portal-hero-pill" style="margin-bottom: 12px;">
-            <span>🟢 Angemeldet als aktiver Teilnehmer</span>
+            <span>IHK Ausbildungs- &amp; Prüfungsvorbereitung</span>
             <span style="opacity: 0.5;">•</span>
             <span id="pill-current-date">Heute</span>
           </div>
-          <h1 style="font-size: 2.2rem; margin-bottom: 8px;">Willkommen zurück, <span id="dash-greeting-name">Entwickler</span>! 👋</h1>
-          <p style="margin: 0; font-size: 1rem; color: #94a3b8; max-width: 680px;">
-            Wähle eine Fachdisziplin, vertiefe dein Wissen im Code-Editor oder trainiere gezielt IHK-Prüfungsszenarien. Dein Fortschritt wird automatisch in der Cloud synchronisiert.
+          <h1>Willkommen, <span id="dash-greeting-name">Teilnehmer</span></h1>
+          <p style="margin: 0; font-size: 0.98rem; color: #94a3b8; max-width: 720px; line-height: 1.6;">
+            Zentrales Ausbildungs- und Lernportal für IT-Fachinformatiker. Praxisnahe Fachmodule, interaktive Monaco Web-IDE und bundeseinheitliche Prüfungsvorbereitung nach IHK AO 2020.
           </p>
         </div>
 
         <div style="display: flex; gap: 10px; align-items: center;">
-          <a href="workspace.html?course=python" class="portal-btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
-            <span>💻 Web-IDE öffnen</span>
+          <a href="workspace.html?course=python" class="portal-btn-primary" style="padding: 9px 16px; font-size: 0.88rem;">
+            <span>Web-IDE öffnen &rarr;</span>
           </a>
-          <a href="index.html?view=landing" class="portal-btn-secondary" style="padding: 10px 16px; font-size: 0.9rem;" title="Zur öffentlichen Plattform-Startseite">
-            <span>🌐 Startseite</span>
+          <a href="index.html?view=landing" class="portal-btn-secondary" style="padding: 9px 16px; font-size: 0.88rem;" title="Zur öffentlichen Plattform-Startseite">
+            <span>Startseite</span>
           </a>
         </div>
       </div>
 
-      <!-- 4 Gamification Stats Cards -->
-      <div class="portal-stats-bar" style="margin-top: 28px;">
-        <div class="portal-stat-card">
-          <div class="portal-stat-num" id="stat-user-level">1</div>
-          <div class="portal-stat-label">Aktuelles Level</div>
-          <div class="portal-stat-desc" id="stat-user-level-desc">Junior Coder</div>
-        </div>
-        <div class="portal-stat-card">
-          <div class="portal-stat-num" id="stat-user-xp">0</div>
-          <div class="portal-stat-label">Erfahrungspunkte (XP)</div>
-          <div class="portal-stat-desc">+25 XP pro gelöstem Modul</div>
-        </div>
-        <div class="portal-stat-card">
-          <div class="portal-stat-num" id="stat-user-streak">1 🔥</div>
-          <div class="portal-stat-label">Tages-Streak</div>
-          <div class="portal-stat-desc">Kontinuierliches Lernen</div>
-        </div>
+      <!-- 4 Professional KPI Metric Cards -->
+      <div class="portal-stats-bar" style="margin-top: 26px;">
         <div class="portal-stat-card">
           <div class="portal-stat-num" id="stat-user-solved">0 / 264</div>
-          <div class="portal-stat-label">Gelöste Module</div>
-          <div class="portal-stat-desc" id="stat-user-percent">0% Gesamtfortschritt</div>
+          <div class="portal-stat-label">Absolvierte Module</div>
+          <div class="portal-stat-desc" id="stat-user-percent">0% Ausbildungsfortschritt</div>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-prof-name" style="font-size: 1.12rem; line-height: 1.3;">Nicht festgelegt</div>
+          <div class="portal-stat-label">Ausbildungsberuf</div>
+          <div class="portal-stat-desc" id="stat-user-prof-desc">Gemäß IHK Rahmenlehrplan</div>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-year-name" style="font-size: 1.12rem; line-height: 1.3;">Alle Lehrjahre</div>
+          <div class="portal-stat-label">Ausbildungsstand</div>
+          <div class="portal-stat-desc" id="stat-user-level-desc">IHK AP1 &amp; AP2 Fokus</div>
+          <span id="stat-user-level" style="display: none;">1</span>
+        </div>
+        <div class="portal-stat-card">
+          <div class="portal-stat-num" id="stat-user-streak">1 Tag</div>
+          <div class="portal-stat-label">Lernkontinuität</div>
+          <div class="portal-stat-desc">Laufende Qualifikation</div>
+          <span id="stat-user-xp" style="display: none;">0</span>
         </div>
       </div>
 
       <!-- Quick Resume Card -->
       <div class="resume-card" id="resume-banner">
         <div style="display: flex; align-items: center; gap: 16px;">
-          <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; font-size: 1.8rem;" id="resume-icon">
-            🐍
+          <div style="width: 44px; height: 44px; border-radius: 8px; background: #334155; border: 1px solid #475569; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;" id="resume-icon">
+            💻
           </div>
           <div>
-            <div style="font-size: 0.74rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.6px;">⚡ Schnelleinstieg / Zuletzt gelernt</div>
-            <h3 style="margin: 3px 0 4px 0; font-size: 1.25rem; color: #ffffff;" id="resume-course-title">Python 3: Vom Einsteiger zum Entwickler</h3>
-            <p style="margin: 0; font-size: 0.88rem; color: #94a3b8;" id="resume-course-desc">Setze deine letzte Übung direkt an der gleichen Stelle in der Monaco Web-IDE fort.</p>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.6px;">Zuletzt bearbeitet</div>
+            <h3 style="margin: 2px 0 4px 0; font-size: 1.15rem; color: #ffffff;" id="resume-course-title">Python 3: Vom Einsteiger zum Entwickler</h3>
+            <p style="margin: 0; font-size: 0.86rem; color: #94a3b8;" id="resume-course-desc">Setze deine letzte praktische Übung direkt an der gleichen Stelle in der Web-IDE fort.</p>
           </div>
         </div>
         <div>
-          <a href="workspace.html?course=python" id="resume-action-btn" class="btn" style="background: #10b981; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
-            <span>▶ In Web-IDE fortsetzen &rarr;</span>
+          <a href="workspace.html?course=python" id="resume-action-btn" class="portal-btn-primary" style="padding: 9px 18px;">
+            <span>Modul fortsetzen &rarr;</span>
           </a>
         </div>
       </div>
@@ -358,64 +360,63 @@
   </section>
 
   <!-- 3. KURS-HUB & KURS-KATALOG (VOLLER ZUGRIFF) -->
-  <main class="portal-container" id="katalog" style="padding-top: 48px; padding-bottom: 64px;">
+  <main class="portal-container" id="katalog" style="padding-top: 40px; padding-bottom: 64px;">
     
     <div class="portal-filter-bar">
       <div>
-        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">📚 Deine 16 Praxis-Kurse</h2>
-        <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Starte jede beliebige Lerneinheit direkt in der Web-IDE oder filtere gezielt nach deinem Ausbildungsberuf und Lehrjahr.</p>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin: 0 0 4px 0; color: #0f172a;">Fachkurse &amp; Ausbildungsmodule</h2>
+        <p style="color: #64748b; margin: 0; font-size: 0.92rem;">Praxisorientierte Fachmodule nach Ausbildungsberuf und Lehrjahr oder freie Themenwahl.</p>
       </div>
 
       <!-- Search Box -->
       <div class="portal-search-box">
-        <span style="font-size: 1rem;">🔍</span>
-        <input type="text" id="course-filter-input" placeholder="Kurs, Thema oder Modul filtern (z.B. Python, Bash, SQL, Git, AD, Subnetting)...">
+        <input type="text" id="course-filter-input" placeholder="Kurs, Thema oder Modul suchen...">
       </div>
     </div>
 
     <!-- Category Filter Tabs -->
     <div class="portal-filter-tabs" style="margin-bottom: 20px;">
-      <button type="button" class="portal-tab-pill active" id="tab-pill-all" onclick="filterCourses('all', this)">🌟 Alle Fachbereiche</button>
-      <button type="button" class="portal-tab-pill" id="tab-pill-ihk" onclick="filterCourses('ihk', this)">🎓 IHK Prüfung</button>
-      <button type="button" class="portal-tab-pill" id="tab-pill-devops" onclick="filterCourses('devops', this)">🐧 DevOps, Linux &amp; AD</button>
-      <button type="button" class="portal-tab-pill" id="tab-pill-coding" onclick="filterCourses('coding', this)">💻 Backend &amp; Systems</button>
-      <button type="button" class="portal-tab-pill" id="tab-pill-data" onclick="filterCourses('data', this)">🗄️ Daten &amp; Web</button>
+      <button type="button" class="portal-tab-pill active" id="tab-pill-all" onclick="filterCourses('all', this)">Alle Fachbereiche</button>
+      <button type="button" class="portal-tab-pill" id="tab-pill-ihk" onclick="filterCourses('ihk', this)">IHK Prüfungsvorbereitung</button>
+      <button type="button" class="portal-tab-pill" id="tab-pill-devops" onclick="filterCourses('devops', this)">DevOps &amp; Infrastruktur</button>
+      <button type="button" class="portal-tab-pill" id="tab-pill-coding" onclick="filterCourses('coding', this)">Softwaretechnik &amp; Systems</button>
+      <button type="button" class="portal-tab-pill" id="tab-pill-data" onclick="filterCourses('data', this)">Datenbanken &amp; Web</button>
     </div>
 
     <!-- AUSBILDUNGSPLAN & KMK-LERNFELDER BEREICH -->
     <div class="apprenticeship-panel" id="azubi-panel">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, #0284c7, #1d4ed8); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white;">
-            🎓
+          <div style="width: 38px; height: 38px; border-radius: 8px; background: #0f172a; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: white;">
+            📋
           </div>
           <div>
-            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #0f172a;">Dein IT-Ausbildungsplan &amp; KMK-Lernfelder (2020)</h3>
-            <p style="margin: 2px 0 0 0; font-size: 0.86rem; color: #64748b;">Gezielte Zuweisung nach Ausbildungsberuf und Ausbildungsjahr (1.–3. Lehrjahr mit AP1/AP2 Relevanz).</p>
+            <h3 style="margin: 0; font-size: 1.12rem; font-weight: 700; color: #0f172a;">Ausbildungsrahmenplan &amp; KMK-Lernfelder (2020)</h3>
+            <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: #64748b;">Lehrplan-Zuordnung nach IT-Ausbildungsberuf und Ausbildungsjahr (1.–3. Lehrjahr mit AP1/AP2 Relevanz).</p>
           </div>
         </div>
 
         <!-- Profession Dropdown & Save Button -->
         <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <label for="azubi-prof-select" style="font-size: 0.85rem; font-weight: 700; color: #475569;">Mein IT-Beruf:</label>
-            <select id="azubi-prof-select" onchange="onProfessionChanged()" style="padding: 7px 12px; font-size: 0.86rem; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0f172a; cursor: pointer;">
-              <option value="">-- Kein Ausbildungsberuf gewählt --</option>
-              <option value="FISI">🖥️ FISI - Systemintegration</option>
-              <option value="FIAE">💻 FIAE - Anwendungsentwicklung</option>
-              <option value="FIDP">📊 FIDP - Daten- &amp; Prozessanalyse</option>
-              <option value="FIDV">🌐 FIDV - Digitale Vernetzung</option>
-              <option value="ITSE">⚡ ITSE - IT-System-Elektronik</option>
-              <option value="ITSM">💼 ITSM - IT-System-Management</option>
-              <option value="KDM">📈 KDM - Digitalisierungsmanagement</option>
-              <option value="ALL">🌟 Alle Ausbildungsberufe anzeigen (Dozent / Admin)</option>
+            <label for="azubi-prof-select" style="font-size: 0.85rem; font-weight: 600; color: #475569;">Ausbildungsberuf:</label>
+            <select id="azubi-prof-select" onchange="onProfessionChanged()" style="padding: 7px 12px; font-size: 0.86rem; font-weight: 500; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; cursor: pointer;">
+              <option value="">-- Kein Ausbildungsberuf festgelegt --</option>
+              <option value="FISI">Fachinformatiker/in für Systemintegration (FISI)</option>
+              <option value="FIAE">Fachinformatiker/in für Anwendungsentwicklung (FIAE)</option>
+              <option value="FIDP">Fachinformatiker/in für Daten- und Prozessanalyse (FIDP)</option>
+              <option value="FIDV">Fachinformatiker/in für Digitale Vernetzung (FIDV)</option>
+              <option value="ITSE">IT-System-Elektroniker/in (ITSE)</option>
+              <option value="ITSM">Kaufleute für IT-System-Management (ITSM)</option>
+              <option value="KDM">Kaufleute für Digitalisierungsmanagement (KDM)</option>
+              <option value="ALL">Alle 7 IT-Berufe (Dozenten- &amp; Admin-Vollansicht)</option>
             </select>
-            <button type="button" class="btn" id="btn-save-apprenticeship" onclick="saveApprenticeshipChoice()" style="background: #0284c7; color: white; padding: 7px 14px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer;" title="Beruf in deinem Account speichern">
-              💾 Im Account speichern
+            <button type="button" class="btn" id="btn-save-apprenticeship" onclick="saveApprenticeshipChoice()" style="background: #1d4ed8; color: white; padding: 7px 14px; font-size: 0.82rem; font-weight: 600; border-radius: 6px; border: none; cursor: pointer;" title="Beruf in deinem Account speichern">
+              Im Account speichern
             </button>
           </div>
           <!-- Account Status Info Badge -->
-          <div id="azubi-prof-account-badge" style="font-size: 0.78rem; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;">
+          <div id="azubi-prof-account-badge" style="font-size: 0.78rem; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; color: #475569;">
             <span id="azubi-prof-account-msg">Lade Berufsstatus...</span>
           </div>
         </div>
@@ -423,11 +424,11 @@
 
       <!-- Year Filter Tabs & Assigned Filter -->
       <div style="display: flex; gap: 8px; flex-wrap: wrap; border-top: 1px solid #f1f5f9; padding-top: 14px;" id="azubi-year-tabs">
-        <button type="button" class="year-pill active" id="pill-year-all" onclick="filterByYear('all', this)">🌟 Alle Lehrjahre</button>
-        <button type="button" class="year-pill" id="pill-year-1" onclick="filterByYear(1, this)">🌱 1. Lehrjahr (LF 1–5)</button>
-        <button type="button" class="year-pill" id="pill-year-2" onclick="filterByYear(2, this)">⚡ 2. Lehrjahr (LF 6–9 · AP1)</button>
-        <button type="button" class="year-pill" id="pill-year-3" onclick="filterByYear(3, this)">🚀 3. Lehrjahr (LF 10–12 · AP2)</button>
-        <button type="button" class="year-pill assigned-only-btn" id="btn-filter-assigned" onclick="filterByAssigned(this)">🔒 Nur mir zugewiesene Kurse</button>
+        <button type="button" class="year-pill active" id="pill-year-all" onclick="filterByYear('all', this)">Alle Lehrjahre</button>
+        <button type="button" class="year-pill" id="pill-year-1" onclick="filterByYear(1, this)">1. Lehrjahr (LF 1–5)</button>
+        <button type="button" class="year-pill" id="pill-year-2" onclick="filterByYear(2, this)">2. Lehrjahr (LF 6–9 · AP1)</button>
+        <button type="button" class="year-pill" id="pill-year-3" onclick="filterByYear(3, this)">3. Lehrjahr (LF 10–12 · AP2)</button>
+        <button type="button" class="year-pill assigned-only-btn" id="btn-filter-assigned" onclick="filterByAssigned(this)">Zugewiesene Module</button>
       </div>
 
       <!-- Dynamic Lernfeld Drawer / Infobox -->
@@ -480,10 +481,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap1&chapter=01_lf1_unternehmen_und_arbeitsplatz" class="btn-start-ide" onclick="trackLastCourse('ihk_ap1', 'IHK AP1: IT-Arbeitsplatz', '📘')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap1/01_lf1_unternehmen_und_arbeitsplatz/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -513,10 +514,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_fisi&chapter=01_lf9_netzwerkinfrastruktur_und_routing" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_fisi', 'IHK AP2 Systemintegration', '📕')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_fisi/01_lf9_netzwerkinfrastruktur_und_routing/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -546,10 +547,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_fiae&chapter=01_software_architektur_und_design_patterns" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_fiae', 'IHK AP2 Anwendungsentwicklung', '💻')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_fiae/01_software_architektur_und_design_patterns/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -579,10 +580,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_fidp&chapter=01_prozessanalyse_und_prozessoptimierung" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_fidp', 'IHK AP2 Datenanalyse', '📊')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_fidp/01_prozessanalyse_und_prozessoptimierung/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -612,10 +613,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_fidv&chapter=01_industrie40_und_cyber_physische_systeme" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_fidv', 'IHK AP2 Digitale Vernetzung', '🏭')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_fidv/01_industrie40_und_cyber_physische_systeme/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -645,10 +646,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_itse&chapter=01_elektrotechnik_und_schutzmassnahmen_vde0100" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_itse', 'IHK AP2 IT-System-Elektroniker', '⚡')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_itse/01_elektrotechnik_und_schutzmassnahmen_vde0100/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -678,10 +679,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_itsm&chapter=01_it_marktanalyse_wettbewerb_und_swot" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_itsm', 'IHK AP2 IT-System-Management', '💼')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_itsm/01_it_marktanalyse_wettbewerb_und_swot/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -711,10 +712,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=ihk_ap2_kdm&chapter=01_digitale_geschaeftsmodelle_und_bmc" class="btn-start-ide" onclick="trackLastCourse('ihk_ap2_kdm', 'IHK AP2 Digitalisierungsmanagement', '📈')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/ihk_ap2_kdm/01_digitale_geschaeftsmodelle_und_bmc/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -744,10 +745,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=python&chapter=01_erste_schritte_taschenrechner" class="btn-start-ide" onclick="trackLastCourse('python', 'Python 3 Professional', '🐍')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="lehrpfad_1_grundlagen/01_erste_schritte_taschenrechner/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -777,10 +778,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=bash&chapter=01_navigation_dateien_und_globbing" class="btn-start-ide" onclick="trackLastCourse('bash', 'Linux Bash & Cloud DevOps', '🐧')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/bash/01_navigation_dateien_und_globbing/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -810,10 +811,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=powershell&chapter=01_powershell_konsole_und_cmdlet_architektur" class="btn-start-ide" onclick="trackLastCourse('powershell', 'PowerShell 7+ Core', '🛡️')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/powershell/01_powershell_konsole_und_cmdlet_architektur/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -844,10 +845,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=active_directory&chapter=01_ad_architektur_und_wald_baum_domaene" class="btn-start-ide" onclick="trackLastCourse('active_directory', 'Active Directory', '🏛️')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/active_directory/01_ad_architektur_und_wald_baum_domaene/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -877,10 +878,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=git&chapter=01_git_init_und_repo_basics" class="btn-start-ide" onclick="trackLastCourse('git', 'Git Versionskontrolle', '🔀')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/git/01_git_init_und_repo_basics/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -910,10 +911,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=dns_records&chapter=01_dns_hierarchie_und_root_server" class="btn-start-ide" onclick="trackLastCourse('dns_records', 'DNS-Records & Domain Security', '🌐')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/dns_records/01_dns_hierarchie_und_root_server/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -943,10 +944,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=sql&chapter=01_tabellen_und_select" class="btn-start-ide" onclick="trackLastCourse('sql', 'SQL Datenbank-Architektur', '🐬')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/sql/01_tabellen_und_select/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -976,10 +977,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=javascript&chapter=01_erste_schritte_variablen" class="btn-start-ide" onclick="trackLastCourse('javascript', 'JavaScript & TypeScript', '🌐')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/javascript/01_erste_schritte_variablen/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1009,10 +1010,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=java&chapter=01_java_syntax_und_primitive_typen" class="btn-start-ide" onclick="trackLastCourse('java', 'Java 21+ Enterprise', '☕')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/java/01_java_syntax_und_primitive_typen/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1042,10 +1043,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=rust&chapter=01_variablen_mutabilitaet_und_typen" class="btn-start-ide" onclick="trackLastCourse('rust', 'Rust Systems & Safety', '🦀')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/rust/01_variablen_mutabilitaet_und_typen/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1075,10 +1076,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=go&chapter=01_syntax_variablen_und_typen" class="btn-start-ide" onclick="trackLastCourse('go', 'Go Microservices & Concurrency', '🐹')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/go/01_syntax_variablen_und_typen/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1108,10 +1109,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=csharp&chapter=01_syntax_datentypen_und_top_level_statements" class="btn-start-ide" onclick="trackLastCourse('csharp', 'C# 12 & .NET 8', '🔷')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/csharp/01_syntax_datentypen_und_top_level_statements/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1141,10 +1142,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=cpp&chapter=01_c_syntax_datentypen_und_io" class="btn-start-ide" onclick="trackLastCourse('cpp', 'C & C++20 Systems Engineering', '⚙️')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/cpp/01_c_syntax_datentypen_und_io/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1174,10 +1175,10 @@
         </div>
         <div class="portal-card-footer" style="margin-top: 14px;">
           <a href="workspace.html?course=html_css&chapter=01_semantisches_html_und_struktur" class="btn-start-ide" onclick="trackLastCourse('html_css', 'HTML5 & Modern CSS3', '🎨')">
-            <span>▶ Kurs starten</span> <span>&rarr;</span>
+            <span>Kurs öffnen</span> <span>&rarr;</span>
           </a>
           <a href="courses/html_css/01_semantisches_html_und_struktur/index.html" class="btn-view-theory">
-            <span>📖 Lehrplan</span>
+            <span>Lehrplan &amp; Theorie</span>
           </a>
         </div>
       </div>
@@ -1185,100 +1186,99 @@
     </div>
 
     <!-- 4. IHK PRÜFUNGSVORBEREITUNG (DIREKTE NUTZUNG) -->
-    <section class="card" id="ihk-section" style="margin-top: 56px; border: 1px solid #bfdbfe; background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); border-radius: 16px; padding: 32px;">
+    <section class="card" id="ihk-section" style="margin-top: 48px; border: 1px solid #cbd5e1; background: #ffffff; border-radius: 12px; padding: 28px;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
         <div>
-          <span class="portal-card-badge badge-ihk" style="font-size: 0.8rem; font-weight: 800;">Offizieller Prüfungsstandard</span>
-          <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">🎓 IHK Prüfungstrainer AP1 &amp; AP2</h3>
-          <p style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 780px;">Realistische Prüfungssimulation nach der neuen Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen mit Timer, Notenschlüssel &amp; Lösungserklärungen.</p>
+          <span class="portal-card-badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 0.78rem; font-weight: 600;">Offizieller Prüfungsstandard</span>
+          <h3 style="margin: 8px 0 6px 0; font-size: 1.45rem; color: #0f172a; font-weight: 800;">IHK Prüfungsvorbereitung AP1 &amp; AP2</h3>
+          <p style="margin: 0; color: #475569; font-size: 0.92rem; max-width: 780px;">Prüfungssimulation nach bundeseinheitlicher Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen mit Zeitbegrenzung, Notenschlüssel und detaillierten Lösungserklärungen.</p>
         </div>
-        <a href="courses/ihk_ap1/12_ap1_probepruefung_simulation/index.html" class="btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-          <span>⚡ 90-Min AP1 Probeprüfung starten</span>
+        <a href="courses/ihk_ap1/12_ap1_probepruefung_simulation/index.html" class="portal-btn-primary" style="padding: 10px 18px; font-size: 0.88rem;">
+          <span>AP1 Probeprüfung starten &rarr;</span>
         </a>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px;">
-        <div class="ihk-quick-card" data-ihk-profession="common" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">📘 AP1: IT-Arbeitsplatz (LF 1–8)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Gemeinsame Kernqualifikationen für alle IT-Berufe: Verträge, Ergonomie, Subnetting, BSI, BPMN 2.0, Belege &amp; Netzplan.</p>
-          <a href="workspace.html?course=ihk_ap1&chapter=01_lf1_unternehmen_und_arbeitsplatz" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px;">
-            <span>▶ AP1 Module üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="common" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP1: IT-Arbeitsplatz &amp; Basissysteme (LF 1–8)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Gemeinsame Kernqualifikationen für alle IT-Berufe: Verträge, Ergonomie, Subnetting, BSI, BPMN 2.0, Belege &amp; Netzplan.</p>
+          <a href="workspace.html?course=ihk_ap1&chapter=01_lf1_unternehmen_und_arbeitsplatz" class="btn-start-ide">
+            <span>AP1 Module öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="FISI" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">📕 AP2: Systemintegration (FISI)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">VLAN &amp; Routing, VRT-Symbole, Active Directory, RAID 0-10, Backup 3-2-1-1-0, Enterprise SQL &amp; 40h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_fisi&chapter=01_lf9_netzwerkinfrastruktur_und_routing" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #991b1b;">
-            <span>▶ AP2 FISI üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="FISI" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: Systemintegration (FISI)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">VLAN &amp; Routing, VRT-Symbole, Active Directory, RAID 0-10, Backup 3-2-1-1-0, Enterprise SQL &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_fisi&chapter=01_lf9_netzwerkinfrastruktur_und_routing" class="btn-start-ide">
+            <span>AP2 FISI öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="FIAE" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #0369a1; font-size: 1.05rem;">💻 AP2: Anwendungsentwicklung (FIAE)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Clean Architecture, GoF-Entwurfsmuster, UML 2.5, Algorithmen (O-Notation), OOP &amp; SOLID, REST/GraphQL &amp; 80h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_fiae&chapter=01_software_architektur_und_design_patterns" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #0369a1;">
-            <span>▶ AP2 FIAE üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="FIAE" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: Anwendungsentwicklung (FIAE)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Clean Architecture, GoF-Entwurfsmuster, UML 2.5, Algorithmen (O-Notation), OOP &amp; SOLID, REST/GraphQL &amp; 80h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_fiae&chapter=01_software_architektur_und_design_patterns" class="btn-start-ide">
+            <span>AP2 FIAE öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="FIDP" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #0d9488; font-size: 1.05rem;">📊 AP2: Daten- &amp; Prozessanalyse (FIDP)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Prozessoptimierung, BPMN 2.0, ISO 25012 Datenqualität, ETL/CDC, Star-Schema, Statistik, ML-Evaluation &amp; 40h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_fidp&chapter=01_prozessanalyse_und_prozessoptimierung" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #0d9488;">
-            <span>▶ AP2 FIDP üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="FIDP" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: Daten- &amp; Prozessanalyse (FIDP)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Prozessoptimierung, BPMN 2.0, ISO 25012 Datenqualität, ETL/CDC, Star-Schema, Statistik, ML-Evaluation &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_fidp&chapter=01_prozessanalyse_und_prozessoptimierung" class="btn-start-ide">
+            <span>AP2 FIDP öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="FIDV" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #b45309; font-size: 1.05rem;">🏭 AP2: Digitale Vernetzung (FIDV)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Cyber-Physische Systeme, RAMI 4.0, IO-Link, Profinet IO, TSN, OPC UA/MQTT, 5G-Campus, IEC 62443, Purdue &amp; 40h-Projekt.</p>
-          <a href="workspace.html?course=ihk_ap2_fidv&chapter=01_industrie40_und_cyber_physische_systeme" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #b45309;">
-            <span>▶ AP2 FIDV üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="FIDV" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: Digitale Vernetzung (FIDV)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Cyber-Physische Systeme, RAMI 4.0, IO-Link, Profinet IO, TSN, OPC UA/MQTT, 5G-Campus, IEC 62443, Purdue &amp; 40h-Projekt.</p>
+          <a href="workspace.html?course=ihk_ap2_fidv&chapter=01_industrie40_und_cyber_physische_systeme" class="btn-start-ide">
+            <span>AP2 FIDV öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="ITSE" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #d97706; font-size: 1.05rem;">⚡ AP2: IT-System-Elektroniker (ITSE)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">VDE 0100/0701, DGUV V3, USV (VFI), LWL-Spleißen &amp; OTDR, EMV, Brandschottung &amp; 40h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_itse&chapter=01_elektrotechnik_und_schutzmassnahmen_vde0100" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #d97706;">
-            <span>▶ AP2 ITSE üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="ITSE" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: IT-System-Elektroniker (ITSE)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">VDE 0100/0701, DGUV V3, USV (VFI), LWL-Spleißen &amp; OTDR, EMV, Brandschottung &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_itse&chapter=01_elektrotechnik_und_schutzmassnahmen_vde0100" class="btn-start-ide">
+            <span>AP2 ITSE öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="ITSM" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #0284c7; font-size: 1.05rem;">💼 AP2: IT-System-Management (ITSM)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">7P-Marketing, Handelskalkulation, TCO/ROI, EVB-IT Verträge, SLAs, ITIL &amp; 40h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_itsm&chapter=01_it_marktanalyse_wettbewerb_und_swot" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #0284c7;">
-            <span>▶ AP2 ITSM üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="ITSM" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: IT-System-Management (ITSM)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">7P-Marketing, Handelskalkulation, TCO/ROI, EVB-IT Verträge, SLAs, ITIL &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_itsm&chapter=01_it_marktanalyse_wettbewerb_und_swot" class="btn-start-ide">
+            <span>AP2 ITSM öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="KDM" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #059669; font-size: 1.05rem;">📈 AP2: Digitalisierungsmanagement (KDM)</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Business Model Canvas, Plattformökonomie, BPMN 2.0, GoBD/DMS, XRechnung, DSFA &amp; 40h-Projektleitfaden.</p>
-          <a href="workspace.html?course=ihk_ap2_kdm&chapter=01_digitale_geschaeftsmodelle_und_bmc" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #059669;">
-            <span>▶ AP2 KDM üben</span>
+        <div class="ihk-quick-card" data-ihk-profession="KDM" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP2: Digitalisierungsmanagement (KDM)</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Business Model Canvas, Plattformökonomie, BPMN 2.0, GoBD/DMS, XRechnung, DSFA &amp; 40h-Projektleitfaden.</p>
+          <a href="workspace.html?course=ihk_ap2_kdm&chapter=01_digitale_geschaeftsmodelle_und_bmc" class="btn-start-ide">
+            <span>AP2 KDM öffnen &rarr;</span>
           </a>
         </div>
 
-        <div class="ihk-quick-card" data-ihk-profession="common" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">⚡ Subnetting-Drill Master</h4>
-          <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 14px 0;">Interaktiver Rechentrainer: Netz-ID, Broadcast-Adresse, Hostbereich &amp; Präfixlängen im Sekundentakt trainieren.</p>
-          <a href="courses/ihk_ap1/11_subnetting_drill_master/index.html" class="btn-start-ide" style="font-size: 0.84rem; padding: 8px 14px; background: #0f172a;">
-            <span>▶ Subnetting-Drill öffnen</span>
+        <div class="ihk-quick-card" data-ihk-profession="common" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">Subnetting-Drill Master</h4>
+          <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Interaktiver Rechentrainer: Netz-ID, Broadcast-Adresse, Hostbereich &amp; Präfixlängen im Sekundentakt trainieren.</p>
+          <a href="courses/ihk_ap1/11_subnetting_drill_master/index.html" class="btn-start-ide">
+            <span>Subnetting-Drill starten &rarr;</span>
           </a>
         </div>
 
         <!-- Hinweisfeld wenn kein Ausbildungsberuf im Account gewählt ist -->
-        <div id="ihk-no-prof-hint" style="display: none; grid-column: 1 / -1; background: #f8fafc; border: 2px dashed #94a3b8; border-radius: 12px; padding: 24px; text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 8px;">🔒</div>
-          <h4 style="margin: 0 0 6px 0; color: #1e293b; font-size: 1.05rem; font-weight: 800;">Fachspezifischer AP2-Prüfungskurs gesperrt</h4>
-          <p style="font-size: 0.88rem; color: #64748b; margin: 0 0 14px 0; max-width: 580px; margin-inline: auto;">
-            Auf deinem Dashboard werden nur Kurse für deinen im Account hinterlegten Ausbildungsberuf angezeigt. Wähle oben im Ausbildungsplan deinen IT-Beruf aus und klicke auf Speichern, um deinen passenden AP2-Trainer freizuschalten.
+        <div id="ihk-no-prof-hint" style="display: none; grid-column: 1 / -1; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center;">
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">Berufsspezifischer Prüfungskurs (AP2)</h4>
+          <p style="font-size: 0.88rem; color: #64748b; margin: 0 0 14px 0; max-width: 580px; margin-inline: auto; line-height: 1.5;">
+            Auf deinem Dashboard werden die Kurse für deinen im Account hinterlegten Ausbildungsberuf angezeigt. Wähle oben im Ausbildungsrahmenplan deinen IT-Beruf aus und klicke auf Speichern, um deinen passenden AP2-Trainer freizuschalten.
           </p>
-          <button type="button" onclick="document.getElementById('azubi-panel').scrollIntoView({behavior:'smooth'})" class="btn" style="background: #0284c7; color: white; padding: 8px 18px; font-weight: 700; border: none; border-radius: 8px; cursor: pointer;">
-            🎓 IT-Ausbildungsberuf wählen &rarr;
+          <button type="button" onclick="document.getElementById('azubi-panel').scrollIntoView({behavior:'smooth'})" class="portal-btn-primary" style="padding: 8px 16px; font-size: 0.84rem;">
+            Ausbildungsberuf festlegen &rarr;
           </button>
         </div>
       </div>
@@ -1536,6 +1536,7 @@
       const msgEl = document.getElementById('azubi-prof-account-msg');
       const badgeEl = document.getElementById('azubi-prof-account-badge');
       const navProf = document.getElementById('nav-auth-profession');
+      const statProf = document.getElementById('stat-user-prof-name');
       if (!msgEl || !badgeEl) return;
 
       if (navProf) {
@@ -1550,26 +1551,36 @@
         }
       }
 
+      if (statProf) {
+        if (!currentProfession) {
+          statProf.innerText = 'Nicht festgelegt';
+        } else if (currentProfession === 'ALL') {
+          statProf.innerText = 'Alle IT-Berufe (Admin)';
+        } else {
+          statProf.innerText = PROFESSION_NAMES[currentProfession] || currentProfession;
+        }
+      }
+
       if (!currentProfession) {
         badgeEl.style.background = '#fef2f2';
         badgeEl.style.borderColor = '#fecaca';
         badgeEl.style.color = '#991b1b';
-        msgEl.innerHTML = '⚠️ <strong>Kein Ausbildungsberuf im Account angegeben:</strong> Spezifische AP2-Prüfungskurse sind ausgeblendet. Wähle oben deinen Beruf und klicke auf Speichern.';
+        msgEl.innerHTML = '<strong>Kein Ausbildungsberuf hinterlegt:</strong> Berufsbezogene AP2-Kurse sind ausgeblendet. Wähle oben deinen Beruf und klicke auf Speichern.';
       } else if (currentProfession === 'ALL') {
-        badgeEl.style.background = '#eff6ff';
-        badgeEl.style.borderColor = '#bfdbfe';
-        badgeEl.style.color = '#1e40af';
-        msgEl.innerHTML = '🌟 <strong>Dozenten- &amp; Admin-Vollansicht:</strong> Alle 7 IT-Ausbildungsberufe sind auf dem Dashboard sichtbar.';
+        badgeEl.style.background = '#f8fafc';
+        badgeEl.style.borderColor = '#cbd5e1';
+        badgeEl.style.color = '#1e293b';
+        msgEl.innerHTML = '<strong>Dozenten- &amp; Admin-Vollansicht:</strong> Alle IT-Ausbildungsberufe sind auf dem Dashboard freigeschaltet.';
       } else if (currentProfession === accountProfession) {
         badgeEl.style.background = '#f0fdf4';
         badgeEl.style.borderColor = '#bbf7d0';
         badgeEl.style.color = '#166534';
-        msgEl.innerHTML = `✅ <strong>Im Account gespeichert:</strong> ${PROFESSION_NAMES[currentProfession] || currentProfession}. Es wird exklusiv dein passender AP2-Prüfungskurs angezeigt.`;
+        msgEl.innerHTML = `<strong>Im Account hinterlegt:</strong> ${PROFESSION_NAMES[currentProfession] || currentProfession}. Es wird exklusiv dein passender AP2-Prüfungskurs angezeigt.`;
       } else {
         badgeEl.style.background = '#fffbeb';
         badgeEl.style.borderColor = '#fde68a';
         badgeEl.style.color = '#92400e';
-        msgEl.innerHTML = `⏳ <strong>Vorschau für:</strong> ${PROFESSION_NAMES[currentProfession] || currentProfession} (noch nicht im Account gespeichert). Klicke auf <strong>💾 Im Account speichern</strong>.`;
+        msgEl.innerHTML = `<strong>Vorschau:</strong> ${PROFESSION_NAMES[currentProfession] || currentProfession} (noch nicht im Account gespeichert). Klicke auf <strong>Im Account speichern</strong>.`;
       }
     }
 
@@ -1666,11 +1677,11 @@
       const pillCoding = document.getElementById('tab-pill-coding');
       const pillData = document.getElementById('tab-pill-data');
 
-      if (pillAll) pillAll.innerText = `🌟 Alle Fachbereiche (${counts.all})`;
-      if (pillIhk) pillIhk.innerText = `🎓 IHK Prüfung (${counts.ihk})`;
-      if (pillDevops) pillDevops.innerText = `🐧 DevOps, Linux & AD (${counts.devops})`;
-      if (pillCoding) pillCoding.innerText = `💻 Backend & Systems (${counts.coding})`;
-      if (pillData) pillData.innerText = `🗄️ Daten & Web (${counts.data})`;
+      if (pillAll) pillAll.innerText = `Alle Fachbereiche (${counts.all})`;
+      if (pillIhk) pillIhk.innerText = `IHK Prüfungsvorbereitung (${counts.ihk})`;
+      if (pillDevops) pillDevops.innerText = `DevOps & Infrastruktur (${counts.devops})`;
+      if (pillCoding) pillCoding.innerText = `Softwaretechnik & Systems (${counts.coding})`;
+      if (pillData) pillData.innerText = `Datenbanken & Web (${counts.data})`;
     }
 
     // 3. Live Category Filter
@@ -1686,6 +1697,10 @@
       document.querySelectorAll('.year-pill').forEach(btn => btn.classList.remove('active'));
       if (element) element.classList.add('active');
       currentYear = year;
+      const statYear = document.getElementById('stat-user-year-name');
+      if (statYear) {
+        statYear.innerText = (year === 'all') ? 'Alle Lehrjahre' : `${year}. Ausbildungsjahr`;
+      }
       renderLernfelder(currentProfession, year);
       applyAllFilters();
     }
@@ -1695,6 +1710,10 @@
       document.querySelectorAll('.year-pill').forEach(btn => btn.classList.remove('active'));
       if (element) element.classList.add('active');
       currentYear = 'assigned';
+      const statYear = document.getElementById('stat-user-year-name');
+      if (statYear) {
+        statYear.innerText = 'Dozenten-Zuweisung';
+      }
       renderLernfelder(currentProfession, 'assigned');
       applyAllFilters();
     }
@@ -1734,10 +1753,10 @@
             currentProfession = prof;
             updateProfessionStatusBadge();
             if (btn) {
-              btn.innerText = '✓ Im Account gespeichert!';
+              btn.innerText = 'Gespeichert!';
               btn.style.background = '#10b981';
               setTimeout(() => {
-                btn.innerText = '💾 Im Account speichern';
+                btn.innerText = 'Im Account speichern';
                 btn.style.background = '#0284c7';
               }, 2000);
             }
@@ -1758,8 +1777,8 @@
         accountProfession = prof;
         currentProfession = prof;
         updateProfessionStatusBadge();
-        if (btn) btn.innerText = '✓ Lokal gemerkt';
-        setTimeout(() => { if (btn) btn.innerText = '💾 Im Account speichern'; }, 2000);
+        if (btn) btn.innerText = 'Lokal übernommen';
+        setTimeout(() => { if (btn) btn.innerText = 'Im Account speichern'; }, 2000);
         applyAllFilters();
       }
     }
@@ -1784,7 +1803,7 @@
 
       if (year === 'assigned') {
         container.style.display = 'block';
-        if (titleEl) titleEl.innerText = `🔒 Deine zugeteilten Kurse (${userAssignedCourses.length} Kurse aktiv)`;
+        if (titleEl) titleEl.innerText = `Zugeteilte Kurse (${userAssignedCourses.length} Kurse aktiv)`;
         if (badgeEl) badgeEl.innerText = 'Dozenten-Zuweisung';
 
         if (userAssignedCourses.length === 0) {
@@ -1804,7 +1823,7 @@
                 </div>
                 <div style="margin-top: 6px;">
                   <a href="workspace.html?course=${cid}" class="btn-start-ide" style="font-size: 0.78rem; padding: 5px 10px;">
-                    ▶ In Web-IDE üben &rarr;
+                    In Web-IDE üben &rarr;
                   </a>
                 </div>
               </div>`;
@@ -1819,7 +1838,7 @@
       container.style.display = 'block';
 
       if (titleEl) {
-        titleEl.innerText = `📖 Lernfelder im ${year}. Ausbildungsjahr (${prof.shortName})`;
+        titleEl.innerText = `Lernfelder im ${year}. Ausbildungsjahr (${prof.shortName})`;
       }
       if (badgeEl) {
         badgeEl.innerText = year === 2 ? 'IHK AP1 Prüfungsrelevant' : (year === 3 ? 'IHK AP2 Fachvertiefung' : 'Kernqualifikationen');
@@ -1887,7 +1906,7 @@
       const user = window.AUTH ? window.AUTH.getUser() : null;
       if (user) {
         const nameStr = user.name || user.email.split('@')[0];
-        document.getElementById('nav-auth-user').innerText = `👤 ${nameStr}`;
+        document.getElementById('nav-auth-user').innerText = nameStr;
         document.getElementById('dash-greeting-name').innerText = nameStr;
         const roleEl = document.getElementById('nav-auth-role');
         if (roleEl) {
@@ -1977,7 +1996,7 @@
               const streak = user.streak_days || 1;
               document.getElementById('stat-user-xp').innerText = xp;
               document.getElementById('stat-user-level').innerText = level;
-              document.getElementById('stat-user-streak').innerText = `${streak} 🔥`;
+              document.getElementById('stat-user-streak').innerText = `${streak} Tag(e)`;
             }
           }
 

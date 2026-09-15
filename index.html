@@ -242,11 +242,10 @@
   <!-- Logged-in Welcome Notification (wird per JS eingeblendet wenn User bereits angemeldet ist) -->
   <div id="landing-logged-in-banner" class="logged-in-banner" style="display: none;">
     <div style="display: flex; align-items: center; gap: 10px;">
-      <span style="font-size: 1.2rem;">👋</span>
-      <span>Du bist eingeloggt als <strong id="landing-user-name">Teilnehmer</strong>. Deine Kurse und dein Lernfortschritt stehen im Dashboard bereit!</span>
+      <span>Angemeldet als <strong id="landing-user-name">Teilnehmer</strong>. Kursfortschritt und Module stehen im Dashboard bereit.</span>
     </div>
-    <a href="dashboard.html" class="btn" style="background: white; color: #0284c7; font-weight: 800; padding: 7px 16px; font-size: 0.85rem; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-      ▶ Zum Kurs-Dashboard &rarr;
+    <a href="dashboard.html" class="btn" style="background: white; color: #1d4ed8; font-weight: 700; padding: 7px 16px; font-size: 0.85rem; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+      Zum Kurs-Dashboard &rarr;
     </a>
   </div>
 
@@ -259,25 +258,25 @@
         </div>
         <div>
           <span class="portal-brand-title">IT-Praxisportal</span>
-          <span class="portal-brand-badge">Alpha</span>
+          <span class="portal-brand-badge">Aus- &amp; Weiterbildung</span>
         </div>
       </a>
 
       <nav class="portal-nav-links">
-        <a href="#hero" class="portal-nav-link">🚀 Start</a>
-        <a href="#was-du-bekommst" class="portal-nav-link">💎 Das Konzept</a>
-        <a href="#dashboard-spotlight" class="portal-nav-link">📊 Features</a>
-        <a href="#features-ide" class="portal-nav-link">💻 Web-IDE</a>
-        <a href="#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
-        <a href="#zielgruppen" class="portal-nav-link">👥 Für wen?</a>
-        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
-        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
+        <a href="#hero" class="portal-nav-link">Start</a>
+        <a href="#was-du-bekommst" class="portal-nav-link">Lehrkonzept</a>
+        <a href="#dashboard-spotlight" class="portal-nav-link">Funktionen</a>
+        <a href="#features-ide" class="portal-nav-link">Monaco Web-IDE</a>
+        <a href="#ihk-section" class="portal-nav-link">IHK-Prüfung</a>
+        <a href="#zielgruppen" class="portal-nav-link">Zielgruppen</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">Dozentenbereich</a>
+        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 700;">Administration</a>
       </nav>
 
       <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
         <span id="nav-auth-user" style="display: none; font-size: 0.82rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(56, 189, 248, 0.2); white-space: nowrap;"></span>
-        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2); white-space: nowrap;" onclick="window.openAuthModal('login', { allowClose: true })">🔑 Anmelden</button>
-        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #0284c7; color: white; white-space: nowrap;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
+        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2); white-space: nowrap;" onclick="window.openAuthModal('login', { allowClose: true })">Anmelden</button>
+        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #1d4ed8; color: white; white-space: nowrap;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
         <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
           <span>☰</span>
         </button>
@@ -289,26 +288,26 @@
   <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
     <!-- Auth-Aktionen für mobile/tablet Besucher -->
     <div id="mobile-drawer-auth-actions" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-      <button type="button" class="mobile-drawer-link" id="mobile-drawer-login-btn" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; font-weight: 700; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="toggleMobileMenu(); window.openAuthModal('login', { allowClose: true });">
-        🔑 Anmelden
+      <button type="button" class="mobile-drawer-link" id="mobile-drawer-login-btn" style="color: #f1f5f9; background: rgba(255, 255, 255, 0.05); border: 1px solid #334155; text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; font-weight: 600; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="toggleMobileMenu(); window.openAuthModal('login', { allowClose: true });">
+        Anmelden
       </button>
-      <button type="button" class="mobile-drawer-link" id="mobile-drawer-register-btn" style="color: #ffffff; background: #0284c7; border: 1px solid #0284c7; text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; font-weight: 700; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="toggleMobileMenu(); window.openAuthModal('register', { allowClose: true });">
-        ✨ Kostenlos registrieren
+      <button type="button" class="mobile-drawer-link" id="mobile-drawer-register-btn" style="color: #ffffff; background: #1d4ed8; border: 1px solid #1d4ed8; text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; font-weight: 600; width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="toggleMobileMenu(); window.openAuthModal('register', { allowClose: true });">
+        Kostenlos registrieren
       </button>
     </div>
 
-    <a href="#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Start &amp; Übersicht</a>
-    <a href="#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">💎 Was du bekommst</a>
-    <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Features &amp; Vorschau</a>
-    <a href="#features-ide" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Monaco Web-IDE</a>
-    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
-    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
-    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">🔒 Datenschutzerklärung</a>
-    <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #34d399; font-weight: 800; background: rgba(52, 211, 153, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.3);">💻 Zum Kurs-Dashboard &rarr;</a>
-    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
-    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
-    <button type="button" class="mobile-drawer-link" id="mobile-drawer-logout-btn" style="display: none; color: #f87171; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; margin-top: 8px; font-weight: 700; width: 100%; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="if(confirm('Möchtest du dich wirklich abmelden?')) window.AUTH.logout();">
-      🚪 Abmelden
+    <a href="#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">Start &amp; Übersicht</a>
+    <a href="#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">Lehrkonzept</a>
+    <a href="#dashboard-spotlight" class="mobile-drawer-link" onclick="toggleMobileMenu()">Funktionen</a>
+    <a href="#features-ide" class="mobile-drawer-link" onclick="toggleMobileMenu()">Monaco Web-IDE</a>
+    <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">IHK Prüfungstrainer</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Datenschutzerklärung</a>
+    <a href="dashboard.html" class="mobile-drawer-link" id="mobile-drawer-dash-link" style="display: none; color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2);">Zum Kurs-Dashboard &rarr;</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">Dozentenbereich</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 700;">Administration</a>
+    <button type="button" class="mobile-drawer-link" id="mobile-drawer-logout-btn" style="display: none; color: #f87171; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); text-align: left; cursor: pointer; border-radius: 6px; padding: 10px 14px; margin-top: 8px; font-weight: 600; width: 100%; align-items: center; gap: 8px; font-size: 0.9rem;" onclick="if(confirm('Möchtest du dich wirklich abmelden?')) window.AUTH.logout();">
+      Abmelden
     </button>
   </div>
 
@@ -316,9 +315,9 @@
   <section class="portal-hero" id="hero">
     <div class="portal-container">
       <div class="portal-hero-pill">
-        <span>⚡ Interaktive Lern- &amp; Prüfungsvorbereitungs-Plattform für IT-Berufe</span>
+        <span>Berufliche Bildung &amp; Prüfungsvorbereitung</span>
         <span style="opacity: 0.5;">•</span>
-        <span>100% Kostenlos</span>
+        <span>Fachinformatiker &amp; IT-Berufe</span>
       </div>
       
       <h1>Echte IT-Praxis statt trockener Theorie.</h1>
@@ -326,13 +325,13 @@
       
       <div class="portal-hero-actions">
         <button type="button" id="hero-primary-cta" class="portal-btn-primary" style="cursor: pointer; border: none;" onclick="window.openAuthModal('register', { allowClose: true })">
-          <span>🚀 Jetzt kostenlos registrieren &amp; Kurse freischalten</span>
+          <span>Jetzt kostenfrei registrieren &rarr;</span>
         </button>
         <a href="#was-du-bekommst" class="portal-btn-secondary">
-          <span>📖 Was ist im Account enthalten? &darr;</span>
+          <span>Lehrkonzept ansehen</span>
         </a>
-        <a href="#ihk-section" class="portal-btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">
-          <span>🎓 IHK AP1 &amp; AP2 Prüfungstrainer</span>
+        <a href="#ihk-section" class="portal-btn-secondary">
+          <span>IHK AP1 &amp; AP2 Prüfungstrainer</span>
         </a>
       </div>
 
@@ -378,7 +377,7 @@
       <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
         <div style="max-width: 720px;">
           <span style="background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">Zentraler Lernbereich</span>
-          <h3 style="font-size: 1.7rem; font-weight: 900; margin: 10px 0; color: #ffffff;">📊 Dein persönliches Kurs-Dashboard</h3>
+          <h3 style="font-size: 1.7rem; font-weight: 900; margin: 10px 0; color: #ffffff;">Dein persönliches Kurs-Dashboard</h3>
           <p style="color: #94a3b8; font-size: 0.96rem; line-height: 1.6; margin-bottom: 16px;">
             Sobald du dich registrierst, erhältst du vollen Zugriff auf dein persönliches Dashboard. Hier wählst du deine gewünschten Kurse aus, verfolgst deinen Lernfortschritt, sammelst Erfahrungspunkte (XP) und startest mit einem Klick genau dort in der Web-IDE, wo du zuletzt aufgehört hast.
           </p>
@@ -386,7 +385,7 @@
 
         <div>
           <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);" onclick="window.openAuthModal('register', { allowClose: true })">
-            <span>✨ Kostenlos registrieren &amp; Dashboard öffnen &rarr;</span>
+            <span>Kostenlos registrieren &amp; Dashboard öffnen &rarr;</span>
           </button>
         </div>
       </div>
@@ -595,7 +594,7 @@
         <div>
           <strong>🎯 Bereit zur Kurswahl?</strong> Nach dem Login stehen alle 13 Spezialkurse im Dashboard zur freien Verfügung.
         </div>
-        <button type="button" class="landing-cta-btn btn" style="background: #0284c7; color: white; padding: 8px 16px; font-size: 0.84rem; font-weight: 700; border-radius: 6px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true })">
+        <button type="button" class="landing-cta-btn btn" style="background: #1d4ed8; color: white; padding: 8px 16px; font-size: 0.84rem; font-weight: 700; border-radius: 6px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true })">
           <span>✨ Account erstellen &amp; Kurse wählen &rarr;</span>
         </button>
       </div>
@@ -606,29 +605,29 @@
       <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
         <div>
           <span class="portal-card-badge badge-ihk" style="font-size: 0.8rem; font-weight: 800;">Offizieller Prüfungsstandard</span>
-          <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">🎓 IHK Prüfungstrainer AP1 &amp; AP2</h3>
+          <h3 style="margin: 8px 0 6px 0; font-size: 1.6rem; color: #1e3a8a; font-weight: 900;">IHK Prüfungstrainer AP1 &amp; AP2</h3>
           <p style="margin: 0; color: #475569; font-size: 0.95rem; max-width: 780px;">Realistische Prüfungssimulation nach der bundeseinheitlichen Ausbildungsordnung (AO 2020) für Fachinformatiker aller Fachrichtungen (FIAE, FISI, FIDP, FITD).</p>
         </div>
         <button type="button" class="landing-cta-btn btn" style="background: #1d4ed8; color: white; padding: 10px 20px; font-weight: 800; border-radius: 8px; border: none; cursor: pointer;" onclick="window.openAuthModal('register', { allowClose: true })">
-          <span>🚀 Prüfungssimulation im Dashboard starten</span>
+          <span>Prüfungssimulation im Dashboard starten &rarr;</span>
         </button>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px;">
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">📘 AP1: IT-Arbeitsplatz &amp; Basissysteme</h4>
+          <h4 style="margin: 0 0 6px 0; color: #1e3a8a; font-size: 1.05rem;">AP1: IT-Arbeitsplatz &amp; Basissysteme</h4>
           <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 12px 0;">Gemeinsame Kernqualifikationen der Lernfelder 1–8: Verträge, Ergonomie, IPv4/IPv6 Subnetting, BSI-Schutzbedarf, relationales SQL &amp; Trace-Tabellen.</p>
           <div style="font-size: 0.78rem; font-weight: 700; color: #0284c7;">✓ 90-Minuten Probeprüfung mit automatischem Notenschlüssel</div>
         </div>
 
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">📕 AP2: Fachqualifikationen &amp; WiSo</h4>
+          <h4 style="margin: 0 0 6px 0; color: #991b1b; font-size: 1.05rem;">AP2: Fachqualifikationen &amp; WiSo</h4>
           <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 12px 0;">Spezifische Lernfelder 9–12: VLANs &amp; Routing, Active Directory GPO, RAID &amp; SAN-Speicher, Containerisierung, WiSo-Kompaktfragen &amp; 40h-Projektarbeits-Leitfaden.</p>
           <div style="font-size: 0.78rem; font-weight: 700; color: #991b1b;">✓ Inklusive Leitfaden für Fachgespräch &amp; Präsentation</div>
         </div>
 
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">⚡ Interaktive Drill-Trainer</h4>
+          <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1.05rem;">Interaktive Drill-Trainer</h4>
           <p style="font-size: 0.86rem; color: #64748b; margin: 0 0 12px 0;">Blitzschnelles Rechnen: Dynamischer Subnetting-Generator mit Live-Punktevergabe, schrittweise Trace-Tabellen-Simulation und relationale Abfrage-Validierung.</p>
           <div style="font-size: 0.78rem; font-weight: 700; color: #10b981;">✓ Unbegrenzt wiederholbare Zufallsaufgaben</div>
         </div>
@@ -640,7 +639,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div style="max-width: 660px;">
           <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 10px; border-radius: 99px; font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">0 Min. Setup • Direkt im Browser</span>
-          <h3 style="font-size: 1.65rem; font-weight: 900; margin: 10px 0; color: #f8fafc;">💻 Monaco Web-IDE: Coden wie ein Profi</h3>
+          <h3 style="font-size: 1.65rem; font-weight: 900; margin: 10px 0; color: #f8fafc;">Monaco Web-IDE: Professionelle Entwicklung im Browser</h3>
           <p style="color: #94a3b8; font-size: 0.94rem; line-height: 1.6; margin-bottom: 16px;">
             Vergiss komplizierte Compiler-Installationen, Treiber-Inkompatibilitäten oder Administrationsrechte auf Schulrechnern. Das IT-Praxisportal bringt die vertraute VS Code Entwicklererfahrung direkt in jeden modernen Webbrowser.
           </p>
@@ -654,7 +653,7 @@
 
         <div>
           <button type="button" class="landing-cta-btn btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);" onclick="window.openAuthModal('register', { allowClose: true })">
-            <span>✨ Web-IDE im Dashboard starten &rarr;</span>
+            <span>Web-IDE im Dashboard starten &rarr;</span>
           </button>
         </div>
       </div>
@@ -698,7 +697,7 @@
 
     <!-- 7. BENTO FEATURE MATRIX -->
     <div style="text-align: center; margin: 48px 0 24px 0;" id="vorteile">
-      <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">🛠️ Warum IT-Praxisportal?</h2>
+      <h2 style="font-size: 1.8rem; font-weight: 900; margin: 0 0 6px 0; color: #0f172a;">Warum IT-Praxisportal?</h2>
       <p style="color: #64748b; margin: 0; font-size: 0.95rem;">Didaktisch durchdacht, technisch modern und konsequent praxisorientiert.</p>
     </div>
 
@@ -731,7 +730,7 @@
     <!-- 8. ZIELGRUPPEN -->
     <section class="card" id="zielgruppen" style="margin-top: 48px; border-radius: 16px; padding: 32px; background: #ffffff;">
       <div style="text-align: center; margin-bottom: 28px;">
-        <h3 style="font-size: 1.5rem; font-weight: 900; color: #0f172a; margin: 0 0 6px 0;">👥 Für wen ist das IT-Praxisportal?</h3>
+        <h3 style="font-size: 1.5rem; font-weight: 900; color: #0f172a; margin: 0 0 6px 0;">Für wen ist das IT-Praxisportal?</h3>
         <p style="color: #64748b; margin: 0; font-size: 0.92rem;">Entwickelt von IHK-Dozenten und erfahrenen Software-Architekten.</p>
       </div>
 
@@ -764,7 +763,7 @@
       </p>
       <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
         <button type="button" class="landing-cta-btn btn" style="background: #ffffff; color: #0284c7; padding: 12px 28px; font-size: 1rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.2);" onclick="window.openAuthModal('register', { allowClose: true })">
-          <span>✨ Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>
+          <span>Jetzt kostenlos registrieren &amp; Kurse wählen &rarr;</span>
         </button>
         <button type="button" class="btn" id="footer-cta-login" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 12px 20px; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer;" onclick="window.openAuthModal('login', { allowClose: true })">
           🔑 Anmelden
@@ -795,7 +794,7 @@
 
       <!-- Lehrpfade -->
       <div class="portal-footer-col">
-        <h4>📚 Lehrpfade</h4>
+        <h4>Lehrpfade</h4>
         <ul class="portal-footer-links">
           <li><a href="dashboard.html" class="portal-footer-link">🐍 Python &amp; OOP</a></li>
           <li><a href="dashboard.html" class="portal-footer-link">⚡ JavaScript &amp; Web</a></li>
@@ -809,7 +808,7 @@
 
       <!-- Features & Tools -->
       <div class="portal-footer-col">
-        <h4>💻 Plattform</h4>
+        <h4>Plattform</h4>
         <ul class="portal-footer-links">
           <li><a href="dashboard.html" class="portal-footer-link">📊 Kurs-Dashboard</a></li>
           <li><a href="workspace.html?course=python" class="portal-footer-link">💻 Monaco Web-IDE</a></li>
@@ -822,7 +821,7 @@
 
       <!-- Rechtliches & Kontakt -->
       <div class="portal-footer-col">
-        <h4>⚖️ Rechtliches &amp; Kontakt</h4>
+        <h4>Rechtliches &amp; Kontakt</h4>
         <ul class="portal-footer-links">
           <li><a href="impressum.html" class="portal-footer-link">⚖️ Impressum (§ 5 DDG)</a></li>
           <li><a href="datenschutz.html" class="portal-footer-link">🔒 Datenschutzerklärung (DSGVO)</a></li>

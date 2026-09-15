@@ -27,19 +27,19 @@
       </a>
 
       <nav class="portal-nav-links">
-        <a href="index.html#hero" class="portal-nav-link">🚀 Start</a>
-        <a href="index.html#was-du-bekommst" class="portal-nav-link">💎 Das Konzept</a>
-        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="color: #34d399; font-weight: 700;">💻 Kurs-Dashboard</a>
-        <a href="index.html#ihk-section" class="portal-nav-link">🎓 IHK Prüfung</a>
-        <a href="workspace.html?course=python" class="portal-nav-link">💻 Web-IDE</a>
-        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">👨‍🏫 Dozenten</a>
-        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin</a>
+        <a href="index.html#hero" class="portal-nav-link">Start</a>
+        <a href="index.html#was-du-bekommst" class="portal-nav-link">Lehrkonzept</a>
+        <a href="dashboard.html" class="portal-nav-link" id="nav-dashboard-link" style="color: #38bdf8; font-weight: 600;">Kurs-Dashboard</a>
+        <a href="index.html#ihk-section" class="portal-nav-link">IHK-Prüfung</a>
+        <a href="workspace.html?course=python" class="portal-nav-link">Web-IDE</a>
+        <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">Dozentenbereich</a>
+        <a href="admin.html" class="portal-nav-link" id="nav-admin-link" style="display: none; color: #f87171; font-weight: 700;">Administration</a>
       </nav>
 
       <div style="display: flex; align-items: center; gap: 8px;">
         <span id="nav-auth-user" style="display: none; font-size: 0.82rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(56, 189, 248, 0.2);"></span>
-        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="window.openAuthModal('login', { allowClose: true })">🔑 Anmelden</button>
-        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #0284c7; color: white;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">✨ Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
+        <button type="button" class="btn" id="nav-btn-login" style="padding: 6px 12px; font-size: 0.82rem; background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="window.openAuthModal('login', { allowClose: true })">Anmelden</button>
+        <button type="button" class="btn" id="nav-btn-register" style="padding: 6px 12px; font-size: 0.82rem; background: #1d4ed8; color: white;" onclick="window.openAuthModal('register', { allowClose: true })"><span class="btn-text-desktop">Kostenlos registrieren</span><span class="btn-text-mobile">Starten</span></button>
         <button type="button" id="portal-mobile-menu-btn" class="mobile-menu-toggle" aria-label="Menü umschalten" onclick="toggleMobileMenu()">
           <span>☰</span>
         </button>
@@ -49,15 +49,15 @@
 
   <!-- Mobile Navigation Drawer -->
   <div id="portal-mobile-drawer" class="mobile-drawer" style="display: none;">
-    <a href="index.html#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">🚀 Start &amp; Übersicht</a>
-    <a href="index.html#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">💎 Was du bekommst</a>
-    <a href="dashboard.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">📊 Kurs-Dashboard</a>
-    <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">💻 Web-IDE starten</a>
-    <a href="index.html#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">🎓 IHK Prüfungstrainer</a>
-    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">⚖️ Impressum</a>
-    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()" style="color: #38bdf8;">🔒 Datenschutzerklärung</a>
-    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">👨‍🏫 Dozenten-Portal</a>
-    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 800;">🛡️ Admin-Panel</a>
+    <a href="index.html#hero" class="mobile-drawer-link" onclick="toggleMobileMenu()">Start &amp; Übersicht</a>
+    <a href="index.html#was-du-bekommst" class="mobile-drawer-link" onclick="toggleMobileMenu()">Lehrkonzept</a>
+    <a href="dashboard.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Kurs-Dashboard</a>
+    <a href="workspace.html?course=python" class="mobile-drawer-link" onclick="toggleMobileMenu()">Web-IDE starten</a>
+    <a href="index.html#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">IHK Prüfungstrainer</a>
+    <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Impressum</a>
+    <a href="datenschutz.html" class="mobile-drawer-link" onclick="toggleMobileMenu()" style="color: #38bdf8;">Datenschutzerklärung</a>
+    <a href="teacher.html" class="mobile-drawer-link" id="mobile-drawer-teacher-link" style="display: none;">Dozentenbereich</a>
+    <a href="admin.html" class="mobile-drawer-link" id="mobile-drawer-admin-link" style="display: none; color: #f87171; font-weight: 700;">Administration</a>
   </div>
 
   <!-- 2. PAGE HEADER BANNER -->
