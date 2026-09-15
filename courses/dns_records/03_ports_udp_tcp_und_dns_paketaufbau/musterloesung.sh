@@ -1,97 +1,91 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# MUSTERLÖSUNG: DNS 03: UDP vs. TCP Port 53 & EDNS0
+# MUSTERLÖSUNG: DNS 03: UDP VS. TCP PORT 53, TRUNCATION & EDNS0
 # ==============================================================================
 
-inspect_dns_transport() {
-  local domain="${1:-it-praxisportal.de}"
-  local target_dir="${2:-.}"
+select_dns_transport() {
+  local size="$1"
+  local qtype=$(echo "$2" | tr '[:lower:]' '[:upper:]')
+  local edns=$(echo "$3" | tr '[:upper:]' '[:lower:]')
 
-  echo "▶ Starte professionelle DNS-Operation für $domain..."
+  if [ "$qtype" = "AXFR" ] || [ "$qtype" = "IXFR" ]; then
+    echo "TCP (Grund: Zonentransfer erfordert zwingend TCP)"
+    return 0
+  fi
 
-  case "03_ports_udp_tcp_und_dns_paketaufbau" in
-    *01_dns_hierarchie*)
-      echo "Host: www | SLD: it-praxisportal | TLD: de | Root: ."
-      ;;
-    *02_rekursive*)
-      echo "Simulation Iteration: Root (.) -> de. -> ns1.it-praxisportal.de -> 188.245.100.5"
-      ;;
-    *03_ports_udp*)
-      echo "Protocol: UDP/53 (Standard) | Fallback: TCP/53 | EDNS0 Buffer: 4096 bytes"
-      ;;
-    *04_ttl*)
-      echo "TTL Current: 86400s | Migration Planned TTL: 300s | Neg Cache: 3600s"
-      ;;
-    *05_a_und_aaaa*)
-      cat << 'ZONE' > "$target_dir/zone_records.txt"
-@   IN  A     188.245.100.5
-@   IN  AAAA  2a01:4f8:c010:d::1
-www IN  A     188.245.100.5
-ZONE
-      ;;
-    *06_cname*)
-      echo "api IN CNAME app.it-praxisportal.de." > "$target_dir/cname_record.txt"
-      ;;
-    *07_soa*)
-      cat << 'ZONE' > "$target_dir/soa_record.txt"
-@ IN SOA ns1.it-praxisportal.de. hostmaster.it-praxisportal.de. (
-    2026091201 ; Serial YYYYMMDDNN
-    7200       ; Refresh (2h)
-    3600       ; Retry (1h)
-    1209600    ; Expire (2w)
-    3600       ; Negative Cache TTL (1h)
-)
-ZONE
-      ;;
-    *08_ns_und_ptr*)
-      echo "100.245.188.in-addr.arpa. IN PTR mail.it-praxisportal.de." > "$target_dir/ptr_record.txt"
-      ;;
-    *09_mx*)
-      echo "@ IN MX 10 mail.it-praxisportal.de." > "$target_dir/mx_record.txt"
-      echo "@ IN MX 20 backup-mail.it-praxisportal.de." >> "$target_dir/mx_record.txt"
-      ;;
-    *10_txt_records*)
-      echo '@ IN TXT "v=spf1 mx ip4:188.245.100.5 include:_spf.google.com -all"' > "$target_dir/spf_record.txt"
-      ;;
-    *11_dkim*)
-      echo 's1._domainkey IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz..."' > "$target_dir/dkim_record.txt"
-      ;;
-    *12_dmarc*)
-      echo '_dmarc IN TXT "v=DMARC1; p=reject; rua=mailto:dmarc-reports@it-praxisportal.de; pct=100; aspf=s"' > "$target_dir/dmarc_record.txt"
-      ;;
-    *13_srv*)
-      echo '_ldap._tcp.dc._msdcs.corp IN SRV 0 100 389 dc01.corp.it-praxisportal.de.' > "$target_dir/srv_record.txt"
-      ;;
-    *14_caa*)
-      echo '@ IN CAA 0 issue "letsencrypt.org"' > "$target_dir/caa_record.txt"
-      echo '@ IN CAA 0 iodef "mailto:security@it-praxisportal.de"' >> "$target_dir/caa_record.txt"
-      ;;
-    *15_dns_troubleshooting*)
-      echo "STATUS: NOERROR | ANSWER: 1 | FLAGS: qr aa rd ra"
-      ;;
-    *16_master*)
-      cat << 'REPORT' > "$target_dir/dns_audit_report.json"
-{
-  "domain": "it-praxisportal.de",
-  "audit_status": "PASSED",
-  "score": 100,
-  "soa_serial_valid": true,
-  "ns_redundancy": 2,
-  "email_security": {
-    "spf": "valid (-all)",
-    "dkim": "present",
-    "dmarc": "enforced (p=reject)"
-  },
-  "dnssec": "active"
+  if [ "$size" -le 512 ]; then
+    echo "UDP (Grund: Paket passt in Standard-512B-Puffer)"
+    return 0
+  fi
+
+  if [ "$size" -gt 512 ] && [ "$edns" = "true" ] && [ "$size" -le 4096 ]; then
+    echo "UDP_EDNS0 (Grund: EDNS0 erweitert UDP-Puffer auf bis zu 4096 Bytes)"
+    return 0
+  fi
+
+  if [ "$size" -gt 512 ] && [ "$edns" = "false" ]; then
+    echo "TCP_TRUNCATED (Grund: TC=1 gesetzt, Fallback auf TCP erforderlich)"
+    return 0
+  fi
+
+  echo "TCP_FALLBACK"
+  return 0
 }
-REPORT
-      ;;
-  esac
 
-  echo "✅ DNS-Operation erfolgreich abgeschlossen."
+parse_section_counts() {
+  local qd="${1:-1}"
+  local an="${2:-0}"
+  local ns="${3:-0}"
+  local ar="${4:-0}"
+
+  local status="EMPTY_RESPONSE"
+  if [ "$an" -gt 0 ]; then
+    status="HAS_ANSWERS"
+  elif [ "$ns" -gt 0 ]; then
+    status="REFERRAL_ONLY"
+  fi
+
+  echo "QUESTIONS=$qd"
+  echo "ANSWERS=$an"
+  echo "AUTHORITY=$ns"
+  echo "ADDITIONAL=$ar"
+  echo "STATUS=$status"
+  return 0
+}
+
+verify_edns0_in_dig() {
+  local file="$1"
+  [ ! -f "$file" ] && return 1
+
+  if grep -q "OPT PSEUDOSECTION:" "$file"; then
+    local size=$(grep -oE "udp:[[:space:]]*[0-9]+" "$file" | grep -oE "[0-9]+")
+    [ -z "$size" ] && size="4096"
+    echo "EDNS0_ACTIVE: Puffergröße ${size} Bytes"
+    return 0
+  else
+    echo "EDNS0_INACTIVE: Kein OPT Pseudo-Record gefunden (512B Limit)"
+    return 1
+  fi
+}
+
+secure_zone_transfers() {
+  local zone="$1"
+  local slave_ip="$2"
+  local out_file="$3"
+
+  [ -z "$zone" ] || [ -z "$slave_ip" ] || [ -z "$out_file" ] && return 1
+  mkdir -p "$(dirname "$out_file")" 2>/dev/null
+
+  cat << EOF > "$out_file"
+zone "${zone}" {
+    type master;
+    file "/var/lib/bind/db.${zone}";
+    allow-transfer { ${slave_ip}; };
+};
+EOF
   return 0
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  inspect_dns_transport "$@"
+  select_dns_transport "$@"
 fi

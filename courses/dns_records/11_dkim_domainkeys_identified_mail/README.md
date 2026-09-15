@@ -1,18 +1,42 @@
-# DNS 11: DKIM Kryptografische E-Mail-Signatur
+# DNS 11: DKIM (DomainKeys Identified Mail) & Kryptografische Signaturen
 
-Willkommen zum Kurs **DNS-Records, Domain Name System & E-Mail-Sicherheit** im IT-Praxisportal!
+Willkommen zu **Modul 11** des Kurses **DNS-Records, Domain Name System & E-Mail-Sicherheit**!
 
-## 💡 Das Wichtigste in Kürze
-- **Ziel:** Public Key im DNS: Selektoren (s1._domainkey.domain.de), RSA/Ed25519 Schlüssel und Header-Validierung.
-- **Wichtigstes Tool:** `opendkim-testkey`
+In diesem Modul lernst du den zweiten Pfeiler moderner Mail-Security kennen: **DKIM (RFC 6376)**. Du erfährst, wie asymmetrische Kryptografie (RSA/Ed25519) die Unveränderbarkeit von E-Mails sicherstellt, wie der **DKIM-Selector** im DNS adressiert wird und wie das **255-Zeichen-String-Limit** bei langen 2048-Bit Schlüsseln gelöst wird.
 
-## 🎯 Deine Aufgaben (Checkliste)
-1. **Teilziel 1:** DKIM-Schlüsselpaar (Private/Public RSA 2048 Bit) generieren
-2. **Teilziel 2:** DNS TXT-Record unter dem Selektor s1._domainkey eintragen
-3. **Teilziel 3:** Tags v=DKIM1; k=rsa; p=PublicKey im Record formatieren
-4. **Teilziel 4:** DKIM-Signaturprüfung simulieren
+---
+
+## 💡 1. Das Wichtigste in Kürze
+
+### Wie DKIM funktioniert
+1. Der versendende Mail-Server signiert Body und wichtige Header mit seinem privaten Schlüssel (`Private Key`).
+2. Die Signatur wird als Mail-Header `DKIM-Signature:` in die E-Mail eingebettet.
+3. Der empfangende Server liest den Selector `s=` aus und schlägt den öffentlichen Schlüssel im DNS nach:
+   `<selector>._domainkey.<domain>.`
+4. Stimmt die mathematische Signaturprüfung, ist bewiesen: **Die E-Mail wurde nach dem Absenden nicht manipuliert!**
+
+### Der BIND 255-Byte Split
+Ein 2048-Bit RSA-Schlüssel ist knapp 400 Zeichen lang. Ein einzelnes String-Literal in DNS darf maximal 255 Zeichen lang sein. BIND erlaubt die Aufteilung in zwei Strings in runden Klammern:
+```dns
+s2026._domainkey.firma.de.  IN  TXT  (
+    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA123..."
+    "...RestDesSchluesselsHierFortgesetzt" )
+```
+
+---
+
+## 🎯 Deine Aufgaben in `aufgabe.sh`
+
+1. **TODO 1 (`build_dkim_fqdn`):** Erzeuge den standardkonformen DKIM-DNS-Namen (`<selector>._domainkey.<domain>.`).
+2. **TODO 2 (`audit_dkim_key_security`):** Prüfe die Schlüssellänge und warne vor unsicheren 1024-Bit RSA-Keys.
+3. **TODO 3 (`format_dkim_record`):** Formatiere den TXT-Record mit 255-Zeichen-Splitting für BIND.
+4. **TODO 4 (`parse_dkim_record`):** Extrahiere Version, Algorithmus und Public Key aus einem DKIM-String.
+
+---
 
 ## 🧪 Tests ausführen
+
+Führe im Terminal folgenden Befehl aus:
 ```bash
 bash test_aufgabe.sh
 ```

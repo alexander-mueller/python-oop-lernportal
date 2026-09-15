@@ -1,7 +1,4 @@
-/**
- * Offizieller IHK Prüfungskatalog ZPA Nord-West 2. Auflage
- */
-window.IHK_QUESTION_BANK = [
+/**\n * Offizieller IHK Prüfungskatalog ZPA Nord-West 2. Auflage mit Diagramm-Studio Erweiterung\n */\nwindow.IHK_QUESTION_BANK = [
   {
     "id": "ap1_lf1_001",
     "exam": "AP1",
@@ -2571,5 +2568,200 @@ window.IHK_QUESTION_BANK = [
     "scenario": "Ein Einzelhändler plant den Einsatz von KI-gestützter Videoanalyse und Gesichtserkennung in seinen Filialen, um personalisierte Werbung auf Kundenmonitoren auszuspielen.",
     "question": "a) Prüfen Sie, ob für dieses Vorhaben eine Datenschutz-Folgenabschätzung (DSFA nach Art. 35 DSGVO) zwingend erforderlich ist, und begründen Sie Ihre Entscheidung.\nb) In welche Risikoklasse nach dem EU AI Act (KI-Verordnung) fällt biometrische Identifikation und Emotionserkennung im öffentlichen Raum?\nc) Was versteht man im Rahmen von Analytics unter dem Konzept 'k-Anonymität'?",
     "expected_solution": "a) Ja, zwingend erforderlich. Gemäß Art. 35 Abs. 3 DSGVO ist eine DSFA vorgeschrieben bei systematischer und umfassender Überwachung öffentlich zugänglicher Bereiche sowie beim Einsatz neuer Technologien mit voraussichtlich hohem Risiko für die Rechte und Freiheiten natürlicher Personen.\nb) Hochrisiko-KI-System (bzw. in Teilen unzulässige/verbotene KI-Praxis bei biometrischer Echtzeit-Fernidentifikation ohne strenge richterliche Ausnahme).\nc) Ein Datensatz erfüllt k-Anonymität, wenn die quasi-identifizierenden Merkmale (z.B. PLZ, Alter, Geschlecht) jedes Individuums nicht von mindestens k-1 anderen Personen im Datensatz unterschieden werden können (Gruppengröße >= k)."
+  },
+  {
+    "id": "ap1_erm_001",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "ER-Modellierung: Kardinalitäten und Notationen",
+    "scenario": "Für eine Autovermietung soll eine relationale Datenbank entworfen werden. Ein Kunde kann mehrere Mietverträge abschließen, aber jeder Mietvertrag gehört genau zu einem Kunden. Zu jedem Mietvertrag gehört genau ein Fahrzeug, jedoch kann ein Fahrzeug im Laufe der Zeit in mehreren Mietverträgen gebucht werden.",
+    "question": "a) Bestimmen Sie die Kardinalitäten zwischen den Entitäten KUNDE, MIETVERTRAG und FAHRZEUG in der Chen-Notation sowie in der Min-Max-Notation.\nb) Begründen Sie, warum zwischen KUNDE und FAHRZEUG keine direkte n:m-Beziehung modelliert werden sollte.",
+    "points": 8,
+    "solution": "a) Kardinalitäten:\n- KUNDE zu MIETVERTRAG: 1 : n (Chen) bzw. KUNDE (0,n) und MIETVERTRAG (1,1) (Min-Max). Ein Kunde kann 0 bis beliebig viele Verträge haben; ein Vertrag muss genau einem Kunden gehören. (2 Pkt.)\n- FAHRZEUG zu MIETVERTRAG: 1 : n (Chen) bzw. FAHRZEUG (0,n) und MIETVERTRAG (1,1) (Min-Max). Ein Fahrzeug kann 0 bis viele Verträge haben; ein Vertrag bezieht sich auf genau 1 Fahrzeug. (2 Pkt.)\nb) Begründung:\nEine direkte n:m-Beziehung KUNDE - FAHRZEUG könnte keine historischen Buchungsdaten (Mietzeitraum von/bis, Kilometerstand, Rechnungsbetrag) speichern, ohne Attribute an der Beziehung zu verdoppeln. Die Entität MIETVERTRAG fungiert als zentrale Geschäftseinheit und löst die n:m-Beziehung sauber in zwei 1:n-Beziehungen auf. (4 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_erm_002",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "Datenbank-Normalisierung 1NF bis 3NF",
+    "scenario": "Gegeben ist folgende nicht-normalisierte Tabelle 'tbl_projekte':\n[ProjektID, Projektname, MitarbeiterListe ('Müller, Schmidt, Meier'), Abteilung, Abteilungsleiter, Stundensatz].",
+    "question": "Erläutern Sie die Anforderungen der 1., 2. und 3. Normalform anhand dieses Beispiels und führen Sie die erforderlichen Zerlegungsschritte durch.",
+    "points": 10,
+    "solution": "1. Normalform (1NF):\n- Anforderung: Alle Attribute müssen atomar sein (keine Wiederholungsgruppen oder kommagetrennten Listen) und ein Primärschlüssel muss existieren. (2 Pkt.)\n- Schritt: 'MitarbeiterListe' aufspalten in atomare Einzeleinträge oder separate Zuordnungstabelle. (1 Pkt.)\n\n2. Normalform (2NF):\n- Anforderung: Tabelle ist in 1NF und jedes Nichtschlüsselattribut ist voll funktional vom gesamten Primärschlüssel abhängig (relevant bei zusammengesetzten Primärschlüsseln, z. B. ProjektID + MitarbeiterID). (2 Pkt.)\n- Schritt: Mitarbeiterbezogene Attribute (Name, Stundensatz) in separate Tabelle 'tbl_mitarbeiter' auslagern. (1 Pkt.)\n\n3. Normalform (3NF):\n- Anforderung: Tabelle ist in 2NF und kein Nichtschlüsselattribut ist transitiv von einem Primärschlüssel abhängig (keine Abhängigkeiten zwischen Nichtschlüsseln). (2 Pkt.)\n- Schritt: 'Abteilungsleiter' hängt von 'Abteilung' ab, nicht direkt von ProjektID. Daher Auslagerung in 'tbl_abteilung' [AbteilungsID, Abteilungsname, AbteilungsleiterID]. (2 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_erm_003",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "Referentielle Integrität und Fremdschlüssel-Löschweiterleitung",
+    "scenario": "In einem Datenbanksystem existiert eine 1:n-Beziehung zwischen 'tbl_abteilung' (Primärtabelle) und 'tbl_mitarbeiter' (Fremdtabelle über abteilung_id).",
+    "question": "a) Definieren Sie den Begriff 'Referentielle Integrität'.\nb) Vergleichen Sie die beiden Löschregeln 'ON DELETE CASCADE' und 'ON DELETE RESTRICT' und beurteilen Sie deren Auswirkung beim Löschen einer Abteilung, der noch Mitarbeiter zugeordnet sind.",
+    "points": 6,
+    "solution": "a) Referentielle Integrität stellt sicher, dass Fremdschlüsselwerte in einer Detailtabelle immer auf einen tatsächlich existierenden Primärschlüssel in der Mastertabelle verweisen (Verhinderung von Waisen-Datensätzen). (2 Pkt.)\nb) Vergleich der Löschregeln:\n- ON DELETE CASCADE: Das Löschen der Abteilung führt zum automatischen Mitlöschen aller in dieser Abteilung beschäftigten Mitarbeiter. Gefahr von irreversiblem Datenverlust! (2 Pkt.)\n- ON DELETE RESTRICT (oder NO ACTION): Die Datenbank blockiert das Löschen der Abteilung mit einer Exception, solange noch mindestens ein Mitarbeiter dieser Abteilung zugeordnet ist. Dies schützt vor versehentlichem Löschen. (2 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_erm_004",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "Auflösung n:m Beziehung (Junction Table)",
+    "scenario": "In einer Schuldatenbank belegen viele Schüler (tbl_schueler) viele verschiedene Wahlkurse (tbl_kurs).",
+    "question": "Beschreiben Sie den Standardansatz zur relationalen Implementierung dieser n:m-Beziehung. Geben Sie die Struktur der erforderlichen Zwischentabelle einschließlich Primär- und Fremdschlüsseln sowie eventueller Zusatzattribute an.",
+    "points": 6,
+    "solution": "1. Erstellung einer Verbindungstabelle / Junction Table (z. B. 'tbl_schueler_belegt_kurs'). (2 Pkt.)\n2. Struktur der Zwischentabelle:\n- Fremdschlüssel 1: schueler_id (verweist auf tbl_schueler.id) (1 Pkt.)\n- Fremdschlüssel 2: kurs_id (verweist auf tbl_kurs.id) (1 Pkt.)\n- Zusammengesetzter Primärschlüssel aus (schueler_id, kurs_id), um Mehrfachbelegungen des gleichen Kurses durch denselben Schüler zu verhindern. (1 Pkt.)\n- Mögliche relationale Zusatzattribute: z. B. belegungsdatum, endnote, fehlstunden. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_sg_001",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "DIN 66261 Struktogramm: Schleifentypen im Vergleich",
+    "scenario": "Ein Fachinformatiker soll einen Algorithmus zur Benutzereingabe eines sicheren Passworts entwerfen. Das Passwort muss mindestens einmal abgefragt werden und solange wiederholt eingegeben werden, bis es den Richtlinien entspricht.",
+    "question": "a) Unterscheiden Sie die abweisende (kopfgesteuerte) Schleife und die durchlaufende (fußgesteuerte) Schleife hinsichtlich Prüfzeitpunkt der Abbruchbedingung und Mindestanzahl der Durchläufe.\nb) Welcher Schleifentyp ist für die Passwortabfrage nach DIN 66261 zu wählen? Skizzieren oder beschreiben Sie das DIN 66261 Struktogramm-Symbol.",
+    "points": 6,
+    "solution": "a) Vergleich der Schleifentypen:\n- Abweisende Schleife (WHILE / kopfgesteuert): Bedingung wird VOR dem ersten Durchlauf geprüft. Wenn die Bedingung anfangs falsch ist, wird der Schleifenkörper 0-mal durchlaufen (Mindestdurchlauf: 0). (2 Pkt.)\n- Durchlaufende Schleife (DO..WHILE / fußgesteuert): Bedingung wird NACH dem Schleifenkörper am Ende geprüft. Der Schleifenkörper wird mindestens 1-mal durchlaufen (Mindestdurchlauf: 1). (2 Pkt.)\nb) Auswahl & DIN 66261 Darstellung:\n- Zu wählen ist die fußgesteuerte Schleife (DO..WHILE), da der Benutzer das Passwort mindestens einmal eingeben muss, bevor die Validierung greifen kann. (1 Pkt.)\n- Symbol nach DIN 66261: L-förmiger Block; der Schleifenrumpf steht oben, und am unteren Ende über die gesamte Breite verläuft der Bedingungsbalken 'solange passwort_gueltig == False'. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_sg_002",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "DIN 66261 Struktogramm Trace & Variablenverlauf",
+    "scenario": "Gegeben ist folgendes DIN 66261 Struktogramm zur Berechnung:\n1. a = 14; b = 4; ergebnis = 0\n2. Solange b > 0 (kopfgesteuerte Schleife):\n   2.1. IF b % 2 == 1 THEN ergebnis = ergebnis + a\n   2.2. a = a * 2\n   2.3. b = b // 2 (Ganzzahldivision)\n3. Ausgabe ergebnis",
+    "question": "Erstellen Sie eine Trace-Tabelle (Schreibtischtest) für alle Schleifendurchläufe mit den Werten von a, b und ergebnis und geben Sie den finalen Ausgabewert an. Welcher mathematische Algorithmus wird hier ausgeführt?",
+    "points": 8,
+    "solution": "Trace-Tabelle:\n- Initialisierung: a = 14, b = 4, ergebnis = 0. Bedingung (b > 0) ist WAHR. (1 Pkt.)\n- Durchlauf 1: b=4 (4 % 2 == 0 -> IF nein). a = 28, b = 4 // 2 = 2, ergebnis = 0. Bedingung (2 > 0) ist WAHR. (2 Pkt.)\n- Durchlauf 2: b=2 (2 % 2 == 0 -> IF nein). a = 56, b = 2 // 2 = 1, ergebnis = 0. Bedingung (1 > 0) ist WAHR. (2 Pkt.)\n- Durchlauf 3: b=1 (1 % 2 == 1 -> IF ja). ergebnis = 0 + 56 = 56. a = 112, b = 1 // 2 = 0. Bedingung (0 > 0) ist FALSCH. Schleifenabbruch. (2 Pkt.)\n\nFinaler Ausgabewert: 56. (1 Pkt.)\nMathematischer Algorithmus: Russische Bauernmultiplikation (Ägyptische Multiplikation) zur Berechnung von 14 * 4 = 56 durch Verdoppeln und Halbieren.",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_sg_003",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "DIN 66261 Mehrfachauswahl (CASE / SWITCH) vs. verschachteltes IF",
+    "scenario": "In einem IT-Versandhandel richten sich die Versandkosten nach dem Zielland: DE = 4.90 EUR, AT/CH = 9.90 EUR, EU = 14.90 EUR, Sonstige = 29.90 EUR.",
+    "question": "a) Erläutern Sie, warum ein DIN 66261 Fallauswahl-Block (CASE/SWITCH) gegenüber tief verschachtelten IF-THEN-ELSE-Strukturen zu bevorzugen ist.\nb) Beschreiben Sie die DIN 66261 Struktur für diese Fallunterscheidung.",
+    "points": 6,
+    "solution": "a) Begründung:\nEine Fallauswahl (CASE) vermeidet die unübersichtliche diagonale Kaskadierung von eingerückten IF-ELSE-Blöcken ('Treppeneffekt'). Sie verbessert die Lesbarkeit, Wartbarkeit und lässt sich im Quelltext oft effizienter als Sprungtabelle (Jump Table) kompilieren. (3 Pkt.)\nb) DIN 66261 Struktur:\n- Kopfblock: Dreieck über die gesamte Breite mit dem Selektorausdruck 'land_code'. (1 Pkt.)\n- Spaltenaufteilung darunter: 4 getrennte Spalten für die Werte ['DE'], ['AT', 'CH'], ['EU'] und eine Restspalte ['Sonstige' / Default]. (1 Pkt.)\n- In jeder Spalte steht die jeweilige Zuweisung der Versandkosten. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap2_uml_001",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "UML Klassendiagramm: Sichtbarkeiten und Notationsstandard",
+    "scenario": "Ein Softwaredesign-Dokument enthält folgende Methodendefinition in einer UML-Klasse:\n# berechneBonus(in umsatz: double, out steuer: double): double",
+    "question": "a) Entschlüsseln Sie alle Bestandteile dieser UML-Signatur (Sichtbarkeit, Parameterrichtung, Parametertypen und Rückgabewert).\nb) Nennen Sie alle vier UML-Sichtbarkeitsmodifikatoren mit ihrem Symbol und ihrer Bedeutung in der objektorientierten Programmierung (OOP).",
+    "points": 8,
+    "solution": "a) Entschlüsselung der Signatur:\n- '#' = Sichtbarkeit 'protected' (nur in dieser Klasse und abgeleiteten Unterklassen sichtbar). (1 Pkt.)\n- 'berechneBonus' = Name der Operation/Methode. (1 Pkt.)\n- 'in umsatz: double' = Eingabeparameter namens umsatz vom Datentyp double (Pass-by-value). (1 Pkt.)\n- 'out steuer: double' = Ausgabeparameter zur Rückgabe eines zusätzlichen Werts. (1 Pkt.)\n- ': double' am Ende = Typ des Rückgabewerts der Methode. (1 Pkt.)\nb) Die 4 UML-Sichtbarkeiten:\n1. '+' = public (öffentlich: für alle Klassen uneingeschränkt sichtbar). (1 Pkt.)\n2. '-' = private (privat: nur innerhalb der deklarierenden Klasse sichtbar). (1 Pkt.)\n3. '#' = protected (geschützt: nur in der deklarierenden Klasse und ihren Spezialisierungen/Subklassen sichtbar). (0.5 Pkt.)\n4. '~' = package (Paket: sichtbar für alle Klassen im selben Namespace/Package). (0.5 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap2_uml_002",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "UML Assoziation vs. Aggregation vs. Komposition",
+    "scenario": "In einem ERP-System werden Beziehungen zwischen folgenden Konzepten modelliert:\n1. Auto und Motor\n2. Universität und Student\n3. Dokument und Paragraph",
+    "question": "a) Unterscheiden Sie die UML-Beziehungstypen 'einfache Assoziation', 'Aggregation' (shared aggregation) und 'Komposition' (composite aggregation) hinsichtlich der Lebenszeitabhängigkeit (Existenzenzkopplung).\nb) Ordnen Sie die drei Beispiele den passenden Beziehungstypen zu und geben Sie jeweils das grafische UML-Symbol am Ende der Beziehungslinie an.",
+    "points": 9,
+    "solution": "a) Begriffsabgrenzung:\n- Einfache Assoziation: Lose Beziehung zwischen zwei eigenständigen Klassen; keine Teil-Ganzes-Hierarchie; Lebenszyklen sind vollkommen unabhängig. (1.5 Pkt.)\n- Aggregation: 'Teil-von'-Beziehung, bei der das Teilobjekt auch ohne das Ganzes-Objekt eigenständig weiterexistieren kann (schwache Bindung). (1.5 Pkt.)\n- Komposition: Strenge 'Besteht-aus'-Beziehung mit existenzieller Abhängigkeit: Wird das Ganzes-Objekt gelöscht, werden alle seine Teilobjekte zwingend mitvernichtet. Ein Teil kann zu jedem Zeitpunkt höchstens zu einem Ganzen gehören. (2 Pkt.)\nb) Zuordnung und Symbole:\n1. Universität und Student: Aggregation. Der Student existiert auch ohne die Universität weiter. Symbol: Offene, weiße Raute an der Seite der Universität. (1.5 Pkt.)\n2. Dokument und Paragraph: Komposition. Ein Paragraph existiert nicht ohne das zugehörige Dokument. Symbol: Ausgefüllte, schwarze Raute an der Seite des Dokuments. (1.5 Pkt.)\n3. Auto und Motor: Je nach Geschäftsdomäne Komposition oder Aggregation (wenn Motoren im Lager autark gewartet und getauscht werden -> Aggregation). In der Prüfung wird meist Komposition (schwarze Raute) oder Aggregation (weiße Raute) bei Begründung voll gewertet. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap2_uml_003",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "UML Interfaces vs. Abstrakte Klassen",
+    "scenario": "In einer Banking-Software soll ein flexibles Zahlungssystem entwickelt werden, das Kreditkarte, SEPA-Lastschrift und PayPal unterstützt.",
+    "question": "a) Vergleichen Sie eine abstrakte Klasse und ein Interface in UML 2.5 hinsichtlich Vererbung, Methoden-Implementierung und Instanziierbarkeit.\nb) Skizzieren oder beschreiben Sie die beiden unterschiedlichen Pfeilarten in UML für die 'Generalisierung' (extends) und die 'Realisierung' (implements).",
+    "points": 7,
+    "solution": "a) Vergleich:\n- Abstrakte Klasse: Kann sowohl abstrakte Methoden (ohne Rumpf) als auch vollständig ausprogrammierte Methoden und Instanzvariablen/Zustände enthalten. Eine Klasse kann in den meisten Programmiersprachen nur von maximal einer (abstrakten) Basisklasse erben (Einfachvererbung). Kann nicht direkt instanziiert werden. (2.5 Pkt.)\n- Interface (Schnittstelle): Definiert reine Funktionssignaturen / Verträge (in modernen Sprachen auch Default-Methods). Klassen können beliebig viele Interfaces implementieren (Mehrfachvererbung von Typen). Besitzt keinen eigenen Objektzustand. (2.5 Pkt.)\nb) Pfeilarten in UML:\n- Generalisierung (extends / Vererbung): Durchgezogene Linie mit einer geschlossenen, nicht ausgefüllten (weißen) Pfeilspitze (Dreieck) in Richtung der Basisklasse. (1 Pkt.)\n- Realisierung (implements / Schnittstelle): Gestrichelte Linie mit einer geschlossenen, nicht ausgefüllten (weißen) Pfeilspitze (Dreieck) in Richtung des Interfaces. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap2_uml_004",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "UML Sequenzdiagramm: Synchrone vs Asynchrone Aufrufe & Fragmente",
+    "scenario": "In einer Microservices-Architektur kommunizieren ein Frontend-Client, ein Bestellservice und ein externer Zahlungsanbieter über ein Sequenzdiagramm.",
+    "question": "a) Unterscheiden Sie synchrone Aufrufe, asynchrone Aufrufe und Rückgabenachrichten (Return Messages) anhand ihrer graphischen Pfeildarstellung im UML-Sequenzdiagramm.\nb) Erläutern Sie die Bedeutung des kombinierten Fragments 'alt' und grenzen Sie es gegen 'opt' und 'loop' ab.",
+    "points": 8,
+    "solution": "a) Pfeilarten im Sequenzdiagramm:\n- Synchroner Aufruf: Durchgezogene Linie mit ausgefüllter schwarzer Dreieckspfeilspitze ('->>'). Der Sender blockiert und wartet auf die Antwort. (2 Pkt.)\n- Asynchroner Aufruf: Durchgezogene Linie mit offener Pfeilspitze ('->'). Der Sender sendet das Event/Message und arbeitet sofort weiter, ohne auf die Ausführung zu warten. (2 Pkt.)\n- Antwortnachricht (Return): Gestrichelte Linie mit offener Pfeilspitze ('-->>'). Gibt das Berechnungsergebnis an den Aufrufer zurück. (1 Pkt.)\nb) Kombinierte Fragmente (Interaction Frames):\n- 'alt' (Alternative): Entspricht einem IF-ELSE Block. Es existieren zwei oder mehr Operandenbereiche, getrennt durch eine gestrichelte Linie. Genau der Zweig wird ausgeführt, dessen Guard-Bedingung wahr ist. (1 Pkt.)\n- 'opt' (Option): Entspricht einem einfachen IF ohne ELSE. Der Block wird nur ausgeführt, wenn die Bedingung zutrifft, andernfalls übersprungen. (1 Pkt.)\n- 'loop' (Schleife): Der Inhalt wird so lange wiederholt, wie die Schleifenbedingung (Guard) wahr ist bzw. die definierte Durchlaufanzahl (min..max) nicht erreicht ist. (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap2_uml_005",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "UML Anwendungsfalldiagramm: <<include>> vs <<extend>>",
+    "scenario": "Für ein Geldautomatensystem (ATM) werden die Use Cases 'Geld abheben', 'PIN prüfen' und 'Kontoauszug drucken' entworfen.",
+    "question": "a) Unterscheiden Sie die beiden Beziehungstypen '<<include>>' und '<<extend>>' zwischen Anwendungsfällen hinsichtlich Verpflichtung und Richtung des Pfeils.\nb) Ordnen Sie die Beziehung zwischen 'Geld abheben' und 'PIN prüfen' sowie zwischen 'Geld abheben' und 'Kontoauszug drucken' zu.",
+    "points": 7,
+    "solution": "a) Definition & Pfeilrichtung:\n- <<include>>: Zwingend erforderliche Einbindung. Der Basis-Use-Case kann ohne die Ausführung des inkludierten Use Cases nicht erfolgreich abgeschlossen werden. Der gestrichelte Pfeil zeigt vom Basis-Use-Case HIN zum inkludierten Use Case (Basisfall -> Inklusionsfall). (2.5 Pkt.)\n- <<extend>>: Optionale Erweiterung unter bestimmten Bedingungen (Extension Point). Der Basisfall ist auch ohne die Erweiterung vollständig funktionsfähig. Der gestrichelte Pfeil zeigt von der Erweiterung ZURÜCK zum Basis-Use-Case (Erweiterung -> Basisfall). (2.5 Pkt.)\nb) Zuordnung:\n- 'Geld abheben' -> <<include>> -> 'PIN prüfen': Ohne erfolgreiche PIN-Verifizierung ist keine Bargeldauszahlung möglich (zwingend nötig). (1 Pkt.)\n- 'Kontoauszug drucken' -> <<extend>> -> 'Geld abheben': Der Kunde kann optional nach der Auszahlung einen Beleg anfordern, muss es aber nicht (optionale Erweiterung). (1 Pkt.)",
+    "type": "text",
+    "options": []
+  },
+  {
+    "id": "ap1_mc_erm_001",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "MC-Test: 3. Normalform Kriterium",
+    "scenario": "Eine Datenbanktabelle befindet sich in der 2. Normalform.",
+    "question": "Unter welcher Bedingung ist diese Tabelle auch in der 3. Normalform?",
+    "points": 4,
+    "solution": "B ist korrekt: Ein Nichtschlüsselattribut darf nicht von einem anderen Nichtschlüsselattribut abhängig sein (keine transitiven Abhängigkeiten).",
+    "type": "mc",
+    "options": [
+      "A) Alle Attribute müssen Fremdschlüssel sein.",
+      "B) Kein Nichtschlüsselattribut darf transitiv vom Primärschlüssel abhängen.",
+      "C) Die Tabelle darf maximal 3 Spalten besitzen.",
+      "D) Alle Datensätze müssen in aufsteigender Reihenfolge sortiert sein."
+    ]
+  },
+  {
+    "id": "ap1_mc_sg_001",
+    "exam": "AP1",
+    "lernfeld": "LF 5",
+    "topic": "MC-Test: Kopfgesteuerte Schleife (WHILE)",
+    "scenario": "In einem DIN 66261 Struktogramm ist eine kopfgesteuerte WHILE-Schleife mit der Bedingung (i < 0) modelliert. Die Variable i wurde zuvor mit 5 initialisiert.",
+    "question": "Wie oft wird der Schleifenkörper ausgeführt?",
+    "points": 4,
+    "solution": "A ist korrekt: Da die Bedingung (5 < 0) bereits vor dem ersten Durchlauf FALSCH ist, wird eine abweisende Schleife genau 0-mal ausgeführt.",
+    "type": "mc",
+    "options": [
+      "A) Genau 0-mal (wird abgewiesen).",
+      "B) Genau 1-mal.",
+      "C) Genau 5-mal.",
+      "D) Es entsteht eine Endlosschleife."
+    ]
+  },
+  {
+    "id": "ap2_mc_uml_001",
+    "exam": "AP2",
+    "lernfeld": "LF 9",
+    "topic": "MC-Test: UML Komposition Eigenschaft",
+    "scenario": "Zwischen den Klassen 'Gebäude' und 'Raum' ist eine Komposition definiert.",
+    "question": "Welche Aussage beschreibt das Verhalten einer Komposition in UML korrekt?",
+    "points": 4,
+    "solution": "C ist korrekt: Bei der Komposition existiert eine strenge Lebenszeitabhängigkeit. Wird das Ganze (Gebäude) zerstört, erlöschen auch die Teile (Räume).",
+    "type": "mc",
+    "options": [
+      "A) Ein Raum kann gleichzeitig zu mehreren Gebäuden gehören.",
+      "B) Wenn ein Gebäude abgerissen wird, existieren seine Räume als Objekte eigenständig weiter.",
+      "C) Das Teilobjekt (Raum) ist existenziell an das Ganzes-Objekt (Gebäude) gebunden und wird beim Löschen des Gebäudes mitvernichtet.",
+      "D) Eine Komposition wird in UML immer mit einer weißen, offenen Raute dargestellt."
+    ]
   }
-];
+];\n

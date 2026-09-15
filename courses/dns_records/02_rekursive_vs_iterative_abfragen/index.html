@@ -12,46 +12,113 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🌐 DNS Resolver</div>
-          <h1>DNS 02: Rekursive vs. Iterative Abfragen</h1>
-          <p>Der schrittweise Ablauf einer DNS-Abfrage: Stub-Resolver, Recursive Resolver, Iteration bis zum Auth-Server.</p>
+          <div class="header-badge">🌐 DNS &amp; Infrastruktur</div>
+          <h1>DNS 02: Rekursive vs. Iterative Abfragen &amp; Flags</h1>
+          <p>Verstehe den Unterschied zwischen Client-Rekursion und iterativer Baumrecherche. Beherrsche DNS-Flags und sichere Open Resolver ab.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: REKURSION VS ITERATION -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Der schrittweise Ablauf einer DNS-Abfrage: Stub-Resolver, Recursive Resolver, Iteration bis zum Auth-Server.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig +trace</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig +trace
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🔄 1. Rekursion vs. Iteration im Detail</h2>
+          <p>Clients (PCs, Smartphones) sind reine <em>Stub-Resolver</em>: Sie besitzen keine eigene DNS-Baumlogik, sondern delegieren die Arbeit mit <code>RD=1</code> vollständig an einen vollwertigen Caching-Resolver.</p>
+          
+          <pre><code># Abfrage mit dig anzeigen und Flags auslesen:
+dig +nocmd www.it-praxisportal.de +noall +comments +answer
+
+# Typischer Header im Output:
+# ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 48212
+# ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+#              ^^^^^^^^
+# qr = Antwort, rd = Rekursion angefordert, ra = Rekursion vom Server ausgeführt</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: OPEN RESOLVER RISIKO -->
+        <section class="card">
+          <h2>🛡️ 2. Das Open-Resolver-Sicherheitsrisiko</h2>
+          <p>Wenn ein rekursiver Nameserver öffentlich im Internet steht und Anfragen von beliebigen IP-Adressen (<code>any</code>) beantwortet, wird er binnen kürzester Zeit für <strong>DNS Amplification DDoS</strong> missbraucht:</p>
+
+          <div class="box box-warnung">
+            <div class="box-title">⚠️ BSI-Warnung: Open Resolver schließen!</div>
+            <p>Ein Angreifer sendet ein gefälschtes 60-Byte UDP-Paket mit der Absender-IP seines Opfers an deinen Open Resolver. Die Antwort (z.B. DNSSEC-Schlüssel) ist 3.000 Bytes groß (Verstärkungsfaktor 50x!). Dein Server bombardiert das Opfer mit unangefordertem Traffic.</p>
+          </div>
+
+          <p><strong>Die Lösung in BIND9 (<code>named.conf.options</code>):</strong></p>
+          <pre><code>options {
+    recursion yes;
+    allow-query { 192.168.0.0/16; 10.0.0.0/8; localhost; };  # Nur internes Netz!
+    forwarders { 1.1.1.1; 9.9.9.9; };
+    forward only;
+};</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: DNS-Header-Flags</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Flag</th>
+                  <th style="padding: 10px;">Bezeichnung</th>
+                  <th style="padding: 10px;">Bedeutung in der Praxis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>QR</code></td>
+                  <td style="padding: 10px;">Query / Response</td>
+                  <td style="padding: 10px;">0 = Anfrage eines Clients; 1 = Antwortpaket eines Servers</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>AA</code></td>
+                  <td style="padding: 10px;">Authoritative Answer</td>
+                  <td style="padding: 10px;">1 = Server besitzt die Original-Zone (kein Cache-Zwischenergebnis)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>TC</code></td>
+                  <td style="padding: 10px;">Truncated</td>
+                  <td style="padding: 10px;">1 = Antwort passte nicht in 512B UDP; Client muss per TCP/53 wiederholen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>RD</code></td>
+                  <td style="padding: 10px;">Recursion Desired</td>
+                  <td style="padding: 10px;">1 = Client bittet den Server, die Auflösung komplett zu übernehmen</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>RA</code></td>
+                  <td style="padding: 10px;">Recursion Available</td>
+                  <td style="padding: 10px;">1 = Server beherrscht Rekursion und bietet diesen Dienst aktiv an</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
+        <!-- 4. AUFGABEN CHECKLISTE -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> Flags RD (Recursion Desired) und RA (Recursion Available) prüfen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>parse_dns_flags(flags)</code>: Analyse von QR, AA, TC, RD, RA umsetzen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Iterative Namensauflösung schrittweise simulieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>simulate_iterative_steps(domain)</code>: Die 4 Phasen der Iteration protokollieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Resolver-Cache und TTL-Abzug nachvollziehen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>detect_open_resolver(flags, network)</code>: Schwachstellenanalyse für offene Rekursion.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> DNS-Forwarder für Unternehmensnetze konfigurieren</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>generate_forwarder_config(...)</code>: Sichere BIND-Options-Konfiguration schreiben.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=02_rekursive_vs_iterative_abfragen" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../03_ports_udp_tcp_und_dns_paketaufbau/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=02_rekursive_vs_iterative_abfragen" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../03_ports_udp_tcp_und_dns_paketaufbau/index.html" class="btn btn-secondary">Weiter zu Modul 03 &rarr;</a>
           </div>
         </section>
       </main>

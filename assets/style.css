@@ -162,7 +162,7 @@ a:hover {
 
 .sidebar-subtitle {
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -197,7 +197,7 @@ a:hover {
 .sidebar-group-title {
   font-size: 0.74rem;
   font-weight: 800;
-  color: #94a3b8;
+  color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   padding: 4px 8px;
@@ -595,7 +595,7 @@ pre code {
 .fn { color: #60a5fa; }
 .str { color: #a7f3d0; }
 .num { color: #fbbf24; }
-.cm { color: #64748b; font-style: italic; }
+.cm { color: #94a3b8; font-style: italic; }
 .var { color: #cbd5e1; }
 .attr { color: #38bdf8; }
 
@@ -1138,7 +1138,7 @@ textarea:focus {
   text-transform: uppercase;
   letter-spacing: 0.6px;
   background: #1e293b;
-  color: #94a3b8;
+  color: #cbd5e1;
   border: 1px solid #334155;
   padding: 2px 7px;
   border-radius: 4px;
@@ -1158,7 +1158,7 @@ textarea:focus {
 }
 
 .portal-nav-link {
-  color: #94a3b8;
+  color: #cbd5e1;
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 500;
@@ -1217,7 +1217,7 @@ textarea:focus {
 .portal-hero p {
   font-size: 0.98rem;
   line-height: 1.6;
-  color: #94a3b8;
+  color: #cbd5e1;
   max-width: 720px;
   margin: 0;
 }
@@ -1301,7 +1301,7 @@ textarea:focus {
 .portal-stat-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 2px;
@@ -1309,7 +1309,7 @@ textarea:focus {
 
 .portal-stat-desc {
   font-size: 0.76rem;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 /* Filter Bar */
@@ -2132,8 +2132,8 @@ body.has-course-sidebar {
   font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: #64748b;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
   padding: 12px 10px 4px 10px;
 }
 
@@ -2143,7 +2143,7 @@ body.has-course-sidebar {
   gap: 10px;
   padding: 8px 10px;
   border-radius: 6px;
-  color: #94a3b8;
+  color: #cbd5e1;
   text-decoration: none;
   font-size: 0.82rem;
   font-weight: 600;

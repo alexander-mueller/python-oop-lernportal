@@ -1,0 +1,472 @@
+/* 🎨 DIAGRAM STUDIO (ER, STRUKTOGRAMM, UML) STYLES */
+
+.ds-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.ds-tab-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 12px;
+}
+
+.ds-tab-btn {
+  background: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.ds-tab-btn:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.ds-tab-btn.active {
+  background: #1d4ed8;
+  color: #ffffff;
+  border-color: #38bdf8;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.ds-editor-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.ds-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 10px 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ds-toolbar-left, .ds-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ds-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.ds-btn-primary { background: #0284c7; color: #ffffff; }
+.ds-btn-primary:hover { background: #0369a1; }
+
+.ds-btn-secondary { background: #334155; color: #f8fafc; border: 1px solid #475569; }
+.ds-btn-secondary:hover { background: #475569; }
+
+.ds-btn-success { background: #059669; color: #ffffff; }
+.ds-btn-success:hover { background: #047857; }
+
+.ds-btn-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.ds-btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
+
+.ds-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.ds-select {
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #f8fafc;
+  padding: 5px 8px;
+  font-size: 0.82rem;
+  outline: none;
+}
+
+.ds-select:focus {
+  border-color: #38bdf8;
+}
+
+.ds-input, .ds-textarea {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f8fafc;
+  padding: 8px 10px;
+  font-size: 0.86rem;
+  box-sizing: border-box;
+}
+
+.ds-input:focus, .ds-textarea:focus {
+  border-color: #38bdf8;
+  outline: none;
+}
+
+.ds-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  height: 640px;
+  overflow: hidden;
+}
+
+.ds-canvas-wrap {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  background: #090d16;
+  border-right: 1px solid #1e293b;
+}
+
+.ds-sidebar {
+  background: #0f172a;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.ds-sidebar-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e293b;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ds-sidebar-header h4 {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #38bdf8;
+}
+
+.ds-sidebar-body {
+  padding: 16px;
+  flex: 1;
+}
+
+.ds-hint {
+  font-size: 0.84rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ds-field-group {
+  margin-bottom: 14px;
+}
+
+.ds-field-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 4px;
+}
+
+.ds-attr-card {
+  background: #090d16;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.ds-icon-btn {
+  background: transparent;
+  border: none;
+  color: #f87171;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.ds-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ds-modal-content {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  max-width: 760px;
+  width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  color: #f8fafc;
+  padding: 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.ds-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.ds-modal-header h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  color: #38bdf8;
+}
+
+.ds-modal-close {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.ds-code-block {
+  background: #060911;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-y: auto;
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #f1f5f9;
+  border: 1px solid #1e293b;
+  margin: 0;
+}
+
+.ds-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* ==========================================================================
+   📐 STRUKTOGRAMM (DIN 66261) CSS
+   ========================================================================== */
+
+.sg-render-wrapper {
+  padding: 28px;
+  display: flex;
+  justify-content: center;
+  min-width: 600px;
+}
+
+.sg-container {
+  width: 100%;
+  max-width: 720px;
+  background: #090d16;
+  border: 2px solid #38bdf8;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.sg-header-title {
+  background: #1e293b;
+  color: #cbd5e1;
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 12px;
+  border-bottom: 2px solid #38bdf8;
+}
+
+.sg-root-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.sg-block {
+  cursor: pointer;
+  transition: background 0.12s ease;
+  position: relative;
+}
+
+.sg-block.sg-selected {
+  outline: 2px solid #fbbf24;
+  z-index: 10;
+}
+
+.sg-instruction {
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 10px 14px;
+}
+
+.sg-instruction:hover {
+  background: #253349;
+}
+
+.sg-text {
+  font-family: monospace;
+  font-size: 0.88rem;
+  color: #f8fafc;
+  line-height: 1.4;
+}
+
+.sg-if {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #334155;
+  background: #1e293b;
+}
+
+.sg-if-header {
+  position: relative;
+  height: 48px;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+}
+
+.sg-if-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sg-if-condition {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #38bdf8;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sg-if-label-left {
+  position: absolute;
+  bottom: 4px;
+  left: 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #4ade80;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+.sg-if-label-right {
+  position: absolute;
+  bottom: 4px;
+  right: 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #f87171;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+.sg-if-branches {
+  display: flex;
+  width: 100%;
+}
+
+.sg-if-then {
+  flex: 1;
+  border-right: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+}
+
+.sg-if-else {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sg-while, .sg-for {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #334155;
+  background: #1e293b;
+}
+
+.sg-while-header, .sg-for-header {
+  background: #0f172a;
+  padding: 8px 14px;
+  border-bottom: 1px solid #334155;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+.sg-badge-loop {
+  color: #fbbf24;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.sg-while-body-wrap {
+  display: flex;
+  width: 100%;
+}
+
+.sg-while-gutter {
+  width: 28px;
+  background: #0f172a;
+  border-right: 1px solid #334155;
+  flex-shrink: 0;
+}
+
+.sg-while-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sg-empty-block {
+  padding: 8px;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-align: center;
+  font-style: italic;
+}

@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 06: CNAME Alias & das Apex-Problem</title>
+  <title>DNS 06: CNAME &amp; Zone-Apex Problem</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,102 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">⚡ CNAME & Aliase</div>
-          <h1>DNS 06: CNAME Alias & das Apex-Problem</h1>
-          <p>Kanonische Namen (CNAME), Zeiger auf Hostnames, Alias-Kollisionen und das Apex-/Root-Domain-Verbot (RFC 1912).</p>
+          <div class="header-badge">⚡ Resource Records</div>
+          <h1>DNS 06: CNAME Alias &amp; das Zone-Apex Problem</h1>
+          <p>Verstehe die strikte RFC-Koexistenzregel für CNAMEs, warum CNAME auf der Root-Domain (@) verboten ist und wie ALIAS-Records das Problem lösen.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: CNAME GRUNDLAGEN -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Kanonische Namen (CNAME), Zeiger auf Hostnames, Alias-Kollisionen und das Apex-/Root-Domain-Verbot (RFC 1912).</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig CNAME</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig CNAME
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🔗 1. Wie ein CNAME funktioniert</h2>
+          <p>Ein <code>CNAME</code> (Canonical Name) ist ein reiner Verweiszeiger. Er enthält selbst keine IP-Adresse, sondern leitet den Resolver an ein anderes Ziel weiter:</p>
+
+          <pre><code># BIND Zonendatei:
+shop      IN  CNAME  stores.shopify.com.     # shop.firma.de -> stores.shopify.com
+webmail   IN  CNAME  mail.google.com.        # webmail.firma.de -> mail.google.com</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DAS ZONE-APEX PROBLEM -->
+        <section class="card">
+          <h2>💥 2. Das Zone-Apex Problem &amp; RFC 1912</h2>
+          <div class="box box-warnung">
+            <div class="box-title">⚠️ Die eiserne Regel: Keine Koexistenz für CNAMEs</div>
+            <p>Ein CNAME darf <strong>niemals</strong> mit anderen Record-Typen auf demselben Node koexistieren! Da auf der Hauptdomain <code>@</code> aber zwingend SOA und NS liegen müssen, ist ein CNAME auf <code>@</code> standardwidrig und zerstört die Namensauflösung der gesamten Zone.</p>
+          </div>
+
+          <pre><code>; ❌ SCHWERER FEHLER (Zonendatei lädt nicht in BIND):
+@         IN  SOA    ns1.firma.de. admin.firma.de. (...)
+@         IN  NS     ns1.firma.de.
+@         IN  CNAME  d12345.cloudfront.net.  ; KOLLISION MIT SOA/NS!
+
+; ✅ KORREKTE PRAXIS:
+@         IN  A      192.0.2.1               ; Feste IP am Apex
+www       IN  CNAME  d12345.cloudfront.net.  ; CNAME auf Subdomain www</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: CNAME Dos &amp; Don'ts</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Regel</th>
+                  <th style="padding: 10px;">Status</th>
+                  <th style="padding: 10px;">Erklärung &amp; RFC-Grund</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>blog IN CNAME ...</code></td>
+                  <td style="padding: 10px; color: #166534; font-weight: 700;">ERLAUBT</td>
+                  <td style="padding: 10px;">Reine Subdomain ohne andere Records</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>@ IN CNAME ...</code></td>
+                  <td style="padding: 10px; color: #991b1b; font-weight: 700;">VERBOTEN</td>
+                  <td style="padding: 10px;">Zone-Apex kollidiert mit SOA und NS Records (RFC 1912)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>sub IN CNAME</code> + <code>sub IN TXT</code></td>
+                  <td style="padding: 10px; color: #991b1b; font-weight: 700;">VERBOTEN</td>
+                  <td style="padding: 10px;">Keine Koexistenz von CNAME mit anderen Daten</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Ziel ohne Schlusspunkt <code>.</code></td>
+                  <td style="padding: 10px; color: #92400e; font-weight: 700;">GEFÄHRLICH</td>
+                  <td style="padding: 10px;">BIND hängt Zonennamen an: <code>target.com.firma.de.</code></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
+        <!-- 4. AUFGABEN CHECKLISTE -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> CNAME-Record für Subdomain (api.domain.de -> elb.aws.com) erstellen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>format_cname_record(...)</code>: CNAME mit Punkt-Garantie erzeugen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> RFC-Kollision prüfen (CNAME darf nicht mit anderen Records koexistieren)</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>validate_apex_cname_rule(...)</code>: Zone-Apex Kollision blockieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Apex/Root-Domain Problem (example.de vs. MX/SOA) verstehen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>detect_cname_collisions(...)</code>: Koexistenz-Konflikte in Zonendatei aufspüren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Moderne ALIAS / ANAME Provider-Lösungen analysieren</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>trace_cname_chain(...)</code>: Alias-Ketten verfolgen und Schleifen abfangen.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_2_core_records&chapter=06_cname_canonical_name_und_alias_regeln" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../07_soa_start_of_authority_und_serial/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_2_core_records&chapter=06_cname_canonical_name_und_alias_regeln" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../07_soa_start_of_authority_und_serial/index.html" class="btn btn-secondary">Weiter zu Modul 07 &rarr;</a>
           </div>
         </section>
       </main>

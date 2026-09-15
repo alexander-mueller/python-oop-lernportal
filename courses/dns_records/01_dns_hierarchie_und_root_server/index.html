@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 01: DNS-Hierarchie & Root-Server</title>
+  <title>DNS 01: DNS-Hierarchie &amp; Root-Server</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,121 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🌐 DNS Grundlagen</div>
-          <h1>DNS 01: DNS-Hierarchie & Root-Server</h1>
-          <p>Verstehe den globalen DNS-Baum: Root-Zone (.), TLDs (gTLD/ccTLD), SLDs, FQDNs und autoritative vs. rekursive Nameserver.</p>
+          <div class="header-badge">🌐 DNS &amp; Infrastruktur</div>
+          <h1>DNS 01: DNS-Hierarchie, FQDN &amp; Root-Server</h1>
+          <p>Verstehe den globalen DNS-Baum: Root-Zone (.), Top-Level Domains (TLD), Second-Level Domains (SLD) und Anycast Root-Cluster.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: DER DNS-BAUM -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Verstehe den globalen DNS-Baum: Root-Zone (.), TLDs (gTLD/ccTLD), SLDs, FQDNs und autoritative vs. rekursive Nameserver.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🌳 1. Die DNS-Baumstruktur (Inverted Tree)</h2>
+          <p>Das Domain Name System ist hierarchisch aufgebaut. An der Spitze steht nicht wie bei Dateipfaden ein Schrägstrich <code>/</code>, sondern der unscheinbare, aber essentielle Wurzelpunkt <code>.</code> (Root-Zone).</p>
+          
+          <pre><code>                    . (Root Zone)
+                   /          \
+                 de.          com. (Top-Level Domains)
+                 /              \
+      it-praxisportal.de.     beispiel.com. (Second-Level Domains)
+             /
+          intern. (Subdomain)
+           /
+        srv01. (Hostname / Leaf Node)</code></pre>
+
+          <div class="box box-analogie">
+            <div class="box-title">🏢 Analogie: Das weltweite Postleitzahlen- &amp; Adresssystem</div>
+            <p>Ein FQDN liest sich im DNS von <strong>rechts nach links</strong> wie eine internationale Postadresse von unten nach oben: Zuerst das Land (<code>.de</code>), dann die Stadt/Organisation (<code>it-praxisportal</code>), dann die Abteilung (<code>intern</code>) und schließlich das konkrete Zimmer oder der Arbeitsplatzrechner (<code>srv01</code>)!</p>
           </div>
         </section>
 
+        <!-- 2. THEORIE: FQDN & SCHLUSSPUNKT -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📍 2. Der Fully Qualified Domain Name (FQDN)</h2>
+          <p>Ein FQDN spezifiziert den vollständigen Pfad im DNS-Baum. In BIND-Zonendateien entscheidet der Schlusspunkt darüber, ob ein Eintrag absolut oder relativ interpretiert wird:</p>
+
+          <pre><code># Absoluter FQDN (mit Schlusspunkt):
+mail.firma.de.    IN  A   192.0.2.10   # Ziel ist exakt mail.firma.de
+
+# Relativer Hostname (ohne Schlusspunkt):
+mail              IN  A   192.0.2.10   # BIND hängt $ORIGIN (firma.de.) automatisch an!
+
+# ⚠️ HÄUFIGE FEHLERQUELLE IN DER PRAXIS:
+app.firma.de      IN  CNAME server01.cloud.de  # OHNE Schlusspunkt!
+# BIND macht daraus: server01.cloud.de.firma.de. -> RESOLUTION FAILURE!</code></pre>
+        </section>
+
+        <!-- 3. CHEAT-SHEET -->
+        <section class="card">
+          <h2>📑 3. Cheat-Sheet: DNS-Ebenen &amp; RFC 1035 Limits</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Ebene / Parameter</th>
+                  <th style="padding: 10px;">Beispiel</th>
+                  <th style="padding: 10px;">RFC-Regeln &amp; Grenzwerte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Root Zone</strong></td>
+                  <td style="padding: 10px;"><code>.</code></td>
+                  <td style="padding: 10px;">Verwaltet durch IANA / ICANN; 13 Anycast-Cluster (A-M)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>TLD (Top-Level)</strong></td>
+                  <td style="padding: 10px;"><code>.de</code>, <code>.com</code></td>
+                  <td style="padding: 10px;">ccTLD (Länder) oder gTLD (generisch); eigene Registry (z.B. DENIC)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>SLD (Second-Level)</strong></td>
+                  <td style="padding: 10px;"><code>it-praxisportal</code></td>
+                  <td style="padding: 10px;">Registrierbarer Name; verweist auf autoritative Nameserver</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><strong>Label-Länge</strong></td>
+                  <td style="padding: 10px;"><code>mein-server-01</code></td>
+                  <td style="padding: 10px;">Maximal <strong>63 Oktette (Zeichen)</strong> pro Label zwischen Punkten</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><strong>FQDN Gesamtlänge</strong></td>
+                  <td style="padding: 10px;"><code>host.sub.firma.de.</code></td>
+                  <td style="padding: 10px;">Maximal <strong>253 Zeichen</strong> netto (255 Oktette binär inkl. Längenbytes)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> FQDN in Hostname, SLD und TLD zerlegen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>parse_fqdn(fqdn)</code>: Host, Domain, SLD, TLD und Root-Dot-Prüfung implementieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Root-Server-Cluster (A-M) und Anycast-Routing erklären</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>list_root_server(cluster)</code>: Root-Cluster A bis M mit Betreiberorganisationen ausgeben.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Unterschied autoritativer vs. rekursiver Nameserver definieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>build_delegation_path(domain)</code>: Den hierarchischen Delegationspfad formatieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> DNS-Baumpfad für www.it-praxisportal.de konstruieren</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>validate_fqdn_syntax(fqdn)</code>: RFC 1035 Regeln (Länge, Bindestriche, Zeichensatz) prüfen.</label>
+          </div>
+
+          <div class="box box-tipp" style="margin-top: 20px;">
+            <div class="box-title">💡 IHK Prüfungstipp: Warum genau 13 Root-Server-Namen?</div>
+            <p>Historisch passte in ein unfragmentiertes 512-Byte UDP-DNS-Antwortpaket (RFC 1035) bei einer Abfrage nach der Root-Zone exakt die Delegation für 13 Nameserver samt ihrer IPv4-Glue-Records! Erst mit <strong>EDNS0</strong> wurde dieser Puffer erweitert.</p>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=01_dns_hierarchie_und_root_server" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../02_rekursive_vs_iterative_abfragen/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=01_dns_hierarchie_und_root_server" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../02_rekursive_vs_iterative_abfragen/index.html" class="btn btn-secondary">Weiter zu Modul 02 &rarr;</a>
           </div>
         </section>
       </main>

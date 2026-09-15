@@ -1,63 +1,43 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 15: DNS-Troubleshooting mit dig & nslookup</title>
+  <title>Modul 15: DNS-Troubleshooting mit dig &amp; nslookup</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
-  <div class="app-layout">
-    <div class="app-main">
-      <header>
-        <div class="header-container">
-          <div class="header-badge">🚀 Diagnose & Analyse</div>
-          <h1>DNS 15: DNS-Troubleshooting mit dig & nslookup</h1>
-          <p>Netzwerkdiagnose im Terminal: dig +trace, +short, Reverse Lookups, Statuscodes (NOERROR, NXDOMAIN, SERVFAIL) & AXFR Leak-Testing.</p>
-        </div>
-      </header>
-
-      <main class="container">
-        <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Netzwerkdiagnose im Terminal: dig +trace, +short, Reverse Lookups, Statuscodes (NOERROR, NXDOMAIN, SERVFAIL) & AXFR Leak-Testing.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
-          <div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> Rückgabecodes (NOERROR, NXDOMAIN, SERVFAIL, REFUSED) unterscheiden</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Gezielte Abfrage an spezifischen DNS-Server (dig @1.1.1.1)</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Offenen Zonentransfer (AXFR) als Sicherheitslücke testen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Automatisches Diagnose-Skript für Domain-Health schreiben</label>
-          </div>
-
-          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_4_advanced_dns&chapter=15_dns_troubleshooting_mit_dig_und_nslookup" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../16_master_abschlussprojekt_dns_zone_auditor/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
-          </div>
-        </section>
-      </main>
+  <header>
+    <div class="header-container">
+      <div class="header-badge">Lehrpfad 4: Erweiterte Records, DNSSEC &amp; Troubleshooting</div>
+      <h1>Modul 15: DNS-Troubleshooting mit dig &amp; nslookup</h1>
+      <p>Systematische Fehlersuche im Terminal: RCODEs analysieren, Caching-Probleme identifizieren und Zonen-Synchronisation prüfen.</p>
+      <div class="nav-links">
+        <a href="../14_caa_und_dnssec_sicherheit/index.html">&larr; Modul 14: CAA &amp; DNSSEC</a>
+        <a href="../../../dashboard.html">Kurs-Dashboard</a>
+        <a href="../16_master_abschlussprojekt_dns_zone_auditor/index.html">Modul 16: Master-Projekt &rarr;</a>
+      </div>
     </div>
-  </div>
-  <script src="../../../assets/courses_manifest.js"></script>
-  <script src="../../../assets/course_sidebar.js"></script>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>1. RCODEs verstehen: Was sagt der Server wirklich?</h2>
+      <p>Wenn ein Ping fehlschlägt, liefert <code>dig</code> die exakte Diagnose. Ob <code>NXDOMAIN</code> oder <code>SERVFAIL</code> macht den Unterschied zwischen einem Tippfehler im Hostnamen und einem kollabierten DNSSEC-Zertifikat.</p>
+    </div>
+
+    <div class="card">
+      <h2>2. 🎯 Deine Teilziele in der Web-IDE</h2>
+      <ul class="task-checklist">
+        <li><strong>Teilziel 1:</strong> <code>diagnose_dns_rcode</code> &ndash; RCODE-Interpretation &amp; Handlungsanweisungen.</li>
+        <li><strong>Teilziel 2:</strong> <code>extract_dig_ips</code> &ndash; Präzise IP-Filterung aus Dig Answer Sections.</li>
+        <li><strong>Teilziel 3:</strong> <code>detect_soa_desync</code> &ndash; Erkennung von Replikationsverzögerungen zwischen Nameservern.</li>
+        <li><strong>Teilziel 4:</strong> <code>verify_axfr_blocked</code> &ndash; Sicherheits-Audit gegen unerlaubten Zonentransfer.</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a href="../../../workspace.html?course=dns_records&chapter=15_dns_troubleshooting_mit_dig_und_nslookup" class="btn">🚀 Aufgabe in der Web-IDE bearbeiten</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

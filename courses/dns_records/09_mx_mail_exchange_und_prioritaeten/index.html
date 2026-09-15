@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 09: MX Records & Mail-Prioritäten</title>
+  <title>DNS 09: MX Records &amp; Mail-Prioritäten</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,92 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🛡️ Mail Routing</div>
-          <h1>DNS 09: MX Records & Mail-Prioritäten</h1>
-          <p>Mail Exchange (MX) Records, Prioritätswerte (10, 20), Backup-Mailserver und Fallback-Routing.</p>
+          <div class="header-badge">🛡️ E-Mail-Sicherheit</div>
+          <h1>DNS 09: MX-Records &amp; Mail-Prioritäten</h1>
+          <p>Lerne, wie der globale Mail-Austausch gesteuert wird: Prioritäts-Routing, Store-and-Forward Redundanz und die RFC-Regel zum CNAME-Verbot.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: MX RECORDAUFBAU -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Mail Exchange (MX) Records, Prioritätswerte (10, 20), Backup-Mailserver und Fallback-Routing.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig MX</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig MX
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>✉️ 1. Der MX-Record: E-Mail-Routing im Internet</h2>
+          <p>Ohne MX-Record würden Mail-Server versuchen, Mails direkt an den A-Record der Domain zu senden. Mit MX trennst du Web-Traffic und E-Mail-Infrastruktur sauber voneinander:</p>
+
+          <pre><code># MX-Records für it-praxisportal.de:
+@   86400   IN   MX   10   mail.it-praxisportal.de.     ; Primärer Mailserver (Prio 10)
+@   86400   IN   MX   20   backup.it-praxisportal.de.   ; Backup-Relay (Prio 20)
+
+; Die zugehörigen A-Records (ZWINGEND erforderlich!):
+mail      IN   A   188.245.100.5
+backup    IN   A   192.0.2.25</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DIE CNAME FALLE -->
+        <section class="card">
+          <h2>⚠️ 2. Die CNAME-Falle bei MX-Zielen</h2>
+          <div class="box box-warnung">
+            <div class="box-title">Häufiger IHK-Prüfungsfehler: MX auf CNAME</div>
+            <p>Ein Administrator trägt ein: <code>@ IN MX 10 mail.firma.de.</code> und legt gleichzeitig an: <code>mail IN CNAME office365.com.</code>. Das verstößt gegen <strong>RFC 2181</strong>! Viele Enterprise-Mailserver brechen die Zustellung sofort mit <em>554 Delivery Failure</em> ab.</p>
           </div>
         </section>
 
+        <!-- 3. CHEAT-SHEET -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📑 3. Cheat-Sheet: MX-Prioritäten</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Prioritätswert</th>
+                  <th style="padding: 10px;">Rolle</th>
+                  <th style="padding: 10px;">Verhalten des sendenden Servers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>10</code> (Niedrigste Zahl)</td>
+                  <td style="padding: 10px;"><strong>Primary MTA</strong></td>
+                  <td style="padding: 10px;">Wird immer zuerst kontaktiert</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>20</code> (Höhere Zahl)</td>
+                  <td style="padding: 10px;"><strong>Secondary / Backup</strong></td>
+                  <td style="padding: 10px;">Wird kontaktiert, wenn Prio 10 nach Timeouts nicht antwortet</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Gleiche Zahl (z.B. zweimal <code>10</code>)</td>
+                  <td style="padding: 10px;"><strong>Load Balancing</strong></td>
+                  <td style="padding: 10px;">Sender verteilt Mails zufällig / gleichmäßig auf beide Server</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> Primären MX-Record mit Priorität 10 anlegen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>format_mx_record(...)</code>: MX-Record mit Prioritätsprüfung erzeugen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Sekundären Backup-MX mit Priorität 20 für Ausfallsicherheit eintragen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>sort_mx_records(file)</code>: Mail-Ziele nach Priorität aufsteigend ordnen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Verbot von IP-Adressen und CNAMEs im MX-Ziel beachten</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>validate_mx_target_type(...)</code>: RFC 2181 CNAME-Verbot durchsetzen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Mail-Zustellungsroute mit dig MX prüfen</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>generate_redundant_mx_setup(...)</code>: Redundantes MX-Paar (10/20) generieren.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=09_mx_mail_exchange_und_prioritaeten" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../10_txt_records_und_spf_sender_policy_framework/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=09_mx_mail_exchange_und_prioritaeten" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../10_txt_records_und_spf_sender_policy_framework/index.html" class="btn btn-secondary">Weiter zu Modul 10 &rarr;</a>
           </div>
         </section>
       </main>

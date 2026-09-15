@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 12: DMARC Policy & Phishing-Abwehr</title>
+  <title>DNS 12: DMARC Policy &amp; Security</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,94 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🛡️ DMARC Policy</div>
-          <h1>DNS 12: DMARC Policy & Phishing-Abwehr</h1>
-          <p>Die Krone der Mail-Sicherheit: DMARC Policy (_dmarc.domain.de), SPF/DKIM Alignment und RUA/RUF Reporting.</p>
+          <div class="header-badge">🛡️ E-Mail-Sicherheit</div>
+          <h1>DNS 12: DMARC Policy &amp; Phishing-Abwehr</h1>
+          <p>Schließe die Sicherheitskette: Kopple SPF und DKIM mit DMARC, erzwinge die Ablehnung gefälschter Mails (p=reject) und analysiere Aggregated Reports.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: DMARC TRIALOGIE -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Die Krone der Mail-Sicherheit: DMARC Policy (_dmarc.domain.de), SPF/DKIM Alignment und RUA/RUF Reporting.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: checkdmarc</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig checkdmarc
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🛡️ 1. Die E-Mail-Security Trilogie im Zusammenspiel</h2>
+          <p>Erst wenn SPF, DKIM und DMARC Hand in Hand arbeiten, ist eine Domain vor CEO-Fraud und Identitätsdiebstahl geschützt:</p>
+
+          <pre><code>+-----------+       +------------+       +-------------------+
+|    SPF    |  AND  |    DKIM    |  ==>  |       DMARC       |
+| (IP-Auth) |       | (Signatur) |       | (Policy &amp; Report) |
++-----------+       +------------+       +-------------------+</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: POLICIES -->
+        <section class="card">
+          <h2>🎯 2. Der DMARC-Einführungsplan für Unternehmen</h2>
+          <div class="box box-tipp">
+            <div class="box-title">💡 Best-Practice Rollout in 3 Phasen</div>
+            <ol style="margin-left: 20px; line-height: 1.6;">
+              <li><strong>Phase 1 (Woche 1-4):</strong> <code>p=none; rua=mailto:...</code> &rarr; Nur Berichte sammeln und legitime Absender (CRM, Newsletter) in SPF aufnehmen.</li>
+              <li><strong>Phase 2 (Woche 5-8):</strong> <code>p=quarantine; pct=50</code> &rarr; Schrittweise Mails ohne Authentifizierung in den Spam-Ordner leiten.</li>
+              <li><strong>Phase 3 (Finale):</strong> <code>p=reject; pct=100</code> &rarr; Vollständige Abweisung gefälschter Mails an der SMTP-Pforte!</li>
+            </ol>
           </div>
         </section>
 
+        <!-- 3. CHEAT-SHEET -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📑 3. Cheat-Sheet: DMARC-Tags</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Tag</th>
+                  <th style="padding: 10px;">Zweck</th>
+                  <th style="padding: 10px;">Mögliche Werte &amp; Empfehlung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>p=</code></td>
+                  <td style="padding: 10px;">Empfänger-Aktion bei Fehler</td>
+                  <td style="padding: 10px;"><code>none</code>, <code>quarantine</code>, <code>reject</code> (Ziel: reject)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>rua=</code></td>
+                  <td style="padding: 10px;">Aggregierte Berichte</td>
+                  <td style="padding: 10px;"><code>mailto:dmarc-reports@firma.de</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>pct=</code></td>
+                  <td style="padding: 10px;">Prozentuale Anwendung</td>
+                  <td style="padding: 10px;"><code>100</code> (bei Rollout 20, 50, ...)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>aspf=</code> / <code>adkim=</code></td>
+                  <td style="padding: 10px;">Alignment Modus</td>
+                  <td style="padding: 10px;"><code>r</code> (Relaxed, Standard) oder <code>s</code> (Strict)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> DMARC TXT-Record unter _dmarc.domain.de anlegen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>format_dmarc_record(...)</code>: DMARC TXT-Record für _dmarc erzeugen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Policy-Stufen (p=none -> p=quarantine -> p=reject) staffeln</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>evaluate_dmarc_verdict(...)</code>: Empfängerentscheidung simulieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Aggregierte Report-Adresse (rua=mailto:dmarc@domain.de) einrichten</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Strenges vs. relatives Alignment (aspf/adkim) festlegen</label>
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>audit_email_security_suite(...)</code>: 100-Punkte Gesamtaudit durchführen.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=12_dmarc_und_email_security_suite" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../13_srv_service_records_fuer_ad_und_sip/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=12_dmarc_und_email_security_suite" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../13_srv_service_records_fuer_ad_und_sip/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 4 (Modul 13) &rarr;</a>
           </div>
         </section>
       </main>

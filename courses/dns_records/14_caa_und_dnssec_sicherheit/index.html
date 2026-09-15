@@ -1,63 +1,51 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 14: CAA Records & DNSSEC Vertrauenskette</title>
+  <title>Modul 14: CAA &amp; DNSSEC Sicherheit</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
-  <div class="app-layout">
-    <div class="app-main">
-      <header>
-        <div class="header-container">
-          <div class="header-badge">🚀 DNSSEC & CAA</div>
-          <h1>DNS 14: CAA Records & DNSSEC Vertrauenskette</h1>
-          <p>CAA zur Autorisierung von Zertifizierungsstellen (Let's Encrypt) und DNSSEC Signierung (RRSIG, DNSKEY, DS).</p>
-        </div>
-      </header>
-
-      <main class="container">
-        <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>CAA zur Autorisierung von Zertifizierungsstellen (Let's Encrypt) und DNSSEC Signierung (RRSIG, DNSKEY, DS).</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: delv</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig delv
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
-          <div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> CAA-Record für autorisierte CAs ('issue "letsencrypt.org"') anlegen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> DNSSEC Komponenten: Key Signing Key (KSK) & Zone Signing Key (ZSK) verstehen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Delegation Signer (DS) Record für die übergeordnete TLD berechnen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> DNSSEC Vertrauenskette mit delv oder dig +dnssec validieren</label>
-          </div>
-
-          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_4_advanced_dns&chapter=14_caa_und_dnssec_sicherheit" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../15_dns_troubleshooting_mit_dig_und_nslookup/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
-          </div>
-        </section>
-      </main>
+  <header>
+    <div class="header-container">
+      <div class="header-badge">Lehrpfad 4: Erweiterte Records, DNSSEC &amp; Troubleshooting</div>
+      <h1>Modul 14: CAA &amp; DNSSEC Sicherheit (RFC 8659, RFC 4034)</h1>
+      <p>Kryptografischer Schutz vor DNS-Hijacking und unautorisierten SSL/TLS-Zertifikaten.</p>
+      <div class="nav-links">
+        <a href="../13_srv_service_records_fuer_ad_und_sip/index.html">&larr; Modul 13: SRV-Records</a>
+        <a href="../../../dashboard.html">Kurs-Dashboard</a>
+        <a href="../15_dns_troubleshooting_mit_dig_und_nslookup/index.html">Modul 15: Troubleshooting &rarr;</a>
+      </div>
     </div>
-  </div>
-  <script src="../../../assets/courses_manifest.js"></script>
-  <script src="../../../assets/course_sidebar.js"></script>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>1. CAA: Wer darf Zertifikate für mich ausstellen?</h2>
+      <p>CAs sind verpflichtet, vor Ausstellung eines Zertifikats die CAA-Records der Domain im DNS abzufragen. Ist dort <code>issue "letsencrypt.org"</code> definiert, weist DigiCert jeden Zertifikatsantrag für deine Domain automatisch ab.</p>
+    </div>
+
+    <div class="card">
+      <h2>2. DNSSEC: Digitale Signaturen für Record-Sets</h2>
+      <div class="box box-analogie">
+        <div class="box-title">🔏 Analogie: Der notariell beglaubigte Personalausweis</div>
+        <p>Ein DNS-Record ohne DNSSEC ist wie ein handgeschriebener Zettel: Jeder kann ihn nachmachen. Mit DNSSEC ist jeder Record notariell versiegelt (RRSIG) und der Notar wird von der übergeordneten Behörde (Parent DS) beglaubigt.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. 🎯 Deine Teilziele in der Web-IDE</h2>
+      <ul class="task-checklist">
+        <li><strong>Teilziel 1:</strong> <code>format_caa_record</code> &ndash; CAA-Syntax nach RFC 8659 generieren.</li>
+        <li><strong>Teilziel 2:</strong> <code>format_caa_wildcard_block</code> &ndash; Absicherung gegen Wildcard-Missbrauch.</li>
+        <li><strong>Teilziel 3:</strong> <code>parse_ds_record</code> &ndash; Zerlegung des Parent Delegation Signer Records.</li>
+        <li><strong>Teilziel 4:</strong> <code>verify_dnssec_chain_status</code> &ndash; Validierung der Trust Chain.</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a href="../../../workspace.html?course=dns_records&chapter=14_caa_und_dnssec_sicherheit" class="btn">🚀 Aufgabe in der Web-IDE bearbeiten</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

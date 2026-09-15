@@ -1,36 +1,59 @@
 #!/usr/bin/env bash
-# ==============================================================================
-# TESTSUITE: DNS 13: SRV Service Records (Active Directory & SIP)
-# ==============================================================================
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-NC='\033[0m'
-
-TARGET_SCRIPT="${1:-aufgabe.sh}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET_SCRIPT="${1:-$SCRIPT_DIR/aufgabe.sh}"
+source "$TARGET_SCRIPT"
 
-echo -e "${BLUE}================================================================${NC}"
-echo -e "${BLUE}🧪 TESTSUITE: DNS 13: SRV Service Records (Active Directory & SIP)${NC}"
-echo -e "${BLUE}================================================================${NC}"
+PASSED_TESTS=0
+TOTAL_TESTS=0
 
-TEST_DIR=$(mktemp -d /tmp/dns_test_XXXXXX)
-trap 'rm -rf "$TEST_DIR"' EXIT
+run_test() {
+  local desc="$1"
+  local cmd="$2"
+  ((TOTAL_TESTS++))
+  echo -e "
+▶ Test ${TOTAL_TESTS}: ${desc}"
+  if eval "$cmd"; then
+    echo -e "  [32m✓ BESTANDEN[0m"
+    ((PASSED_TESTS++))
+  else
+    echo -e "  [31m✗ FEHLGESCHLAGEN[0m
+"
+  fi
+}
 
-source "$SCRIPT_DIR/$TARGET_SCRIPT"
+run_test "format_srv_record erzeugt RFC 2782 konformen SRV Eintrag" '
+  OUT=$(format_srv_record "ldap" "tcp" "corp.de" 0 100 389 "dc1.corp.de" 86400)
+  [ "$OUT" = "_ldap._tcp.corp.de. 86400 IN SRV 0 100 389 dc1.corp.de." ]
+'
 
-# Führe Funktion aus
-configure_ad_srv_records "example.com" "$TEST_DIR"
-RET=$?
+run_test "parse_srv_record extrahiert Prio, Port und Target" '
+  LINE="_sip._udp.firma.de. 3600 IN SRV 10 60 5060 pbx01.firma.de."
+  OUT=$(parse_srv_record "$LINE")
+  echo "$OUT" | grep -q "SERVICE=_sip" &&   echo "$OUT" | grep -q "PORT=5060" &&   echo "$OUT" | grep -q "TARGET=pbx01.firma.de."
+'
 
-if [ $RET -eq 0 ]; then
-  echo -e "${GREEN}✓ Test 1: Funktion configure_ad_srv_records existiert und gibt 0 zurück.${NC}"
-  echo -e "${GREEN}✓ Test 2: DNS Resource Records / Syntax validiert.${NC}"
-  echo -e "${GREEN}✓ Test 3: Teilziele 1 bis 4 erfolgreich abgeschlossen.${NC}"
-  echo -e "${GREEN}🎉 ERFOLG: Alle DNS-Prüfungen in DNS 13: SRV Service Records (Active Directory & SIP) bestanden!${NC}"
+run_test "generate_ad_srv_records erzeugt LDAP, Kerberos und GC Records" '
+  OUT=$(generate_ad_srv_records "ad.local" "dc01.ad.local" 0 100)
+  echo "$OUT" | grep -q "_ldap._tcp.ad.local." &&   echo "$OUT" | grep -q "_kerberos._tcp.ad.local." &&   echo "$OUT" | grep -q "_gc._tcp.ad.local."
+'
+
+run_test "select_srv_target_by_prio wählt Host mit kleinster Priorität" '
+  RECS=$(cat <<EOF
+_ldap._tcp.dom.de. 300 IN SRV 20 50 389 backup.dom.de.
+_ldap._tcp.dom.de. 300 IN SRV 5 100 389 primary.dom.de.
+_ldap._tcp.dom.de. 300 IN SRV 10 80 389 secondary.dom.de.
+EOF
+)
+  TARGET=$(select_srv_target_by_prio "$RECS")
+  [ "$TARGET" = "primary.dom.de." ]
+'
+
+if [ "$PASSED_TESTS" -eq "$TOTAL_TESTS" ]; then
+  echo -e "
+[32m🎉 ERFOLG: Alle ${PASSED_TESTS}/${TOTAL_TESTS} Tests in DNS 13 bestanden![0m"
   exit 0
 else
-  echo -e "${RED}❌ FEHLER: Skript fehlgeschlagen mit Status $RET${NC}"
+  echo -e "
+[31m❌ FEHLER: ${PASSED_TESTS}/${TOTAL_TESTS} Tests bestanden.[0m"
   exit 1
 fi

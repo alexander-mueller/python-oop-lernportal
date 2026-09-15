@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 11: DKIM Kryptografische E-Mail-Signatur</title>
+  <title>DNS 11: DKIM E-Mail-Signatur</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,90 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🛡️ DKIM Signatur</div>
-          <h1>DNS 11: DKIM Kryptografische E-Mail-Signatur</h1>
-          <p>Public Key im DNS: Selektoren (s1._domainkey.domain.de), RSA/Ed25519 Schlüssel und Header-Validierung.</p>
+          <div class="header-badge">🛡️ E-Mail-Sicherheit</div>
+          <h1>DNS 11: DKIM &amp; Kryptografische E-Mail-Signaturen</h1>
+          <p>Verstehe digitale E-Mail-Signaturen: Der DKIM-Selector, Public-Key-Verteilung im DNS und die Behebung des 255-Byte-TXT-Limits bei 2048-Bit RSA-Schlüsseln.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: DKIM ABLAUF -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Public Key im DNS: Selektoren (s1._domainkey.domain.de), RSA/Ed25519 Schlüssel und Header-Validierung.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: opendkim-testkey</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig opendkim-testkey
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🔐 1. Funktionsweise von DKIM (RFC 6376)</h2>
+          <p>DKIM schützt vor Man-in-the-Middle Manipulationen. Der Public Key wird unter der Subdomain <code>._domainkey</code> publiziert:</p>
+
+          <pre><code># Abfrage eines DKIM-Records mit dig (Selector 'google'):
+dig TXT google._domainkey.gmail.com +short
+
+# Ausgabe:
+# "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: SCHLÜSSELLÄNGE -->
+        <section class="card">
+          <h2>🛡️ 2. Warum 1024-Bit Keys verboten gehören</h2>
+          <div class="box box-warnung">
+            <div class="box-title">Security Alert: 1024-Bit RSA gebrochen</div>
+            <p>1024-Bit RSA-Schlüssel können heute mit Cloud-Rechenleistung in wenigen Tagen faktorisiert werden! Google und Yahoo verlangen seit 2024 zwingend <strong>mindestens 2048 Bit</strong>. Mails mit 1024-Bit Schlüsseln werden zunehmend gebounced.</p>
           </div>
         </section>
 
+        <!-- 3. CHEAT-SHEET -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📑 3. Cheat-Sheet: DKIM-Tags</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Tag</th>
+                  <th style="padding: 10px;">Bedeutung</th>
+                  <th style="padding: 10px;">Standard / Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>v=</code></td>
+                  <td style="padding: 10px;">DKIM-Protokollversion</td>
+                  <td style="padding: 10px;"><code>v=DKIM1</code></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>k=</code></td>
+                  <td style="padding: 10px;">Schlüssel-Algorithmus</td>
+                  <td style="padding: 10px;"><code>k=rsa</code> oder <code>k=ed25519</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>p=</code></td>
+                  <td style="padding: 10px;">Base64 Public Key</td>
+                  <td style="padding: 10px;"><code>p=MIIBIjANBgkqhki...</code> (mind. 2048 Bit)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> DKIM-Schlüsselpaar (Private/Public RSA 2048 Bit) generieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>build_dkim_fqdn(sel, dom)</code>: Selector-Domain konstruieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> DNS TXT-Record unter dem Selektor s1._domainkey eintragen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>audit_dkim_key_security(key)</code>: 2048-Bit Schlüssellänge prüfen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Tags v=DKIM1; k=rsa; p=PublicKey im Record formatieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>format_dkim_record(...)</code>: 255-Zeichen-Splitting für BIND umsetzen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> DKIM-Signaturprüfung simulieren</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>parse_dkim_record(raw)</code>: Tags und Public Key extrahieren.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=11_dkim_domainkeys_identified_mail" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../12_dmarc_und_email_security_suite/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=11_dkim_domainkeys_identified_mail" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../12_dmarc_und_email_security_suite/index.html" class="btn btn-secondary">Weiter zu Modul 12 &rarr;</a>
           </div>
         </section>
       </main>

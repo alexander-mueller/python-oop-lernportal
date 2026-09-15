@@ -1,63 +1,43 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master 16: Enterprise DNS Zone & Security Auditor</title>
+  <title>Modul 16: Master-Abschlussprojekt DNS Zone Auditor</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
-  <div class="app-layout">
-    <div class="app-main">
-      <header>
-        <div class="header-container">
-          <div class="header-badge">🏆 DNS Master</div>
-          <h1>Master 16: Enterprise DNS Zone & Security Auditor</h1>
-          <p>Das ultimative Abschlussprojekt: Entwickle einen vollautomatischen DNS-Auditor für Zonendateien & Domain Security.</p>
-        </div>
-      </header>
-
-      <main class="container">
-        <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Das ultimative Abschlussprojekt: Entwickle einen vollautomatischen DNS-Auditor für Zonendateien & Domain Security.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dns_zone_auditor</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dns_zone_auditor
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
-          <div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> Zonendatei auf RFC-Konformität, doppelte Einträge und CNAME-Apex-Kollisionen prüfen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Vollständige E-Mail-Sicherheitsanalyse (MX, SPF, DKIM, DMARC) durchführen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> SOA Serial und NS-Redundanz (mind. 2 getrennte Nameserver) auditieren</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Strukturierten JSON- und Terminal-Sicherheitsbericht mit Score generieren</label>
-          </div>
-
-          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_4_advanced_dns&chapter=16_master_abschlussprojekt_dns_zone_auditor" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../../../dashboard.html" class="btn btn-secondary">Zurück zum Dashboard</a>
-          </div>
-        </section>
-      </main>
+  <header>
+    <div class="header-container">
+      <div class="header-badge">Lehrpfad 4: Erweiterte Records, DNSSEC &amp; Troubleshooting</div>
+      <h1>Modul 16: Master-Abschlussprojekt &ndash; Enterprise DNS Zone Auditor</h1>
+      <p>Das finale Meisterstück: Entwickle einen vollautomatisierten BIND-Zonenauditor zur Erkennung von RFC-Verletzungen, Sicherheitslücken und Fehlkonfigurationen.</p>
+      <div class="nav-links">
+        <a href="../15_dns_troubleshooting_mit_dig_und_nslookup/index.html">&larr; Modul 15: Troubleshooting</a>
+        <a href="../../../dashboard.html">Kurs-Dashboard</a>
+      </div>
     </div>
-  </div>
-  <script src="../../../assets/courses_manifest.js"></script>
-  <script src="../../../assets/course_sidebar.js"></script>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>🏆 Die Königsdisziplin der DNS-Administration</h2>
+      <p>Ein unbemerkter CNAME am Apex bringt deinen Mailserver zum Schweigen. Ein fehlender zweiter Nameserver lässt bei Serverausfall die gesamte Webpräsenz verschwinden. Dein Auditor prüft Zonen auf Herz und Nieren.</p>
+    </div>
+
+    <div class="card">
+      <h2>2. 🎯 Deine Teilziele in der Web-IDE</h2>
+      <ul class="task-checklist">
+        <li><strong>Teilziel 1:</strong> <code>audit_soa_record</code> &ndash; Validierung der 10-stelligen SOA Serial.</li>
+        <li><strong>Teilziel 2:</strong> <code>audit_ns_redundancy</code> &ndash; Durchsetzung von mindestens 2 redundanten Nameservern.</li>
+        <li><strong>Teilziel 3:</strong> <code>audit_apex_cname_collision</code> &ndash; Abwehr von illegalen Apex-CNAMEs.</li>
+        <li><strong>Teilziel 4:</strong> <code>audit_email_defense</code> &ndash; Kombinierte Prüfung von SPF und DMARC.</li>
+        <li><strong>Teilziel 5:</strong> <code>run_complete_zone_audit</code> &ndash; 100-Punkte Audit-Report mit Gesamturteil.</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a href="../../../workspace.html?course=dns_records&chapter=16_master_abschlussprojekt_dns_zone_auditor" class="btn">🚀 Master-Projekt in der Web-IDE starten</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

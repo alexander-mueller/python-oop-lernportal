@@ -153,9 +153,12 @@ class IhkExamEngine {
         </button>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <a href="../../../diagram_editor.html" target="_blank" class="ihk-btn" style="background: #0284c7; color: #ffffff !important; font-size: 0.82rem; padding: 6px 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="Öffnet das interaktive IHK Diagramm-Studio in neuem Tab">
+          <span>📐</span> <span>Diagramm-Studio (ER / SG / UML)</span>
+        </a>
         <button id="btn-open-catalog" class="ihk-btn" style="background: #334155; color: #f8fafc; font-size: 0.82rem; padding: 6px 14px; border: 1px solid #475569;">
-          📚 150-Fragen-Pool (Drill)
+          📚 Fragenkatalog (234 Fragen)
         </button>
       </div>
     `;
@@ -347,6 +350,16 @@ class IhkExamEngine {
     task.dataset.points = q.points;
     task.style.cssText = "background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px;";
 
+    let diagramLinkHtml = '';
+    const topicLow = ((q.topic || '') + ' ' + (q.question || '')).toLowerCase();
+    if (topicLow.includes('er-modell') || topicLow.includes('kardinalit') || topicLow.includes('normalis')) {
+      diagramLinkHtml = `<div style="margin-bottom: 12px;"><a href="../../../diagram_editor.html#er" target="_blank" class="ihk-btn" style="padding: 4px 10px; font-size: 0.78rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.3); text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;"><span>🗄️</span> <span>Im ER-Modell Editor entwerfen / prüfen &rarr;</span></a></div>`;
+    } else if (topicLow.includes('struktogramm') || topicLow.includes('nassi') || topicLow.includes('din 66261')) {
+      diagramLinkHtml = `<div style="margin-bottom: 12px;"><a href="../../../diagram_editor.html#struktogramm" target="_blank" class="ihk-btn" style="padding: 4px 10px; font-size: 0.78rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.3); text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;"><span>📐</span> <span>Im Struktogramm-Editor entwerfen / prüfen &rarr;</span></a></div>`;
+    } else if (topicLow.includes('uml') || topicLow.includes('klassendiagramm') || topicLow.includes('sequenzdiagramm') || topicLow.includes('use case')) {
+      diagramLinkHtml = `<div style="margin-bottom: 12px;"><a href="../../../diagram_editor.html#uml" target="_blank" class="ihk-btn" style="padding: 4px 10px; font-size: 0.78rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.3); text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;"><span>🔷</span> <span>Im UML-Studio entwerfen / prüfen &rarr;</span></a></div>`;
+    }
+
     task.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
         <h3 style="color: #38bdf8; margin: 0; font-size: 1.15rem;">
@@ -370,6 +383,7 @@ class IhkExamEngine {
         <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin-top: 0;">
           ${this.formatQuestionText(q.question)}
         </p>
+        ${diagramLinkHtml}
         <textarea class="ihk-input" rows="${q.points > 8 ? 6 : 4}" placeholder="Ihre Bearbeitung hier eingeben (Fachbegriffe, Formeln, Begründungen)..."></textarea>
       </div>
 

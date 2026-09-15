@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 04: TTL & DNS-Propagation</title>
+  <title>DNS 04: TTL &amp; DNS-Propagation</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,108 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🌐 DNS Caching</div>
-          <h1>DNS 04: TTL & DNS-Propagation</h1>
-          <p>Time-To-Live (TTL), Cache-Invalidierung, Negative Caching (RFC 2308) und Migrationsstrategien.</p>
+          <div class="header-badge">🌐 DNS &amp; Infrastruktur</div>
+          <h1>DNS 04: TTL (Time to Live) &amp; DNS-Propagation</h1>
+          <p>Verstehe Caching-Mechanismen, plane Servermigrationen ohne Downtime und analysiere Negative Caching nach RFC 2308.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: TTL & CACHE -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Time-To-Live (TTL), Cache-Invalidierung, Negative Caching (RFC 2308) und Migrationsstrategien.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig +nocache</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig +nocache
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>⏳ 1. Caching &amp; die Time to Live (TTL)</h2>
+          <p>Die TTL bestimmt, wie lange ein rekursiver Resolver einen Record zwischenspeichern darf. Mit <code>dig</code> kannst du beobachten, wie die TTL im Cache bei jeder Abfrage abnimmt:</p>
+
+          <pre><code># 1. Erste Abfrage (vom autoritativen Server geholt):
+dig www.it-praxisportal.de +noall +answer
+# Ausgabe: www.it-praxisportal.de.   3600    IN   A   188.245.100.5
+
+# 2. Zweite Abfrage 45 Sekunden später (aus dem lokalen Cache):
+dig www.it-praxisportal.de +noall +answer
+# Ausgabe: www.it-praxisportal.de.   3555    IN   A   188.245.100.5  <- TTL zählt runter!</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: MIGRATION -->
+        <section class="card">
+          <h2>🚀 2. Professioneller Serverumzug ohne Downtime</h2>
+          <p>Wenn du einen produktiven Web- oder Mailserver migrierst, ist die TTL dein wichtigstes Werkzeug:</p>
+
+          <div class="box box-tipp">
+            <div class="box-title">💡 Der 3-Schritte-Migrationsplan für Systemintegratoren</div>
+            <ol style="margin-left: 20px; line-height: 1.6;">
+              <li><strong>T minus 48 Stunden:</strong> Senke die TTL des A/AAAA-Records von 86.400s (24h) auf <strong>300s (5 Min.)</strong>. Alle alten Caches laufen vor dem Umzug ab.</li>
+              <li><strong>Wartungsfenster (Tag T):</strong> Ändere die IP-Adresse auf den neuen Server. Nach spätestens 5 Minuten sprechen alle Clients weltweit den neuen Server an!</li>
+              <li><strong>T plus 24 Stunden:</strong> Sobald alles stabil läuft, hebe die TTL wieder auf 86.400s an, um die DNS-Last zu minimieren.</li>
+            </ol>
           </div>
         </section>
 
+        <!-- 3. CHEAT-SHEET -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📑 3. Cheat-Sheet: Typische TTL-Richtwerte in der Praxis</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Record-Typ</th>
+                  <th style="padding: 10px;">Empfohlene TTL</th>
+                  <th style="padding: 10px;">Begründung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>NS</code> / <code>SOA</code></td>
+                  <td style="padding: 10px;">86.400s (24h) bis 172.800s (48h)</td>
+                  <td style="padding: 10px;">Nameserver-Infrastruktur ändert sich extrem selten; entlastet TLDs</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>MX</code></td>
+                  <td style="padding: 10px;">14.400s (4h) bis 86.400s (24h)</td>
+                  <td style="padding: 10px;">Mailserver-Routen sind stabil; Backup-MX fängt Ausfälle ab</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Standard <code>A</code> / <code>AAAA</code></td>
+                  <td style="padding: 10px;">3.600s (1h) bis 14.400s (4h)</td>
+                  <td style="padding: 10px;">Gute Balance zwischen Lastreduktion und Flexibilität</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;">Migrations-Vorbereitung</td>
+                  <td style="padding: 10px;">300s (5 Min.) bis 600s (10 Min.)</td>
+                  <td style="padding: 10px;">Ermöglicht schnellen IP-Wechsel bei minimaler Propagation-Downtime</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Negative Caching (NXDOMAIN)</td>
+                  <td style="padding: 10px;">1.800s (30m) bis 7.200s (2h)</td>
+                  <td style="padding: 10px;">5. Feld im SOA; verhindert Query-Fluten bei Tippfehlern</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> TTL-Werte in Resource Records analysieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>format_ttl_human(sec)</code>: Sekunden in d, h, m, s umrechnen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> TTL vor einer Server-Migration schrittweise reduzieren (300 Sek.)</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>plan_dns_migration(...)</code>: Vorlaufzeit und temporäre TTL für Serverumzug berechnen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Negative Caching TTL im SOA-Record verstehen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>simulate_cache_decay(...)</code>: Rest-TTL ermitteln oder Cache Expiry melden.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> DNS-Propagation globaler Nameserver prüfen</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>extract_soa_negative_ttl(...)</code>: Negative Caching Feld aus SOA prüfen.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=04_ttl_und_dns_propagation" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../05_a_und_aaaa_records/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_1_dns_architektur&chapter=04_ttl_und_dns_propagation" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../05_a_und_aaaa_records/index.html" class="btn btn-secondary">Weiter zu Lehrpfad 2 (Modul 05) &rarr;</a>
           </div>
         </section>
       </main>

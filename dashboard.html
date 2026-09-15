@@ -246,6 +246,7 @@
         <a href="#overview" class="portal-nav-link active">Übersicht</a>
         <a href="#katalog" class="portal-nav-link">Kurse</a>
         <a href="#ihk-section" class="portal-nav-link">IHK-Prüfung</a>
+        <a href="diagram_editor.html" class="portal-nav-link" title="Interaktives Diagramm-Studio (ER, Struktogramm, UML)">📐 Diagramme</a>
         <a href="workspace.html?course=python" class="portal-nav-link">Web-IDE</a>
         <a href="#zertifikate-section" class="portal-nav-link">Zertifikate</a>
         <a href="teacher.html" class="portal-nav-link" id="nav-teacher-link" style="display: none;">Dozentenbereich</a>
@@ -275,6 +276,7 @@
     <a href="#overview" class="mobile-drawer-link" onclick="toggleMobileMenu()">Übersicht</a>
     <a href="#katalog" class="mobile-drawer-link" onclick="toggleMobileMenu()">Kurse</a>
     <a href="#ihk-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">IHK-Prüfungsvorbereitung</a>
+    <a href="diagram_editor.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">📐 Diagramm-Studio (ER, SG, UML)</a>
     <a href="#zertifikate-section" class="mobile-drawer-link" onclick="toggleMobileMenu()">Zertifikate</a>
     <a href="index.html?view=landing" class="mobile-drawer-link" onclick="toggleMobileMenu()">Startseite</a>
     <a href="impressum.html" class="mobile-drawer-link" onclick="toggleMobileMenu()">Impressum</a>
@@ -297,7 +299,7 @@
             <span id="pill-current-date">Heute</span>
           </div>
           <h1>Willkommen, <span id="dash-greeting-name">Teilnehmer</span></h1>
-          <p style="margin: 0; font-size: 0.98rem; color: #94a3b8; max-width: 720px; line-height: 1.6;">
+          <p style="margin: 0; font-size: 0.98rem; color: #cbd5e1; max-width: 720px; line-height: 1.6;">
             Zentrales Ausbildungs- und Lernportal für IT-Fachinformatiker. Praxisnahe Fachmodule, interaktive Monaco Web-IDE und bundeseinheitliche Prüfungsvorbereitung nach IHK AO 2020.
           </p>
         </div>
@@ -345,9 +347,9 @@
             💻
           </div>
           <div>
-            <div style="font-size: 0.74rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.6px;">Zuletzt bearbeitet</div>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.6px;">Zuletzt bearbeitet</div>
             <h3 style="margin: 2px 0 4px 0; font-size: 1.15rem; color: #ffffff;" id="resume-course-title">Python 3: Vom Einsteiger zum Entwickler</h3>
-            <p style="margin: 0; font-size: 0.86rem; color: #94a3b8;" id="resume-course-desc">Setze deine letzte praktische Übung direkt an der gleichen Stelle in der Web-IDE fort.</p>
+            <p style="margin: 0; font-size: 0.86rem; color: #cbd5e1;" id="resume-course-desc">Setze deine letzte praktische Übung direkt an der gleichen Stelle in der Web-IDE fort.</p>
           </div>
         </div>
         <div>
@@ -1199,6 +1201,21 @@
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px;">
+        <div class="ihk-quick-card" data-ihk-profession="common" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1px solid #38bdf8; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); color: #f8fafc; grid-column: 1 / -1;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <span class="portal-card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); font-size: 0.72rem; font-weight: 700;">NEU • IHK ENTWURFSSTUDIO</span>
+              <h4 style="margin: 6px 0 4px 0; color: #ffffff; font-size: 1.15rem; font-weight: 800;">📐 IHK Diagramm-Studio: ER-Modell, Struktogramm (DIN 66261) &amp; UML 2.5</h4>
+              <p style="font-size: 0.88rem; color: #cbd5e1; margin: 0; line-height: 1.55; max-width: 840px;">
+                Visuelle Entwurfswerkzeuge für Prüfungsaufgaben: Relationale Datenbankschemata mit ANSI SQL DDL-Generierung, Nassi-Shneiderman Struktogramme mit Python-Transpiler sowie UML Klassendiagramme, Sequenzen und Use-Cases.
+              </p>
+            </div>
+            <a href="diagram_editor.html" class="portal-btn-primary" style="padding: 10px 20px; font-size: 0.88rem; background: #0284c7; border-color: #0284c7; text-decoration: none;">
+              <span>Diagramm-Studio öffnen &rarr;</span>
+            </a>
+          </div>
+        </div>
+
         <div class="ihk-quick-card" data-ihk-profession="common" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-sm);">
           <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 1rem; font-weight: 700;">AP1: IT-Arbeitsplatz &amp; Basissysteme (LF 1–8)</h4>
           <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 14px 0; line-height: 1.5;">Gemeinsame Kernqualifikationen für alle IT-Berufe: Verträge, Ergonomie, Subnetting, BSI, BPMN 2.0, Belege &amp; Netzplan.</p>

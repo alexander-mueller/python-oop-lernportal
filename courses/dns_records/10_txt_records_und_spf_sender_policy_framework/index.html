@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 10: SPF Sender Policy Framework (TXT)</title>
+  <title>DNS 10: SPF Sender Policy Framework</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
@@ -12,46 +12,104 @@
     <div class="app-main">
       <header>
         <div class="header-container">
-          <div class="header-badge">🛡️ SPF Schutz</div>
-          <h1>DNS 10: SPF Sender Policy Framework (TXT)</h1>
-          <p>Schutz vor E-Mail-Spoofing: Autorisierte Absender-IPs im TXT-Record definieren (v=spf1 mx ip4:... -all).</p>
+          <div class="header-badge">🛡️ E-Mail-Sicherheit</div>
+          <h1>DNS 10: SPF (Sender Policy Framework) &amp; 10-Lookup Limit</h1>
+          <p>Verhindere Mail-Spoofing mit TXT-Records: Lerne die SPF-Syntax, sichere Qualifier (-all) und das gefürchtete 10-DNS-Lookup-Limit nach RFC 7208.</p>
         </div>
       </header>
 
       <main class="container">
+        <!-- 1. THEORIE: SPF ANATOMIE -->
         <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Schutz vor E-Mail-Spoofing: Autorisierte Absender-IPs im TXT-Record definieren (v=spf1 mx ip4:... -all).</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig TXT</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig TXT
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
+          <h2>🛡️ 1. Anatomie eines professionellen SPF-Records</h2>
+          <p>SPF wird als Standard <code>TXT</code>-Record auf der Domäne hinterlegt. Der String beginnt immer zwingend mit <code>v=spf1</code>:</p>
+
+          <pre><code># BIND Zonendatei:
+@   IN  TXT  "v=spf1 mx ip4:188.245.100.5 include:_spf.google.com -all"
+
+# Bedeutung der einzelnen Komponenten:
+# 1. v=spf1                   -> Kennung als SPF Version 1
+# 2. mx                       -> Eigene MX-Server dürfen senden
+# 3. ip4:188.245.100.5        -> Dedizierte Webserver-IP darf senden
+# 4. include:_spf.google.com  -> Google Workspace Mailserver dürfen senden
+# 5. -all                     -> Alle anderen Server werden strikt abgewiesen!</code></pre>
+        </section>
+
+        <!-- 2. THEORIE: DAS 10 LOOKUP LIMIT -->
+        <section class="card">
+          <h2>🛑 2. Das gefürchtete 10-Lookup-Limit</h2>
+          <div class="box box-warnung">
+            <div class="box-title">RFC 7208 Void-Lookup Limit: Max. 10 DNS-Queries</div>
+            <p>Jeder <code>include</code>, <code>a</code> und <code>mx</code> Mechanismus löst eine neue DNS-Anfrage aus. Verschachtelte Includes (z.B. Office 365 + Zendesk + Mailchimp) summieren sich schnell auf über 10 Lookups. In diesem Fall verwerfen viele Empfänger-Server die Mail mit <strong>SPF PermError</strong>!</p>
           </div>
         </section>
 
+        <!-- 3. CHEAT-SHEET -->
         <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
+          <h2>📑 3. Cheat-Sheet: Die 4 SPF-Qualifier</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); background: var(--bg-subtle);">
+                  <th style="padding: 10px;">Qualifier</th>
+                  <th style="padding: 10px;">Name</th>
+                  <th style="padding: 10px;">Auswirkung beim Empfänger</th>
+                  <th style="padding: 10px;">Empfehlung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>-all</code></td>
+                  <td style="padding: 10px;">HardFail</td>
+                  <td style="padding: 10px;">Mails von ungelisteten IPs werden abgewiesen</td>
+                  <td style="padding: 10px; color: #166534; font-weight: 700;">Best Practice</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>~all</code></td>
+                  <td style="padding: 10px;">SoftFail</td>
+                  <td style="padding: 10px;">Wird angenommen, aber als Spam markiert</td>
+                  <td style="padding: 10px; color: #92400e;">Nur für Übergangsphase</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 10px;"><code>?all</code></td>
+                  <td style="padding: 10px;">Neutral</td>
+                  <td style="padding: 10px;">Keine Schutzwirkung</td>
+                  <td style="padding: 10px;">Vermeiden</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;"><code>+all</code></td>
+                  <td style="padding: 10px;">Pass</td>
+                  <td style="padding: 10px;">Jeder Server weltweit darf fälschen!</td>
+                  <td style="padding: 10px; color: #991b1b; font-weight: 800;">VERBOTEN</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. AUFGABEN CHECKLISTE -->
+        <section class="card">
+          <h2>🎯 Aufgaben &amp; Checkliste in <code>aufgabe.sh</code></h2>
           <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> Gültigen SPF TXT-Record für die Domain erstellen</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t1"><strong>TODO 1:</strong> <code>build_spf_record(...)</code>: Modularen SPF-String aufbauen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> Mechanismen (ip4, a, mx, include) kombinieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t2"><strong>TODO 2:</strong> <code>count_spf_lookups(spf)</code>: DNS-Lookup-Zähler gegen 10er-Limit prüfen.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Unterschied Hardfail (-all) vs. Softfail (~all) implementieren</label>
-          </div><div class="task-item">
+            <label class="task-label" for="t3"><strong>TODO 3:</strong> <code>audit_spf_qualifier(spf)</code>: Gefährliches <code>+all</code> abfangen und <code>-all</code> verifizieren.</label>
+          </div>
+          <div class="task-item">
             <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Das 10-DNS-Lookup-Limit des SPF-Standards (RFC 7208) einhalten</label>
+            <label class="task-label" for="t4"><strong>TODO 4:</strong> <code>format_spf_txt_record(...)</code>: Validen BIND TXT-Record schreiben.</label>
           </div>
 
           <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=10_txt_records_und_spf_sender_policy_framework" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../11_dkim_domainkeys_identified_mail/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
+            <a href="../../../workspace.html?course=dns_records&track=track_3_email_security&chapter=10_txt_records_und_spf_sender_policy_framework" class="btn" style="background: #1d4ed8; color: #fff; font-weight: 700;">In Web-IDE öffnen &rarr;</a>
+            <a href="../11_dkim_domainkeys_identified_mail/index.html" class="btn btn-secondary">Weiter zu Modul 11 &rarr;</a>
           </div>
         </section>
       </main>

@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DNS 13: SRV Service Records (Active Directory & SIP)</title>
+  <title>Modul 13: SRV-Service Records für Active Directory &amp; SIP</title>
   <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 <body>
-  <div class="app-layout">
-    <div class="app-main">
-      <header>
-        <div class="header-container">
-          <div class="header-badge">🚀 Service Discovery</div>
-          <h1>DNS 13: SRV Service Records (Active Directory & SIP)</h1>
-          <p>Dienste automatisch im Netzwerk finden: _service._proto.name TTL Class SRV Priority Weight Port Target.</p>
-        </div>
-      </header>
-
-      <main class="container">
-        <section class="card">
-          <h2>💡 Theorie &amp; Praxiskonzept</h2>
-          <p>Dienste automatisch im Netzwerk finden: _service._proto.name TTL Class SRV Priority Weight Port Target.</p>
-          <div class="code-container">
-            <div class="code-header">
-              <span>DNS Command &amp; Syntax Reference</span>
-              <span>Tool: dig SRV</span>
-            </div>
-            <pre><code># Wichtige Befehle &amp; Zonensyntax:
-dig dig SRV
-named-checkzone example.com /etc/bind/zones/db.example.com</code></pre>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>🎯 Aufgaben &amp; Checkliste</h2>
-          <div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t1">
-            <label class="task-label" for="t1"><strong>TODO 1:</strong> SRV-Record für Active Directory LDAP (_ldap._tcp.dc._msdcs) erstellen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t2">
-            <label class="task-label" for="t2"><strong>TODO 2:</strong> SRV-Record für Kerberos Authentifizierung (_kerberos._tcp) anlegen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t3">
-            <label class="task-label" for="t3"><strong>TODO 3:</strong> Priorität und Gewichtung (Weight) für Lastverteilung berechnen</label>
-          </div><div class="task-item">
-            <input type="checkbox" class="task-checkbox" id="t4">
-            <label class="task-label" for="t4"><strong>TODO 4:</strong> Service-Discovery Abfragen mit dig SRV durchführen</label>
-          </div>
-
-          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../../../workspace.html?course=dns_records&track=track_4_advanced_dns&chapter=13_srv_service_records_fuer_ad_und_sip" class="btn" style="background: #0284c7; color: #fff; font-weight: 700;">💻 In Web-IDE öffnen &rarr;</a>
-            <a href="../14_caa_und_dnssec_sicherheit/index.html" class="btn btn-secondary">Weiter zu Modul &rarr;</a>
-          </div>
-        </section>
-      </main>
+  <header>
+    <div class="header-container">
+      <div class="header-badge">Lehrpfad 4: Erweiterte Records, DNSSEC &amp; Troubleshooting</div>
+      <h1>Modul 13: SRV-Service Records für Active Directory &amp; SIP (RFC 2782)</h1>
+      <p>Service Discovery im DNS: Wie Clients Server für LDAP, Kerberos und VoIP dynamisch mit Port, Priorität und Lastverteilung finden.</p>
+      <div class="nav-links">
+        <a href="../12_dmarc_und_email_security_suite/index.html">&larr; Modul 12: DMARC</a>
+        <a href="../../../dashboard.html">Kurs-Dashboard</a>
+        <a href="../14_caa_und_dnssec_sicherheit/index.html">Modul 14: CAA &amp; DNSSEC &rarr;</a>
+      </div>
     </div>
-  </div>
-  <script src="../../../assets/courses_manifest.js"></script>
-  <script src="../../../assets/course_sidebar.js"></script>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>1. Warum SRV-Records? Das Problem klassischer A-Records</h2>
+      <p>Ein A-Record liefert nur eine IP-Adresse. Läuft der LDAP-Server auf Port 389 oder 636? Welcher von drei DCs hat die höchste Rechenleistung? <strong>RFC 2782 SRV-Records</strong> lösen dies durch strukturierte Metadaten direkt in der DNS-Zone.</p>
+      <div class="box box-analogie">
+        <div class="box-title">🏢 Analogie: Das Firmen-Telefonbuch mit Durchwahlen</div>
+        <p>Ein A-Record ist die Firmenadresse auf dem Briefkopf. Ein <strong>SRV-Record</strong> ist der Empfang mit Durchwahlliste: Er sagt dir, in welchem Büro (Host), auf welcher Durchwahl (Port) und wer zuerst abhebt (Priorität/Gewichtung).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Active Directory DNS-Discovery Struktur</h2>
+      <div class="code-container">
+        <div class="code-header">SRV-Discovery in Microsoft Windows Server Umgebungen</div>
+        <pre><code>; Active Directory Domain Controller Discovery
+_ldap._tcp.dc._msdcs.corp.local.   600 IN SRV 0 100 389  dc01.corp.local.
+_kerberos._tcp.dc._msdcs.corp.local. 600 IN SRV 0 100 88   dc01.corp.local.
+_gc._tcp.corp.local.                 600 IN SRV 0 100 3268 dc01.corp.local.</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. 🎯 Deine Teilziele in der Web-IDE</h2>
+      <ul class="task-checklist">
+        <li><strong>Teilziel 1:</strong> <code>format_srv_record</code> &ndash; Standardkonformes BIND SRV-Format mit Trailing Dots.</li>
+        <li><strong>Teilziel 2:</strong> <code>parse_srv_record</code> &ndash; Parsing der 6 Kernfelder eines SRV-Eintrags.</li>
+        <li><strong>Teilziel 3:</strong> <code>generate_ad_srv_records</code> &ndash; Automatische Erstellung der Kerberos-, LDAP- und GC-Records.</li>
+        <li><strong>Teilziel 4:</strong> <code>select_srv_target_by_prio</code> &ndash; Bestimmung des Failover-Ziels mit niedrigster Prioritätszahl.</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a href="../../../workspace.html?course=dns_records&chapter=13_srv_service_records_fuer_ad_und_sip" class="btn">🚀 Aufgabe in der Web-IDE bearbeiten</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

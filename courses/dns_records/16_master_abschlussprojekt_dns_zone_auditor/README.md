@@ -1,18 +1,25 @@
-# Master 16: Enterprise DNS Zone & Security Auditor
+# Modul 16: Master-Abschlussprojekt &ndash; Enterprise DNS Zone Auditor
 
-Willkommen zum Kurs **DNS-Records, Domain Name System & E-Mail-Sicherheit** im IT-Praxisportal!
+## 🏆 Willkommen zum Master-Abschlussprojekt des DNS-Kurses!
+Du hast die gesamte DNS-Architektur gemeistert: Von den 13 Root-Clustern über CNAME-Apex-Konflikte, SPF/DKIM/DMARC E-Mail-Sicherheit bis hin zu Active Directory SRV-Records und DNSSEC.
 
-## 💡 Das Wichtigste in Kürze
-- **Ziel:** Das ultimative Abschlussprojekt: Entwickle einen vollautomatischen DNS-Auditor für Zonendateien & Domain Security.
-- **Wichtigstes Tool:** `dns_zone_auditor`
+In diesem Abschlussprojekt entwickelst du ein **vollständiges, produktionsreifes DNS-Zone-Auditing-Werkzeug** in Bash.
 
-## 🎯 Deine Aufgaben (Checkliste)
-1. **Teilziel 1:** Zonendatei auf RFC-Konformität, doppelte Einträge und CNAME-Apex-Kollisionen prüfen
-2. **Teilziel 2:** Vollständige E-Mail-Sicherheitsanalyse (MX, SPF, DKIM, DMARC) durchführen
-3. **Teilziel 3:** SOA Serial und NS-Redundanz (mind. 2 getrennte Nameserver) auditieren
-4. **Teilziel 4:** Strukturierten JSON- und Terminal-Sicherheitsbericht mit Score generieren
+---
 
-## 🧪 Tests ausführen
-```bash
-bash test_aufgabe.sh
-```
+## 🎯 Anforderungen an den DNS Zone Auditor:
+
+Der Auditor liest eine BIND-Zonendatei oder simuliert die Überprüfung einer Live-Domain und führt 5 fundamentale Checks durch:
+
+1. **Check 1: SOA-Record Validierung**:
+   - Existiert ein SOA-Record?
+   - Hat die Serial das gültige 10-stellige Datumsformat `YYYYMMDDNN`?
+2. **Check 2: NS-Redundanz (RFC 2182)**:
+   - Sind mindestens **2 verschiedene Nameserver (NS)** definiert?
+3. **Check 3: CNAME-Apex Kollisionsprüfung (RFC 1912)**:
+   - Befindet sich am Zone-Apex (`@`) versehentlich ein CNAME-Record?
+4. **Check 4: E-Mail-Sicherheits-Trilogie**:
+   - Existiert ein SPF TXT Record mit sicherem `-all`?
+   - Existiert ein DMARC Record mit `p=quarantine` oder `p=reject`?
+5. **Check 5: Gesamtbewertung & Score**:
+   - Berechnet einen Gesamt-Sicherheits-Score (0 bis 100 Punkte) und gibt das Urteil `AUDIT_PASSED` (>=80) oder `AUDIT_FAILED` aus.
